@@ -11,3 +11,5 @@
 .project
 .settings/
 
+# Project-specific Files #
+src/main/resources/general-en/
