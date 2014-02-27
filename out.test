@@ -1,0 +1,12 @@
+Score: 0.9769476394033474
+1	Give	give	VB	pb=give.01	0	root	_
+2	me	me	PRP	_	1	iobj	1:A2=GOL
+3	the	the	DT	_	4	det	_
+4	currencies	currency	NNS	_	1	dobj	1:A1=PPT
+5	of	of	IN	_	4	prep	_
+6	all	all	DT	p2=PDT	9	det	_
+7	G8	g8	NNP	p2=NN	9	hmod	_
+8	-	-	HYPH	_	9	hyph	_
+9	countries	country	NNS	_	5	pobj	_
+10	?	?	.	_	1	punct	_
+
