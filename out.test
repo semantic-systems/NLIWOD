@@ -10,3 +10,73 @@ Score: 0.9769476394033474
 9	countries	country	NNS	_	5	pobj	_
 10	?	?	.	_	1	punct	_
 
+Score: 5.844951572812943
+1	In	in	IN	_	11	prep	11:R-AM-LOC
+2	which	which	WDT	_	3	det	_
+3	city	city	NN	_	1	pobj	_
+4	was	be	VBD	_	11	auxpass	_
+5	the	the	DT	_	6	det	_
+6	assassin	assassin	NN	p2=NNP	11	nsubjpass	11:A1=PPT
+7	of	of	IN	_	6	prep	_
+8	Martin	martin	NNP	_	10	nn	_
+9	Luther	luther	NNP	_	10	nn	_
+10	King	king	NNP	_	7	pobj	_
+11	born	bear	VBN	p2=RP|pb=bear.02	0	root	_
+12	?	?	.	_	11	punct	_
+
+Score: 5.445976155560333
+1	In	in	IN	_	11	prep	11:AM-LOC
+2	which	which	WDT	_	3	det	_
+3	city	city	NN	_	1	pcomp	_
+4	was	be	VBD	_	11	auxpass	_
+5	the	the	DT	_	6	det	_
+6	assassin	assassin	NN	p2=NNP	11	nsubjpass	11:A1=PPT
+7	of	of	IN	_	6	prep	_
+8	Martin	martin	NNP	_	10	nn	_
+9	Luther	luther	NNP	_	10	nn	_
+10	King	king	NNP	_	7	pobj	_
+11	born	bear	VBN	p2=RP|pb=bear.02	0	root	_
+12	?	?	.	_	11	punct	_
+
+Score: 5.419798626040317
+1	In	in	IN	_	11	prep	11:R-AM-LOC
+2	which	which	WDT	_	3	det	_
+3	city	city	NN	_	1	pobj	_
+4	was	be	VBD	_	11	auxpass	_
+5	the	the	DT	_	6	det	_
+6	assassin	assassin	NN	p2=NNP	11	nsubjpass	11:A1=PPT
+7	of	of	IN	_	6	prep	_
+8	Martin	martin	NNP	_	10	nn	_
+9	Luther	luther	NNP	_	10	amod	_
+10	King	king	NNP	_	7	pobj	_
+11	born	bear	VBN	p2=RP|pb=bear.02	0	root	_
+12	?	?	.	_	11	punct	_
+
+Score: 5.417163601455646
+1	In	in	IN	_	11	prep	11:R-AM-LOC
+2	which	which	WDT	_	3	det	_
+3	city	city	NN	_	1	pobj	_
+4	was	be	VBD	_	11	auxpass	_
+5	the	the	DT	_	6	det	_
+6	assassin	assassin	NN	p2=NNP	11	nsubjpass	11:A1=PPT
+7	of	of	IN	_	6	prep	_
+8	Martin	martin	NNP	_	9	nn	_
+9	Luther	luther	NNP	_	10	nn	_
+10	King	king	NNP	_	7	pobj	_
+11	born	bear	VBN	p2=RP|pb=bear.02	0	root	_
+12	?	?	.	_	11	punct	_
+
+Score: 0.8833771462642385
+1	In	in	IN	_	4	prep	4:R-AM-LOC
+2	which	which	WDT	_	1	pobj	_
+3	city	city	NN	_	4	nsubj	4:A1=PPT
+4	was	be	VBD	pb=be.01	0	root	_
+5	the	the	DT	_	6	det	_
+6	assassin	assassin	NN	p2=NNP	4	attr	11:A1=PPT;4:A2=PRD
+7	of	of	IN	_	6	prep	_
+8	Martin	martin	NNP	_	10	nn	_
+9	Luther	luther	NNP	_	10	nn	_
+10	King	king	NNP	_	7	pobj	_
+11	born	bear	VBN	p2=RP|pb=bear.02	6	partmod	_
+12	?	?	.	_	4	punct	_
+
