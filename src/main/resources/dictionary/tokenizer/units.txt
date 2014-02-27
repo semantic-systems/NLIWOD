@@ -1,0 +1,3 @@
+\$
+USD|EUR|JPY|GBP|CHF|CAD|KPW|RMB|CNY|AD|GMT
+m|h|d|s|ms|((k|d|c|m|n|p|f|a|z|y)(m|g))|in|ft|yd|ch|fur|mi|lea|gr|drc|oz|lb|st|qtr|cwt|(a|p)m
