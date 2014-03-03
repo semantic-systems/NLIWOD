@@ -38,7 +38,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.aksw.hawk.predicateArgumentTree;
+package org.aksw.hawk.nlp;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
