@@ -12,6 +12,10 @@ import com.hp.hpl.jena.rdf.model.Resource;
  * 
  */
 public class Entity {
+	public String label = "";
+	public String type = "";
+	public List<Resource> uris = new ArrayList<Resource>();
+	public List<Resource> posTags = new ArrayList<Resource>();
 
 	@Override
 	public int hashCode() {
@@ -38,9 +42,8 @@ public class Entity {
 		return true;
 	}
 
-	public String label = "";
-	public String type = "";
-	public List<Resource> uris = new ArrayList<Resource>();
+	public Entity() {
+	}
 
 	/**
 	 * 
@@ -55,7 +58,7 @@ public class Entity {
 
 	public String toString() {
 
-		return label + "(" + type + ")";
+		return label + "(" +uris.get(0) + ")";
 	}
 
 }
