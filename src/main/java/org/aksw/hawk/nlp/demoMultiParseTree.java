@@ -46,7 +46,6 @@ import java.util.List;
 
 import com.clearnlp.component.AbstractComponent;
 import com.clearnlp.component.dep.AbstractDEPParser;
-import com.clearnlp.dependency.DEPArc;
 import com.clearnlp.dependency.DEPNode;
 import com.clearnlp.dependency.DEPTree;
 import com.clearnlp.nlp.NLPGetter;
@@ -72,16 +71,10 @@ public class demoMultiParseTree {
 		AbstractComponent identifier = NLPGetter.getComponent(modelType, language, NLPMode.MODE_PRED);
 		AbstractComponent classifier = NLPGetter.getComponent(modelType, language, NLPMode.MODE_ROLE);
 		AbstractComponent labeler = NLPGetter.getComponent(modelType, language, NLPMode.MODE_SRL);
-
-		AbstractComponent[] preComponents = { tagger }; // components used
-														// before parsing
-		AbstractComponent[] postComponents = { identifier, classifier, labeler }; // components
-																					// used
-																					// after
-																					// parsing
-
-		String sentence = "I know you know who I know.";
-		// process(tokenizer, (AbstractDEPParser) parser, preComponents,
+		// components used before parsing
+		AbstractComponent[] preComponents = { tagger };
+		// components used after parsing
+		AbstractComponent[] postComponents = { identifier, classifier, labeler };
 		// postComponents, sentence);
 		process(tokenizer, (AbstractDEPParser) parser, preComponents, postComponents, UTInput.createBufferedFileReader(inputFile), UTOutput.createPrintBufferedFileStream(outputFile));
 	}
@@ -119,7 +112,7 @@ public class demoMultiParseTree {
 	}
 
 	private void inorderTraversal(DEPNode depNode, int i) {
-		System.out.println(printTabs(i) + depNode.lemma );
+		System.out.println(printTabs(i) + depNode.lemma);
 		++i;
 		for (DEPNode node : depNode.getDependentNodeList()) {
 			inorderTraversal(node, i);
@@ -134,7 +127,7 @@ public class demoMultiParseTree {
 		for (int j = 0; j < i; ++j) {
 			tabs += "=";
 		}
-		tabs+=">";
+		tabs += ">";
 		return tabs;
 	}
 

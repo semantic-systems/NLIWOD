@@ -1,8 +1,6 @@
 package org.aksw.autosparql.commons.qald;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +10,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,12 +27,14 @@ public class QaldLoader {
 
 		URL resource = QaldLoader.class.getClassLoader().getResource("qald-4_hybrid_train.xml");
 		String file = resource.getFile();
-		for (Question q : QaldLoader.load(file)) {
+		QaldLoader ql = new QaldLoader();
+		for (Question q : ql.load(file)) {
 			System.out.println(q.languageToQuestion);
+			System.out.println("\tAnswers: " + StringUtils.join(q.goldenAnswers, ", "));
 		}
 	}
 
-	public static List<Question> load(String file) {
+	public List<Question> load(String file) {
 
 		List<Question> questions = new ArrayList<Question>();
 
@@ -81,6 +82,13 @@ public class QaldLoader {
 
 				// check if OUT OF SCOPE marked
 				question.outOfScope = question.sparqlQuery.toUpperCase().contains("OUT OF SCOPE");
+
+				// read answers
+				NodeList answers = questionNode.getElementsByTagName("answer");
+				for (int j = 0; j < answers.getLength(); j++) {
+					String answer = ((Element) answers.item(j)).getTextContent();
+					question.goldenAnswers.add(answer.trim());
+				}
 
 				questions.add(question);
 			}
