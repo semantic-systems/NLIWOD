@@ -10,11 +10,13 @@ import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.autosparql.commons.qald.QaldLoader;
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
+import org.aksw.hawk.nlp.ParseTree;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.nlp.spotter.NERD_module;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.clearnlp.dependency.DEPTree;
 import com.hp.hpl.jena.query.QueryParseException;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
@@ -24,6 +26,7 @@ public class PipelineController {
 	private QaldLoader datasetLoader;
 	private String endpoint;
 	private NERD_module nerdModule;
+	private ParseTree parseTree;
 
 	public static void main(String args[]) {
 		PipelineController controller = new PipelineController();
@@ -33,6 +36,7 @@ public class PipelineController {
 		controller.setDatasetLoader(new QaldLoader());
 		controller.setEndpoint("http://dbpedia.org/sparql");
 		controller.setNERDmodule(new Fox());
+		controller.setParseTree(new ParseTree());
 		log.info("Run controller");
 		controller.run();
 
@@ -50,7 +54,8 @@ public class PipelineController {
 				for (Entity ent : entities.get("en")) {
 					log.info("\t" + ent.toString());
 				}
-				// TODO 3. Build trees from questions and cache them
+				// 3. Build trees from questions and cache them
+				DEPTree tree = this.parseTree.process("Give me all currencies of G8 countries.");
 
 				// TODO 4. Apply pruning rules
 
@@ -93,5 +98,10 @@ public class PipelineController {
 
 	private void setNERDmodule(NERD_module nerd) {
 		this.nerdModule = nerd;
+	}
+
+	private void setParseTree(ParseTree parseTree) {
+		this.parseTree = parseTree;
+
 	}
 }
