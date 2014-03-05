@@ -27,21 +27,25 @@ import org.slf4j.LoggerFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
-public class Spotlight implements NERD_module {
-	static Logger log = LoggerFactory.getLogger(Spotlight.class);
+public class TagMe implements NERD_module {
+	static Logger log = LoggerFactory.getLogger(TagMe.class);
 
-	private String request = "http://spotlight.dbpedia.org/rest/annotate";
-	private String confidence = "0.2";
-	private String support = "20";
+	private String request = "http://tagme.di.unipi.it/tag";
+	private String key = "???";
+	private String lang = "en";
+	private String include_all_spots = "true";
+	private String include_categories = "true";
 
-	public Spotlight() {
+	public TagMe() {
 	}
 
 	private String doTASK(String inputText) throws MalformedURLException, IOException, ProtocolException {
 
 		String urlParameters = "text=" + URLEncoder.encode(inputText, "UTF-8");
-		urlParameters += "&confidence=" + confidence;
-		urlParameters += "&support=" + support;
+		urlParameters += "&key=" + key;
+		urlParameters += "&lang=" + lang;
+		urlParameters += "&include_all_spots=" + include_all_spots;
+		urlParameters += "&include_categories=" + include_categories;
 
 		URL url = new URL(request);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -69,6 +73,7 @@ public class Spotlight implements NERD_module {
 		wr.close();
 		reader.close();
 		connection.disconnect();
+		System.out.println(sb.toString());
 		return sb.toString();
 	}
 
@@ -110,7 +115,7 @@ public class Spotlight implements NERD_module {
 	public static void main(String args[]) {
 		Question q = new Question();
 		q.languageToQuestion.put("en", "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
-		NERD_module fox = new Spotlight();
+		NERD_module fox = new TagMe();
 		q.languageToNamedEntites = fox.getEntities(q.languageToQuestion.get("en"));
 		for (String key : q.languageToNamedEntites.keySet()) {
 			System.out.println(key);
