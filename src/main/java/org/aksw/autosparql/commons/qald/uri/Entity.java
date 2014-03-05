@@ -15,7 +15,7 @@ public class Entity {
 	public String label = "";
 	public String type = "";
 	public List<Resource> uris = new ArrayList<Resource>();
-	public List<Resource> posTags = new ArrayList<Resource>();
+	public List<Resource> types = new ArrayList<Resource>();
 
 	@Override
 	public int hashCode() {

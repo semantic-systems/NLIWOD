@@ -1,4 +1,4 @@
-package org.aksw.hawk.nlp;
+package org.aksw.hawk.nlp.spotter;
 
 import java.util.List;
 import java.util.Map;

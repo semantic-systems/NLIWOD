@@ -10,8 +10,8 @@ import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.autosparql.commons.qald.QaldLoader;
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
-import org.aksw.hawk.nlp.Fox_NER_NED;
-import org.aksw.hawk.nlp.NERD_module;
+import org.aksw.hawk.nlp.spotter.Fox;
+import org.aksw.hawk.nlp.spotter.NERD_module;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +32,7 @@ public class PipelineController {
 		controller.setDataset(ClassLoader.getSystemResource("qald-4_hybrid_train.xml"));
 		controller.setDatasetLoader(new QaldLoader());
 		controller.setEndpoint("http://dbpedia.org/sparql");
-		controller.setNERDmodule(new Fox_NER_NED());
+		controller.setNERDmodule(new Fox());
 		log.info("Run controller");
 		controller.run();
 
