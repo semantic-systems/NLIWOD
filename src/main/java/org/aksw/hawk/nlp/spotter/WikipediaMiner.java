@@ -5,17 +5,17 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
@@ -26,31 +26,24 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.RDFReader;
-import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
-public class Fox implements NERD_module {
-	static Logger log = LoggerFactory.getLogger(Fox.class);
+public class WikipediaMiner implements NERD_module {
+	static Logger log = LoggerFactory.getLogger(WikipediaMiner.class);
 
-	private String request = "http://139.18.2.164:4444/api";
-	private String outputFormat = "N3";
-	private String taskType = "NER";
-	private String inputType = "text";
+	private String request = "http://wikipedia-miner.cms.waikato.ac.nz/services/wikify";
+	private String repeatMode = "all";
+	private String responseFormat = "json";
 
-	public Fox() {
+	public WikipediaMiner() {
 	}
 
 	private String doTASK(String inputText) throws MalformedURLException, IOException, ProtocolException {
 
-		String urlParameters = "type=" + inputType;
-		urlParameters += "&task=" + taskType;
-		urlParameters += "&output=" + outputFormat;
-		urlParameters += "&input=" + URLEncoder.encode(inputText, "UTF-8");
+		String urlParameters = "source=" + URLEncoder.encode(inputText, "UTF-8");
+		urlParameters += "&responseFormat=" + responseFormat;
+		urlParameters += "&repeatMode=" + repeatMode;
 
 		URL url = new URL(request);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -77,15 +70,9 @@ public class Fox implements NERD_module {
 		wr.close();
 		reader.close();
 		connection.disconnect();
-
 		return sb.toString();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.aksw.hawk.nlp.NERD_module#getEntities(java.lang.String)
-	 */
 	@Override
 	public Map<String, List<Entity>> getEntities(String question) {
 		HashMap<String, List<Entity>> tmp = new HashMap<String, List<Entity>>();
@@ -93,46 +80,56 @@ public class Fox implements NERD_module {
 			String foxJSONOutput = doTASK(question);
 
 			JSONParser parser = new JSONParser();
-			JSONArray jsonArray = (JSONArray) parser.parse(foxJSONOutput);
+			JSONObject jsonObject = (JSONObject) parser.parse(foxJSONOutput);
 
-			String output = URLDecoder.decode((String) ((JSONObject) jsonArray.get(0)).get("output"), "UTF-8");
+			JSONArray resources = (JSONArray) jsonObject.get("detectedTopics");
 
-			String baseURI = "http://dbpedia.org";
-			Model model = ModelFactory.createDefaultModel();
-			RDFReader r = model.getReader("N3");
-			r.read(model, new StringReader(output), baseURI);
-
-			ResIterator iter = model.listSubjects();
 			ArrayList<Entity> tmpList = new ArrayList<>();
-			while (iter.hasNext()) {
-				Resource next = iter.next();
-				StmtIterator statementIter = next.listProperties();
+			for (Object res : resources.toArray()) {
+				JSONObject next = (JSONObject) res;
 				Entity ent = new Entity();
-				while (statementIter.hasNext()) {
-					Statement statement = statementIter.next();
-					String predicateURI = statement.getPredicate().getURI();
-					if (predicateURI.equals("http://www.w3.org/2000/10/annotation-ns#body")) {
-						ent.label = statement.getObject().asLiteral().getString();
-					} else if (predicateURI.equals("http://ns.aksw.org/scms/means")) {
-						ent.uris.add(statement.getObject().asResource());
-					} else if (predicateURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) {
-						ent.types.add(statement.getObject().asResource());
-					}
-				}
+				ent.uris.add(new ResourceImpl((String) next.get("title")));
 				tmpList.add(ent);
 			}
 			tmp.put("en", tmpList);
+			Pattern TAG_REGEX = Pattern.compile("\\[\\[(.+?)\\]\\]");
+			String wikifiedText = (String) jsonObject.get("wikifiedDocument");
+			Matcher matcher = TAG_REGEX.matcher(wikifiedText);
+
+			while (matcher.find()) {
+				String[] uriLabel = matcher.group(1).split("\\|");
+				for (Entity entity : tmpList) {
+					String resource = entity.uris.get(0).getURI();
+					if (uriLabel.length == 1) {
+						if (resource.equals(uriLabel[0])) {
+							entity.label = uriLabel[0];
+						} else if (resource.toLowerCase().equals(uriLabel[0])) {
+							entity.label = uriLabel[0];
+						}
+					} else {
+						if (resource.equals(uriLabel[0])) {
+							entity.label = uriLabel[1];
+						}
+					}
+				}
+			}
+
+			String baseURI = "http://dbpedia.org/resource/";
+			for (Entity entity : tmpList) {
+				entity.uris.add(new ResourceImpl(baseURI + entity.uris.get(0)));
+				entity.uris.remove(0);
+			}
 
 		} catch (IOException | ParseException e) {
-			log.error("Could not call FOX for NER/NED", e);
+			log.error(e.getLocalizedMessage(), e);
 		}
 		return tmp;
 	}
 
 	public static void main(String args[]) {
 		Question q = new Question();
-		q.languageToQuestion.put("en", "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
-		NERD_module fox = new Fox();
+		q.languageToQuestion.put("en", "Give me all currency of G8 countries.");
+		NERD_module fox = new WikipediaMiner();
 		q.languageToNamedEntites = fox.getEntities(q.languageToQuestion.get("en"));
 		for (String key : q.languageToNamedEntites.keySet()) {
 			System.out.println(key);
