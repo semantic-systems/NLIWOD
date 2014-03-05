@@ -14,6 +14,7 @@ import org.aksw.hawk.nlp.ParseTree;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.nlp.spotter.NERD_module;
 import org.aksw.hawk.nlp.spotter.Spotlight;
+import org.aksw.hawk.nlp.spotter.WikipediaMiner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +36,7 @@ public class PipelineController {
 		controller.setDataset(ClassLoader.getSystemResource("qald-4_hybrid_train.xml"));
 		controller.setDatasetLoader(new QaldLoader());
 		controller.setEndpoint("http://dbpedia.org/sparql");
-		controller.setNERDmodule(new Spotlight());
+		controller.setNERDmodule(new WikipediaMiner());
 		controller.setParseTree(new ParseTree());
 		log.info("Run controller");
 		controller.run();

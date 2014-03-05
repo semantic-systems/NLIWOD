@@ -11,6 +11,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +71,7 @@ public class WikipediaMiner implements NERD_module {
 		wr.close();
 		reader.close();
 		connection.disconnect();
+		log.debug(sb.toString());
 		return sb.toString();
 	}
 
@@ -88,7 +90,7 @@ public class WikipediaMiner implements NERD_module {
 			for (Object res : resources.toArray()) {
 				JSONObject next = (JSONObject) res;
 				Entity ent = new Entity();
-				ent.uris.add(new ResourceImpl((String) next.get("title")));
+				ent.uris.add(new ResourceImpl(((String) next.get("title"))));
 				tmpList.add(ent);
 			}
 			tmp.put("en", tmpList);
@@ -98,12 +100,12 @@ public class WikipediaMiner implements NERD_module {
 
 			while (matcher.find()) {
 				String[] uriLabel = matcher.group(1).split("\\|");
+				Collections.sort(tmpList);
+				Collections.reverse(tmpList);
 				for (Entity entity : tmpList) {
 					String resource = entity.uris.get(0).getURI();
 					if (uriLabel.length == 1) {
-						if (resource.equals(uriLabel[0])) {
-							entity.label = uriLabel[0];
-						} else if (resource.toLowerCase().equals(uriLabel[0])) {
+						  if (resource.toLowerCase().equals(uriLabel[0].toLowerCase())) {
 							entity.label = uriLabel[0];
 						}
 					} else {
@@ -113,12 +115,23 @@ public class WikipediaMiner implements NERD_module {
 					}
 				}
 			}
+			//  eliminate entities that still have no label, because they are the shorter ones of overlaps
 
+			for (int i=tmpList.size()-1; i>=0; --i){
+				if(tmpList.get(i).label.equals("")){
+					tmpList.remove(i);
+				}
+			}
+			
 			String baseURI = "http://dbpedia.org/resource/";
 			for (Entity entity : tmpList) {
-				entity.uris.add(new ResourceImpl(baseURI + entity.uris.get(0)));
+				//hack to make underscores where spaces are
+				Resource resource = entity.uris.get(0);
+				entity.uris.add(new ResourceImpl(baseURI + resource.getURI().replace(" ", "_")));
 				entity.uris.remove(0);
 			}
+			
+			
 
 		} catch (IOException | ParseException e) {
 			log.error(e.getLocalizedMessage(), e);
@@ -128,7 +141,10 @@ public class WikipediaMiner implements NERD_module {
 
 	public static void main(String args[]) {
 		Question q = new Question();
-		q.languageToQuestion.put("en", "Give me all currency of G8 countries.");
+		//q.languageToQuestion.put("en", "Which street basketball player was diagnosed with Sarcoidosis?");
+		//q.languageToQuestion.put("en", "Which recipients of the Victoria Cross died in the Battle of Arnhe");
+		 q.languageToQuestion.put("en", "Under which king did the British prime minister that signed the Munich agreement serve?");
+//		 q.languageToQuestion.put("en", "Which anti-apartheid activist graduated from the University of South Africa?");
 		NERD_module fox = new WikipediaMiner();
 		q.languageToNamedEntites = fox.getEntities(q.languageToQuestion.get("en"));
 		for (String key : q.languageToNamedEntites.keySet()) {
