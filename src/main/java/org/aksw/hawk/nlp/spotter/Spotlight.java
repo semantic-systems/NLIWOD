@@ -30,7 +30,7 @@ import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 public class Spotlight implements NERD_module {
 	static Logger log = LoggerFactory.getLogger(Spotlight.class);
 
-	private String request = "http://spotlight.dbpedia.org/rest/annotate";
+	private String request = "http://spotlight.sztaki.hu:2222/rest/annotate";
 	private String confidence = "0.2";
 	private String support = "20";
 
@@ -43,6 +43,7 @@ public class Spotlight implements NERD_module {
 		urlParameters += "&confidence=" + confidence;
 		urlParameters += "&support=" + support;
 
+		log.debug(urlParameters);
 		URL url = new URL(request);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("POST");
@@ -87,20 +88,20 @@ public class Spotlight implements NERD_module {
 			JSONObject jsonObject = (JSONObject) parser.parse(foxJSONOutput);
 
 			JSONArray resources = (JSONArray) jsonObject.get("Resources");
-
-			ArrayList<Entity> tmpList = new ArrayList<>();
-			for (Object res : resources.toArray()) {
-				JSONObject next = (JSONObject) res;
-				Entity ent = new Entity();
-				ent.label = (String) next.get("@surfaceForm");
-				ent.uris.add(new ResourceImpl((String) next.get("@URI")));
-				for (String type : ((String) next.get("@types")).split(",")) {
-					ent.types.add(new ResourceImpl(type));
+			if (resources != null) {
+				ArrayList<Entity> tmpList = new ArrayList<>();
+				for (Object res : resources.toArray()) {
+					JSONObject next = (JSONObject) res;
+					Entity ent = new Entity();
+					ent.label = (String) next.get("@surfaceForm");
+					ent.uris.add(new ResourceImpl((String) next.get("@URI")));
+					for (String type : ((String) next.get("@types")).split(",")) {
+						ent.types.add(new ResourceImpl(type));
+					}
+					tmpList.add(ent);
 				}
-				tmpList.add(ent);
+				tmp.put("en", tmpList);
 			}
-			tmp.put("en", tmpList);
-
 		} catch (IOException | ParseException e) {
 			log.error("Could not call Spotlight for NER/NED", e);
 		}

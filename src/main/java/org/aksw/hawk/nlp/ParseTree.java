@@ -1,7 +1,10 @@
 package org.aksw.hawk.nlp;
 
 import java.io.IOException;
+import java.util.List;
 
+import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,11 +45,17 @@ public class ParseTree {
 		}
 	}
 
-	public DEPTree process(String input) {
-		return process(tokenizer, components, input);
+	public DEPTree process(Question q) {
+		return process(tokenizer, components, q);
 	}
 
-	private DEPTree process(AbstractTokenizer tokenizer, AbstractComponent[] components, String sentence) {
+	private DEPTree process(AbstractTokenizer tokenizer, AbstractComponent[] components, Question q) {
+		String sentence = q.languageToQuestion.get("en");
+		if (!q.languageToNamedEntites.isEmpty()) {
+			sentence = replaceLabelsByIdentifiedURIs(sentence, q.languageToNamedEntites.get("en"));
+			log.debug(sentence);
+		}
+
 		DEPTree tree = NLPGetter.toDEPTree(tokenizer.getTokens(sentence));
 
 		for (AbstractComponent component : components)
@@ -56,11 +65,11 @@ public class ParseTree {
 		return tree;
 	}
 
-	public static void main(String[] args) {
-
-		ParseTree parseTree = new ParseTree();
-		DEPTree tree = parseTree.process("Give me all currencies of G8 countries.");
-		 
-		tree = parseTree.process("Give me all http://dbpedia.org/resource/Currency of http://dbpedia.org/resource/G8.");
+	private String replaceLabelsByIdentifiedURIs(String sentence, List<Entity> list) {
+		for (Entity entity : list) {
+			sentence = sentence.replace(entity.label, entity.uris.get(0).getURI());
+		}
+		return sentence;
 	}
+
 }

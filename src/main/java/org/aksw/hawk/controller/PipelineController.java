@@ -13,10 +13,10 @@ import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.hawk.nlp.ParseTree;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.nlp.spotter.NERD_module;
+import org.aksw.hawk.nlp.spotter.Spotlight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.clearnlp.dependency.DEPTree;
 import com.hp.hpl.jena.query.QueryParseException;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
@@ -35,7 +35,7 @@ public class PipelineController {
 		controller.setDataset(ClassLoader.getSystemResource("qald-4_hybrid_train.xml"));
 		controller.setDatasetLoader(new QaldLoader());
 		controller.setEndpoint("http://dbpedia.org/sparql");
-		controller.setNERDmodule(new Fox());
+		controller.setNERDmodule(new Spotlight());
 		controller.setParseTree(new ParseTree());
 		log.info("Run controller");
 		controller.run();
@@ -47,15 +47,17 @@ public class PipelineController {
 		List<Question> questions = datasetLoader.load(dataset);
 
 		for (Question q : questions) {
-			log.info("->" + q.languageToQuestion);
+			log.debug("->" + q.languageToQuestion);
 			try {
 				// 2. Disambiguate parts of the query
-				Map<String, List<Entity>> entities = nerdModule.getEntities(q.languageToQuestion.get("en"));
-				for (Entity ent : entities.get("en")) {
-					log.info("\t" + ent.toString());
+				q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
+				if (!q.languageToNamedEntites.isEmpty()) {
+					for (Entity ent : q.languageToNamedEntites.get("en")) {
+						log.debug("\t" + ent.toString());
+					}
 				}
 				// 3. Build trees from questions and cache them
-				DEPTree tree = this.parseTree.process("Give me all currencies of G8 countries.");
+				q.tree = this.parseTree.process(q);
 
 				// TODO 4. Apply pruning rules
 
@@ -75,9 +77,9 @@ public class PipelineController {
 				double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 				double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
 				double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-				log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+				log.debug("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
 			} catch (QueryParseException e) {
-				log.error("QueryParseException: " + q.sparqlQuery, e);
+				log.error("QueryParseException: " + q.pseudoSparqlQuery, e);
 			}
 		}
 

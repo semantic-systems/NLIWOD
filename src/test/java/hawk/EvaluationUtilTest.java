@@ -23,7 +23,7 @@ public class EvaluationUtilTest {
 		systemAnswers.add(new ResourceImpl("true"));
 
 		Question q = new Question();
-		q.sparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nASK\nWHERE {	?m1 text:\"exhibits\" res:Rosetta_Stone .		res:Gayer-Anderson_Cat dbo:museum ?x .        ?m2 rdfs:label ?m2 .        FILTER (?m1=?m2)}";
+		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nASK\nWHERE {	?m1 text:\"exhibits\" res:Rosetta_Stone .		res:Gayer-Anderson_Cat dbo:museum ?x .        ?m2 rdfs:label ?m2 .        FILTER (?m1=?m2)}";
 		q.goldenAnswers.add("true");
 		q.aggregation = true;
 		double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
@@ -39,7 +39,7 @@ public class EvaluationUtilTest {
 		systemAnswers.add(new ResourceImpl("false"));
 
 		Question q = new Question();
-		q.sparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nASK\nWHERE {	?m1 text:\"exhibits\" res:Rosetta_Stone .		res:Gayer-Anderson_Cat dbo:museum ?x .        ?m2 rdfs:label ?m2 .        FILTER (?m1=?m2)}";
+		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nASK\nWHERE {	?m1 text:\"exhibits\" res:Rosetta_Stone .		res:Gayer-Anderson_Cat dbo:museum ?x .        ?m2 rdfs:label ?m2 .        FILTER (?m1=?m2)}";
 		q.goldenAnswers.add("true");
 		q.aggregation = true;
 		double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
@@ -55,7 +55,7 @@ public class EvaluationUtilTest {
 		systemAnswers.add(new ResourceImpl("25"));
 
 		Question q = new Question();
-		q.sparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nSELECT\n?n WHERE {         res:Steve_Jobs dbo:relative ?uri .         ?uri text:\"did not meet until she was\" ?n .}";
+		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nSELECT\n?n WHERE {         res:Steve_Jobs dbo:relative ?uri .         ?uri text:\"did not meet until she was\" ?n .}";
 		q.goldenAnswers.add("25");
 		q.aggregation = true;
 		double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
@@ -71,7 +71,7 @@ public class EvaluationUtilTest {
 		systemAnswers.add(new ResourceImpl("3"));
 
 		Question q = new Question();
-		q.sparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nSELECT\n?n WHERE {         res:Steve_Jobs dbo:relative ?uri .         ?uri text:\"did not meet until she was\" ?n .}";
+		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nSELECT\n?n WHERE {         res:Steve_Jobs dbo:relative ?uri .         ?uri text:\"did not meet until she was\" ?n .}";
 		q.goldenAnswers.add("25");
 		q.aggregation = true;
 		double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
@@ -88,7 +88,7 @@ public class EvaluationUtilTest {
 		systemAnswers.add(new ResourceImpl("http://dbpedia.org/resource/Method_Man"));
 		
 		Question q = new Question();
-		q.sparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?uri  WHERE {         res:Wu-Tang_Clan dbo:bandMember ?uri .         ?uri text:\"stage name\" ?x .         ?x text:\"from\" text:\"movie\" . }";
+		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?uri  WHERE {         res:Wu-Tang_Clan dbo:bandMember ?uri .         ?uri text:\"stage name\" ?x .         ?x text:\"from\" text:\"movie\" . }";
 		q.goldenAnswers.add("http://dbpedia.org/resource/Ghostface_Killah");
 		q.goldenAnswers.add("http://dbpedia.org/resource/Method_Man");
 		q.aggregation = true;
@@ -106,7 +106,7 @@ public class EvaluationUtilTest {
 		systemAnswers.add(new ResourceImpl("http://dbpedia.org/resource/Barack Obama"));
 		
 		Question q = new Question();
-		q.sparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?uri  WHERE {         res:Wu-Tang_Clan dbo:bandMember ?uri .         ?uri text:\"stage name\" ?x .         ?x text:\"from\" text:\"movie\" . }";
+		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?uri  WHERE {         res:Wu-Tang_Clan dbo:bandMember ?uri .         ?uri text:\"stage name\" ?x .         ?x text:\"from\" text:\"movie\" . }";
 		q.goldenAnswers.add("http://dbpedia.org/resource/Ghostface_Killah");
 		q.goldenAnswers.add("http://dbpedia.org/resource/Method_Man");
 		q.aggregation = true;

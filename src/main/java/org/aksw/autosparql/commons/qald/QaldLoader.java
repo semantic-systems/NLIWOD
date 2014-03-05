@@ -71,17 +71,21 @@ public class QaldLoader {
 					question.languageToKeywords.put(lang, Arrays.asList(((Element) keywords.item(j)).getTextContent().trim().split(", ")));
 				}
 
-				// Read SPARQL query
-				Element element = (Element) questionNode.getElementsByTagName("query").item(0);
-				if (element == null) {
-					element = (Element) questionNode.getElementsByTagName("pseudoquery").item(0);
-				}
+				// Read pseudoSPARQL query
+				Element element = (Element) questionNode.getElementsByTagName("pseudoquery").item(0);
 				NodeList childNodes = element.getChildNodes();
 				Node item = childNodes.item(0);
-				question.sparqlQuery = item.getNodeValue().trim();
+				question.pseudoSparqlQuery = item.getNodeValue().trim();
 
+				// Read SPARQL query
+				element = (Element) questionNode.getElementsByTagName("query").item(0);
+				if (element != null) {
+					childNodes = element.getChildNodes();
+					item = childNodes.item(0);
+					question.sparqlQuery = item.getNodeValue().trim();
+				}
 				// check if OUT OF SCOPE marked
-				question.outOfScope = question.sparqlQuery.toUpperCase().contains("OUT OF SCOPE");
+				question.outOfScope = question.pseudoSparqlQuery.toUpperCase().contains("OUT OF SCOPE");
 
 				// read answers
 				NodeList answers = questionNode.getElementsByTagName("answer");

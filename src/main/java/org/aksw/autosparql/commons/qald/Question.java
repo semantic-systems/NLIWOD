@@ -13,6 +13,8 @@ import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.autosparql.commons.qald.uri.GoldEntity;
 import org.apache.commons.lang3.StringUtils;
 
+import com.clearnlp.dependency.DEPTree;
+
 public class Question implements Serializable {
 
 	/**
@@ -24,16 +26,17 @@ public class Question implements Serializable {
 	public String answerType;
 	public Boolean aggregation;
 	public Boolean onlydbo;
-	public String sparqlQuery;
+	public String pseudoSparqlQuery;
 	public Boolean outOfScope;
 	public Map<String, String> languageToQuestion = new LinkedHashMap<String, String>();
 	public Map<String, List<String>> languageToKeywords = new LinkedHashMap<String, List<String>>();
-
 	public Map<String, List<Entity>> languageToNamedEntites = new LinkedHashMap<String, List<Entity>>();
 	public Map<String, List<Entity>> languageToNounPhrases = new LinkedHashMap<String, List<Entity>>();
 	public Map<String, List<GoldEntity>> goldEntites = new HashMap<String, List<GoldEntity>>();
-
 	public Set<String> goldenAnswers = new HashSet<String>();
+	public DEPTree tree;
+
+	public String sparqlQuery;
 
 	public Question() {
 
@@ -54,7 +57,7 @@ public class Question implements Serializable {
 			if (languageToNounPhrases.containsKey(entry.getKey()))
 				output += "\t\tNouns: " + StringUtils.join(languageToNounPhrases.get(entry.getKey()), ", ") + "\n";
 		}
-		output += "SPARQL: " + sparqlQuery;
+		output += "SPARQL: " + pseudoSparqlQuery;
 		output += "\tAnswers: " + StringUtils.join(goldenAnswers, ", ") + "\n";
 
 		return output;

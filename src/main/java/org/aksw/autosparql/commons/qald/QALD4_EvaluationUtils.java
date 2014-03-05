@@ -17,12 +17,12 @@ public class QALD4_EvaluationUtils {
 	public static double precision(Set<RDFNode> systemAnswer, Question question) {
 		double precision = 0;
 		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers);
-		if (isSelectType(question.sparqlQuery)) {
+		if (isSelectType(question.pseudoSparqlQuery)) {
 			SetView<RDFNode> intersection = Sets.intersection(goldenRDFNodes, systemAnswer);
 			if (systemAnswer.size() != 0) {
 				precision = (double) intersection.size() / (double) systemAnswer.size();
 			}
-		} else if (isAskType(question.sparqlQuery)) {
+		} else if (isAskType(question.pseudoSparqlQuery)) {
 			if (systemAnswer.size() == 1) {
 				RDFNode ans = systemAnswer.iterator().next();
 				RDFNode goldstandardAns = goldenRDFNodes.iterator().next();
@@ -39,7 +39,7 @@ public class QALD4_EvaluationUtils {
 	public static double recall(Set<RDFNode> systemAnswer, Question question) {
 		double recall = 0;
 		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers);
-		if (isSelectType(question.sparqlQuery)) {
+		if (isSelectType(question.pseudoSparqlQuery)) {
 			// if queries contain aggregation return always 1
 			if (question.aggregation) {
 				recall = 1;
@@ -48,7 +48,7 @@ public class QALD4_EvaluationUtils {
 			if (goldenRDFNodes.size() != 0) {
 				recall = (double) intersection.size() / (double) goldenRDFNodes.size();
 			}
-		} else if (isAskType(question.sparqlQuery)) {
+		} else if (isAskType(question.pseudoSparqlQuery)) {
 			// if queries are ASK queries return recall=1
 			recall = 1;
 		} else {
