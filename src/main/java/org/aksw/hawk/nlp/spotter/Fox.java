@@ -116,7 +116,7 @@ public class Fox implements NERD_module {
 					} else if (predicateURI.equals("http://ns.aksw.org/scms/means")) {
 						ent.uris.add(statement.getObject().asResource());
 					} else if (predicateURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) {
-						ent.types.add(statement.getObject().asResource());
+						ent.posTypesAndCategories.add(statement.getObject().asResource());
 					}
 				}
 				tmpList.add(ent);
@@ -138,7 +138,7 @@ public class Fox implements NERD_module {
 			System.out.println(key);
 			for (Entity entity : q.languageToNamedEntites.get(key)) {
 				System.out.println("\t" + entity.label + " ->" + entity.type);
-				for (Resource r : entity.types) {
+				for (Resource r : entity.posTypesAndCategories) {
 					System.out.println("\t\tpos: " + r);
 				}
 				for (Resource r : entity.uris) {

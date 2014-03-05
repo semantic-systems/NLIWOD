@@ -8,7 +8,7 @@ public class Entity implements Comparable<Entity> {
 	public String label = "";
 	public String type = "";
 	public List<Resource> uris = new ArrayList<Resource>();
-	public List<Resource> types = new ArrayList<Resource>();
+	public List<Resource> posTypesAndCategories = new ArrayList<Resource>();
 
 	public String toString() {
 		return label + "(" + uris.get(0) + ")";

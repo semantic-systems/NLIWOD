@@ -96,7 +96,7 @@ public class Spotlight implements NERD_module {
 					ent.label = (String) next.get("@surfaceForm");
 					ent.uris.add(new ResourceImpl((String) next.get("@URI")));
 					for (String type : ((String) next.get("@types")).split(",")) {
-						ent.types.add(new ResourceImpl(type));
+						ent.posTypesAndCategories.add(new ResourceImpl(type));
 					}
 					tmpList.add(ent);
 				}
@@ -117,7 +117,7 @@ public class Spotlight implements NERD_module {
 			System.out.println(key);
 			for (Entity entity : q.languageToNamedEntites.get(key)) {
 				System.out.println("\t" + entity.label + " ->" + entity.type);
-				for (Resource r : entity.types) {
+				for (Resource r : entity.posTypesAndCategories) {
 					System.out.println("\t\tpos: " + r);
 				}
 				for (Resource r : entity.uris) {

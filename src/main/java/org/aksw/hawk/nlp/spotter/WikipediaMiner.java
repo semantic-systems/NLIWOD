@@ -151,7 +151,7 @@ public class WikipediaMiner implements NERD_module {
 			System.out.println(key);
 			for (Entity entity : q.languageToNamedEntites.get(key)) {
 				System.out.println("\t" + entity.label + " ->" + entity.type);
-				for (Resource r : entity.types) {
+				for (Resource r : entity.posTypesAndCategories) {
 					System.out.println("\t\tpos: " + r);
 				}
 				for (Resource r : entity.uris) {
