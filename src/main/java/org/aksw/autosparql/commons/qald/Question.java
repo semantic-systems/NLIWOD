@@ -29,6 +29,7 @@ public class Question implements Serializable {
 	public String answerType;
 	public String sparqlQuery;
 	public String pseudoSparqlQuery;
+	public String pseudoSystemQuery;
 	public DEPTree tree;
 	public Map<String, String> languageToQuestion = new LinkedHashMap<String, String>();
 	public Map<String, List<String>> languageToKeywords = new LinkedHashMap<String, List<String>>();
@@ -37,6 +38,7 @@ public class Question implements Serializable {
 	public Map<String, List<GoldEntity>> goldEntites = new HashMap<String, List<GoldEntity>>();
 	public Map<String, Set<String>> goldenAnswers = new HashMap<String, Set<String>>();
 	public List<Module> modules;
+
 
 	public Question() {
 

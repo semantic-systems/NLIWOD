@@ -23,11 +23,11 @@ public class ModuleBuilder {
 		 */
 		for (DEPArc arc : rootPredicate.getDependents()) {
 			DEPNode node = arc.getNode();
-			log.debug(rootPredicate.lemma + " -> " + node.lemma);
 			/*
 			 * for each arc build a type of, predicate and possibly predicate
 			 * subject statement
 			 */
+			log.debug(rootPredicate.lemma + " -> " + node.lemma);
 			Module module = new Module(rootPredicate, node,q);
 			list.add(module);
 			build(node, list,q);
