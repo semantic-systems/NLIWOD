@@ -16,7 +16,7 @@ public class QALD4_EvaluationUtils {
 
 	public static double precision(Set<RDFNode> systemAnswer, Question question) {
 		double precision = 0;
-		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers);
+		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers.get("en"));
 		if (isSelectType(question.pseudoSparqlQuery)) {
 			SetView<RDFNode> intersection = Sets.intersection(goldenRDFNodes, systemAnswer);
 			if (systemAnswer.size() != 0) {
@@ -38,7 +38,7 @@ public class QALD4_EvaluationUtils {
 
 	public static double recall(Set<RDFNode> systemAnswer, Question question) {
 		double recall = 0;
-		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers);
+		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers.get("en"));
 		if (isSelectType(question.pseudoSparqlQuery)) {
 			// if queries contain aggregation return always 1
 			if (question.aggregation) {

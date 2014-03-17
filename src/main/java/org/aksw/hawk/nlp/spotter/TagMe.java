@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
@@ -31,13 +32,21 @@ public class TagMe implements NERD_module {
 	static Logger log = LoggerFactory.getLogger(TagMe.class);
 
 	private String request = "http://tagme.di.unipi.it/tag";
-// TODO: extract key to property file 
 	private String key = "";
 	private String lang = "en";
 	private String include_all_spots = "true";
 	private String include_categories = "true";
 
 	public TagMe() {
+
+		try {
+			Properties prop = new Properties();
+			InputStream input=getClass().getClassLoader().getResourceAsStream("hawk.properties");
+			prop.load(input);
+			this.key = prop.getProperty("tagmekey");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private String doTASK(String inputText) throws MalformedURLException, IOException, ProtocolException {
@@ -87,8 +96,9 @@ public class TagMe implements NERD_module {
 	public Map<String, List<Entity>> getEntities(String question) {
 		HashMap<String, List<Entity>> tmp = new HashMap<String, List<Entity>>();
 		try {
-//			String foxJSONOutput = doTASK(question);
-			String foxJSONOutput = "{\"timestamp\":\"2014-03-05T14:48:47\",\"time\":1,\"api\":\"tag\",\"annotations\":[{\"id\":537481,\"title\":\"Building code\",\"dbpedia_categories\":[\"Architecture\",\"Building engineering\",\"Construction law\",\"Real estate\",\"Safety codes\",\"Legal codes\"],\"start\":6,\"rho\":\"0.21168\",\"end\":15,\"spot\":\"buildings\"},{\"id\":1881,\"title\":\"Art Deco\",\"dbpedia_categories\":[\"Art Deco\",\"Art Deco architecture\",\"20th-century architectural styles\",\"Decorative arts\",\"Modern art\",\"Art movements\",\"Moderne architecture\"],\"start\":19,\"rho\":\"0.61866\",\"end\":27,\"spot\":\"art deco\"},{\"id\":8560,\"title\":\"Design\",\"dbpedia_categories\":[\"Design\",\"Architectural design\",\"Arts\"],\"start\":28,\"rho\":\"0.22216\",\"end\":33,\"spot\":\"style\"},{\"id\":3563046,\"title\":\"Shreve, Lamb and Harmon\",\"dbpedia_categories\":[\"Architecture firms based in New York\",\"Architecture firms of the United States\"],\"start\":38,\"rho\":\"0.62794\",\"end\":61,\"spot\":\"Shreve, Lamb and Harmon\"},{\"id\":8560,\"title\":\"Design\",\"dbpedia_categories\":[\"Design\",\"Architectural design\",\"Arts\"],\"start\":62,\"rho\":\"0.22595\",\"end\":68,\"spot\":\"design\"}],\"lang\":\"en\"}\r\n";
+			String foxJSONOutput = doTASK(question);
+			// String foxJSONOutput =
+			// "{\"timestamp\":\"2014-03-05T14:48:47\",\"time\":1,\"api\":\"tag\",\"annotations\":[{\"id\":537481,\"title\":\"Building code\",\"dbpedia_categories\":[\"Architecture\",\"Building engineering\",\"Construction law\",\"Real estate\",\"Safety codes\",\"Legal codes\"],\"start\":6,\"rho\":\"0.21168\",\"end\":15,\"spot\":\"buildings\"},{\"id\":1881,\"title\":\"Art Deco\",\"dbpedia_categories\":[\"Art Deco\",\"Art Deco architecture\",\"20th-century architectural styles\",\"Decorative arts\",\"Modern art\",\"Art movements\",\"Moderne architecture\"],\"start\":19,\"rho\":\"0.61866\",\"end\":27,\"spot\":\"art deco\"},{\"id\":8560,\"title\":\"Design\",\"dbpedia_categories\":[\"Design\",\"Architectural design\",\"Arts\"],\"start\":28,\"rho\":\"0.22216\",\"end\":33,\"spot\":\"style\"},{\"id\":3563046,\"title\":\"Shreve, Lamb and Harmon\",\"dbpedia_categories\":[\"Architecture firms based in New York\",\"Architecture firms of the United States\"],\"start\":38,\"rho\":\"0.62794\",\"end\":61,\"spot\":\"Shreve, Lamb and Harmon\"},{\"id\":8560,\"title\":\"Design\",\"dbpedia_categories\":[\"Design\",\"Architectural design\",\"Arts\"],\"start\":62,\"rho\":\"0.22595\",\"end\":68,\"spot\":\"design\"}],\"lang\":\"en\"}\r\n";
 			JSONParser parser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) parser.parse(foxJSONOutput);
 
@@ -116,8 +126,8 @@ public class TagMe implements NERD_module {
 
 			tmp.put("en", tmpList);
 
-		} catch (  ParseException e) {
-			log.error("Could not call Spotlight for NER/NED", e);
+		} catch (ParseException | IOException e) {
+			log.error("Could not call TagMe for NER/NED", e);
 		}
 		return tmp;
 	}

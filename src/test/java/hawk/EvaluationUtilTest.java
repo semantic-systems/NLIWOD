@@ -24,7 +24,9 @@ public class EvaluationUtilTest {
 
 		Question q = new Question();
 		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nASK\nWHERE {	?m1 text:\"exhibits\" res:Rosetta_Stone .		res:Gayer-Anderson_Cat dbo:museum ?x .        ?m2 rdfs:label ?m2 .        FILTER (?m1=?m2)}";
-		q.goldenAnswers.add("true");
+		HashSet<String> set = new HashSet<>();
+		set.add("true");
+		q.goldenAnswers.put("en", set);
 		q.aggregation = true;
 		double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 		double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
@@ -40,7 +42,9 @@ public class EvaluationUtilTest {
 
 		Question q = new Question();
 		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nASK\nWHERE {	?m1 text:\"exhibits\" res:Rosetta_Stone .		res:Gayer-Anderson_Cat dbo:museum ?x .        ?m2 rdfs:label ?m2 .        FILTER (?m1=?m2)}";
-		q.goldenAnswers.add("true");
+		HashSet<String> set = new HashSet<>();
+		set.add("true");
+		q.goldenAnswers.put("en", set);
 		q.aggregation = true;
 		double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 		double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
@@ -56,7 +60,9 @@ public class EvaluationUtilTest {
 
 		Question q = new Question();
 		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nSELECT\n?n WHERE {         res:Steve_Jobs dbo:relative ?uri .         ?uri text:\"did not meet until she was\" ?n .}";
-		q.goldenAnswers.add("25");
+		HashSet<String> set = new HashSet<>();
+		set.add("25");
+		q.goldenAnswers.put("en", set);
 		q.aggregation = true;
 		double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 		double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
@@ -72,7 +78,9 @@ public class EvaluationUtilTest {
 
 		Question q = new Question();
 		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nSELECT\n?n WHERE {         res:Steve_Jobs dbo:relative ?uri .         ?uri text:\"did not meet until she was\" ?n .}";
-		q.goldenAnswers.add("25");
+		HashSet<String> set = new HashSet<>();
+		set.add("25");
+		q.goldenAnswers.put("en", set);
 		q.aggregation = true;
 		double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 		double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
@@ -86,11 +94,13 @@ public class EvaluationUtilTest {
 		Set<RDFNode> systemAnswers = new HashSet<RDFNode>();
 		systemAnswers.add(new ResourceImpl("http://dbpedia.org/resource/Ghostface_Killah"));
 		systemAnswers.add(new ResourceImpl("http://dbpedia.org/resource/Method_Man"));
-		
+
 		Question q = new Question();
 		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?uri  WHERE {         res:Wu-Tang_Clan dbo:bandMember ?uri .         ?uri text:\"stage name\" ?x .         ?x text:\"from\" text:\"movie\" . }";
-		q.goldenAnswers.add("http://dbpedia.org/resource/Ghostface_Killah");
-		q.goldenAnswers.add("http://dbpedia.org/resource/Method_Man");
+		HashSet<String> set = new HashSet<>();
+		set.add("http://dbpedia.org/resource/Ghostface_Killah");
+		set.add("http://dbpedia.org/resource/Method_Man");
+		q.goldenAnswers.put("en", set);
 		q.aggregation = true;
 		double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 		double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
@@ -104,11 +114,13 @@ public class EvaluationUtilTest {
 		Set<RDFNode> systemAnswers = new HashSet<RDFNode>();
 		systemAnswers.add(new ResourceImpl("http://dbpedia.org/resource/Ghostface_Killah"));
 		systemAnswers.add(new ResourceImpl("http://dbpedia.org/resource/Barack Obama"));
-		
+
 		Question q = new Question();
 		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?uri  WHERE {         res:Wu-Tang_Clan dbo:bandMember ?uri .         ?uri text:\"stage name\" ?x .         ?x text:\"from\" text:\"movie\" . }";
-		q.goldenAnswers.add("http://dbpedia.org/resource/Ghostface_Killah");
-		q.goldenAnswers.add("http://dbpedia.org/resource/Method_Man");
+		HashSet<String> set = new HashSet<>();
+		set.add("http://dbpedia.org/resource/Ghostface_Killah");
+		set.add("http://dbpedia.org/resource/Method_Man");
+		q.goldenAnswers.put("en", set);
 		q.aggregation = true;
 		double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 		double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);

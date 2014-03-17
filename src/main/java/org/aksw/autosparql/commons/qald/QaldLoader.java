@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -89,11 +90,12 @@ public class QaldLoader {
 
 				// read answers
 				NodeList answers = questionNode.getElementsByTagName("answer");
+				HashSet<String> set = new HashSet<>();
 				for (int j = 0; j < answers.getLength(); j++) {
 					String answer = ((Element) answers.item(j)).getTextContent();
-					question.goldenAnswers.add(answer.trim());
+					set.add(answer.trim());
 				}
-
+				question.goldenAnswers.put("en", set);
 				questions.add(question);
 			}
 

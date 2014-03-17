@@ -39,7 +39,7 @@ public class EvaluationUtils {
 				precision = 1;
 			}
 		} else {
-			// TODO
+			// TODO implement other question type
 		}
 		return precision;
 	}
@@ -65,7 +65,7 @@ public class EvaluationUtils {
 			// if queries are AKS queries return recall=1
 			recall = 1;
 		} else {
-			// TODO
+			// TODO implement other question type
 		}
 		return recall;
 	}

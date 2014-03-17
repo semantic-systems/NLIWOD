@@ -3,7 +3,6 @@ package org.aksw.autosparql.commons.qald;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +10,7 @@ import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.autosparql.commons.qald.uri.GoldEntity;
+import org.aksw.hawk.module.Module;
 import org.apache.commons.lang3.StringUtils;
 
 import com.clearnlp.dependency.DEPTree;
@@ -23,20 +23,20 @@ public class Question implements Serializable {
 	private static final long serialVersionUID = 9130793012431486456L;
 
 	public Integer id;
-	public String answerType;
-	public Boolean aggregation;
 	public Boolean onlydbo;
-	public String pseudoSparqlQuery;
 	public Boolean outOfScope;
+	public Boolean aggregation;
+	public String answerType;
+	public String sparqlQuery;
+	public String pseudoSparqlQuery;
+	public DEPTree tree;
 	public Map<String, String> languageToQuestion = new LinkedHashMap<String, String>();
 	public Map<String, List<String>> languageToKeywords = new LinkedHashMap<String, List<String>>();
 	public Map<String, List<Entity>> languageToNamedEntites = new LinkedHashMap<String, List<Entity>>();
 	public Map<String, List<Entity>> languageToNounPhrases = new LinkedHashMap<String, List<Entity>>();
 	public Map<String, List<GoldEntity>> goldEntites = new HashMap<String, List<GoldEntity>>();
-	public Set<String> goldenAnswers = new HashSet<String>();
-	public DEPTree tree;
-
-	public String sparqlQuery;
+	public Map<String, Set<String>> goldenAnswers = new HashMap<String, Set<String>>();
+	public List<Module> modules;
 
 	public Question() {
 
