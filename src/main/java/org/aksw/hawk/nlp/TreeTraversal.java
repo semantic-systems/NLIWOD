@@ -1,5 +1,7 @@
 package org.aksw.hawk.nlp;
 
+import org.aksw.hawk.nlp.posTree.MutableTreeNode;
+
 import com.clearnlp.dependency.DEPNode;
 
 public class TreeTraversal {
@@ -16,6 +18,18 @@ public class TreeTraversal {
 		return sb.toString();
 	}
 
+	public static String inorderTraversal(MutableTreeNode depNode, int i, StringBuilder sb) {
+		if (sb == null) {
+			sb = new StringBuilder();
+			sb.append("\n");
+		}
+		sb.append(printTabs(i) + depNode.label + "\n");
+		++i;
+		for (MutableTreeNode node : depNode.getChildren()) {
+			inorderTraversal(node, i, sb);
+		}
+		return sb.toString();
+	}
 	private static String printTabs(int i) {
 		String tabs = "";
 		if (i > 0) {

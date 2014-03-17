@@ -10,31 +10,55 @@ import com.hp.hpl.jena.query.ParameterizedSparqlString;
 public class PseudoQueryBuilder {
 
 	public List<ParameterizedSparqlString> buildQuery(Question q) {
-
 		List<ParameterizedSparqlString> queries = new ArrayList<ParameterizedSparqlString>();
-
-		// TODO choose projection variable wisely
-
-		boolean[] print = new boolean[q.modules.size()];
+		int numberOfModules = q.modules.size();
+		boolean[] print = new boolean[numberOfModules];
 		boolean finished = false;
 		while (!finished) {
 			ParameterizedSparqlString query = new ParameterizedSparqlString();
-			query.setCommandText("SELECT ?a WHERE {}");
-
+			buildCommandText(query, q);
 			finished = true;
+
 			for (int i = 0; i < print.length; i++) {
+				// TODO build a query more wisely
 				if (print[i]) {
-					query.append(q.modules.get(i).statementList.get(0));
+					replaceParameters(query, q.modules.get(i).statementList.get(0), i);
 				} else {
-					query.append(q.modules.get(i).statementList.get(1));
+					replaceParameters(query, q.modules.get(i).statementList.get(1), i);
 					finished = false;
 				}
 			}
+
 			addOneBinary(print);
 			queries.add(query);
 		}
-
 		return queries;
+	}
+
+	private void replaceParameters(ParameterizedSparqlString query, WhereClause whereClause, int parameterNumber) {
+		query.setIri("xp" + parameterNumber, whereClause.p);
+		if (whereClause.o.startsWith("http://")) {
+			query.setIri("xo" + parameterNumber, whereClause.o);
+
+		} else {
+			query.setLiteral("xo" + parameterNumber, whereClause.o);
+		}
+
+	}
+
+	private void buildCommandText(ParameterizedSparqlString query, Question q) {
+		// TODO choose projection variable wisely
+		String tmp = "SELECT ?xs0 WHERE {\n";
+		for (int i = 0; i < q.modules.size(); i++) {
+			// subject
+			tmp += "?xs" + i + " ";
+			// predicate
+			tmp += "?xp" + i + " ";
+			// object
+			tmp += "?xo" + i + ".\n";
+		}
+		tmp += "}";
+		query.setCommandText(tmp);
 	}
 
 	private void addOneBinary(boolean[] print) {

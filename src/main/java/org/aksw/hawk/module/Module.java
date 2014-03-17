@@ -4,50 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.nlp.posTree.MutableTreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.clearnlp.dependency.DEPNode;
-import com.hp.hpl.jena.graph.impl.LiteralLabelFactory;
-import com.hp.hpl.jena.query.ParameterizedSparqlString;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
-
 public class Module {
-	public List<ParameterizedSparqlString> statementList = new ArrayList<>();
+	public List<WhereClause> statementList = new ArrayList<>();
 	Logger log = LoggerFactory.getLogger(getClass());
 
-	public Module(DEPNode rootPredicate, DEPNode node, Question q) {
-		buildRDFTypeStatement(rootPredicate, node);
-		buildPredicateStatement(rootPredicate, node);
+	public Module(MutableTreeNode mutableTreeNode, MutableTreeNode node, Question q) {
+		buildRDFTypeStatement(mutableTreeNode, node);
+		buildPredicateStatement(mutableTreeNode, node);
 
 	}
 
-	private void buildPredicateStatement(DEPNode rootPredicate, DEPNode node) {
-		ParameterizedSparqlString pss = new ParameterizedSparqlString();
-		pss.appendNode(new ResourceImpl());
-		pss.appendIri(rootPredicate.form);
+	private void buildPredicateStatement(MutableTreeNode mutableTreeNode, MutableTreeNode node) {
+		WhereClause wc = new WhereClause();
+		wc.p = mutableTreeNode.label;
+		wc.o = node.label;
 
-		if (node.form.startsWith("http://")) {
-			pss.appendNode(new ResourceImpl(node.form));
-		} else {
-			pss.append(LiteralLabelFactory.create(node.form, "en"));
-		}
-
-		log.debug("\t\t\t" + pss.getCommandText());
-		statementList.add(pss);
+		log.debug("\t\t\t" + wc);
+		statementList.add(wc);
 	}
 
-	private void buildRDFTypeStatement(DEPNode rootPredicate, DEPNode node) {
-		ParameterizedSparqlString pss = new ParameterizedSparqlString();
-		pss.appendNode(new ResourceImpl());
-		pss.appendIri("rdf:type");
-		if (rootPredicate.form.startsWith("http://")) {
-			pss.appendNode(new ResourceImpl(rootPredicate.form));
-		} else {
-			pss.append(LiteralLabelFactory.create(rootPredicate.form, "en"));
-		}
-		log.debug("\t\t\t" + pss.getCommandText());
-		statementList.add(pss);
+	private void buildRDFTypeStatement(MutableTreeNode mutableTreeNode, MutableTreeNode node) {
+		WhereClause wc = new WhereClause();
+		wc.p = "rdf:type";
+		wc.o = mutableTreeNode.label;
+		log.debug("\t\t\t" + wc);
+		statementList.add(wc);
 	}
-
 }

@@ -4,16 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.nlp.posTree.MutableTreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.clearnlp.dependency.DEPArc;
-import com.clearnlp.dependency.DEPNode;
 
 public class ModuleBuilder {
 	Logger log = LoggerFactory.getLogger(ModuleBuilder.class);
 
-	public List<Module> build(DEPNode rootPredicate, List<Module> list, Question q) {
+	public List<Module> build(MutableTreeNode mutableTreeNode, List<Module> list, Question q) {
 		if (list == null) {
 			list = new ArrayList<>();
 		}
@@ -21,14 +19,13 @@ public class ModuleBuilder {
 		 * traverse tree by recursive build a module for each traverse
 		 * predicate-argument arc
 		 */
-		for (DEPArc arc : rootPredicate.getDependents()) {
-			DEPNode node = arc.getNode();
+		for (MutableTreeNode node : mutableTreeNode.getChildren()) {
 			/*
 			 * for each arc build a type of, predicate and possibly predicate
 			 * subject statement
 			 */
-			log.debug(rootPredicate.lemma + " -> " + node.lemma);
-			Module module = new Module(rootPredicate, node,q);
+			log.debug(mutableTreeNode.label + " -> " + node.label);
+			Module module = new Module(mutableTreeNode, node,q);
 			list.add(module);
 			build(node, list,q);
 

@@ -8,17 +8,17 @@ import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.autosparql.commons.qald.QaldLoader;
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
-import org.aksw.hawk.module.Module;
 import org.aksw.hawk.module.ModuleBuilder;
+import org.aksw.hawk.module.Pruner;
 import org.aksw.hawk.module.PseudoQueryBuilder;
 import org.aksw.hawk.nlp.ParseTree;
+import org.aksw.hawk.nlp.posTree.TreeTransformer;
 import org.aksw.hawk.nlp.spotter.NERD_module;
-import org.aksw.hawk.nlp.spotter.Spotlight;
-import org.aksw.hawk.nlp.spotter.TagMe;
 import org.aksw.hawk.nlp.spotter.WikipediaMiner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.clearnlp.dependency.DEPTree;
 import com.hp.hpl.jena.query.ParameterizedSparqlString;
 import com.hp.hpl.jena.query.QueryParseException;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -32,11 +32,14 @@ public class PipelineController {
 	private ParseTree parseTree;
 	private ModuleBuilder moduleBuilder;
 	private PseudoQueryBuilder pseudoQueryBuilder;
+	private Pruner pruner;
+	private TreeTransformer treeTransform;
 
 	public static void main(String args[]) {
 		PipelineController controller = new PipelineController();
 
 		log.info("Configuring controller");
+		
 		controller.dataset = ClassLoader.getSystemResource("qald-4_hybrid_train.xml").getFile();
 		controller.endpoint = "http://dbpedia.org/sparql";
 		controller.datasetLoader = new QaldLoader();
@@ -44,6 +47,9 @@ public class PipelineController {
 		controller.parseTree = new ParseTree();
 		controller.moduleBuilder = new ModuleBuilder();
 		controller.pseudoQueryBuilder = new PseudoQueryBuilder();
+		controller.pruner = new Pruner();
+		controller.treeTransform = new TreeTransformer();
+		
 		log.info("Run controller");
 		controller.run();
 
@@ -64,13 +70,15 @@ public class PipelineController {
 					}
 				}
 				// 3. Build trees from questions and cache them
-				q.tree = this.parseTree.process(q);
-				// TODO 4. Apply pruning rules
+				DEPTree tmpTree = this.parseTree.process(q);
+				q.tree = this.treeTransform.DEPtoMutableDEP(tmpTree);
 
+				// 4. Apply pruning rules
+				q.tree = this.pruner.prune(q);
 				// TODO 5. Find projection variable
 
 				// 7. Build modules
-				q.modules = this.moduleBuilder.build(q.tree.getFirstRoot(), null, q);
+				q.modules = this.moduleBuilder.build(q.tree.getRoot(), null, q);
 
 				// TODO 7.1 Apply rdfs reasoning on each module
 
@@ -99,4 +107,5 @@ public class PipelineController {
 		}
 
 	}
+
 }

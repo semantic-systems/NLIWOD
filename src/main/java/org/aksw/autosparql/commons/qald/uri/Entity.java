@@ -2,6 +2,7 @@ package org.aksw.autosparql.commons.qald.uri;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.hp.hpl.jena.rdf.model.Resource;
 
 public class Entity implements Comparable<Entity> {
