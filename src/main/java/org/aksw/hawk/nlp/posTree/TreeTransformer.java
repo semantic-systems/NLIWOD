@@ -8,30 +8,29 @@ import com.clearnlp.dependency.DEPNode;
 import com.clearnlp.dependency.DEPTree;
 
 public class TreeTransformer {
-	Logger log = LoggerFactory.getLogger(getClass());
+	Logger log = LoggerFactory.getLogger(TreeTransformer.class);
 
 	public MutableTree DEPtoMutableDEP(DEPTree tmp) {
-
 		MutableTree tree = new MutableTree();
+		addNodeRecursivly(tree, tree.head, tmp.getFirstRoot());
 
-		addNodeRecursivly(tree.head, tmp.getFirstRoot());
-
-		log.debug(TreeTraversal.inorderTraversal(tree.head, 0, new StringBuilder()));
+		String tmpString = TreeTraversal.inorderTraversal(tree.head, 0, null);
+		log.debug(tmpString);
 		return tree;
 	}
 
-	private void addNodeRecursivly(MutableTreeNode parent, DEPNode depNode) {
+	private void addNodeRecursivly(MutableTree tree, MutableTreeNode parent, DEPNode depNode) {
 
 		MutableTreeNode newNode = new MutableTreeNode();
 		newNode.label = depNode.form;
 		newNode.posTag = depNode.pos;
 		if (parent == null) {
-			parent = newNode;
+			tree.head = newNode;
 		} else {
 			parent.addChild(newNode);
 		}
 		for (DEPNode tmpChilds : depNode.getDependentNodeList()) {
-			addNodeRecursivly(newNode, tmpChilds);
+			addNodeRecursivly(tree, newNode, tmpChilds);
 		}
 
 	}

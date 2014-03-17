@@ -22,7 +22,7 @@ import com.clearnlp.tokenization.AbstractTokenizer;
  * 
  */
 public class ParseTree {
-	Logger log = LoggerFactory.getLogger(getClass());
+	Logger log = LoggerFactory.getLogger(ParseTree.class);
 
 	final String language = AbstractReader.LANG_EN;
 	final String modelType = "general-en";

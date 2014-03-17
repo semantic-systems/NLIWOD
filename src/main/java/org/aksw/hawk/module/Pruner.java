@@ -19,8 +19,9 @@ public class Pruner {
 		if (firstRoot.label.equals("Give")) {
 			for (MutableTreeNode node : firstRoot.getChildren()) {
 				if (node.label.equals("me")) {
-					System.out.println(q.tree.remove(node));
-					System.out.println(q.tree.remove(firstRoot));
+					//TODO add comprehensive removal of nodes
+//					System.out.println(q.tree.remove(node));
+//					System.out.println(q.tree.remove(firstRoot));
 				}
 			}
 		}
