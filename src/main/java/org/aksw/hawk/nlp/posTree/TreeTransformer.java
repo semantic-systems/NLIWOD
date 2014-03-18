@@ -1,6 +1,5 @@
 package org.aksw.hawk.nlp.posTree;
 
-import org.aksw.hawk.nlp.TreeTraversal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,23 +13,21 @@ public class TreeTransformer {
 		MutableTree tree = new MutableTree();
 		addNodeRecursivly(tree, tree.head, tmp.getFirstRoot());
 
-		String tmpString = TreeTraversal.inorderTraversal(tree.head, 0, null);
-		log.debug(tmpString);
 		return tree;
 	}
 
 	private void addNodeRecursivly(MutableTree tree, MutableTreeNode parent, DEPNode depNode) {
 
-		MutableTreeNode newNode = new MutableTreeNode();
-		newNode.label = depNode.form;
-		newNode.posTag = depNode.pos;
+		MutableTreeNode newParent = null;
 		if (parent == null) {
-			tree.head = newNode;
+			newParent = new MutableTreeNode(depNode.form, depNode.pos, null);
+			tree.head = newParent;
 		} else {
-			parent.addChild(newNode);
+			newParent = new MutableTreeNode(depNode.form, depNode.pos, parent);
+			parent.addChild(newParent);
 		}
 		for (DEPNode tmpChilds : depNode.getDependentNodeList()) {
-			addNodeRecursivly(tree, newNode, tmpChilds);
+			addNodeRecursivly(tree, newParent, tmpChilds);
 		}
 
 	}

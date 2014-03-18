@@ -39,7 +39,7 @@ public class PipelineController {
 		PipelineController controller = new PipelineController();
 
 		log.info("Configuring controller");
-		
+
 		controller.dataset = ClassLoader.getSystemResource("qald-4_hybrid_train.xml").getFile();
 		controller.endpoint = "http://dbpedia.org/sparql";
 		controller.datasetLoader = new QaldLoader();
@@ -49,7 +49,7 @@ public class PipelineController {
 		controller.pseudoQueryBuilder = new PseudoQueryBuilder();
 		controller.pruner = new Pruner();
 		controller.treeTransform = new TreeTransformer();
-		
+
 		log.info("Run controller");
 		controller.run();
 
@@ -74,7 +74,10 @@ public class PipelineController {
 				q.tree = this.treeTransform.DEPtoMutableDEP(tmpTree);
 
 				// 4. Apply pruning rules
+				log.debug(q.tree.toString());
 				q.tree = this.pruner.prune(q);
+				log.debug(q.tree.toString());
+
 				// TODO 5. Find projection variable
 
 				// 7. Build modules

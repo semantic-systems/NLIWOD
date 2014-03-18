@@ -68,7 +68,8 @@ public class ParseTree {
 	private String replaceLabelsByIdentifiedURIs(String sentence, List<Entity> list) {
 		for (Entity entity : list) {
 			if(!entity.label.equals("")){
-			sentence = sentence.replace(entity.label, entity.uris.get(0).getURI());}
+				// " " inserted so punctuation gets seperated correctly from URIss
+			sentence = sentence.replace(entity.label, entity.uris.get(0).getURI() +" ");}
 			else{
 				log.error("Entity has no label in sentence: "+ sentence);
 			}
