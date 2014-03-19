@@ -1,15 +1,9 @@
 package org.aksw.hawk.nlp.spotter;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -34,16 +28,13 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
-public class Fox implements NERD_module {
+public class Fox extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(Fox.class);
 
-	private String request = "http://139.18.2.164:4444/api";
+	private String requestURL = "http://139.18.2.164:4444/api";
 	private String outputFormat = "N3";
 	private String taskType = "NER";
 	private String inputType = "text";
-
-	public Fox() {
-	}
 
 	private String doTASK(String inputText) throws MalformedURLException, IOException, ProtocolException {
 
@@ -52,33 +43,7 @@ public class Fox implements NERD_module {
 		urlParameters += "&output=" + outputFormat;
 		urlParameters += "&input=" + URLEncoder.encode(inputText, "UTF-8");
 
-		URL url = new URL(request);
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		connection.setRequestMethod("POST");
-		connection.setDoOutput(true);
-		connection.setDoInput(true);
-		connection.setUseCaches(false);
-		connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-		connection.setRequestProperty("Content-Length", String.valueOf(urlParameters.length()));
-
-		DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-		wr.writeBytes(urlParameters);
-		wr.flush();
-
-		InputStream inputStream = connection.getInputStream();
-		InputStreamReader in = new InputStreamReader(inputStream);
-		BufferedReader reader = new BufferedReader(in);
-
-		StringBuilder sb = new StringBuilder();
-		while (reader.ready()) {
-			sb.append(reader.readLine());
-		}
-
-		wr.close();
-		reader.close();
-		connection.disconnect();
-
-		return sb.toString();
+		return requestPOST(urlParameters, requestURL);
 	}
 
 	/*
@@ -132,7 +97,7 @@ public class Fox implements NERD_module {
 	public static void main(String args[]) {
 		Question q = new Question();
 		q.languageToQuestion.put("en", "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
-		NERD_module fox = new Fox();
+		ASpotter fox = new Fox();
 		q.languageToNamedEntites = fox.getEntities(q.languageToQuestion.get("en"));
 		for (String key : q.languageToNamedEntites.keySet()) {
 			System.out.println(key);

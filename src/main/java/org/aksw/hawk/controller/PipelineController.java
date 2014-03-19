@@ -13,8 +13,9 @@ import org.aksw.hawk.module.Pruner;
 import org.aksw.hawk.module.PseudoQueryBuilder;
 import org.aksw.hawk.nlp.ParseTree;
 import org.aksw.hawk.nlp.posTree.TreeTransformer;
-import org.aksw.hawk.nlp.spotter.NERD_module;
-import org.aksw.hawk.nlp.spotter.WikipediaMiner;
+import org.aksw.hawk.nlp.spotter.Fox;
+import org.aksw.hawk.nlp.spotter.ASpotter;
+import org.aksw.hawk.nlp.spotter.Spotlight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,7 @@ public class PipelineController {
 	private String dataset;
 	private QaldLoader datasetLoader;
 	private String endpoint;
-	private NERD_module nerdModule;
+	private ASpotter nerdModule;
 	private ParseTree parseTree;
 	private ModuleBuilder moduleBuilder;
 	private PseudoQueryBuilder pseudoQueryBuilder;
@@ -43,7 +44,7 @@ public class PipelineController {
 		controller.dataset = ClassLoader.getSystemResource("qald-4_hybrid_train.xml").getFile();
 		controller.endpoint = "http://dbpedia.org/sparql";
 		controller.datasetLoader = new QaldLoader();
-		controller.nerdModule = new WikipediaMiner();
+		controller.nerdModule = new Spotlight();
 		controller.parseTree = new ParseTree();
 		controller.moduleBuilder = new ModuleBuilder();
 		controller.pseudoQueryBuilder = new PseudoQueryBuilder();
@@ -101,7 +102,6 @@ public class PipelineController {
 				double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 				double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
 				double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-
 				log.debug("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
 				break;
 			} catch (QueryParseException e) {

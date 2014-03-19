@@ -1,14 +1,8 @@
 package org.aksw.hawk.nlp.spotter;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,10 +21,10 @@ import org.slf4j.LoggerFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
-public class Spotlight implements NERD_module {
+public class Spotlight extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(Spotlight.class);
 
-	private String request = "http://spotlight.sztaki.hu:2222/rest/annotate";
+	private String requestURL = "http://spotlight.sztaki.hu:2222/rest/annotate";
 	private String confidence = "0.2";
 	private String support = "20";
 
@@ -43,41 +37,9 @@ public class Spotlight implements NERD_module {
 		urlParameters += "&confidence=" + confidence;
 		urlParameters += "&support=" + support;
 
-		log.debug(urlParameters);
-		URL url = new URL(request);
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		connection.setRequestMethod("POST");
-		connection.setDoOutput(true);
-		connection.setDoInput(true);
-		connection.setUseCaches(false);
-		connection.setRequestProperty("Accept", "application/json");
-		connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-		connection.setRequestProperty("Content-Length", String.valueOf(urlParameters.length()));
-
-		DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-		wr.writeBytes(urlParameters);
-		wr.flush();
-
-		InputStream inputStream = connection.getInputStream();
-		InputStreamReader in = new InputStreamReader(inputStream);
-		BufferedReader reader = new BufferedReader(in);
-
-		StringBuilder sb = new StringBuilder();
-		while (reader.ready()) {
-			sb.append(reader.readLine());
-		}
-
-		wr.close();
-		reader.close();
-		connection.disconnect();
-		return sb.toString();
+		return requestPOST(urlParameters, requestURL);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.aksw.hawk.nlp.NERD_module#getEntities(java.lang.String)
-	 */
 	@Override
 	public Map<String, List<Entity>> getEntities(String question) {
 		HashMap<String, List<Entity>> tmp = new HashMap<String, List<Entity>>();
@@ -111,7 +73,7 @@ public class Spotlight implements NERD_module {
 	public static void main(String args[]) {
 		Question q = new Question();
 		q.languageToQuestion.put("en", "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
-		NERD_module fox = new Spotlight();
+		ASpotter fox = new Spotlight();
 		q.languageToNamedEntites = fox.getEntities(q.languageToQuestion.get("en"));
 		for (String key : q.languageToNamedEntites.keySet()) {
 			System.out.println(key);

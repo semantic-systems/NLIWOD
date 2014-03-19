@@ -1,14 +1,8 @@
 package org.aksw.hawk.nlp.spotter;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,10 +24,10 @@ import org.slf4j.LoggerFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
-public class WikipediaMiner implements NERD_module {
+public class WikipediaMiner extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(WikipediaMiner.class);
 
-	private String request = "http://wikipedia-miner.cms.waikato.ac.nz/services/wikify";
+	private String requestURL = "http://wikipedia-miner.cms.waikato.ac.nz/services/wikify";
 	private String repeatMode = "all";
 	private String responseFormat = "json";
 
@@ -41,38 +35,11 @@ public class WikipediaMiner implements NERD_module {
 	}
 
 	private String doTASK(String inputText) throws MalformedURLException, IOException, ProtocolException {
-
 		String urlParameters = "source=" + URLEncoder.encode(inputText, "UTF-8");
 		urlParameters += "&responseFormat=" + responseFormat;
 		urlParameters += "&repeatMode=" + repeatMode;
 
-		URL url = new URL(request);
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		connection.setRequestMethod("POST");
-		connection.setDoOutput(true);
-		connection.setDoInput(true);
-		connection.setUseCaches(false);
-		connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-		connection.setRequestProperty("Content-Length", String.valueOf(urlParameters.length()));
-
-		DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-		wr.writeBytes(urlParameters);
-		wr.flush();
-
-		InputStream inputStream = connection.getInputStream();
-		InputStreamReader in = new InputStreamReader(inputStream);
-		BufferedReader reader = new BufferedReader(in);
-
-		StringBuilder sb = new StringBuilder();
-		while (reader.ready()) {
-			sb.append(reader.readLine());
-		}
-
-		wr.close();
-		reader.close();
-		connection.disconnect();
-		log.debug(sb.toString());
-		return sb.toString();
+		return requestPOST(urlParameters, requestURL);
 	}
 
 	@Override
@@ -105,7 +72,7 @@ public class WikipediaMiner implements NERD_module {
 				for (Entity entity : tmpList) {
 					String resource = entity.uris.get(0).getURI();
 					if (uriLabel.length == 1) {
-						  if (resource.toLowerCase().equals(uriLabel[0].toLowerCase())) {
+						if (resource.toLowerCase().equals(uriLabel[0].toLowerCase())) {
 							entity.label = uriLabel[0];
 						}
 					} else {
@@ -115,23 +82,22 @@ public class WikipediaMiner implements NERD_module {
 					}
 				}
 			}
-			//  eliminate entities that still have no label, because they are the shorter ones of overlaps
+			// eliminate entities that still have no label, because they are the
+			// shorter ones of overlaps
 
-			for (int i=tmpList.size()-1; i>=0; --i){
-				if(tmpList.get(i).label.equals("")){
+			for (int i = tmpList.size() - 1; i >= 0; --i) {
+				if (tmpList.get(i).label.equals("")) {
 					tmpList.remove(i);
 				}
 			}
-			
+
 			String baseURI = "http://dbpedia.org/resource/";
 			for (Entity entity : tmpList) {
-				//hack to make underscores where spaces are
+				// hack to make underscores where spaces are
 				Resource resource = entity.uris.get(0);
 				entity.uris.add(new ResourceImpl(baseURI + resource.getURI().replace(" ", "_")));
 				entity.uris.remove(0);
 			}
-			
-			
 
 		} catch (IOException | ParseException e) {
 			log.error(e.getLocalizedMessage(), e);
@@ -141,11 +107,14 @@ public class WikipediaMiner implements NERD_module {
 
 	public static void main(String args[]) {
 		Question q = new Question();
-		//q.languageToQuestion.put("en", "Which street basketball player was diagnosed with Sarcoidosis?");
-		//q.languageToQuestion.put("en", "Which recipients of the Victoria Cross died in the Battle of Arnhe");
-		 q.languageToQuestion.put("en", "Under which king did the British prime minister that signed the Munich agreement serve?");
-//		 q.languageToQuestion.put("en", "Which anti-apartheid activist graduated from the University of South Africa?");
-		NERD_module fox = new WikipediaMiner();
+		// q.languageToQuestion.put("en",
+		// "Which street basketball player was diagnosed with Sarcoidosis?");
+		// q.languageToQuestion.put("en",
+		// "Which recipients of the Victoria Cross died in the Battle of Arnhe");
+		q.languageToQuestion.put("en", "Under which king did the British prime minister that signed the Munich agreement serve?");
+		// q.languageToQuestion.put("en",
+		// "Which anti-apartheid activist graduated from the University of South Africa?");
+		ASpotter fox = new WikipediaMiner();
 		q.languageToNamedEntites = fox.getEntities(q.languageToQuestion.get("en"));
 		for (String key : q.languageToNamedEntites.keySet()) {
 			System.out.println(key);
