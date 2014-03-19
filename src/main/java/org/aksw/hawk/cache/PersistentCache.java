@@ -16,6 +16,7 @@ public class PersistentCache {
 	public String charset = "UTF-8";
 	public static String cacheLocation = "spotterCache";
 	public HashMap<String, String> cache;
+	int i = 0;
 
 	public PersistentCache() {
 		readCache();
@@ -67,8 +68,13 @@ public class PersistentCache {
 	}
 
 	public void put(String input, String output) {
+
 		cache.put(input, output);
 
+	}
+
+	public int size() {
+		return cache.size();
 	}
 
 }

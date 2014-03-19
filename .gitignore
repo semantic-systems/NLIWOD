@@ -13,3 +13,5 @@
 
 # Project-specific Files #
 src/main/resources/general-en/
+spotterCache
+src/main/resources/hawk.properties

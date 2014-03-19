@@ -20,9 +20,9 @@ public abstract class ASpotter {
 	public abstract Map<String, List<Entity>> getEntities(String question);
 
 	private boolean useCache = true;
-	private PersistentCache cache = new PersistentCache();
+	private static PersistentCache cache = new PersistentCache();
 
-	public String requestPOST(String input, String requestURL) {
+	protected String requestPOST(String input, String requestURL) {
 		try {
 			if (useCache) {
 				if (cache.containsKey(input)) {
@@ -32,10 +32,10 @@ public abstract class ASpotter {
 
 			String output = POST(input, requestURL);
 			cache.put(input, output);
-
 			if (useCache) {
 				cache.writeCache();
 			}
+
 			return output;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -43,7 +43,7 @@ public abstract class ASpotter {
 		return null;
 	}
 
-	protected String POST(String urlParameters, String requestURL) throws MalformedURLException, IOException, ProtocolException {
+	private String POST(String urlParameters, String requestURL) throws MalformedURLException, IOException, ProtocolException {
 		URL url = new URL(requestURL);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("POST");
@@ -72,5 +72,10 @@ public abstract class ASpotter {
 		connection.disconnect();
 
 		return sb.toString();
+	}
+
+	public String toString() {
+		String[] name = getClass().getName().split("\\.");
+		return name[name.length - 1].substring(0, 2);
 	}
 }

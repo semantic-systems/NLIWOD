@@ -24,8 +24,8 @@ import com.hp.hpl.jena.query.ParameterizedSparqlString;
 import com.hp.hpl.jena.query.QueryParseException;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
-public class PipelineController {
-	static Logger log = LoggerFactory.getLogger(PipelineController.class);
+public class PipelineController_QALD4 {
+	static Logger log = LoggerFactory.getLogger(PipelineController_QALD4.class);
 	private String dataset;
 	private QaldLoader datasetLoader;
 	private String endpoint;
@@ -37,7 +37,7 @@ public class PipelineController {
 	private TreeTransformer treeTransform;
 
 	public static void main(String args[]) {
-		PipelineController controller = new PipelineController();
+		PipelineController_QALD4 controller = new PipelineController_QALD4();
 
 		log.info("Configuring controller");
 
