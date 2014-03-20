@@ -1,6 +1,49 @@
 <?xml version="1.0" ?>
 <dataset id="qald-4_hybrid_train">
-
+<question answertype="resource" id="20" aggregation="false" onlydbo="true">
+<string lang="en"><![CDATA[List all the battles fought by the lover of Cleopatra.]]></string>
+<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?uri 
+WHERE {	
+	?x text:"lover" text:"Cleopatra".	
+	?x dbo:battle ?uri .		
+}
+]]></pseudoquery>
+<answers>
+<answer>
+<uri>http://dbpedia.org/resource/Gallic_Wars</uri>
+</answer>
+<answer>
+<uri>http://dbpedia.org/resource/Battle_of_Actium</uri>
+</answer>
+<answer>
+<uri>http://dbpedia.org/resource/Battle_of_Mutina</uri>
+</answer>
+<answer>
+<uri>http://dbpedia.org/resource/Battle_of_Philippi</uri>
+</answer>
+<answer>
+<uri>http://dbpedia.org/resource/Final_War_of_the_Roman_Republic</uri>
+</answer>
+<answer>
+<uri>http://dbpedia.org/resource/Battle_of_Pharsalus</uri>
+</answer>
+<answer>
+<uri>http://dbpedia.org/resource/Roman–Parthian_Wars</uri>
+</answer>
+<answer>
+<uri>http://dbpedia.org/resource/Antony's_Parthian_War</uri>
+</answer>
+<answer>
+<uri>http://dbpedia.org/resource/Caesar's_Civil_War</uri>
+</answer>
+<answer>
+<uri>http://dbpedia.org/resource/Liberators'_civil_war</uri>
+</answer>
+</answers>
+</question>
 <question answertype="resource" id="1" aggregation="false" onlydbo="true">
 <string lang="en"><![CDATA[Give me the currencies of all G8 countries.]]></string>
 <pseudoquery><![CDATA[
@@ -136,7 +179,7 @@ WHERE {
 </question>
 
 <question answertype="number" id="7" aggregation="false" onlydbo="true">
-<string lang="en"><![CDATA[How old was Steve Job's sister when she first met him?]]></string>
+<string lang="en"><![CDATA[How old was Steve Jobs' sister when she first met him?]]></string>
 <pseudoquery><![CDATA[
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX res: <http://dbpedia.org/resource/>
@@ -460,53 +503,10 @@ WHERE {
 </answers>
 </question>
 
-<question answertype="resource" id="20" aggregation="false" onlydbo="true">
-<string lang="en"><![CDATA[List all the battles fought by the lover of Cleopatra.]]></string>
-<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX res: <http://dbpedia.org/resource/>
-SELECT DISTINCT ?uri 
-WHERE {	
-	?x text:"lover" text:"Cleopatra".	
-	?x dbo:battle ?uri .		
-}
-]]></pseudoquery>
-<answers>
-<answer>
-<uri>http://dbpedia.org/resource/Gallic_Wars</uri>
-</answer>
-<answer>
-<uri>http://dbpedia.org/resource/Battle_of_Actium</uri>
-</answer>
-<answer>
-<uri>http://dbpedia.org/resource/Battle_of_Mutina</uri>
-</answer>
-<answer>
-<uri>http://dbpedia.org/resource/Battle_of_Philippi</uri>
-</answer>
-<answer>
-<uri>http://dbpedia.org/resource/Final_War_of_the_Roman_Republic</uri>
-</answer>
-<answer>
-<uri>http://dbpedia.org/resource/Battle_of_Pharsalus</uri>
-</answer>
-<answer>
-<uri>http://dbpedia.org/resource/Roman–Parthian_Wars</uri>
-</answer>
-<answer>
-<uri>http://dbpedia.org/resource/Antony's_Parthian_War</uri>
-</answer>
-<answer>
-<uri>http://dbpedia.org/resource/Caesar's_Civil_War</uri>
-</answer>
-<answer>
-<uri>http://dbpedia.org/resource/Liberators'_civil_war</uri>
-</answer>
-</answers>
-</question>
+
 
 <question answertype="resource" id="21" aggregation="true" onlydbo="true">
-<string lang="en"><![CDATA[Are the Rosetta Stone and the Gayer-Andersen cat exhibited in the same museum?]]></string>
+<string lang="en"><![CDATA[Are the Rosetta Stone and the Gayer-Anderson cat exhibited in the same museum?]]></string>
 <pseudoquery><![CDATA[
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX res: <http://dbpedia.org/resource/>
