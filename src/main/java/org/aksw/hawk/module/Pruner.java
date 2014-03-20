@@ -14,16 +14,61 @@ public class Pruner {
 	public MutableTree prune(Question q) {
 		applyPunctuationRules(q);
 		applyDeterminantRules(q);
-		/* interrogative rules last else each interrogative word has at least
-		 two children, which can't be handled yet by the removal*/
+		applyPDTRules(q);
+		applyINRules(q);
+		/*
+		 * interrogative rules last else each interrogative word has at least
+		 * two children, which can't be handled yet by the removal
+		 */
 		applyInterrogativeRules(q);
 
 		return q.tree;
 	}
 
+	private void applyPDTRules(Question q) {
+		inorderRemovalPDT(q.tree.getRoot(), q.tree);
+
+	}
+
+	private boolean inorderRemovalPDT(MutableTreeNode node, MutableTree tree) {
+		if (node.posTag.equals("PDT")) {
+			tree.remove(node);
+			return true;
+		} else {
+			for (Iterator<MutableTreeNode> it = node.getChildren().iterator(); it.hasNext();) {
+				MutableTreeNode child = it.next();
+				if (inorderRemovalPDT(child, tree)) {
+					it = node.getChildren().iterator();
+				}
+			}
+			return false;
+		}
+	}
+
+	// removes BY and IN
+	private void applyINRules(Question q) {
+		inorderRemovalIN(q.tree.getRoot(), q.tree);
+
+	}
+
+	private boolean inorderRemovalIN(MutableTreeNode node, MutableTree tree) {
+		if (node.posTag.equals("IN")) {
+			tree.remove(node);
+			return true;
+		} else {
+			for (Iterator<MutableTreeNode> it = node.getChildren().iterator(); it.hasNext();) {
+				MutableTreeNode child = it.next();
+				if (inorderRemovalIN(child, tree)) {
+					it = node.getChildren().iterator();
+				}
+			}
+			return false;
+		}
+	}
+
 	private void applyInterrogativeRules(Question q) {
 		MutableTreeNode root = q.tree.getRoot();
-
+		// GIVE ME will be deleted
 		if (root.label.equals("Give")) {
 			for (Iterator<MutableTreeNode> it = root.getChildren().iterator(); it.hasNext();) {
 				MutableTreeNode next = it.next();
@@ -32,6 +77,10 @@ public class Pruner {
 					q.tree.remove(root);
 				}
 			}
+		}
+		// LIST
+		if (root.label.equals("List")) {
+			q.tree.remove(root);
 		}
 
 	}

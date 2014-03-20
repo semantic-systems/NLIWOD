@@ -72,6 +72,7 @@ public class PipelineController_QALD4 {
 				}
 				// 3. Build trees from questions and cache them
 				DEPTree tmpTree = this.parseTree.process(q);
+				System.out.println(tmpTree.toStringSRL());
 				q.tree = this.treeTransform.DEPtoMutableDEP(tmpTree);
 
 				// 4. Apply pruning rules
