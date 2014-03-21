@@ -132,7 +132,7 @@ public class DBOIndex {
 
 	public static void main(String args[]) {
 		DBOIndex index = new DBOIndex();
-		index.search(null, null, "commander");
+		index.search(null, null, "writer");
 
 	}
 }
