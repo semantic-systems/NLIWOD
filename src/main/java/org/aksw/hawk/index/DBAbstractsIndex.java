@@ -29,12 +29,13 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.rdf.model.impl.PropertyImpl;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
-public class DBOIndex {
+public class DBAbstractsIndex {
 
 	private static final Version LUCENE_VERSION = Version.LUCENE_46;
-	private org.slf4j.Logger log = LoggerFactory.getLogger(DBOIndex.class);
+	private org.slf4j.Logger log = LoggerFactory.getLogger(DBAbstractsIndex.class);
 	public String FIELD_NAME_SUBJECT = "subject";
 	public String FIELD_NAME_PREDICATE = "predicate";
 	public String FIELD_NAME_OBJECT = "object";
@@ -46,7 +47,7 @@ public class DBOIndex {
 	private IndexWriter iwriter;
 	private SimpleAnalyzer analyzer;
 
-	public DBOIndex() {
+	public DBAbstractsIndex() {
 		directory = new RAMDirectory();
 		analyzer = new SimpleAnalyzer(LUCENE_VERSION);
 		index();
@@ -97,20 +98,14 @@ public class DBOIndex {
 			iwriter = new IndexWriter(directory, config);
 
 			Model dbpedia = ModelFactory.createDefaultModel();
-			dbpedia.read("dbpedia_3.9.owl", "RDF/XML");
-			StmtIterator stmts = dbpedia.listStatements(null, RDFS.label, (RDFNode) null);
+			dbpedia.read("/Users/ricardousbeck/Dropbox/DBpedia/long_abstracts_en.ttl", "TTL");
+			final PropertyImpl propertyImpl = new PropertyImpl("http://dbpedia.org/ontology/abstract");
+			StmtIterator stmts = dbpedia.listStatements(null, propertyImpl, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();
 				RDFNode label = stmt.getObject();
 				if (label.asLiteral().getLanguage().equals("en")) {
-					addDocumentToIndex(stmt.getSubject(), "rdfs:label", label.asLiteral());
-					NodeIterator comment = dbpedia.listObjectsOfProperty(stmt.getSubject(), RDFS.comment);
-					while (comment.hasNext()) {
-						RDFNode next = comment.next();
-						if (next.asLiteral().getLanguage().equals("en")) {
-							addDocumentToIndex(stmt.getSubject(), "rdfs:comment", next);
-						}
-					}
+					addDocumentToIndex(stmt.getSubject(), "dbo:abstract", label.asLiteral());
 				}
 			}
 
@@ -131,8 +126,8 @@ public class DBOIndex {
 	}
 
 	public static void main(String args[]) {
-		DBOIndex index = new DBOIndex();
-		index.search(null, null, "pope");
+		DBAbstractsIndex index = new DBAbstractsIndex();
+		index.search(null, null, "lover");
 
 	}
 }
