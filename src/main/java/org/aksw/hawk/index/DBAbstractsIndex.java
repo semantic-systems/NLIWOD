@@ -1,6 +1,9 @@
 package org.aksw.hawk.index;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -12,60 +15,79 @@ import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
+import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.RAMDirectory;
+import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
+import org.openrdf.model.Statement;
+import org.openrdf.rio.RDFHandlerException;
+import org.openrdf.rio.RDFParseException;
+import org.openrdf.rio.RDFParser;
+import org.openrdf.rio.helpers.RDFHandlerBase;
+import org.openrdf.rio.turtle.TurtleParser;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.NodeIterator;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.rdf.model.impl.PropertyImpl;
-import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class DBAbstractsIndex {
 
-	private static final Version LUCENE_VERSION = Version.LUCENE_46;
-	private org.slf4j.Logger log = LoggerFactory.getLogger(DBAbstractsIndex.class);
+	private Logger log = LoggerFactory.getLogger(DBAbstractsIndex.class);
 	public String FIELD_NAME_SUBJECT = "subject";
 	public String FIELD_NAME_PREDICATE = "predicate";
 	public String FIELD_NAME_OBJECT = "object";
-	private int numberOfDocsRetrievedFromIndex = 100;
+	private int numberOfDocsRetrievedFromIndex = 1000;
+	public Version LUCENE_VERSION = Version.LUCENE_46;
 
 	private Directory directory;
 	private IndexSearcher isearcher;
 	private DirectoryReader ireader;
-	private IndexWriter iwriter;
-	private SimpleAnalyzer analyzer;
+
+	// private HashMap<String, List<Triple>> cache;
 
 	public DBAbstractsIndex() {
-		directory = new RAMDirectory();
-		analyzer = new SimpleAnalyzer(LUCENE_VERSION);
-		index();
+		try {
+			File index = new File("indexAbstract");
+			if (!index.exists()) {
+				index.mkdir();
+				directory = new MMapDirectory(index);
+				index();
+			} else {
+				directory = new MMapDirectory(index);
+			}
+			ireader = DirectoryReader.open(directory);
+			isearcher = new IndexSearcher(ireader);
+			// cache = new HashMap<String, List<Triple>>();
+		} catch (IOException e) {
+			log.error(e.getLocalizedMessage());
+		}
 	}
 
 	public List<String> search(String subject, String predicate, String object) {
+		List<String> triples = new ArrayList<String>();
+		// BooleanQuery bq = new BooleanQuery();
 		try {
-
-			ireader = DirectoryReader.open(directory);
-			isearcher = new IndexSearcher(ireader);
+			// if (cache.containsKey(subject+predicate+object)) {
+			// return cache.get(subject+predicate+object);
+			// }
 			log.debug("\t start asking index...");
-			Query q = null;
-			Analyzer analyzer = new SimpleAnalyzer(LUCENE_VERSION);
-			QueryParser parser = new QueryParser(LUCENE_VERSION, FIELD_NAME_OBJECT, analyzer);
-			parser.setDefaultOperator(QueryParser.Operator.OR);
-			q = parser.parse(QueryParser.escape(object));
+			// Query q = null;
+			// Analyzer analyzer = new SimpleAnalyzer(LUCENE_VERSION);
+			// QueryParser parser = new QueryParser(LUCENE_VERSION,
+			// FIELD_NAME_OBJECT, analyzer);
+			// parser.setDefaultOperator(QueryParser.Operator.AND);
+			// q = parser.parse(QueryParser.escape(object));
+			// bq.add(q, BooleanClause.Occur.MUST);
+
+			Term term = new Term(FIELD_NAME_OBJECT, object  );
+			PrefixQuery query = new PrefixQuery(term);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
-			isearcher.search(q, collector);
+			isearcher.search(query, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
 
 			for (int i = 0; i < hits.length; i++) {
@@ -73,14 +95,69 @@ public class DBAbstractsIndex {
 				String s = hitDoc.get(FIELD_NAME_SUBJECT);
 				String p = hitDoc.get(FIELD_NAME_PREDICATE);
 				String o = hitDoc.get(FIELD_NAME_OBJECT);
-				// TODO build clever return
-				System.out.println(s + p + o);
+				if(s.contains("Martin"))
+				log.debug(s + "==>");
 			}
 			log.debug("\t finished asking index...");
+			// cache.put(subject+predicate+object, triples);
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage() + " -> " + subject);
 		}
-		return null;
+		return triples;
+	}
+
+	private void index() {
+		String file = "/data/r.usbeck/Dropbox/DBpedia/long_abstracts_en.ttl";
+		String baseURI = "http://dbpedia.org";
+		try {
+			Analyzer analyzer = new SimpleAnalyzer(LUCENE_VERSION);
+			IndexWriterConfig config = new IndexWriterConfig(LUCENE_VERSION, analyzer);
+			IndexWriter iwriter = new IndexWriter(directory, config);
+
+			iwriter.commit();
+
+			log.info("Start parsing.");
+			OnlineStatementHandler osh = new OnlineStatementHandler(iwriter);
+			RDFParser parser = new TurtleParser();
+			parser.setRDFHandler(osh);
+			parser.setStopAtFirstError(false);
+			parser.parse(new FileReader(file), baseURI);
+			log.info("Finished parsing.");
+
+			iwriter.commit();
+			iwriter.close();
+		} catch (RDFParseException | RDFHandlerException | IOException e) {
+			log.error("Could not create index: ", e);
+		}
+
+	}
+
+	class OnlineStatementHandler extends RDFHandlerBase {
+		private IndexWriter iwriter;
+
+		public OnlineStatementHandler(IndexWriter iwriter) {
+			this.iwriter = iwriter;
+		}
+
+		@Override
+		public void handleStatement(Statement st) {
+			String subject = st.getSubject().stringValue();
+			String predicate = st.getPredicate().stringValue();
+			String object = st.getObject().stringValue();
+			try {
+				addDocumentToIndex(iwriter, subject, predicate, object);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void addDocumentToIndex(IndexWriter iwriter, String subject, String predicate, String object) throws IOException {
+		Document doc = new Document();
+		doc.add(new StringField(FIELD_NAME_SUBJECT, subject, Store.YES));
+		doc.add(new StringField(FIELD_NAME_PREDICATE, predicate, Store.YES));
+		doc.add(new TextField(FIELD_NAME_OBJECT, object, Store.YES));
+		iwriter.addDocument(doc);
 	}
 
 	public void close() {
@@ -92,42 +169,10 @@ public class DBAbstractsIndex {
 		}
 	}
 
-	private void index() {
-		try {
-			IndexWriterConfig config = new IndexWriterConfig(LUCENE_VERSION, analyzer);
-			iwriter = new IndexWriter(directory, config);
-
-			Model dbpedia = ModelFactory.createDefaultModel();
-			dbpedia.read("/Users/ricardousbeck/Dropbox/DBpedia/long_abstracts_en.ttl", "TTL");
-			final PropertyImpl propertyImpl = new PropertyImpl("http://dbpedia.org/ontology/abstract");
-			StmtIterator stmts = dbpedia.listStatements(null, propertyImpl, (RDFNode) null);
-			while (stmts.hasNext()) {
-				final Statement stmt = stmts.next();
-				RDFNode label = stmt.getObject();
-				if (label.asLiteral().getLanguage().equals("en")) {
-					addDocumentToIndex(stmt.getSubject(), "dbo:abstract", label.asLiteral());
-				}
-			}
-
-			iwriter.commit();
-			iwriter.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void addDocumentToIndex(Resource resource, String predicate, RDFNode next) throws IOException {
-		Document doc = new Document();
-		doc.add(new StringField(FIELD_NAME_SUBJECT, resource.getURI(), Store.YES));
-		doc.add(new StringField(FIELD_NAME_PREDICATE, predicate, Store.YES));
-		doc.add(new TextField(FIELD_NAME_OBJECT, next.asLiteral().getString(), Store.YES));
-		iwriter.addDocument(doc);
-	}
-
 	public static void main(String args[]) {
 		DBAbstractsIndex index = new DBAbstractsIndex();
-		index.search(null, null, "lover");
+		index.search(null, null, "assassin");
+		index.close();
 
 	}
 }
