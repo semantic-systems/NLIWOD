@@ -62,6 +62,8 @@ public class ParseTree {
 			component.process(tree);
 
 		log.debug(TreeTraversal.inorderTraversal(tree.getFirstRoot(), 0, null));
+		log.debug(tree.toStringSRL());
+
 		return tree;
 	}
 

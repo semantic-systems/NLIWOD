@@ -9,11 +9,13 @@ public class MutableTreeNode {
 	public String posTag;
 	public List<MutableTreeNode> children = new ArrayList<>();
 	public MutableTreeNode parent;
+	public String depLabel;
 
-	public MutableTreeNode(String label, String posTag, MutableTreeNode parent) {
+	public MutableTreeNode(String label, String posTag, String depLabel, MutableTreeNode parent) {
 		this.label = label;
 		this.posTag = posTag;
 		this.parent = parent;
+		this.depLabel = depLabel;
 	}
 
 	public void addChild(MutableTreeNode newNode) {

@@ -16,6 +16,7 @@ public class Pruner {
 		applyDeterminantRules(q);
 		applyPDTRules(q);
 		applyINRules(q);
+		applyAuxPassRules(q);
 		/*
 		 * interrogative rules last else each interrogative word has at least
 		 * two children, which can't be handled yet by the removal
@@ -23,6 +24,26 @@ public class Pruner {
 		applyInterrogativeRules(q);
 
 		return q.tree;
+	}
+
+	private void applyAuxPassRules(Question q) {
+		inorderRemovalAuxPass(q.tree.getRoot(), q.tree);
+
+	}
+
+	private boolean inorderRemovalAuxPass(MutableTreeNode node, MutableTree tree) {
+		if (node.depLabel.equals("auxpass")) {
+			tree.remove(node);
+			return true;
+		} else {
+			for (Iterator<MutableTreeNode> it = node.getChildren().iterator(); it.hasNext();) {
+				MutableTreeNode child = it.next();
+				if (inorderRemovalAuxPass(child, tree)) {
+					it = node.getChildren().iterator();
+				}
+			}
+			return false;
+		}
 	}
 
 	private void applyPDTRules(Question q) {

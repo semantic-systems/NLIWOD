@@ -44,7 +44,7 @@ public class PipelineController_QALD4 {
 		controller.dataset = ClassLoader.getSystemResource("qald-4_hybrid_train.xml").getFile();
 		controller.endpoint = "http://dbpedia.org/sparql";
 		controller.datasetLoader = new QaldLoader();
-		controller.nerdModule = new Spotlight();
+		controller.nerdModule = new Fox();
 		controller.parseTree = new ParseTree();
 		controller.moduleBuilder = new ModuleBuilder();
 		controller.pseudoQueryBuilder = new PseudoQueryBuilder();
@@ -78,31 +78,31 @@ public class PipelineController_QALD4 {
 				log.debug(q.tree.toString());
 				q.tree = this.pruner.prune(q);
 				log.debug(q.tree.toString());
-//				// TODO 5. Find projection variable
-//
-//				// 7. Build modules
-//				q.modules = this.moduleBuilder.build(q.tree.getRoot(), null, q);
-//
-//				// TODO 7.1 Apply rdfs reasoning on each module
-//
-//				// 8. Build pseudo queries
-//				List<ParameterizedSparqlString> tmp = this.pseudoQueryBuilder.buildQuery(q);
-//				int i = 0;
+				// TODO 5. Find projection variable
+
+				// 7. Build modules
+				q.modules = this.moduleBuilder.build(q.tree.getRoot(), null, q);
+
+				// TODO 7.1 Apply rdfs reasoning on each module
+
+				// 8. Build pseudo queries
+				List<ParameterizedSparqlString> tmp = this.pseudoQueryBuilder.buildQuery(q);
+				int i = 0;
 //				for (ParameterizedSparqlString pseudoQuery : tmp) {
 //					log.debug("\t " + i++ + " : " + pseudoQuery.toString());
 //				}
-//
-//				// TODO 9. Eliminate invalid queries and find top ranked query
-//				q.pseudoSystemQuery = null;
-//				// TODO 10. Execute queries to generate system answers
-//				Set<RDFNode> systemAnswers = new HashSet<RDFNode>();
-//
-//				// 11. Compare to set of resources from benchmark
-//				double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
-//				double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-//				double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-//				log.debug("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
-//				break;
+
+				// TODO 9. Eliminate invalid queries and find top ranked query
+				q.pseudoSystemQuery = null;
+				// TODO 10. Execute queries to generate system answers
+				Set<RDFNode> systemAnswers = new HashSet<RDFNode>();
+
+				// 11. Compare to set of resources from benchmark
+				double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+				double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+				double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+				log.debug("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+				break;
 			} catch (QueryParseException e) {
 				log.error("QueryParseException: " + q.pseudoSparqlQuery, e);
 			}

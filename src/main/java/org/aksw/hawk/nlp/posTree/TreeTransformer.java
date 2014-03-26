@@ -20,10 +20,10 @@ public class TreeTransformer {
 
 		MutableTreeNode newParent = null;
 		if (parent == null) {
-			newParent = new MutableTreeNode(depNode.form, depNode.pos, null);
+			newParent = new MutableTreeNode(depNode.form, depNode.pos,depNode.getLabel(), null);
 			tree.head = newParent;
 		} else {
-			newParent = new MutableTreeNode(depNode.form, depNode.pos, parent);
+			newParent = new MutableTreeNode(depNode.form, depNode.pos,depNode.getLabel(), parent);
 			parent.addChild(newParent);
 		}
 		for (DEPNode tmpChilds : depNode.getDependentNodeList()) {
