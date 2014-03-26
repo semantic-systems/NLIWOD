@@ -3,19 +3,21 @@ package org.aksw.hawk.nlp.posTree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MutableTreeNode {
+public class MutableTreeNode implements Comparable {
 
 	public String label;
 	public String posTag;
 	public List<MutableTreeNode> children = new ArrayList<>();
 	public MutableTreeNode parent;
 	public String depLabel;
+	public int nodeNumber;
 
-	public MutableTreeNode(String label, String posTag, String depLabel, MutableTreeNode parent) {
+	public MutableTreeNode(String label, String posTag, String depLabel, MutableTreeNode parent, int i) {
 		this.label = label;
 		this.posTag = posTag;
 		this.parent = parent;
 		this.depLabel = depLabel;
+		this.nodeNumber = i;
 	}
 
 	public void addChild(MutableTreeNode newNode) {
@@ -26,7 +28,18 @@ public class MutableTreeNode {
 		return children;
 	}
 
+	@Override
 	public String toString() {
 		return label + ": " + posTag;
 	}
+
+	@Override
+	public int compareTo(Object o) {
+		if (this.nodeNumber > ((MutableTreeNode) o).nodeNumber) {
+			return 1;
+		} else {
+			return -1;
+		}
+	}
+
 }

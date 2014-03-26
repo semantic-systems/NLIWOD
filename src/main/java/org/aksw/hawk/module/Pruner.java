@@ -1,6 +1,10 @@
 package org.aksw.hawk.module;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.nlp.posTree.MutableTree;
@@ -23,7 +27,19 @@ public class Pruner {
 		 */
 		applyInterrogativeRules(q);
 
+		sortTree(q.tree);
 		return q.tree;
+	}
+
+	private void sortTree(MutableTree tree) {
+		Queue<MutableTreeNode> queue = new LinkedList<MutableTreeNode>();
+		queue.add(tree.getRoot());
+		while (!queue.isEmpty()) {
+			MutableTreeNode tmp = queue.poll();
+			Collections.sort(tmp.getChildren());
+			queue.addAll(tmp.getChildren());
+		}
+
 	}
 
 	private void applyAuxPassRules(Question q) {

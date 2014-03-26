@@ -13,14 +13,12 @@ import org.aksw.hawk.module.Pruner;
 import org.aksw.hawk.module.PseudoQueryBuilder;
 import org.aksw.hawk.nlp.ParseTree;
 import org.aksw.hawk.nlp.posTree.TreeTransformer;
-import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.nlp.spotter.ASpotter;
-import org.aksw.hawk.nlp.spotter.Spotlight;
+import org.aksw.hawk.nlp.spotter.Fox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.clearnlp.dependency.DEPTree;
-import com.hp.hpl.jena.query.ParameterizedSparqlString;
 import com.hp.hpl.jena.query.QueryParseException;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
@@ -86,8 +84,8 @@ public class PipelineController_QALD4 {
 				// TODO 7.1 Apply rdfs reasoning on each module
 
 				// 8. Build pseudo queries
-				List<ParameterizedSparqlString> tmp = this.pseudoQueryBuilder.buildQuery(q);
-				int i = 0;
+//				List<ParameterizedSparqlString> tmp = this.pseudoQueryBuilder.buildQuery(q);
+//				int i = 0;
 //				for (ParameterizedSparqlString pseudoQuery : tmp) {
 //					log.debug("\t " + i++ + " : " + pseudoQuery.toString());
 //				}

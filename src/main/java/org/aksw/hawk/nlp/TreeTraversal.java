@@ -23,13 +23,14 @@ public class TreeTraversal {
 			sb = new StringBuilder();
 			sb.append("\n");
 		}
-		sb.append(printTabs(i) + depNode.label + "\n");
+		sb.append(printTabs(i) + depNode.label + " (" + depNode.nodeNumber + ")\n");
 		++i;
 		for (MutableTreeNode node : depNode.getChildren()) {
 			inorderTraversal(node, i, sb);
 		}
 		return sb.toString();
 	}
+
 	private static String printTabs(int i) {
 		String tabs = "";
 		if (i > 0) {

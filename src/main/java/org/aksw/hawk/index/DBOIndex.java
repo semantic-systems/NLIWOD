@@ -13,6 +13,7 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.queryparser.classic.QueryParserBase;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -62,7 +63,7 @@ public class DBOIndex {
 			Analyzer analyzer = new SimpleAnalyzer(LUCENE_VERSION);
 			QueryParser parser = new QueryParser(LUCENE_VERSION, FIELD_NAME_OBJECT, analyzer);
 			parser.setDefaultOperator(QueryParser.Operator.OR);
-			q = parser.parse(QueryParser.escape(object));
+			q = parser.parse(QueryParserBase.escape(object));
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
 			isearcher.search(q, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;

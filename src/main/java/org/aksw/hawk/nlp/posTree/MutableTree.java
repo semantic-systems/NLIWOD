@@ -30,6 +30,7 @@ public class MutableTree {
 		}
 	}
 
+	@Override
 	public String toString() {
 		return TreeTraversal.inorderTraversal(head, 0, null);
 	}

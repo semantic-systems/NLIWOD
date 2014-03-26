@@ -11,6 +11,7 @@ public class Entity implements Comparable<Entity> {
 	public List<Resource> uris = new ArrayList<Resource>();
 	public List<Resource> posTypesAndCategories = new ArrayList<Resource>();
 
+	@Override
 	public String toString() {
 		return label + "(" + uris.get(0) + ")";
 	}

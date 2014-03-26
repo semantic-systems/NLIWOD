@@ -5,6 +5,7 @@ class WhereClause {
 	public String p;
 	public String o;
 
+	@Override
 	public String toString() {
 		return s + " " + p + " " + o;
 	}
