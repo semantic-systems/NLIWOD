@@ -20,11 +20,10 @@ public class ModuleBuilder {
 		}
 		// 5. Find projection variable
 		List<Module> findProjectionVariable = findProjectionVariable(q);
-		if(findProjectionVariable== null){
+		if (findProjectionVariable == null) {
 			return null;
 		}
 		list.addAll(findProjectionVariable);
-
 		log.debug(Joiner.on("\n").join(list));
 		return list;
 	}
@@ -49,13 +48,19 @@ public class ModuleBuilder {
 				log.error("NO TYPE VARIABLE FOUND: " + q.id);
 				return null;
 			} else {
-				Module module = new ProjectionModule(type);
-				tmp.add(module);
+				Module proj = new ProjectionModule(type);
+				tmp.add(proj);
+				log.debug("\t==>" + Joiner.on("   ").join(projectionVariable));
+
+				projectionVariable.remove(0);
+
+				Module projConstraint = new ProjectionConstraintModule(projectionVariable.get(0));
+				tmp.add(projConstraint);
+				log.debug("\t==>" + Joiner.on("   ").join(projectionVariable));
 			}
-			log.debug("\t==>" + Joiner.on("   ").join(projectionVariable));
 
 		} else {
-			log.error("NO RULE APPLIED FOR THIS QUESTION: " +q.id);
+			log.error("NO RULE APPLIED FOR THIS QUESTION: " + q.id);
 			return null;
 		}
 		return tmp;
