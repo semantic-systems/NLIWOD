@@ -67,19 +67,11 @@ public class DBAbstractsIndex {
 
 	public List<String> search(String subject, String predicate, String object) {
 		List<String> triples = new ArrayList<String>();
-		// BooleanQuery bq = new BooleanQuery();
 		try {
 			// if (cache.containsKey(subject+predicate+object)) {
 			// return cache.get(subject+predicate+object);
 			// }
 			log.debug("\t start asking index...");
-			// Query q = null;
-			// Analyzer analyzer = new SimpleAnalyzer(LUCENE_VERSION);
-			// QueryParser parser = new QueryParser(LUCENE_VERSION,
-			// FIELD_NAME_OBJECT, analyzer);
-			// parser.setDefaultOperator(QueryParser.Operator.AND);
-			// q = parser.parse(QueryParser.escape(object));
-			// bq.add(q, BooleanClause.Occur.MUST);
 
 			Term term = new Term(FIELD_NAME_OBJECT, object  );
 			PrefixQuery query = new PrefixQuery(term);
@@ -92,9 +84,10 @@ public class DBAbstractsIndex {
 				String s = hitDoc.get(FIELD_NAME_SUBJECT);
 				String p = hitDoc.get(FIELD_NAME_PREDICATE);
 				String o = hitDoc.get(FIELD_NAME_OBJECT);
-				if(s.contains("Martin"))
-				log.debug(s + "==>");
 			}
+
+			//TODO add results 
+			
 			log.debug("\t finished asking index...");
 			// cache.put(subject+predicate+object, triples);
 		} catch (Exception e) {

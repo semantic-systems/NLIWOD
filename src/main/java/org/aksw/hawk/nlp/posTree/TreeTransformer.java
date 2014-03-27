@@ -13,6 +13,7 @@ public class TreeTransformer {
 
 	public MutableTree DEPtoMutableDEP(DEPTree tmp) {
 		MutableTree tree = new MutableTree();
+		 i = 0;
 		addNodeRecursivly(tree, tree.head, tmp.getFirstRoot());
 
 		return tree;

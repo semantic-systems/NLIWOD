@@ -1,7 +1,7 @@
 package org.aksw.hawk.index;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
@@ -19,7 +19,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.RAMDirectory;
+import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +39,7 @@ public class DBOIndex {
 	public String FIELD_NAME_SUBJECT = "subject";
 	public String FIELD_NAME_PREDICATE = "predicate";
 	public String FIELD_NAME_OBJECT = "object";
-	private int numberOfDocsRetrievedFromIndex = 100;
+	private int numberOfDocsRetrievedFromIndex = 1;
 
 	private Directory directory;
 	private IndexSearcher isearcher;
@@ -48,37 +48,38 @@ public class DBOIndex {
 	private SimpleAnalyzer analyzer;
 
 	public DBOIndex() {
-		directory = new RAMDirectory();
+		try {
+			directory = new MMapDirectory(new File("indexOntology"));
+		} catch (IOException e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
 		analyzer = new SimpleAnalyzer(LUCENE_VERSION);
 		index();
 	}
 
-	public List<String> search(String subject, String predicate, String object) {
+	public String search(String object) {
 		try {
-
 			ireader = DirectoryReader.open(directory);
 			isearcher = new IndexSearcher(ireader);
 			log.debug("\t start asking index...");
-			Query q = null;
+
 			Analyzer analyzer = new SimpleAnalyzer(LUCENE_VERSION);
 			QueryParser parser = new QueryParser(LUCENE_VERSION, FIELD_NAME_OBJECT, analyzer);
 			parser.setDefaultOperator(QueryParser.Operator.OR);
-			q = parser.parse(QueryParserBase.escape(object));
+			Query q = parser.parse(QueryParserBase.escape(object));
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
+
 			isearcher.search(q, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
 
 			for (int i = 0; i < hits.length; i++) {
 				Document hitDoc = isearcher.doc(hits[i].doc);
-				String s = hitDoc.get(FIELD_NAME_SUBJECT);
-				String p = hitDoc.get(FIELD_NAME_PREDICATE);
-				String o = hitDoc.get(FIELD_NAME_OBJECT);
-				// TODO build clever return
-				System.out.println(s + p + o);
+				String o = hitDoc.get(FIELD_NAME_SUBJECT);
+				log.debug("\t finished asking index...");
+				return o;
 			}
-			log.debug("\t finished asking index...");
 		} catch (Exception e) {
-			log.error(e.getLocalizedMessage() + " -> " + subject);
+			log.error(e.getLocalizedMessage() + " -> " + object);
 		}
 		return null;
 	}
@@ -88,7 +89,7 @@ public class DBOIndex {
 			ireader.close();
 			directory.close();
 		} catch (IOException e) {
-			log.error(e.getLocalizedMessage());
+			log.error(e.getLocalizedMessage(), e);
 		}
 	}
 
@@ -118,8 +119,7 @@ public class DBOIndex {
 			iwriter.commit();
 			iwriter.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getLocalizedMessage(), e);
 		}
 	}
 
@@ -133,7 +133,7 @@ public class DBOIndex {
 
 	public static void main(String args[]) {
 		DBOIndex index = new DBOIndex();
-		index.search(null, null, "pope");
+		System.out.println(index.search("city"));
 
 	}
 }

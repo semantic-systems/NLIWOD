@@ -1,6 +1,5 @@
-package org.aksw.hawk.module;
+package org.aksw.hawk.nlp;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -16,6 +15,7 @@ public class Pruner {
 	Logger log = LoggerFactory.getLogger(Pruner.class);
 
 	public MutableTree prune(Question q) {
+		log.debug(q.tree.toString());
 		applyPunctuationRules(q);
 		applyDeterminantRules(q);
 		applyPDTRules(q);
@@ -26,8 +26,8 @@ public class Pruner {
 		 * two children, which can't be handled yet by the removal
 		 */
 		applyInterrogativeRules(q);
-
 		sortTree(q.tree);
+		log.debug(q.tree.toString());
 		return q.tree;
 	}
 

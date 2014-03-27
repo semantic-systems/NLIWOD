@@ -3,7 +3,7 @@ package org.aksw.hawk.nlp.posTree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MutableTreeNode implements Comparable {
+public class MutableTreeNode implements Comparable<MutableTreeNode> {
 
 	public String label;
 	public String posTag;
@@ -34,8 +34,8 @@ public class MutableTreeNode implements Comparable {
 	}
 
 	@Override
-	public int compareTo(Object o) {
-		if (this.nodeNumber > ((MutableTreeNode) o).nodeNumber) {
+	public int compareTo(MutableTreeNode o) {
+		if (this.nodeNumber > o.nodeNumber) {
 			return 1;
 		} else {
 			return -1;

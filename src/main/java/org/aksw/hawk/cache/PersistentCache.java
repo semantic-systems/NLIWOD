@@ -9,10 +9,11 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PersistentCache {
-	public static org.slf4j.Logger log = LoggerFactory.getLogger(PersistentCache.class);
+	public static Logger log = LoggerFactory.getLogger(PersistentCache.class);
 	public String charset = "UTF-8";
 	public static String cacheLocation = "spotterCache";
 	public HashMap<String, String> cache;
@@ -68,9 +69,7 @@ public class PersistentCache {
 	}
 
 	public void put(String input, String output) {
-
 		cache.put(input, output);
-
 	}
 
 	public int size() {

@@ -1,5 +1,6 @@
 package org.aksw.hawk.module;
 
+
 class WhereClause {
 	public String s;
 	public String p;
