@@ -15,7 +15,7 @@ public class Pruner {
 	Logger log = LoggerFactory.getLogger(Pruner.class);
 
 	public MutableTree prune(Question q) {
-		log.debug(q.tree.toString());
+//		log.debug(q.tree.toString());
 		applyPunctuationRules(q);
 		applyDeterminantRules(q);
 		applyPDTRules(q);

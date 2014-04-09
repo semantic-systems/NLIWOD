@@ -1,6 +1,5 @@
 package org.aksw.hawk.module;
 
-import org.aksw.hawk.index.DBOIndex;
 import org.aksw.hawk.nlp.posTree.MutableTreeNode;
 
 import com.hp.hpl.jena.vocabulary.RDF;
@@ -8,7 +7,6 @@ import com.hp.hpl.jena.vocabulary.RDF;
 public class ProjectionModule extends Module {
 
 	public ProjectionModule(MutableTreeNode type) {
-		DBOIndex dboIndex =  new DBOIndex();
 		String dboTerm = dboIndex.search(  type.label);
 		log.debug("DBOTerm: " + dboTerm);
 

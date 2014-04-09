@@ -68,8 +68,9 @@ public class PipelineController_QALD4 {
 					log.debug("\t" + Joiner.on("\n").join(q.languageToNamedEntites.get("en")));
 				}
 				// 3. Build trees from questions and cache them
-				DEPTree tmpTree = this.parseTree.process(q);
-				q.tree = this.treeTransform.DEPtoMutableDEP(tmpTree);
+				q.depTree =  this.parseTree.process(q);
+
+				q.tree = this.treeTransform.DEPtoMutableDEP(q.depTree);
 
 				// 4. Apply pruning rules
 				q.tree = this.pruner.prune(q);
@@ -96,8 +97,8 @@ public class PipelineController_QALD4 {
 				double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 				double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
 				double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-				// log.debug("\tP=" + precision + " R=" + recall + " F=" +
-				// fMeasure);
+				log.debug("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+				break;
 			} catch (QueryParseException e) {
 				log.error("QueryParseException: " + q.pseudoSparqlQuery, e);
 			}

@@ -14,6 +14,8 @@ import org.aksw.hawk.module.Module;
 import org.aksw.hawk.nlp.posTree.MutableTree;
 import org.apache.commons.lang3.StringUtils;
 
+import com.clearnlp.dependency.DEPTree;
+
 public class Question implements Serializable {
 
 	/**
@@ -30,6 +32,7 @@ public class Question implements Serializable {
 	public String pseudoSparqlQuery;
 	public String pseudoSystemQuery;
 	public MutableTree tree;
+	public DEPTree depTree;
 	public Map<String, String> languageToQuestion = new LinkedHashMap<String, String>();
 	public Map<String, List<String>> languageToKeywords = new LinkedHashMap<String, List<String>>();
 	public Map<String, List<Entity>> languageToNamedEntites = new LinkedHashMap<String, List<Entity>>();
@@ -37,6 +40,7 @@ public class Question implements Serializable {
 	public Map<String, List<GoldEntity>> goldEntites = new HashMap<String, List<GoldEntity>>();
 	public Map<String, Set<String>> goldenAnswers = new HashMap<String, Set<String>>();
 	public List<Module> modules;
+
 
 
 	public Question() {

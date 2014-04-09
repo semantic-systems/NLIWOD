@@ -11,6 +11,7 @@ public class MutableTreeNode implements Comparable<MutableTreeNode> {
 	public MutableTreeNode parent;
 	public String depLabel;
 	public int nodeNumber;
+	private boolean used = false;
 
 	public MutableTreeNode(String label, String posTag, String depLabel, MutableTreeNode parent, int i) {
 		this.label = label;
@@ -42,4 +43,11 @@ public class MutableTreeNode implements Comparable<MutableTreeNode> {
 		}
 	}
 
+	public void isUsed() {
+		used = true;
+	}
+
+	public boolean used() {
+		return used;
+	}
 }
