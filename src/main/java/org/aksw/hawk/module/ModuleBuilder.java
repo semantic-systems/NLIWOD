@@ -28,8 +28,8 @@ public class ModuleBuilder {
 
 		// add constraint modules by traversing the tree
 		List<Module> findConstraintVariable = findConstraintVariable(q);
-		 list.addAll(findConstraintVariable);
-		log.debug(Joiner.on("\n").join(list));
+		list.addAll(findConstraintVariable);
+		log.debug("\n" + Joiner.on("\n").join(list));
 		return list;
 	}
 
@@ -53,7 +53,7 @@ public class ModuleBuilder {
 						// mark the subnode as already used
 						constraintObject.isUsed();
 						// construct constraint module
-						Module projConstraint = new ConstraintModule(constraintPredicate,constraintObject);
+						Module projConstraint = new ConstraintModule(constraintPredicate, constraintObject);
 						tmp.add(projConstraint);
 					} else {
 						log.error("Cannot build constraint variable at question " + q.id + " since this case is not implemented");

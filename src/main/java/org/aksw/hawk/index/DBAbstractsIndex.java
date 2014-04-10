@@ -3,10 +3,14 @@ package org.aksw.hawk.index;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field.Store;
@@ -16,9 +20,14 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.PrefixQuery;
+import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
@@ -35,9 +44,9 @@ import org.slf4j.LoggerFactory;
 public class DBAbstractsIndex {
 
 	private Logger log = LoggerFactory.getLogger(DBAbstractsIndex.class);
-	public String FIELD_NAME_SUBJECT = "subject";
-	public String FIELD_NAME_PREDICATE = "predicate";
-	public String FIELD_NAME_OBJECT = "object";
+	public static String FIELD_NAME_SUBJECT = "subject";
+	public static String FIELD_NAME_PREDICATE = "predicate";
+	public static String FIELD_NAME_OBJECT = "object";
 	private int numberOfDocsRetrievedFromIndex = 1000;
 	public Version LUCENE_VERSION = Version.LUCENE_46;
 
@@ -65,33 +74,32 @@ public class DBAbstractsIndex {
 		}
 	}
 
-	public List<String> search(String subject, String predicate, String object) {
-		List<String> triples = new ArrayList<String>();
+	public List<Document> askForPredicateWithBoundAbstract(String targetPredicate, String boundAbstract) {
+		List<Document> triples = new ArrayList<Document>();
 		try {
-			// if (cache.containsKey(subject+predicate+object)) {
-			// return cache.get(subject+predicate+object);
-			// }
 			log.debug("\t start asking index...");
+			boundAbstract = URLDecoder.decode(boundAbstract, "UTF-8");
+			BooleanQuery bq = new BooleanQuery();
+			TermQuery termSubject = new TermQuery(new Term(FIELD_NAME_SUBJECT, "\"" + boundAbstract + "\""));
+			bq.add(termSubject, BooleanClause.Occur.MUST);
 
-			Term term = new Term(FIELD_NAME_OBJECT, object  );
-			PrefixQuery query = new PrefixQuery(term);
+			PrefixQuery query = new PrefixQuery(new Term(FIELD_NAME_OBJECT, targetPredicate));
+			bq.add(query, BooleanClause.Occur.MUST);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
-			isearcher.search(query, collector);
+			Query q = new QueryParser(LUCENE_VERSION, FIELD_NAME_SUBJECT, new KeywordAnalyzer()).parse(bq.toString());
+			isearcher.search(q, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
-
 			for (int i = 0; i < hits.length; i++) {
 				Document hitDoc = isearcher.doc(hits[i].doc);
 				String s = hitDoc.get(FIELD_NAME_SUBJECT);
 				String p = hitDoc.get(FIELD_NAME_PREDICATE);
 				String o = hitDoc.get(FIELD_NAME_OBJECT);
+				log.debug("\tFound in document: " + s);
+				triples.add(hitDoc);
 			}
 
-			//TODO add results 
-			
-			log.debug("\t finished asking index...");
-			// cache.put(subject+predicate+object, triples);
 		} catch (Exception e) {
-			log.error(e.getLocalizedMessage() + " -> " + subject);
+			log.error(e.getLocalizedMessage(), e);
 		}
 		return triples;
 	}
@@ -161,8 +169,9 @@ public class DBAbstractsIndex {
 
 	public static void main(String args[]) {
 		DBAbstractsIndex index = new DBAbstractsIndex();
-		index.search(null, null, "assassin");
+		index.askForPredicateWithBoundAbstract("assassin", "http://dbpedia.org/resource/Martin_Luther_King%2C_Jr.");
 		index.close();
 
 	}
+
 }

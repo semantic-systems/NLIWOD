@@ -15,6 +15,9 @@ public class QALD4_EvaluationUtils {
 	static Logger log = LoggerFactory.getLogger(QALD4_EvaluationUtils.class);
 
 	public static double precision(Set<RDFNode> systemAnswer, Question question) {
+		if(systemAnswer==null){
+			return 0;
+		}
 		double precision = 0;
 		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers.get("en"));
 		if (isSelectType(question.pseudoSparqlQuery)) {
@@ -37,6 +40,9 @@ public class QALD4_EvaluationUtils {
 	}
 
 	public static double recall(Set<RDFNode> systemAnswer, Question question) {
+		if(systemAnswer==null){
+			return 0;
+		}
 		double recall = 0;
 		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers.get("en"));
 		if (isSelectType(question.pseudoSparqlQuery)) {

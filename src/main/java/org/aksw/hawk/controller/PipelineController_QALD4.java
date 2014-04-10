@@ -7,9 +7,9 @@ import java.util.Set;
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.autosparql.commons.qald.QaldLoader;
 import org.aksw.autosparql.commons.qald.Question;
-import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.hawk.module.ModuleBuilder;
 import org.aksw.hawk.module.PseudoQueryBuilder;
+import org.aksw.hawk.module.SystemAnswerer;
 import org.aksw.hawk.nlp.ParseTree;
 import org.aksw.hawk.nlp.Pruner;
 import org.aksw.hawk.nlp.posTree.TreeTransformer;
@@ -18,8 +18,8 @@ import org.aksw.hawk.nlp.spotter.Fox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.clearnlp.dependency.DEPTree;
 import com.google.common.base.Joiner;
+import com.hp.hpl.jena.query.ParameterizedSparqlString;
 import com.hp.hpl.jena.query.QueryParseException;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
@@ -34,6 +34,7 @@ public class PipelineController_QALD4 {
 	private PseudoQueryBuilder pseudoQueryBuilder;
 	private Pruner pruner;
 	private TreeTransformer treeTransform;
+	private SystemAnswerer systemAnswerer;
 
 	public static void main(String args[]) {
 		PipelineController_QALD4 controller = new PipelineController_QALD4();
@@ -49,6 +50,7 @@ public class PipelineController_QALD4 {
 		controller.pseudoQueryBuilder = new PseudoQueryBuilder();
 		controller.pruner = new Pruner();
 		controller.treeTransform = new TreeTransformer();
+		controller.systemAnswerer = new SystemAnswerer();
 
 		log.info("Run controller");
 		controller.run();
@@ -68,7 +70,7 @@ public class PipelineController_QALD4 {
 					log.debug("\t" + Joiner.on("\n").join(q.languageToNamedEntites.get("en")));
 				}
 				// 3. Build trees from questions and cache them
-				q.depTree =  this.parseTree.process(q);
+				q.depTree = this.parseTree.process(q);
 
 				q.tree = this.treeTransform.DEPtoMutableDEP(q.depTree);
 
@@ -81,23 +83,22 @@ public class PipelineController_QALD4 {
 				// TODO 7.1 Apply rdfs reasoning on each module
 
 				// 8. Build pseudo queries
-				// List<ParameterizedSparqlString> tmp =
-				// this.pseudoQueryBuilder.buildQuery(q);
-				// int i = 0;
-				// for (ParameterizedSparqlString pseudoQuery : tmp) {
-				// log.debug("\t " + i++ + " : " + pseudoQuery.toString());
-				// }
+				List<ParameterizedSparqlString> tmp = this.pseudoQueryBuilder.buildQuery(q);
+				log.debug("\n" + Joiner.on("\n ").join(tmp));
 
 				// TODO 9. Eliminate invalid queries and find top ranked query
 				q.pseudoSystemQuery = null;
-				// TODO 10. Execute queries to generate system answers
-				Set<RDFNode> systemAnswers = new HashSet<RDFNode>();
 
-				// 11. Compare to set of resources from benchmark
-				double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
-				double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-				double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-				log.debug("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+				// 10. Execute queries to generate system answers
+				for (ParameterizedSparqlString pseudoQuery : tmp) {
+					Set<RDFNode> systemAnswers = this.systemAnswerer.answer(pseudoQuery);
+
+					// 11. Compare to set of resources from benchmark
+					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+					log.debug("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+				}
 				break;
 			} catch (QueryParseException e) {
 				log.error("QueryParseException: " + q.pseudoSparqlQuery, e);
@@ -105,5 +106,4 @@ public class PipelineController_QALD4 {
 		}
 
 	}
-
 }

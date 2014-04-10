@@ -1,10 +1,15 @@
 package org.aksw.hawk.module;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.aksw.autosparql.commons.qald.Question;
+import org.apache.xerces.impl.xs.opti.NodeImpl;
+import org.openrdf.query.algebra.Var;
 
+import com.google.common.base.Joiner;
+import com.hp.hpl.jena.graph.Node_Variable;
 import com.hp.hpl.jena.query.ParameterizedSparqlString;
 
 public class PseudoQueryBuilder {
@@ -12,36 +17,72 @@ public class PseudoQueryBuilder {
 	public List<ParameterizedSparqlString> buildQuery(Question q) {
 		List<ParameterizedSparqlString> queries = new ArrayList<ParameterizedSparqlString>();
 		int numberOfModules = q.modules.size();
-		boolean[] print = new boolean[numberOfModules];
+		// init print with each number of statements per module
+		int[] print = new int[numberOfModules];
+		for (int i = 0; i < print.length; i++) {
+			print[i] = q.modules.get(i).statementList.size() - 1;
+		}
+		// iterate until all permutations are reached
 		boolean finished = false;
 		while (!finished) {
 			ParameterizedSparqlString query = new ParameterizedSparqlString();
 			buildCommandText(query, q);
 			finished = true;
-
 			for (int i = 0; i < print.length; i++) {
-				// TODO build a query more wisely
-				if (print[i]) {
-					replaceParameters(query, q.modules.get(i).statementList.get(0), i);
-				} else {
-					replaceParameters(query, q.modules.get(i).statementList.get(1), i);
-					finished = false;
-				}
+				Module currentModule = q.modules.get(i);
+				WhereClause currentChoiceOfStatement = currentModule.statementList.get(print[i]);
+				replaceParameters(query, currentChoiceOfStatement, i);
 			}
-
-			addOneBinary(print);
+			// think of print as a map which shows the current permutations
+			// minus one will generate the next permutation using a clock
+			// paradigm
+			finished = minusOne(print, q);
 			queries.add(query);
 		}
 		return queries;
 	}
 
-	private void replaceParameters(ParameterizedSparqlString query, WhereClause whereClause, int parameterNumber) {
-		query.setIri("xp" + parameterNumber, whereClause.p);
-		if (whereClause.o.startsWith("http://")) {
-			query.setIri("xo" + parameterNumber, whereClause.o);
+	private boolean minusOne(int[] print, Question q) {
+		int pointer = print.length - 1;
+		while (pointer >= 0) {
+			if (print[pointer] > 0) {
+				print[pointer]--;
+				return false;
+			} else {
+				// if we have no chance to decrease the current position
+				// we set it to its initial value and decrease afterwards the
+				// next larger position
+				print[pointer] = q.modules.get(pointer).statementList.size() - 1;
+				pointer--;
+			}
+		}
 
+		return true;
+	}
+
+	private void replaceParameters(ParameterizedSparqlString query, WhereClause whereClause, int parameterNumber) {
+		String s = whereClause.s;
+		String p = whereClause.p;
+		String o = whereClause.o;
+		// keep projection variable
+		if (s.equals("?uri")) {
+			query.setParam("xs" + parameterNumber, new Node_Variable(s.replace("?", "")));
+		}
+		// keep bgp forming variable
+		if (s.equals("?xo1")) {
+			query.setParam("xs" + parameterNumber, new Node_Variable(s.replace("?", "")));
+		}
+
+		// set predicate
+		query.setIri("xp" + parameterNumber, p);
+
+		// handle object
+		if (o.startsWith("http://")) {
+			query.setIri("xo" + parameterNumber, o);
+		} else if (o.startsWith("?")) {
+			query.setParam("xo" + parameterNumber, new Node_Variable(o.replace("?", "")));
 		} else {
-			query.setLiteral("xo" + parameterNumber, whereClause.o);
+			query.setLiteral("xo" + parameterNumber, o);
 		}
 
 	}
@@ -61,19 +102,4 @@ public class PseudoQueryBuilder {
 		query.setCommandText(tmp);
 	}
 
-	private void addOneBinary(boolean[] print) {
-		boolean carry = true;
-		int i = 0;
-		while (carry && i < print.length) {
-			if (print[i]) {
-				print[i] = false;
-				carry = true;
-				i++;
-			} else {
-				print[i] = true;
-				carry = false;
-			}
-		}
-
-	}
 }
