@@ -1,14 +1,10 @@
 package org.aksw.hawk.module;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.aksw.autosparql.commons.qald.Question;
-import org.apache.xerces.impl.xs.opti.NodeImpl;
-import org.openrdf.query.algebra.Var;
 
-import com.google.common.base.Joiner;
 import com.hp.hpl.jena.graph.Node_Variable;
 import com.hp.hpl.jena.query.ParameterizedSparqlString;
 
@@ -66,37 +62,44 @@ public class PseudoQueryBuilder {
 		String o = whereClause.o;
 		// keep projection variable
 		if (s.equals("?uri")) {
-			query.setParam("xs" + parameterNumber, new Node_Variable(s.replace("?", "")));
+			query.setParam("xS" + parameterNumber, new Node_Variable(s.replace("?", "")));
 		}
 		// keep bgp forming variable
 		if (s.equals("?xo1")) {
-			query.setParam("xs" + parameterNumber, new Node_Variable(s.replace("?", "")));
+			query.setParam("xS" + parameterNumber, new Node_Variable(s.replace("?", "")));
+		}
+		// keep projection variable
+		if (o.equals("?uri")) {
+			query.setParam("xO" + parameterNumber, new Node_Variable(o.replace("?", "")));
+		}
+		// keep bgp forming variable
+		if (o.equals("?xo1")) {
+			query.setParam("xO" + parameterNumber, new Node_Variable(o.replace("?", "")));
 		}
 
 		// set predicate
-		query.setIri("xp" + parameterNumber, p);
+		query.setIri("xP" + parameterNumber, p);
 
 		// handle object
 		if (o.startsWith("http://")) {
-			query.setIri("xo" + parameterNumber, o);
+			query.setIri("xO" + parameterNumber, o);
 		} else if (o.startsWith("?")) {
-			query.setParam("xo" + parameterNumber, new Node_Variable(o.replace("?", "")));
+			query.setParam("xO" + parameterNumber, new Node_Variable(o.replace("?", "")));
 		} else {
-			query.setLiteral("xo" + parameterNumber, o);
+			query.setLiteral("xO" + parameterNumber, o);
 		}
 
 	}
 
 	private void buildCommandText(ParameterizedSparqlString query, Question q) {
-		// TODO choose projection variable wisely
 		String tmp = "SELECT ?xs0 WHERE {\n";
 		for (int i = 0; i < q.modules.size(); i++) {
 			// subject
-			tmp += "?xs" + i + " ";
+			tmp += "?xS" + i + " ";
 			// predicate
-			tmp += "?xp" + i + " ";
+			tmp += "?xP" + i + " ";
 			// object
-			tmp += "?xo" + i + ".\n";
+			tmp += "?xO" + i + ".\n";
 		}
 		tmp += "}";
 		query.setCommandText(tmp);
