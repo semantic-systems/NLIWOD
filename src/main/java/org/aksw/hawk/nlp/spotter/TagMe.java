@@ -71,8 +71,10 @@ public class TagMe extends ASpotter {
 				ent.label = (String) next.get("spot");
 				ent.uris.add(new ResourceImpl(((String) next.get("title"))));
 				JSONArray types = (JSONArray) next.get("dbpedia_categories");
-				for (Object type : types) {
-					ent.posTypesAndCategories.add(new ResourceImpl((String) type));
+				if (types != null) {
+					for (Object type : types) {
+						ent.posTypesAndCategories.add(new ResourceImpl((String) type));
+					}
 				}
 				tmpList.add(ent);
 			}
@@ -80,8 +82,11 @@ public class TagMe extends ASpotter {
 			for (Entity entity : tmpList) {
 				// hack to make underscores where spaces are
 				Resource resource = entity.uris.get(0);
-				entity.uris.add(new ResourceImpl(baseURI + resource.getURI().replace(" ", "_")));
-				entity.uris.remove(0);
+				if (resource.getURI() != null) {
+					ResourceImpl e = new ResourceImpl(baseURI + resource.getURI().replace(" ", "_"));
+					entity.uris.add(e);
+					entity.uris.remove(0);
+				}
 			}
 
 			tmp.put("en", tmpList);

@@ -116,5 +116,11 @@
 			<artifactId>sesame-rio-turtle</artifactId>
 			<version>2.7.0-beta1</version>
 		</dependency>
+		<!-- OpenNLP for sentence detection -->
+		<dependency>
+			<groupId>org.apache.opennlp</groupId>
+			<artifactId>opennlp-tools</artifactId>
+			<version>1.5.3</version>
+		</dependency>
 	</dependencies>
 </project>
