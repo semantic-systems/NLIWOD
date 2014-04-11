@@ -11,7 +11,6 @@ import java.util.Set;
 import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.autosparql.commons.qald.uri.GoldEntity;
 import org.aksw.hawk.module.Module;
-import org.aksw.hawk.module.SystemAnswerer;
 import org.aksw.hawk.nlp.posTree.MutableTree;
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,7 +30,6 @@ public class Question implements Serializable {
 	public String answerType;
 	public String sparqlQuery;
 	public String pseudoSparqlQuery;
-	public String pseudoSystemQuery;
 	public MutableTree tree;
 	public DEPTree depTree;
 	public Map<String, String> languageToQuestion = new LinkedHashMap<String, String>();

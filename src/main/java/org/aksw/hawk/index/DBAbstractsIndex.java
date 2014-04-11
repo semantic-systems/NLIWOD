@@ -3,9 +3,7 @@ package org.aksw.hawk.index;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +92,7 @@ public class DBAbstractsIndex {
 				String s = hitDoc.get(FIELD_NAME_SUBJECT);
 				String p = hitDoc.get(FIELD_NAME_PREDICATE);
 				String o = hitDoc.get(FIELD_NAME_OBJECT);
-				log.debug("\tFound in document: " + s);
+				log.debug("\tFound in document: " + s + "\n" + p + "\n" + o);
 				triples.add(hitDoc);
 			}
 

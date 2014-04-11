@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.aksw.autosparql.commons.qald.Question;
 
+import com.google.common.collect.Lists;
 import com.hp.hpl.jena.graph.Node_Variable;
 import com.hp.hpl.jena.query.ParameterizedSparqlString;
 
@@ -35,7 +36,20 @@ public class PseudoQueryBuilder {
 			finished = minusOne(print, q);
 			queries.add(query);
 		}
+
+		queries = rebuildQueriesWithCorrectParameters(queries);
 		return queries;
+	}
+
+	private List<ParameterizedSparqlString> rebuildQueriesWithCorrectParameters(List<ParameterizedSparqlString> queries) {
+		List<ParameterizedSparqlString> tmpList = Lists.newArrayList();
+		for (ParameterizedSparqlString q : queries) {
+			String queryString = q.asQuery().toString();
+			ParameterizedSparqlString tmpQuery = new ParameterizedSparqlString(queryString);
+			tmpList.add(tmpQuery);
+		}
+
+		return tmpList;
 	}
 
 	private boolean minusOne(int[] print, Question q) {
@@ -92,7 +106,7 @@ public class PseudoQueryBuilder {
 	}
 
 	private void buildCommandText(ParameterizedSparqlString query, Question q) {
-		String tmp = "SELECT ?xs0 WHERE {\n";
+		String tmp = "SELECT ?uri WHERE {\n";
 		for (int i = 0; i < q.modules.size(); i++) {
 			// subject
 			tmp += "?xS" + i + " ";

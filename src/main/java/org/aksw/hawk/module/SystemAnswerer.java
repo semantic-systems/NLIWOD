@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.query.ParameterizedSparqlString;
 import com.hp.hpl.jena.query.Query;
@@ -25,7 +26,6 @@ import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 import com.hp.hpl.jena.sparql.core.TriplePath;
 import com.hp.hpl.jena.sparql.syntax.Element;
 import com.hp.hpl.jena.sparql.syntax.ElementGroup;
@@ -62,9 +62,9 @@ public class SystemAnswerer {
 								for (Document doc : list) {
 									List<String> ne = extractPossibleNEFromDoc(doc, localName, triple.getObject().getURI(), subjectType);
 									if (ne.size() == 1) {
-										//write something to rebuild the params or else the wrong will be replaced
-										String name = "?"+subjectVariable.getName().replace("xo", "xO").replace("xp", "xP").replace("xs", "xS");
-										pseudoQuery.setParam(name, new ResourceImpl(ne.get(0)));
+										String name = "?" + subjectVariable.getName();
+										// replace matching variable by found
+										pseudoQuery.setIri(name, ne.get(0));
 									} else {
 										// TODO work on this case
 									}
@@ -83,18 +83,69 @@ public class SystemAnswerer {
 						else {
 							log.error("Cannot resolve hybrid query");
 						}
+					} else {
+						log.error("Cannot resolve hybrid query");
 					}
 					// if object is text
 				}
 			}
 		}
 
-		log.debug("\t" + pseudoQuery);
 		// if query has only variables and URIs anymore than ask DBpedia
+		log.debug("\t" + pseudoQuery);
+		pseudoQuery = removeUnneccessaryClauses(pseudoQuery);
+		log.debug("\t" + pseudoQuery);
 
-		return null;
+		// pose query to endpoint
+		return sparql(pseudoQuery);
 	}
 
+	private Set<RDFNode> sparql(ParameterizedSparqlString pseudoQuery) {
+		Set<RDFNode> set = Sets.newHashSet();
+		QueryExecution qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", pseudoQuery.asQuery());
+		try {
+			ResultSet results = qexec.execSelect();
+			while (results.hasNext()) {
+				set.add(results.next().get("?uri"));
+			}
+		} finally {
+			qexec.close();
+		}
+		return set;
+	}
+
+	/**
+	 * does not work with more special constructs like filters etc.
+	 * @return 
+	 * 
+	 */
+	private ParameterizedSparqlString removeUnneccessaryClauses(ParameterizedSparqlString pseudoQuery) {
+		ParameterizedSparqlString tmpQ = new ParameterizedSparqlString();
+		tmpQ.setCommandText("SELECT ?uri WHERE {");
+		List<Element> elements = ((ElementGroup) pseudoQuery.asQuery().getQueryPattern()).getElements();
+		for (Element elem : elements) {
+			if (elem instanceof ElementPathBlock) {
+				ElementPathBlock pathBlock = (ElementPathBlock) elem;
+				for (TriplePath triple : pathBlock.getPattern().getList()) {
+					if ((triple.getSubject().isVariable() || triple.getObject().isVariable()) && triple.getPredicate().isURI()) {
+						tmpQ.appendNode(triple.getSubject());
+						tmpQ.appendNode(triple.getPredicate());
+						tmpQ.appendNode(triple.getObject());
+
+						tmpQ.append(".\n");
+					}
+				}
+			}
+		}
+		tmpQ.append("}");
+		return tmpQ;
+	}
+/**
+ * needed when retrieving NE from full text to discard non matching ones
+ * @param query
+ * @param variable
+ * @return
+ */
 	private String getTypeOfVariable(Query query, Node variable) {
 		// simple strategy: find triple where variable is in a triple with a
 		// bound predicate

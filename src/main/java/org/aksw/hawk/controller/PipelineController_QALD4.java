@@ -1,6 +1,5 @@
 package org.aksw.hawk.controller;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -87,7 +86,6 @@ public class PipelineController_QALD4 {
 				log.debug("\n" + Joiner.on("\n ").join(tmp));
 
 				// TODO 9. Eliminate invalid queries and find top ranked query
-				q.pseudoSystemQuery = null;
 
 				// 10. Execute queries to generate system answers
 				for (ParameterizedSparqlString pseudoQuery : tmp) {

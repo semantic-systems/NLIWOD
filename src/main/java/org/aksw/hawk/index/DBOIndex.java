@@ -54,6 +54,7 @@ public class DBOIndex {
 			log.error(e.getLocalizedMessage(), e);
 		}
 		analyzer = new SimpleAnalyzer(LUCENE_VERSION);
+		//TODO nicht immer indezieren
 		index();
 	}
 
