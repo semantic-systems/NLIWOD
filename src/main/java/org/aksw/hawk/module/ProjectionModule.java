@@ -21,23 +21,25 @@ public class ProjectionModule extends Module {
 		wc.o = type.label;
 		statementList.add(wc);
 
-		wc = new WhereClause();
-		wc.s = "?uri";
-		wc.p = RDF.type.asResource().getURI();
-		wc.o = dboTerm;
-		statementList.add(wc);
+		if (dboTerm != null) {
+			wc = new WhereClause();
+			wc.s = "?uri";
+			wc.p = RDF.type.asResource().getURI();
+			wc.o = dboTerm;
+			statementList.add(wc);
 
-		wc = new WhereClause();
-		wc.s = "?uri";
-		wc.p = RDF.type.asResource().getURI();
-		wc.o = superClassOf(dboTerm);
-		statementList.add(wc);
+			wc = new WhereClause();
+			wc.s = "?uri";
+			wc.p = RDF.type.asResource().getURI();
+			wc.o = superClassOf(dboTerm);
+			statementList.add(wc);
+		}
 	}
 
 	private String superClassOf(String dboTerm) {
 		// TODO hack nur großgeschriebene sachen verwenden um classes statt
 		// objectproperties zu verwenden
-		String before = dboTerm.substring(0, dboTerm.lastIndexOf("/")+1);
+		String before = dboTerm.substring(0, dboTerm.lastIndexOf("/") + 1);
 		String lowerCase = dboTerm.substring(dboTerm.lastIndexOf("/") + 1, dboTerm.lastIndexOf("/") + 2);
 		String after = dboTerm.substring(dboTerm.lastIndexOf("/") + 2, dboTerm.length());
 		lowerCase = lowerCase.toUpperCase();

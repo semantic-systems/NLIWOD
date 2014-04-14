@@ -4,15 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.aksw.autosparql.commons.qald.Question;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.hp.hpl.jena.graph.Node_Variable;
 import com.hp.hpl.jena.query.ParameterizedSparqlString;
 
 public class PseudoQueryBuilder {
+	Logger log = LoggerFactory.getLogger(PseudoQueryBuilder.class);
 
 	public List<ParameterizedSparqlString> buildQuery(Question q) {
 		List<ParameterizedSparqlString> queries = new ArrayList<ParameterizedSparqlString>();
+		if (q.modules == null) {
+			return null;
+		}
 		int numberOfModules = q.modules.size();
 		// init print with each number of statements per module
 		int[] print = new int[numberOfModules];
@@ -38,6 +45,8 @@ public class PseudoQueryBuilder {
 		}
 
 		queries = rebuildQueriesWithCorrectParameters(queries);
+		log.debug("\n" + Joiner.on("\n ").join(queries));
+
 		return queries;
 	}
 

@@ -83,21 +83,23 @@ public class PipelineController_QALD4 {
 
 				// 8. Build pseudo queries
 				List<ParameterizedSparqlString> tmp = this.pseudoQueryBuilder.buildQuery(q);
-				log.debug("\n" + Joiner.on("\n ").join(tmp));
 
 				// TODO 9. Eliminate invalid queries and find top ranked query
 
 				// 10. Execute queries to generate system answers
-				for (ParameterizedSparqlString pseudoQuery : tmp) {
-					Set<RDFNode> systemAnswers = this.systemAnswerer.answer(pseudoQuery);
+				if (tmp == null) {
+					log.info("\tP=" + 0.0 + " R=" + 0.0 + " F=" + 0.0);
+				} else {
+					for (ParameterizedSparqlString pseudoQuery : tmp) {
+						Set<RDFNode> systemAnswers = this.systemAnswerer.answer(pseudoQuery);
 
-					// 11. Compare to set of resources from benchmark
-					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
-					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-					log.debug("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+						// 11. Compare to set of resources from benchmark
+						double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+						double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+						double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+						log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+					}
 				}
-				break;
 			} catch (QueryParseException e) {
 				log.error("QueryParseException: " + q.pseudoSparqlQuery, e);
 			}
