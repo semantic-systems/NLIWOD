@@ -43,50 +43,54 @@ public class SystemAnswerer {
 			if (elem instanceof ElementPathBlock) {
 				ElementPathBlock pathBlock = (ElementPathBlock) elem;
 				for (TriplePath triple : pathBlock.getPattern().getList()) {
-					Node predicate = triple.getPredicate();
-					// if predicate is text
-					// TODO work on cases
-					if (!predicate.toString(false).startsWith("http:")) {
-						String localName = predicate.getLocalName();
-
-						// case 1: subject bound
-						if (triple.getSubject().isConcrete()) {
-							log.error("Cannot resolve hybrid query");
-						}
-						// case 2: object bound
-						else if (triple.getObject().isConcrete()) {
-							Node subjectVariable = triple.getSubject();
-							String subjectType = getTypeOfVariable(pseudoQuery.asQuery(), subjectVariable);
-							if (triple.getObject().isURI()) {
-								List<Document> list = abstractsIndex.askForPredicateWithBoundAbstract(localName, triple.getObject().getURI());
-								for (Document doc : list) {
-									List<String> ne = extractPossibleNEFromDoc(doc, localName, triple.getObject().getURI(), subjectType);
-									if (ne.size() == 1) {
-										String name = "?" + subjectVariable.getName();
-										// replace matching variable by found
-										pseudoQuery.setIri(name, ne.get(0));
-									} else {
-										// TODO work on this case
+					// only use full-text lookup is triple has full-text part
+					if (triple.getPredicate().getURI().startsWith("file://") || triple.getObject().isLiteral()) {
+						String predicateURI = triple.getPredicate().getURI();
+						// if pred is text do a complex lookup in abstract index
+						if (predicateURI.startsWith("http:")) {
+							log.error("Cannot resolve hybrid part: " + triple.toString());
+						} else {
+							String localName = triple.getPredicate().getLocalName();
+							// case 1: subject bound
+							if (triple.getSubject().isConcrete()) {
+								log.error("Cannot resolve hybrid part");
+							}
+							// case 2: object bound
+							else if (triple.getObject().isConcrete()) {
+								Node subjectVariable = triple.getSubject();
+								String subjectType = getTypeOfVariable(pseudoQuery.asQuery(), subjectVariable);
+								if (triple.getObject().isURI()) {
+									List<Document> list = abstractsIndex.askForPredicateWithBoundAbstract(localName, triple.getObject().getURI());
+									for (Document doc : list) {
+										List<String> ne = extractPossibleNEFromDoc(doc, localName, triple.getObject().getURI(), subjectType);
+										if (ne.size() == 1) {
+											String name = "?" + subjectVariable.getName();
+											// replace matching variable by
+											// found
+											pseudoQuery.setIri(name, ne.get(0));
+										} else {
+											// TODO work on this case
+											log.error("Cannot resolve hybrid part");
+										}
 									}
+
+								} else {
+									log.error("Cannot resolve hybrid part");
 								}
-
-							} else {
-								log.error("Cannot resolve hybrid query");
-
+							}
+							// case 3: both are bound
+							else if (triple.getObject().isConcrete() && triple.getSubject().isConcrete()) {
+								log.error("Cannot resolve hybrid part");
+							}
+							// case 4: neither subject nor object are bound
+							else {
+								log.error("Cannot resolve hybrid part");
 							}
 						}
-						// case 3: both are bound
-						else if (triple.getObject().isConcrete() && triple.getSubject().isConcrete()) {
-							log.error("Cannot resolve hybrid query");
-						}
-						// case 4: neither subject nor object are bound
-						else {
-							log.error("Cannot resolve hybrid query");
-						}
+						// if object is text
 					} else {
-						log.error("Cannot resolve hybrid query");
+						log.debug("Regular SPARQL clause: " + triple.toString());
 					}
-					// if object is text
 				}
 			}
 		}
@@ -116,7 +120,8 @@ public class SystemAnswerer {
 
 	/**
 	 * does not work with more special constructs like filters etc.
-	 * @return 
+	 * 
+	 * @return
 	 * 
 	 */
 	private ParameterizedSparqlString removeUnneccessaryClauses(ParameterizedSparqlString pseudoQuery) {
@@ -140,12 +145,14 @@ public class SystemAnswerer {
 		tmpQ.append("}");
 		return tmpQ;
 	}
-/**
- * needed when retrieving NE from full text to discard non matching ones
- * @param query
- * @param variable
- * @return
- */
+
+	/**
+	 * needed when retrieving NE from full text to discard non matching ones
+	 * 
+	 * @param query
+	 * @param variable
+	 * @return
+	 */
 	private String getTypeOfVariable(Query query, Node variable) {
 		// simple strategy: find triple where variable is in a triple with a
 		// bound predicate

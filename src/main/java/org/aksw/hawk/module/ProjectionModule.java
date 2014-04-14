@@ -15,14 +15,8 @@ public class ProjectionModule extends Module {
 		String dboTerm = dboIndex.search(type.label);
 		log.debug("DBOTerm: " + dboTerm);
 
-		WhereClause wc = new WhereClause();
-		wc.s = "?uri";
-		wc.p = RDF.type.asResource().getURI();
-		wc.o = type.label;
-		statementList.add(wc);
-
 		if (dboTerm != null) {
-			wc = new WhereClause();
+			WhereClause	wc = new WhereClause();
 			wc.s = "?uri";
 			wc.p = RDF.type.asResource().getURI();
 			wc.o = dboTerm;
@@ -32,6 +26,12 @@ public class ProjectionModule extends Module {
 			wc.s = "?uri";
 			wc.p = RDF.type.asResource().getURI();
 			wc.o = superClassOf(dboTerm);
+			statementList.add(wc);
+		} else {
+			WhereClause wc = new WhereClause();
+			wc.s = "?uri";
+			wc.p = RDF.type.asResource().getURI();
+			wc.o = type.label;
 			statementList.add(wc);
 		}
 	}

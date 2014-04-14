@@ -40,7 +40,7 @@ public class PipelineController_QALD4 {
 
 		log.info("Configuring controller");
 
-		controller.dataset = ClassLoader.getSystemResource("qald-4_hybrid_train.xml").getFile();
+		controller.dataset = ClassLoader.getSystemResource("qald-4_hybrid_train_which.xml").getFile();
 		controller.endpoint = "http://dbpedia.org/sparql";
 		controller.datasetLoader = new QaldLoader();
 		controller.nerdModule = new Fox();
@@ -103,7 +103,6 @@ public class PipelineController_QALD4 {
 			} catch (QueryParseException e) {
 				log.error("QueryParseException: " + q.pseudoSparqlQuery, e);
 			}
-			break;
 		}
 
 	}
