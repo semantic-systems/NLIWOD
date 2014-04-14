@@ -103,6 +103,7 @@ public class PipelineController_QALD4 {
 			} catch (QueryParseException e) {
 				log.error("QueryParseException: " + q.pseudoSparqlQuery, e);
 			}
+			break;
 		}
 
 	}

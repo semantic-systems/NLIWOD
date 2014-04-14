@@ -47,16 +47,12 @@ public class ProjectionModule extends Module {
 		String q = "select distinct ?o where { <" + dboTerm + "> <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?o.}";
 		Query sparqlQuery = QueryFactory.create(q);
 		QueryExecution qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", sparqlQuery);
-		try {
-			ResultSet results = qexec.execSelect();
-			while (results.hasNext()) {
-				// TODO improve returning first best result
-				return results.next().get("?o").asResource().getURI();
-			}
-		} finally {
-			qexec.close();
-			log.error("Run into error");
+		ResultSet results = qexec.execSelect();
+		while (results.hasNext()) {
+			// TODO improve returning first best result
+			return results.next().get("?o").asResource().getURI();
 		}
+		qexec.close();
 		return dboTerm;
 	}
 }
