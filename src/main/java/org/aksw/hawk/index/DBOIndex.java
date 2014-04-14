@@ -3,7 +3,6 @@ package org.aksw.hawk.index;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field.Store;
@@ -49,22 +48,28 @@ public class DBOIndex {
 
 	public DBOIndex() {
 		try {
-			directory = new MMapDirectory(new File("indexOntology"));
+			File index = new File("indexOntology");
+			analyzer = new SimpleAnalyzer(LUCENE_VERSION);
+			if (!index.exists()) {
+				index.mkdir();
+				IndexWriterConfig config = new IndexWriterConfig(LUCENE_VERSION, analyzer);
+				directory = new MMapDirectory(index);
+				iwriter = new IndexWriter(directory, config);
+				index();
+			} else {
+				directory = new MMapDirectory(index);
+			}
+			ireader = DirectoryReader.open(directory);
+			isearcher = new IndexSearcher(ireader);
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);
 		}
-		analyzer = new SimpleAnalyzer(LUCENE_VERSION);
-		//TODO nicht immer indezieren
-		index();
 	}
 
 	public String search(String object) {
 		try {
-			ireader = DirectoryReader.open(directory);
-			isearcher = new IndexSearcher(ireader);
 			log.debug("\t start asking index...");
 
-			Analyzer analyzer = new SimpleAnalyzer(LUCENE_VERSION);
 			QueryParser parser = new QueryParser(LUCENE_VERSION, FIELD_NAME_OBJECT, analyzer);
 			parser.setDefaultOperator(QueryParser.Operator.OR);
 			Query q = parser.parse(QueryParserBase.escape(object));
@@ -96,9 +101,6 @@ public class DBOIndex {
 
 	private void index() {
 		try {
-			IndexWriterConfig config = new IndexWriterConfig(LUCENE_VERSION, analyzer);
-			iwriter = new IndexWriter(directory, config);
-
 			Model dbpedia = ModelFactory.createDefaultModel();
 			dbpedia.read("dbpedia_3.9.owl", "RDF/XML");
 			StmtIterator stmts = dbpedia.listStatements(null, RDFS.label, (RDFNode) null);
