@@ -40,7 +40,7 @@ public class TagMe extends ASpotter {
 			prop.load(input);
 			this.key = prop.getProperty("tagmekey");
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("Could not create Tagme", e);
 		}
 	}
 

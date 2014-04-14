@@ -3,9 +3,11 @@ package org.aksw.hawk.index;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
@@ -100,9 +102,14 @@ public class DBAbstractsIndex {
 	}
 
 	private void index() {
-		String file = "/data/r.usbeck/Dropbox/DBpedia/long_abstracts_en.ttl";
-		String baseURI = "http://dbpedia.org";
 		try {
+			Properties prop = new Properties();
+			InputStream input = getClass().getClassLoader().getResourceAsStream("hawk.properties");
+			prop.load(input);
+			String file = prop.getProperty("abstracts");
+
+			String baseURI = "http://dbpedia.org";
+
 			Analyzer analyzer = new SimpleAnalyzer(LUCENE_VERSION);
 			IndexWriterConfig config = new IndexWriterConfig(LUCENE_VERSION, analyzer);
 			IndexWriter iwriter = new IndexWriter(directory, config);
