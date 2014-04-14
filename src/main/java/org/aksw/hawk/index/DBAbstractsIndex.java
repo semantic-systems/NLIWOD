@@ -52,8 +52,6 @@ public class DBAbstractsIndex {
 	private IndexSearcher isearcher;
 	private DirectoryReader ireader;
 
-	// private HashMap<String, List<Triple>> cache;
-
 	public DBAbstractsIndex() {
 		try {
 			File index = new File("indexAbstract");
@@ -66,9 +64,8 @@ public class DBAbstractsIndex {
 			}
 			ireader = DirectoryReader.open(directory);
 			isearcher = new IndexSearcher(ireader);
-			// cache = new HashMap<String, List<Triple>>();
 		} catch (IOException e) {
-			log.error(e.getLocalizedMessage());
+			log.error(e.getLocalizedMessage(), e);
 		}
 	}
 
@@ -143,7 +140,7 @@ public class DBAbstractsIndex {
 			try {
 				addDocumentToIndex(iwriter, subject, predicate, object);
 			} catch (IOException e) {
-				e.printStackTrace();
+				log.error("Could not create index: ", e);
 			}
 		}
 	}
@@ -161,7 +158,7 @@ public class DBAbstractsIndex {
 			ireader.close();
 			directory.close();
 		} catch (IOException e) {
-			log.error(e.getLocalizedMessage());
+			log.error(e.getLocalizedMessage(), e);
 		}
 	}
 
