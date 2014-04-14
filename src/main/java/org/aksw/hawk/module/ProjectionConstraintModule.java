@@ -14,11 +14,21 @@ public class ProjectionConstraintModule extends Module {
 			wc.p = dboTerm;
 			wc.o = "?uri";
 			statementList.add(wc);
+			wc = new WhereClause();
+			wc.s = "?uri";
+			wc.p = dboTerm;
+			wc.o = "?xo1";
+			statementList.add(wc);
 		} else {
 			WhereClause wc = new WhereClause();
 			wc.s = "?xo1";
 			wc.p = mutableTreeNode.label;
 			wc.o = "?uri";
+			statementList.add(wc);
+			wc = new WhereClause();
+			wc.s = "?uri";
+			wc.p = mutableTreeNode.label;
+			wc.o = "?xo1";
 			statementList.add(wc);
 		}
 	}

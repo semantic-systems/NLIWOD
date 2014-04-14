@@ -39,13 +39,14 @@ public class ModuleBuilder {
 		Stack<MutableTreeNode> stack = new Stack<>();
 		stack.push(q.tree.getRoot());
 		while (!stack.isEmpty()) {
+			log.debug(stack.peek().toString());
 			MutableTreeNode pop = stack.pop();
 			// if a not yet used argument is found in the parse tree use it to
 			// add to the query
 			if (!pop.used()) {
 				int numberOfChildren = pop.getChildren().size();
 				if (numberOfChildren == 0) {
-					log.error("Cannot build constraint variable at question " + q.id + " since this case is not implemented");
+
 				} else if (numberOfChildren == 1) {
 					if (pop.getChildren().get(0).getChildren().size() == 0) {
 						MutableTreeNode constraintPredicate = pop;
