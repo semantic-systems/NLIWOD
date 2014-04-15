@@ -121,6 +121,7 @@ public class PipelineController_QALD4 {
 				}
 			}
 			bw.write("<hr/>");
+			break;
 		}
 		bw.close();
 	}
