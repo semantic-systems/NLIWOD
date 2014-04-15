@@ -3,6 +3,8 @@ package org.aksw.hawk.nlp.posTree;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.aksw.hawk.experiments.TextInBox;
+
 public class MutableTreeNode implements Comparable<MutableTreeNode> {
 
 	public String label;
@@ -12,6 +14,7 @@ public class MutableTreeNode implements Comparable<MutableTreeNode> {
 	public String depLabel;
 	public int nodeNumber;
 	private boolean used = false;
+	private TextInBox TextNode;
 
 	public MutableTreeNode(String label, String posTag, String depLabel, MutableTreeNode parent, int i) {
 		this.label = label;
@@ -49,5 +52,13 @@ public class MutableTreeNode implements Comparable<MutableTreeNode> {
 
 	public boolean used() {
 		return used;
+	}
+
+	public void setTextNode(TextInBox TextNode) {
+		this.TextNode = TextNode;
+	}
+
+	public TextInBox getTextNode() {
+		return this.TextNode;
 	}
 }

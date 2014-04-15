@@ -40,15 +40,15 @@ public class PipelineController_QALD4 {
 
 		log.info("Configuring controller");
 
-		controller.dataset = ClassLoader.getSystemResource("qald-4_hybrid_train_which.xml").getFile();
+		controller.dataset = ClassLoader.getSystemResource("qald-4_hybrid_train.xml").getFile();
 		controller.endpoint = "http://dbpedia.org/sparql";
 		controller.datasetLoader = new QaldLoader();
 		controller.nerdModule = new Fox();
 		controller.parseTree = new ParseTree();
+		controller.treeTransform = new TreeTransformer();
 		controller.moduleBuilder = new ModuleBuilder();
 		controller.pseudoQueryBuilder = new PseudoQueryBuilder();
 		controller.pruner = new Pruner();
-		controller.treeTransform = new TreeTransformer();
 		controller.systemAnswerer = new SystemAnswerer();
 
 		log.info("Run controller");

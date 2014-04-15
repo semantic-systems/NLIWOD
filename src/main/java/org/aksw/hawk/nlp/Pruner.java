@@ -32,7 +32,7 @@ public class Pruner {
 		 */
 		applyInterrogativeRules(q);
 		sortTree(q.tree);
-		log.error(q.tree.toString());
+		log.info(q.tree.toString());
 		return q.tree;
 	}
 
@@ -47,7 +47,7 @@ public class Pruner {
 			MutableTreeNode pop = stack.pop();
 			// if JJ is found search in the ascending nodes a NN, NNS, NNP or
 			// NNPS
-			if (pop.posTag.equals("JJ")) {
+			if (pop.posTag.equals("JJ") && pop.parent != null) {
 				MutableTreeNode parent = pop.parent;
 				while (parent != null) {
 					if (parent.posTag.equals("NN") || parent.posTag.equals("NNS") || parent.posTag.equals("NNP") || parent.posTag.equals("NNPS")) {
@@ -55,7 +55,9 @@ public class Pruner {
 					}
 					parent = parent.parent;
 				}
-				parent.label = pop.label + " " + parent.label;
+				if (parent != null) {
+					parent.label = pop.label + " " + parent.label;
+				}
 				q.tree.remove(pop);
 			}
 			List<MutableTreeNode> children = pop.getChildren();
