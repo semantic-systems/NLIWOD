@@ -32,10 +32,13 @@ import com.hp.hpl.jena.sparql.syntax.ElementGroup;
 import com.hp.hpl.jena.sparql.syntax.ElementPathBlock;
 
 public class SystemAnswerer {
+	private   String HTTP_LIVE_DBPEDIA_ORG_SPARQL ;
 	Logger log = LoggerFactory.getLogger(SystemAnswerer.class);
 	private int sizeOfWindow = 5;
 	private DBAbstractsIndex abstractsIndex = new DBAbstractsIndex();
-
+	public SystemAnswerer(String endpoint){
+		HTTP_LIVE_DBPEDIA_ORG_SPARQL = endpoint;
+	}
 	public Set<RDFNode> answer(ParameterizedSparqlString pseudoQuery) {
 		// for each full text part of the query ask abstract index
 		List<Element> elements = ((ElementGroup) pseudoQuery.asQuery().getQueryPattern()).getElements();
@@ -106,7 +109,7 @@ public class SystemAnswerer {
 
 	private Set<RDFNode> sparql(ParameterizedSparqlString pseudoQuery) {
 		Set<RDFNode> set = Sets.newHashSet();
-		QueryExecution qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", pseudoQuery.asQuery());
+		QueryExecution qexec = QueryExecutionFactory.sparqlService(HTTP_LIVE_DBPEDIA_ORG_SPARQL, pseudoQuery.asQuery());
 		try {
 			ResultSet results = qexec.execSelect();
 			while (results.hasNext()) {
@@ -167,7 +170,7 @@ public class SystemAnswerer {
 						// ask dbpedia range of pred
 						String q = "select distinct ?o where { <" + pred.getURI() + "> <http://www.w3.org/2000/01/rdf-schema#range> ?o.}";
 						Query sparqlQuery = QueryFactory.create(q);
-						QueryExecution qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", sparqlQuery);
+						QueryExecution qexec = QueryExecutionFactory.sparqlService(HTTP_LIVE_DBPEDIA_ORG_SPARQL, sparqlQuery);
 						try {
 							ResultSet results = qexec.execSelect();
 							while (results.hasNext()) {
@@ -183,7 +186,7 @@ public class SystemAnswerer {
 						// ask dbpedia domain of pred
 						String q = "select distinct ?o  where { <" + pred.getURI() + "> <http://www.w3.org/2000/01/rdf-schema#domain> ?o.}";
 						Query sparqlQuery = QueryFactory.create(q);
-						QueryExecution qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", sparqlQuery);
+						QueryExecution qexec = QueryExecutionFactory.sparqlService(HTTP_LIVE_DBPEDIA_ORG_SPARQL, sparqlQuery);
 						try {
 							ResultSet results = qexec.execSelect();
 							while (results.hasNext()) {

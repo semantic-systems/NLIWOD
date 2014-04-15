@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.aksw.hawk.experiments;
+package org.aksw.hawk.visualization;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

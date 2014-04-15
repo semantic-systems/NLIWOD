@@ -1,4 +1,4 @@
-package org.aksw.hawk.experiments;
+package org.aksw.hawk.visualization;
 /*
 * [The "BSD license"]
 * Copyright (c) 2011, abego Software GmbH, Germany (http://www.abego.org)
@@ -29,11 +29,11 @@ package org.aksw.hawk.experiments;
 * POSSIBILITY OF SUCH DAMAGE.
 */
 
-import static org.aksw.hawk.experiments.SVGUtil.doc;
-import static org.aksw.hawk.experiments.SVGUtil.line;
-import static org.aksw.hawk.experiments.SVGUtil.rect;
-import static org.aksw.hawk.experiments.SVGUtil.svg;
-import static org.aksw.hawk.experiments.SVGUtil.text;
+import static org.aksw.hawk.visualization.SVGUtil.doc;
+import static org.aksw.hawk.visualization.SVGUtil.line;
+import static org.aksw.hawk.visualization.SVGUtil.rect;
+import static org.aksw.hawk.visualization.SVGUtil.svg;
+import static org.aksw.hawk.visualization.SVGUtil.text;
 
 import java.awt.Dimension;
 import java.awt.geom.Rectangle2D;

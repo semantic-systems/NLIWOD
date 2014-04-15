@@ -1,4 +1,5 @@
-package org.aksw.hawk.experiments;
+package org.aksw.hawk.visualization;
+
 /*
  * [The "BSD license"]
  * Copyright (c) 2011, abego Software GmbH, Germany (http://www.abego.org)
@@ -29,26 +30,26 @@ package org.aksw.hawk.experiments;
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-import org.abego.treelayout.NodeExtentProvider;
-
 /**
- * A {@link NodeExtentProvider} for nodes of type {@link TextInBox}.
- * <p>
- * As one would expect this NodeExtentProvider returns the width and height as
- * specified with each TextInBox.
+ * Represents a text to be displayed in a box of a given size.
  * 
  * @author Udo Borkowski (ub@abego.org)
  */
-public class TextInBoxNodeExtentProvider implements
-                NodeExtentProvider<TextInBox> {
+public class TextInBox {
 
-        @Override
-        public double getWidth(TextInBox treeNode) {
-                return treeNode.width;
-        }
+	public final String text;
+	public final int height;
+	public final int width;
 
-        @Override
-        public double getHeight(TextInBox treeNode) {
-                return treeNode.height;
-        }
+	public TextInBox(String text, int width, int height) {
+		text = text.replace("http://dbpedia.org/resource/", "dbr:");
+		text = text.replace("http://dbpedia.org/ontology/", "dbo:");
+
+		if (text.contains(":")) {
+			width = width * 3;
+		}
+		this.text = text;
+		this.width = width;
+		this.height = height;
+	}
 }

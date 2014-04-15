@@ -1,4 +1,4 @@
-package org.aksw.hawk.experiments;
+package org.aksw.hawk.experiment;
 
 import java.util.List;
 

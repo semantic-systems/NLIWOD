@@ -3,7 +3,7 @@ package org.aksw.hawk.nlp.posTree;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.aksw.hawk.experiments.TextInBox;
+import org.aksw.hawk.visualization.TextInBox;
 
 public class MutableTreeNode implements Comparable<MutableTreeNode> {
 

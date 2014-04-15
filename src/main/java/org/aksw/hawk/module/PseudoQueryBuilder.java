@@ -53,9 +53,13 @@ public class PseudoQueryBuilder {
 	private List<ParameterizedSparqlString> rebuildQueriesWithCorrectParameters(List<ParameterizedSparqlString> queries) {
 		List<ParameterizedSparqlString> tmpList = Lists.newArrayList();
 		for (ParameterizedSparqlString q : queries) {
-			String queryString = q.asQuery().toString();
-			ParameterizedSparqlString tmpQuery = new ParameterizedSparqlString(queryString);
-			tmpList.add(tmpQuery);
+			try {
+				String queryString = q.asQuery().toString();
+				ParameterizedSparqlString tmpQuery = new ParameterizedSparqlString(queryString);
+				tmpList.add(tmpQuery);
+			} catch (Exception e) {
+				log.error(q.toString(),e);
+			}
 		}
 
 		return tmpList;
