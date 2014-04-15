@@ -48,12 +48,12 @@ public class SystemAnswerer {
 						String predicateURI = triple.getPredicate().getURI();
 						// if pred is text do a complex lookup in abstract index
 						if (predicateURI.startsWith("http:")) {
-							log.error("Cannot resolve hybrid part: " + triple.toString());
+							log.warn("Cannot resolve hybrid part: " + triple.toString());
 						} else {
 							String localName = triple.getPredicate().getLocalName();
 							// case 1: subject bound
 							if (triple.getSubject().isConcrete()) {
-								log.error("Cannot resolve hybrid part");
+								log.warn("Cannot resolve hybrid part");
 							}
 							// case 2: object bound
 							else if (triple.getObject().isConcrete()) {
@@ -70,21 +70,21 @@ public class SystemAnswerer {
 											pseudoQuery.setIri(name, ne.get(0));
 										} else {
 											// TODO work on this case
-											log.error("Cannot resolve hybrid part");
+											log.warn("Cannot resolve hybrid part");
 										}
 									}
 
 								} else {
-									log.error("Cannot resolve hybrid part");
+									log.warn("Cannot resolve hybrid part");
 								}
 							}
 							// case 3: both are bound
 							else if (triple.getObject().isConcrete() && triple.getSubject().isConcrete()) {
-								log.error("Cannot resolve hybrid part");
+								log.warn("Cannot resolve hybrid part");
 							}
 							// case 4: neither subject nor object are bound
 							else {
-								log.error("Cannot resolve hybrid part");
+								log.warn("Cannot resolve hybrid part");
 							}
 						}
 						// if object is text

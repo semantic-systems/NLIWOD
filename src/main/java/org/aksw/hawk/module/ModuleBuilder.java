@@ -110,6 +110,8 @@ public class ModuleBuilder {
 				Module proj = new ProjectionModule(type);
 				tmp.add(proj);
 				projectionVariable.remove(0);
+				//TODO only do this if the right argument supports more than one constraint
+				// else build a simple constraint
 				Module projConstraint = new ProjectionConstraintModule(projectionVariable.get(0));
 				tmp.add(projConstraint);
 			}

@@ -32,7 +32,7 @@ public class Pruner {
 		 */
 		applyInterrogativeRules(q);
 		sortTree(q.tree);
-		log.debug(q.tree.toString());
+		log.error(q.tree.toString());
 		return q.tree;
 	}
 
