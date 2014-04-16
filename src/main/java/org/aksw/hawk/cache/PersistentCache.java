@@ -15,11 +15,13 @@ import org.slf4j.LoggerFactory;
 public class PersistentCache {
 	public static Logger log = LoggerFactory.getLogger(PersistentCache.class);
 	public String charset = "UTF-8";
-	public static String cacheLocation = "spotterCache";
+	public static String cacheLocation;
 	public HashMap<String, String> cache;
 	int i = 0;
 
 	public PersistentCache() {
+		cacheLocation = PersistentCache.class.getClassLoader().getResource("spotterCache").getFile();
+		log.debug("cacheLocation: " + cacheLocation);
 		readCache();
 	}
 
