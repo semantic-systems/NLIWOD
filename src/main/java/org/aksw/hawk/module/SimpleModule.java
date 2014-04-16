@@ -1,8 +1,30 @@
 package org.aksw.hawk.module;
 
+import com.hp.hpl.jena.vocabulary.RDF;
+
 public class SimpleModule extends Module {
-	public void addStatement(WhereClause wc) {
+	public void addStatement(String subject, String predicate, String object) {
+		WhereClause wc = null;
+		if (predicate.equals(RDF.type.getURI())) {
+			String dboTerm = dboIndex.search(object);
+			if (dboTerm != null) {
+				wc = new WhereClause(subject, predicate, dboTerm);
+			} else {
+				wc = new WhereClause(subject, predicate, object);
+			}
+		} else if (predicate.equals("IS")) {
+			// skip since subject is var and object is a dbpedia resource
+			wc = new WhereClause(subject, predicate, object);
+		} else {
+			String dboTerm = dboIndex.search(predicate);
+			if (dboTerm != null) {
+				wc = new WhereClause(subject, dboTerm, object);
+			} else {
+				wc = new WhereClause(subject, predicate, object);
+			}
+		}
 		statementList.add(wc);
+
 	}
 
 	public String toString() {
@@ -12,4 +34,5 @@ public class SimpleModule extends Module {
 		}
 		return sb.toString();
 	}
+
 }

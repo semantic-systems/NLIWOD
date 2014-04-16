@@ -78,21 +78,18 @@ public class ModuleBuilder {
 			// if node a leaf and posTag is ADD or NN*
 			for (int j = variableNumber; j > 0; --j) {
 				// if j = 0 ADD will be projection variable
-				WhereClause wc = new WhereClause("?a" + j, "IS", node.label);
-				module.addStatement(wc);
+				module.addStatement("?a" + j, "IS", node.label);
 			}
 		} else {
 			// adding where clauses
-			WhereClause wc = new WhereClause("?a" + (variableNumber - 1), RDF.type.getURI(), node.label);
-			module.addStatement(wc);
+			module.addStatement("?a" + (variableNumber - 1), RDF.type.getURI(), node.label);
 			// Replacement rule to form different BGPs
 			// (?a(i) = ?a(j) or ?a(j) != ?a(i))
 			// for i!=j and i,j = [0,|modules|]
 			for (int i = variableNumber; i >= 0; --i) {
 				for (int j = variableNumber; j >= 0; --j) {
 					if (i != j) {
-						wc = new WhereClause("?a" + i, node.label, "?a" + j);
-						module.addStatement(wc);
+						module.addStatement("?a" + i, node.label, "?a" + j);
 					}
 				}
 			}
