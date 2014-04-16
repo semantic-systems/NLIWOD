@@ -9,6 +9,7 @@ import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.hawk.index.DBAbstractsIndex;
 import org.aksw.hawk.nlp.SentenceDetector;
 import org.aksw.hawk.nlp.spotter.ASpotter;
+import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.nlp.spotter.Spotlight;
 import org.apache.lucene.document.Document;
 import org.slf4j.Logger;
@@ -223,7 +224,7 @@ public class SystemAnswerer {
 		}
 		String windowText = Joiner.on("\n").join(window);
 		// extract possible Named Entities (NE) via NERD modules
-		ASpotter tagger = new Spotlight();
+		ASpotter tagger = new Fox();
 		Map<String, List<Entity>> nes = tagger.getEntities(windowText);
 
 		// extract only NE which are contain the given type

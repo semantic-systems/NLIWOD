@@ -25,7 +25,8 @@ public class Pruner {
 		applyPDTRules(q);
 		applyINRules(q);
 		applyAuxPassRules(q);
-		applyJJRule(q);
+		applyJJRule(q);//TODO JJ rule is very vague
+//		applyWDTRule(q);
 		/*
 		 * interrogative rules last else each interrogative word has at least
 		 * two children, which can't be handled yet by the removal
@@ -35,6 +36,26 @@ public class Pruner {
 		log.info(q.tree.toString());
 		return q.tree;
 	}
+
+	private void applyWDTRule(Question q) {
+		inorderRemovalWDTRule(q.tree.getRoot(), q.tree);
+
+		}
+
+		private boolean inorderRemovalWDTRule(MutableTreeNode node, MutableTree tree) {
+			if (node.posTag.equals("WDT")) {
+				tree.remove(node);
+				return true;
+			} else {
+				for (Iterator<MutableTreeNode> it = node.getChildren().iterator(); it.hasNext();) {
+					MutableTreeNode child = it.next();
+					if (inorderRemovalWDTRule(child, tree)) {
+						it = node.getChildren().iterator();
+					}
+				}
+				return false;
+			}
+		}
 
 	private void applyJJRule(Question q) {
 		// delete JJ node and paste JJ content to NN or NNS or NNP or NNPS

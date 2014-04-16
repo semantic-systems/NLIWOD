@@ -97,30 +97,30 @@ public class PipelineController_QALD4 {
 			vis(bw, q);
 
 			// 5. Build modules
-			q.modules = this.moduleBuilder.build(q.tree.getRoot(), null, q);
+			q.modules = this.moduleBuilder.build(q);
 
 			// TODO 7.1 Apply rdfs reasoning on each module
 
 			// 8. Build pseudo queries
-			List<ParameterizedSparqlString> tmp = this.pseudoQueryBuilder.buildQuery(q);
-
-			// TODO 9. Eliminate invalid queries and find top ranked query
-
-			// 10. Execute queries to generate system answers
-			if (tmp == null) {
-				log.info("\tP=" + 0.0 + " R=" + 0.0 + " F=" + 0.0);
-			} else {
-				for (ParameterizedSparqlString pseudoQuery : tmp) {
-					Set<RDFNode> systemAnswers = this.systemAnswerer.answer(pseudoQuery);
-
-					// 11. Compare to set of resources from benchmark
-					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
-					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-					log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
-				}
-			}
-			bw.write("<hr/>");
+//			List<ParameterizedSparqlString> tmp = this.pseudoQueryBuilder.buildQuery(q);
+//
+//			// TODO 9. Eliminate invalid queries and find top ranked query
+//
+//			// 10. Execute queries to generate system answers
+//			if (tmp == null) {
+//				log.info("\tP=" + 0.0 + " R=" + 0.0 + " F=" + 0.0);
+//			} else {
+//				for (ParameterizedSparqlString pseudoQuery : tmp) {
+//					Set<RDFNode> systemAnswers = this.systemAnswerer.answer(pseudoQuery);
+//
+//					// 11. Compare to set of resources from benchmark
+//					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+//					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+//					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+//					log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+//				}
+//			}
+//			bw.write("<hr/>");
 			break;
 		}
 		bw.close();
