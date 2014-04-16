@@ -102,8 +102,8 @@ public class PipelineController_QALD4 {
 			// TODO 7.1 Apply rdfs reasoning on each module
 
 			// 8. Build pseudo queries
-//			List<ParameterizedSparqlString> tmp = this.pseudoQueryBuilder.buildQuery(q);
-//
+			List<ParameterizedSparqlString> tmp = this.pseudoQueryBuilder.buildQuery(q);
+
 //			// TODO 9. Eliminate invalid queries and find top ranked query
 //
 //			// 10. Execute queries to generate system answers
