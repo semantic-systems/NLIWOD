@@ -99,7 +99,9 @@ public class ModuleBuilder {
 			}
 			variableNumber++;
 		}
-		list.add(module);
+		if (module.statementList.size() > 0) {
+			list.add(module);
+		}
 	}
 
 }
