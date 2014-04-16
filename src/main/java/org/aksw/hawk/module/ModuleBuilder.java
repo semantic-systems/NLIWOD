@@ -76,7 +76,8 @@ public class ModuleBuilder {
 
 		} else if (node.children.size() == 0 && node.posTag.matches("ADD|NN(.)*")) {
 			// if node a leaf and posTag is ADD or NN*
-			for (int j = variableNumber; j >= 0; --j) {
+			for (int j = variableNumber; j > 0; --j) {
+				// if j = 0 ADD will be projection variable
 				WhereClause wc = new WhereClause("?a" + j, "IS", node.label);
 				module.addStatement(wc);
 			}
