@@ -4,6 +4,7 @@ import com.hp.hpl.jena.vocabulary.RDF;
 
 public class SimpleModule extends Module {
 	public void addStatement(String subject, String predicate, String object) {
+		// TODO if label which can be URI is not promising use string label
 		WhereClause wc = null;
 		if (predicate.equals(RDF.type.getURI())) {
 			String dboTerm = dboIndex.search(object);

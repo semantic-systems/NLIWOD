@@ -69,11 +69,9 @@ public class ModuleBuilder {
 	}
 
 	private void build(MutableTreeNode node) {
-		// TODO if label which can be URI is not promising use string label
 		SimpleModule module = new SimpleModule();
 		if (node.posTag.matches("WD(.)*")) {
 			// if node is WD* skip
-
 		} else if (node.children.size() == 0 && node.posTag.matches("ADD|NN(.)*")) {
 			// if node a leaf and posTag is ADD or NN*
 			for (int j = variableNumber; j > 0; --j) {
