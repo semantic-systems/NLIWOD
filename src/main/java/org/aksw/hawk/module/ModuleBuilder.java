@@ -92,8 +92,6 @@ public class ModuleBuilder {
 					if (i != j) {
 						wc = new WhereClause("?a" + i, node.label, "?a" + j);
 						module.addStatement(wc);
-						wc = new WhereClause("?a" + i, node.label, "?a" + j);
-						module.addStatement(wc);
 					}
 				}
 			}

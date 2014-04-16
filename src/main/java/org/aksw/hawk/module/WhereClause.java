@@ -17,6 +17,6 @@ class WhereClause {
 
 	@Override
 	public String toString() {
-		return s + " " + p + " " + o;
+		return s + " " + p + " " + o +".";
 	}
 }

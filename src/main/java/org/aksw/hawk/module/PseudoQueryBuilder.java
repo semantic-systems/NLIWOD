@@ -7,9 +7,7 @@ import org.aksw.autosparql.commons.qald.Question;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import com.hp.hpl.jena.graph.Node_Variable;
 import com.hp.hpl.jena.query.ParameterizedSparqlString;
 
 public class PseudoQueryBuilder {
@@ -29,23 +27,29 @@ public class PseudoQueryBuilder {
 		// iterate until all permutations are reached
 		boolean finished = false;
 		while (!finished) {
-			ParameterizedSparqlString query = new ParameterizedSparqlString();
-			buildCommandText(query, q);
+			StringBuilder queryString = new StringBuilder("SELECT ?a0 WHERE {\n");
+			// buildCommandText(query, q);
 			finished = true;
 			for (int i = 0; i < print.length; i++) {
 				Module currentModule = q.modules.get(i);
 				WhereClause currentChoiceOfStatement = currentModule.statementList.get(print[i]);
-				replaceParameters(query, currentChoiceOfStatement, i);
+				queryString.append(currentChoiceOfStatement.toString());
+				queryString.append("\n");
+				// replaceParameters(query, currentChoiceOfStatement, i);
 			}
+			queryString.append("}");
 			// think of print as a map which shows the current permutations
-			// minus one will generate the next permutation using a clock
-			// paradigm
+			// minus one generates the next permutation using clock paradigm
 			finished = minusOne(print, q);
+
+//			log.debug("Query: " + queryString.toString());
+			ParameterizedSparqlString query = new ParameterizedSparqlString(queryString.toString());
 			queries.add(query);
 		}
 
-		queries = rebuildQueriesWithCorrectParameters(queries);
-		log.debug("\n" + Joiner.on("\n ").join(queries));
+//		queries = rebuildQueriesWithCorrectParameters(queries);
+		log.debug("Number of queries: " + queries.size());
+		// log.debug("\n" + Joiner.on("\n ").join(queries));
 
 		return queries;
 	}
@@ -58,7 +62,7 @@ public class PseudoQueryBuilder {
 				ParameterizedSparqlString tmpQuery = new ParameterizedSparqlString(queryString);
 				tmpList.add(tmpQuery);
 			} catch (Exception e) {
-				log.error(q.toString(),e);
+				log.error(q.toString(), e);
 			}
 		}
 
@@ -83,53 +87,60 @@ public class PseudoQueryBuilder {
 		return true;
 	}
 
-	private void replaceParameters(ParameterizedSparqlString query, WhereClause whereClause, int parameterNumber) {
-		String s = whereClause.s;
-		String p = whereClause.p;
-		String o = whereClause.o;
-		// keep projection variable
-		if (s.equals("?uri")) {
-			query.setParam("xS" + parameterNumber, new Node_Variable(s.replace("?", "")));
-		}
-		// keep bgp forming variable
-		if (s.equals("?xo1")) {
-			query.setParam("xS" + parameterNumber, new Node_Variable(s.replace("?", "")));
-		}
-		// keep projection variable
-		if (o.equals("?uri")) {
-			query.setParam("xO" + parameterNumber, new Node_Variable(o.replace("?", "")));
-		}
-		// keep bgp forming variable
-		if (o.equals("?xo1")) {
-			query.setParam("xO" + parameterNumber, new Node_Variable(o.replace("?", "")));
-		}
-
-		// set predicate
-		query.setIri("xP" + parameterNumber, p);
-
-		// handle object
-		if (o.startsWith("http://")) {
-			query.setIri("xO" + parameterNumber, o);
-		} else if (o.startsWith("?")) {
-			query.setParam("xO" + parameterNumber, new Node_Variable(o.replace("?", "")));
-		} else {
-			query.setLiteral("xO" + parameterNumber, o);
-		}
-
-	}
-
-	private void buildCommandText(ParameterizedSparqlString query, Question q) {
-		String tmp = "SELECT ?uri WHERE {\n";
-		for (int i = 0; i < q.modules.size(); i++) {
-			// subject
-			tmp += "?xS" + i + " ";
-			// predicate
-			tmp += "?xP" + i + " ";
-			// object
-			tmp += "?xO" + i + ".\n";
-		}
-		tmp += "}";
-		query.setCommandText(tmp);
-	}
+	// private void replaceParameters(ParameterizedSparqlString query,
+	// WhereClause whereClause, int parameterNumber) {
+	// String s = whereClause.s;
+	// String p = whereClause.p;
+	// String o = whereClause.o;
+	// // keep projection variable
+	// if (s.equals("?uri")) {
+	// query.setParam("xS" + parameterNumber, new Node_Variable(s.replace("?",
+	// "")));
+	// }
+	// // keep bgp forming variable
+	// if (s.equals("?xo1")) {
+	// query.setParam("xS" + parameterNumber, new Node_Variable(s.replace("?",
+	// "")));
+	// }
+	// // keep projection variable
+	// if (o.equals("?uri")) {
+	// query.setParam("xO" + parameterNumber, new Node_Variable(o.replace("?",
+	// "")));
+	// }
+	// // keep bgp forming variable
+	// if (o.equals("?xo1")) {
+	// query.setParam("xO" + parameterNumber, new Node_Variable(o.replace("?",
+	// "")));
+	// }
+	//
+	// // set predicate
+	// query.setIri("xP" + parameterNumber, p);
+	//
+	// // handle object
+	// if (o.startsWith("http://")) {
+	// query.setIri("xO" + parameterNumber, o);
+	// } else if (o.startsWith("?")) {
+	// query.setParam("xO" + parameterNumber, new Node_Variable(o.replace("?",
+	// "")));
+	// } else {
+	// query.setLiteral("xO" + parameterNumber, o);
+	// }
+	//
+	// }
+	//
+	// private void buildCommandText(ParameterizedSparqlString query, Question
+	// q) {
+	// String tmp = "SELECT ?uri WHERE {\n";
+	// for (int i = 0; i < q.modules.size(); i++) {
+	// // subject
+	// tmp += "?xS" + i + " ";
+	// // predicate
+	// tmp += "?xP" + i + " ";
+	// // object
+	// tmp += "?xO" + i + ".\n";
+	// }
+	// tmp += "}";
+	// query.setCommandText(tmp);
+	// }
 
 }
