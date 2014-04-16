@@ -6,9 +6,15 @@ class WhereClause {
 
 	public WhereClause(String s, String p, String o) {
 		super();
-		this.s = s;
-		this.p = p;
-		this.o = o;
+		String sTmp = s;
+		sTmp = sTmp.startsWith("http") ? "<" + sTmp + ">" : sTmp;
+		String pTmp = p;
+		pTmp = pTmp.startsWith("http") ? "<" + pTmp + ">" : pTmp;
+		String oTmp = o;
+		oTmp = oTmp.startsWith("http") ? "<" + oTmp + ">" : oTmp;
+		this.s = sTmp;
+		this.p = pTmp;
+		this.o = oTmp;
 	}
 
 	public String s;
@@ -17,6 +23,6 @@ class WhereClause {
 
 	@Override
 	public String toString() {
-		return s + " " + p + " " + o +" .";
+		return s + " " + p + " " + o + " .";
 	}
 }
