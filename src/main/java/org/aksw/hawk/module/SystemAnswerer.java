@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.ws.http.HTTPException;
+
 import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.hawk.index.DBAbstractsIndex;
 import org.aksw.hawk.nlp.SentenceDetector;
 import org.aksw.hawk.nlp.spotter.ASpotter;
-import org.aksw.hawk.nlp.spotter.Fox;
+import org.aksw.hawk.nlp.spotter.Spotlight;
 import org.apache.lucene.document.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,7 @@ import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.QueryParseException;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -32,13 +35,16 @@ import com.hp.hpl.jena.sparql.syntax.ElementGroup;
 import com.hp.hpl.jena.sparql.syntax.ElementPathBlock;
 
 public class SystemAnswerer {
-	private   String HTTP_LIVE_DBPEDIA_ORG_SPARQL ;
+	private static final String PROJECTION_VARIABLE = "?a0";
+	private String HTTP_LIVE_DBPEDIA_ORG_SPARQL;
 	Logger log = LoggerFactory.getLogger(SystemAnswerer.class);
 	private int sizeOfWindow = 5;
 	private DBAbstractsIndex abstractsIndex = new DBAbstractsIndex();
-	public SystemAnswerer(String endpoint){
+
+	public SystemAnswerer(String endpoint) {
 		HTTP_LIVE_DBPEDIA_ORG_SPARQL = endpoint;
 	}
+
 	public Set<RDFNode> answer(ParameterizedSparqlString pseudoQuery) {
 		// for each full text part of the query ask abstract index
 		List<Element> elements = ((ElementGroup) pseudoQuery.asQuery().getQueryPattern()).getElements();
@@ -65,11 +71,20 @@ public class SystemAnswerer {
 								if (triple.getObject().isURI()) {
 									List<Document> list = abstractsIndex.askForPredicateWithBoundAbstract(localName, triple.getObject().getURI());
 									for (Document doc : list) {
+										log.debug("type " + subjectType);
 										List<String> ne = extractPossibleNEFromDoc(doc, localName, triple.getObject().getURI(), subjectType);
 										if (ne.size() == 1) {
 											String name = "?" + subjectVariable.getName();
-											// replace matching variable by
-											// found
+											// replace variable by found NE
+											/*
+											 * TODO bug: if variable is
+											 * projection variable then a URI is
+											 * the projection variable which is
+											 * an error, discard query
+											 */
+											if (name.equals(PROJECTION_VARIABLE)) {
+												return Sets.newHashSet();
+											}
 											pseudoQuery.setIri(name, ne.get(0));
 										} else {
 											// TODO work on this case
@@ -99,7 +114,6 @@ public class SystemAnswerer {
 		}
 
 		// if query has only variables and URIs anymore than ask DBpedia
-		log.debug("\t" + pseudoQuery);
 		pseudoQuery = removeUnneccessaryClauses(pseudoQuery);
 		log.debug("\t" + pseudoQuery);
 
@@ -113,8 +127,11 @@ public class SystemAnswerer {
 		try {
 			ResultSet results = qexec.execSelect();
 			while (results.hasNext()) {
-				set.add(results.next().get("?uri"));
+				set.add(results.next().get(PROJECTION_VARIABLE));
 			}
+		} catch (HTTPException e) {
+			log.error("Query: " + pseudoQuery, e);
+
 		} finally {
 			qexec.close();
 		}
@@ -129,26 +146,31 @@ public class SystemAnswerer {
 	 */
 	private ParameterizedSparqlString removeUnneccessaryClauses(ParameterizedSparqlString pseudoQuery) {
 		ParameterizedSparqlString tmpQ = new ParameterizedSparqlString();
-		tmpQ.setCommandText("SELECT ?uri WHERE {");
-		List<Element> elements = ((ElementGroup) pseudoQuery.asQuery().getQueryPattern()).getElements();
-		for (Element elem : elements) {
-			if (elem instanceof ElementPathBlock) {
-				ElementPathBlock pathBlock = (ElementPathBlock) elem;
-				for (TriplePath triple : pathBlock.getPattern().getList()) {
-					if ((triple.getSubject().isVariable() || triple.getObject().isVariable()) && triple.getPredicate().isURI()) {
-						tmpQ.appendNode(triple.getSubject());
-						tmpQ.appendNode(triple.getPredicate());
-						tmpQ.appendNode(triple.getObject());
+		try {
+			tmpQ.setCommandText("SELECT ?a0 WHERE {");
+			List<Element> elements = ((ElementGroup) pseudoQuery.asQuery().getQueryPattern()).getElements();
+			for (Element elem : elements) {
+				if (elem instanceof ElementPathBlock) {
+					ElementPathBlock pathBlock = (ElementPathBlock) elem;
+					for (TriplePath triple : pathBlock.getPattern().getList()) {
+						if ((triple.getSubject().isVariable() || triple.getObject().isVariable()) && triple.getPredicate().isURI()) {
+							tmpQ.appendNode(triple.getSubject());
+							tmpQ.appendNode(triple.getPredicate());
+							tmpQ.appendNode(triple.getObject());
 
-						tmpQ.append(".\n");
+							tmpQ.append(".\n");
+						}
 					}
 				}
 			}
+			tmpQ.append("}");
+		} catch (QueryParseException e) {
+			log.error("Query: " + pseudoQuery, e);
 		}
-		tmpQ.append("}");
 		return tmpQ;
 	}
 
+	//TODO dont ask dbpedia but dbpedia owl
 	/**
 	 * needed when retrieving NE from full text to discard non matching ones
 	 * 
@@ -166,9 +188,13 @@ public class SystemAnswerer {
 				for (TriplePath triple : pathBlock.getPattern().getList()) {
 					Node pred = triple.getPredicate();
 					// variable is in object of triple
+					String uri = pred.getURI();
+					if(uri.equals("http://dbpedia.org/ontology/birthPlace") && triple.getSubject().equals(variable)){
+						System.out.println();
+					}
 					if (triple.getObject().equals(variable)) {
 						// ask dbpedia range of pred
-						String q = "select distinct ?o where { <" + pred.getURI() + "> <http://www.w3.org/2000/01/rdf-schema#range> ?o.}";
+						String q = "select distinct ?o where { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#range> ?o.}";
 						Query sparqlQuery = QueryFactory.create(q);
 						QueryExecution qexec = QueryExecutionFactory.sparqlService(HTTP_LIVE_DBPEDIA_ORG_SPARQL, sparqlQuery);
 						try {
@@ -184,7 +210,7 @@ public class SystemAnswerer {
 					// variable is in subject of triple
 					else if (triple.getSubject().equals(variable)) {
 						// ask dbpedia domain of pred
-						String q = "select distinct ?o  where { <" + pred.getURI() + "> <http://www.w3.org/2000/01/rdf-schema#domain> ?o.}";
+						String q = "select distinct ?o  where { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#domain> ?o.}";
 						Query sparqlQuery = QueryFactory.create(q);
 						QueryExecution qexec = QueryExecutionFactory.sparqlService(HTTP_LIVE_DBPEDIA_ORG_SPARQL, sparqlQuery);
 						try {
@@ -223,7 +249,7 @@ public class SystemAnswerer {
 		}
 		String windowText = Joiner.on("\n").join(window);
 		// extract possible Named Entities (NE) via NERD modules
-		ASpotter tagger = new Fox();
+		ASpotter tagger = new Spotlight();
 		Map<String, List<Entity>> nes = tagger.getEntities(windowText);
 
 		// extract only NE which are contain the given type
@@ -232,6 +258,7 @@ public class SystemAnswerer {
 			for (Entity entity : nes.get(key)) {
 				for (Resource res : entity.posTypesAndCategories) {
 					String uri = res.getURI().replace("DBpedia:", "http://dbpedia.org/ontology/");
+					log.debug(entity.toString());
 					if (uri.equals(type)) {
 						possibleEntitiesForVariableFoundViaTextSearch.add(entity.uris.get(0).getURI());
 					}
@@ -239,5 +266,18 @@ public class SystemAnswerer {
 			}
 		}
 		return possibleEntitiesForVariableFoundViaTextSearch;
+	}
+
+	public static void main(String args[]) {
+		String q = "SELECT ?a0 WHERE { " + "?a0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Settlement> . " + "?a1 <http://dbpedia.org/ontology/birthPlace> ?a0 . " + "?a1 <assassin> <http://dbpedia.org/resource/Martin_Luther_King%2C_Jr.> .}";
+
+		ParameterizedSparqlString pss = new ParameterizedSparqlString(q);
+
+		SystemAnswerer sys = new SystemAnswerer("http://dbpedia.org/sparql");
+
+		Set<RDFNode> ans = sys.answer(pss);
+		for (RDFNode answer : ans) {
+			System.out.println(answer);
+		}
 	}
 }

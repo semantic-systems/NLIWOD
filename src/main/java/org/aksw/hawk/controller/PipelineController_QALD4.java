@@ -61,7 +61,7 @@ public class PipelineController_QALD4 {
 		controller.moduleBuilder = new ModuleBuilder();
 		controller.pseudoQueryBuilder = new PseudoQueryBuilder();
 		controller.pruner = new Pruner();
-		String endpoint = "http://live.dbpedia.org/sparql";
+		String endpoint = "http://dbpedia.org/sparql";
 		controller.systemAnswerer = new SystemAnswerer(endpoint);
 
 		log.info("Run controller");
@@ -110,7 +110,9 @@ public class PipelineController_QALD4 {
 			if (tmp == null) {
 				log.info("\tP=" + 0.0 + " R=" + 0.0 + " F=" + 0.0);
 			} else {
+				log.info("Number of PseudoQueries: " + tmp.size());
 				for (ParameterizedSparqlString pseudoQuery : tmp) {
+					log.info(pseudoQuery.toString());
 					Set<RDFNode> systemAnswers = this.systemAnswerer.answer(pseudoQuery);
 
 					// 11. Compare to set of resources from benchmark
