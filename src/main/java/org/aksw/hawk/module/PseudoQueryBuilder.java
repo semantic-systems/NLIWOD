@@ -12,6 +12,7 @@ import com.google.common.collect.Sets;
 import com.hp.hpl.jena.query.ParameterizedSparqlString;
 
 public class PseudoQueryBuilder {
+	private static final String IS = "<IS>";
 	Logger log = LoggerFactory.getLogger(PseudoQueryBuilder.class);
 
 	public List<ParameterizedSparqlString> buildQuery(Question q) {
@@ -52,7 +53,7 @@ public class PseudoQueryBuilder {
 			Module currentModule = q.modules.get(i);
 			WhereClause currentChoiceOfStatement = currentModule.statementList.get(print[i]);
 			// replacement rule gets activated
-			if (currentChoiceOfStatement.p.equals("IS")) {
+			if (currentChoiceOfStatement.p.equals(IS)) {
 				// if variable in s is not in the set of variables discard query
 				if (vars.contains(currentChoiceOfStatement.s)) {
 					String s = "\\" + currentChoiceOfStatement.s;
@@ -76,10 +77,10 @@ public class PseudoQueryBuilder {
 		for (int i = 0; i < print.length; i++) {
 			Module currentModule = q.modules.get(i);
 			WhereClause currentStatment = currentModule.statementList.get(print[i]);
-			if (currentStatment.s.startsWith("?") && !currentStatment.p.equals("IS")) {
+			if (currentStatment.s.startsWith("?") && !currentStatment.p.equals(IS)) {
 				vars.add(currentStatment.s);
 			}
-			if (currentStatment.o.startsWith("?") && !currentStatment.p.equals("IS")) {
+			if (currentStatment.o.startsWith("?") && !currentStatment.p.equals(IS)) {
 				vars.add(currentStatment.o);
 			}
 		}

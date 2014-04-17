@@ -5,12 +5,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 import org.abego.treelayout.TreeForTreeLayout;
 import org.abego.treelayout.TreeLayout;
 import org.abego.treelayout.util.DefaultConfiguration;
 import org.abego.treelayout.util.DefaultTreeForTreeLayout;
+import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.autosparql.commons.qald.QaldLoader;
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
@@ -32,6 +34,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 import com.hp.hpl.jena.query.ParameterizedSparqlString;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class PipelineController_QALD4 {
 	static Logger log = LoggerFactory.getLogger(PipelineController_QALD4.class);
@@ -82,43 +85,42 @@ public class PipelineController_QALD4 {
 			q.depTree = this.parseTree.process(q);
 
 			q.tree = this.treeTransform.DEPtoMutableDEP(q.depTree);
-			
-			//visualize the tree
+
+			// visualize the tree
 			String svg = visTree(q);
 			bw.write(svg);
-			
+
 			// 4. Apply pruning rules
 			q.tree = this.pruner.prune(q);
-			
-			//visualize the tree
+
+			// visualize the tree
 			vis(bw, q);
 
 			// 5. Build modules
 			q.modules = this.moduleBuilder.build(q);
 
-
 			// 8. Build pseudo queries
 			List<ParameterizedSparqlString> tmp = this.pseudoQueryBuilder.buildQuery(q);
 
-//			// TODO 9. Eliminate invalid queries and find top ranked query
-			// check whether clauses are connected
-			//			Apply rdfs reasoning on each module
-//			
-//			// 10. Execute queries to generate system answers
-//			if (tmp == null) {
-//				log.info("\tP=" + 0.0 + " R=" + 0.0 + " F=" + 0.0);
-//			} else {
-//				for (ParameterizedSparqlString pseudoQuery : tmp) {
-//					Set<RDFNode> systemAnswers = this.systemAnswerer.answer(pseudoQuery);
-//
-//					// 11. Compare to set of resources from benchmark
-//					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
-//					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-//					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-//					log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
-//				}
-//			}
-//			bw.write("<hr/>");
+			// TODO Eliminate invalid queries and find top ranked query
+			// TODO check whether clauses are connected
+			// TODO Apply rdfs reasoning on each module
+			//
+			// 10. Execute queries to generate system answers
+			if (tmp == null) {
+				log.info("\tP=" + 0.0 + " R=" + 0.0 + " F=" + 0.0);
+			} else {
+				for (ParameterizedSparqlString pseudoQuery : tmp) {
+					Set<RDFNode> systemAnswers = this.systemAnswerer.answer(pseudoQuery);
+
+					// 11. Compare to set of resources from benchmark
+					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+					log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+				}
+			}
+			bw.write("<hr/>");
 			break;
 		}
 		bw.close();

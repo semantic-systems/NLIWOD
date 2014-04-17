@@ -7,11 +7,29 @@ class WhereClause {
 	public WhereClause(String s, String p, String o) {
 		super();
 		String sTmp = s;
-		sTmp = sTmp.startsWith("http") ? "<" + sTmp + ">" : sTmp;
+		if (sTmp.startsWith("http://")) {
+			sTmp = "<" + s + ">";
+		} else if (sTmp.startsWith("?")) {
+			sTmp = s;
+		} else {
+			sTmp = "<" + s + ">";
+		}
 		String pTmp = p;
-		pTmp = pTmp.startsWith("http") ? "<" + pTmp + ">" : pTmp;
+		if (pTmp.startsWith("http://")) {
+			pTmp = "<" + p + ">";
+		} else if (pTmp.startsWith("?")) {
+			pTmp = p;
+		} else {
+			pTmp = "<" + p + ">";
+		}
 		String oTmp = o;
-		oTmp = oTmp.startsWith("http") ? "<" + oTmp + ">" : oTmp;
+		if (oTmp.startsWith("http://")) {
+			oTmp = "<" + o + ">";
+		} else if (oTmp.startsWith("?")) {
+			oTmp = o;
+		} else {
+			oTmp = "<" + o + ">";
+		}
 		this.s = sTmp;
 		this.p = pTmp;
 		this.o = oTmp;
