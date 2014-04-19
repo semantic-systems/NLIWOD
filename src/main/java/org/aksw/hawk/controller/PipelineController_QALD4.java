@@ -112,7 +112,7 @@ public class PipelineController_QALD4 {
 			} else {
 				log.info("Number of PseudoQueries: " + tmp.size());
 				for (ParameterizedSparqlString pseudoQuery : tmp) {
-					log.info(pseudoQuery.toString());
+					log.debug(pseudoQuery.toString());
 					Set<RDFNode> systemAnswers = this.systemAnswerer.answer(pseudoQuery);
 
 					// 11. Compare to set of resources from benchmark
@@ -123,7 +123,6 @@ public class PipelineController_QALD4 {
 				}
 			}
 			bw.write("<hr/>");
-			break;
 		}
 		bw.close();
 	}
