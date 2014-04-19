@@ -26,6 +26,7 @@ import org.aksw.hawk.nlp.posTree.MutableTreeNode;
 import org.aksw.hawk.nlp.posTree.TreeTransformer;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
+import org.aksw.hawk.pruner.QueryVariableHomomorphPruner;
 import org.aksw.hawk.visualization.SVGForTextInBoxTree;
 import org.aksw.hawk.visualization.TextInBox;
 import org.aksw.hawk.visualization.TextInBoxNodeExtentProvider;
@@ -47,6 +48,7 @@ public class PipelineController_QALD4 {
 	private Pruner pruner;
 	private TreeTransformer treeTransform;
 	private SystemAnswerer systemAnswerer;
+	private QueryVariableHomomorphPruner queryVariableHomomorphPruner;
 
 	public static void main(String args[]) throws IOException {
 		PipelineController_QALD4 controller = new PipelineController_QALD4();
@@ -58,9 +60,10 @@ public class PipelineController_QALD4 {
 		controller.nerdModule = new Fox();
 		controller.parseTree = new ParseTree();
 		controller.treeTransform = new TreeTransformer();
+		controller.pruner = new Pruner();
 		controller.moduleBuilder = new ModuleBuilder();
 		controller.pseudoQueryBuilder = new PseudoQueryBuilder();
-		controller.pruner = new Pruner();
+		controller.queryVariableHomomorphPruner = new QueryVariableHomomorphPruner();
 		String endpoint = "http://dbpedia.org/sparql";
 		controller.systemAnswerer = new SystemAnswerer(endpoint);
 
@@ -102,6 +105,10 @@ public class PipelineController_QALD4 {
 			// 8. Build pseudo queries
 			List<ParameterizedSparqlString> tmp = this.pseudoQueryBuilder.buildQuery(q);
 
+			// homogenize variables in queries
+			log.info("Before homogenizing queries: " + tmp.size());
+			tmp = this.queryVariableHomomorphPruner.prune(tmp);
+			log.info("After homogenizing queries:  " + tmp.size());
 			// TODO Eliminate invalid queries and find top ranked query
 			// TODO check whether clauses are connected
 			// TODO Apply rdfs reasoning on each module

@@ -15,7 +15,7 @@ import com.hp.hpl.jena.sparql.syntax.ElementGroup;
 import com.hp.hpl.jena.sparql.syntax.ElementPathBlock;
 
 public class QueryVariableHomomorphPruner {
-	private List<ParameterizedSparqlString> prune(List<ParameterizedSparqlString> queries) {
+	public List<ParameterizedSparqlString> prune(List<ParameterizedSparqlString> queries) {
 		Set<String> reducedQueries = Sets.newHashSet();
 		// reduce number of variables
 		for (ParameterizedSparqlString query : queries) {
@@ -90,6 +90,7 @@ public class QueryVariableHomomorphPruner {
 		queries.add(new ParameterizedSparqlString(queryString));
 
 		QueryVariableHomomorphPruner qvhPruner = new QueryVariableHomomorphPruner();
+		System.out.println(queries.size());
 		queries = qvhPruner.prune(queries);
 		System.out.println(queries.size());
 	}
