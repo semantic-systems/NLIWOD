@@ -26,6 +26,7 @@ import org.aksw.hawk.nlp.posTree.MutableTreeNode;
 import org.aksw.hawk.nlp.posTree.TreeTransformer;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
+import org.aksw.hawk.nlp.spotter.Spotlight;
 import org.aksw.hawk.pruner.GraphNonSCCPruner;
 import org.aksw.hawk.pruner.QueryVariableHomomorphPruner;
 import org.aksw.hawk.visualization.SVGForTextInBoxTree;
@@ -68,7 +69,7 @@ public class PipelineController_QALD4 {
 		controller.queryVariableHomomorphPruner = new QueryVariableHomomorphPruner();
 		controller.graphNonSCCPruner = new GraphNonSCCPruner();
 		String endpoint = "http://dbpedia.org/sparql";
-		controller.systemAnswerer = new SystemAnswerer(endpoint);
+		controller.systemAnswerer = new SystemAnswerer(endpoint,controller.nerdModule);
 
 		log.info("Run controller");
 		controller.run();
@@ -139,6 +140,7 @@ public class PipelineController_QALD4 {
 				}
 			}
 			bw.write("<hr/>");
+			break;
 		}
 		bw.close();
 	}

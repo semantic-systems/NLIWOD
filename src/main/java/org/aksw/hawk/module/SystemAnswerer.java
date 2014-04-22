@@ -40,13 +40,17 @@ import com.hp.hpl.jena.util.FileManager;
 
 public class SystemAnswerer {
 	private static final String PROJECTION_VARIABLE = "?a0";
+	private Logger log = LoggerFactory.getLogger(SystemAnswerer.class);
 	private String HTTP_LIVE_DBPEDIA_ORG_SPARQL;
-	Logger log = LoggerFactory.getLogger(SystemAnswerer.class);
-	private int sizeOfWindow = 5;
 	private DBAbstractsIndex abstractsIndex = new DBAbstractsIndex();
 	private Model model;
+	private ASpotter spotter;
+	private int sizeOfWindow = 5;
 
-	public SystemAnswerer(String endpoint) {
+	public SystemAnswerer(String endpoint, ASpotter spotter) {
+		// this.spotter =spotter;
+		// TODO resolve hack
+		this.spotter = new Spotlight();
 		HTTP_LIVE_DBPEDIA_ORG_SPARQL = endpoint;
 		URL url = this.getClass().getClassLoader().getResource("dbpedia_3.9.owl");
 		this.model = ModelFactory.createDefaultModel();
@@ -259,8 +263,7 @@ public class SystemAnswerer {
 		}
 		String windowText = Joiner.on("\n").join(window);
 		// extract possible Named Entities (NE) via NERD modules
-		ASpotter tagger = new Spotlight();
-		Map<String, List<Entity>> nes = tagger.getEntities(windowText);
+		Map<String, List<Entity>> nes = spotter.getEntities(windowText);
 
 		// extract only NE which are contain the given type
 		ArrayList<String> possibleEntitiesForVariableFoundViaTextSearch = Lists.newArrayList();
@@ -282,7 +285,7 @@ public class SystemAnswerer {
 		String q = "SELECT ?a0 WHERE { " + "?a0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Settlement> . " + "?a1 <http://dbpedia.org/ontology/birthPlace> ?a0 . " + "?a1 <assassin> <http://dbpedia.org/resource/Martin_Luther_King%2C_Jr.> .}";
 		ParameterizedSparqlString pss = new ParameterizedSparqlString(q);
 
-		SystemAnswerer sys = new SystemAnswerer("http://dbpedia.org/sparql");
+		SystemAnswerer sys = new SystemAnswerer("http://dbpedia.org/sparql", new Spotlight());
 
 		Set<RDFNode> ans = sys.answer(pss);
 		for (RDFNode answer : ans) {
