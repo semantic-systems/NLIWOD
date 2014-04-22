@@ -31,7 +31,6 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.sparql.core.TriplePath;
 import com.hp.hpl.jena.sparql.syntax.Element;
 import com.hp.hpl.jena.sparql.syntax.ElementGroup;
@@ -43,18 +42,22 @@ public class SystemAnswerer {
 	private Logger log = LoggerFactory.getLogger(SystemAnswerer.class);
 	private String HTTP_LIVE_DBPEDIA_ORG_SPARQL;
 	private DBAbstractsIndex abstractsIndex = new DBAbstractsIndex();
-	private Model model;
+	private Model rdfsModel;
 	private ASpotter spotter;
 	private int sizeOfWindow = 5;
+	private Model typesModel;
 
 	public SystemAnswerer(String endpoint, ASpotter spotter) {
-		// this.spotter =spotter;
 		// TODO resolve hack
-		this.spotter = new Spotlight();
+		this.spotter = spotter;
+		// this.spotter = new Spotlight();
 		HTTP_LIVE_DBPEDIA_ORG_SPARQL = endpoint;
 		URL url = this.getClass().getClassLoader().getResource("dbpedia_3.9.owl");
-		this.model = ModelFactory.createDefaultModel();
-		FileManager.get().readModel(model, url.getFile());
+		this.rdfsModel = ModelFactory.createDefaultModel();
+		FileManager.get().readModel(rdfsModel, url.getFile());
+//		url = this.getClass().getClassLoader().getResource("instance_types_en.ttl");
+//		this.typesModel = ModelFactory.createDefaultModel();
+//		FileManager.get().readModel(typesModel, url.getFile());
 	}
 
 	public Set<RDFNode> answer(ParameterizedSparqlString pseudoQuery) {
@@ -83,7 +86,7 @@ public class SystemAnswerer {
 								if (triple.getObject().isURI()) {
 									List<Document> list = abstractsIndex.askForPredicateWithBoundAbstract(localName, triple.getObject().getURI());
 									for (Document doc : list) {
-										log.debug("type " + subjectType);
+										log.debug("variableType " + subjectType + " variable " + subjectType);
 										List<String> ne = extractPossibleNEFromDoc(doc, localName, triple.getObject().getURI(), subjectType);
 										if (ne.size() == 1) {
 											String name = "?" + subjectVariable.getName();
@@ -99,7 +102,7 @@ public class SystemAnswerer {
 											}
 											pseudoQuery.setIri(name, ne.get(0));
 										} else {
-											// TODO work on this case
+											// TODO!!!! work on this case
 											log.warn("Cannot resolve hybrid part");
 										}
 									}
@@ -231,7 +234,7 @@ public class SystemAnswerer {
 	private String sparqlLocalOWL(String sparqlQuery) {
 		String targetValue = null;
 		Query sparql = QueryFactory.create(sparqlQuery);
-		QueryExecution qexec = QueryExecutionFactory.create(sparql, model);
+		QueryExecution qexec = QueryExecutionFactory.create(sparql, rdfsModel);
 		try {
 			ResultSet results = qexec.execSelect();
 			while (results.hasNext()) {
@@ -269,16 +272,61 @@ public class SystemAnswerer {
 		ArrayList<String> possibleEntitiesForVariableFoundViaTextSearch = Lists.newArrayList();
 		for (String key : nes.keySet()) {
 			for (Entity entity : nes.get(key)) {
-				for (Resource res : entity.posTypesAndCategories) {
-					String uri = res.getURI().replace("DBpedia:", "http://dbpedia.org/ontology/");
-					log.debug(entity.toString());
+				// TODO replace this by looking for type inside types.ttl of
+				// DBpedia
+				for (String uri : getTypes(entity.uris.get(0).getURI())) {
+					// String uri = res.getURI().replace("DBpedia:",
+					// "http://dbpedia.org/ontology/");
 					if (uri.equals(type)) {
 						possibleEntitiesForVariableFoundViaTextSearch.add(entity.uris.get(0).getURI());
 					}
 				}
 			}
 		}
+		log.debug("#Possible Entities:" + possibleEntitiesForVariableFoundViaTextSearch.size());
+		if(possibleEntitiesForVariableFoundViaTextSearch.size()>1){
+			System.out.println();
+		}
 		return possibleEntitiesForVariableFoundViaTextSearch;
+	}
+
+	// TODO check behaviour
+	private List<String> getTypes(String uri) {
+		String q = "select distinct ?o where { <" + uri + "> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?o.}";
+		ParameterizedSparqlString pseudoQuery = new ParameterizedSparqlString(q);
+		Set<RDFNode> set = Sets.newHashSet();
+		QueryExecution qexec = QueryExecutionFactory.sparqlService(HTTP_LIVE_DBPEDIA_ORG_SPARQL, pseudoQuery.asQuery());
+		try {
+			ResultSet results = qexec.execSelect();
+			while (results.hasNext()) {
+				set.add(results.next().get("?o"));
+			}
+		} catch (HTTPException e) {
+			log.error("Query: " + pseudoQuery, e);
+
+		} finally {
+			qexec.close();
+		}
+		List<String> types = Lists.newArrayList();
+		for (RDFNode node : set) {
+			types.add(node.asResource().getURI());
+		}
+		return types;
+	}
+
+	private List<String> sparqlLocalTypes(String sparqlQuery) {
+		List<String> types = Lists.newArrayList();
+		Query sparql = QueryFactory.create(sparqlQuery);
+		QueryExecution qexec = QueryExecutionFactory.create(sparql, typesModel);
+		try {
+			ResultSet results = qexec.execSelect();
+			while (results.hasNext()) {
+				types.add(results.next().get("?o").asResource().getURI());
+			}
+		} finally {
+			qexec.close();
+		}
+		return types;
 	}
 
 	public static void main(String args[]) {
