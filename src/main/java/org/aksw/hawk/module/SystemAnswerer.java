@@ -2,7 +2,7 @@ package org.aksw.hawk.module;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.query.ParameterizedSparqlString;
@@ -57,24 +58,25 @@ public class SystemAnswerer {
 		FileManager.get().readModel(rdfsModel, url.getFile());
 	}
 
-	public List<Set<RDFNode>> answer(List<ParameterizedSparqlString> listOfPseudoQuery) {
-		HashSet<ParameterizedSparqlString> targetQueries = Sets.newHashSet();
+	public HashMap<String, Set<RDFNode>> answer(List<ParameterizedSparqlString> listOfPseudoQuery) {
+		List<ParameterizedSparqlString> targetQueries = Lists.newArrayList();
 
 		for (ParameterizedSparqlString query : listOfPseudoQuery) {
 			// for each full text part of the query ask abstract index
 			targetQueries.addAll(checkForFullTextTriple(query));
 		}
-
-		List<Set<RDFNode>> resultSets = Lists.newArrayList();
+//		}
+		HashMap<String, Set<RDFNode>> resultSets = Maps.newHashMap();
 		for (ParameterizedSparqlString query : targetQueries) {
 			log.debug("\t" + query);
 			// if query has only variables and URIs anymore than ask DBpedia
+
 			query = removeUnneccessaryClauses(query);
 
 			// TODO Apply rdfs reasoning on each query
 			// pose query to endpoint
 			Set<RDFNode> sparql = sparql(query);
-			resultSets.add(sparql);
+			resultSets.put(query.toString(), sparql);
 		}
 
 		return resultSets;
@@ -118,13 +120,13 @@ public class SystemAnswerer {
 											 * an error, discard query
 											 */
 											String name = "?" + subjectVariable.getName();
-											pseudoQuery.setIri(name, ne.get(0));
+//											pseudoQuery.setIri(name, ne.get(0));
 											for (int i = 0; i < ne.size(); i++) {
 												ParameterizedSparqlString pss = new ParameterizedSparqlString(pseudoQuery.toString());
 												if (name.equals(PROJECTION_VARIABLE)) {
 													return null;
 												}
-												pss.setIri(name, ne.get(0));
+												pss.setIri(name, ne.get(i));
 												resultQueries.add(pss);
 											}
 										} else {
@@ -164,7 +166,6 @@ public class SystemAnswerer {
 			}
 		} catch (HTTPException e) {
 			log.error("Query: " + pseudoQuery, e);
-
 		} finally {
 			qexec.close();
 		}
@@ -300,13 +301,10 @@ public class SystemAnswerer {
 			}
 		}
 		log.debug("#Possible Entities:" + possibleEntitiesForVariableFoundViaTextSearch.size());
-		if (possibleEntitiesForVariableFoundViaTextSearch.size() > 1) {
-			System.out.println();
-		}
 		return possibleEntitiesForVariableFoundViaTextSearch;
 	}
 
-	// TODO check behaviour
+	// TODO check behavior
 	private List<String> getTypes(String uri) {
 		String q = "select distinct ?o where { <" + uri + "> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?o.}";
 		ParameterizedSparqlString pseudoQuery = new ParameterizedSparqlString(q);
@@ -336,10 +334,11 @@ public class SystemAnswerer {
 
 		SystemAnswerer sys = new SystemAnswerer("http://dbpedia.org/sparql", new Spotlight());
 
-		List<Set<RDFNode>> ans = sys.answer(Lists.newArrayList(pss));
-		for (Set<RDFNode> answer : ans) {
-			for (RDFNode rdfNode : answer) {
-				System.out.println(rdfNode);
+		HashMap<String, Set<RDFNode>> ans = sys.answer(Lists.newArrayList(pss));
+		for (String key : ans.keySet()) {
+			System.out.println(key);
+			for (RDFNode rdfNode : ans.get(key)) {
+				System.out.println("\t->" + rdfNode);
 			}
 		}
 	}

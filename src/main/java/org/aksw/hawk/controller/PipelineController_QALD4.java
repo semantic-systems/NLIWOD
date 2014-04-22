@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
@@ -67,8 +68,9 @@ public class PipelineController_QALD4 {
 		controller.pseudoQueryBuilder = new PseudoQueryBuilder();
 		controller.queryVariableHomomorphPruner = new QueryVariableHomomorphPruner();
 		controller.graphNonSCCPruner = new GraphNonSCCPruner();
+		// String endpoint = "http://dbpedia.org/sparql";
 		String endpoint = "http://dbpedia.org/sparql";
-		controller.systemAnswerer = new SystemAnswerer(endpoint,controller.nerdModule);
+		controller.systemAnswerer = new SystemAnswerer(endpoint, controller.nerdModule);
 
 		log.info("Run controller");
 		controller.run();
@@ -119,22 +121,22 @@ public class PipelineController_QALD4 {
 
 			// TODO Eliminate invalid queries and find top ranked query
 			// 10. Execute queries to generate system answers
-			if (tmp == null) {
-				log.info("\tP=" + 0.0 + " R=" + 0.0 + " F=" + 0.0);
-			} else {
-				log.info("Number of PseudoQueries: " + tmp.size());
-				for (Set<RDFNode> systemAnswers :  this.systemAnswerer.answer(tmp)) {
-
-					// 11. Compare to set of resources from benchmark
-					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
-					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-
-					if (fMeasure > 0) {
-						log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
-					}
+			log.info("Number of PseudoQueries: " + tmp.size());
+			int i = 0;
+			HashMap<String, Set<RDFNode>> answer = this.systemAnswerer.answer(tmp);
+			for (String key : answer.keySet()) {
+				Set<RDFNode> systemAnswers = answer.get(key);
+				// 11. Compare to set of resources from benchmark
+				double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+				double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+				double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+				if (fMeasure > 0) {
+					log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+					log.info(key);
 				}
+				i++;
 			}
+			log.info("Number of system answers:" + i);
 			bw.write("<hr/>");
 			break;
 		}
