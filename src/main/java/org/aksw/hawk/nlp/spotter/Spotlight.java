@@ -56,7 +56,8 @@ public class Spotlight extends ASpotter {
 					JSONObject next = (JSONObject) res;
 					Entity ent = new Entity();
 					ent.label = (String) next.get("@surfaceForm");
-					ent.uris.add(new ResourceImpl((String) next.get("@URI")));
+					String uri = ((String) next.get("@URI") ).replaceAll(",","%2C");
+					ent.uris.add(new ResourceImpl(uri));
 					for (String type : ((String) next.get("@types")).split(",")) {
 						ent.posTypesAndCategories.add(new ResourceImpl(type));
 					}

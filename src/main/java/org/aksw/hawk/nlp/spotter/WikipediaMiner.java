@@ -57,7 +57,7 @@ public class WikipediaMiner extends ASpotter {
 			for (Object res : resources.toArray()) {
 				JSONObject next = (JSONObject) res;
 				Entity ent = new Entity();
-				ent.uris.add(new ResourceImpl(((String) next.get("title"))));
+				ent.uris.add(new ResourceImpl(((String) next.get("title")).replaceAll(",","%2C")));
 				tmpList.add(ent);
 			}
 			tmp.put("en", tmpList);
