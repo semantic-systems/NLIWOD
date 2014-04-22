@@ -118,6 +118,8 @@ public class SystemAnswerer {
 		log.debug("\t" + pseudoQuery);
 
 		// pose query to endpoint
+		// TODO Apply rdfs reasoning on each query
+
 		return sparql(pseudoQuery);
 	}
 

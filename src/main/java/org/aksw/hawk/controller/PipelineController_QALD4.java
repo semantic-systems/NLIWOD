@@ -26,6 +26,7 @@ import org.aksw.hawk.nlp.posTree.MutableTreeNode;
 import org.aksw.hawk.nlp.posTree.TreeTransformer;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
+import org.aksw.hawk.pruner.GraphNonSCCPruner;
 import org.aksw.hawk.pruner.QueryVariableHomomorphPruner;
 import org.aksw.hawk.visualization.SVGForTextInBoxTree;
 import org.aksw.hawk.visualization.TextInBox;
@@ -49,6 +50,7 @@ public class PipelineController_QALD4 {
 	private TreeTransformer treeTransform;
 	private SystemAnswerer systemAnswerer;
 	private QueryVariableHomomorphPruner queryVariableHomomorphPruner;
+	private GraphNonSCCPruner graphNonSCCPruner;
 
 	public static void main(String args[]) throws IOException {
 		PipelineController_QALD4 controller = new PipelineController_QALD4();
@@ -64,6 +66,7 @@ public class PipelineController_QALD4 {
 		controller.moduleBuilder = new ModuleBuilder();
 		controller.pseudoQueryBuilder = new PseudoQueryBuilder();
 		controller.queryVariableHomomorphPruner = new QueryVariableHomomorphPruner();
+		controller.graphNonSCCPruner = new GraphNonSCCPruner();
 		String endpoint = "http://dbpedia.org/sparql";
 		controller.systemAnswerer = new SystemAnswerer(endpoint);
 
@@ -105,14 +108,16 @@ public class PipelineController_QALD4 {
 			// 8. Build pseudo queries
 			List<ParameterizedSparqlString> tmp = this.pseudoQueryBuilder.buildQuery(q);
 
+			log.info("Before : " + tmp.size());
 			// homogenize variables in queries
-			log.info("Before homogenizing queries: " + tmp.size());
 			tmp = this.queryVariableHomomorphPruner.prune(tmp);
 			log.info("After homogenizing queries:  " + tmp.size());
+
+			// check whether clauses are connected
+			tmp = this.graphNonSCCPruner.prune(tmp);
+			log.info("After SCC check number of queries:  " + tmp.size());
+
 			// TODO Eliminate invalid queries and find top ranked query
-			// TODO check whether clauses are connected
-			// TODO Apply rdfs reasoning on each module
-			//
 			// 10. Execute queries to generate system answers
 			if (tmp == null) {
 				log.info("\tP=" + 0.0 + " R=" + 0.0 + " F=" + 0.0);
@@ -126,7 +131,11 @@ public class PipelineController_QALD4 {
 					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
 					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-					log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+
+					if (fMeasure > 0) {
+						log.info(pseudoQuery.toString());
+						log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+					}
 				}
 			}
 			bw.write("<hr/>");
