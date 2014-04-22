@@ -104,7 +104,7 @@ public class DBOIndex {
 	private void index() {
 		try {
 			Model dbpedia = ModelFactory.createDefaultModel();
-			InputStream url = URLClassLoader.getSystemResourceAsStream("dbpedia_3.9.owl");
+			InputStream url = ClassLoader.getSystemResourceAsStream("dbpedia_3.9.owl");
 			dbpedia.read(url, "RDF/XML");
 			StmtIterator stmts = dbpedia.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {

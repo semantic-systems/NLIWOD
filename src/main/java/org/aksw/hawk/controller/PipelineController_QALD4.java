@@ -26,7 +26,6 @@ import org.aksw.hawk.nlp.posTree.MutableTreeNode;
 import org.aksw.hawk.nlp.posTree.TreeTransformer;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
-import org.aksw.hawk.nlp.spotter.Spotlight;
 import org.aksw.hawk.pruner.GraphNonSCCPruner;
 import org.aksw.hawk.pruner.QueryVariableHomomorphPruner;
 import org.aksw.hawk.visualization.SVGForTextInBoxTree;

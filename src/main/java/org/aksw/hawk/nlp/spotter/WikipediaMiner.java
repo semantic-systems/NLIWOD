@@ -73,11 +73,11 @@ public class WikipediaMiner extends ASpotter {
 					String resource = entity.uris.get(0).getURI();
 					if (uriLabel.length == 1) {
 						if (resource.toLowerCase().equals(uriLabel[0].toLowerCase())) {
-							entity.label = uriLabel[0];
+							entity.label = (uriLabel[0]);
 						}
 					} else {
 						if (resource.equals(uriLabel[0])) {
-							entity.label = uriLabel[1];
+							entity.label = (uriLabel[1]);
 						}
 					}
 				}
