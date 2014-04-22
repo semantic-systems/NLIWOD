@@ -10,7 +10,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.vocabulary.RDF;
 
 public class ProjectionModule extends Module {
-
+//TODO old module, either delete or refactor, not used by now (end of april 14)
 	public ProjectionModule(MutableTreeNode type) {
 		String dboTerm = dboIndex.search(type.label);
 		log.debug("DBOTerm: " + dboTerm);

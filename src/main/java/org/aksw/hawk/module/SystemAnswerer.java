@@ -1,5 +1,6 @@
 package org.aksw.hawk.module;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,12 +28,15 @@ import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QueryParseException;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.sparql.core.TriplePath;
 import com.hp.hpl.jena.sparql.syntax.Element;
 import com.hp.hpl.jena.sparql.syntax.ElementGroup;
 import com.hp.hpl.jena.sparql.syntax.ElementPathBlock;
+import com.hp.hpl.jena.util.FileManager;
 
 public class SystemAnswerer {
 	private static final String PROJECTION_VARIABLE = "?a0";
@@ -40,9 +44,13 @@ public class SystemAnswerer {
 	Logger log = LoggerFactory.getLogger(SystemAnswerer.class);
 	private int sizeOfWindow = 5;
 	private DBAbstractsIndex abstractsIndex = new DBAbstractsIndex();
+	private Model model;
 
 	public SystemAnswerer(String endpoint) {
 		HTTP_LIVE_DBPEDIA_ORG_SPARQL = endpoint;
+		URL url = this.getClass().getClassLoader().getResource("dbpedia_3.9.owl");
+		this.model = ModelFactory.createDefaultModel();
+		FileManager.get().readModel(model, url.getFile());
 	}
 
 	public Set<RDFNode> answer(ParameterizedSparqlString pseudoQuery) {
@@ -172,7 +180,6 @@ public class SystemAnswerer {
 		return tmpQ;
 	}
 
-	//TODO dont ask dbpedia but dbpedia owl
 	/**
 	 * needed when retrieving NE from full text to discard non matching ones
 	 * 
@@ -181,8 +188,8 @@ public class SystemAnswerer {
 	 * @return
 	 */
 	private String getTypeOfVariable(Query query, Node variable) {
-		// simple strategy: find triple where variable is in a triple with a
-		// bound predicate
+		// simple strategy:
+		// find triple where variable is in a triple with a bound predicate
 		List<Element> elements = ((ElementGroup) query.getQueryPattern()).getElements();
 		for (Element elem : elements) {
 			if (elem instanceof ElementPathBlock) {
@@ -191,45 +198,46 @@ public class SystemAnswerer {
 					Node pred = triple.getPredicate();
 					// variable is in object of triple
 					String uri = pred.getURI();
-					if(uri.equals("http://dbpedia.org/ontology/birthPlace") && triple.getSubject().equals(variable)){
-						System.out.println();
-					}
 					if (triple.getObject().equals(variable)) {
 						// ask dbpedia range of pred
-						String q = "select distinct ?o where { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#range> ?o.}";
-						Query sparqlQuery = QueryFactory.create(q);
-						QueryExecution qexec = QueryExecutionFactory.sparqlService(HTTP_LIVE_DBPEDIA_ORG_SPARQL, sparqlQuery);
-						try {
-							ResultSet results = qexec.execSelect();
-							while (results.hasNext()) {
-								// TODO improve returning first best result
-								return results.next().get("?o").asResource().getURI();
-							}
-						} finally {
-							qexec.close();
-						}
+						return getRDFSRange(uri);
 					}
 					// variable is in subject of triple
 					else if (triple.getSubject().equals(variable)) {
 						// ask dbpedia domain of pred
-						String q = "select distinct ?o  where { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#domain> ?o.}";
-						Query sparqlQuery = QueryFactory.create(q);
-						QueryExecution qexec = QueryExecutionFactory.sparqlService(HTTP_LIVE_DBPEDIA_ORG_SPARQL, sparqlQuery);
-						try {
-							ResultSet results = qexec.execSelect();
-							while (results.hasNext()) {
-								// TODO improve returning first best result
-								return results.next().get("?o").asResource().getURI();
-							}
-						} finally {
-							qexec.close();
-						}
+						return getRDFSDomain(uri);
 					}
 				}
 			}
 		}
 		// ask variables domain respectively range
 		return null;
+	}
+
+	private String getRDFSDomain(String uri) {
+		String q = "select distinct ?o  where { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#domain> ?o.}";
+		return sparqlLocalOWL(q);
+	}
+
+	private String getRDFSRange(String uri) {
+		String q = "select distinct ?o where { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#range> ?o.}";
+		return sparqlLocalOWL(q);
+	}
+
+	private String sparqlLocalOWL(String sparqlQuery) {
+		String targetValue = null;
+		Query sparql = QueryFactory.create(sparqlQuery);
+		QueryExecution qexec = QueryExecutionFactory.create(sparql, model);
+		try {
+			ResultSet results = qexec.execSelect();
+			while (results.hasNext()) {
+				targetValue = results.next().get("?o").asResource().getURI();
+				break;
+			}
+		} finally {
+			qexec.close();
+		}
+		return targetValue;
 	}
 
 	private List<String> extractPossibleNEFromDoc(Document doc, String surrounding, String alreadyIdentifiedNE, String type) {
@@ -272,7 +280,6 @@ public class SystemAnswerer {
 
 	public static void main(String args[]) {
 		String q = "SELECT ?a0 WHERE { " + "?a0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Settlement> . " + "?a1 <http://dbpedia.org/ontology/birthPlace> ?a0 . " + "?a1 <assassin> <http://dbpedia.org/resource/Martin_Luther_King%2C_Jr.> .}";
-
 		ParameterizedSparqlString pss = new ParameterizedSparqlString(q);
 
 		SystemAnswerer sys = new SystemAnswerer("http://dbpedia.org/sparql");
