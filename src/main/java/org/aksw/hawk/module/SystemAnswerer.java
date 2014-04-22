@@ -2,6 +2,7 @@ package org.aksw.hawk.module;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -45,7 +46,6 @@ public class SystemAnswerer {
 	private Model rdfsModel;
 	private ASpotter spotter;
 	private int sizeOfWindow = 5;
-	private Model typesModel;
 
 	public SystemAnswerer(String endpoint, ASpotter spotter) {
 		// TODO resolve hack
@@ -55,19 +55,40 @@ public class SystemAnswerer {
 		URL url = this.getClass().getClassLoader().getResource("dbpedia_3.9.owl");
 		this.rdfsModel = ModelFactory.createDefaultModel();
 		FileManager.get().readModel(rdfsModel, url.getFile());
-//		url = this.getClass().getClassLoader().getResource("instance_types_en.ttl");
-//		this.typesModel = ModelFactory.createDefaultModel();
-//		FileManager.get().readModel(typesModel, url.getFile());
 	}
 
-	public Set<RDFNode> answer(ParameterizedSparqlString pseudoQuery) {
-		// for each full text part of the query ask abstract index
+	public List<Set<RDFNode>> answer(List<ParameterizedSparqlString> listOfPseudoQuery) {
+		HashSet<ParameterizedSparqlString> targetQueries = Sets.newHashSet();
+
+		for (ParameterizedSparqlString query : listOfPseudoQuery) {
+			// for each full text part of the query ask abstract index
+			targetQueries.addAll(checkForFullTextTriple(query));
+		}
+
+		List<Set<RDFNode>> resultSets = Lists.newArrayList();
+		for (ParameterizedSparqlString query : targetQueries) {
+			log.debug("\t" + query);
+			// if query has only variables and URIs anymore than ask DBpedia
+			query = removeUnneccessaryClauses(query);
+
+			// TODO Apply rdfs reasoning on each query
+			// pose query to endpoint
+			Set<RDFNode> sparql = sparql(query);
+			resultSets.add(sparql);
+		}
+
+		return resultSets;
+	}
+
+	private List<ParameterizedSparqlString> checkForFullTextTriple(ParameterizedSparqlString pseudoQuery) {
+		List<ParameterizedSparqlString> resultQueries = Lists.newArrayList();
+
 		List<Element> elements = ((ElementGroup) pseudoQuery.asQuery().getQueryPattern()).getElements();
 		for (Element elem : elements) {
 			if (elem instanceof ElementPathBlock) {
 				ElementPathBlock pathBlock = (ElementPathBlock) elem;
 				for (TriplePath triple : pathBlock.getPattern().getList()) {
-					// only use full-text lookup is triple has full-text part
+					// only use full-text lookup if triple has full-text part
 					if (triple.getPredicate().getURI().startsWith("file://") || triple.getObject().isLiteral()) {
 						String predicateURI = triple.getPredicate().getURI();
 						// if pred is text do a complex lookup in abstract index
@@ -88,8 +109,7 @@ public class SystemAnswerer {
 									for (Document doc : list) {
 										log.debug("variableType " + subjectType + " variable " + subjectType);
 										List<String> ne = extractPossibleNEFromDoc(doc, localName, triple.getObject().getURI(), subjectType);
-										if (ne.size() == 1) {
-											String name = "?" + subjectVariable.getName();
+										if (ne.size() > 0) {
 											// replace variable by found NE
 											/*
 											 * TODO bug: if variable is
@@ -97,16 +117,20 @@ public class SystemAnswerer {
 											 * the projection variable which is
 											 * an error, discard query
 											 */
-											if (name.equals(PROJECTION_VARIABLE)) {
-												return Sets.newHashSet();
-											}
+											String name = "?" + subjectVariable.getName();
 											pseudoQuery.setIri(name, ne.get(0));
+											for (int i = 0; i < ne.size(); i++) {
+												ParameterizedSparqlString pss = new ParameterizedSparqlString(pseudoQuery.toString());
+												if (name.equals(PROJECTION_VARIABLE)) {
+													return null;
+												}
+												pss.setIri(name, ne.get(0));
+												resultQueries.add(pss);
+											}
 										} else {
-											// TODO!!!! work on this case
 											log.warn("Cannot resolve hybrid part");
 										}
 									}
-
 								} else {
 									log.warn("Cannot resolve hybrid part");
 								}
@@ -127,15 +151,7 @@ public class SystemAnswerer {
 				}
 			}
 		}
-
-		// if query has only variables and URIs anymore than ask DBpedia
-		pseudoQuery = removeUnneccessaryClauses(pseudoQuery);
-		log.debug("\t" + pseudoQuery);
-
-		// pose query to endpoint
-		// TODO Apply rdfs reasoning on each query
-
-		return sparql(pseudoQuery);
+		return resultQueries;
 	}
 
 	private Set<RDFNode> sparql(ParameterizedSparqlString pseudoQuery) {
@@ -284,7 +300,7 @@ public class SystemAnswerer {
 			}
 		}
 		log.debug("#Possible Entities:" + possibleEntitiesForVariableFoundViaTextSearch.size());
-		if(possibleEntitiesForVariableFoundViaTextSearch.size()>1){
+		if (possibleEntitiesForVariableFoundViaTextSearch.size() > 1) {
 			System.out.println();
 		}
 		return possibleEntitiesForVariableFoundViaTextSearch;
@@ -314,30 +330,17 @@ public class SystemAnswerer {
 		return types;
 	}
 
-	private List<String> sparqlLocalTypes(String sparqlQuery) {
-		List<String> types = Lists.newArrayList();
-		Query sparql = QueryFactory.create(sparqlQuery);
-		QueryExecution qexec = QueryExecutionFactory.create(sparql, typesModel);
-		try {
-			ResultSet results = qexec.execSelect();
-			while (results.hasNext()) {
-				types.add(results.next().get("?o").asResource().getURI());
-			}
-		} finally {
-			qexec.close();
-		}
-		return types;
-	}
-
 	public static void main(String args[]) {
 		String q = "SELECT ?a0 WHERE { " + "?a0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Settlement> . " + "?a1 <http://dbpedia.org/ontology/birthPlace> ?a0 . " + "?a1 <assassin> <http://dbpedia.org/resource/Martin_Luther_King%2C_Jr.> .}";
 		ParameterizedSparqlString pss = new ParameterizedSparqlString(q);
 
 		SystemAnswerer sys = new SystemAnswerer("http://dbpedia.org/sparql", new Spotlight());
 
-		Set<RDFNode> ans = sys.answer(pss);
-		for (RDFNode answer : ans) {
-			System.out.println(answer);
+		List<Set<RDFNode>> ans = sys.answer(Lists.newArrayList(pss));
+		for (Set<RDFNode> answer : ans) {
+			for (RDFNode rdfNode : answer) {
+				System.out.println(rdfNode);
+			}
 		}
 	}
 }

@@ -26,9 +26,6 @@ import org.aksw.hawk.nlp.posTree.MutableTreeNode;
 import org.aksw.hawk.nlp.posTree.TreeTransformer;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
-import org.aksw.hawk.nlp.spotter.Spotlight;
-import org.aksw.hawk.nlp.spotter.TagMe;
-import org.aksw.hawk.nlp.spotter.WikipediaMiner;
 import org.aksw.hawk.pruner.GraphNonSCCPruner;
 import org.aksw.hawk.pruner.QueryVariableHomomorphPruner;
 import org.aksw.hawk.visualization.SVGForTextInBoxTree;
@@ -126,9 +123,7 @@ public class PipelineController_QALD4 {
 				log.info("\tP=" + 0.0 + " R=" + 0.0 + " F=" + 0.0);
 			} else {
 				log.info("Number of PseudoQueries: " + tmp.size());
-				for (ParameterizedSparqlString pseudoQuery : tmp) {
-					log.debug(pseudoQuery.toString());
-					Set<RDFNode> systemAnswers = this.systemAnswerer.answer(pseudoQuery);
+				for (Set<RDFNode> systemAnswers :  this.systemAnswerer.answer(tmp)) {
 
 					// 11. Compare to set of resources from benchmark
 					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
@@ -136,7 +131,6 @@ public class PipelineController_QALD4 {
 					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
 
 					if (fMeasure > 0) {
-						log.info(pseudoQuery.toString());
 						log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
 					}
 				}
