@@ -290,7 +290,7 @@ public class SystemAnswerer {
 		for (String key : nes.keySet()) {
 			for (Entity entity : nes.get(key)) {
 				// TODO replace this by looking for type inside types.ttl of
-				// DBpedia
+				// DBpedia but(!) loading instance.ttl to jena takes too long
 				for (String uri : getTypes(entity.uris.get(0).getURI())) {
 					// String uri = res.getURI().replace("DBpedia:",
 					// "http://dbpedia.org/ontology/");

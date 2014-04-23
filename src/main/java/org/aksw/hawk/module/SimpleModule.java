@@ -39,7 +39,7 @@ public class SimpleModule extends Module {
 				wc = new WhereClause(subject, predicate, object);
 			}
 		} else if (predicate.equals("IS")) {
-			// skip since subject is var and object is a dbpedia resource
+			// skip since subject is var and object is a dbpedia resource or noun
 			wc = new WhereClause(subject, predicate, object);
 		} else {
 			String dboTerm = dboIndex.search(predicate);
