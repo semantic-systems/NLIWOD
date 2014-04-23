@@ -18,6 +18,7 @@ public class ModuleBuilder {
 	private int variableNumber = 1;
 
 	public List<Module> build(Question q) {
+		variableNumber = 1;
 		this.list = Lists.newArrayList();
 
 		eulerTour(q.tree.getRoot());
@@ -72,26 +73,35 @@ public class ModuleBuilder {
 		SimpleModule module = new SimpleModule();
 		if (node.posTag.matches("WD(.)*")) {
 			// if node is WD* skip
-		} else if (node.children.size() == 0 && node.posTag.matches("ADD|NN(.)*")) {
-			// if node a leaf and posTag is ADD or NN*
-			for (int j = variableNumber; j > 0; --j) {
-				// if j = 0 ADD will be projection variable
-				module.addStatement("?a" + j, "IS", node.label);
-			}
 		} else {
-			// adding where clauses
-			module.addStatement("?a" + (variableNumber - 1), RDF.type.getURI(), node.label);
-			// Replacement rule to form different BGPs
-			// (?a(i) = ?a(j) or ?a(j) != ?a(i))
-			// for i!=j and i,j = [0,|modules|]
-			for (int i = variableNumber; i >= 0; --i) {
-				for (int j = variableNumber; j >= 0; --j) {
-					if (i != j) {
-						module.addStatement("?a" + i, node.label, "?a" + j);
+			String label = node.label;
+			if (node.children.size() == 0 && node.posTag.matches("ADD|NN(.)*")) {
+				// if node a leaf and posTag is ADD or NN*
+				for (int j = variableNumber; j > 0; --j) {
+					// if j = 0 ADD will be projection variable
+					module.addStatement("?a" + j, "IS", label);
+				}
+			} else {
+				// adding where clauses
+				module.addStatement("?a" + (variableNumber - 1), RDF.type.getURI(), label);
+				// Replacement rule to form different BGPs
+				// (?a(i) = ?a(j) or ?a(j) != ?a(i))
+				// for i!=j and i,j = [0,|modules|]
+				if (!label.startsWith("http://")) {
+					// escape whitespace so no parse action occurs
+					// i.e. <anti-apartheid activist> becomes
+					// <anti-apartheid%20activist>
+					label = label.replaceAll("\\s", "_");
+				}
+				for (int i = variableNumber; i >= 0; --i) {
+					for (int j = variableNumber; j >= 0; --j) {
+						if (i != j) {
+							module.addStatement("?a" + i, label, "?a" + j);
+						}
 					}
 				}
+				variableNumber++;
 			}
-			variableNumber++;
 		}
 		if (module.statementList.size() > 0) {
 			list.add(module);

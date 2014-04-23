@@ -138,7 +138,6 @@ public class PipelineController_QALD4 {
 			}
 			log.info("Number of system answers:" + i);
 			bw.write("<hr/>");
-			break;
 		}
 		bw.close();
 	}
