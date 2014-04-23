@@ -20,6 +20,7 @@ import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.hawk.module.ModuleBuilder;
 import org.aksw.hawk.module.PseudoQueryBuilder;
 import org.aksw.hawk.module.SystemAnswerer;
+import org.aksw.hawk.nlp.NounCombiner;
 import org.aksw.hawk.nlp.ParseTree;
 import org.aksw.hawk.nlp.Pruner;
 import org.aksw.hawk.nlp.posTree.MutableTree;
@@ -52,6 +53,7 @@ public class PipelineController_QALD4 {
 	private SystemAnswerer systemAnswerer;
 	private QueryVariableHomomorphPruner queryVariableHomomorphPruner;
 	private GraphNonSCCPruner graphNonSCCPruner;
+	private NounCombiner nounCombiner;
 
 	public static void main(String args[]) throws IOException {
 		PipelineController_QALD4 controller = new PipelineController_QALD4();
@@ -63,6 +65,7 @@ public class PipelineController_QALD4 {
 		controller.nerdModule = new Fox();
 		controller.parseTree = new ParseTree();
 		controller.treeTransform = new TreeTransformer();
+		controller.nounCombiner = new NounCombiner();
 		controller.pruner = new Pruner();
 		controller.moduleBuilder = new ModuleBuilder();
 		controller.pseudoQueryBuilder = new PseudoQueryBuilder();
@@ -89,11 +92,13 @@ public class PipelineController_QALD4 {
 			if (!q.languageToNamedEntites.isEmpty()) {
 				log.debug("\t" + Joiner.on("\n").join(q.languageToNamedEntites.get("en")));
 			}
+
 			// 3. Build trees from questions and cache them
+			q.depTree = this.parseTree.process(q);
 			q.depTree = this.parseTree.process(q);
 
 			q.tree = this.treeTransform.DEPtoMutableDEP(q.depTree);
-
+			this.nounCombiner.combineNouns(q);
 			// visualize the tree
 			String svg = visTree(q);
 			bw.write(svg);
@@ -101,6 +106,7 @@ public class PipelineController_QALD4 {
 			// 4. Apply pruning rules
 			q.tree = this.pruner.prune(q);
 
+			System.exit(0);
 			// visualize the tree
 			vis(bw, q);
 

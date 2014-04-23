@@ -71,7 +71,8 @@ public class ModuleBuilder {
 
 	private void build(MutableTreeNode node) {
 		SimpleModule module = new SimpleModule();
-		if (node.posTag.matches("WD(.)*")) {
+		//TODO work on How... queries
+		if (node.posTag.matches("WD(.)*|WR(.)*")) {
 			// if node is WD* skip
 		} else {
 			String label = node.label;
@@ -82,17 +83,19 @@ public class ModuleBuilder {
 					module.addStatement("?a" + j, "IS", label);
 				}
 			} else {
-				// adding where clauses
-				module.addStatement("?a" + (variableNumber - 1), RDF.type.getURI(), label);
-				// Replacement rule to form different BGPs
-				// (?a(i) = ?a(j) or ?a(j) != ?a(i))
-				// for i!=j and i,j = [0,|modules|]
 				if (!label.startsWith("http://")) {
 					// escape whitespace so no parse action occurs
 					// i.e. <anti-apartheid activist> becomes
 					// <anti-apartheid%20activist>
 					label = label.replaceAll("\\s", "_");
 				}
+				// adding where clauses
+				// ?a(i) a label
+				// ?a(i) label ?a(j), i!=j
+				module.addStatement("?a" + (variableNumber - 1), RDF.type.getURI(), label);
+				// Replacement rule to form different BGPs
+				// (?a(i) = ?a(j) or ?a(j) != ?a(i))
+				// for i!=j and i,j = [0,|modules|]
 				for (int i = variableNumber; i >= 0; --i) {
 					for (int j = variableNumber; j >= 0; --j) {
 						if (i != j) {
