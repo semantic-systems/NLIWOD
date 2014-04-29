@@ -3,7 +3,6 @@ package org.aksw.hawk.index;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLClassLoader;
 
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.Document;

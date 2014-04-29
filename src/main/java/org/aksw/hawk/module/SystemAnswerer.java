@@ -1,7 +1,6 @@
 package org.aksw.hawk.module;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,29 +54,25 @@ public class SystemAnswerer {
 		// this.spotter = new Spotlight();
 		HTTP_LIVE_DBPEDIA_ORG_SPARQL = endpoint;
 		this.rdfsModel = ModelFactory.createDefaultModel();
-		FileManager.get().readModel(rdfsModel,new File("resources/dbpedia_3.9.owl").getAbsolutePath());
+		FileManager.get().readModel(rdfsModel, new File("resources/dbpedia_3.9.owl").getAbsolutePath());
 	}
 
-	public HashMap<String, Set<RDFNode>> answer(List<ParameterizedSparqlString> listOfPseudoQuery) {
+	public HashMap<String, Set<RDFNode>> answer(ParameterizedSparqlString query) {
 		List<ParameterizedSparqlString> targetQueries = Lists.newArrayList();
 
-		for (ParameterizedSparqlString query : listOfPseudoQuery) {
-			// for each full text part of the query ask abstract index
-			List<ParameterizedSparqlString> checkForFullTextTriple = checkForFullTextTriple(query);
-			targetQueries.addAll(checkForFullTextTriple);
-		}
-//		}
+		// for each full text part of the query ask abstract index
+		List<ParameterizedSparqlString> checkForFullTextTriple = checkForFullTextTriple(query);
+		targetQueries.addAll(checkForFullTextTriple);
 		HashMap<String, Set<RDFNode>> resultSets = Maps.newHashMap();
-		for (ParameterizedSparqlString query : targetQueries) {
-			log.debug("\t" + query);
+		for (ParameterizedSparqlString tmpQuery : targetQueries) {
+			log.debug("\t" + tmpQuery);
 			// if query has only variables and URIs anymore than ask DBpedia
-
-			query = removeUnneccessaryClauses(query);
+			tmpQuery = removeUnneccessaryClauses(tmpQuery);
 
 			// TODO Apply rdfs reasoning on each query
 			// pose query to endpoint
-			Set<RDFNode> sparql = sparql(query);
-			resultSets.put(query.toString(), sparql);
+			Set<RDFNode> sparql = sparql(tmpQuery);
+			resultSets.put(tmpQuery.toString(), sparql);
 		}
 
 		return resultSets;
@@ -110,7 +105,7 @@ public class SystemAnswerer {
 								if (triple.getObject().isURI()) {
 									List<Document> list = abstractsIndex.askForPredicateWithBoundAbstract(localName, triple.getObject().getURI());
 									for (Document doc : list) {
-										log.debug("variableType " + subjectType + " variable " + subjectType);
+										log.debug("variableType " + subjectType + " variable " + subjectVariable);
 										List<String> ne = extractPossibleNEFromDoc(doc, localName, triple.getObject().getURI(), subjectType);
 										if (ne.size() > 0) {
 											// replace variable by found NE
@@ -121,7 +116,8 @@ public class SystemAnswerer {
 											 * an error, discard query
 											 */
 											String name = "?" + subjectVariable.getName();
-//											pseudoQuery.setIri(name, ne.get(0));
+											// pseudoQuery.setIri(name,
+											// ne.get(0));
 											for (int i = 0; i < ne.size(); i++) {
 												ParameterizedSparqlString pss = new ParameterizedSparqlString(pseudoQuery.toString());
 												if (name.equals(PROJECTION_VARIABLE)) {
@@ -335,7 +331,7 @@ public class SystemAnswerer {
 
 		SystemAnswerer sys = new SystemAnswerer("http://dbpedia.org/sparql", new Spotlight());
 
-		HashMap<String, Set<RDFNode>> ans = sys.answer(Lists.newArrayList(pss));
+		HashMap<String, Set<RDFNode>> ans = sys.answer(pss);
 		for (String key : ans.keySet()) {
 			System.out.println(key);
 			for (RDFNode rdfNode : ans.get(key)) {

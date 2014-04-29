@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
@@ -113,36 +114,36 @@ public class PipelineController_QALD4 {
 			q.modules = this.moduleBuilder.build(q);
 
 			// 8. Build pseudo queries
-			List<ParameterizedSparqlString> tmp = this.pseudoQueryBuilder.buildQuery(q);
+			Iterator<ParameterizedSparqlString> iter = this.pseudoQueryBuilder.buildQuery(q);
+			while (iter.hasNext()) {
+				ParameterizedSparqlString thisQuery = iter.next();
+				if (thisQuery != null) {
+					// homogenize variables in queries
+					// TODO Eliminate invalid queries and find top ranked query
+					// TODO rethink variable homomorpher
+					// iter = this.queryVariableHomomorphPruner.prune(iter);
 
-			log.info("Before : " + tmp.size());
-			// homogenize variables in queries
-			tmp = this.queryVariableHomomorphPruner.prune(tmp);
-			log.info("After homogenizing queries:  " + tmp.size());
+					// check whether clauses are connected
+					// TODO rethink graph scc pruner
+					// iter = this.graphNonSCCPruner.prune(iter);
 
-			// check whether clauses are connected
-			tmp = this.graphNonSCCPruner.prune(tmp);
-			log.info("After SCC check number of queries:  " + tmp.size());
-
-			// TODO Eliminate invalid queries and find top ranked query
-			// 10. Execute queries to generate system answers
-			log.info("Number of PseudoQueries: " + tmp.size());
-			int i = 0;
-			HashMap<String, Set<RDFNode>> answer = this.systemAnswerer.answer(tmp);
-			for (String key : answer.keySet()) {
-				Set<RDFNode> systemAnswers = answer.get(key);
-				// 11. Compare to set of resources from benchmark
-				double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
-				double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-				double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-				if (fMeasure > 0) {
-					log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
-					log.info(key);
+					// 10. Execute queries to generate system answers
+					HashMap<String, Set<RDFNode>> answer = this.systemAnswerer.answer(thisQuery);
+					for (String key : answer.keySet()) {
+						Set<RDFNode> systemAnswers = answer.get(key);
+						// 11. Compare to set of resources from benchmark
+						double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+						double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+						double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+						if (fMeasure > 0) {
+							log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+							log.info(key);
+						}
+					}
+					bw.write("<hr/>");
 				}
-				i++;
 			}
-			log.info("Number of system answers:" + i);
-			bw.write("<hr/>");
+			System.gc();
 		}
 		bw.close();
 	}
