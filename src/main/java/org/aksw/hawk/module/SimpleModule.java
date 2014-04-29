@@ -1,5 +1,6 @@
 package org.aksw.hawk.module;
 
+import java.io.File;
 import java.net.URL;
 
 import com.hp.hpl.jena.query.Query;
@@ -18,9 +19,8 @@ public class SimpleModule extends Module {
 
 	public SimpleModule() {
 		super();
-		URL url = this.getClass().getClassLoader().getResource("dbpedia_3.9.owl");
 		this.model = ModelFactory.createDefaultModel();
-		FileManager.get().readModel(model, url.getFile());
+		FileManager.get().readModel(model, (new File("resources/dbpedia_3.9.owl")).getAbsolutePath());
 	}
 
 	public void addStatement(String subject, String predicate, String object) {

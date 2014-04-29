@@ -50,7 +50,7 @@ public class DBOIndex {
 
 	public DBOIndex() {
 		try {
-			File index = new File("indexOntology");
+			File index = new File("resources/indexOntology");
 			analyzer = new SimpleAnalyzer(LUCENE_VERSION);
 			if (!index.exists()) {
 				index.mkdir();

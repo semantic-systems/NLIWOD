@@ -1,5 +1,6 @@
 package org.aksw.hawk.module;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,9 +54,8 @@ public class SystemAnswerer {
 		this.spotter = spotter;
 		// this.spotter = new Spotlight();
 		HTTP_LIVE_DBPEDIA_ORG_SPARQL = endpoint;
-		URL url = this.getClass().getClassLoader().getResource("dbpedia_3.9.owl");
 		this.rdfsModel = ModelFactory.createDefaultModel();
-		FileManager.get().readModel(rdfsModel, url.getFile());
+		FileManager.get().readModel(rdfsModel,new File("resources/dbpedia_3.9.owl").getAbsolutePath());
 	}
 
 	public HashMap<String, Set<RDFNode>> answer(List<ParameterizedSparqlString> listOfPseudoQuery) {
@@ -63,7 +63,8 @@ public class SystemAnswerer {
 
 		for (ParameterizedSparqlString query : listOfPseudoQuery) {
 			// for each full text part of the query ask abstract index
-			targetQueries.addAll(checkForFullTextTriple(query));
+			List<ParameterizedSparqlString> checkForFullTextTriple = checkForFullTextTriple(query);
+			targetQueries.addAll(checkForFullTextTriple);
 		}
 //		}
 		HashMap<String, Set<RDFNode>> resultSets = Maps.newHashMap();
@@ -124,7 +125,7 @@ public class SystemAnswerer {
 											for (int i = 0; i < ne.size(); i++) {
 												ParameterizedSparqlString pss = new ParameterizedSparqlString(pseudoQuery.toString());
 												if (name.equals(PROJECTION_VARIABLE)) {
-													return null;
+													return resultQueries;
 												}
 												pss.setIri(name, ne.get(i));
 												resultQueries.add(pss);

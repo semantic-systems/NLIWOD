@@ -38,6 +38,20 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
+			<plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.aksw.hawk.controller.PipelineController_QALD4</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -128,5 +142,6 @@
             <artifactId>org.abego.treelayout.core</artifactId>
             <version>1.0.1</version>
         </dependency>
+        
 	</dependencies>
 </project>

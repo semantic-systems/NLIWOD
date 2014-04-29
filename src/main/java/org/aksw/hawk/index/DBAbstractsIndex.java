@@ -56,7 +56,7 @@ public class DBAbstractsIndex {
 
 	public DBAbstractsIndex() {
 		try {
-			File index = new File("indexAbstract");
+			File index = new File("resources/indexAbstract");
 			if (!index.exists()) {
 				index.mkdir();
 				directory = new MMapDirectory(index);

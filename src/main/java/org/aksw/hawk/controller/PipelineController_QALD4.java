@@ -60,7 +60,7 @@ public class PipelineController_QALD4 {
 
 		log.info("Configuring controller");
 
-		controller.dataset = ClassLoader.getSystemResource("qald-4_hybrid_train.xml").getFile();
+		controller.dataset = new File(args[0]).getAbsolutePath();
 		controller.datasetLoader = new QaldLoader();
 		controller.nerdModule = new Fox();
 		controller.parseTree = new ParseTree();
@@ -106,7 +106,6 @@ public class PipelineController_QALD4 {
 			// 4. Apply pruning rules
 			q.tree = this.pruner.prune(q);
 
-			System.exit(0);
 			// visualize the tree
 			vis(bw, q);
 

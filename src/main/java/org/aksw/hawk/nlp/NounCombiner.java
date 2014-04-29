@@ -41,8 +41,8 @@ public class NounCombiner {
 			String findPos = findPos(token, q.depTree.getFirstRoot());
 			posList.add(findPos);
 		}
-		System.out.println();
 		for (int i = 0; i < posList.size() - 1; i++) {
+			//TODO improve to match "Battle of Arnhem" NNP (IN) NNP
 			if (posList.get(i).matches("NN(.)*") && posList.get(i + 1).matches("NN(.)*")) {
 				Set<String> tokenSet = Sets.newHashSet();
 				String entLabel = "";
@@ -70,6 +70,7 @@ public class NounCombiner {
 						}
 					}
 				}
+				//delete transformed nodes
 				for (int x = 0; x < toBeDeleted.size(); x++) {
 					q.tree.remove(toBeDeleted.get(x));
 				}

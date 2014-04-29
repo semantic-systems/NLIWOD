@@ -20,7 +20,7 @@ public class PersistentCache {
 	int i = 0;
 
 	public PersistentCache() {
-		cacheLocation = PersistentCache.class.getClassLoader().getResource("spotterCache").getFile();
+		cacheLocation = new File("spotterCache").getAbsolutePath();
 		log.debug("cacheLocation: " + cacheLocation);
 		readCache();
 	}
