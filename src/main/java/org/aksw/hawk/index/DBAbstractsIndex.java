@@ -72,8 +72,8 @@ public class DBAbstractsIndex {
 	}
 
 	public List<Document> askForPredicateWithBoundAbstract(String targetPredicate, String boundAbstract) {
-		//hack to remove escaped spaces so parsing errors would not happen
-		//i.e. <anti-apartheid_activist> becomes <anti-apartheid activist>
+		// hack to remove escaped spaces so parsing errors would not happen
+		// i.e. <anti-apartheid_activist> becomes <anti-apartheid activist>
 		targetPredicate = targetPredicate.replaceAll("_", "\\s");
 		List<Document> triples = new ArrayList<Document>();
 		try {
@@ -96,6 +96,29 @@ public class DBAbstractsIndex {
 				String o = hitDoc.get(FIELD_NAME_OBJECT);
 				log.debug("\tFound in document: " + s + "\n" + p + "\n" + o);
 				triples.add(hitDoc);
+			}
+
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+		return triples;
+	}
+
+	public List<String> listAbstractsContaining(String token) {
+		List<String> triples = new ArrayList<String>();
+		try {
+			log.debug("\t start asking index...");
+			BooleanQuery bq = new BooleanQuery();
+			TermQuery query = new TermQuery(new Term(FIELD_NAME_OBJECT, "\"" + token + "\""));
+			bq.add(query, BooleanClause.Occur.MUST);
+			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
+			Query q = new QueryParser(LUCENE_VERSION, FIELD_NAME_SUBJECT, new SimpleAnalyzer(LUCENE_VERSION)).parse(bq.toString());
+			isearcher.search(q, collector);
+			ScoreDoc[] hits = collector.topDocs().scoreDocs;
+			for (int i = 0; i < hits.length; i++) {
+				Document hitDoc = isearcher.doc(hits[i].doc);
+				String s = hitDoc.get(FIELD_NAME_SUBJECT);
+				triples.add(s);
 			}
 
 		} catch (Exception e) {

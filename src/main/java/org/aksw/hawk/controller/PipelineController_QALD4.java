@@ -96,7 +96,6 @@ public class PipelineController_QALD4 {
 
 			// 3. Build trees from questions and cache them
 			q.depTree = this.parseTree.process(q);
-			q.depTree = this.parseTree.process(q);
 
 			q.tree = this.treeTransform.DEPtoMutableDEP(q.depTree);
 			this.nounCombiner.combineNouns(q);
@@ -140,10 +139,11 @@ public class PipelineController_QALD4 {
 							log.info(key);
 						}
 					}
-					bw.write("<hr/>");
 				}
 			}
+			bw.write("<hr/>");
 			System.gc();
+			break;
 		}
 		bw.close();
 	}
