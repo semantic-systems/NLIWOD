@@ -13,7 +13,7 @@ public class Entity implements Comparable<Entity> {
 
 	@Override
 	public String toString() {
-		return label + "(" + uris.get(0) + ")";
+		return label + " (" + uris.get(0) + ")";
 	}
 
 	@Override

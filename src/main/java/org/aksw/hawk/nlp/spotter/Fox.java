@@ -27,6 +27,7 @@ import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class Fox extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(Fox.class);
@@ -79,7 +80,10 @@ public class Fox extends ASpotter {
 					if (predicateURI.equals("http://www.w3.org/2000/10/annotation-ns#body")) {
 						ent.label = statement.getObject().asLiteral().getString();
 					} else if (predicateURI.equals("http://ns.aksw.org/scms/means")) {
-						ent.uris.add(statement.getObject().asResource());
+						String uri = statement.getObject().asResource().getURI();
+						String encode = uri.replaceAll(",","%2C");
+						ResourceImpl e = new ResourceImpl(encode);
+						ent.uris.add(e);
 					} else if (predicateURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) {
 						ent.posTypesAndCategories.add(statement.getObject().asResource());
 					}

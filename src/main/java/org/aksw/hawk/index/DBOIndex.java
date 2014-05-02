@@ -2,6 +2,8 @@ package org.aksw.hawk.index;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLClassLoader;
 
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.Document;
@@ -48,7 +50,7 @@ public class DBOIndex {
 
 	public DBOIndex() {
 		try {
-			File index = new File("indexOntology");
+			File index = new File("resources/indexOntology");
 			analyzer = new SimpleAnalyzer(LUCENE_VERSION);
 			if (!index.exists()) {
 				index.mkdir();
@@ -102,7 +104,8 @@ public class DBOIndex {
 	private void index() {
 		try {
 			Model dbpedia = ModelFactory.createDefaultModel();
-			dbpedia.read("dbpedia_3.9.owl", "RDF/XML");
+			InputStream url = ClassLoader.getSystemResourceAsStream("dbpedia_3.9.owl");
+			dbpedia.read(url, "RDF/XML");
 			StmtIterator stmts = dbpedia.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();

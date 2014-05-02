@@ -2,17 +2,17 @@ package org.aksw.hawk.module;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
-import com.hp.hpl.jena.graph.Node_Variable;
+import com.google.common.collect.Sets;
 import com.hp.hpl.jena.query.ParameterizedSparqlString;
 
 public class PseudoQueryBuilder {
+	private static final String IS = "<IS>";
 	Logger log = LoggerFactory.getLogger(PseudoQueryBuilder.class);
 
 	public List<ParameterizedSparqlString> buildQuery(Question q) {
@@ -29,36 +29,62 @@ public class PseudoQueryBuilder {
 		// iterate until all permutations are reached
 		boolean finished = false;
 		while (!finished) {
-			ParameterizedSparqlString query = new ParameterizedSparqlString();
-			buildCommandText(query, q);
 			finished = true;
-			for (int i = 0; i < print.length; i++) {
-				Module currentModule = q.modules.get(i);
-				WhereClause currentChoiceOfStatement = currentModule.statementList.get(print[i]);
-				replaceParameters(query, currentChoiceOfStatement, i);
-			}
-			// think of print as a map which shows the current permutations
-			// minus one will generate the next permutation using a clock
-			// paradigm
+			StringBuilder queryString = buildQuery(q, print);
 			finished = minusOne(print, q);
-			queries.add(query);
+			if (queryString != null) {
+				log.debug("Query: " + queryString);
+				// think of print as a map which shows the current permutations
+				// minus one generates the next permutation using clock paradigm
+
+				ParameterizedSparqlString query = new ParameterizedSparqlString(queryString.toString());
+				queries.add(query);
+			}
 		}
 
-		queries = rebuildQueriesWithCorrectParameters(queries);
-		log.debug("\n" + Joiner.on("\n ").join(queries));
-
+		log.debug("Number of queries: " + queries.size());
 		return queries;
 	}
 
-	private List<ParameterizedSparqlString> rebuildQueriesWithCorrectParameters(List<ParameterizedSparqlString> queries) {
-		List<ParameterizedSparqlString> tmpList = Lists.newArrayList();
-		for (ParameterizedSparqlString q : queries) {
-			String queryString = q.asQuery().toString();
-			ParameterizedSparqlString tmpQuery = new ParameterizedSparqlString(queryString);
-			tmpList.add(tmpQuery);
+	private StringBuilder buildQuery(Question q, int[] print) {
+		StringBuilder queryString = new StringBuilder("SELECT ?a0 WHERE {\n");
+		Set<String> vars = getVars(q, print);
+		for (int i = 0; i < print.length; i++) {
+			Module currentModule = q.modules.get(i);
+			WhereClause currentChoiceOfStatement = currentModule.statementList.get(print[i]);
+			// replacement rule gets activated
+			if (currentChoiceOfStatement.p.equals(IS)) {
+				// if variable in s is not in the set of variables discard query
+				if (vars.contains(currentChoiceOfStatement.s)) {
+					String s = "\\" + currentChoiceOfStatement.s;
+					String o = currentChoiceOfStatement.o;
+					String querySoFar = queryString.toString();
+					queryString = new StringBuilder(querySoFar.replaceAll(s, o));
+				} else {
+					return null;
+				}
+			} else {
+				queryString.append(currentChoiceOfStatement.toString());
+				queryString.append("\n");
+			}
 		}
+		queryString.append("}");
+		return queryString;
+	}
 
-		return tmpList;
+	private Set<String> getVars(Question q, int[] print) {
+		Set<String> vars = Sets.newHashSet();
+		for (int i = 0; i < print.length; i++) {
+			Module currentModule = q.modules.get(i);
+			WhereClause currentStatment = currentModule.statementList.get(print[i]);
+			if (currentStatment.s.startsWith("?") && !currentStatment.p.equals(IS)) {
+				vars.add(currentStatment.s);
+			}
+			if (currentStatment.o.startsWith("?") && !currentStatment.p.equals(IS)) {
+				vars.add(currentStatment.o);
+			}
+		}
+		return vars;
 	}
 
 	private boolean minusOne(int[] print, Question q) {
@@ -75,57 +101,6 @@ public class PseudoQueryBuilder {
 				pointer--;
 			}
 		}
-
 		return true;
 	}
-
-	private void replaceParameters(ParameterizedSparqlString query, WhereClause whereClause, int parameterNumber) {
-		String s = whereClause.s;
-		String p = whereClause.p;
-		String o = whereClause.o;
-		// keep projection variable
-		if (s.equals("?uri")) {
-			query.setParam("xS" + parameterNumber, new Node_Variable(s.replace("?", "")));
-		}
-		// keep bgp forming variable
-		if (s.equals("?xo1")) {
-			query.setParam("xS" + parameterNumber, new Node_Variable(s.replace("?", "")));
-		}
-		// keep projection variable
-		if (o.equals("?uri")) {
-			query.setParam("xO" + parameterNumber, new Node_Variable(o.replace("?", "")));
-		}
-		// keep bgp forming variable
-		if (o.equals("?xo1")) {
-			query.setParam("xO" + parameterNumber, new Node_Variable(o.replace("?", "")));
-		}
-
-		// set predicate
-		query.setIri("xP" + parameterNumber, p);
-
-		// handle object
-		if (o.startsWith("http://")) {
-			query.setIri("xO" + parameterNumber, o);
-		} else if (o.startsWith("?")) {
-			query.setParam("xO" + parameterNumber, new Node_Variable(o.replace("?", "")));
-		} else {
-			query.setLiteral("xO" + parameterNumber, o);
-		}
-
-	}
-
-	private void buildCommandText(ParameterizedSparqlString query, Question q) {
-		String tmp = "SELECT ?uri WHERE {\n";
-		for (int i = 0; i < q.modules.size(); i++) {
-			// subject
-			tmp += "?xS" + i + " ";
-			// predicate
-			tmp += "?xP" + i + " ";
-			// object
-			tmp += "?xO" + i + ".\n";
-		}
-		tmp += "}";
-		query.setCommandText(tmp);
-	}
-
 }

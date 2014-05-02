@@ -56,7 +56,7 @@ public class DBAbstractsIndex {
 
 	public DBAbstractsIndex() {
 		try {
-			File index = new File("indexAbstract");
+			File index = new File("resources/indexAbstract");
 			if (!index.exists()) {
 				index.mkdir();
 				directory = new MMapDirectory(index);
@@ -72,6 +72,9 @@ public class DBAbstractsIndex {
 	}
 
 	public List<Document> askForPredicateWithBoundAbstract(String targetPredicate, String boundAbstract) {
+		//hack to remove escaped spaces so parsing errors would not happen
+		//i.e. <anti-apartheid_activist> becomes <anti-apartheid activist>
+		targetPredicate = targetPredicate.replaceAll("_", "\\s");
 		List<Document> triples = new ArrayList<Document>();
 		try {
 			log.debug("\t start asking index...");

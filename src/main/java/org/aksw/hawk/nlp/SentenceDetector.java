@@ -1,6 +1,5 @@
 package org.aksw.hawk.nlp;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -19,8 +18,11 @@ public class SentenceDetector {
 	public SentenceDetector() {
 		InputStream modelIn = null;
 		try {
-			modelIn = new FileInputStream("en-sent.bin");
-			SentenceModel model = new SentenceModel(modelIn);
+			InputStream in = this.getClass().getClassLoader().getResourceAsStream("en-sent.bin");
+			if (in == null) {
+				log.error("Something went horribly wrong loading en-sent.bin");
+			}
+			SentenceModel model = new SentenceModel(in);
 			sentenceDetector = new SentenceDetectorME(model);
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);

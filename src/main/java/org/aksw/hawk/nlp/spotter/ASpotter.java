@@ -77,6 +77,6 @@ public abstract class ASpotter {
 	@Override
 	public String toString() {
 		String[] name = getClass().getName().split("\\.");
-		return name[name.length - 1].substring(0, 2);
+		return name[name.length - 1].substring(0, 3);
 	}
 }
