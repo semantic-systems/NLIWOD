@@ -311,7 +311,7 @@ public class SystemAnswerer {
 	}
 
 	private List<String> getTypes(String uri) {
-		String q = "select distinct ?o where { <" + uri + "> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?o.}";
+		String q = "select distinct "+PROJECTION_VARIABLE+" where { <" + uri + "> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> "+PROJECTION_VARIABLE+".}";
 		ParameterizedSparqlString pseudoQuery = new ParameterizedSparqlString(q);
 		List<String> types = Lists.newArrayList();
 		for (RDFNode node : sparql(pseudoQuery)) {
