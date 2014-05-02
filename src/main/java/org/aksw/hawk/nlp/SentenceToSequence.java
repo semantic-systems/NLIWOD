@@ -36,7 +36,7 @@ public class SentenceToSequence {
 	public static void main(String args[]) {
 		// String sentence =
 		// "Who succeeded the pope that reigned only 33 days?";
-		String sentence = "Which horses did The Long Fellow ride?";
+		String sentence = "only 33 days?";
 		SentenceToSequence sts = new SentenceToSequence();
 
 		List<String> list = sts.sequence(sentence);

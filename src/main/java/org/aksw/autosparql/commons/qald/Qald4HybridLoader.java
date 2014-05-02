@@ -22,13 +22,13 @@ import org.xml.sax.SAXException;
 /**
  *
  */
-public class QaldLoader {
+public class Qald4HybridLoader {
 
 	public static void main(String[] args) {
 
-		URL resource = QaldLoader.class.getClassLoader().getResource("qald-4_hybrid_train.xml");
+		URL resource = Qald4HybridLoader.class.getClassLoader().getResource("qald-4_hybrid_train.xml");
 		String file = resource.getFile();
-		QaldLoader ql = new QaldLoader();
+		Qald4HybridLoader ql = new Qald4HybridLoader();
 		for (Question q : ql.load(file)) {
 			System.out.println(q.languageToQuestion);
 			System.out.println("\tAnswers: " + StringUtils.join(q.goldenAnswers, ", "));
@@ -74,20 +74,23 @@ public class QaldLoader {
 
 				// Read pseudoSPARQL query
 				Element element = (Element) questionNode.getElementsByTagName("pseudoquery").item(0);
-				NodeList childNodes = element.getChildNodes();
-				Node item = childNodes.item(0);
-				question.pseudoSparqlQuery = item.getNodeValue().trim();
+				if (element != null) {
+					NodeList childNodes = element.getChildNodes();
+					Node item = childNodes.item(0);
+					question.pseudoSparqlQuery = item.getNodeValue().trim();
+				}
 
 				// Read SPARQL query
 				element = (Element) questionNode.getElementsByTagName("query").item(0);
 				if (element != null) {
-					childNodes = element.getChildNodes();
-					item = childNodes.item(0);
+					NodeList childNodes = element.getChildNodes();
+					Node item = childNodes.item(0);
 					question.sparqlQuery = item.getNodeValue().trim();
 				}
 				// check if OUT OF SCOPE marked
-				question.outOfScope = question.pseudoSparqlQuery.toUpperCase().contains("OUT OF SCOPE");
-
+				if (question.pseudoSparqlQuery != null) {
+					question.outOfScope = question.pseudoSparqlQuery.toUpperCase().contains("OUT OF SCOPE");
+				}
 				// read answers
 				NodeList answers = questionNode.getElementsByTagName("answer");
 				HashSet<String> set = new HashSet<>();

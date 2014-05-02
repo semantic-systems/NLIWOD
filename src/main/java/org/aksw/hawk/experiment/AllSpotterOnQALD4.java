@@ -2,10 +2,10 @@ package org.aksw.hawk.experiment;
 
 import java.util.List;
 
-import org.aksw.autosparql.commons.qald.QaldLoader;
+import org.aksw.autosparql.commons.qald.Qald4HybridLoader;
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
-import org.aksw.hawk.controller.PipelineController_QALD4;
+import org.aksw.hawk.controller.PipelineController;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.nlp.spotter.Spotlight;
@@ -17,12 +17,12 @@ import org.slf4j.LoggerFactory;
 import com.hp.hpl.jena.query.QueryParseException;
 
 public class AllSpotterOnQALD4 {
-	static Logger log = LoggerFactory.getLogger(PipelineController_QALD4.class);
+	static Logger log = LoggerFactory.getLogger(PipelineController.class);
 
 	public static void main(String args[]) {
 
 		String dataset = ClassLoader.getSystemResource("qald-4_hybrid_train.xml").getFile();
-		QaldLoader datasetLoader = new QaldLoader();
+		Qald4HybridLoader datasetLoader = new Qald4HybridLoader();
 
 		List<Question> questions = datasetLoader.load(dataset);
 		for (Question q : questions) {

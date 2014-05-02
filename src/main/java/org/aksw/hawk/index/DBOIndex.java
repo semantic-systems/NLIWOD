@@ -138,7 +138,7 @@ public class DBOIndex {
 
 	public static void main(String args[]) {
 		DBOIndex index = new DBOIndex();
-		System.out.println(index.search("graduate"));
+		System.out.println(index.search("pope"));
 
 	}
 }
