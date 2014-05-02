@@ -1,54 +1,7 @@
 <?xml version="1.0" ?>
 <dataset id="qald-4_hybrid_train">
-	
-	<question answertype="resource" id="14" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Which horses did The Long Fellow ride?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT DISTINCT ?uri 
-WHERE {
-        ?x text:"known as" text:"The Long Fellow" .
-        ?x dbo:raceHorse ?uri .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/St._Paddy</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Petite_Etoile</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Alleged_(horse)</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Crepello</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Sir_Ivor</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Empery</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Nijinsky_II</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/The_Minstrel</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Roberto_(horse)</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Never_Say_Die_(horse)</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Teenoso</uri>
-			</answer>
-		</answers>
-	</question>
+
+
 	<question answertype="resource" id="2" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[In which city was the assassin of Martin Luther King born?]]></string>
@@ -281,7 +234,7 @@ WHERE {
 		</answers>
 	</question>
 
-	
+
 
 	<question answertype="resource" id="15" aggregation="false"
 		onlydbo="true">
@@ -623,6 +576,54 @@ WHERE {
 		<answers>
 			<answer>
 				<uri>dbpedia.org/resource/Adrian_Johnston</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="14" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Which horses did The Long Fellow ride?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?uri 
+WHERE {
+        ?x text:"known as" text:"The Long Fellow" .
+        ?x dbo:raceHorse ?uri .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/St._Paddy</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Petite_Etoile</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Alleged_(horse)</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Crepello</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Sir_Ivor</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Empery</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Nijinsky_II</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/The_Minstrel</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Roberto_(horse)</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Never_Say_Die_(horse)</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Teenoso</uri>
 			</answer>
 		</answers>
 	</question>
