@@ -49,9 +49,7 @@ public class SystemAnswerer {
 	private int sizeOfWindow = 5;
 
 	public SystemAnswerer(String endpoint, ASpotter spotter) {
-		// TODO resolve hack
 		this.spotter = spotter;
-		// this.spotter = new Spotlight();
 		HTTP_LIVE_DBPEDIA_ORG_SPARQL = endpoint;
 		this.rdfsModel = ModelFactory.createDefaultModel();
 		FileManager.get().readModel(rdfsModel, new File("resources/dbpedia_3.9.owl").getAbsolutePath());
@@ -87,65 +85,39 @@ public class SystemAnswerer {
 				ElementPathBlock pathBlock = (ElementPathBlock) elem;
 				for (TriplePath triple : pathBlock.getPattern().getList()) {
 					// only use full-text lookup if triple has full-text part
-					if (triple.getPredicate().getURI().startsWith("file://") || triple.getObject().isLiteral()) {
-						String predicateURI = triple.getPredicate().getURI();
-						// if pred is text do a complex lookup in abstract index
-						if (predicateURI.startsWith("http:")) {
-							log.warn("Cannot resolve hybrid part: " + triple.toString());
-						} else {
-							String localName = triple.getPredicate().getLocalName();
-							// case 1: subject bound
-							if (triple.getSubject().isConcrete()) {
-								log.warn("Cannot resolve hybrid part");
-							}
-							// case 2: object bound
-							else if (triple.getObject().isConcrete()) {
-								Node subjectVariable = triple.getSubject();
-								String subjectType = getTypeOfVariable(pseudoQuery.asQuery(), subjectVariable);
-								if (triple.getObject().isURI()) {
-									List<Document> list = abstractsIndex.askForPredicateWithBoundAbstract(localName, triple.getObject().getURI());
-									for (Document doc : list) {
-										log.debug("variableType " + subjectType + " variable " + subjectVariable);
-										List<String> ne = extractPossibleNEFromDoc(doc, localName, triple.getObject().getURI(), subjectType);
-										if (ne.size() > 0) {
-											// replace variable by found NE
-											/*
-											 * TODO bug: if variable is
-											 * projection variable then a URI is
-											 * the projection variable which is
-											 * an error, discard query
-											 */
-											String name = "?" + subjectVariable.getName();
-											// pseudoQuery.setIri(name,
-											// ne.get(0));
-											for (int i = 0; i < ne.size(); i++) {
-												ParameterizedSparqlString pss = new ParameterizedSparqlString(pseudoQuery.toString());
-												if (name.equals(PROJECTION_VARIABLE)) {
-													return resultQueries;
-												}
-												pss.setIri(name, ne.get(i));
-												resultQueries.add(pss);
-											}
-										} else {
-											log.warn("Cannot resolve hybrid part");
-										}
+					Node subject = triple.getSubject();
+					Node predicate = triple.getPredicate();
+					Node object = triple.getObject();
+					if (subject.isVariable() && predicate.getURI().startsWith("file://") && object.isURI()) {
+						String localName = predicate.getLocalName();
+						Node subjectVariable = subject;
+						String subjectType = getTypeOfVariable(pseudoQuery.asQuery(), subjectVariable);
+						List<Document> list = abstractsIndex.askForPredicateWithBoundAbstract(localName, object.getURI());
+						for (Document doc : list) {
+							log.debug("variableType " + subjectType + " variable " + subjectVariable);
+							List<String> ne = extractPossibleNEFromDoc(doc, localName, object.getURI(), subjectType);
+							if (ne.size() > 0) {
+								// replace variable by found NE
+								/*
+								 * TODO bug: if variable is projection variable
+								 * then a URI is the projection variable which
+								 * is an error, discard query
+								 */
+								String name = "?" + subjectVariable.getName();
+								for (int i = 0; i < ne.size(); i++) {
+									ParameterizedSparqlString pss = new ParameterizedSparqlString(pseudoQuery.toString());
+									if (name.equals(PROJECTION_VARIABLE)) {
+										return resultQueries;
 									}
-								} else {
-									log.warn("Cannot resolve hybrid part");
+									pss.setIri(name, ne.get(i));
+									resultQueries.add(pss);
 								}
-							}
-							// case 3: both are bound
-							else if (triple.getObject().isConcrete() && triple.getSubject().isConcrete()) {
-								log.warn("Cannot resolve hybrid part");
-							}
-							// case 4: neither subject nor object are bound
-							else {
-								log.warn("Cannot resolve hybrid part");
+							} else {
+								log.warn("No Named Entity found for full-text lookup");
 							}
 						}
-						// if object is text
 					} else {
-						log.debug("Regular SPARQL clause: " + triple.toString());
+						log.warn("Not implemented case: " + triple);
 					}
 				}
 			}

@@ -25,14 +25,25 @@ public class Visualizer {
 	public Visualizer() {
 		try {
 			bw = new BufferedWriter(new FileWriter(new File("trees.html")));
+			bw.write("<?xml version=\"1.0\" standalone=\"no\" ?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20010904//EN\" \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">");
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	void vis(Question q, ASpotter nerdModule) throws IOException {
-		String svg;
-		svg = visTree(q);
+		double gapBetweenLevels = 50;
+		double gapBetweenNodes = 10;
+		DefaultConfiguration<TextInBox> configuration = new DefaultConfiguration<TextInBox>(gapBetweenLevels, gapBetweenNodes);
+		TreeForTreeLayout<TextInBox> tree = createTree(q.tree);
+		TextInBoxNodeExtentProvider nodeExtentProvider = new TextInBoxNodeExtentProvider();
+		TreeLayout<TextInBox> treeLayout = new TreeLayout<TextInBox>(tree, nodeExtentProvider, configuration);
+		SVGForTextInBoxTree generator = new SVGForTextInBoxTree(treeLayout);
+
+		String oldChar = "<?xml version=\"1.0\" standalone=\"no\" ?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20010904//EN\" \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">";
+		String svg = generator.getSVG().replace(oldChar, "");
+		
 		bw.write(svg);
 		bw.write("<div style=\"float:right\">");
 		bw.write("Query: " + q.languageToQuestion.get("en") + " <br/>");
@@ -49,22 +60,16 @@ public class Visualizer {
 		bw.write("</div>");
 	}
 
-	String visTree(Question q) {
+	void visTree(Question q) {
 		// setup the tree layout configuration
 		double gapBetweenLevels = 50;
 		double gapBetweenNodes = 10;
 		DefaultConfiguration<TextInBox> configuration = new DefaultConfiguration<TextInBox>(gapBetweenLevels, gapBetweenNodes);
-
 		TreeForTreeLayout<TextInBox> tree = createTree(q.tree);
-
-		// create the NodeExtentProvider for TextInBox nodes
 		TextInBoxNodeExtentProvider nodeExtentProvider = new TextInBoxNodeExtentProvider();
-
-		// create the layout
 		TreeLayout<TextInBox> treeLayout = new TreeLayout<TextInBox>(tree, nodeExtentProvider, configuration);
-
-		// Generate the SVG and write it to System.out
 		SVGForTextInBoxTree generator = new SVGForTextInBoxTree(treeLayout);
+
 		String oldChar = "<?xml version=\"1.0\" standalone=\"no\" ?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20010904//EN\" \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">";
 		String svg = generator.getSVG().replace(oldChar, "");
 		try {
@@ -72,7 +77,6 @@ public class Visualizer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return svg;
 	}
 
 	private TreeForTreeLayout<TextInBox> createTree(MutableTree origTree) {
