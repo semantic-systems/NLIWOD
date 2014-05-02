@@ -20,20 +20,21 @@ import com.hp.hpl.jena.sparql.syntax.ElementPathBlock;
 
 public class QueryVariableHomomorphPruner {
 	Logger log = LoggerFactory.getLogger(QueryVariableHomomorphPruner.class);
+	Set<String> reducedQueries = Sets.newHashSet();
 
-	public List<ParameterizedSparqlString> prune(List<ParameterizedSparqlString> queries) {
-		Set<String> reducedQueries = Sets.newHashSet();
+	public boolean queryHasNotBeenHandled(ParameterizedSparqlString query) {
 		// reduce number of variables
-		for (ParameterizedSparqlString query : queries) {
-			reducedQueries.add(reduce(query).toString());
+		if (reducedQueries.add(reduce(query).toString())) {
+			// did not exist before
+			return true;
+		} else {
+			return false;
 		}
+	}
 
-		// hash them return a new list of ParameterizedSparqlString
-		List<ParameterizedSparqlString> queriesHash = Lists.newArrayList();
-		for (String tmpQuery : reducedQueries) {
-			queriesHash.add(new ParameterizedSparqlString(tmpQuery));
-		}
-		return queriesHash;
+	public void reset() {
+		reducedQueries = Sets.newHashSet();
+
 	}
 
 	private ParameterizedSparqlString reduce(ParameterizedSparqlString query) {
@@ -101,8 +102,13 @@ public class QueryVariableHomomorphPruner {
 
 		QueryVariableHomomorphPruner qvhPruner = new QueryVariableHomomorphPruner();
 		System.out.println(queries.size());
-		queries = qvhPruner.prune(queries);
-		System.out.println(queries.size());
+		for (ParameterizedSparqlString q : queries) {
+			if(qvhPruner.queryHasNotBeenHandled(q)){
+				System.out.println("Keep: " + q);
+			}else{
+				System.out.println("Delete: " + q);
+			}
+		}
 	}
 
 }

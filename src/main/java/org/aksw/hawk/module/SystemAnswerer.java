@@ -1,7 +1,6 @@
 package org.aksw.hawk.module;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,34 +49,28 @@ public class SystemAnswerer {
 	private int sizeOfWindow = 5;
 
 	public SystemAnswerer(String endpoint, ASpotter spotter) {
-		// TODO resolve hack
-		this.spotter = spotter;
-		// this.spotter = new Spotlight();
 		HTTP_LIVE_DBPEDIA_ORG_SPARQL = endpoint;
+		this.spotter = spotter;
 		this.rdfsModel = ModelFactory.createDefaultModel();
-		FileManager.get().readModel(rdfsModel,new File("resources/dbpedia_3.9.owl").getAbsolutePath());
+		FileManager.get().readModel(rdfsModel, new File("resources/dbpedia_3.9.owl").getAbsolutePath());
 	}
 
-	public HashMap<String, Set<RDFNode>> answer(List<ParameterizedSparqlString> listOfPseudoQuery) {
+	public HashMap<String, Set<RDFNode>> answer(ParameterizedSparqlString query) {
 		List<ParameterizedSparqlString> targetQueries = Lists.newArrayList();
 
-		for (ParameterizedSparqlString query : listOfPseudoQuery) {
-			// for each full text part of the query ask abstract index
-			List<ParameterizedSparqlString> checkForFullTextTriple = checkForFullTextTriple(query);
-			targetQueries.addAll(checkForFullTextTriple);
-		}
-//		}
+		// for each full text part of the query ask abstract index
+		List<ParameterizedSparqlString> checkForFullTextTriple = checkForFullTextTriple(query);
+		targetQueries.addAll(checkForFullTextTriple);
 		HashMap<String, Set<RDFNode>> resultSets = Maps.newHashMap();
-		for (ParameterizedSparqlString query : targetQueries) {
-			log.debug("\t" + query);
+		for (ParameterizedSparqlString tmpQuery : targetQueries) {
+			log.debug("\t" + tmpQuery);
 			// if query has only variables and URIs anymore than ask DBpedia
-
-			query = removeUnneccessaryClauses(query);
+			tmpQuery = removeUnneccessaryClauses(tmpQuery);
 
 			// TODO Apply rdfs reasoning on each query
 			// pose query to endpoint
-			Set<RDFNode> sparql = sparql(query);
-			resultSets.put(query.toString(), sparql);
+			Set<RDFNode> sparql = sparql(tmpQuery);
+			resultSets.put(tmpQuery.toString(), sparql);
 		}
 
 		return resultSets;
@@ -92,64 +85,76 @@ public class SystemAnswerer {
 				ElementPathBlock pathBlock = (ElementPathBlock) elem;
 				for (TriplePath triple : pathBlock.getPattern().getList()) {
 					// only use full-text lookup if triple has full-text part
-					if (triple.getPredicate().getURI().startsWith("file://") || triple.getObject().isLiteral()) {
-						String predicateURI = triple.getPredicate().getURI();
-						// if pred is text do a complex lookup in abstract index
-						if (predicateURI.startsWith("http:")) {
-							log.warn("Cannot resolve hybrid part: " + triple.toString());
-						} else {
-							String localName = triple.getPredicate().getLocalName();
-							// case 1: subject bound
-							if (triple.getSubject().isConcrete()) {
-								log.warn("Cannot resolve hybrid part");
-							}
-							// case 2: object bound
-							else if (triple.getObject().isConcrete()) {
-								Node subjectVariable = triple.getSubject();
-								String subjectType = getTypeOfVariable(pseudoQuery.asQuery(), subjectVariable);
-								if (triple.getObject().isURI()) {
-									List<Document> list = abstractsIndex.askForPredicateWithBoundAbstract(localName, triple.getObject().getURI());
-									for (Document doc : list) {
-										log.debug("variableType " + subjectType + " variable " + subjectType);
-										List<String> ne = extractPossibleNEFromDoc(doc, localName, triple.getObject().getURI(), subjectType);
-										if (ne.size() > 0) {
-											// replace variable by found NE
-											/*
-											 * TODO bug: if variable is
-											 * projection variable then a URI is
-											 * the projection variable which is
-											 * an error, discard query
-											 */
-											String name = "?" + subjectVariable.getName();
-//											pseudoQuery.setIri(name, ne.get(0));
-											for (int i = 0; i < ne.size(); i++) {
-												ParameterizedSparqlString pss = new ParameterizedSparqlString(pseudoQuery.toString());
-												if (name.equals(PROJECTION_VARIABLE)) {
-													return resultQueries;
-												}
-												pss.setIri(name, ne.get(i));
-												resultQueries.add(pss);
-											}
-										} else {
-											log.warn("Cannot resolve hybrid part");
-										}
+					Node subject = triple.getSubject();
+					Node predicate = triple.getPredicate();
+					Node object = triple.getObject();
+					if (subject.isVariable() && predicate.getURI().startsWith("file://") && object.isConcrete()) {
+						String localName = predicate.getLocalName();
+						String subjectType = getTypeOfVariable(pseudoQuery.asQuery(), subject);
+						List<Document> list = abstractsIndex.askForPredicateWithBoundAbstract(localName, object.getURI());
+						for (Document doc : list) {
+							log.debug("variableType " + subjectType + " variable " + subject);
+							List<String> ne = extractPossibleNEFromDoc(doc, localName, object.getURI(), subjectType);
+							if (ne.size() > 0) {
+								// replace variable by found NE
+								/*
+								 * TODO bug: if variable is projection variable
+								 * then a URI is the projection variable which
+								 * is an error, discard query
+								 */
+								String name = "?" + subject.getName();
+								for (int i = 0; i < ne.size(); i++) {
+									ParameterizedSparqlString pss = new ParameterizedSparqlString(pseudoQuery.toString());
+									if (name.equals(PROJECTION_VARIABLE)) {
+										return resultQueries;
 									}
-								} else {
-									log.warn("Cannot resolve hybrid part");
+									pss.setIri(name, ne.get(i));
+									resultQueries.add(pss);
 								}
-							}
-							// case 3: both are bound
-							else if (triple.getObject().isConcrete() && triple.getSubject().isConcrete()) {
-								log.warn("Cannot resolve hybrid part");
-							}
-							// case 4: neither subject nor object are bound
-							else {
-								log.warn("Cannot resolve hybrid part");
+							} else {
+								log.debug("No Named Entity found for full-text lookup (possibly): " + triple);
 							}
 						}
-						// if object is text
+					} else if (subject.isVariable() && predicate.getURI().startsWith("http://") && object.isConcrete()) {
+						log.debug("Nothing to do: " + pseudoQuery.toString());
+					} else if (subject.isVariable() && predicate.getURI().startsWith("http://") && object.isVariable()) {
+						log.debug("Nothing to do: " + pseudoQuery.toString());
+					} else if (subject.isURI() && predicate.getURI().startsWith("http://") && object.isConcrete()) {
+						log.debug("Nothing to do: " + pseudoQuery.toString());
+					} else if (subject.isURI() && predicate.getURI().startsWith("http://") && object.isVariable()) {
+						log.debug("Nothing to do: " + pseudoQuery.toString());
+					} else if (subject.isURI() && predicate.getURI().startsWith("file://") && object.isVariable()) {
+						String localName = predicate.getLocalName();
+						Node objectVariable = object;
+						String objectType = getTypeOfVariable(pseudoQuery.asQuery(), objectVariable);
+						List<Document> list = abstractsIndex.askForPredicateWithBoundAbstract(localName, subject.getURI());
+						for (Document doc : list) {
+							log.debug("variableType " + objectType + " variable " + objectVariable);
+							List<String> ne = extractPossibleNEFromDoc(doc, localName, subject.getURI(), objectType);
+							if (ne.size() > 0) {
+								// replace variable by found NE
+								/*
+								 * TODO bug: if variable is projection variable
+								 * then a URI is the projection variable which
+								 * is an error, discard query
+								 */
+								String name = "?" + objectVariable.getName();
+								for (int i = 0; i < ne.size(); i++) {
+									ParameterizedSparqlString pss = new ParameterizedSparqlString(pseudoQuery.toString());
+									if (name.equals(PROJECTION_VARIABLE)) {
+										return resultQueries;
+									}
+									pss.setIri(name, ne.get(i));
+									resultQueries.add(pss);
+								}
+							} else {
+								log.debug("No Named Entity found for full-text lookup (possibly): " + triple);
+							}
+						}
+					} else if (subject.isVariable() && predicate.getURI().startsWith("file://") && object.isVariable()) {
+						log.warn("Not implemented case: " + triple);
 					} else {
-						log.debug("Regular SPARQL clause: " + triple.toString());
+						log.warn("Not implemented case: " + triple);
 					}
 				}
 			}
@@ -305,25 +310,11 @@ public class SystemAnswerer {
 		return possibleEntitiesForVariableFoundViaTextSearch;
 	}
 
-	// TODO check behavior
 	private List<String> getTypes(String uri) {
 		String q = "select distinct ?o where { <" + uri + "> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?o.}";
 		ParameterizedSparqlString pseudoQuery = new ParameterizedSparqlString(q);
-		Set<RDFNode> set = Sets.newHashSet();
-		QueryExecution qexec = QueryExecutionFactory.sparqlService(HTTP_LIVE_DBPEDIA_ORG_SPARQL, pseudoQuery.asQuery());
-		try {
-			ResultSet results = qexec.execSelect();
-			while (results.hasNext()) {
-				set.add(results.next().get("?o"));
-			}
-		} catch (HTTPException e) {
-			log.error("Query: " + pseudoQuery, e);
-
-		} finally {
-			qexec.close();
-		}
 		List<String> types = Lists.newArrayList();
-		for (RDFNode node : set) {
+		for (RDFNode node : sparql(pseudoQuery)) {
 			types.add(node.asResource().getURI());
 		}
 		return types;
@@ -335,7 +326,7 @@ public class SystemAnswerer {
 
 		SystemAnswerer sys = new SystemAnswerer("http://dbpedia.org/sparql", new Spotlight());
 
-		HashMap<String, Set<RDFNode>> ans = sys.answer(Lists.newArrayList(pss));
+		HashMap<String, Set<RDFNode>> ans = sys.answer(pss);
 		for (String key : ans.keySet()) {
 			System.out.println(key);
 			for (RDFNode rdfNode : ans.get(key)) {

@@ -20,6 +20,7 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Joiner;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
@@ -93,6 +94,9 @@ public class TagMe extends ASpotter {
 
 		} catch (ParseException | IOException e) {
 			log.error("Could not call TagMe for NER/NED", e);
+		}
+		if (!tmp.isEmpty()) {
+			log.debug("\t" + Joiner.on("\n").join(tmp.get("en")));
 		}
 		return tmp;
 	}

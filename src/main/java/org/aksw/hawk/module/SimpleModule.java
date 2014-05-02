@@ -1,7 +1,6 @@
 package org.aksw.hawk.module;
 
 import java.io.File;
-import java.net.URL;
 
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;

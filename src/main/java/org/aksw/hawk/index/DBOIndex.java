@@ -3,7 +3,6 @@ package org.aksw.hawk.index;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLClassLoader;
 
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.Document;
@@ -139,7 +138,7 @@ public class DBOIndex {
 
 	public static void main(String args[]) {
 		DBOIndex index = new DBOIndex();
-		System.out.println(index.search("graduate"));
+		System.out.println(index.search("pope"));
 
 	}
 }

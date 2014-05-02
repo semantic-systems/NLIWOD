@@ -27,6 +27,32 @@ public class GraphNonSCCPruner {
 		return returnList;
 	}
 
+	public boolean isSCC(ParameterizedSparqlString query) {
+		// build graph
+		Graph g = new Graph(query);
+		// look whether each node is reachable from each other
+		if (g.isSCC()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static void main(String args[]) {
+		List<ParameterizedSparqlString> queries = Lists.newArrayList();
+		String queryString = "SELECT ?a0 WHERE {?a0 a <http://dbpedia.org/ontology/City>. ?a1 <http://dbpedia.org/ontology/birthPlace> ?a0. }";
+		queries.add(new ParameterizedSparqlString(queryString));
+		queryString = "SELECT ?a0 WHERE {?a0 a <http://dbpedia.org/ontology/City>. ?a0 <http://dbpedia.org/ontology/birthPlace> ?a3. }";
+		queries.add(new ParameterizedSparqlString(queryString));
+		queryString = "SELECT ?a0 WHERE {?a0 a <http://dbpedia.org/ontology/City>. ?a2 <http://dbpedia.org/ontology/deathPlace> ?a1. }";
+		queries.add(new ParameterizedSparqlString(queryString));
+
+		GraphNonSCCPruner gSCCPruner = new GraphNonSCCPruner();
+		System.out.println(queries.size());
+		queries = gSCCPruner.prune(queries);
+		System.out.println(queries.size());
+	}
+
 	private class Graph {
 		int nodeCount = 0;
 		Map<Node, Integer> mapStringInt = Maps.newHashMap();
@@ -78,7 +104,7 @@ public class GraphNonSCCPruner {
 				Integer currentNode = stack.pop();
 				visited[currentNode] = true;
 				for (int i = 0; i < nodeCount; i++) {
-					if (edgeMatrix[currentNode][i]&&!visited[i]) {
+					if (edgeMatrix[currentNode][i] && !visited[i]) {
 						stack.push(i);
 					}
 				}
@@ -92,18 +118,4 @@ public class GraphNonSCCPruner {
 		}
 	}
 
-	public static void main(String args[]) {
-		List<ParameterizedSparqlString> queries = Lists.newArrayList();
-		String queryString = "SELECT ?a0 WHERE {?a0 a <http://dbpedia.org/ontology/City>. ?a1 <http://dbpedia.org/ontology/birthPlace> ?a0. }";
-		queries.add(new ParameterizedSparqlString(queryString));
-		queryString = "SELECT ?a0 WHERE {?a0 a <http://dbpedia.org/ontology/City>. ?a0 <http://dbpedia.org/ontology/birthPlace> ?a3. }";
-		queries.add(new ParameterizedSparqlString(queryString));
-		queryString = "SELECT ?a0 WHERE {?a0 a <http://dbpedia.org/ontology/City>. ?a2 <http://dbpedia.org/ontology/deathPlace> ?a1. }";
-		queries.add(new ParameterizedSparqlString(queryString));
-
-		GraphNonSCCPruner gSCCPruner = new GraphNonSCCPruner();
-		System.out.println(queries.size());
-		queries = gSCCPruner.prune(queries);
-		System.out.println(queries.size());
-	}
 }
