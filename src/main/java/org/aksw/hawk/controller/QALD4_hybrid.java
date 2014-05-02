@@ -36,7 +36,7 @@ public class QALD4_hybrid {
 		controller.pseudoQueryBuilder = new PseudoQueryBuilder();
 		controller.queryVariableHomomorphPruner = new QueryVariableHomomorphPruner();
 		controller.graphNonSCCPruner = new GraphNonSCCPruner();
-		String endpoint = "http://dbpedia.org/sparql";
+		String endpoint = "http://live.dbpedia.org/sparql";
 		controller.systemAnswerer = new SystemAnswerer(endpoint, controller.nerdModule);
 
 		log.info("Run controller");
