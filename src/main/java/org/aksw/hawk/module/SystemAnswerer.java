@@ -152,7 +152,8 @@ public class SystemAnswerer {
 							}
 						}
 					} else if (subject.isVariable() && predicate.getURI().startsWith("file://") && object.isVariable()) {
-						log.warn("Not implemented case: " + triple);
+						// TODO resolve iiieek queries
+						log.debug("Not implemented case: " + triple);
 					} else {
 						log.warn("Not implemented case: " + triple);
 					}
@@ -311,7 +312,7 @@ public class SystemAnswerer {
 	}
 
 	private List<String> getTypes(String uri) {
-		String q = "select distinct "+PROJECTION_VARIABLE+" where { <" + uri + "> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> "+PROJECTION_VARIABLE+".}";
+		String q = "select distinct " + PROJECTION_VARIABLE + " where { <" + uri + "> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " + PROJECTION_VARIABLE + ".}";
 		ParameterizedSparqlString pseudoQuery = new ParameterizedSparqlString(q);
 		List<String> types = Lists.newArrayList();
 		for (RDFNode node : sparql(pseudoQuery)) {
