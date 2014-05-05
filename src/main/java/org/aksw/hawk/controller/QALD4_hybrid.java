@@ -10,6 +10,7 @@ import org.aksw.hawk.module.SystemAnswerer;
 import org.aksw.hawk.nlp.NounCombiner;
 import org.aksw.hawk.nlp.ParseTree;
 import org.aksw.hawk.nlp.Pruner;
+import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.hawk.nlp.posTree.TreeTransformer;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.pruner.GraphNonSCCPruner;
@@ -31,6 +32,7 @@ public class QALD4_hybrid {
 		controller.parseTree = new ParseTree();
 		controller.treeTransform = new TreeTransformer();
 		controller.nounCombiner = new NounCombiner();
+		controller.sentenceToSequence = new SentenceToSequence();
 		controller.pruner = new Pruner();
 		controller.moduleBuilder = new ModuleBuilder();
 		controller.pseudoQueryBuilder = new PseudoQueryBuilder();

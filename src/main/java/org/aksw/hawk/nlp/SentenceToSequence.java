@@ -1,52 +1,139 @@
 package org.aksw.hawk.nlp;
 
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
+import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.index.DBAbstractsIndex;
+import org.aksw.hawk.nlp.posTree.MutableTreeNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.clearnlp.tokenization.EnglishTokenizer;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Queues;
 
 public class SentenceToSequence {
+	Logger log = LoggerFactory.getLogger(SentenceToSequence.class);
 	DBAbstractsIndex index = new DBAbstractsIndex();
 
-	public SentenceToSequence() {
-
-	}
-
-	private List<String> sequence(String sentence) {
+	// combine noun phrases
+	// TODO improve nounphrases e.g. combine following nulls, i.e., URLs to get
+	// early life of Jane Austin instead of early life
+	public void combineSequences(Question q) {
+		String question = q.languageToQuestion.get("en");
 		EnglishTokenizer tok = new EnglishTokenizer();
+		List<String> list = tok.getTokens(question);
 
-		List<String> list = tok.getTokens(sentence);
-		// build subsequences out of token
-		List<String> subsequences = Lists.newArrayList();
-		for (int windowSize = list.size(); windowSize > 1; windowSize--) {
-			for (int sub = 0; sub + windowSize < list.size(); sub++) {
-				subsequences.add(Joiner.on(" ").join(list.subList(sub, sub + windowSize)));
+		List<String> subsequence = Lists.newArrayList();
+		for (int tcounter = 0; tcounter < list.size(); tcounter++) {
+			String token = list.get(tcounter);
+			// look for start "RB|JJ|NN(.)*"
+			if (subsequence.isEmpty() && null != pos(token, q) && pos(token, q).matches("RB|JJ|NN(.)*")) {
+				subsequence.add(token);
 			}
+			// split "of the" or "of all" via pos_i=IN and pos_i+1=DT
+			else if (!subsequence.isEmpty() && null != pos(token, q) && tcounter + 1 < list.size() && null != pos(list.get(tcounter + 1), q) && pos(token, q).matches("IN") && pos(list.get(tcounter + 1), q).matches("DT")) {
+				if (subsequence.size() > 2) {
+					transformTree(subsequence, q);
+				}
+				subsequence = Lists.newArrayList();
+			}
+			// finish via VB* or IN -> null or IN -> DT
+			else if (!subsequence.isEmpty() && (null == pos(token, q) || pos(token, q).matches("VB(.)*|\\.") || (pos(token, q).matches("IN") && pos(list.get(tcounter + 1), q) == null) || (pos(token, q).matches("IN") && pos(list.get(tcounter + 1), q).matches("DT")))) {
+				// more than one token, so summarizing makes sense
+				if (subsequence.size() > 1) {
+					transformTree(subsequence, q);
+				}
+				subsequence = Lists.newArrayList();
+			}
+			// continue via "NN(.)*|RB|CD|CC|JJ|DT|IN"
+			else if (!subsequence.isEmpty() && null != pos(token, q) && pos(token, q).matches("NN(.)*|RB|CD|CC|JJ|DT|IN")) {
+				subsequence.add(token);
+			} else {
+				subsequence = Lists.newArrayList();
+			}
+
 		}
-		return subsequences;
+
 	}
 
-	private List<String> index(String token) {
-		return index.listAbstractsContaining(token);
-	}
-
-	public static void main(String args[]) {
-		// String sentence =
-		// "Who succeeded the pope that reigned only 33 days?";
-		String sentence = "only 33 days?";
-		SentenceToSequence sts = new SentenceToSequence();
-
-		List<String> list = sts.sequence(sentence);
-
-		for (String item : list) {
-			System.out.println(item);
-			for (String abstracts : sts.index(item)) {
-				System.out.println(abstracts);
+	private void transformTree(List<String> subsequence, Question q) {
+		String newLabel = Joiner.on("\t").join(subsequence);
+		MutableTreeNode top = findTopMostNode(q.tree.getRoot(), subsequence);
+		log.debug(newLabel + "=>" + top);
+		// mutate tree q.tree
+		top.label = newLabel;
+		top.posTag = "CombinedNN";
+		List<MutableTreeNode> toBeDeleted = Lists.newArrayList();
+		for (MutableTreeNode child : top.getChildren()) {
+			for (String token : subsequence) {
+				MutableTreeNode findDeletableNodes = findDeletableNodes(child, token);
+				if (findDeletableNodes != null) {
+					toBeDeleted.add(findDeletableNodes);
+				}
 			}
 		}
+		// delete transformed nodes
+		for (int x = 0; x < toBeDeleted.size(); x++) {
+			q.tree.remove(toBeDeleted.get(x));
+		}
+	}
+
+	// use breadth first search to find the deletable node
+	private MutableTreeNode findDeletableNodes(MutableTreeNode root, String token) {
+		Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
+		queue.add(root);
+		while (!queue.isEmpty()) {
+			MutableTreeNode tmp = queue.poll();
+			if (token.equals(tmp.label)) {
+				return tmp;
+			}
+			for (MutableTreeNode n : tmp.getChildren()) {
+				queue.add(n);
+			}
+
+		}
+		return null;
+	}
+
+	// use breadth first search to find the top most node
+	private MutableTreeNode findTopMostNode(MutableTreeNode root, List<String> tokenSet) {
+		Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
+		queue.add(root);
+		while (!queue.isEmpty()) {
+			MutableTreeNode tmp = queue.poll();
+			for (String token : tokenSet) {
+				if (token.equals(tmp.label)) {
+					return tmp;
+				}
+			}
+			for (MutableTreeNode n : tmp.getChildren()) {
+				queue.add(n);
+			}
+
+		}
+		return null;
+	}
+
+	private String pos(String token, Question q) {
+		Stack<MutableTreeNode> stack = new Stack<MutableTreeNode>();
+		stack.push(q.tree.getRoot());
+		while (!stack.isEmpty()) {
+			MutableTreeNode tmp = stack.pop();
+			if (tmp.label.equals(token)) {
+				return tmp.posTag;
+			} else {
+				for (MutableTreeNode child : tmp.getChildren()) {
+					stack.push(child);
+				}
+			}
+
+		}
+
+		return null;
 	}
 
 }

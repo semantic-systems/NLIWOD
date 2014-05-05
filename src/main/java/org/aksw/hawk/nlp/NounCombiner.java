@@ -42,7 +42,6 @@ public class NounCombiner {
 			posList.add(findPos);
 		}
 		for (int i = 0; i < posList.size() - 1; i++) {
-			//TODO improve to match "Battle of Arnhem" NNP (IN) NNP
 			if (posList.get(i).matches("NN(.)*") && posList.get(i + 1).matches("NN(.)*")) {
 				Set<String> tokenSet = Sets.newHashSet();
 				String entLabel = "";
