@@ -55,8 +55,8 @@ public class SentenceToSequence {
 				}
 				subsequence = Lists.newArrayList();
 			}
-			// continue via "NN(.)*|RB|CD|CC|JJ|DT|IN"
-			else if (!subsequence.isEmpty() && null != pos(token, q) && pos(token, q).matches("NN(.)*|RB|CD|CC|JJ|DT|IN")) {
+			// continue via "NN(.)*|RB|CD|CC|JJ|DT|IN|PRP|HYPH"
+			else if (!subsequence.isEmpty() && null != pos(token, q) && pos(token, q).matches("NN(.)*|RB|CD|CC|JJ|DT|IN|PRP|HYPH")) {
 				subsequence.add(token);
 			} else {
 				subsequence = Lists.newArrayList();

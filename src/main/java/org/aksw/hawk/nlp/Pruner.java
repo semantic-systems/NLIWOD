@@ -11,19 +11,15 @@ import org.aksw.hawk.nlp.posTree.MutableTreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
+
 public class Pruner {
 	Logger log = LoggerFactory.getLogger(Pruner.class);
 
 	public MutableTree prune(Question q) {
 		log.debug(q.tree.toString());
 		removalRules(q);
-		applyDeterminantRules(q);
-		applyPDTRules(q);
-		applyINRules(q);
-		applyAuxPassRules(q);
-		// applyJJRule(q);// TODO JJ rule is very vague
-		// applyCombineNNRule(q);
-		// applyWDTRule(q);
+		removalBasedOnDependencyLabels(q);
 		/*
 		 * interrogative rules last else each interrogative word has at least
 		 * two children, which can't be handled yet by the removal
@@ -45,61 +41,20 @@ public class Pruner {
 
 	}
 
-	private void applyAuxPassRules(Question q) {
-		inorderRemovalAuxPass(q.tree.getRoot(), q.tree);
-
-	}
-
-	private boolean inorderRemovalAuxPass(MutableTreeNode node, MutableTree tree) {
-		if (node.depLabel.equals("auxpass")) {
-			tree.remove(node);
-			return true;
-		} else {
-			for (Iterator<MutableTreeNode> it = node.getChildren().iterator(); it.hasNext();) {
-				MutableTreeNode child = it.next();
-				if (inorderRemovalAuxPass(child, tree)) {
-					it = node.getChildren().iterator();
-				}
-			}
-			return false;
+	private void removalBasedOnDependencyLabels(Question q) {
+		for (String depLabel : Lists.newArrayList("auxpass", "aux")) {
+			inorderRemovalBasedOnDependencyLabels(q.tree.getRoot(), q.tree, depLabel);
 		}
 	}
 
-	// pre determiner: all, both
-	private void applyPDTRules(Question q) {
-		inorderRemovalPDT(q.tree.getRoot(), q.tree);
-
-	}
-
-	private boolean inorderRemovalPDT(MutableTreeNode node, MutableTree tree) {
-		if (node.posTag.equals("PDT")) {
+	private boolean inorderRemovalBasedOnDependencyLabels(MutableTreeNode node, MutableTree tree, String depLabel) {
+		if (node.depLabel.matches(depLabel)) {
 			tree.remove(node);
 			return true;
 		} else {
 			for (Iterator<MutableTreeNode> it = node.getChildren().iterator(); it.hasNext();) {
 				MutableTreeNode child = it.next();
-				if (inorderRemovalPDT(child, tree)) {
-					it = node.getChildren().iterator();
-				}
-			}
-			return false;
-		}
-	}
-
-	// removes BY and IN
-	private void applyINRules(Question q) {
-		inorderRemovalIN(q.tree.getRoot(), q.tree);
-
-	}
-
-	private boolean inorderRemovalIN(MutableTreeNode node, MutableTree tree) {
-		if (node.posTag.equals("IN")) {
-			tree.remove(node);
-			return true;
-		} else {
-			for (Iterator<MutableTreeNode> it = node.getChildren().iterator(); it.hasNext();) {
-				MutableTreeNode child = it.next();
-				if (inorderRemovalIN(child, tree)) {
+				if (inorderRemovalBasedOnDependencyLabels(child, tree, depLabel)) {
 					it = node.getChildren().iterator();
 				}
 			}
@@ -126,45 +81,28 @@ public class Pruner {
 
 	}
 
-	private void applyDeterminantRules(Question q) {
-		inorderRemovalDeterminats(q.tree.getRoot(), q.tree);
-
-	}
-
-	private boolean inorderRemovalDeterminats(MutableTreeNode node, MutableTree tree) {
-		if (node.posTag.equals("DT")) {
-			tree.remove(node);
-			return true;
-		} else {
-			for (Iterator<MutableTreeNode> it = node.getChildren().iterator(); it.hasNext();) {
-				MutableTreeNode child = it.next();
-				if (inorderRemovalDeterminats(child, tree)) {
-					it = node.getChildren().iterator();
-				}
-			}
-			return false;
-		}
-	}
-
 	/**
-	 * removes punctuations (.) and wh- words(WDT|WP|WRB)
+	 * removes: * punctuations (.) * wh- words(WDT|WP|WRB|WP$) * PRP($) * DT *
+	 * BY and IN (possessive) pronouns * PDT predeterminer all both
 	 * 
 	 * @param q
 	 */
 	private void removalRules(Question q) {
 		MutableTreeNode root = q.tree.getRoot();
-		inorderRemoval(root, q.tree);
+		for (String posTag : Lists.newArrayList(".", "WDT", "WP", "WRB", "WP\\$", "PRP\\$", "PRP", "DT", "IN", "PDT")) {
+			inorderRemoval(root, q.tree, posTag);
+		}
 
 	}
 
-	private boolean inorderRemoval(MutableTreeNode node, MutableTree tree) {
-		if (node.posTag.matches(".|WDT|WP|WRB")) {
+	private boolean inorderRemoval(MutableTreeNode node, MutableTree tree, String posTag) {
+		if (node.posTag.matches(posTag)) {
 			tree.remove(node);
 			return true;
 		} else {
 			for (Iterator<MutableTreeNode> it = node.getChildren().iterator(); it.hasNext();) {
 				MutableTreeNode child = it.next();
-				if (inorderRemoval(child, tree)) {
+				if (inorderRemoval(child, tree, posTag)) {
 					it = node.getChildren().iterator();
 				}
 			}
