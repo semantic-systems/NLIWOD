@@ -1,6 +1,25 @@
 <?xml version="1.0" ?>
 <dataset id="qald-4_hybrid_train">
-
+	<question answertype="resource" id="12" aggregation="false"
+		onlydbo="false">
+		<string lang="en"><![CDATA[Who succeeded the pope that reigned only 33 days?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX yago: <http://dbpedia.org/class/yago/>
+SELECT DISTINCT ?uri 
+WHERE {
+        ?x rdf:type yago:Popes .
+        ?x text:"reign" text:"33 days" .
+        ?x dbo:successor ?uri .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Pope_John_Paul_II</uri>
+			</answer>
+		</answers>
+	</question>
 
 	<question answertype="resource" id="2" aggregation="false"
 		onlydbo="true">
@@ -192,26 +211,7 @@ WHERE {
 
 
 
-	<question answertype="resource" id="12" aggregation="false"
-		onlydbo="false">
-		<string lang="en"><![CDATA[Who succeeded the pope that reigned only 33 days?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX yago: <http://dbpedia.org/class/yago/>
-SELECT DISTINCT ?uri 
-WHERE {
-        ?x rdf:type yago:Popes .
-        ?x text:"reign" text:"33 days" .
-        ?x dbo:successor ?uri .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Pope_John_Paul_II</uri>
-			</answer>
-		</answers>
-	</question>
+
 
 	<question answertype="resource" id="13" aggregation="false"
 		onlydbo="false">

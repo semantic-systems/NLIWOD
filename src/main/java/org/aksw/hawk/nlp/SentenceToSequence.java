@@ -26,7 +26,6 @@ public class SentenceToSequence {
 		String question = q.languageToQuestion.get("en");
 		EnglishTokenizer tok = new EnglishTokenizer();
 		List<String> list = tok.getTokens(question);
-
 		List<String> subsequence = Lists.newArrayList();
 		for (int tcounter = 0; tcounter < list.size(); tcounter++) {
 			String token = list.get(tcounter);
@@ -36,6 +35,13 @@ public class SentenceToSequence {
 			}
 			// split "of the" or "of all" via pos_i=IN and pos_i+1=DT
 			else if (!subsequence.isEmpty() && null != pos(token, q) && tcounter + 1 < list.size() && null != pos(list.get(tcounter + 1), q) && pos(token, q).matches("IN") && pos(list.get(tcounter + 1), q).matches("DT")) {
+				if (subsequence.size() > 2) {
+					transformTree(subsequence, q);
+				}
+				subsequence = Lists.newArrayList();
+			}
+			// do not combine NN and NNP+,e.g., the opera Madame Butterfly
+			else if (!subsequence.isEmpty() && null != pos(token, q)  && null != pos(list.get(tcounter - 1), q) && pos(list.get(tcounter - 1), q).matches("NN(S)?") && pos(token, q).matches("NNP(S)?")) {
 				if (subsequence.size() > 2) {
 					transformTree(subsequence, q);
 				}
@@ -61,12 +67,22 @@ public class SentenceToSequence {
 	}
 
 	private void transformTree(List<String> subsequence, Question q) {
-		String newLabel = Joiner.on("\t").join(subsequence);
+		String newLabel = Joiner.on(" ").join(subsequence);
 		MutableTreeNode top = findTopMostNode(q.tree.getRoot(), subsequence);
 		log.debug(newLabel + "=>" + top);
 		// mutate tree q.tree
 		top.label = newLabel;
 		top.posTag = "CombinedNN";
+
+		// correct parent pointers of children of combinedNN
+		for (String sub : subsequence) {
+			List<MutableTreeNode> children = findChildOfSubSequenceToken(sub, q.tree.getRoot());
+			if (children != null) {
+				for (MutableTreeNode child : children) {
+					child.parent = top;
+				}
+			}
+		}
 		List<MutableTreeNode> toBeDeleted = Lists.newArrayList();
 		for (MutableTreeNode child : top.getChildren()) {
 			for (String token : subsequence) {
@@ -80,6 +96,23 @@ public class SentenceToSequence {
 		for (int x = 0; x < toBeDeleted.size(); x++) {
 			q.tree.remove(toBeDeleted.get(x));
 		}
+	}
+
+	private List<MutableTreeNode> findChildOfSubSequenceToken(String sub, MutableTreeNode root) {
+		Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
+		queue.add(root);
+		while (!queue.isEmpty()) {
+			MutableTreeNode tmp = queue.poll();
+			if (tmp.label.equals(sub)) {
+				return tmp.getChildren();
+			} else {
+				for (MutableTreeNode n : tmp.getChildren()) {
+					queue.add(n);
+				}
+
+			}
+		}
+		return null;
 	}
 
 	// use breadth first search to find the deletable node
@@ -106,7 +139,7 @@ public class SentenceToSequence {
 		while (!queue.isEmpty()) {
 			MutableTreeNode tmp = queue.poll();
 			for (String token : tokenSet) {
-				if (token.equals(tmp.label)) {
+				if (token.equals(tmp.label) && subTreeContainsOtherToken(tmp, tokenSet)) {
 					return tmp;
 				}
 			}
@@ -116,6 +149,38 @@ public class SentenceToSequence {
 
 		}
 		return null;
+	}
+
+	/**
+	 * to match correct subtree it is important to find the top most node in the
+	 * subtree that contains every token of the combined noun
+	 * 
+	 * @param root
+	 * @param tokenSet
+	 * @return
+	 */
+	private boolean subTreeContainsOtherToken(MutableTreeNode root, List<String> tokenSet) {
+		boolean[] tokenCheck = new boolean[tokenSet.size()];
+		for (int i = 0; i < tokenSet.size(); i++) {
+			Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
+			queue.add(root);
+			while (!queue.isEmpty()) {
+				MutableTreeNode tmp = queue.poll();
+				if (tokenSet.get(i).equals(tmp.label)) {
+					tokenCheck[i] = true;
+				}
+				for (MutableTreeNode n : tmp.getChildren()) {
+					queue.add(n);
+				}
+
+			}
+		}
+		for (boolean item : tokenCheck) {
+			if (!item) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private String pos(String token, Question q) {

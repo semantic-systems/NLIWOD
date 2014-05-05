@@ -1,5 +1,7 @@
 package org.aksw.hawk.nlp.posTree;
 
+import java.util.List;
+
 import org.aksw.hawk.nlp.TreeTraversal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +26,11 @@ public class MutableTree {
 				return false;
 			}
 		} else {
-			target.parent.children.addAll(target.children);
-			target.parent.children.remove(target);
+			List<MutableTreeNode> children = target.children;
+			MutableTreeNode parent = target.parent;
+			List<MutableTreeNode> parentsChildren = parent.children;
+			parentsChildren.addAll(children);
+			parentsChildren.remove(target);
 			return true;
 		}
 	}
