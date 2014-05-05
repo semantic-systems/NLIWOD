@@ -48,6 +48,9 @@ public class TextInBox {
 		if (text.contains(":")) {
 			width = width * 3;
 		}
+		if (text.contains("CombinedNN")) {
+			width = width * 3;
+		}
 		this.text = text;
 		this.width = width;
 		this.height = height;

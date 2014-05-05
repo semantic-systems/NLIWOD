@@ -67,7 +67,6 @@ public class PipelineController {
 
 			// visualize the tree
 			vis.vis(q, nerdModule);
-			// continue;
 			// // 5. Build modules
 			// q.modules = this.moduleBuilder.build(q);
 			//
@@ -106,7 +105,7 @@ public class PipelineController {
 			// }
 			// }
 			// }
-			// vis.horRule();
+			 vis.horRule();
 			// System.gc();
 		}
 		vis.close();
