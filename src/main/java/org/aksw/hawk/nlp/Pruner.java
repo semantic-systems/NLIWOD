@@ -78,6 +78,10 @@ public class Pruner {
 		if (root.label.equals("List")) {
 			q.tree.remove(root);
 		}
+		// GIVE will be deleted
+		if (root.label.equals("Give")) {
+			q.tree.remove(root);
+		}
 
 	}
 
