@@ -69,70 +69,23 @@ public class SentenceToSequence {
 	private void transformTree(List<String> subsequence, Question q) {
 		String newLabel = Joiner.on(" ").join(subsequence);
 		MutableTreeNode top = findTopMostNode(q.tree.getRoot(), subsequence);
-		log.debug(newLabel + "=>" + top);
-		// mutate tree q.tree
+		for (String sub : subsequence) {
+			Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
+			queue.add(q.tree.getRoot());
+			while (!queue.isEmpty()) {
+				MutableTreeNode tmp = queue.poll();
+				if (tmp.label.equals(sub) && !tmp.equals(top)) {
+					q.tree.remove(tmp);
+					break;
+				} else {
+					for (MutableTreeNode n : tmp.getChildren()) {
+						queue.add(n);
+					}
+				}
+			}
+		}
 		top.label = newLabel;
 		top.posTag = "CombinedNN";
-		if (top.label.contains("awards")) {
-			System.out.println();
-		}
-		// correct parent pointers of children of combinedNN
-		for (String sub : subsequence) {
-			List<MutableTreeNode> children = findChildOfSubSequenceToken(sub, q.tree.getRoot());
-			if (children != null) {
-				for (MutableTreeNode child : children) {
-					child.parent = top;
-					top.children.add(child);
-				}
-			}
-		}
-		List<MutableTreeNode> toBeDeleted = Lists.newArrayList();
-		for (MutableTreeNode child : top.getChildren()) {
-			for (String token : subsequence) {
-				MutableTreeNode findDeletableNodes = findDeletableNodes(child, token);
-				if (findDeletableNodes != null) {
-					toBeDeleted.add(findDeletableNodes);
-				}
-			}
-		}
-		// delete transformed nodes
-		for (int x = 0; x < toBeDeleted.size(); x++) {
-			q.tree.remove(toBeDeleted.get(x));
-		}
-	}
-
-	private List<MutableTreeNode> findChildOfSubSequenceToken(String sub, MutableTreeNode root) {
-		Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
-		queue.add(root);
-		while (!queue.isEmpty()) {
-			MutableTreeNode tmp = queue.poll();
-			if (tmp.label.equals(sub)) {
-				return tmp.getChildren();
-			} else {
-				for (MutableTreeNode n : tmp.getChildren()) {
-					queue.add(n);
-				}
-
-			}
-		}
-		return null;
-	}
-
-	// use breadth first search to find the deletable node
-	private MutableTreeNode findDeletableNodes(MutableTreeNode root, String token) {
-		Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
-		queue.add(root);
-		while (!queue.isEmpty()) {
-			MutableTreeNode tmp = queue.poll();
-			if (token.equals(tmp.label)) {
-				return tmp;
-			}
-			for (MutableTreeNode n : tmp.getChildren()) {
-				queue.add(n);
-			}
-
-		}
-		return null;
 	}
 
 	// use breadth first search to find the top most node
@@ -149,7 +102,6 @@ public class SentenceToSequence {
 			for (MutableTreeNode n : tmp.getChildren()) {
 				queue.add(n);
 			}
-
 		}
 		return null;
 	}
@@ -200,7 +152,6 @@ public class SentenceToSequence {
 			}
 
 		}
-
 		return null;
 	}
 

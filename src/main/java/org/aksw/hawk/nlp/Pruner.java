@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Queues;
 
 public class Pruner {
 	Logger log = LoggerFactory.getLogger(Pruner.class);
@@ -92,25 +93,22 @@ public class Pruner {
 	 * @param q
 	 */
 	private void removalRules(Question q) {
-		MutableTreeNode root = q.tree.getRoot();
-		for (String posTag : Lists.newArrayList(".", "WDT", "WP", "WRB", "WP\\$", "PRP\\$", "PRP", "DT", "IN", "PDT")) {
-			inorderRemoval(root, q.tree, posTag);
+		if (q.languageToQuestion.get("en").contains("award")) {
+			System.out.println();
 		}
-
-	}
-
-	private boolean inorderRemoval(MutableTreeNode node, MutableTree tree, String posTag) {
-		if (node.posTag.matches(posTag)) {
-			tree.remove(node);
-			return true;
-		} else {
-			for (Iterator<MutableTreeNode> it = node.getChildren().iterator(); it.hasNext();) {
-				MutableTreeNode child = it.next();
-				if (inorderRemoval(child, tree, posTag)) {
-					it = node.getChildren().iterator();
+		MutableTreeNode root = q.tree.getRoot();
+		for (String posTag : Lists.newArrayList(".", "WDT", "POS", "WP", "WRB", "WP\\$", "PRP\\$", "PRP", "DT", "IN", "PDT")) {
+			Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
+			queue.add(root);
+			while (!queue.isEmpty()) {
+				MutableTreeNode tmp = queue.poll();
+				if (tmp.posTag.matches(posTag)) {
+					q.tree.remove(tmp);
+				}
+				for (MutableTreeNode n : tmp.getChildren()) {
+					queue.add(n);
 				}
 			}
-			return false;
 		}
 
 	}
