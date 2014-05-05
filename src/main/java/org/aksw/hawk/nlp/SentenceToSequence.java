@@ -41,7 +41,7 @@ public class SentenceToSequence {
 				subsequence = Lists.newArrayList();
 			}
 			// do not combine NN and NNP+,e.g., the opera Madame Butterfly
-			else if (!subsequence.isEmpty() && null != pos(token, q)  && null != pos(list.get(tcounter - 1), q) && pos(list.get(tcounter - 1), q).matches("NN(S)?") && pos(token, q).matches("NNP(S)?")) {
+			else if (!subsequence.isEmpty() && null != pos(token, q) && null != pos(list.get(tcounter - 1), q) && pos(list.get(tcounter - 1), q).matches("NN(S)?") && pos(token, q).matches("NNP(S)?")) {
 				if (subsequence.size() > 2) {
 					transformTree(subsequence, q);
 				}
@@ -73,13 +73,16 @@ public class SentenceToSequence {
 		// mutate tree q.tree
 		top.label = newLabel;
 		top.posTag = "CombinedNN";
-
+		if (top.label.contains("awards")) {
+			System.out.println();
+		}
 		// correct parent pointers of children of combinedNN
 		for (String sub : subsequence) {
 			List<MutableTreeNode> children = findChildOfSubSequenceToken(sub, q.tree.getRoot());
 			if (children != null) {
 				for (MutableTreeNode child : children) {
 					child.parent = top;
+					top.children.add(child);
 				}
 			}
 		}
