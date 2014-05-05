@@ -72,6 +72,7 @@ public class ModuleBuilder {
 	private void build(MutableTreeNode node) {
 		SimpleModule module = new SimpleModule();
 		//TODO work on How... queries
+		//TODO here is a bug concerning the questions word which is not transformed into a rdf:type
 		if (node.posTag.matches("WD(.)*|WR(.)*")) {
 			// if node is WD* skip
 		} else {

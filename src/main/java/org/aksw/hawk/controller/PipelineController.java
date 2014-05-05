@@ -67,46 +67,40 @@ public class PipelineController {
 
 			// visualize the tree
 			vis.vis(q, nerdModule);
-			// // 5. Build modules
-			// q.modules = this.moduleBuilder.build(q);
-			//
-			// // 8. Build pseudo queries
-			// Iterator<ParameterizedSparqlString> iter =
-			// pseudoQueryBuilder.buildQuery(q);
-			// log.info("Built PseudoQueries");
-			// queryVariableHomomorphPruner.reset();
-			// while (iter.hasNext()) {
-			// ParameterizedSparqlString thisQuery = iter.next();
-			// if (thisQuery != null) {
-			// // check whether clauses are connected
-			// if (graphNonSCCPruner.isSCC(thisQuery)) {
-			// // homogenize variables in queries
-			// if
-			// (queryVariableHomomorphPruner.queryHasNotBeenHandled(thisQuery))
-			// {
-			// // 10. Execute queries to generate system answers
-			// HashMap<String, Set<RDFNode>> answer =
-			// systemAnswerer.answer(thisQuery);
-			// for (String key : answer.keySet()) {
-			// Set<RDFNode> systemAnswers = answer.get(key);
-			// // 11. Compare to set of resources from
-			// // benchmark
-			// double precision = QALD4_EvaluationUtils.precision(systemAnswers,
-			// q);
-			// double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-			// double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers,
-			// q);
-			// if (fMeasure > 0) {
-			// log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
-			// log.info(key);
-			// }
-			// }
-			// }
-			// }
-			// }
-			// }
-			 vis.horRule();
-			// System.gc();
+			// 5. Build modules
+			q.modules = this.moduleBuilder.build(q);
+
+			// 8. Build pseudo queries
+			Iterator<ParameterizedSparqlString> iter = pseudoQueryBuilder.buildQuery(q);
+			log.info("Built PseudoQueries");
+			queryVariableHomomorphPruner.reset();
+			while (iter.hasNext()) {
+				ParameterizedSparqlString thisQuery = iter.next();
+				if (thisQuery != null) {
+					// check whether clauses are connected
+					if (graphNonSCCPruner.isSCC(thisQuery)) {
+						// homogenize variables in queries
+						if (queryVariableHomomorphPruner.queryHasNotBeenHandled(thisQuery)) {
+							// 10. Execute queries to generate system answers
+							HashMap<String, Set<RDFNode>> answer = systemAnswerer.answer(thisQuery);
+							for (String key : answer.keySet()) {
+								Set<RDFNode> systemAnswers = answer.get(key);
+								// 11. Compare to set of resources from
+								// benchmark
+								double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+								double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+								double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+								if (fMeasure > 0) {
+									log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+									log.info(key);
+								}
+							}
+						}
+					}
+				}
+			}
+			vis.horRule();
+			System.gc();
 		}
 		vis.close();
 	}
