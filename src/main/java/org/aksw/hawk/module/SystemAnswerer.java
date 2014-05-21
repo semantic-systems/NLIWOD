@@ -63,7 +63,7 @@ public class SystemAnswerer {
 		targetQueries.addAll(checkForFullTextTriple);
 		HashMap<String, Set<RDFNode>> resultSets = Maps.newHashMap();
 		for (ParameterizedSparqlString tmpQuery : targetQueries) {
-			log.debug("\t" + tmpQuery);
+			System.out.println("\t" + tmpQuery);
 			// if query has only variables and URIs anymore than ask DBpedia
 			tmpQuery = removeUnneccessaryClauses(tmpQuery);
 
@@ -114,6 +114,24 @@ public class SystemAnswerer {
 							} else {
 								log.debug("No Named Entity found for full-text lookup (possibly): " + triple);
 							}
+						}
+					} else if (subject.isVariable() && predicate.getURI().startsWith("http://") && object.getURI().startsWith("file://")) {
+						String localName = object.getLocalName();
+						List<String> list = abstractsIndex.listAbstractsContaining(localName);
+						String name = "?" + subject.getName();
+						/*
+						 * TODO bug: if variable is projection variable then a
+						 * URI is the projection variable which is an error,
+						 * discard query
+						 */
+						if (name.equals(PROJECTION_VARIABLE)) {
+							return resultQueries;
+						}
+						for (String doc : list) {
+							// replace variable by found NE
+							ParameterizedSparqlString pss = new ParameterizedSparqlString(pseudoQuery.toString());
+							pss.setIri(name, doc);
+							resultQueries.add(pss);
 						}
 					} else if (subject.isVariable() && predicate.getURI().startsWith("http://") && object.isConcrete()) {
 						log.debug("Nothing to do: " + pseudoQuery.toString());

@@ -43,13 +43,15 @@ public class Visualizer {
 
 		String oldChar = "<?xml version=\"1.0\" standalone=\"no\" ?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20010904//EN\" \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">";
 		String svg = generator.getSVG().replace(oldChar, "");
-		
+
 		bw.write(svg);
 		bw.write("<div style=\"float:right\">");
 		bw.write("Query: " + q.languageToQuestion.get("en") + " <br/>");
 		bw.write("Spotter: " + nerdModule.toString() + " <br/>");
-		for (Entity ent : q.languageToNamedEntites.get("en")) {
-			bw.write("=>&nbsp" + ent.toString() + " <br/>");
+		if (q.languageToNamedEntites != null&& !q.languageToNamedEntites.isEmpty()) {
+			for (Entity ent : q.languageToNamedEntites.get("en")) {
+				bw.write("=>&nbsp" + ent.toString() + " <br/>");
+			}
 		}
 		if (q.pseudoSparqlQuery != null) {
 			bw.write("PseudoQuery: " + q.pseudoSparqlQuery.replace("\n", "<br/>") + " <br/>");

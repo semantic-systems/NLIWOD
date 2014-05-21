@@ -71,13 +71,17 @@ public class ModuleBuilder {
 
 	private void build(MutableTreeNode node) {
 		SimpleModule module = new SimpleModule();
-		//TODO work on How... queries
-		//TODO here is a bug concerning the questions word which is not transformed into a rdf:type
+		// TODO work on How... queries
+		// TODO here is a bug concerning the questions word which is not
+		// transformed into a rdf:type
 		if (node.posTag.matches("WD(.)*|WR(.)*")) {
 			// if node is WD* skip
 		} else {
 			String label = node.label;
 			if (node.children.size() == 0 && node.posTag.matches("ADD|NN(.)*")) {
+				for (int j = 0; j <variableNumber; j++) {
+					module.addStatement("?a" + j, RDF.type.getURI(), label);
+				}
 				// if node a leaf and posTag is ADD or NN*
 				for (int j = variableNumber; j > 0; --j) {
 					// if j = 0 ADD will be projection variable

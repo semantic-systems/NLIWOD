@@ -1,5 +1,24 @@
 <?xml version="1.0" ?>
 <dataset id="qald-4_hybrid_train">
+	<question answertype="resource" id="3" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Which anti-apartheid activist graduated from the University of South Africa?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?uri 
+WHERE {
+	?uri rdf:type text:"anti-apartheid activist" .
+        ?uri dbo:almaMater res:University_of_South_Africa .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Nelson_Mandela</uri>
+			</answer>
+		</answers>
+	</question>
 	<question answertype="resource" id="12" aggregation="false"
 		onlydbo="false">
 		<string lang="en"><![CDATA[Who succeeded the pope that reigned only 33 days?]]></string>
@@ -127,25 +146,7 @@ WHERE {
 
 
 
-	<question answertype="resource" id="3" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Which anti-apartheid activist graduated from the University of South Africa?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX res: <http://dbpedia.org/resource/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT DISTINCT ?uri 
-WHERE {
-	?uri rdf:type text:"anti-apartheid activist" .
-        ?uri dbo:almaMater res:University_of_South_Africa .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Nelson_Mandela</uri>
-			</answer>
-		</answers>
-	</question>
+	
 
 	<question answertype="number" id="4" aggregation="true"
 		onlydbo="true">

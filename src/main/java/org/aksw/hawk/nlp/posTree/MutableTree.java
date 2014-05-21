@@ -1,13 +1,15 @@
 package org.aksw.hawk.nlp.posTree;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.aksw.hawk.nlp.TreeTraversal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MutableTree {
-	Logger log = LoggerFactory.getLogger(MutableTree.class);
+public class MutableTree implements Serializable {
+	private static final long serialVersionUID = 1286195006804443794L;
+	static Logger log = LoggerFactory.getLogger(MutableTree.class);
 	MutableTreeNode head = null;
 
 	public MutableTreeNode getRoot() {

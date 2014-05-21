@@ -1,12 +1,13 @@
 package org.aksw.hawk.nlp.posTree;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.aksw.hawk.visualization.TextInBox;
 
-public class MutableTreeNode implements Comparable<MutableTreeNode> {
-
+public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializable {
+	private static final long serialVersionUID = 3684161169564127853L;
 	public String label;
 	public String posTag;
 	public List<MutableTreeNode> children = new ArrayList<>();
@@ -14,7 +15,10 @@ public class MutableTreeNode implements Comparable<MutableTreeNode> {
 	public String depLabel;
 	public int nodeNumber;
 	private boolean used = false;
-	private TextInBox TextNode;
+	private transient TextInBox TextNode;
+
+	public MutableTreeNode() {
+	}
 
 	public MutableTreeNode(String label, String posTag, String depLabel, MutableTreeNode parent, int i) {
 		this.label = label;
