@@ -1,6 +1,7 @@
 package org.aksw.hawk.module;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
@@ -23,7 +24,9 @@ public class Fulltexter {
 		while (!stack.isEmpty()) {
 			MutableTreeNode tmp = stack.pop();
 			if (tmp.posTag.equals("CombinedNN") || tmp.posTag.matches("NN(.)*")) {
-				for (String resourceURL : index.listAbstractsContaining(tmp.label)) {
+				List<String> listAbstractsContaining = index.listAbstractsContaining(tmp.label);
+				System.out.println(tmp + " : "+ listAbstractsContaining.size());
+				for (String resourceURL : listAbstractsContaining) {
 					set.add(new ResourceImpl(resourceURL));
 				}
 			}

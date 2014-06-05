@@ -58,11 +58,12 @@ public class PipelineShortRecall {
 
 			// 4. Apply pruning rules
 			q.tree = pruner.prune(q);
-			log.info(q.tree.toString());
+//			log.info(q.tree.toString());
 
 			HashMap<String, Set<RDFNode>> answer = fulltexter.fulltext(q);
 			for (String key : answer.keySet()) {
 				Set<RDFNode> systemAnswers = answer.get(key);
+//				log.info("NUMBER of answers : " + systemAnswers.size());
 				// for (RDFNode rdf : systemAnswers) {
 				// log.info(rdf.asResource().getURI());
 				// }

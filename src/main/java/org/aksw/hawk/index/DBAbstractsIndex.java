@@ -108,11 +108,14 @@ public class DBAbstractsIndex {
 		List<String> triples = new ArrayList<String>();
 		try {
 			log.debug("\t start asking index...");
-			BooleanQuery bq = new BooleanQuery();
-			TermQuery query = new TermQuery(new Term(FIELD_NAME_OBJECT, "\"" + token + "\""));
-			bq.add(query, BooleanClause.Occur.MUST);
+			SimpleAnalyzer analyzer = new SimpleAnalyzer(LUCENE_VERSION);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
-			Query q = new QueryParser(LUCENE_VERSION, FIELD_NAME_SUBJECT, new SimpleAnalyzer(LUCENE_VERSION)).parse(bq.toString());
+
+			QueryParser qp = new QueryParser(LUCENE_VERSION, FIELD_NAME_OBJECT, analyzer);
+			qp.setDefaultOperator(QueryParser.Operator.AND);
+
+			Query q = qp.parse(token);
+
 			isearcher.search(q, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
 			for (int i = 0; i < hits.length; i++) {
