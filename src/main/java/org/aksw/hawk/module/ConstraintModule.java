@@ -11,10 +11,10 @@ public class ConstraintModule extends Module {
 		wc.p = constraintPredicate.label;
 		wc.o = constraintObject.label;
 		statementList.add(wc);
-		
+
 		String dboTerm = dboIndex.search(constraintPredicate.label);
 		log.debug("DBOTerm: " + dboTerm);
-		
+
 		if (dboTerm != null) {
 			wc = new WhereClause();
 			wc.s = "?xo1";

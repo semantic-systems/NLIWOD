@@ -48,7 +48,7 @@ public class Visualizer {
 		bw.write("<div style=\"float:right\">");
 		bw.write("Query: " + q.languageToQuestion.get("en") + " <br/>");
 		bw.write("Spotter: " + nerdModule.toString() + " <br/>");
-		if (q.languageToNamedEntites != null&& !q.languageToNamedEntites.isEmpty()) {
+		if (q.languageToNamedEntites != null && !q.languageToNamedEntites.isEmpty()) {
 			for (Entity ent : q.languageToNamedEntites.get("en")) {
 				bw.write("=>&nbsp" + ent.toString() + " <br/>");
 			}

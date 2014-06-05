@@ -27,7 +27,7 @@ public class Pruner {
 		 */
 		applyInterrogativeRules(q);
 		sortTree(q.tree);
-		log.info(q.tree.toString());
+		log.debug(q.tree.toString());
 		return q.tree;
 	}
 

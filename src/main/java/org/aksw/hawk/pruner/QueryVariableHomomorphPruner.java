@@ -103,9 +103,9 @@ public class QueryVariableHomomorphPruner {
 		QueryVariableHomomorphPruner qvhPruner = new QueryVariableHomomorphPruner();
 		System.out.println(queries.size());
 		for (ParameterizedSparqlString q : queries) {
-			if(qvhPruner.queryHasNotBeenHandled(q)){
+			if (qvhPruner.queryHasNotBeenHandled(q)) {
 				System.out.println("Keep: " + q);
-			}else{
+			} else {
 				System.out.println("Delete: " + q);
 			}
 		}

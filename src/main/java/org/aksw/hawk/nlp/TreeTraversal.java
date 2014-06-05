@@ -23,7 +23,7 @@ public class TreeTraversal {
 			sb = new StringBuilder();
 			sb.append("\n");
 		}
-		sb.append(printTabs(i) + depNode.label + " (" + depNode.nodeNumber + "|" + depNode.posTag+ ")\n");
+		sb.append(printTabs(i) + depNode.label + " (" + depNode.nodeNumber + "|" + depNode.posTag + ")\n");
 		++i;
 		for (MutableTreeNode node : depNode.getChildren()) {
 			inorderTraversal(node, i, sb);

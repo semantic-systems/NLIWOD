@@ -28,7 +28,7 @@ class WhereClause {
 		} else if (oTmp.startsWith("?")) {
 			oTmp = o;
 		} else {
-			//TODO escape whitespaces
+			// TODO escape whitespaces
 			oTmp = "<" + o + ">";
 		}
 		this.s = sTmp;

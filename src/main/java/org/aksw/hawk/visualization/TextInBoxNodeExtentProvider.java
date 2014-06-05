@@ -1,4 +1,5 @@
 package org.aksw.hawk.visualization;
+
 /*
  * [The "BSD license"]
  * Copyright (c) 2011, abego Software GmbH, Germany (http://www.abego.org)
@@ -39,16 +40,15 @@ import org.abego.treelayout.NodeExtentProvider;
  * 
  * @author Udo Borkowski (ub@abego.org)
  */
-public class TextInBoxNodeExtentProvider implements
-                NodeExtentProvider<TextInBox> {
+public class TextInBoxNodeExtentProvider implements NodeExtentProvider<TextInBox> {
 
-        @Override
-        public double getWidth(TextInBox treeNode) {
-                return treeNode.width;
-        }
+	@Override
+	public double getWidth(TextInBox treeNode) {
+		return treeNode.width;
+	}
 
-        @Override
-        public double getHeight(TextInBox treeNode) {
-                return treeNode.height;
-        }
+	@Override
+	public double getHeight(TextInBox treeNode) {
+		return treeNode.height;
+	}
 }

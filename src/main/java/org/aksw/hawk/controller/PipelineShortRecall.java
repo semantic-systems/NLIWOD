@@ -4,18 +4,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-import java.util.Stack;
-
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.autosparql.commons.qald.Qald4HybridLoader;
 import org.aksw.autosparql.commons.qald.Question;
-import org.aksw.hawk.index.DBAbstractsIndex;
+import org.aksw.hawk.module.Fulltexter;
 import org.aksw.hawk.module.ModuleBuilder;
 import org.aksw.hawk.module.PseudoQueryBuilder;
 import org.aksw.hawk.module.SystemAnswerer;
 import org.aksw.hawk.nlp.Pruner;
 import org.aksw.hawk.nlp.SentenceToSequence;
-import org.aksw.hawk.nlp.posTree.MutableTreeNode;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.util.CachedParseTree;
 import org.aksw.hawk.pruner.GraphNonSCCPruner;
@@ -23,13 +20,10 @@ import org.aksw.hawk.pruner.QueryVariableHomomorphPruner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
-public class ShortRecallPipeline {
-	static Logger log = LoggerFactory.getLogger(ShortRecallPipeline.class);
+public class PipelineShortRecall {
+	static Logger log = LoggerFactory.getLogger(PipelineShortRecall.class);
 	String dataset;
 	Qald4HybridLoader datasetLoader;
 	ASpotter nerdModule;
@@ -42,10 +36,15 @@ public class ShortRecallPipeline {
 	GraphNonSCCPruner graphNonSCCPruner;
 	Visualizer vis = new Visualizer();
 	SentenceToSequence sentenceToSequence;
+	Fulltexter fulltexter;
 
 	void run() throws IOException {
 		// 1. read in Questions from QALD 4
 		List<Question> questions = datasetLoader.load(dataset);
+		double overallf = 0;
+		double overallp = 0;
+		double overallr = 0;
+		double counter = 0;
 
 		for (Question q : questions) {
 			log.info("->" + q.languageToQuestion);
@@ -60,10 +59,13 @@ public class ShortRecallPipeline {
 			// 4. Apply pruning rules
 			q.tree = pruner.prune(q);
 			log.info(q.tree.toString());
-			
-			HashMap<String, Set<RDFNode>> answer = fulltext(q);
+
+			HashMap<String, Set<RDFNode>> answer = fulltexter.fulltext(q);
 			for (String key : answer.keySet()) {
 				Set<RDFNode> systemAnswers = answer.get(key);
+				// for (RDFNode rdf : systemAnswers) {
+				// log.info(rdf.asResource().getURI());
+				// }
 				// 11. Compare to set of resources from
 				// benchmark
 				double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
@@ -71,31 +73,15 @@ public class ShortRecallPipeline {
 				double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
 				if (fMeasure > 0) {
 					log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
-					log.info(key);
+					overallf += fMeasure;
+					overallp += precision;
+					overallr += recall;
+					counter++;
 				}
 			}
+			// break;
 		}
+		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter);
 	}
 
-	private HashMap<String, Set<RDFNode>> fulltext(Question q) {
-		HashMap<String, Set<RDFNode>> map = Maps.newHashMap();
-		DBAbstractsIndex index = new DBAbstractsIndex();
-		Set<RDFNode> set = Sets.newHashSet();
-		Stack<MutableTreeNode> stack = new Stack<MutableTreeNode>();
-		stack.push(q.tree.getRoot());
-		while (!stack.isEmpty()) {
-			MutableTreeNode tmp = stack.pop();
-			if (tmp.posTag.equals("CombinedNN")) {
-				for (String resourceURL : index.listAbstractsContaining(tmp.label)) {
-					set.add(new ResourceImpl(resourceURL));
-				}
-			}
-			for (MutableTreeNode child : tmp.getChildren()) {
-				stack.push(child);
-			}
-		}
-		map.put(q.languageToQuestion.get("en"), set);
-		index.close();
-		return map;
-	}
 }

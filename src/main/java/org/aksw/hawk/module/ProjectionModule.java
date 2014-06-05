@@ -10,13 +10,14 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.vocabulary.RDF;
 
 public class ProjectionModule extends Module {
-//TODO old module, either delete or refactor, not used by now (end of april 14)
+	// TODO old module, either delete or refactor, not used by now (end of april
+	// 14)
 	public ProjectionModule(MutableTreeNode type) {
 		String dboTerm = dboIndex.search(type.label);
 		log.debug("DBOTerm: " + dboTerm);
 
 		if (dboTerm != null) {
-			WhereClause	wc = new WhereClause();
+			WhereClause wc = new WhereClause();
 			wc.s = "?uri";
 			wc.p = RDF.type.asResource().getURI();
 			wc.o = dboTerm;

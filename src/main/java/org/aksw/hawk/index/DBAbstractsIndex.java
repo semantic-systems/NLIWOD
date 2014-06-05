@@ -47,7 +47,7 @@ public class DBAbstractsIndex {
 	public static String FIELD_NAME_SUBJECT = "subject";
 	public static String FIELD_NAME_PREDICATE = "predicate";
 	public static String FIELD_NAME_OBJECT = "object";
-	private int numberOfDocsRetrievedFromIndex = 1000;
+	private int numberOfDocsRetrievedFromIndex = 100000;
 	public Version LUCENE_VERSION = Version.LUCENE_46;
 
 	private Directory directory;
@@ -128,13 +128,12 @@ public class DBAbstractsIndex {
 	}
 
 	private void index() {
+		String baseURI = "http://dbpedia.org";
 		try {
 			Properties prop = new Properties();
 			InputStream input = getClass().getClassLoader().getResourceAsStream("hawk.properties");
 			prop.load(input);
 			String file = prop.getProperty("abstracts");
-
-			String baseURI = "http://dbpedia.org";
 
 			Analyzer analyzer = new SimpleAnalyzer(LUCENE_VERSION);
 			IndexWriterConfig config = new IndexWriterConfig(LUCENE_VERSION, analyzer);
@@ -146,6 +145,15 @@ public class DBAbstractsIndex {
 			OnlineStatementHandler osh = new OnlineStatementHandler(iwriter);
 			RDFParser parser = new TurtleParser();
 			parser.setRDFHandler(osh);
+			parser.setStopAtFirstError(false);
+			parser.parse(new FileReader(file), baseURI);
+			log.info("Finished parsing.");
+
+			log.info("Start parsing.");
+			file = prop.getProperty("redirects");
+			OnlineStatementHandlerRedirects oshr = new OnlineStatementHandlerRedirects(iwriter);
+			parser = new TurtleParser();
+			parser.setRDFHandler(oshr);
 			parser.setStopAtFirstError(false);
 			parser.parse(new FileReader(file), baseURI);
 			log.info("Finished parsing.");
@@ -178,6 +186,33 @@ public class DBAbstractsIndex {
 		}
 	}
 
+	class OnlineStatementHandlerRedirects extends RDFHandlerBase {
+		private IndexWriter iwriter;
+
+		public OnlineStatementHandlerRedirects(IndexWriter iwriter) {
+			this.iwriter = iwriter;
+		}
+
+		@Override
+		public void handleStatement(Statement st) {
+			String subject = st.getSubject().stringValue();
+			subject = subject.replaceAll("_", " ").replaceAll("http://dbpedia.org/resource/", "");
+			String label = new String();
+			for (String w : subject.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])")) {
+				label += w + " ";
+			}
+			label.trim();
+
+			String predicate = st.getPredicate().stringValue();
+			String object = st.getObject().stringValue();
+			try {
+				addDocumentToIndex(iwriter, object, predicate, label);
+			} catch (IOException e) {
+				log.error("Could not create index: ", e);
+			}
+		}
+	}
+
 	private void addDocumentToIndex(IndexWriter iwriter, String subject, String predicate, String object) throws IOException {
 		Document doc = new Document();
 		doc.add(new StringField(FIELD_NAME_SUBJECT, subject, Store.YES));
@@ -201,7 +236,5 @@ public class DBAbstractsIndex {
 		index.close();
 
 	}
-
-	
 
 }

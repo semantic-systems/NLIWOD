@@ -13,9 +13,9 @@ public abstract class Module {
 	public List<WhereClause> statementList = new ArrayList<>();
 	public Logger log = LoggerFactory.getLogger(getClass());
 	public DBOIndex dboIndex = new DBOIndex();
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return Joiner.on("\n").join(statementList);
 	}
 }

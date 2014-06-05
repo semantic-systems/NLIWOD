@@ -25,8 +25,8 @@ public class AllSpotterOnExcerpt {
 				}
 			}
 		}
-		
-		  excerpt = "In which city was the assassin of Martin Luther King born?";
+
+		excerpt = "In which city was the assassin of Martin Luther King born?";
 
 		for (ASpotter nerdModule : new ASpotter[] { new Spotlight(), new Fox(), new TagMe(), new WikipediaMiner() }) {
 			Map<String, List<Entity>> nes = nerdModule.getEntities(excerpt);

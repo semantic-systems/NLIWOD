@@ -79,7 +79,7 @@ public class ModuleBuilder {
 		} else {
 			String label = node.label;
 			if (node.children.size() == 0 && node.posTag.matches("ADD|NN(.)*")) {
-				for (int j = 0; j <variableNumber; j++) {
+				for (int j = 0; j < variableNumber; j++) {
 					module.addStatement("?a" + j, RDF.type.getURI(), label);
 				}
 				// if node a leaf and posTag is ADD or NN*
