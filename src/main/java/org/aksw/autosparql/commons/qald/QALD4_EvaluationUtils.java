@@ -15,50 +15,87 @@ public class QALD4_EvaluationUtils {
 	static Logger log = LoggerFactory.getLogger(QALD4_EvaluationUtils.class);
 
 	public static double precision(Set<RDFNode> systemAnswer, Question question) {
-		if(systemAnswer==null){
+		if (systemAnswer == null) {
 			return 0;
 		}
 		double precision = 0;
 		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers.get("en"));
-		if (isSelectType(question.pseudoSparqlQuery)) {
-			SetView<RDFNode> intersection = Sets.intersection(goldenRDFNodes, systemAnswer);
-			if (systemAnswer.size() != 0) {
-				precision = (double) intersection.size() / (double) systemAnswer.size();
-			}
-		} else if (isAskType(question.pseudoSparqlQuery)) {
-			if (systemAnswer.size() == 1) {
-				RDFNode ans = systemAnswer.iterator().next();
-				RDFNode goldstandardAns = goldenRDFNodes.iterator().next();
-				if (ans.toString().equals(goldstandardAns.toString())) {
-					precision = 1;
+		if (question.pseudoSparqlQuery != null) {
+			if (isSelectType(question.pseudoSparqlQuery)) {
+				SetView<RDFNode> intersection = Sets.intersection(goldenRDFNodes, systemAnswer);
+				if (systemAnswer.size() != 0) {
+					precision = (double) intersection.size() / (double) systemAnswer.size();
 				}
+			} else if (isAskType(question.pseudoSparqlQuery)) {
+				if (systemAnswer.size() == 1) {
+					RDFNode ans = systemAnswer.iterator().next();
+					RDFNode goldstandardAns = goldenRDFNodes.iterator().next();
+					if (ans.toString().equals(goldstandardAns.toString())) {
+						precision = 1;
+					}
+				}
+			} else {
+				log.error("Unsupported Query Type" + question);
 			}
 		} else {
-			log.error("Unsupported Query Type" + question);
+			if (isSelectType(question.sparqlQuery)) {
+				SetView<RDFNode> intersection = Sets.intersection(goldenRDFNodes, systemAnswer);
+				if (systemAnswer.size() != 0) {
+					precision = (double) intersection.size() / (double) systemAnswer.size();
+				}
+			} else if (isAskType(question.sparqlQuery)) {
+				if (systemAnswer.size() == 1) {
+					RDFNode ans = systemAnswer.iterator().next();
+					RDFNode goldstandardAns = goldenRDFNodes.iterator().next();
+					if (ans.toString().equals(goldstandardAns.toString())) {
+						precision = 1;
+					}
+				}
+			} else {
+				log.error("Unsupported Query Type" + question);
+			}
 		}
 		return precision;
 	}
 
 	public static double recall(Set<RDFNode> systemAnswer, Question question) {
-		if(systemAnswer==null){
+		if (systemAnswer == null) {
 			return 0;
 		}
 		double recall = 0;
 		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers.get("en"));
-		if (isSelectType(question.pseudoSparqlQuery)) {
-			// if queries contain aggregation return always 1
-			if (question.aggregation) {
+		if (question.pseudoSparqlQuery != null) {
+			if (isSelectType(question.pseudoSparqlQuery)) {
+				// if queries contain aggregation return always 1
+				if (question.aggregation) {
+					recall = 1;
+				}
+				SetView<RDFNode> intersection = Sets.intersection(systemAnswer, goldenRDFNodes);
+				if (goldenRDFNodes.size() != 0) {
+					recall = (double) intersection.size() / (double) goldenRDFNodes.size();
+				}
+			} else if (isAskType(question.pseudoSparqlQuery)) {
+				// if queries are ASK queries return recall=1
 				recall = 1;
+			} else {
+				log.error("Unsupported Query Type" + question);
 			}
-			SetView<RDFNode> intersection = Sets.intersection(systemAnswer, goldenRDFNodes);
-			if (goldenRDFNodes.size() != 0) {
-				recall = (double) intersection.size() / (double) goldenRDFNodes.size();
-			}
-		} else if (isAskType(question.pseudoSparqlQuery)) {
-			// if queries are ASK queries return recall=1
-			recall = 1;
 		} else {
-			log.error("Unsupported Query Type" + question);
+			if (isSelectType(question.sparqlQuery)) {
+				// if queries contain aggregation return always 1
+				if (question.aggregation) {
+					recall = 1;
+				}
+				SetView<RDFNode> intersection = Sets.intersection(systemAnswer, goldenRDFNodes);
+				if (goldenRDFNodes.size() != 0) {
+					recall = (double) intersection.size() / (double) goldenRDFNodes.size();
+				}
+			} else if (isAskType(question.sparqlQuery)) {
+				// if queries are ASK queries return recall=1
+				recall = 1;
+			} else {
+				log.error("Unsupported Query Type" + question);
+			}
 		}
 		return recall;
 	}
@@ -74,11 +111,11 @@ public class QALD4_EvaluationUtils {
 	}
 
 	private static boolean isAskType(String sparqlQuery) {
-		return sparqlQuery.contains("\nASK\n")||sparqlQuery.contains("ASK ");
+		return sparqlQuery.contains("\nASK\n") || sparqlQuery.contains("ASK ");
 	}
 
 	private static boolean isSelectType(String sparqlQuery) {
-		return sparqlQuery.contains("\nSELECT\n")||sparqlQuery.contains("SELECT ");
+		return sparqlQuery.contains("\nSELECT\n") || sparqlQuery.contains("SELECT ");
 	}
 
 	private static Set<RDFNode> answersToRDFNode(Set<String> answers) {
