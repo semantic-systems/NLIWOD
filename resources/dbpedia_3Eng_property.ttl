@@ -1,0 +1,323 @@
+<http://dbpedia.org/ontology/foundingYear> rdfs:label "founding year in" .
+<http://dbpedia.org/ontology/formationYear> rdfs:label "formed in" .
+<http://dbpedia.org/ontology/motto> rdfs:label "motto" .
+<http://dbpedia.org/ontology/seatingCapacity> rdfs:label "seating capacity" .
+<http://dbpedia.org/ontology/layingDown> rdfs:label "laid down on" .
+<http://dbpedia.org/ontology/gridReference> rdfs:label "grid reference" .
+<http://dbpedia.org/ontology/status> rdfs:label "status" .
+<http://dbpedia.org/ontology/elevation> rdfs:label "height at" .
+<http://dbpedia.org/ontology/width> rdfs:label "width" .
+<http://dbpedia.org/ontology/officialSchoolColour> rdfs:label "official color" .
+<http://dbpedia.org/ontology/range> rdfs:label "part of" .
+<http://dbpedia.org/ontology/slogan> rdfs:label "slogan" .
+<http://dbpedia.org/ontology/shipBeam> rdfs:label "beam" .
+<http://dbpedia.org/ontology/nrhpReferenceNumber> rdfs:label "National Register reference number" .
+<http://dbpedia.org/ontology/date> rdfs:label "take place on" .
+<http://dbpedia.org/ontology/foundingDate> rdfs:label "established on" .
+<http://dbpedia.org/ontology/decommissioningDate> rdfs:label "decommissioned on" .
+<http://dbpedia.org/ontology/gross> rdfs:label "make" .
+<http://dbpedia.org/ontology/activeYearsEndYear> rdfs:label "active until" .
+<http://dbpedia.org/ontology/areaCode> rdfs:label "area code" .
+<http://dbpedia.org/ontology/populationMetroDensity> rdfs:label "population density" .
+<http://dbpedia.org/ontology/alias> rdfs:label "alias" .
+<http://dbpedia.org/ontology/iataLocationIdentifier> rdfs:label "IATA identifier" .
+<http://dbpedia.org/ontology/facilityId> rdfs:label "facility ID" .
+<http://dbpedia.org/ontology/populationDensity> rdfs:label "population density" .
+<http://dbpedia.org/ontology/issn> rdfs:label "ISSN" .
+<http://dbpedia.org/ontology/recordDate> rdfs:label "record date on" .
+<http://dbpedia.org/ontology/dateCompleted> rdfs:label "completed on" .
+<http://dbpedia.org/ontology/birthYear> rdfs:label "born in" .
+<http://dbpedia.org/ontology/depth> rdfs:label "deep" .
+<http://dbpedia.org/ontology/commonName> rdfs:label "common name" .
+<http://dbpedia.org/ontology/icaoLocationIdentifier> rdfs:label "ICAO code" .
+<http://dbpedia.org/ontology/sublimationPoint> rdfs:label "sublimation point at" .
+<http://dbpedia.org/ontology/length> rdfs:label "length" .
+<http://dbpedia.org/ontology/activeYearsStartDate> rdfs:label "active since" .
+<http://dbpedia.org/ontology/deathDate> rdfs:label "die on" .
+<http://dbpedia.org/ontology/populationUrbanDensity> rdfs:label "population density" .
+<http://dbpedia.org/ontology/openingDate> rdfs:label "opened on" .
+<http://dbpedia.org/ontology/dcc> rdfs:label "Dewey classification" .
+<http://dbpedia.org/ontology/birthDate> rdfs:label "birth date on" .
+<http://dbpedia.org/ontology/height> rdfs:label "tall" .
+<http://dbpedia.org/ontology/address> rdfs:label "address in" .
+<http://dbpedia.org/ontology/day> rdfs:label "day" .
+<http://dbpedia.org/ontology/causalties> rdfs:label "casualties" .
+<http://dbpedia.org/ontology/agencyStationCode> rdfs:label "station code" .
+<http://dbpedia.org/ontology/areaTotal> rdfs:label "area" .
+<http://dbpedia.org/ontology/conservationStatus> rdfs:label "conservation status" .
+<http://dbpedia.org/ontology/entrezgene> rdfs:label "Entrez ID" .
+<http://dbpedia.org/ontology/runtime> rdfs:label "runtime" .
+<http://dbpedia.org/ontology/revenue> rdfs:label "revenue" .
+<http://dbpedia.org/ontology/meanTemperature> rdfs:label "mean temperature on" .
+<http://dbpedia.org/ontology/isbn> rdfs:label "ISBN" .
+<http://dbpedia.org/ontology/averageSpeed> rdfs:label "average speed" .
+<http://dbpedia.org/ontology/numberOfStudents> rdfs:label "student population of" .
+<http://dbpedia.org/ontology/shipDraft> rdfs:label "draft" .
+<http://dbpedia.org/ontology/deathYear> rdfs:label "die in" .
+<http://dbpedia.org/ontology/utcOffset> rdfs:label "time zone offset" .
+<http://dbpedia.org/ontology/bSide> rdfs:label "B-side" .
+<http://dbpedia.org/ontology/commissioningDate> rdfs:label "commissioned on" .
+<http://dbpedia.org/ontology/activeYearsStartYear> rdfs:label "active since" .
+<http://dbpedia.org/ontology/number> rdfs:label "shirt number" .
+<http://dbpedia.org/ontology/areaLand> rdfs:label "land area" .
+<http://dbpedia.org/ontology/area> rdfs:label "area" .
+<http://dbpedia.org/ontology/squadNumber> rdfs:label "shirt number" .
+<http://dbpedia.org/ontology/budget> rdfs:label "budget" .
+<http://dbpedia.org/ontology/formationDate> rdfs:label "formation date on" .
+<http://dbpedia.org/ontology/review> rdfs:label "review at" .
+<http://dbpedia.org/ontology/density> rdfs:label "density" .
+<http://dbpedia.org/ontology/apoapsis> rdfs:label "apoapsis" .
+<http://dbpedia.org/ontology/epoch> rdfs:label "epoch" .
+<http://dbpedia.org/ontology/oclc> rdfs:label "OCLC number" .
+<http://dbpedia.org/ontology/displacement> rdfs:label "engine displacement" .
+<http://dbpedia.org/ontology/weight> rdfs:label "weight" .
+<http://dbpedia.org/ontology/maximumElevation> rdfs:label "maximum altitude to" .
+<http://dbpedia.org/ontology/populationUrban> rdfs:label "population" .
+<http://dbpedia.org/ontology/latestReleaseVersion> rdfs:label "current release" .
+<http://dbpedia.org/ontology/requirement> rdfs:label "require of" .
+<http://dbpedia.org/ontology/yearOfConstruction> rdfs:label "constructed in" .
+<http://dbpedia.org/ontology/militaryCommand> rdfs:label "command" .
+<http://dbpedia.org/ontology/iupacName> rdfs:label "IUPAC name" .
+<http://dbpedia.org/ontology/postalCode> rdfs:label "post code" .
+<http://dbpedia.org/ontology/meltingPoint> rdfs:label "melting point at" .
+<http://dbpedia.org/ontology/absoluteMagnitude> rdfs:label "absolute magnitude" .
+<http://dbpedia.org/ontology/pseudonym> rdfs:label "pseudonym" .
+<http://dbpedia.org/ontology/populationTotal> rdfs:label "population" .
+<http://dbpedia.org/ontology/areaMetro> rdfs:label "area" .
+<http://dbpedia.org/ontology/mascot> rdfs:label "mascot" .
+<http://dbpedia.org/ontology/abbreviation> rdfs:label "abbreviated as" .
+<http://dbpedia.org/ontology/topSpeed> rdfs:label "top speed" .
+<http://dbpedia.org/ontology/launchDate> rdfs:label "launched on" .
+<http://dbpedia.org/ontology/office> rdfs:label "position" .
+<http://dbpedia.org/ontology/lcc> rdfs:label "LC classification" .
+<http://dbpedia.org/ontology/populationMetro> rdfs:label "population" .
+<http://dbpedia.org/ontology/orbitalPeriod> rdfs:label "orbital period" .
+<http://dbpedia.org/ontology/totalPopulation> rdfs:label "population" .
+<http://dbpedia.org/ontology/shipLaunch> rdfs:label "launched on" .
+<http://dbpedia.org/ontology/dateUse> rdfs:label "opened in" .
+<http://dbpedia.org/ontology/frequency> rdfs:label "frequency on" .
+<http://dbpedia.org/ontology/birthName> rdfs:label "birth name" .
+<http://dbpedia.org/ontology/periapsis> rdfs:label "periapsis" .
+<http://dbpedia.org/ontology/completionDate> rdfs:label "completed on" .
+<http://dbpedia.org/ontology/areaWater> rdfs:label "water area" .
+<http://dbpedia.org/ontology/minimumElevation> rdfs:label "minimum altitude" .
+<http://dbpedia.org/ontology/capacity> rdfs:label "accommodate" .
+<http://dbpedia.org/ontology/areaUrban> rdfs:label "area" .
+<http://dbpedia.org/ontology/openingYear> rdfs:label "opened in" .
+<http://dbpedia.org/ontology/colourName> rdfs:label "color" .
+<http://dbpedia.org/ontology/position> rdfs:label "position" .
+<http://dbpedia.org/ontology/releaseDate> rdfs:label "released on" .
+<http://dbpedia.org/ontology/boilingPoint> rdfs:label "boiling point at" .
+<http://dbpedia.org/ontology/synonym> rdfs:label "synonym" .
+<http://dbpedia.org/ontology/activeYearsEndDate> rdfs:label "active until" .
+<http://dbpedia.org/ontology/callsignMeaning> rdfs:label "mean for" .
+<http://dbpedia.org/ontology/formerName> rdfs:label "former name" .
+<http://dbpedia.org/ontology/result> rdfs:label "result of" .
+<http://dbpedia.org/ontology/facultySize> rdfs:label "faculty size" .
+<http://dbpedia.org/ontology/title> rdfs:label "known as" .
+<http://dbpedia.org/ontology/product> rdfs:label "product" .
+<http://dbpedia.org/ontology/city> rdfs:label "located in" .
+<http://dbpedia.org/ontology/president> rdfs:label "serve under" .
+<http://dbpedia.org/ontology/highestMountain> rdfs:label "highest mountain in" .
+<http://dbpedia.org/ontology/locatedInArea> rdfs:label "located in" .
+<http://dbpedia.org/ontology/regionServed> rdfs:label "operate in" .
+<http://dbpedia.org/ontology/ground> rdfs:label "home of" .
+<http://dbpedia.org/ontology/place> rdfs:label "take place in" .
+<http://dbpedia.org/ontology/assembly> rdfs:label "assembled in" .
+<http://dbpedia.org/ontology/genus> rdfs:label "genus to" .
+<http://dbpedia.org/ontology/timeZone> rdfs:label "time zone" .
+<http://dbpedia.org/ontology/creator> rdfs:label "creator" .
+<http://dbpedia.org/ontology/highestRegion> rdfs:label "highest region" .
+<http://dbpedia.org/ontology/genre> rdfs:label "genre" .
+<http://dbpedia.org/ontology/computingPlatform> rdfs:label "ported to" .
+<http://dbpedia.org/ontology/college> rdfs:label "attend from" .
+<http://dbpedia.org/ontology/region> rdfs:label "located in" .
+<http://dbpedia.org/ontology/programmeFormat> rdfs:label "play" .
+<http://dbpedia.org/ontology/league> rdfs:label "play in" .
+<http://dbpedia.org/ontology/instrument> rdfs:label "play of" .
+<http://dbpedia.org/ontology/computingInput> rdfs:label "play with" .
+<http://dbpedia.org/ontology/team> rdfs:label "team" .
+<http://dbpedia.org/ontology/religion> rdfs:label "religion" .
+<http://dbpedia.org/ontology/distributor> rdfs:label "distribute" .
+<http://dbpedia.org/ontology/managerClub> rdfs:label "manage" .
+<http://dbpedia.org/ontology/foundingPerson> rdfs:label "establish" .
+<http://dbpedia.org/ontology/similar> rdfs:label "like to" .
+<http://dbpedia.org/ontology/associatedBand> rdfs:label "associated act" .
+<http://dbpedia.org/ontology/restingPlace> rdfs:label "resting place in" .
+<http://dbpedia.org/ontology/servingRailwayLine> rdfs:label "serve" .
+<http://dbpedia.org/ontology/associatedRocket> rdfs:label "blast off from" .
+<http://dbpedia.org/ontology/relatedMeanOfTransportation> rdfs:label "based on" .
+<http://dbpedia.org/ontology/department> rdfs:label "located in" .
+<http://dbpedia.org/ontology/structuralSystem> rdfs:label "structural system of" .
+<http://dbpedia.org/ontology/network> rdfs:label "broadcasted on" .
+<http://dbpedia.org/ontology/routeJunction> rdfs:label "intersect with" .
+<http://dbpedia.org/ontology/award> rdfs:label "award" .
+<http://dbpedia.org/ontology/formerBandMember> rdfs:label "former band member of" .
+<http://dbpedia.org/ontology/stateOfOrigin> rdfs:label "come from" .
+<http://dbpedia.org/ontology/hometown> rdfs:label "home town from" .
+<http://dbpedia.org/ontology/computingMedia> rdfs:label "released on" .
+<http://dbpedia.org/ontology/spouse> rdfs:label "husband to" .
+<http://dbpedia.org/ontology/chairman> rdfs:label "chairman" .
+<http://dbpedia.org/ontology/influenced> rdfs:label "influence" .
+<http://dbpedia.org/ontology/series> rdfs:label "part of" .
+<http://dbpedia.org/ontology/birthPlace> rdfs:label "birth place in" .
+<http://dbpedia.org/ontology/university> rdfs:label "study at" .
+<http://dbpedia.org/ontology/isPartOfMilitaryConflict> rdfs:label "part of" .
+<http://dbpedia.org/ontology/spokenIn> rdfs:label "spoken in" .
+<http://dbpedia.org/ontology/foundationPlace> rdfs:label "foundation place in" .
+<http://dbpedia.org/ontology/viceChancellor> rdfs:label "vice chancellor" .
+<http://dbpedia.org/ontology/homeArena> rdfs:label "home arena of" .
+<http://dbpedia.org/ontology/locationCity> rdfs:label "located in" .
+<http://dbpedia.org/ontology/guest> rdfs:label "feature in" .
+<http://dbpedia.org/ontology/editing> rdfs:label "edit" .
+<http://dbpedia.org/ontology/musicalBand> rdfs:label "record" .
+<http://dbpedia.org/ontology/parentCompany> rdfs:label "daughter company" .
+<http://dbpedia.org/ontology/musicFusionGenre> rdfs:label "fuse into" .
+<http://dbpedia.org/ontology/parent> rdfs:label "child" .
+<http://dbpedia.org/ontology/headquarter> rdfs:label "based in" .
+<http://dbpedia.org/ontology/writer> rdfs:label "author of" .
+<http://dbpedia.org/ontology/field> rdfs:label "work on" .
+<http://dbpedia.org/ontology/publisher> rdfs:label "publish" .
+<http://dbpedia.org/ontology/riverMouth> rdfs:label "run into" .
+<http://dbpedia.org/ontology/nearestCity> rdfs:label "close to" .
+<http://dbpedia.org/ontology/order> rdfs:label "belong to" .
+<http://dbpedia.org/ontology/formerCoach> rdfs:label "former coach" .
+<http://dbpedia.org/ontology/previousWork> rdfs:label "prequel" .
+<http://dbpedia.org/ontology/operatedBy> rdfs:label "operate" .
+<http://dbpedia.org/ontology/mouthPlace> rdfs:label "run into" .
+<http://dbpedia.org/ontology/owningCompany> rdfs:label "daughter company" .
+<http://dbpedia.org/ontology/bandMember> rdfs:label "member of" .
+<http://dbpedia.org/ontology/owner> rdfs:label "own" .
+<http://dbpedia.org/ontology/relative> rdfs:label "related to" .
+<http://dbpedia.org/ontology/developer> rdfs:label "develop" .
+<http://dbpedia.org/ontology/recordedIn> rdfs:label "recorded in" .
+<http://dbpedia.org/ontology/commander> rdfs:label "leader in" .
+<http://dbpedia.org/ontology/operatingSystem> rdfs:label "run under" .
+<http://dbpedia.org/ontology/literaryGenre> rdfs:label "genre" .
+<http://dbpedia.org/ontology/state> rdfs:label "located in" .
+<http://dbpedia.org/ontology/intercommunality> rdfs:label "suburb of" .
+<http://dbpedia.org/ontology/phylum> rdfs:label "phylum to" .
+<http://dbpedia.org/ontology/deathPlace> rdfs:label "death place in" .
+<http://dbpedia.org/ontology/crosses> rdfs:label "crossing over" .
+<http://dbpedia.org/ontology/manufacturer> rdfs:label "produce" .
+<http://dbpedia.org/ontology/rector> rdfs:label "rector" .
+<http://dbpedia.org/ontology/populationPlace> rdfs:label "live in" .
+<http://dbpedia.org/ontology/militaryUnit> rdfs:label "serve in" .
+<http://dbpedia.org/ontology/almaMater> rdfs:label "graduate from" .
+<http://dbpedia.org/ontology/country> rdfs:label "located in" .
+<http://dbpedia.org/ontology/executiveProducer> rdfs:label "executive producer" .
+<http://dbpedia.org/ontology/composer> rdfs:label "composer" .
+<http://dbpedia.org/ontology/kingdom> rdfs:label "kingdom to" .
+<http://dbpedia.org/ontology/locationCountry> rdfs:label "located in" .
+<http://dbpedia.org/ontology/sisterStation> rdfs:label "sister station" .
+<http://dbpedia.org/ontology/influencedBy> rdfs:label "influence" .
+<http://dbpedia.org/ontology/associatedMusicalArtist> rdfs:label "associated act" .
+<http://dbpedia.org/ontology/mouthMountain> rdfs:label "run into" .
+<http://dbpedia.org/ontology/precursor> rdfs:label "precursor of" .
+<http://dbpedia.org/ontology/isPartOf> rdfs:label "part of" .
+<http://dbpedia.org/ontology/affiliation> rdfs:label "affiliated with" .
+<http://dbpedia.org/ontology/class> rdfs:label "class to" .
+<http://dbpedia.org/ontology/binomialAuthority> rdfs:label "first describe" .
+<http://dbpedia.org/ontology/predecessor> rdfs:label "successor" .
+<http://dbpedia.org/ontology/musicalArtist> rdfs:label "record of" .
+<http://dbpedia.org/ontology/militaryBranch> rdfs:label "serve in" .
+<http://dbpedia.org/ontology/location> rdfs:label "located in" .
+<http://dbpedia.org/ontology/channel> rdfs:label "air on" .
+<http://dbpedia.org/ontology/cinematography> rdfs:label "cinematographer" .
+<http://dbpedia.org/ontology/border> rdfs:label "border" .
+<http://dbpedia.org/ontology/occupation> rdfs:label "work as" .
+<http://dbpedia.org/ontology/division> rdfs:label "belong to" .
+<http://dbpedia.org/ontology/programmingLanguage> rdfs:label "programming language in" .
+<http://dbpedia.org/ontology/languageFamily> rdfs:label "belong" .
+<http://dbpedia.org/ontology/neighboringMunicipality> rdfs:label "neighboring municipality" .
+<http://dbpedia.org/ontology/profession> rdfs:label "profession as" .
+<http://dbpedia.org/ontology/successor> rdfs:label "successor" .
+<http://dbpedia.org/ontology/manager> rdfs:label "manage" .
+<http://dbpedia.org/ontology/runningMate> rdfs:label "running mate" .
+<http://dbpedia.org/ontology/album> rdfs:label "song on" .
+<http://dbpedia.org/ontology/architect> rdfs:label "architect" .
+<http://dbpedia.org/ontology/canton> rdfs:label "located in" .
+<http://dbpedia.org/ontology/broadcastNetwork> rdfs:label "part of" .
+<http://dbpedia.org/ontology/license> rdfs:label "licensed under" .
+<http://dbpedia.org/ontology/canonizedPlace> rdfs:label "canonize in" .
+<http://dbpedia.org/ontology/patron> rdfs:label "patron saint" .
+<http://dbpedia.org/ontology/subsequentWork> rdfs:label "sequel" .
+<http://dbpedia.org/ontology/sourceCountry> rdfs:label "originate in" .
+<http://dbpedia.org/ontology/county> rdfs:label "located in" .
+<http://dbpedia.org/ontology/origin> rdfs:label "made in" .
+<http://dbpedia.org/ontology/family> rdfs:label "belong to" .
+<http://dbpedia.org/ontology/foundedBy> rdfs:label "establish" .
+<http://dbpedia.org/ontology/presenter> rdfs:label "presenter" .
+<http://dbpedia.org/ontology/format> rdfs:label "format" .
+<http://dbpedia.org/ontology/operator> rdfs:label "home of" .
+<http://dbpedia.org/ontology/battle> rdfs:label "fight in" .
+<http://dbpedia.org/ontology/starring> rdfs:label "star in" .
+<http://dbpedia.org/ontology/builder> rdfs:label "build" .
+<http://dbpedia.org/ontology/debutTeam> rdfs:label "debut for" .
+<http://dbpedia.org/ontology/district> rdfs:label "located in" .
+<http://dbpedia.org/ontology/arrondissement> rdfs:label "located in" .
+<http://dbpedia.org/ontology/board> rdfs:label "board member at" .
+<http://dbpedia.org/ontology/province> rdfs:label "located in" .
+<http://dbpedia.org/ontology/ethnicity> rdfs:label "ethnicity" .
+<http://dbpedia.org/ontology/openingFilm> rdfs:label "opening film at" .
+<http://dbpedia.org/ontology/mountainRange> rdfs:label "part of" .
+<http://dbpedia.org/ontology/broadcastArea> rdfs:label "cover in" .
+<http://dbpedia.org/ontology/residence> rdfs:label "reside in" .
+<http://dbpedia.org/ontology/language> rdfs:label "written in" .
+<http://dbpedia.org/ontology/source> rdfs:label "originate in" .
+<http://dbpedia.org/ontology/designer> rdfs:label "design" .
+<http://dbpedia.org/ontology/commandStructure> rdfs:label "part of" .
+<http://dbpedia.org/ontology/child> rdfs:label "child" .
+<http://dbpedia.org/ontology/education_restrictedTo_range_http://dbpedia.org/ontology/EducationalInstitution> rdfs:label "go to" .
+<http://dbpedia.org/ontology/ground_restrictedTo_domain_http://dbpedia.org/ontology/Stadium> rdfs:label "home stadium" .
+<http://dbpedia.org/ontology/team_restrictedTo_domain_http://dbpedia.org/ontology/SportsManager> rdfs:label "manager" .
+<http://dbpedia.org/ontology/closestCity> rdfs:label "located near" .
+<http://dbpedia.org/ontology/related_restrictedTo_domain_http://dbpedia.org/ontology/EthnicGroup> rdfs:label "related to" .
+<http://dbpedia.org/ontology/series_restrictedTo_domain_http://dbpedia.org/ontology/TelevisionEpisode> rdfs:label "episode of" .
+<http://dbpedia.org/ontology/tenant_restrictedTo_range_http://dbpedia.org/ontology/Organisation> rdfs:label "play in" .
+<http://dbpedia.org/ontology/team_restrictedTo_domain_http://dbpedia.org/ontology/SoccerPlayer_or_http://dbpedia.org/ontology/BaseballPlayer_or_http://dbpedia.org/ontology/IceHockeyPlayer_or_http://dbpedia.org/ontology/BasketballPlayer_or_http://dbpedia.org/ontology/AmericanFootballPlayer_or_http://dbpedia.org/ontology/GridironFootballPlayer_or_http://dbpedia.org/ontology/CanadianFootballPlayer_or_http://dbpedia.org/ontology/TennisPlayer_or_http://dbpedia.org/ontology/GolfPlayer_or_http://dbpedia.org/ontology/BadmintonPlayer_or_http://dbpedia.org/ontology/RugbyPlayer_or_http://dbpedia.org/ontology/PokerPlayer> rdfs:label "play for" .
+<http://dbpedia.org/ontology/child_restrictedTo_range_Things_with_http://dbpedia.org/ontology/gender_p1_Female> rdfs:label "daughter" .
+<http://dbpedia.org/ontology/parent_restrictedTo_domain_Things_with_http://dbpedia.org/ontology/gender_p1_Female> rdfs:label "daughter" .
+<http://dbpedia.org/ontology/cinematographer> rdfs:label "shoot" .
+<http://dbpedia.org/ontology/subsequentWork_restrictedTo_domain_http://dbpedia.org/ontology/Book> rdfs:label "written after" .
+<http://dbpedia.org/ontology/previousWork_restrictedTo_domain_http://dbpedia.org/ontology/Book> rdfs:label "written before" .
+<http://dbpedia.org/ontology/company_restrictedTo_domain_http://dbpedia.org/ontology/TelevisionShow> rdfs:label "produce" .
+<http://dbpedia.org/ontology/operator_restrictedTo_domain_http://dbpedia.org/ontology/Infrastructure_or_http://dbpedia.org/ontology/MeanOfTransportation> rdfs:label "operate" .
+<http://dbpedia.org/ontology/child_o_http://dbpedia.org/ontology/child> rdfs:label "grandchild" .
+<http://dbpedia.org/ontology/subsequentWork_restrictedTo_domain_http://dbpedia.org/ontology/Album> rdfs:label "record after" .
+<http://dbpedia.org/ontology/previousWork_restrictedTo_domain_http://dbpedia.org/ontology/Album> rdfs:label "record before" .
+<http://dbpedia.org/ontology/leader_restrictedTo_range_Things_with_http://dbpedia.org/ontology/leaderTitle_p1_President> rdfs:label "president" .
+<http://dbpedia.org/ontology/child_restrictedTo_range_Things_with_http://dbpedia.org/ontology/gender_p1_Male> rdfs:label "son" .
+<http://dbpedia.org/ontology/parent_restrictedTo_domain_Things_with_http://dbpedia.org/ontology/gender_p1_Male> rdfs:label "son" .
+<http://dbpedia.org/ontology/garrison_restrictedTo_domain_http://dbpedia.org/ontology/PopulatedPlace> rdfs:label "based in" .
+<http://dbpedia.org/ontology/garrison_restrictedTo_domain_http://dbpedia.org/ontology/Building_or_http://dbpedia.org/ontology/Infrastructure> rdfs:label "based at" .
+<http://dbpedia.org/ontology/madgnitude> rdfs:label "magnitude" .
+<http://dbpedia.org/ontology/child_restrictedTo_domain_Things_with_http://dbpedia.org/ontology/gender_p1_Female> rdfs:label "mother" .
+<http://dbpedia.org/ontology/parent_restrictedTo_range_Things_with_http://dbpedia.org/ontology/gender_p1_Female> rdfs:label "mother" .
+<http://dbpedia.org/ontology/child_o_http://dbpedia.org/ontology/child_restrictedTo_domain_Things_with_http://dbpedia.org/ontology/gender_p1_Female> rdfs:label "grandmother" .
+<http://dbpedia.org/ontology/team_restrictedTo_domain_http://dbpedia.org/ontology/Cyclist_or_http://dbpedia.org/ontology/FormulaOneRacer_or_http://dbpedia.org/ontology/NascarDriver> rdfs:label "race for" .
+<http://dbpedia.org/ontology/tenant_restrictedTo_range_http://dbpedia.org/ontology/Event> rdfs:label "host" .
+<http://dbpedia.org/ontology/rector_restrictedTo_domain_http://dbpedia.org/ontology/School> rdfs:label "principal" .
+<http://dbpedia.org/ontology/genre_restrictedTo_domain_http://dbpedia.org/ontology/Writer> rdfs:label "write" .
+<http://dbpedia.org/ontology/leader_restrictedTo_range_Things_with_http://dbpedia.org/ontology/leaderTitle_p1_Governor> rdfs:label "governor" .
+<http://dbpedia.org/ontology/related_restrictedTo_domain_http://dbpedia.org/ontology/TelevisionShow> rdfs:label "spin-off" .
+<http://dbpedia.org/ontology/company_restrictedTo_domain_http://dbpedia.org/ontology/Canal> rdfs:label "build" .
+<http://dbpedia.org/ontology/birthPlace_o_http://dbpedia.org/ontology/country> rdfs:label "born in" .
+<http://dbpedia.org/ontology/completionDate_restrictedTo_domain_http://dbpedia.org/ontology/TelevisionShow> rdfs:label "air until" .
+<http://dbpedia.org/ontology/nationality_restrictedTo_range_http://dbpedia.org/ontology/Place> rdfs:label "come from" .
+<http://dbpedia.org/ontology/artist_restrictedTo_domain_http://dbpedia.org/ontology/Album_or_http://dbpedia.org/ontology/Song> rdfs:label "interpreter of" .
+<http://dbpedia.org/ontology/nationality_restrictedTo_range_http://dbpedia.org/ontology/Country> rdfs:label "home country" .
+<http://dbpedia.org/ontology/routeEnd_restrictedTo_range_http://dbpedia.org/ontology/PopulatedPlace> rdfs:label "end in" .
+<http://dbpedia.org/ontology/routeEnd_restrictedTo_range_http://dbpedia.org/ontology/Road> rdfs:label "end at" .
+<http://dbpedia.org/ontology/ground_restrictedTo_domain_http://dbpedia.org/ontology/PopulatedPlace> rdfs:label "based in" .
+<http://dbpedia.org/ontology/routeStart_restrictedTo_range_http://dbpedia.org/ontology/PopulatedPlace> rdfs:label "begin in" .
+<http://dbpedia.org/ontology/routeStart_restrictedTo_range_http://dbpedia.org/ontology/Road> rdfs:label "begin at" .
+<http://dbpedia.org/ontology/child_o_http://dbpedia.org/ontology/child_restrictedTo_domain_Things_with_http://dbpedia.org/ontology/gender_p1_Male> rdfs:label "grandfather" .
+<http://dbpedia.org/ontology/child_o_http://dbpedia.org/ontology/child_restrictedTo_range_Things_with_http://dbpedia.org/ontology/gender_p1_Male> rdfs:label "grandson" .
+<http://dbpedia.org/ontology/owningOrganization> rdfs:label "own" .
+<http://dbpedia.org/ontology/origin_restrictedTo_domain_http://dbpedia.org/ontology/Stream> rdfs:label "originate in" .
+<http://dbpedia.org/ontology/genre_restrictedTo_range_http://dbpedia.org/ontology/MusicGenre> rdfs:label "make" .
+<http://dbpedia.org/ontology/child_o_http://dbpedia.org/ontology/child_restrictedTo_range_Things_with_http://dbpedia.org/ontology/gender_p1_Female> rdfs:label "granddaughter" .
+<http://dbpedia.org/ontology/child_restrictedTo_domain_Things_with_http://dbpedia.org/ontology/gender_p1_Male> rdfs:label "father" .
+<http://dbpedia.org/ontology/parent_restrictedTo_range_Things_with_http://dbpedia.org/ontology/gender_p1_Male> rdfs:label "father" .
+<http://dbpedia.org/ontology/leader_restrictedTo_range_Things_with_http://dbpedia.org/ontology/leaderTitle_p1_Mayor> rdfs:label "mayor" .
