@@ -2,7 +2,7 @@ package org.aksw.hawk.experiment;
 
 import java.util.List;
 
-import org.aksw.autosparql.commons.qald.Qald4HybridLoader;
+import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.hawk.controller.PipelineController;
@@ -22,7 +22,7 @@ public class AllSpotterOnQALD4 {
 	public static void main(String args[]) {
 
 		String dataset = ClassLoader.getSystemResource("qald-4_hybrid_train.xml").getFile();
-		Qald4HybridLoader datasetLoader = new Qald4HybridLoader();
+		QALD_Loader datasetLoader = new QALD_Loader();
 
 		List<Question> questions = datasetLoader.load(dataset);
 		for (Question q : questions) {

@@ -40,7 +40,7 @@ public class SentenceToSequence {
 				}
 				subsequence = Lists.newArrayList();
 			}
-			// do not combine NN and NNP+,e.g., the opera Madame Butterfly
+			// do not combine NN and NNP+, e.g., the opera Madame Butterfly
 			else if (!subsequence.isEmpty() && null != pos(token, q) && null != pos(list.get(tcounter - 1), q) && pos(list.get(tcounter - 1), q).matches("NN(S)?") && pos(token, q).matches("NNP(S)?")) {
 				if (subsequence.size() > 2) {
 					transformTree(subsequence, q);
@@ -69,6 +69,10 @@ public class SentenceToSequence {
 	private void transformTree(List<String> subsequence, Question q) {
 		String newLabel = Joiner.on(" ").join(subsequence);
 		MutableTreeNode top = findTopMostNode(q.tree.getRoot(), subsequence);
+		//if top node equals null the target subsequence is not in one dependence subtree and thus will not be joined together
+		if(top==null){
+			return;
+		}
 		for (String sub : subsequence) {
 			Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
 			queue.add(q.tree.getRoot());
@@ -95,8 +99,10 @@ public class SentenceToSequence {
 		while (!queue.isEmpty()) {
 			MutableTreeNode tmp = queue.poll();
 			for (String token : tokenSet) {
-				if (token.equals(tmp.label) && subTreeContainsOtherToken(tmp, tokenSet)) {
-					return tmp;
+				if (token.equals(tmp.label)) {
+					if (subTreeContainsOtherToken(tmp, tokenSet)) {
+						return tmp;
+					}
 				}
 			}
 			for (MutableTreeNode n : tmp.getChildren()) {

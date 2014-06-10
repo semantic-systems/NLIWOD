@@ -22,13 +22,13 @@ import org.xml.sax.SAXException;
 /**
  *
  */
-public class Qald4HybridLoader {
+public class QALD_Loader {
 
 	public static void main(String[] args) {
 
-		URL resource = Qald4HybridLoader.class.getClassLoader().getResource("qald-4_hybrid_train.xml");
+		URL resource = QALD_Loader.class.getClassLoader().getResource("qald-4_hybrid_train.xml");
 		String file = resource.getFile();
-		Qald4HybridLoader ql = new Qald4HybridLoader();
+		QALD_Loader ql = new QALD_Loader();
 		for (Question q : ql.load(file)) {
 			System.out.println(q.languageToQuestion);
 			System.out.println("\tAnswers: " + StringUtils.join(q.goldenAnswers, ", "));

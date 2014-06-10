@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
-import org.aksw.autosparql.commons.qald.Qald4HybridLoader;
+import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.module.Fulltexter;
 import org.aksw.hawk.module.ModuleBuilder;
@@ -25,7 +25,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 public class PipelineShortRecall {
 	static Logger log = LoggerFactory.getLogger(PipelineShortRecall.class);
 	String dataset;
-	Qald4HybridLoader datasetLoader;
+	QALD_Loader datasetLoader;
 	ASpotter nerdModule;
 	CachedParseTree cParseTree;
 	ModuleBuilder moduleBuilder;

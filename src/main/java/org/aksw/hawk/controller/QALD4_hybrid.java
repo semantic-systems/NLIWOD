@@ -3,7 +3,7 @@ package org.aksw.hawk.controller;
 import java.io.File;
 import java.io.IOException;
 
-import org.aksw.autosparql.commons.qald.Qald4HybridLoader;
+import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.hawk.module.ModuleBuilder;
 import org.aksw.hawk.module.PseudoQueryBuilder;
 import org.aksw.hawk.module.SystemAnswerer;
@@ -25,7 +25,7 @@ public class QALD4_hybrid {
 		log.info("Configuring controller");
 
 		controller.dataset = new File(args[0]).getAbsolutePath();
-		controller.datasetLoader = new Qald4HybridLoader();
+		controller.datasetLoader = new QALD_Loader();
 		controller.nerdModule = new Fox();
 		controller.cParseTree = new CachedParseTree();
 		controller.sentenceToSequence = new SentenceToSequence();

@@ -35,7 +35,7 @@ public class QALD4_EvaluationUtils {
 					}
 				}
 			} else {
-				log.error("Unsupported Query Type" + question);
+				log.error("Unsupported Query Type" + question.pseudoSparqlQuery);
 			}
 		} else {
 			if (isSelectType(question.sparqlQuery)) {
@@ -52,7 +52,7 @@ public class QALD4_EvaluationUtils {
 					}
 				}
 			} else {
-				log.error("Unsupported Query Type" + question);
+				log.error("Unsupported Query Type" + question.sparqlQuery);
 			}
 		}
 		return precision;
@@ -78,7 +78,7 @@ public class QALD4_EvaluationUtils {
 				// if queries are ASK queries return recall=1
 				recall = 1;
 			} else {
-				log.error("Unsupported Query Type" + question);
+				log.error("Unsupported Query Type" + question.pseudoSparqlQuery);
 			}
 		} else {
 			if (isSelectType(question.sparqlQuery)) {
@@ -94,7 +94,7 @@ public class QALD4_EvaluationUtils {
 				// if queries are ASK queries return recall=1
 				recall = 1;
 			} else {
-				log.error("Unsupported Query Type" + question);
+				log.error("Unsupported Query Type" + question.sparqlQuery);
 			}
 		}
 		return recall;
