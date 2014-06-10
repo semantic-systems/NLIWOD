@@ -16,8 +16,8 @@ import org.aksw.hawk.pruner.QueryVariableHomomorphPruner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class QALD4_hybrid {
-	static Logger log = LoggerFactory.getLogger(QALD4_hybrid.class);
+public class QALD4_long {
+	static Logger log = LoggerFactory.getLogger(QALD4_long.class);
 
 	public static void main(String args[]) throws IOException {
 		PipelineController controller = new PipelineController();
