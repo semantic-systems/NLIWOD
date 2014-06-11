@@ -69,13 +69,15 @@ public class SentenceToSequence {
 	private void transformTree(List<String> subsequence, Question q) {
 		String newLabel = Joiner.on(" ").join(subsequence);
 		MutableTreeNode top = findTopMostNode(q.tree.getRoot(), subsequence);
-		//if top node equals null the target subsequence is not in one dependence subtree and thus will not be joined together
-		if(top==null){
+		// if top node equals null the target subsequence is not in one
+		// dependence subtree and thus will not be joined together
+		if (top == null) {
 			return;
 		}
 		for (String sub : subsequence) {
 			Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
 			queue.add(q.tree.getRoot());
+			// delete unnecessary sub nodes
 			while (!queue.isEmpty()) {
 				MutableTreeNode tmp = queue.poll();
 				if (tmp.label.equals(sub) && !tmp.equals(top)) {

@@ -32,6 +32,9 @@ public class MutableTree implements Serializable {
 			MutableTreeNode parent = target.parent;
 			List<MutableTreeNode> parentsChildren = parent.children;
 			parentsChildren.addAll(children);
+			for(MutableTreeNode grandchild: children){
+				grandchild.parent=parent;
+			}
 			parentsChildren.remove(target);
 			return true;
 		}
