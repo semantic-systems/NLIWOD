@@ -54,7 +54,7 @@ public class QALD_Loader {
 				Element questionNode = (Element) questionNodes.item(i);
 
 				question.id = Integer.valueOf(questionNode.getAttribute("id"));
-				question.answerType = questionNode.getAttribute("answerType");
+				question.answerType = questionNode.getAttribute("answertype");
 				question.aggregation = Boolean.valueOf(questionNode.getAttribute("aggregation"));
 				question.onlydbo = Boolean.valueOf(questionNode.getAttribute("onlydbo"));
 

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.autosparql.commons.qald.Question;
@@ -47,42 +48,56 @@ public class PipelineShortRecall {
 		double counter = 0;
 
 		for (Question q : questions) {
-			log.info("->" + q.languageToQuestion);
-			// 2. Disambiguate parts of the query
-			q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
+			// by now only work on resource questions
+			// TODO sort out ASK questions.
+			if (q.answerType.equals("resource") && isSELECTquery(q.pseudoSparqlQuery, q.sparqlQuery)) {
+				log.info("->" + q.languageToQuestion);
+				// 2. Disambiguate parts of the query
+				q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
 
-			// 3. Build trees from questions and cache them
-			q.tree = cParseTree.process(q);
-			// noun combiner, so the number of nodes in the DEPTree decreases
-			sentenceToSequence.combineSequences(q);
+				// 3. Build trees from questions and cache them
+				q.tree = cParseTree.process(q);
+				// noun combiner, so the number of nodes in the DEPTree
+				// decreases
+				sentenceToSequence.combineSequences(q);
 
-			// 4. Apply pruning rules
-			q.tree = pruner.prune(q);
-//			log.info(q.tree.toString());
+				// 4. Apply pruning rules
+				q.tree = pruner.prune(q);
+				// log.info(q.tree.toString());
 
-			HashMap<String, Set<RDFNode>> answer = fulltexter.fulltext(q);
-			for (String key : answer.keySet()) {
-				Set<RDFNode> systemAnswers = answer.get(key);
-//				log.info("NUMBER of answers : " + systemAnswers.size());
-				// for (RDFNode rdf : systemAnswers) {
-				// log.info(rdf.asResource().getURI());
-				// }
-				// 11. Compare to set of resources from
-				// benchmark
-				double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
-				double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-				double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-				if (fMeasure > 0) {
-					log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
-					overallf += fMeasure;
-					overallp += precision;
-					overallr += recall;
-					counter++;
+				HashMap<String, Set<RDFNode>> answer = fulltexter.fulltext(q);
+				for (String key : answer.keySet()) {
+					Set<RDFNode> systemAnswers = answer.get(key);
+					// log.info("NUMBER of answers : " + systemAnswers.size());
+					// for (RDFNode rdf : systemAnswers) {
+					// log.info(rdf.asResource().getURI());
+					// }
+					// 11. Compare to set of resources from
+					// benchmark
+					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+					if (fMeasure > 0) {
+						log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+						overallf += fMeasure;
+						overallp += precision;
+						overallr += recall;
+						counter++;
+					}
 				}
+				// break;
 			}
-			// break;
 		}
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter);
+	}
+
+	private boolean isSELECTquery(String pseudoSparqlQuery, String sparqlQuery) {
+		if (pseudoSparqlQuery != null) {
+			return pseudoSparqlQuery.contains("\nSELECT\n") || pseudoSparqlQuery.contains("SELECT ");
+		} else if (sparqlQuery != null) {
+			return sparqlQuery.contains("\nSELECT\n") || sparqlQuery.contains("SELECT ");
+		}
+		return false;
 	}
 
 }
