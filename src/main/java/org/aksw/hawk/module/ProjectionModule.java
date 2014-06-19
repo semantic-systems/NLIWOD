@@ -13,7 +13,7 @@ public class ProjectionModule extends Module {
 	// TODO old module, either delete or refactor, not used by now (end of april
 	// 14)
 	public ProjectionModule(MutableTreeNode type) {
-		String dboTerm = dboIndex.search(type.label);
+		String dboTerm = dboIndex.search(type.label).get(0);;
 		log.debug("DBOTerm: " + dboTerm);
 
 		if (dboTerm != null) {

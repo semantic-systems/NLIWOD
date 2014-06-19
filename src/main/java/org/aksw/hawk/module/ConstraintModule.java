@@ -12,7 +12,7 @@ public class ConstraintModule extends Module {
 		wc.o = constraintObject.label;
 		statementList.add(wc);
 
-		String dboTerm = dboIndex.search(constraintPredicate.label);
+		String dboTerm = dboIndex.search(constraintPredicate.label).get(0);
 		log.debug("DBOTerm: " + dboTerm);
 
 		if (dboTerm != null) {

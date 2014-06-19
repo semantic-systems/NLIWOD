@@ -2,9 +2,9 @@ package org.aksw.hawk.index;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
+import org.apache.jena.riot.RDFDataMgr;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field.Store;
@@ -14,33 +14,30 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.queryparser.classic.QueryParserBase;
+import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
+import org.apache.lucene.util.automaton.LevenshteinAutomata;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
-public class DBOIndex {
+public class IndexDBO_classes {
 
 	private static final Version LUCENE_VERSION = Version.LUCENE_46;
-	private org.slf4j.Logger log = LoggerFactory.getLogger(DBOIndex.class);
+	private org.slf4j.Logger log = LoggerFactory.getLogger(IndexDBO_classes.class);
 	public String FIELD_NAME_SUBJECT = "subject";
 	public String FIELD_NAME_PREDICATE = "predicate";
 	public String FIELD_NAME_OBJECT = "object";
@@ -52,9 +49,9 @@ public class DBOIndex {
 	private IndexWriter iwriter;
 	private SimpleAnalyzer analyzer;
 
-	public DBOIndex() {
+	public IndexDBO_classes() {
 		try {
-			File index = new File("resources/indexOntology");
+			File index = new File("resources/ontologyClasses");
 			analyzer = new SimpleAnalyzer(LUCENE_VERSION);
 			if (!index.exists()) {
 				index.mkdir();
@@ -73,14 +70,11 @@ public class DBOIndex {
 	}
 
 	public ArrayList<String> search(String object) {
-		ArrayList<String> uris= Lists.newArrayList();
+	ArrayList<String> uris= Lists.newArrayList();
 		try {
 			log.debug("\t start asking index...");
 
-//			QueryParser parser = new QueryParser(LUCENE_VERSION, FIELD_NAME_OBJECT, analyzer);
-//			parser.setDefaultOperator(QueryParser.Operator.OR);
-//			Query q = parser.parse(QueryParserBase.escape(object));
-			TermQuery q = new TermQuery(new Term(FIELD_NAME_OBJECT, object));
+			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object),LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE);   
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
 
 			isearcher.search(q, collector);
@@ -108,23 +102,12 @@ public class DBOIndex {
 
 	private void index() {
 		try {
-			Model dbpedia = ModelFactory.createDefaultModel();
-			InputStream url = ClassLoader.getSystemResourceAsStream("dbpedia_3.9.owl");
-			dbpedia.read(url, "RDF/XML");
-			StmtIterator stmts = dbpedia.listStatements(null, RDFS.label, (RDFNode) null);
+			Model model = RDFDataMgr.loadModel("resources/dbpedia_3Eng_class.ttl") ;
+			StmtIterator stmts = model.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();
 				RDFNode label = stmt.getObject();
-				if (label.asLiteral().getLanguage().equals("en")) {
-					addDocumentToIndex(stmt.getSubject(), "rdfs:label", label.asLiteral());
-					NodeIterator comment = dbpedia.listObjectsOfProperty(stmt.getSubject(), RDFS.comment);
-					while (comment.hasNext()) {
-						RDFNode next = comment.next();
-						if (next.asLiteral().getLanguage().equals("en")) {
-							addDocumentToIndex(stmt.getSubject(), "rdfs:comment", next);
-						}
-					}
-				}
+				addDocumentToIndex(stmt.getSubject(), "rdfs:label", label.asLiteral());
 			}
 
 			iwriter.commit();
@@ -143,9 +126,8 @@ public class DBOIndex {
 	}
 
 	public static void main(String args[]) {
-		DBOIndex index = new DBOIndex();
-		//TODO compose findet nicht music composer label
-		System.out.println(Joiner.on("\t").join(index.search("composer")));
+		IndexDBO_classes index = new IndexDBO_classes();
+		System.out.println(Joiner.on("\n").join(index.search("city")));
 
 	}
 }

@@ -6,7 +6,7 @@ public class ProjectionConstraintModule extends Module {
 
 	public ProjectionConstraintModule(MutableTreeNode mutableTreeNode) {
 		// TODO make the BGP depend on the rdf:type of the projection variable
-		String dboTerm = dboIndex.search(mutableTreeNode.label);
+		String dboTerm = dboIndex.search(mutableTreeNode.label).get(0);
 		log.debug("DBOTerm: " + dboTerm);
 		if (dboTerm != null) {
 			WhereClause wc = new WhereClause();

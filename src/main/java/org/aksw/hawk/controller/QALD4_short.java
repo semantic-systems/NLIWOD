@@ -22,7 +22,7 @@ public class QALD4_short {
 
 	public static void main(String args[]) throws IOException {
 
-		for (String file : new String[] { "resources/qald-4_hybrid_train.xml", "resources/qald-4_multilingual_train_withanswers.xml" }) {
+		for (String file : new String[] { "resources/qald-4_hybrid_train.xml"}) { // ,"resources/qald-4_multilingual_train_withanswers.xml" 
 			PipelineShortRecall controller = new PipelineShortRecall();
 
 			log.info("Configuring controller");

@@ -26,7 +26,7 @@ public class SimpleModule extends Module {
 		// TODO if label which can be URI is not promising use string label
 		WhereClause wc = null;
 		if (predicate.equals(RDF.type.getURI())) {
-			String dboTerm = dboIndex.search(object);
+			String dboTerm = dboIndex.search(object).get(0);;
 			if (dboTerm != null) {
 				wc = new WhereClause(subject, predicate, dboTerm);
 				String superClass = superClassOf(dboTerm);
@@ -42,7 +42,7 @@ public class SimpleModule extends Module {
 			// noun
 			wc = new WhereClause(subject, predicate, object);
 		} else {
-			String dboTerm = dboIndex.search(predicate);
+			String dboTerm = dboIndex.search(predicate).get(0);;
 			if (dboTerm != null) {
 				wc = new WhereClause(subject, dboTerm, object);
 			} else {

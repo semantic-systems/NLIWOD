@@ -22,6 +22,7 @@ import com.clearnlp.tokenization.AbstractTokenizer;
  * 
  */
 public class ParseTree {
+	//TODO find the point where the performance is lost here
 	Logger log = LoggerFactory.getLogger(ParseTree.class);
 
 	final String language = AbstractReader.LANG_EN;
