@@ -17,5 +17,7 @@ spotterCache
 src/main/resources/hawk.properties
 indexAbstract/
 indexOntology/
+resources/ontologyClasses/
+resources/ontologyProperties/
 trees.html
 log.out
