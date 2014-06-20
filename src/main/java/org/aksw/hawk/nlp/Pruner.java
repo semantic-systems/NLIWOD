@@ -93,9 +93,6 @@ public class Pruner {
 	 * @param q
 	 */
 	private void removalRules(Question q) {
-		if (q.languageToQuestion.get("en").contains("award")) {
-			System.out.println();
-		}
 		MutableTreeNode root = q.tree.getRoot();
 		for (String posTag : Lists.newArrayList(".", "WDT", "POS", "WP", "WRB", "WP\\$", "PRP\\$", "PRP", "DT", "IN", "PDT")) {
 			Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
