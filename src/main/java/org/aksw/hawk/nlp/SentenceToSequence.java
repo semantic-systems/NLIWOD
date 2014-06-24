@@ -22,7 +22,6 @@ public class SentenceToSequence {
 	// combine noun phrases
 	// TODO improve noun phrases e.g. combine following nulls, i.e., URLs to get
 	// early life of Jane Austin instead of early life
-	// improve upon "first known photographer of snowflakes"
 	public void combineSequences(Question q) {
 		String question = q.languageToQuestion.get("en");
 		EnglishTokenizer tok = new EnglishTokenizer();
@@ -37,7 +36,7 @@ public class SentenceToSequence {
 			// look for start "RB|JJ|NN(.)*"
 			if (subsequence.isEmpty() && null != pos && pos.matches("RB|JJ|NN(.)*")) {
 				subsequence.add(token);
-			}  
+			}
 			// split "of the" or "of all" via pos_i=IN and pos_i+1=DT
 			else if (!subsequence.isEmpty() && null != pos && tcounter + 1 < list.size() && null != pos(list.get(tcounter + 1), q) && pos.matches("IN") && pos(list.get(tcounter + 1), q).matches("(W)?DT")) {
 				if (subsequence.size() >= 2) {
@@ -45,15 +44,17 @@ public class SentenceToSequence {
 				}
 				subsequence = Lists.newArrayList();
 			}
-			// do not combine NNS and NNPS but combine  "stage name", "British Prime minister"
+			// do not combine NNS and NNPS but combine "stage name",
+			// "British Prime minister"
 			else if (!subsequence.isEmpty() && null != pos && null != pos(list.get(tcounter - 1), q) && pos(list.get(tcounter - 1), q).matches("NNS") && pos.matches("NNP(S)?")) {
 				if (subsequence.size() > 2) {
 					transformTree(subsequence, q);
 				}
 				subsequence = Lists.newArrayList();
 			}
-			// finish via VB* or IN -> null or IN -> DT or WDT (now a that or which follows)
-			else if (!subsequence.isEmpty() &&!pos(list.get(tcounter - 1), q).matches("JJ")&&(null == pos ||  pos.matches("VB(.)*|\\.|WDT") || (pos.matches("IN") && pos(list.get(tcounter + 1), q) == null) || (pos.matches("IN") && pos(list.get(tcounter + 1), q).matches("DT")))) {
+			// finish via VB* or IN -> null or IN -> DT or WDT (now a that or
+			// which follows)
+			else if (!subsequence.isEmpty() && !pos(list.get(tcounter - 1), q).matches("JJ") && (null == pos || pos.matches("VB(.)*|\\.|WDT") || (pos.matches("IN") && pos(list.get(tcounter + 1), q) == null) || (pos.matches("IN") && pos(list.get(tcounter + 1), q).matches("DT")))) {
 				// more than one token, so summarizing makes sense
 				if (subsequence.size() > 1) {
 					transformTree(subsequence, q);
@@ -67,10 +68,6 @@ public class SentenceToSequence {
 				subsequence = Lists.newArrayList();
 			}
 		}
-		
-		
-		
-
 	}
 
 	private void transformTree(List<String> subsequence, Question q) {
