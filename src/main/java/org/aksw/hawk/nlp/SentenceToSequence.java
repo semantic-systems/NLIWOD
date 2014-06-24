@@ -27,9 +27,6 @@ public class SentenceToSequence {
 		EnglishTokenizer tok = new EnglishTokenizer();
 		List<String> list = tok.getTokens(question);
 		List<String> subsequence = Lists.newArrayList();
-		if (q.languageToQuestion.get("en").contains("snowflakes")) {
-			System.out.println();
-		}
 		for (int tcounter = 0; tcounter < list.size(); tcounter++) {
 			String token = list.get(tcounter);
 			String pos = pos(token, q);

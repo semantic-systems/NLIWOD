@@ -86,7 +86,7 @@ public class IndexDBO_classes {
 			}
 			log.debug("\t finished asking index...");
 		} catch (Exception e) {
-			log.error(e.getLocalizedMessage() + " -> " + object);
+			log.error(e.getLocalizedMessage() + " -> " + object,e);
 		}
 		return uris;
 	}
