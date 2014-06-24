@@ -20,39 +20,40 @@ public class SentenceToSequence {
 	DBAbstractsIndex index = new DBAbstractsIndex();
 
 	// combine noun phrases
-	// TODO improve nounphrases e.g. combine following nulls, i.e., URLs to get
+	// TODO improve noun phrases e.g. combine following nulls, i.e., URLs to get
 	// early life of Jane Austin instead of early life
-	// improve upon "stage name", "first known photographer of snowflakes", "British Prime minister"
+	// improve upon "first known photographer of snowflakes"
 	public void combineSequences(Question q) {
 		String question = q.languageToQuestion.get("en");
 		EnglishTokenizer tok = new EnglishTokenizer();
 		List<String> list = tok.getTokens(question);
 		List<String> subsequence = Lists.newArrayList();
-		if (q.languageToQuestion.get("en").contains("African")) {
+		if (q.languageToQuestion.get("en").contains("snowflakes")) {
 			System.out.println();
 		}
 		for (int tcounter = 0; tcounter < list.size(); tcounter++) {
 			String token = list.get(tcounter);
+			String pos = pos(token, q);
 			// look for start "RB|JJ|NN(.)*"
-			if (subsequence.isEmpty() && null != pos(token, q) && pos(token, q).matches("RB|JJ|NN(.)*")) {
+			if (subsequence.isEmpty() && null != pos && pos.matches("RB|JJ|NN(.)*")) {
 				subsequence.add(token);
 			}  
 			// split "of the" or "of all" via pos_i=IN and pos_i+1=DT
-			else if (!subsequence.isEmpty() && null != pos(token, q) && tcounter + 1 < list.size() && null != pos(list.get(tcounter + 1), q) && pos(token, q).matches("IN") && pos(list.get(tcounter + 1), q).matches("DT")) {
+			else if (!subsequence.isEmpty() && null != pos && tcounter + 1 < list.size() && null != pos(list.get(tcounter + 1), q) && pos.matches("IN") && pos(list.get(tcounter + 1), q).matches("(W)?DT")) {
 				if (subsequence.size() >= 2) {
 					transformTree(subsequence, q);
 				}
 				subsequence = Lists.newArrayList();
 			}
-			// do not combine NN and NNP+, e.g., the opera Madame Butterfly
-			else if (!subsequence.isEmpty() && null != pos(token, q) && null != pos(list.get(tcounter - 1), q) && pos(list.get(tcounter - 1), q).matches("NNS") && pos(token, q).matches("NNP(S)?")) {
+			// do not combine NNS and NNPS but combine  "stage name", "British Prime minister"
+			else if (!subsequence.isEmpty() && null != pos && null != pos(list.get(tcounter - 1), q) && pos(list.get(tcounter - 1), q).matches("NNS") && pos.matches("NNP(S)?")) {
 				if (subsequence.size() > 2) {
 					transformTree(subsequence, q);
 				}
 				subsequence = Lists.newArrayList();
 			}
-			// finish via VB* or IN -> null or IN -> DT
-			else if (!subsequence.isEmpty() && (null == pos(token, q) || pos(token, q).matches("VB(.)*|\\.") || (pos(token, q).matches("IN") && pos(list.get(tcounter + 1), q) == null) || (pos(token, q).matches("IN") && pos(list.get(tcounter + 1), q).matches("DT")))) {
+			// finish via VB* or IN -> null or IN -> DT or WDT (now a that or which follows)
+			else if (!subsequence.isEmpty() &&!pos(list.get(tcounter - 1), q).matches("JJ")&&(null == pos ||  pos.matches("VB(.)*|\\.|WDT") || (pos.matches("IN") && pos(list.get(tcounter + 1), q) == null) || (pos.matches("IN") && pos(list.get(tcounter + 1), q).matches("DT")))) {
 				// more than one token, so summarizing makes sense
 				if (subsequence.size() > 1) {
 					transformTree(subsequence, q);
@@ -60,7 +61,7 @@ public class SentenceToSequence {
 				subsequence = Lists.newArrayList();
 			}
 			// continue via "NN(.)*|RB|CD|CC|JJ|DT|IN|PRP|HYPH"
-			else if (!subsequence.isEmpty() && null != pos(token, q) && pos(token, q).matches("NN(.)*|RB|CD|CC|JJ|DT|IN|PRP|HYPH")) {
+			else if (!subsequence.isEmpty() && null != pos && pos.matches("NN(.)*|RB|CD|CC|JJ|DT|IN|PRP|HYPH|VBN")) {
 				subsequence.add(token);
 			} else {
 				subsequence = Lists.newArrayList();
