@@ -19,16 +19,18 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 	private boolean used = false;
 	private transient TextInBox TextNode;
 	private ArrayList<ResourceImpl> annotations = new ArrayList<>();
+	public String lemma;
 
 	public MutableTreeNode() {
 	}
 
-	public MutableTreeNode(String label, String posTag, String depLabel, MutableTreeNode parent, int i) {
+	public MutableTreeNode(String label, String posTag, String depLabel, MutableTreeNode parent, int i, String lemma) {
 		this.label = label;
 		this.posTag = posTag;
 		this.parent = parent;
 		this.depLabel = depLabel;
 		this.nodeNumber = i;
+		this.lemma = lemma;
 	}
 
 	public void addChild(MutableTreeNode newNode) {

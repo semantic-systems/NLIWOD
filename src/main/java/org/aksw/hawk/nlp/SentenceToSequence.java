@@ -22,26 +22,30 @@ public class SentenceToSequence {
 	// combine noun phrases
 	// TODO improve nounphrases e.g. combine following nulls, i.e., URLs to get
 	// early life of Jane Austin instead of early life
+	// improve upon "stage name", "first known photographer of snowflakes", "British Prime minister"
 	public void combineSequences(Question q) {
 		String question = q.languageToQuestion.get("en");
 		EnglishTokenizer tok = new EnglishTokenizer();
 		List<String> list = tok.getTokens(question);
 		List<String> subsequence = Lists.newArrayList();
+		if (q.languageToQuestion.get("en").contains("African")) {
+			System.out.println();
+		}
 		for (int tcounter = 0; tcounter < list.size(); tcounter++) {
 			String token = list.get(tcounter);
 			// look for start "RB|JJ|NN(.)*"
 			if (subsequence.isEmpty() && null != pos(token, q) && pos(token, q).matches("RB|JJ|NN(.)*")) {
 				subsequence.add(token);
-			}
+			}  
 			// split "of the" or "of all" via pos_i=IN and pos_i+1=DT
 			else if (!subsequence.isEmpty() && null != pos(token, q) && tcounter + 1 < list.size() && null != pos(list.get(tcounter + 1), q) && pos(token, q).matches("IN") && pos(list.get(tcounter + 1), q).matches("DT")) {
-				if (subsequence.size() > 2) {
+				if (subsequence.size() >= 2) {
 					transformTree(subsequence, q);
 				}
 				subsequence = Lists.newArrayList();
 			}
 			// do not combine NN and NNP+, e.g., the opera Madame Butterfly
-			else if (!subsequence.isEmpty() && null != pos(token, q) && null != pos(list.get(tcounter - 1), q) && pos(list.get(tcounter - 1), q).matches("NN(S)?") && pos(token, q).matches("NNP(S)?")) {
+			else if (!subsequence.isEmpty() && null != pos(token, q) && null != pos(list.get(tcounter - 1), q) && pos(list.get(tcounter - 1), q).matches("NNS") && pos(token, q).matches("NNP(S)?")) {
 				if (subsequence.size() > 2) {
 					transformTree(subsequence, q);
 				}
@@ -61,8 +65,10 @@ public class SentenceToSequence {
 			} else {
 				subsequence = Lists.newArrayList();
 			}
-
 		}
+		
+		
+		
 
 	}
 

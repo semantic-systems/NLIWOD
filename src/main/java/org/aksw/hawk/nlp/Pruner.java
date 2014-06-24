@@ -87,14 +87,15 @@ public class Pruner {
 	}
 
 	/**
-	 * removes: * punctuations (.) * wh- words(WDT|WP|WRB|WP$) * PRP($) * DT *
+	 * removes: * punctuations (.) * wh- words(WDT|WP$) * PRP($) * DT *
 	 * BY and IN (possessive) pronouns * PDT predeterminer all both
 	 * 
+	 * Who,Where WP|WRB stays in
 	 * @param q
 	 */
 	private void removalRules(Question q) {
 		MutableTreeNode root = q.tree.getRoot();
-		for (String posTag : Lists.newArrayList(".", "WDT", "POS", "WP", "WRB", "WP\\$", "PRP\\$", "PRP", "DT", "IN", "PDT")) {
+		for (String posTag : Lists.newArrayList(".", "WDT", "POS",  "WP\\$", "PRP\\$", "PRP", "DT", "IN", "PDT")) {
 			Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
 			queue.add(root);
 			while (!queue.isEmpty()) {

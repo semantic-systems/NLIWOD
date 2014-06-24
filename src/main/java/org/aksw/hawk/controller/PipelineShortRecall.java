@@ -12,6 +12,7 @@ import org.aksw.hawk.module.Fulltexter;
 import org.aksw.hawk.module.ModuleBuilder;
 import org.aksw.hawk.module.PseudoQueryBuilder;
 import org.aksw.hawk.module.SystemAnswerer;
+import org.aksw.hawk.nlp.Annotater;
 import org.aksw.hawk.nlp.Pruner;
 import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.hawk.nlp.spotter.ASpotter;
@@ -65,6 +66,7 @@ public class PipelineShortRecall {
 				q.tree = pruner.prune(q);
 				log.info(q.languageToQuestion.get("en"));
 				annotater.annotateTree(q);
+				log.info(q.tree.toString());
 				Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 				// fulltexter.fulltext(q);
 				for (String key : answer.keySet()) {

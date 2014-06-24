@@ -1,4 +1,4 @@
-package org.aksw.hawk.controller;
+package org.aksw.hawk.nlp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class Annotater {
 		Stack<MutableTreeNode> stack = new Stack<>();
 		MutableTree tree = q.tree;
 		stack.push(tree.getRoot().getChildren().get(0));
-		log.debug(q.tree.toString());
+		
 		while (!stack.isEmpty()) {
 			MutableTreeNode tmp = stack.pop();
 			String label = tmp.label;
@@ -33,7 +33,7 @@ public class Annotater {
 
 			// only one projection variable node
 			if (tmp.children.size() == 0) {
-				if (posTag.equals("W(.)*")) {
+				if (posTag.matches("WRB|WP")) {
 					// gives only hints towards the type of projection variable
 					if (label.equals("Where")) {
 						tmp.addAnnotation(new ResourceImpl("http://dbpedia.org/ontology/Place"));
@@ -48,6 +48,11 @@ public class Annotater {
 					}
 				} else if (posTag.matches("NN(.)*")) {
 					// DBO look up
+					if (posTag.matches("NNS")){
+						//TODO improve lemmatization. e.g., birds->bird
+						if(tmp.lemma!=null)
+						label = tmp.lemma;
+					}
 					if (classesIndex.search(label).size() > 0) {
 						ArrayList<String> uris = classesIndex.search(label);
 						for (String resourceURL : uris) {
@@ -65,6 +70,7 @@ public class Annotater {
 				// imperative word queries like "List .." or "Give me.." do have
 				// parse trees where the root is a NN(.)*
 				if (posTag.matches("NN(.)*")) {
+					//TODO ask actress also in dbo owl
 					if (classesIndex.search(label).size() > 0) {
 						ArrayList<String> uris = classesIndex.search(label);
 						for (String resourceURL : uris) {
