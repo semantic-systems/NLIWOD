@@ -275,28 +275,21 @@
 <http://dbpedia.org/ontology/related_restrictedTo_domain_http://dbpedia.org/ontology/EthnicGroup> <http://www.w3.org/2000/01/rdf-schema#label> "related to" .
 <http://dbpedia.org/ontology/series_restrictedTo_domain_http://dbpedia.org/ontology/TelevisionEpisode> <http://www.w3.org/2000/01/rdf-schema#label> "episode of" .
 <http://dbpedia.org/ontology/tenant_restrictedTo_range_http://dbpedia.org/ontology/Organisation> <http://www.w3.org/2000/01/rdf-schema#label> "play in" .
-<http://dbpedia.org/ontology/team_restrictedTo_domain_http://dbpedia.org/ontology/SoccerPlayer_or_http://dbpedia.org/ontology/BaseballPlayer_or_http://dbpedia.org/ontology/IceHockeyPlayer_or_http://dbpedia.org/ontology/BasketballPlayer_or_http://dbpedia.org/ontology/AmericanFootballPlayer_or_http://dbpedia.org/ontology/GridironFootballPlayer_or_http://dbpedia.org/ontology/CanadianFootballPlayer_or_http://dbpedia.org/ontology/TennisPlayer_or_http://dbpedia.org/ontology/GolfPlayer_or_http://dbpedia.org/ontology/BadmintonPlayer_or_http://dbpedia.org/ontology/RugbyPlayer_or_http://dbpedia.org/ontology/PokerPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "play for" .
 <http://dbpedia.org/ontology/cinematographer> <http://www.w3.org/2000/01/rdf-schema#label> "shoot" .
 <http://dbpedia.org/ontology/subsequentWork_restrictedTo_domain_http://dbpedia.org/ontology/Book> <http://www.w3.org/2000/01/rdf-schema#label> "written after" .
 <http://dbpedia.org/ontology/previousWork_restrictedTo_domain_http://dbpedia.org/ontology/Book> <http://www.w3.org/2000/01/rdf-schema#label> "written before" .
 <http://dbpedia.org/ontology/company_restrictedTo_domain_http://dbpedia.org/ontology/TelevisionShow> <http://www.w3.org/2000/01/rdf-schema#label> "produce" .
-<http://dbpedia.org/ontology/operator_restrictedTo_domain_http://dbpedia.org/ontology/Infrastructure_or_http://dbpedia.org/ontology/MeanOfTransportation> <http://www.w3.org/2000/01/rdf-schema#label> "operate" .
-<http://dbpedia.org/ontology/child_o_http://dbpedia.org/ontology/child> <http://www.w3.org/2000/01/rdf-schema#label> "grandchild" .
 <http://dbpedia.org/ontology/subsequentWork_restrictedTo_domain_http://dbpedia.org/ontology/Album> <http://www.w3.org/2000/01/rdf-schema#label> "record after" .
 <http://dbpedia.org/ontology/previousWork_restrictedTo_domain_http://dbpedia.org/ontology/Album> <http://www.w3.org/2000/01/rdf-schema#label> "record before" .
 <http://dbpedia.org/ontology/garrison_restrictedTo_domain_http://dbpedia.org/ontology/PopulatedPlace> <http://www.w3.org/2000/01/rdf-schema#label> "based in" .
-<http://dbpedia.org/ontology/garrison_restrictedTo_domain_http://dbpedia.org/ontology/Building_or_http://dbpedia.org/ontology/Infrastructure> <http://www.w3.org/2000/01/rdf-schema#label> "based at" .
 <http://dbpedia.org/ontology/madgnitude> <http://www.w3.org/2000/01/rdf-schema#label> "magnitude" .
-<http://dbpedia.org/ontology/team_restrictedTo_domain_http://dbpedia.org/ontology/Cyclist_or_http://dbpedia.org/ontology/FormulaOneRacer_or_http://dbpedia.org/ontology/NascarDriver> <http://www.w3.org/2000/01/rdf-schema#label> "race for" .
 <http://dbpedia.org/ontology/tenant_restrictedTo_range_http://dbpedia.org/ontology/Event> <http://www.w3.org/2000/01/rdf-schema#label> "host" .
 <http://dbpedia.org/ontology/rector_restrictedTo_domain_http://dbpedia.org/ontology/School> <http://www.w3.org/2000/01/rdf-schema#label> "principal" .
 <http://dbpedia.org/ontology/genre_restrictedTo_domain_http://dbpedia.org/ontology/Writer> <http://www.w3.org/2000/01/rdf-schema#label> "write" .
 <http://dbpedia.org/ontology/related_restrictedTo_domain_http://dbpedia.org/ontology/TelevisionShow> <http://www.w3.org/2000/01/rdf-schema#label> "spin-off" .
 <http://dbpedia.org/ontology/company_restrictedTo_domain_http://dbpedia.org/ontology/Canal> <http://www.w3.org/2000/01/rdf-schema#label> "build" .
-<http://dbpedia.org/ontology/birthPlace_o_http://dbpedia.org/ontology/country> <http://www.w3.org/2000/01/rdf-schema#label> "born in" .
 <http://dbpedia.org/ontology/completionDate_restrictedTo_domain_http://dbpedia.org/ontology/TelevisionShow> <http://www.w3.org/2000/01/rdf-schema#label> "air until" .
 <http://dbpedia.org/ontology/nationality_restrictedTo_range_http://dbpedia.org/ontology/Place> <http://www.w3.org/2000/01/rdf-schema#label> "come from" .
-<http://dbpedia.org/ontology/artist_restrictedTo_domain_http://dbpedia.org/ontology/Album_or_http://dbpedia.org/ontology/Song> <http://www.w3.org/2000/01/rdf-schema#label> "interpreter of" .
 <http://dbpedia.org/ontology/nationality_restrictedTo_range_http://dbpedia.org/ontology/Country> <http://www.w3.org/2000/01/rdf-schema#label> "home country" .
 <http://dbpedia.org/ontology/routeEnd_restrictedTo_range_http://dbpedia.org/ontology/PopulatedPlace> <http://www.w3.org/2000/01/rdf-schema#label> "end in" .
 <http://dbpedia.org/ontology/routeEnd_restrictedTo_range_http://dbpedia.org/ontology/Road> <http://www.w3.org/2000/01/rdf-schema#label> "end at" .
