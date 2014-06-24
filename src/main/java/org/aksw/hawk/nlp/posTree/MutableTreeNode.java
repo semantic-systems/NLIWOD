@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.aksw.hawk.visualization.TextInBox;
 
+import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
+
 public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializable {
 	private static final long serialVersionUID = 3684161169564127853L;
 	public String label;
@@ -16,6 +18,7 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 	public int nodeNumber;
 	private boolean used = false;
 	private transient TextInBox TextNode;
+	private ArrayList<ResourceImpl> annotations = new ArrayList<>();
 
 	public MutableTreeNode() {
 	}
@@ -64,5 +67,20 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 
 	public TextInBox getTextNode() {
 		return this.TextNode;
+	}
+
+	public void addAnnotation(ResourceImpl resourceImpl) {
+		if (annotations == null) {
+			annotations = new ArrayList<>();
+		}
+		annotations.add(resourceImpl);
+	}
+
+	public List<ResourceImpl> getAnnotations() {
+		if (annotations == null) {
+			return new ArrayList<>();
+		} else {
+			return annotations;
+		}
 	}
 }
