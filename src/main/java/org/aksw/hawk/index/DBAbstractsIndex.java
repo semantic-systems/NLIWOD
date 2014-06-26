@@ -4,14 +4,20 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
-import org.apache.lucene.analysis.core.SimpleAnalyzer;
+import org.apache.lucene.analysis.core.LowerCaseFilter;
+import org.apache.lucene.analysis.core.WhitespaceTokenizer;
+import org.apache.lucene.analysis.miscellaneous.TrimFilter;
+import org.apache.lucene.analysis.pattern.PatternReplaceFilter;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.StringField;
@@ -24,6 +30,7 @@ import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -104,18 +111,20 @@ public class DBAbstractsIndex {
 		return triples;
 	}
 
-	public List<String> listAbstractsContaining(String token) {
+	public List<String> listAbstractsContaining(String tokens) {
 		List<String> triples = new ArrayList<String>();
 		try {
 			log.debug("\t start asking index...");
-			SimpleAnalyzer analyzer = new SimpleAnalyzer(LUCENE_VERSION);
+
+			PhraseQuery query = new PhraseQuery();
+			String[] words = tokens.split(" ");
+			for (String token : words) {
+				query.add(new Term(FIELD_NAME_OBJECT, token));
+			}
+			BooleanQuery q = new BooleanQuery();
+			q.add(query, BooleanClause.Occur.MUST);
+
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
-
-			QueryParser qp = new QueryParser(LUCENE_VERSION, FIELD_NAME_OBJECT, analyzer);
-			qp.setDefaultOperator(QueryParser.Operator.AND);
-
-			Query q = qp.parse(token);
-
 			isearcher.search(q, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
 			for (int i = 0; i < hits.length; i++) {
@@ -138,7 +147,18 @@ public class DBAbstractsIndex {
 			prop.load(input);
 			String file = prop.getProperty("abstracts");
 
-			Analyzer analyzer = new SimpleAnalyzer(LUCENE_VERSION);
+			// Analyzer analyzer = new StandardAnalyzer(LUCENE_VERSION);
+
+			Analyzer analyzer = new Analyzer() {
+				@Override
+				protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
+					Tokenizer whitespaceTokenizer = new WhitespaceTokenizer(LUCENE_VERSION, reader);
+					PatternReplaceFilter in = new PatternReplaceFilter(whitespaceTokenizer, Pattern.compile("[^a-zA-Z0-9\\-]"), "", true);
+					TrimFilter trimFilter = new TrimFilter(LUCENE_VERSION, in);
+					return new TokenStreamComponents(whitespaceTokenizer, trimFilter);
+				}
+
+			};
 			IndexWriterConfig config = new IndexWriterConfig(LUCENE_VERSION, analyzer);
 			IndexWriter iwriter = new IndexWriter(directory, config);
 

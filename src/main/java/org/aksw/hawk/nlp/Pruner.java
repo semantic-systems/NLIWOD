@@ -95,7 +95,7 @@ public class Pruner {
 	 */
 	private void removalRules(Question q) {
 		MutableTreeNode root = q.tree.getRoot();
-		for (String posTag : Lists.newArrayList(".", "WDT", "POS",  "WP\\$", "PRP\\$", "PRP", "DT", "IN", "PDT")) {
+		for (String posTag : Lists.newArrayList(".", "WDT", "POS",  "WP\\$", "PRP\\$", "RB","PRP", "DT", "IN", "PDT")) {
 			Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
 			queue.add(root);
 			while (!queue.isEmpty()) {

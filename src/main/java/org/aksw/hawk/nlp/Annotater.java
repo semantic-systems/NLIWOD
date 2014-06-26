@@ -28,23 +28,49 @@ public class Annotater {
 		MutableTree tree = q.tree;
 		annotateProjectionLeftTree(tree);
 		annotateVerbs(tree);
-		// if X (of or P) Y which is a path in the left tree do
-		// X as pred and Y as Entity (full-text or index)
-		// // for each VB* ask property index
-		// if (posTag.matches("VB(.)*")) {
-		// // System.out.println(label + " \t\t\t= " +
-		// // Joiner.on(", ").join(propertiesIndex.search(label)));
-		// }
-		// // for each NN* ask class index
-		// else if (posTag.matches("NN(.)*")) {
-		// // System.out.println(label + " \t\t\t= " +
-		// // Joiner.on(", ").join(classesIndex.search(label)));
-		// }
-		// for (MutableTreeNode child : tmp.getChildren()) {
-		// stack.push(child);
-		// }
-		//
-		// // set.add(new ResourceImpl(resourceURL));
+		annotateNouns(tree);
+	}
+
+	/**
+	 * "Named entities are noun phrases and are usually modelled as resources,
+	 * thus a lexical entry is built comprising a syntactic noun phrase
+	 * representation together with a corresponding semantic representation
+	 * containing a resource slot." citation by Unger et al. tbsl
+	 */
+	/**
+	 * "Nouns are often referring to classes, while sometimes to properties,
+	 * thus two lexical entries are built { one containing a semantic
+	 * representation with a class slot and one containing a semantic
+	 * representation with a property slot." citation by Unger et al. tbsl
+	 * 
+	 * @param tree
+	 */
+	private void annotateNouns(MutableTree tree) {
+		Stack<MutableTreeNode> stack = new Stack<>();
+		stack.push(tree.getRoot());
+		while (!stack.isEmpty()) {
+			MutableTreeNode tmp = stack.pop();
+			String label = tmp.label;
+			String posTag = tmp.posTag;
+			if (posTag.matches("NN(.)*") && tmp.getAnnotations().isEmpty()) {
+				// ArrayList<String> search = propertiesIndex.search(label);
+				// if (search.isEmpty() && tmp.lemma != null) {
+				// search = propertiesIndex.search(tmp.lemma);
+				// } else if (search.isEmpty()) {
+				// search = dboIndex.search(label);
+				// }
+				// for (String uri : search) {
+				// tmp.addAnnotation(new ResourceImpl(uri));
+				// }
+				// log.debug(Joiner.on(", ").join(tmp.getAnnotations()));
+				// System.out.println(label);
+			} else if (posTag.matches("CombinedNN") && tmp.getAnnotations().isEmpty()) {
+				System.out.println(label + "->" + index.listAbstractsContaining(label).size());
+			}
+			for (MutableTreeNode child : tmp.getChildren()) {
+				stack.push(child);
+			}
+		}
 	}
 
 	/**
@@ -76,8 +102,6 @@ public class Annotater {
 					tmp.addAnnotation(new ResourceImpl(uri));
 				}
 				log.debug(Joiner.on(", ").join(tmp.getAnnotations()));
-			}else {
-				//TODO work on this
 			}
 			for (MutableTreeNode child : tmp.getChildren()) {
 				stack.push(child);

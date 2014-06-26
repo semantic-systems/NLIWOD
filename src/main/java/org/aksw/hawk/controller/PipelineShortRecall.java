@@ -66,7 +66,7 @@ public class PipelineShortRecall {
 				q.tree = pruner.prune(q);
 				log.info(q.languageToQuestion.get("en"));
 				annotater.annotateTree(q);
-				log.info(q.tree.toString());
+//				log.info(q.tree.toString());
 				Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 				// fulltexter.fulltext(q);
 				for (String key : answer.keySet()) {

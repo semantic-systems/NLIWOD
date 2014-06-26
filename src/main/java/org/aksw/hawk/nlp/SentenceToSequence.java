@@ -31,7 +31,7 @@ public class SentenceToSequence {
 			String token = list.get(tcounter);
 			String pos = pos(token, q);
 			// look for start "RB|JJ|NN(.)*"
-			if (subsequence.isEmpty() && null != pos && pos.matches("RB|JJ|NN(.)*")) {
+			if (subsequence.isEmpty() && null != pos && pos.matches("CD|JJ|NN(.)*")) {
 				subsequence.add(token);
 			}
 			// split "of the" or "of all" via pos_i=IN and pos_i+1=DT
