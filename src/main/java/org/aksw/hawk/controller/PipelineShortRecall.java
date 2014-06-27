@@ -63,9 +63,11 @@ public class PipelineShortRecall {
 				// decreases
 				sentenceToSequence.combineSequences(q);
 				// 4. Apply pruning rules
+				
 				q.tree = pruner.prune(q);
 				log.info(q.languageToQuestion.get("en"));
 				annotater.annotateTree(q);
+				log.info(q.tree.toString());
 //				log.info(q.tree.toString());
 				Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 				// fulltexter.fulltext(q);

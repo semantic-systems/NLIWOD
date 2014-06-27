@@ -51,7 +51,11 @@ public class SentenceToSequence {
 			}
 			// finish via VB* or IN -> null or IN -> DT or WDT (now a that or
 			// which follows)
-			else if (!subsequence.isEmpty() && !pos(list.get(tcounter - 1), q).matches("JJ") && (null == pos || pos.matches("VB(.)*|\\.|WDT") || (pos.matches("IN") && pos(list.get(tcounter + 1), q) == null) || (pos.matches("IN") && pos(list.get(tcounter + 1), q).matches("DT")))) {
+			else if (!subsequence.isEmpty() && !pos(list.get(tcounter - 1), q).matches("JJ") && 
+					(null == pos || 
+					pos.matches("VB(.)*|\\.|WDT") || 
+					(pos.matches("IN") && pos(list.get(tcounter + 1), q) == null) || 
+					(pos.matches("IN") && pos(list.get(tcounter + 1), q).matches("DT")))) {
 				// more than one token, so summarizing makes sense
 				if (subsequence.size() > 1) {
 					transformTree(subsequence, q);

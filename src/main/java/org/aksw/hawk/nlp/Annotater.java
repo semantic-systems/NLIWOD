@@ -65,7 +65,7 @@ public class Annotater {
 				// log.debug(Joiner.on(", ").join(tmp.getAnnotations()));
 				// System.out.println(label);
 			} else if (posTag.matches("CombinedNN") && tmp.getAnnotations().isEmpty()) {
-				System.out.println(label + "->" + index.listAbstractsContaining(label).size());
+//		TODO		System.out.println(label + "->" + index.listAbstractsContaining(label).size());
 			}
 			for (MutableTreeNode child : tmp.getChildren()) {
 				stack.push(child);
