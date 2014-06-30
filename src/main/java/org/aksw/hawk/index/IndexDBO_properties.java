@@ -127,7 +127,7 @@ public class IndexDBO_properties {
 
 	public static void main(String args[]) {
 		IndexDBO_properties index = new IndexDBO_properties();
-		System.out.println(Joiner.on("\t").join(index.search("born")));
+		System.out.println(Joiner.on("\t").join(index.search("die")));
 
 	}
 }

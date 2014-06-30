@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
-import org.apache.lucene.analysis.core.LowerCaseFilter;
 import org.apache.lucene.analysis.core.WhitespaceTokenizer;
 import org.apache.lucene.analysis.miscellaneous.TrimFilter;
 import org.apache.lucene.analysis.pattern.PatternReplaceFilter;
@@ -47,6 +46,8 @@ import org.openrdf.rio.helpers.RDFHandlerBase;
 import org.openrdf.rio.turtle.TurtleParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Joiner;
 
 public class DBAbstractsIndex {
 
@@ -255,7 +256,11 @@ public class DBAbstractsIndex {
 
 	public static void main(String args[]) {
 		DBAbstractsIndex index = new DBAbstractsIndex();
-		index.askForPredicateWithBoundAbstract("assassin", "http://dbpedia.org/resource/Martin_Luther_King%2C_Jr.");
+//		index.askForPredicateWithBoundAbstract("assassin", "http://dbpedia.org/resource/Martin_Luther_King%2C_Jr.");
+		
+		
+		System.out.println(Joiner.on("\n").join(index.listAbstractsContaining("first man in space")));
+		
 		index.close();
 
 	}

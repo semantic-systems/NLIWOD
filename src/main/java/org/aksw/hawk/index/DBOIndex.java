@@ -14,13 +14,15 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
+import org.apache.lucene.util.automaton.LevenshteinAutomata;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
@@ -74,10 +76,7 @@ public class DBOIndex {
 		try {
 			log.debug("\t start asking index...");
 
-//			QueryParser parser = new QueryParser(LUCENE_VERSION, FIELD_NAME_OBJECT, analyzer);
-//			parser.setDefaultOperator(QueryParser.Operator.OR);
-//			Query q = parser.parse(QueryParserBase.escape(object));
-			TermQuery q = new TermQuery(new Term(FIELD_NAME_OBJECT, object));
+			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object),LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE);   
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
 
 			isearcher.search(q, collector);
@@ -142,7 +141,7 @@ public class DBOIndex {
 	public static void main(String args[]) {
 		DBOIndex index = new DBOIndex();
 		//TODO compose findet nicht music composer label
-		System.out.println(Joiner.on("\t").join(index.search("composer")));
+		System.out.println(Joiner.on("\t").join(index.search("currencies")));
 
 	}
 }

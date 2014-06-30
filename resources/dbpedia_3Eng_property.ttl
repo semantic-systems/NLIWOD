@@ -268,34 +268,6 @@
 <http://dbpedia.org/ontology/designer> <http://www.w3.org/2000/01/rdf-schema#label> "design" .
 <http://dbpedia.org/ontology/commandStructure> <http://www.w3.org/2000/01/rdf-schema#label> "part of" .
 <http://dbpedia.org/ontology/child> <http://www.w3.org/2000/01/rdf-schema#label> "child" .
-<http://dbpedia.org/ontology/education_restrictedTo_range_http://dbpedia.org/ontology/EducationalInstitution> <http://www.w3.org/2000/01/rdf-schema#label> "go to" .
-<http://dbpedia.org/ontology/ground_restrictedTo_domain_http://dbpedia.org/ontology/Stadium> <http://www.w3.org/2000/01/rdf-schema#label> "home stadium" .
-<http://dbpedia.org/ontology/team_restrictedTo_domain_http://dbpedia.org/ontology/SportsManager> <http://www.w3.org/2000/01/rdf-schema#label> "manager" .
-<http://dbpedia.org/ontology/closestCity> <http://www.w3.org/2000/01/rdf-schema#label> "located near" .
-<http://dbpedia.org/ontology/related_restrictedTo_domain_http://dbpedia.org/ontology/EthnicGroup> <http://www.w3.org/2000/01/rdf-schema#label> "related to" .
-<http://dbpedia.org/ontology/series_restrictedTo_domain_http://dbpedia.org/ontology/TelevisionEpisode> <http://www.w3.org/2000/01/rdf-schema#label> "episode of" .
-<http://dbpedia.org/ontology/tenant_restrictedTo_range_http://dbpedia.org/ontology/Organisation> <http://www.w3.org/2000/01/rdf-schema#label> "play in" .
-<http://dbpedia.org/ontology/cinematographer> <http://www.w3.org/2000/01/rdf-schema#label> "shoot" .
-<http://dbpedia.org/ontology/subsequentWork_restrictedTo_domain_http://dbpedia.org/ontology/Book> <http://www.w3.org/2000/01/rdf-schema#label> "written after" .
-<http://dbpedia.org/ontology/previousWork_restrictedTo_domain_http://dbpedia.org/ontology/Book> <http://www.w3.org/2000/01/rdf-schema#label> "written before" .
-<http://dbpedia.org/ontology/company_restrictedTo_domain_http://dbpedia.org/ontology/TelevisionShow> <http://www.w3.org/2000/01/rdf-schema#label> "produce" .
-<http://dbpedia.org/ontology/subsequentWork_restrictedTo_domain_http://dbpedia.org/ontology/Album> <http://www.w3.org/2000/01/rdf-schema#label> "record after" .
-<http://dbpedia.org/ontology/previousWork_restrictedTo_domain_http://dbpedia.org/ontology/Album> <http://www.w3.org/2000/01/rdf-schema#label> "record before" .
-<http://dbpedia.org/ontology/garrison_restrictedTo_domain_http://dbpedia.org/ontology/PopulatedPlace> <http://www.w3.org/2000/01/rdf-schema#label> "based in" .
-<http://dbpedia.org/ontology/madgnitude> <http://www.w3.org/2000/01/rdf-schema#label> "magnitude" .
-<http://dbpedia.org/ontology/tenant_restrictedTo_range_http://dbpedia.org/ontology/Event> <http://www.w3.org/2000/01/rdf-schema#label> "host" .
-<http://dbpedia.org/ontology/rector_restrictedTo_domain_http://dbpedia.org/ontology/School> <http://www.w3.org/2000/01/rdf-schema#label> "principal" .
-<http://dbpedia.org/ontology/genre_restrictedTo_domain_http://dbpedia.org/ontology/Writer> <http://www.w3.org/2000/01/rdf-schema#label> "write" .
-<http://dbpedia.org/ontology/related_restrictedTo_domain_http://dbpedia.org/ontology/TelevisionShow> <http://www.w3.org/2000/01/rdf-schema#label> "spin-off" .
-<http://dbpedia.org/ontology/company_restrictedTo_domain_http://dbpedia.org/ontology/Canal> <http://www.w3.org/2000/01/rdf-schema#label> "build" .
-<http://dbpedia.org/ontology/completionDate_restrictedTo_domain_http://dbpedia.org/ontology/TelevisionShow> <http://www.w3.org/2000/01/rdf-schema#label> "air until" .
-<http://dbpedia.org/ontology/nationality_restrictedTo_range_http://dbpedia.org/ontology/Place> <http://www.w3.org/2000/01/rdf-schema#label> "come from" .
-<http://dbpedia.org/ontology/nationality_restrictedTo_range_http://dbpedia.org/ontology/Country> <http://www.w3.org/2000/01/rdf-schema#label> "home country" .
-<http://dbpedia.org/ontology/routeEnd_restrictedTo_range_http://dbpedia.org/ontology/PopulatedPlace> <http://www.w3.org/2000/01/rdf-schema#label> "end in" .
-<http://dbpedia.org/ontology/routeEnd_restrictedTo_range_http://dbpedia.org/ontology/Road> <http://www.w3.org/2000/01/rdf-schema#label> "end at" .
-<http://dbpedia.org/ontology/ground_restrictedTo_domain_http://dbpedia.org/ontology/PopulatedPlace> <http://www.w3.org/2000/01/rdf-schema#label> "based in" .
-<http://dbpedia.org/ontology/routeStart_restrictedTo_range_http://dbpedia.org/ontology/PopulatedPlace> <http://www.w3.org/2000/01/rdf-schema#label> "begin in" .
-<http://dbpedia.org/ontology/routeStart_restrictedTo_range_http://dbpedia.org/ontology/Road> <http://www.w3.org/2000/01/rdf-schema#label> "begin at" .
-<http://dbpedia.org/ontology/owningOrganization> <http://www.w3.org/2000/01/rdf-schema#label> "own" .
-<http://dbpedia.org/ontology/origin_restrictedTo_domain_http://dbpedia.org/ontology/Stream> <http://www.w3.org/2000/01/rdf-schema#label> "originate in" .
-<http://dbpedia.org/ontology/genre_restrictedTo_range_http://dbpedia.org/ontology/MusicGenre> <http://www.w3.org/2000/01/rdf-schema#label> "make" .
+
+<http://dbpedia.org/ontology/deathPlace> <http://www.w3.org/2000/01/rdf-schema#label> "die in" .
+<http://dbpedia.org/ontology/successor> <http://www.w3.org/2000/01/rdf-schema#label> "succeeded" .

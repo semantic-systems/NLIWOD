@@ -53,19 +53,31 @@ public class Annotater {
 			String label = tmp.label;
 			String posTag = tmp.posTag;
 			if (posTag.matches("NN(.)*") && tmp.getAnnotations().isEmpty()) {
-				// ArrayList<String> search = propertiesIndex.search(label);
-				// if (search.isEmpty() && tmp.lemma != null) {
-				// search = propertiesIndex.search(tmp.lemma);
-				// } else if (search.isEmpty()) {
-				// search = dboIndex.search(label);
-				// }
-				// for (String uri : search) {
-				// tmp.addAnnotation(new ResourceImpl(uri));
-				// }
-				// log.debug(Joiner.on(", ").join(tmp.getAnnotations()));
-				// System.out.println(label);
+				ArrayList<String> search = classesIndex.search(label);
+				if (!search.isEmpty()) {
+					for (String uri : search) {
+						tmp.addAnnotation(new ResourceImpl(uri));
+					}
+				} else if (!propertiesIndex.search(label).isEmpty()) {
+					search = propertiesIndex.search(label);
+					for (String uri : search) {
+						tmp.addAnnotation(new ResourceImpl(uri));
+					}
+				} else {
+					search = dboIndex.search(label);
+					for (String uri : search) {
+						tmp.addAnnotation(new ResourceImpl(uri));
+					}
+				}
 			} else if (posTag.matches("CombinedNN") && tmp.getAnnotations().isEmpty()) {
-//		TODO		System.out.println(label + "->" + index.listAbstractsContaining(label).size());
+				List<String> uris = index.listAbstractsContaining(label);
+				for (String resourceURL : uris) {
+					tmp.addAnnotation(new ResourceImpl(resourceURL));
+				}
+			} else if (tmp.getAnnotations().isEmpty() && (posTag.matches("ADD") || posTag.matches("VB(.)*"))) {
+				// expected behaviour
+			} else {
+				log.debug("Unrecognized node: " + tmp);
 			}
 			for (MutableTreeNode child : tmp.getChildren()) {
 				stack.push(child);
