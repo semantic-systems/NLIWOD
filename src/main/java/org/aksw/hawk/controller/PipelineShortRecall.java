@@ -2,7 +2,6 @@ package org.aksw.hawk.controller;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
@@ -22,7 +21,6 @@ import org.aksw.hawk.pruner.QueryVariableHomomorphPruner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Maps;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class PipelineShortRecall {
@@ -63,24 +61,27 @@ public class PipelineShortRecall {
 				// decreases
 				sentenceToSequence.combineSequences(q);
 				// 4. Apply pruning rules
-				
+
 				q.tree = pruner.prune(q);
-				log.info(q.languageToQuestion.get("en"));
+
+				// 5. Annotate tree
+				// log.info(q.languageToQuestion.get("en"));
 				annotater.annotateTree(q);
-				log.info(q.tree.toString());
 //				log.info(q.tree.toString());
-				Map<String, Set<RDFNode>> answer = Maps.newHashMap();
+
+				// 6. Build queries via subqueries
+				SPARQLQueryBuilder queryBuilder = new SPARQLQueryBuilder();
+				Set<Set<RDFNode>> answer = queryBuilder.build(q);
+
 				// fulltexter.fulltext(q);
-				for (String key : answer.keySet()) {
-					Set<RDFNode> systemAnswers = answer.get(key);
+				for (Set<RDFNode> systemAnswers : answer) {
 					// 11. Compare to set of resources from benchmark
 					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
 					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
 					counter++;
 					if (fMeasure > 0) {
-						// log.info("\tP=" + precision + " R=" + recall + " F="
-						// + fMeasure);
+						log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
 						overallf += fMeasure;
 						overallp += precision;
 						overallr += recall;
