@@ -28,6 +28,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
@@ -35,6 +36,9 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopScoreDocCollector;
+import org.apache.lucene.search.spans.SpanMultiTermQueryWrapper;
+import org.apache.lucene.search.spans.SpanNearQuery;
+import org.apache.lucene.search.spans.SpanQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
@@ -117,16 +121,22 @@ public class DBAbstractsIndex {
 		try {
 			log.debug("\t start asking index...");
 
-			PhraseQuery query = new PhraseQuery();
 			String[] words = tokens.split(" ");
-			for (String token : words) {
-				query.add(new Term(FIELD_NAME_OBJECT, token));
+			// PhraseQuery query = new PhraseQuery();
+			// for (String token : words) {
+			// query.add(new Term(FIELD_NAME_OBJECT, token));
+			// }
+			// BooleanQuery q = new BooleanQuery();
+			// q.add(query, BooleanClause.Occur.MUST);
+
+			SpanQuery[] clauses = new SpanQuery[words.length];
+			for (int i = 0; i < words.length; i++) {
+				clauses[i] = new SpanMultiTermQueryWrapper(new FuzzyQuery(new Term(FIELD_NAME_OBJECT, words[i])));
 			}
-			BooleanQuery q = new BooleanQuery();
-			q.add(query, BooleanClause.Occur.MUST);
+			SpanNearQuery query = new SpanNearQuery(clauses, 0, true);
 
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
-			isearcher.search(q, collector);
+			isearcher.search(query, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
 			for (int i = 0; i < hits.length; i++) {
 				Document hitDoc = isearcher.doc(hits[i].doc);
@@ -256,11 +266,11 @@ public class DBAbstractsIndex {
 
 	public static void main(String args[]) {
 		DBAbstractsIndex index = new DBAbstractsIndex();
-//		index.askForPredicateWithBoundAbstract("assassin", "http://dbpedia.org/resource/Martin_Luther_King%2C_Jr.");
-		
-		
+		// index.askForPredicateWithBoundAbstract("assassin",
+		// "http://dbpedia.org/resource/Martin_Luther_King%2C_Jr.");
+
 		System.out.println(Joiner.on("\n").join(index.listAbstractsContaining("first man in space")));
-		
+
 		index.close();
 
 	}
