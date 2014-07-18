@@ -30,7 +30,6 @@ import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -131,7 +130,7 @@ public class DBAbstractsIndex {
 
 			SpanQuery[] clauses = new SpanQuery[words.length];
 			for (int i = 0; i < words.length; i++) {
-				clauses[i] = new SpanMultiTermQueryWrapper(new FuzzyQuery(new Term(FIELD_NAME_OBJECT, words[i])));
+				clauses[i] = new SpanMultiTermQueryWrapper<FuzzyQuery>(new FuzzyQuery(new Term(FIELD_NAME_OBJECT, words[i])));
 			}
 			SpanNearQuery query = new SpanNearQuery(clauses, 0, true);
 

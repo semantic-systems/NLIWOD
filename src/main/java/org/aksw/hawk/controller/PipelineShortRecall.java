@@ -82,8 +82,8 @@ public class PipelineShortRecall {
 					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
 					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
 					counter++;
-					log.info(query);
-					log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+					log.debug(query);
+					log.debug("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
 					overallf += fMeasure;
 					overallp += precision;
 					overallr += recall;

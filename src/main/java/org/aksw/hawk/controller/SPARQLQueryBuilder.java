@@ -22,12 +22,11 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class SPARQLQueryBuilder {
-
 	Logger log = LoggerFactory.getLogger(SPARQLQueryBuilder.class);
 
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
-
+		// build projection part
 		List<StringBuilder> queryStrings = buildProjectionPart(q);
 		for (StringBuilder queryString : queryStrings) {
 			answer.put(queryString.toString(), sparql(queryString.toString()));
@@ -37,7 +36,6 @@ public class SPARQLQueryBuilder {
 
 	private List<StringBuilder> buildProjectionPart(Question q) {
 		List<StringBuilder> queries = Lists.newArrayList();
-
 		Stack<MutableTreeNode> stack = new Stack<>();
 		stack.push(q.tree.getRoot().getChildren().get(0));
 		// iterate through left tree part
@@ -47,13 +45,14 @@ public class SPARQLQueryBuilder {
 
 			// only one projection variable node
 			if (tmp.children.size() == 0) {
-				if (posTag.matches("WRB|WP")) {
+				if (posTag.matches("WRB|WP|NN(.)*")) {
 					// is either from Where or Who
-					if (tmp.getAnnotations().size() == 1) {
-						StringBuilder queryString = new StringBuilder("SELECT ?proj WHERE {\n");
-						queryString.append("?proj a <" + tmp.getAnnotations().get(0) + ">.\n");
-						queryString.append("}");
-						queries.add(queryString);
+					if (tmp.getAnnotations().size() > 0) {
+						for (ResourceImpl annotation : tmp.getAnnotations()) {
+							StringBuilder queryString = new StringBuilder("SELECT ?proj WHERE {\n");
+							queryString.append("?proj a <" + annotation + ">.\n}");
+							queries.add(queryString);
+						}
 					} else {
 						log.error("Too many or too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 					}
@@ -62,27 +61,13 @@ public class SPARQLQueryBuilder {
 					// words, i.e., type constraints
 					if (tmp.getAnnotations().size() > 0) {
 						StringBuilder queryString = new StringBuilder("SELECT ?proj WHERE {\n");
-						queryString.append("?proj ?p ?o.\n");
-						queryString.append("FILTER (?proj IN (\n");
+						queryString.append("?proj ?p ?o.\n").append("FILTER (?proj IN (\n");
 						for (ResourceImpl annotation : tmp.getAnnotations()) {
 							queryString.append("<" + annotation.getURI() + "> , ");
 						}
-						queryString.deleteCharAt(queryString.lastIndexOf(","));
-						queryString.append(")).");
-						queryString.append("}");
+						queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).}");
+						;
 						queries.add(queryString);
-					} else {
-						log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
-					}
-				} else if (posTag.matches("NN(.)*")) {
-					// projection node is either a property or a class
-					if (tmp.getAnnotations().size() > 0) {
-						for (ResourceImpl annotation : tmp.getAnnotations()) {
-							StringBuilder queryString = new StringBuilder("SELECT ?proj WHERE {\n");
-							queryString.append("?proj a <" + annotation + ">.\n");
-							queryString.append("}");
-							queries.add(queryString);
-						}
 					} else {
 						log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 					}
@@ -91,6 +76,8 @@ public class SPARQLQueryBuilder {
 					// since entities should not be the question word type
 					log.error("Strange case that never should happen: " + posTag);
 				}
+			} else {
+				System.out.println("HERE!!!" + q.tree);
 			}
 		}
 		return queries;
