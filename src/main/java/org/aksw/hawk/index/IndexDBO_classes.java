@@ -127,7 +127,7 @@ public class IndexDBO_classes {
 
 	public static void main(String args[]) {
 		IndexDBO_classes index = new IndexDBO_classes();
-		System.out.println(Joiner.on("\n").join(index.search("city")));
+		System.out.println(Joiner.on("\n").join(index.search("king")));
 
 	}
 }

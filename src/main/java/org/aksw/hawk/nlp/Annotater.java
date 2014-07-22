@@ -135,7 +135,6 @@ public class Annotater {
 			MutableTreeNode tmp = stack.pop();
 			String label = tmp.label;
 			String posTag = tmp.posTag;
-
 			// only one projection variable node
 			if (tmp.children.size() == 0) {
 				if (posTag.matches("WRB|WP")) {
@@ -176,8 +175,12 @@ public class Annotater {
 				// parse trees where the root is a NN(.)*
 				if (posTag.matches("NN(.)*")) {
 					// TODO ask actress also in dbo owl
-					if (classesIndex.search(label).size() > 0) {
+					if (classesIndex.search(label).size() > 0 || propertiesIndex.search(label).size() > 0 ) {
 						ArrayList<String> uris = classesIndex.search(label);
+						for (String resourceURL : uris) {
+							tmp.addAnnotation(new ResourceImpl(resourceURL));
+						}
+						uris = propertiesIndex.search(label);
 						for (String resourceURL : uris) {
 							tmp.addAnnotation(new ResourceImpl(resourceURL));
 						}
@@ -188,6 +191,11 @@ public class Annotater {
 						for (String resourceURL : uris) {
 							tmp.addAnnotation(new ResourceImpl(resourceURL));
 						}
+						// since a full text lookup takes place we assume
+						// hereafter there will be a FILTER clause needed which
+						// can only be handled it annotated as CombinedNoun
+						// w.r.t. its postag
+						tmp.posTag = "CombinedNN";
 					}
 				} else {
 					log.error("Strange case that never should happen: " + posTag);

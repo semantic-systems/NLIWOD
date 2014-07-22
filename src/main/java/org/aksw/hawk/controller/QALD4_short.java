@@ -11,6 +11,7 @@ import org.aksw.hawk.module.SystemAnswerer;
 import org.aksw.hawk.nlp.Pruner;
 import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.hawk.nlp.spotter.Fox;
+import org.aksw.hawk.nlp.spotter.Spotlight;
 import org.aksw.hawk.nlp.util.CachedParseTree;
 import org.aksw.hawk.pruner.GraphNonSCCPruner;
 import org.aksw.hawk.pruner.QueryVariableHomomorphPruner;
