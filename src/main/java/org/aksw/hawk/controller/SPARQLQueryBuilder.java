@@ -180,16 +180,14 @@ public class SPARQLQueryBuilder {
 		log.debug("FILTER Pattern found" + m.find());
 		String group = m.group(1);
 		query = query.replace(group, "XXAKSWXX");
-		ArrayList<String> uris = Lists.newArrayList();
-		for (String uri : group.split(", ")) {
-			uris.add(uri.trim());
-		}
+
+		String[] uris = group.split(", ");
 		int sizeOfFilterThreshold = 50;
-		for (int i = 0; i < uris.size();) {
+		for (int i = 0; i < uris.length;) {
 			String filter = "";
-			for (int sizeOfFilter = 0; sizeOfFilter < sizeOfFilterThreshold && sizeOfFilter + i < uris.size(); sizeOfFilter++) {
-				filter += uris.get(i + sizeOfFilter);
-				if (sizeOfFilter < (sizeOfFilterThreshold - 1) && sizeOfFilter + i < (uris.size() - 1)) {
+			for (int sizeOfFilter = 0; sizeOfFilter < sizeOfFilterThreshold && sizeOfFilter + i < uris.length; sizeOfFilter++) {
+				filter += uris[i + sizeOfFilter].trim();
+				if (sizeOfFilter < (sizeOfFilterThreshold - 1) && sizeOfFilter + i < (uris.length - 1)) {
 					filter += ",";
 				}
 			}
