@@ -1,8 +1,11 @@
 package org.aksw.hawk.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.ws.http.HTTPException;
 
@@ -27,7 +30,7 @@ public class SPARQLQueryBuilder {
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		// build projection part
-		if(q.languageToQuestion.get("en").contains("Shre")){
+		if (q.languageToQuestion.get("en").contains("Shre")) {
 			System.out.println();
 		}
 		Set<StringBuilder> queryStrings = buildProjectionPart(q);
@@ -67,7 +70,8 @@ public class SPARQLQueryBuilder {
 							StringBuilder queryString = new StringBuilder("SELECT ?proj WHERE {\n");
 							queryString.append("?proj a <" + annotation + ">.\n}");
 							queries.add(queryString);
-							// TODO add super class for things like City -> Settlement
+							// TODO add super class for things like City ->
+							// Settlement
 						}
 					} else {
 						log.error("Too many or too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
@@ -105,7 +109,7 @@ public class SPARQLQueryBuilder {
 						}
 						queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).}");
 						queries.add(queryString);
-						  queryString = new StringBuilder("SELECT ?proj WHERE {\n");
+						queryString = new StringBuilder("SELECT ?proj WHERE {\n");
 						queryString.append("?o <" + predicates + "> ?proj.\n").append("FILTER (?proj IN (\n");
 						for (ResourceImpl annotation : bottom.getAnnotations()) {
 							queryString.append("<" + annotation.getURI() + "> , ");
@@ -148,19 +152,80 @@ public class SPARQLQueryBuilder {
 
 	private Set<RDFNode> sparql(String query) {
 		Set<RDFNode> set = Sets.newHashSet();
-		QueryExecution qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", query);
+		QueryExecution qexec = null;
+		String newQuery = null;
 		try {
-			ResultSet results = qexec.execSelect();
-			while (results.hasNext()) {
-				set.add(results.next().get("?proj"));
+			if (query.contains("FILTER")) {
+				query = query.replaceAll("\n", "");
+				Pattern pattern = Pattern.compile(".+FILTER\\s*\\(\\s*\\?proj IN\\s*\\((.+)\\)\\).+");
+				Matcher m = pattern.matcher(query);
+				boolean found = m.find();
+				String group = m.group(1);
+				query = query.replace(group, "XXAKSWXX");
+				ArrayList<String> uris = Lists.newArrayList();
+				for (String uri : group.split(", ")) {
+					uris.add(uri.trim());
+				}
+				int sizeOfFilterThreshold = 50;
+				System.out.println(uris.size());
+				for (int i = 0; i < uris.size();) {
+					String filter = "";
+					for (int sizeOfFilter = 0; sizeOfFilter < sizeOfFilterThreshold && sizeOfFilter + i < uris.size(); sizeOfFilter++) {
+						filter += uris.get(i + sizeOfFilter);
+						if (sizeOfFilter < (sizeOfFilterThreshold - 1) && sizeOfFilter + i < (uris.size() - 1)) {
+							filter += ",";
+						}
+					}
+					i += sizeOfFilterThreshold;
+					newQuery = query.replace("XXAKSWXX", filter);
+					qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", newQuery);
+					ResultSet results = qexec.execSelect();
+					while (results.hasNext()) {
+						set.add(results.next().get("?proj"));
+					}
+				}
+			} else {
+				qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", query);
+				ResultSet results = qexec.execSelect();
+				while (results.hasNext()) {
+					set.add(results.next().get("?proj"));
+				}
 			}
 		} catch (HTTPException e) {
-			log.error("Query: ", e);
+			log.error("Query: " + newQuery, e);
 		} catch (Exception e) {
-			log.error("Query: ", e);
+			log.error("Query: " + newQuery, e);
 		} finally {
-			qexec.close();
+			if (qexec != null) {
+				qexec.close();
+			}
 		}
 		return set;
+	}
+
+	public static void main(String args[]) {
+		String query = "SELECT ?proj WHERE {?proj ?p ?o. FILTER " + "(?proj IN (<http://(1)> , <http://2> , <http://3> , <http://4> , <http://5>, <http://6> , <http://7>   ))}";
+		Pattern pattern = Pattern.compile(".+FILTER\\s*\\(\\s*\\?proj IN\\s*\\((.+)\\)\\).+");
+		Matcher m = pattern.matcher(query);
+		m.find();
+		String group = m.group(1);
+		query = query.replace(group, "XXAKSWXX");
+		ArrayList<String> uris = Lists.newArrayList();
+		for (String uri : group.split(",")) {
+			uris.add(uri.trim());
+		}
+		int sizeOfFilterThreshold = 3;
+		for (int i = 0; i < uris.size();) {
+			String filter = "";
+			for (int sizeOfFilter = 0; sizeOfFilter < sizeOfFilterThreshold && sizeOfFilter + i < uris.size(); sizeOfFilter++) {
+				filter += uris.get(i + sizeOfFilter);
+				if (sizeOfFilter < (sizeOfFilterThreshold - 1) && sizeOfFilter + i < (uris.size() - 1)) {
+					filter += ",";
+				}
+			}
+			i += sizeOfFilterThreshold;
+			String newQuery = query.replace("XXAKSWXX", filter);
+			System.out.println(newQuery);
+		}
 	}
 }
