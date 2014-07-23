@@ -48,8 +48,8 @@ public class CachedParseTree {
 		String question = q.languageToQuestion.get("en");
 		int hash = question.hashCode();
 		String serializedFileName = "resources/trees/" + hash + ".tree";
-//		log.error(DEPtoMutableDEP.toString());
-	System.out.println(	StorageHelper.storeToFileSavely(DEPtoMutableDEP, serializedFileName));
+		// log.error(DEPtoMutableDEP.toString());
+		StorageHelper.storeToFileSavely(DEPtoMutableDEP, serializedFileName);
 
 	}
 

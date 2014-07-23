@@ -63,7 +63,7 @@ public class SystemAnswerer {
 		targetQueries.addAll(checkForFullTextTriple);
 		HashMap<String, Set<RDFNode>> resultSets = Maps.newHashMap();
 		for (ParameterizedSparqlString tmpQuery : targetQueries) {
-			System.out.println("\t" + tmpQuery);
+			log.debug("\t" + tmpQuery);
 			// if query has only variables and URIs anymore than ask DBpedia
 			tmpQuery = removeUnneccessaryClauses(tmpQuery);
 

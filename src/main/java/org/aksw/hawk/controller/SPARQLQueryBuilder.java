@@ -14,7 +14,6 @@ import org.aksw.hawk.nlp.posTree.MutableTreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.clearnlp.util.stack.Stack;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -30,9 +29,6 @@ public class SPARQLQueryBuilder {
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		// build projection part
-		if (q.languageToQuestion.get("en").contains("Shre")) {
-			System.out.println();
-		}
 		Set<StringBuilder> queryStrings = buildProjectionPart(q);
 		for (StringBuilder queryString : queryStrings) {
 			// TODO if filter is too large split it
@@ -43,16 +39,16 @@ public class SPARQLQueryBuilder {
 
 	private Set<StringBuilder> buildProjectionPart(Question q) {
 		Set<StringBuilder> queries = Sets.newHashSet();
-		Stack<MutableTreeNode> stack = new Stack<>();
-		stack.push(q.tree.getRoot().getChildren().get(0));
-		// TODO improve that part of the code, this is scarry
 		List<MutableTreeNode> bottomUp = Lists.newArrayList();
 		// iterate through left tree part
-		while (!stack.isEmpty()) {
-			MutableTreeNode tmp = stack.pop();
+		// assumption: this part of the tree is a path
+		MutableTreeNode tmp = q.tree.getRoot().getChildren().get(0);
+		while (tmp != null) {
 			bottomUp.add(tmp);
-			for (MutableTreeNode child : tmp.getChildren()) {
-				stack.push(child);
+			if (!tmp.getChildren().isEmpty()) {
+				tmp = tmp.getChildren().get(0);
+			} else {
+				tmp = null;
 			}
 		}
 		bottomUp = Lists.reverse(bottomUp);
@@ -167,7 +163,6 @@ public class SPARQLQueryBuilder {
 					uris.add(uri.trim());
 				}
 				int sizeOfFilterThreshold = 50;
-				System.out.println(uris.size());
 				for (int i = 0; i < uris.size();) {
 					String filter = "";
 					for (int sizeOfFilter = 0; sizeOfFilter < sizeOfFilterThreshold && sizeOfFilter + i < uris.size(); sizeOfFilter++) {

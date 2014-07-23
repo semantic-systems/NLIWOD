@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.hp.hpl.jena.graph.Node;
@@ -14,6 +17,8 @@ import com.hp.hpl.jena.sparql.syntax.ElementGroup;
 import com.hp.hpl.jena.sparql.syntax.ElementPathBlock;
 
 public class GraphNonSCCPruner {
+	static Logger log = LoggerFactory.getLogger(GraphNonSCCPruner.class);
+
 	public List<ParameterizedSparqlString> prune(List<ParameterizedSparqlString> queries) {
 		List<ParameterizedSparqlString> returnList = Lists.newArrayList();
 		for (ParameterizedSparqlString query : queries) {
@@ -48,9 +53,9 @@ public class GraphNonSCCPruner {
 		queries.add(new ParameterizedSparqlString(queryString));
 
 		GraphNonSCCPruner gSCCPruner = new GraphNonSCCPruner();
-		System.out.println(queries.size());
+		log.debug(queries.size());
 		queries = gSCCPruner.prune(queries);
-		System.out.println(queries.size());
+		log.debug(queries.size());
 	}
 
 	private class Graph {
