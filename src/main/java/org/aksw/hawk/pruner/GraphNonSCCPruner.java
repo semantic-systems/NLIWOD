@@ -53,9 +53,9 @@ public class GraphNonSCCPruner {
 		queries.add(new ParameterizedSparqlString(queryString));
 
 		GraphNonSCCPruner gSCCPruner = new GraphNonSCCPruner();
-		log.debug(queries.size());
+		log.debug("" + queries.size());
 		queries = gSCCPruner.prune(queries);
-		log.debug(queries.size());
+		log.debug("" + queries.size());
 	}
 
 	private class Graph {

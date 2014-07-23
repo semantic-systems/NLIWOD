@@ -7,8 +7,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.xml.ws.http.HTTPException;
-
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.nlp.posTree.MutableTreeNode;
 import org.slf4j.Logger;
@@ -147,49 +145,24 @@ public class SPARQLQueryBuilder {
 	}
 
 	private Set<RDFNode> sparql(String query) {
+		ArrayList<String> queries = Lists.newArrayList();
 		Set<RDFNode> set = Sets.newHashSet();
 		QueryExecution qexec = null;
-		String newQuery = null;
 		try {
 			if (query.contains("FILTER")) {
-				query = query.replaceAll("\n", "");
-				Pattern pattern = Pattern.compile(".+FILTER\\s*\\(\\s*\\?proj IN\\s*\\((.+)\\)\\).+");
-				Matcher m = pattern.matcher(query);
-				boolean found = m.find();
-				String group = m.group(1);
-				query = query.replace(group, "XXAKSWXX");
-				ArrayList<String> uris = Lists.newArrayList();
-				for (String uri : group.split(", ")) {
-					uris.add(uri.trim());
-				}
-				int sizeOfFilterThreshold = 50;
-				for (int i = 0; i < uris.size();) {
-					String filter = "";
-					for (int sizeOfFilter = 0; sizeOfFilter < sizeOfFilterThreshold && sizeOfFilter + i < uris.size(); sizeOfFilter++) {
-						filter += uris.get(i + sizeOfFilter);
-						if (sizeOfFilter < (sizeOfFilterThreshold - 1) && sizeOfFilter + i < (uris.size() - 1)) {
-							filter += ",";
-						}
-					}
-					i += sizeOfFilterThreshold;
-					newQuery = query.replace("XXAKSWXX", filter);
-					qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", newQuery);
-					ResultSet results = qexec.execSelect();
-					while (results.hasNext()) {
-						set.add(results.next().get("?proj"));
-					}
-				}
+				queries = splitLongFilterSPARQL(query);
 			} else {
-				qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", query);
+				queries.add(query);
+			}
+			for (String q : queries) {
+				qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", q);
 				ResultSet results = qexec.execSelect();
 				while (results.hasNext()) {
 					set.add(results.next().get("?proj"));
 				}
 			}
-		} catch (HTTPException e) {
-			log.error("Query: " + newQuery, e);
 		} catch (Exception e) {
-			log.error("Query: " + newQuery, e);
+			log.error("Query: " + queries.get(0), e);
 		} finally {
 			if (qexec != null) {
 				qexec.close();
@@ -198,18 +171,20 @@ public class SPARQLQueryBuilder {
 		return set;
 	}
 
-	public static void main(String args[]) {
-		String query = "SELECT ?proj WHERE {?proj ?p ?o. FILTER " + "(?proj IN (<http://(1)> , <http://2> , <http://3> , <http://4> , <http://5>, <http://6> , <http://7>   ))}";
+	private ArrayList<String> splitLongFilterSPARQL(String query) {
+		ArrayList<String> queries = Lists.newArrayList();
+
+		query = query.replaceAll("\n", "");
 		Pattern pattern = Pattern.compile(".+FILTER\\s*\\(\\s*\\?proj IN\\s*\\((.+)\\)\\).+");
 		Matcher m = pattern.matcher(query);
-		m.find();
+		log.debug("FILTER Pattern found" + m.find());
 		String group = m.group(1);
 		query = query.replace(group, "XXAKSWXX");
 		ArrayList<String> uris = Lists.newArrayList();
-		for (String uri : group.split(",")) {
+		for (String uri : group.split(", ")) {
 			uris.add(uri.trim());
 		}
-		int sizeOfFilterThreshold = 3;
+		int sizeOfFilterThreshold = 50;
 		for (int i = 0; i < uris.size();) {
 			String filter = "";
 			for (int sizeOfFilter = 0; sizeOfFilter < sizeOfFilterThreshold && sizeOfFilter + i < uris.size(); sizeOfFilter++) {
@@ -220,7 +195,17 @@ public class SPARQLQueryBuilder {
 			}
 			i += sizeOfFilterThreshold;
 			String newQuery = query.replace("XXAKSWXX", filter);
-			System.out.println(newQuery);
+			queries.add(newQuery);
+		}
+		return queries;
+	}
+
+	public static void main(String args[]) {
+		String query = "SELECT ?proj WHERE {?proj ?p ?o. FILTER " + "(?proj IN (<http://(1)> , <http://2,3> , <http://3> , <http://4> , <http://5>, <http://6> , <http://7>   ))}";
+		SPARQLQueryBuilder sqb = new SPARQLQueryBuilder();
+		ArrayList<String> i = sqb.splitLongFilterSPARQL(query);
+		for (String q : i) {
+			System.out.println(q);
 		}
 	}
 }
