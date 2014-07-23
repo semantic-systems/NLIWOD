@@ -34,7 +34,7 @@ public class Fox extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(Fox.class);
 
 	private String requestURL = "http://139.18.2.164:4444/api";
-	private String outputFormat = "N3";
+	private String outputFormat = "N-Triples";
 	private String taskType = "NER";
 	private String inputType = "text";
 
@@ -60,9 +60,8 @@ public class Fox extends ASpotter {
 			String foxJSONOutput = doTASK(question);
 
 			JSONParser parser = new JSONParser();
-			JSONArray jsonArray = (JSONArray) parser.parse(foxJSONOutput);
-
-			String output = URLDecoder.decode((String) ((JSONObject) jsonArray.get(0)).get("output"), "UTF-8");
+            JSONObject jsonArray = (JSONObject) parser.parse(foxJSONOutput);
+            String output = URLDecoder.decode((String) ((JSONObject) jsonArray).get("output"), "UTF-8");
 
 			String baseURI = "http://dbpedia.org";
 			Model model = ModelFactory.createDefaultModel();
@@ -82,7 +81,7 @@ public class Fox extends ASpotter {
 						ent.label = statement.getObject().asLiteral().getString();
 					} else if (predicateURI.equals("http://ns.aksw.org/scms/means")) {
 						String uri = statement.getObject().asResource().getURI();
-						String encode = uri.replaceAll(",","%2C");
+						String encode = uri.replaceAll(",", "%2C");
 						ResourceImpl e = new ResourceImpl(encode);
 						ent.uris.add(e);
 					} else if (predicateURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) {

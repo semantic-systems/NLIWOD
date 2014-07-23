@@ -22,6 +22,9 @@ public class SPARQLQueryBuilder {
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		// build projection part
+		if (q.languageToQuestion.get("en").contains("recipient")) {
+			System.out.println();
+		}
 		Set<StringBuilder> queryStrings = buildProjectionPart(q);
 		for (StringBuilder queryString : queryStrings) {
 			answer.put(queryString.toString(), sparql.sparql(queryString.toString()));
@@ -49,7 +52,7 @@ public class SPARQLQueryBuilder {
 							// TODO add super class,e.g., City -> Settlement
 						}
 					} else {
-						log.error("Too many or too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
+						log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 					}
 				} else if (bottomposTag.equals("CombinedNN")) {
 					// combined nouns are lists of abstracts containing does
@@ -102,6 +105,25 @@ public class SPARQLQueryBuilder {
 					}
 					// or it stems from a full-text look up (+ reversing of the
 					// predicates)
+					StringBuilder queryString = new StringBuilder("SELECT ?proj WHERE {\n");
+					queryString.append("?proj ?p <" + bottom.label + ">.\n").append("FILTER (?proj IN (\n");
+					for (ResourceImpl annotation : top.getAnnotations()) {
+						queryString.append("<" + annotation.getURI() + "> , ");
+					}
+					queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).}");
+					queries.add(queryString);
+					queryString = new StringBuilder("SELECT ?proj WHERE {\n");
+					queryString.append("<" + bottom.label + "> ?p ?proj.\n").append("FILTER (?proj IN (\n");
+					for (ResourceImpl annotation : top.getAnnotations()) {
+						queryString.append("<" + annotation.getURI() + "> , ");
+					}
+					queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).}");
+					queries.add(queryString);
+					i++;
+				} else if (bottomposTag.equals("ADD") && topPosTag.matches("CombinedNN")) {
+					// either way it is an unprecise verb binding
+					// CNN ,e.g., recipient
+					// reversing of the predicates
 					StringBuilder queryString = new StringBuilder("SELECT ?proj WHERE {\n");
 					queryString.append("?proj ?p <" + bottom.label + ">.\n").append("FILTER (?proj IN (\n");
 					for (ResourceImpl annotation : top.getAnnotations()) {

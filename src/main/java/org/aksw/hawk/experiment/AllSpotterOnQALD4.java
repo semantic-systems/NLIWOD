@@ -21,19 +21,19 @@ public class AllSpotterOnQALD4 {
 
 	public static void main(String args[]) {
 
-		String dataset = ClassLoader.getSystemResource("qald-4_hybrid_train.xml").getFile();
+		String dataset = "resources/qald-4_hybrid_train.xml";
 		QALD_Loader datasetLoader = new QALD_Loader();
 
 		List<Question> questions = datasetLoader.load(dataset);
 		for (Question q : questions) {
-			log.debug(q.languageToQuestion.get("en"));
+			log.info(q.languageToQuestion.get("en"));
 			try {
 				// 2. Disambiguate parts of the query
 				for (ASpotter nerdModule : new ASpotter[] { new Spotlight(), new Fox(), new TagMe(), new WikipediaMiner() }) {
 					q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
 					if (!q.languageToNamedEntites.isEmpty()) {
 						for (Entity ent : q.languageToNamedEntites.get("en")) {
-							log.debug("\t" + nerdModule.toString() + "\t" + ent.toString());
+							log.info("\t" + nerdModule.toString() + "\t" + ent.toString());
 						}
 					}
 				}
