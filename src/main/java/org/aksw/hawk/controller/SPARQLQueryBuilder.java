@@ -1,11 +1,8 @@
 package org.aksw.hawk.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.nlp.posTree.MutableTreeNode;
@@ -15,41 +12,26 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class SPARQLQueryBuilder {
 	Logger log = LoggerFactory.getLogger(SPARQLQueryBuilder.class);
+	SPARQL sparql = new SPARQL();
 
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		// build projection part
 		Set<StringBuilder> queryStrings = buildProjectionPart(q);
 		for (StringBuilder queryString : queryStrings) {
-			// TODO if filter is too large split it
-			answer.put(queryString.toString(), sparql(queryString.toString()));
+			answer.put(queryString.toString(), sparql.sparql(queryString.toString()));
 		}
 		return answer;
 	}
 
 	private Set<StringBuilder> buildProjectionPart(Question q) {
 		Set<StringBuilder> queries = Sets.newHashSet();
-		List<MutableTreeNode> bottomUp = Lists.newArrayList();
-		// iterate through left tree part
-		// assumption: this part of the tree is a path
-		MutableTreeNode tmp = q.tree.getRoot().getChildren().get(0);
-		while (tmp != null) {
-			bottomUp.add(tmp);
-			if (!tmp.getChildren().isEmpty()) {
-				tmp = tmp.getChildren().get(0);
-			} else {
-				tmp = null;
-			}
-		}
-		bottomUp = Lists.reverse(bottomUp);
+		List<MutableTreeNode> bottomUp = getProjectionPathBottumUp(q);
 		for (int i = 0; i < bottomUp.size(); ++i) {
 			MutableTreeNode bottom = bottomUp.get(i);
 			String bottomposTag = bottom.posTag;
@@ -64,8 +46,7 @@ public class SPARQLQueryBuilder {
 							StringBuilder queryString = new StringBuilder("SELECT ?proj WHERE {\n");
 							queryString.append("?proj a <" + annotation + ">.\n}");
 							queries.add(queryString);
-							// TODO add super class for things like City ->
-							// Settlement
+							// TODO add super class,e.g., City -> Settlement
 						}
 					} else {
 						log.error("Too many or too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
@@ -85,8 +66,8 @@ public class SPARQLQueryBuilder {
 						log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 					}
 				} else {
-					// strange case
-					// since entities should not be the question word type
+					// strange case since entities should not be the question
+					// word type
 					log.error("Strange case that never should happen: " + bottomposTag);
 				}
 			} else {
@@ -144,66 +125,20 @@ public class SPARQLQueryBuilder {
 		return queries;
 	}
 
-	private Set<RDFNode> sparql(String query) {
-		ArrayList<String> queries = Lists.newArrayList();
-		Set<RDFNode> set = Sets.newHashSet();
-		QueryExecution qexec = null;
-		try {
-			if (query.contains("FILTER")) {
-				queries = splitLongFilterSPARQL(query);
+	private List<MutableTreeNode> getProjectionPathBottumUp(Question q) {
+		List<MutableTreeNode> bottomUp = Lists.newArrayList();
+		// iterate through left tree part
+		// assumption: this part of the tree is a path
+		MutableTreeNode tmp = q.tree.getRoot().getChildren().get(0);
+		while (tmp != null) {
+			bottomUp.add(tmp);
+			if (!tmp.getChildren().isEmpty()) {
+				tmp = tmp.getChildren().get(0);
 			} else {
-				queries.add(query);
-			}
-			for (String q : queries) {
-				qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", q);
-				ResultSet results = qexec.execSelect();
-				while (results.hasNext()) {
-					set.add(results.next().get("?proj"));
-				}
-			}
-		} catch (Exception e) {
-			log.error("Query: " + queries.get(0), e);
-		} finally {
-			if (qexec != null) {
-				qexec.close();
+				tmp = null;
 			}
 		}
-		return set;
-	}
-
-	private ArrayList<String> splitLongFilterSPARQL(String query) {
-		ArrayList<String> queries = Lists.newArrayList();
-
-		query = query.replaceAll("\n", "");
-		Pattern pattern = Pattern.compile(".+FILTER\\s*\\(\\s*\\?proj IN\\s*\\((.+)\\)\\).+");
-		Matcher m = pattern.matcher(query);
-		log.debug("FILTER Pattern found" + m.find());
-		String group = m.group(1);
-		query = query.replace(group, "XXAKSWXX");
-
-		String[] uris = group.split(", ");
-		int sizeOfFilterThreshold = 50;
-		for (int i = 0; i < uris.length;) {
-			String filter = "";
-			for (int sizeOfFilter = 0; sizeOfFilter < sizeOfFilterThreshold && sizeOfFilter + i < uris.length; sizeOfFilter++) {
-				filter += uris[i + sizeOfFilter].trim();
-				if (sizeOfFilter < (sizeOfFilterThreshold - 1) && sizeOfFilter + i < (uris.length - 1)) {
-					filter += ",";
-				}
-			}
-			i += sizeOfFilterThreshold;
-			String newQuery = query.replace("XXAKSWXX", filter);
-			queries.add(newQuery);
-		}
-		return queries;
-	}
-
-	public static void main(String args[]) {
-		String query = "SELECT ?proj WHERE {?proj ?p ?o. FILTER " + "(?proj IN (<http://(1)> , <http://2,3> , <http://3> , <http://4> , <http://5>, <http://6> , <http://7>   ))}";
-		SPARQLQueryBuilder sqb = new SPARQLQueryBuilder();
-		ArrayList<String> i = sqb.splitLongFilterSPARQL(query);
-		for (String q : i) {
-			System.out.println(q);
-		}
+		bottomUp = Lists.reverse(bottomUp);
+		return bottomUp;
 	}
 }
