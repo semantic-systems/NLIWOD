@@ -27,7 +27,8 @@ public class SPARQLQueryBuilder {
 		}
 		Set<StringBuilder> queryStrings = buildProjectionPart(q);
 		for (StringBuilder queryString : queryStrings) {
-			answer.put(queryString.toString(), sparql.sparql(queryString.toString()));
+			String query = "SELECT ?proj WHERE {\n " + queryString.toString() + "}";
+			answer.put(queryString.toString(), sparql.sparql(query));
 		}
 		return answer;
 	}
@@ -46,8 +47,7 @@ public class SPARQLQueryBuilder {
 					// is either from Where or Who
 					if (bottom.getAnnotations().size() > 0) {
 						for (ResourceImpl annotation : bottom.getAnnotations()) {
-							StringBuilder queryString = new StringBuilder("SELECT ?proj WHERE {\n");
-							queryString.append("?proj a <" + annotation + ">.\n}");
+							StringBuilder queryString = new StringBuilder("?proj a <" + annotation + ">.");
 							queries.add(queryString);
 							// TODO add super class,e.g., City -> Settlement
 						}
@@ -58,12 +58,11 @@ public class SPARQLQueryBuilder {
 					// combined nouns are lists of abstracts containing does
 					// words, i.e., type constraints
 					if (bottom.getAnnotations().size() > 0) {
-						StringBuilder queryString = new StringBuilder("SELECT ?proj WHERE {\n");
-						queryString.append("?proj ?p ?o.\n").append("FILTER (?proj IN (\n");
+						StringBuilder queryString = new StringBuilder("?proj ?p ?o.\nFILTER (?proj IN (\n");
 						for (ResourceImpl annotation : bottom.getAnnotations()) {
 							queryString.append("<" + annotation.getURI() + "> , ");
 						}
-						queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).}");
+						queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).");
 						queries.add(queryString);
 					} else {
 						log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
@@ -80,63 +79,43 @@ public class SPARQLQueryBuilder {
 				// heuristically say that here NNs or VBs stand for a predicates
 				if (bottomposTag.equals("CombinedNN") && topPosTag.matches("VB(.)*|NN(.)*")) {
 					for (ResourceImpl predicates : top.getAnnotations()) {
-						StringBuilder queryString = new StringBuilder("SELECT ?proj WHERE {\n");
-						queryString.append("?proj <" + predicates + "> ?o.\n").append("FILTER (?proj IN (\n");
+						StringBuilder queryString = new StringBuilder("?proj <" + predicates + "> ?o.\nFILTER (?proj IN (\n");
 						for (ResourceImpl annotation : bottom.getAnnotations()) {
 							queryString.append("<" + annotation.getURI() + "> , ");
 						}
-						queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).}");
+						queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).");
 						queries.add(queryString);
-						queryString = new StringBuilder("SELECT ?proj WHERE {\n");
-						queryString.append("?o <" + predicates + "> ?proj.\n").append("FILTER (?proj IN (\n");
+
+						queryString = new StringBuilder("?o <" + predicates + "> ?proj.\nFILTER (?proj IN (\n");
 						for (ResourceImpl annotation : bottom.getAnnotations()) {
 							queryString.append("<" + annotation.getURI() + "> , ");
 						}
-						queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).}");
+						queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).");
 						queries.add(queryString);
 					}
 					i++;
-				} else if (bottomposTag.equals("ADD") && topPosTag.matches("VB(.)*|NN(.)*")) {
+				} else if (bottomposTag.equals("ADD") && topPosTag.matches("VB(.)*|NN(.)*|CombinedNN")) {
 					// either way it is an unprecise verb binding
-					for (ResourceImpl annotation : top.getAnnotations()) {
-						StringBuilder queryString = new StringBuilder("SELECT ?proj WHERE {\n");
-						queryString.append("?proj <" + annotation + "> <" + bottom.label + ">.\n}");
-						queries.add(queryString);
+					if (!topPosTag.matches("CombinedNN")) {
+						for (ResourceImpl annotation : top.getAnnotations()) {
+							StringBuilder queryString = new StringBuilder("?proj <" + annotation + "> <" + bottom.label + ">.");
+							queries.add(queryString);
+						}
 					}
 					// or it stems from a full-text look up (+ reversing of the
 					// predicates)
-					StringBuilder queryString = new StringBuilder("SELECT ?proj WHERE {\n");
-					queryString.append("?proj ?p <" + bottom.label + ">.\n").append("FILTER (?proj IN (\n");
+					StringBuilder queryString = new StringBuilder("?proj ?p <" + bottom.label + ">.\n").append("FILTER (?proj IN (\n");
 					for (ResourceImpl annotation : top.getAnnotations()) {
 						queryString.append("<" + annotation.getURI() + "> , ");
 					}
-					queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).}");
+					queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).");
 					queries.add(queryString);
-					queryString = new StringBuilder("SELECT ?proj WHERE {\n");
-					queryString.append("<" + bottom.label + "> ?p ?proj.\n").append("FILTER (?proj IN (\n");
+
+					queryString = new StringBuilder("<" + bottom.label + "> ?p ?proj.\nFILTER (?proj IN (\n");
 					for (ResourceImpl annotation : top.getAnnotations()) {
 						queryString.append("<" + annotation.getURI() + "> , ");
 					}
-					queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).}");
-					queries.add(queryString);
-					i++;
-				} else if (bottomposTag.equals("ADD") && topPosTag.matches("CombinedNN")) {
-					// either way it is an unprecise verb binding
-					// CNN ,e.g., recipient
-					// reversing of the predicates
-					StringBuilder queryString = new StringBuilder("SELECT ?proj WHERE {\n");
-					queryString.append("?proj ?p <" + bottom.label + ">.\n").append("FILTER (?proj IN (\n");
-					for (ResourceImpl annotation : top.getAnnotations()) {
-						queryString.append("<" + annotation.getURI() + "> , ");
-					}
-					queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).}");
-					queries.add(queryString);
-					queryString = new StringBuilder("SELECT ?proj WHERE {\n");
-					queryString.append("<" + bottom.label + "> ?p ?proj.\n").append("FILTER (?proj IN (\n");
-					for (ResourceImpl annotation : top.getAnnotations()) {
-						queryString.append("<" + annotation.getURI() + "> , ");
-					}
-					queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).}");
+					queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).");
 					queries.add(queryString);
 					i++;
 				} else {
