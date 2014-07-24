@@ -107,7 +107,7 @@ public class SPARQLQueryBuilder {
 						queries.add(queryString);
 					}
 					i++;
-				} else if (bottomposTag.equals("ADD") && topPosTag.matches("VB(.)*|NN(.)*|CombinedNN")) {
+				} else if (bottomposTag.matches("ADD|NN") && topPosTag.matches("VB(.)*|NN(.)*|CombinedNN")) {
 					// either way it is an unprecise verb binding
 					if (!topPosTag.matches("CombinedNN")) {
 						for (ResourceImpl annotation : top.getAnnotations()) {
