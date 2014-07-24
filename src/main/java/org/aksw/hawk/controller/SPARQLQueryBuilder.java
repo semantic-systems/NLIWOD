@@ -22,7 +22,7 @@ public class SPARQLQueryBuilder {
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		// build projection part
-		if (q.languageToQuestion.get("en").contains("recipient")) {
+		if (q.languageToQuestion.get("en").contains("crown")) {
 			System.out.println();
 		}
 		Set<StringBuilder> queryStrings = buildProjectionPart(q);
@@ -44,53 +44,66 @@ public class SPARQLQueryBuilder {
 			// head of this node is root element
 			if (top.parent == null) {
 				if (bottomposTag.matches("WRB|WP|NN(.)*")) {
-					// is either from Where or Who
-					if (bottom.getAnnotations().size() > 0) {
-						for (ResourceImpl annotation : bottom.getAnnotations()) {
-							StringBuilder queryString = new StringBuilder("?proj a <" + annotation + ">.");
-							queries.add(queryString);
-							// TODO add super class,e.g., City -> Settlement
+					if (queries.isEmpty()) {
+						// is either from Where or Who
+						if (bottom.getAnnotations().size() > 0) {
+							for (ResourceImpl annotation : bottom.getAnnotations()) {
+								queries.add(new StringBuilder("?proj a <" + annotation + ">."));
+								// TODO add super class,e.g., City -> Settlement
+							}
+						} else {
+							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 						}
 					} else {
-						log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
+						// is either from Where or Who
+						if (bottom.getAnnotations().size() > 0) {
+							for (ResourceImpl annotation : bottom.getAnnotations()) {
+								for (StringBuilder existingQueries : queries) {
+									existingQueries.append("?proj a <" + annotation + ">.");
+									// TODO add super class,e.g., City -> Settlement
+								}
+							}
+						} else {
+							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
+						}
 					}
 				} else if (bottomposTag.equals("CombinedNN")) {
-					// combined nouns are lists of abstracts containing does
-					// words, i.e., type constraints
-					if (bottom.getAnnotations().size() > 0) {
-						StringBuilder queryString = new StringBuilder("?proj ?p ?o.\nFILTER (?proj IN (\n");
-						for (ResourceImpl annotation : bottom.getAnnotations()) {
-							queryString.append("<" + annotation.getURI() + "> , ");
+					if (queries.isEmpty()) {
+						// combined nouns are lists of abstracts containing does words, i.e., type constraints
+						if (bottom.getAnnotations().size() > 0) {
+							StringBuilder queryString = new StringBuilder("?proj ?p ?o.\nFILTER (?proj IN (\n");
+							joinURIsForFilterExpression(bottom, queryString);
+							queries.add(queryString);
+						} else {
+							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 						}
-						queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).");
-						queries.add(queryString);
 					} else {
-						log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
+						// combined nouns are lists of abstracts containing does words, i.e., type constraints
+						if (bottom.getAnnotations().size() > 0) {
+							for (StringBuilder existingQueries : queries) {
+								existingQueries.append("?proj ?p ?o.\nFILTER (?proj IN (\n");
+								joinURIsForFilterExpression(bottom, existingQueries);
+							}
+						} else {
+							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
+						}
 					}
 				} else {
-					// strange case since entities should not be the question
-					// word type
+					// strange case since entities should not be the question word type
 					log.error("Strange case that never should happen: " + bottomposTag);
 				}
+
 			} else {
-				// TODO build it in a way, that says that down here are only
-				// projection variable constraining modules that need to be
-				// advanced by the top
-				// heuristically say that here NNs or VBs stand for a predicates
+				// TODO build it in a way, that says that down here are only projection variable constraining modules that need to be advanced by the top heuristically say that here NNs or VBs stand
+				// for a predicates
 				if (bottomposTag.equals("CombinedNN") && topPosTag.matches("VB(.)*|NN(.)*")) {
 					for (ResourceImpl predicates : top.getAnnotations()) {
 						StringBuilder queryString = new StringBuilder("?proj <" + predicates + "> ?o.\nFILTER (?proj IN (\n");
-						for (ResourceImpl annotation : bottom.getAnnotations()) {
-							queryString.append("<" + annotation.getURI() + "> , ");
-						}
-						queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).");
+						joinURIsForFilterExpression(bottom, queryString);
 						queries.add(queryString);
 
 						queryString = new StringBuilder("?o <" + predicates + "> ?proj.\nFILTER (?proj IN (\n");
-						for (ResourceImpl annotation : bottom.getAnnotations()) {
-							queryString.append("<" + annotation.getURI() + "> , ");
-						}
-						queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).");
+						joinURIsForFilterExpression(bottom, queryString);
 						queries.add(queryString);
 					}
 					i++;
@@ -102,20 +115,13 @@ public class SPARQLQueryBuilder {
 							queries.add(queryString);
 						}
 					}
-					// or it stems from a full-text look up (+ reversing of the
-					// predicates)
-					StringBuilder queryString = new StringBuilder("?proj ?p <" + bottom.label + ">.\n").append("FILTER (?proj IN (\n");
-					for (ResourceImpl annotation : top.getAnnotations()) {
-						queryString.append("<" + annotation.getURI() + "> , ");
-					}
-					queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).");
+					// or it stems from a full-text look up (+ reversing of the predicates)
+					StringBuilder queryString = new StringBuilder("?proj ?p <" + bottom.label + ">.\nFILTER (?proj IN (\n");
+					joinURIsForFilterExpression(top, queryString);
 					queries.add(queryString);
 
 					queryString = new StringBuilder("<" + bottom.label + "> ?p ?proj.\nFILTER (?proj IN (\n");
-					for (ResourceImpl annotation : top.getAnnotations()) {
-						queryString.append("<" + annotation.getURI() + "> , ");
-					}
-					queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).");
+					joinURIsForFilterExpression(top, queryString);
 					queries.add(queryString);
 					i++;
 				} else {
@@ -124,6 +130,20 @@ public class SPARQLQueryBuilder {
 			}
 		}
 		return queries;
+	}
+
+	/**
+	 * 
+	 * @param top
+	 *            contains |URIs|=n
+	 * @param queryString
+	 *            contains so far a SOMETHING. FILTER (?proj IN (...)). Goal is to insert the URIs into the brackets in a valid SPARQL way
+	 */
+	private void joinURIsForFilterExpression(MutableTreeNode top, StringBuilder queryString) {
+		for (ResourceImpl annotation : top.getAnnotations()) {
+			queryString.append("<" + annotation.getURI() + "> , ");
+		}
+		queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).");
 	}
 
 	private List<MutableTreeNode> getProjectionPathBottumUp(Question q) {
