@@ -28,7 +28,10 @@ public class SPARQLQueryBuilder {
 		Set<StringBuilder> queryStrings = buildProjectionPart(q);
 		for (StringBuilder queryString : queryStrings) {
 			String query = "SELECT ?proj WHERE {\n " + queryString.toString() + "}";
-			answer.put(queryString.toString(), sparql.sparql(query));
+			Set<RDFNode> answerSet = sparql.sparql(query);
+			if (!answerSet.isEmpty()) {
+				answer.put(queryString.toString(), answerSet);
+			}
 		}
 		return answer;
 	}
