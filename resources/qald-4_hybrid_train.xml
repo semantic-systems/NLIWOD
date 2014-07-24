@@ -324,7 +324,7 @@ WHERE {
         ?uri dbo:architect res:Shreve,_Lamb_&_Harmon .
       { ?uri dbo:architecturalStyle res:Art_Deco . }
       UNION
-      { ?uri text:"style text:"art deco" . } 
+      { ?uri text:"style" text:"art deco" . } 
 }
 ]]>
 		</pseudoquery>
