@@ -5,13 +5,20 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
+import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
+import org.aksw.jena_sparql_api.cache.extra.CacheCoreH2;
+import org.aksw.jena_sparql_api.cache.extra.CacheEx;
+import org.aksw.jena_sparql_api.cache.extra.CacheExImpl;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.delay.core.QueryExecutionFactoryDelay;
+import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
@@ -32,8 +39,23 @@ public class SPARQL {
 				queries.add(query);
 			}
 			for (String q : queries) {
-				qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", q);
-				ResultSet results = qexec.execSelect();
+				// AKSW SPARQL API call 
+//				QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql", "http://dbpedia.org");
+				QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
+//				QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/", "http://dbpedia.org");
+//				qef = new QueryExecutionFactoryDelay(qef, 2000);
+				long timeToLive = 30l * 24l * 60l * 60l * 1000l;
+				CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
+				CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
+				qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
+				
+				QueryExecution qe = qef.createQueryExecution(q);
+
+				ResultSet results = qe.execSelect();
+
+				// Standard Jena SPARQL call
+				// qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", q);
+				// ResultSet results = qexec.execSelect();
 				while (results.hasNext()) {
 					set.add(results.next().get("?proj"));
 				}

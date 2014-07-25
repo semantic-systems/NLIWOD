@@ -45,11 +45,13 @@ public class SPARQLQueryBuilder {
 					StringBuilder variant3 = new StringBuilder(query.toString()).append("?const  ?p ?proj.");
 					StringBuilder variant4 = new StringBuilder(query.toString()).append("?proj   ?p ?const.");
 
-					//TODO build other variants
 					sb.add(variant1);
 					sb.add(variant2);
 					sb.add(variant3);
 					sb.add(variant4);
+					//TODO build other variants
+					
+					
 				}
 			}
 		} else {
