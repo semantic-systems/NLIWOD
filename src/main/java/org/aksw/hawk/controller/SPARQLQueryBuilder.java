@@ -15,19 +15,16 @@ import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class SPARQLQueryBuilder {
 	Logger log = LoggerFactory.getLogger(SPARQLQueryBuilder.class);
-	SPARQLQueryBuilder_ProjectionPart projection = new SPARQLQueryBuilder_ProjectionPart(new SPARQL());
-
+	SPARQLQueryBuilder_ProjectionPart projection = new SPARQLQueryBuilder_ProjectionPart();
+	SPARQL sparql = new SPARQL();
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		// build projection part
-		if (q.languageToQuestion.get("en").contains("crown")) {
-			System.out.println();
-		}
 		Set<StringBuilder> queryStrings = projection.buildProjectionPart(this, q);
-		queryStrings = constrain(queryStrings, q);
+		queryStrings = buildConstraintPart(queryStrings, q);
 		for (StringBuilder queryString : queryStrings) {
 			String query = "SELECT ?proj WHERE {\n " + queryString.toString() + "}";
-			Set<RDFNode> answerSet = projection.sparql.sparql(query);
+			Set<RDFNode> answerSet = sparql.sparql(query);
 			if (!answerSet.isEmpty()) {
 				answer.put(queryString.toString(), answerSet);
 			}
@@ -35,17 +32,24 @@ public class SPARQLQueryBuilder {
 		return answer;
 	}
 
-	private Set<StringBuilder> constrain(Set<StringBuilder> queryStrings, Question q) {
+	private Set<StringBuilder> buildConstraintPart(Set<StringBuilder> queryStrings, Question q) {
 		Set<StringBuilder> sb = Sets.newHashSet();
 		MutableTreeNode root = q.tree.getRoot();
 		if (!root.getAnnotations().isEmpty()) {
 			for (StringBuilder query : queryStrings) {
 				for (ResourceImpl anno : root.getAnnotations()) {
-					StringBuilder variant1 = new StringBuilder(query.toString()).append("?proj <" + anno + "> ?const.");
+					// root has a valuable annotation from NN* or VB*
+					StringBuilder variant1 = new StringBuilder(query.toString()).append("?proj  <" + anno + "> ?const.");
 					StringBuilder variant2 = new StringBuilder(query.toString()).append("?const <" + anno + "> ?proj.");
+					// root has annotations but they are not valuable, e.g. took, is, was, ride
+					StringBuilder variant3 = new StringBuilder(query.toString()).append("?const  ?p ?proj.");
+					StringBuilder variant4 = new StringBuilder(query.toString()).append("?proj   ?p ?const.");
+
 					//TODO build other variants
 					sb.add(variant1);
 					sb.add(variant2);
+					sb.add(variant3);
+					sb.add(variant4);
 				}
 			}
 		} else {

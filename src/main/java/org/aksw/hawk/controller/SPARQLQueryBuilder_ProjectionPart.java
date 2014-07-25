@@ -11,15 +11,14 @@ import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class SPARQLQueryBuilder_ProjectionPart {
-	public SPARQL sparql;
-
-	public SPARQLQueryBuilder_ProjectionPart(SPARQL sparql) {
-		this.sparql = sparql;
-	}
 
 	Set<StringBuilder> buildProjectionPart(SPARQLQueryBuilder sparqlQueryBuilder, Question q) {
 		Set<StringBuilder> queries = Sets.newHashSet();
 		List<MutableTreeNode> bottomUp = getProjectionPathBottumUp(q);
+
+		// empty restriction for projection part in order to account for misinformation in left tree
+		// TODO this leads to tremendous increase of runtime
+		// queries.add(new StringBuilder("?proj ?p ?o."));
 		for (int i = 0; i < bottomUp.size(); ++i) {
 			MutableTreeNode bottom = bottomUp.get(i);
 			String bottomposTag = bottom.posTag;

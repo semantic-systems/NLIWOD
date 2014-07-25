@@ -17,6 +17,9 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class SPARQL {
 	Logger log = LoggerFactory.getLogger(SPARQL.class);
+	int sizeOfFilterThreshold = 100;
+
+	// TODO treshhold can be increased by introducing prefixes
 
 	public Set<RDFNode> sparql(String query) {
 		ArrayList<String> queries = Lists.newArrayList();
@@ -56,7 +59,6 @@ public class SPARQL {
 		query = query.replace(group, "XXAKSWXX");
 
 		String[] uris = group.split(", ");
-		int sizeOfFilterThreshold = 50;
 		for (int i = 0; i < uris.length;) {
 			String filter = "";
 			for (int sizeOfFilter = 0; sizeOfFilter < sizeOfFilterThreshold && sizeOfFilter + i < uris.length; sizeOfFilter++) {
