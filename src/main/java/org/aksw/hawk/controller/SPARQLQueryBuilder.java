@@ -1,9 +1,11 @@
 package org.aksw.hawk.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.index.DBAbstractsIndex;
 import org.aksw.hawk.nlp.posTree.MutableTreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,8 @@ public class SPARQLQueryBuilder {
 	Logger log = LoggerFactory.getLogger(SPARQLQueryBuilder.class);
 	SPARQLQueryBuilder_ProjectionPart projection = new SPARQLQueryBuilder_ProjectionPart();
 	SPARQL sparql = new SPARQL();
+	DBAbstractsIndex index = new DBAbstractsIndex();
+
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		// build projection part
@@ -35,6 +39,18 @@ public class SPARQLQueryBuilder {
 	private Set<StringBuilder> buildConstraintPart(Set<StringBuilder> queryStrings, Question q) {
 		Set<StringBuilder> sb = Sets.newHashSet();
 		MutableTreeNode root = q.tree.getRoot();
+
+		{ // full-text stuff like protected
+			for (StringBuilder query : queryStrings) {
+				List<String> uris = index.listAbstractsContaining(root.label);
+				StringBuilder fulltextConstraint = new StringBuilder("FILTER (?proj IN (\n");
+				for (String annotation : uris) {
+					fulltextConstraint.append("<" + annotation + "> , ");
+				}
+				fulltextConstraint.deleteCharAt(fulltextConstraint.lastIndexOf(",")).append(")).");
+				sb.add(query.append(fulltextConstraint.toString()));
+			}
+		}
 		if (!root.getAnnotations().isEmpty()) {
 			for (StringBuilder query : queryStrings) {
 				for (ResourceImpl anno : root.getAnnotations()) {
@@ -49,9 +65,8 @@ public class SPARQLQueryBuilder {
 					sb.add(variant2);
 					sb.add(variant3);
 					sb.add(variant4);
-					//TODO build other variants
-					
-					
+					// TODO build other variants
+
 				}
 			}
 		} else {

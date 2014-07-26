@@ -11,7 +11,6 @@ import org.aksw.jena_sparql_api.cache.extra.CacheCoreH2;
 import org.aksw.jena_sparql_api.cache.extra.CacheEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheExImpl;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.delay.core.QueryExecutionFactoryDelay;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,21 +33,22 @@ public class SPARQL {
 		QueryExecution qexec = null;
 		try {
 			if (query.contains("FILTER")) {
+				query = intersectFILTERS(query);
 				queries = splitLongFilterSPARQL(query);
 			} else {
 				queries.add(query);
 			}
 			for (String q : queries) {
-				// AKSW SPARQL API call 
-//				QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql", "http://dbpedia.org");
+				// AKSW SPARQL API call
+				// QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql", "http://dbpedia.org");
 				QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
-//				QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/", "http://dbpedia.org");
-//				qef = new QueryExecutionFactoryDelay(qef, 2000);
+				// QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/", "http://dbpedia.org");
+				// qef = new QueryExecutionFactoryDelay(qef, 2000);
 				long timeToLive = 30l * 24l * 60l * 60l * 1000l;
 				CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
 				CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
 				qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
-				
+
 				QueryExecution qe = qef.createQueryExecution(q);
 
 				ResultSet results = qe.execSelect();
@@ -68,6 +68,18 @@ public class SPARQL {
 			}
 		}
 		return set;
+	}
+
+	private String intersectFILTERS(String query) {
+		// if (more than one FILTER expression exists)
+		// then
+		// if (expressions has variables in common)
+		// then
+		// extract URIs
+		// intersect the sets
+		// rebuild the URIs
+		// endif endif
+		return null;
 	}
 
 	private ArrayList<String> splitLongFilterSPARQL(String query) {
