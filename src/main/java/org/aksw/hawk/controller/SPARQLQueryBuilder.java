@@ -41,6 +41,7 @@ public class SPARQLQueryBuilder {
 		MutableTreeNode root = q.tree.getRoot();
 
 		{ // full-text stuff like protected
+			//TODO bug here, this gets added to early to all other things, must be handled like variant 5 below
 			for (StringBuilder query : queryStrings) {
 				List<String> uris = index.listAbstractsContaining(root.label);
 				StringBuilder fulltextConstraint = new StringBuilder("FILTER (?proj IN (\n");

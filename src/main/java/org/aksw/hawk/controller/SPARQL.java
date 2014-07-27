@@ -1,6 +1,9 @@
 package org.aksw.hawk.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,7 +18,9 @@ import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.ResultSet;
@@ -70,18 +75,40 @@ public class SPARQL {
 		return set;
 	}
 
-	private String intersectFILTERS(String query) {
-		// if (more than one FILTER expression exists)
-		// then
-		// if (expressions has variables in common)
-		// then
-		// extract URIs
-		// intersect the sets
-		// rebuild the URIs
-		// endif endif
-		return null;
+	public String intersectFILTERS(String query) {
+		// find all filter expressions
+		Pattern pattern = Pattern.compile("FILTER\\s*\\(\\s*\\?(\\w+) IN\\s*\\(((.+?))\\)\\).", Pattern.MULTILINE);
+		Matcher m = pattern.matcher(query);
+
+		Map<String, Set<String>> intersectionSets = Maps.newHashMap();
+		while (m.find()) {
+			query = query.replace(m.group(0), "");
+			String proj = m.group(1);
+			HashSet<String> c = new HashSet<String>(Arrays.asList(m.group(2).split(", ")));
+			if (intersectionSets.containsKey(proj)) {
+				// intersect FILTER IN expressions with the same projection variable, so the endpoint does not need to do it
+				Set<String> alreadyIdentifiedSet = intersectionSets.get(proj);
+				alreadyIdentifiedSet.retainAll(c);
+			} else {
+				intersectionSets.put(proj, c);
+			}
+		}
+		// rebuild the SPARQL query
+		for (String projectionVariable : intersectionSets.keySet()) {
+			Set<String> uris = intersectionSets.get(projectionVariable);
+			query = query.replace("}", "FILTER ( ?" + projectionVariable + " IN (" + Joiner.on(", ").join(uris) + ")). }");
+		}
+		return query;
 	}
 
+	public ArrayList<String> splitLongFilterSPARQL(String query, int threshold) {
+		this.sizeOfFilterThreshold = threshold;
+		return splitLongFilterSPARQL(query);
+
+	}
+
+	// TODO currently only ?proj gets splitted but not other long filter.
+	//think about the right semantics to do so
 	private ArrayList<String> splitLongFilterSPARQL(String query) {
 		ArrayList<String> queries = Lists.newArrayList();
 
@@ -98,7 +125,7 @@ public class SPARQL {
 			for (int sizeOfFilter = 0; sizeOfFilter < sizeOfFilterThreshold && sizeOfFilter + i < uris.length; sizeOfFilter++) {
 				filter += uris[i + sizeOfFilter].trim();
 				if (sizeOfFilter < (sizeOfFilterThreshold - 1) && sizeOfFilter + i < (uris.length - 1)) {
-					filter += ",";
+					filter += ", ";
 				}
 			}
 			i += sizeOfFilterThreshold;
@@ -109,9 +136,15 @@ public class SPARQL {
 	}
 
 	public static void main(String args[]) {
-		String query = "SELECT ?proj WHERE {?proj ?p ?o. FILTER " + "(?proj IN (<http://(1)> , <http://2,3> , <http://3> , <http://4> , <http://5>, <http://6> , <http://7>   ))}";
+		String query = "SELECT ?proj WHERE {?proj ?p ?o. "
+				+ "FILTER (?proj IN (<http://(1)> , <http://2,3> , <http://3> , <http://4> , <http://5>, <http://6> , <http://7>   )). "
+				+ "FILTER (?proj IN (<http://(1A)> , <http://2,3> , <http://3> , <http://4B> , <http://5B>, <http://6> , <http://7B>   ))."
+				+ "FILTER (?s IN ( <http://4Bs> , <http://5Bs>, <http://6> , <http://7B>   ))."
+				+ " ?s ?p ?oo."
+				+ "}";
 		SPARQL sqb = new SPARQL();
-		ArrayList<String> i = sqb.splitLongFilterSPARQL(query);
+		query = sqb.intersectFILTERS(query);
+		ArrayList<String> i = sqb.splitLongFilterSPARQL(query, 2);
 		for (String q : i) {
 			System.out.println(q);
 		}
