@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.xml.ws.http.HTTPException;
 
 import org.aksw.autosparql.commons.qald.uri.Entity;
+import org.aksw.hawk.cache.AbstractIndexCache;
 import org.aksw.hawk.index.DBAbstractsIndex;
 import org.aksw.hawk.nlp.SentenceDetector;
 import org.aksw.hawk.nlp.spotter.ASpotter;
@@ -43,13 +44,14 @@ public class SystemAnswerer {
 	private static final String PROJECTION_VARIABLE = "?a0";
 	private Logger log = LoggerFactory.getLogger(SystemAnswerer.class);
 	private String HTTP_LIVE_DBPEDIA_ORG_SPARQL;
-	private DBAbstractsIndex abstractsIndex = new DBAbstractsIndex();
+	private DBAbstractsIndex abstractsIndex;
 	private Model rdfsModel;
 	private ASpotter spotter;
 	private int sizeOfWindow = 5;
 
-	public SystemAnswerer(String endpoint, ASpotter spotter) {
+	public SystemAnswerer(String endpoint, ASpotter spotter, DBAbstractsIndex abstractsIndex) {
 		HTTP_LIVE_DBPEDIA_ORG_SPARQL = endpoint;
+		this.abstractsIndex = abstractsIndex;
 		this.spotter = spotter;
 		this.rdfsModel = ModelFactory.createDefaultModel();
 		FileManager.get().readModel(rdfsModel, new File("resources/dbpedia_3.9.owl").getAbsolutePath());
@@ -98,9 +100,7 @@ public class SystemAnswerer {
 							if (ne.size() > 0) {
 								// replace variable by found NE
 								/*
-								 * TODO bug: if variable is projection variable
-								 * then a URI is the projection variable which
-								 * is an error, discard query
+								 * TODO bug: if variable is projection variable then a URI is the projection variable which is an error, discard query
 								 */
 								String name = "?" + subject.getName();
 								for (int i = 0; i < ne.size(); i++) {
@@ -120,9 +120,7 @@ public class SystemAnswerer {
 						List<String> list = abstractsIndex.listAbstractsContaining(localName);
 						String name = "?" + subject.getName();
 						/*
-						 * TODO bug: if variable is projection variable then a
-						 * URI is the projection variable which is an error,
-						 * discard query
+						 * TODO bug: if variable is projection variable then a URI is the projection variable which is an error, discard query
 						 */
 						if (name.equals(PROJECTION_VARIABLE)) {
 							return resultQueries;
@@ -152,9 +150,7 @@ public class SystemAnswerer {
 							if (ne.size() > 0) {
 								// replace variable by found NE
 								/*
-								 * TODO bug: if variable is projection variable
-								 * then a URI is the projection variable which
-								 * is an error, discard query
+								 * TODO bug: if variable is projection variable then a URI is the projection variable which is an error, discard query
 								 */
 								String name = "?" + objectVariable.getName();
 								for (int i = 0; i < ne.size(); i++) {
@@ -340,10 +336,13 @@ public class SystemAnswerer {
 	}
 
 	public static void main(String args[]) {
-		String q = "SELECT ?a0 WHERE { " + "?a0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Settlement> . " + "?a1 <http://dbpedia.org/ontology/birthPlace> ?a0 . " + "?a1 <assassin> <http://dbpedia.org/resource/Martin_Luther_King%2C_Jr.> .}";
+		String q = "SELECT ?a0 WHERE { "
+				+ "?a0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Settlement> . "
+				+ "?a1 <http://dbpedia.org/ontology/birthPlace> ?a0 . "
+				+ "?a1 <assassin> <http://dbpedia.org/resource/Martin_Luther_King%2C_Jr.> .}";
 		ParameterizedSparqlString pss = new ParameterizedSparqlString(q);
 
-		SystemAnswerer sys = new SystemAnswerer("http://dbpedia.org/sparql", new Spotlight());
+		SystemAnswerer sys = new SystemAnswerer("http://dbpedia.org/sparql", new Spotlight(), new DBAbstractsIndex(new AbstractIndexCache()));
 
 		HashMap<String, Set<RDFNode>> ans = sys.answer(pss);
 		for (String key : ans.keySet()) {

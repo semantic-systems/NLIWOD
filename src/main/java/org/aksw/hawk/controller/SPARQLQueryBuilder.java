@@ -19,7 +19,11 @@ public class SPARQLQueryBuilder {
 	Logger log = LoggerFactory.getLogger(SPARQLQueryBuilder.class);
 	SPARQLQueryBuilder_ProjectionPart projection = new SPARQLQueryBuilder_ProjectionPart();
 	SPARQL sparql = new SPARQL();
-	DBAbstractsIndex index = new DBAbstractsIndex();
+	DBAbstractsIndex index;
+
+	public SPARQLQueryBuilder(DBAbstractsIndex index) {
+		this.index = index;
+	}
 
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
@@ -40,7 +44,7 @@ public class SPARQLQueryBuilder {
 		Set<StringBuilder> sb = Sets.newHashSet();
 		MutableTreeNode root = q.tree.getRoot();
 
-	 // full-text stuff e.g. "protected"
+		// full-text stuff e.g. "protected"
 		List<String> uris = index.listAbstractsContaining(root.label);
 		if (!root.getAnnotations().isEmpty()) {
 			for (StringBuilder query : queryStrings) {
@@ -51,7 +55,7 @@ public class SPARQLQueryBuilder {
 					// root has annotations but they are not valuable, e.g. took, is, was, ride
 					StringBuilder variant3 = new StringBuilder(query.toString()).append("?const  ?p ?proj.");
 					StringBuilder variant4 = new StringBuilder(query.toString()).append("?proj   ?p ?const.");
-					
+
 					StringBuilder variant5 = new StringBuilder(query.toString()).append("FILTER (?proj IN (\n");
 					for (String annotation : uris) {
 						variant5.append("<" + annotation + "> , ");

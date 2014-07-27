@@ -39,7 +39,8 @@ public class PipelineShortRecall {
 	Visualizer vis = new Visualizer();
 	SentenceToSequence sentenceToSequence;
 	Fulltexter fulltexter;
-	Annotater annotater = new Annotater();
+	Annotater annotater;
+	 SPARQLQueryBuilder queryBuilder;
 
 	void run() throws IOException {
 		// 1. read in Questions from QALD 4
@@ -48,7 +49,6 @@ public class PipelineShortRecall {
 		double overallp = 0;
 		double overallr = 0;
 		double counter = 0;
-
 		for (Question q : questions) {
 			// by now only work on resource questions
 			if (q.answerType.equals("resource") && isSELECTquery(q.pseudoSparqlQuery, q.sparqlQuery)) {
@@ -71,7 +71,6 @@ public class PipelineShortRecall {
 				// log.debug(q.tree.toString());
 
 				// 6. Build queries via subqueries
-				SPARQLQueryBuilder queryBuilder = new SPARQLQueryBuilder();
 				Map<String, Set<RDFNode>> answer = queryBuilder.build(q);
 
 				// fulltexter.fulltext(q);

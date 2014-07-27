@@ -18,10 +18,14 @@ import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class Fulltexter {
 	public static Logger log = LoggerFactory.getLogger(Fulltexter.class);
+	private DBAbstractsIndex index;
 
+	public Fulltexter(DBAbstractsIndex index){
+		this.index = index;
+	}
+	
 	public HashMap<String, Set<RDFNode>> fulltext(Question q) {
 		HashMap<String, Set<RDFNode>> map = Maps.newHashMap();
-		DBAbstractsIndex index = new DBAbstractsIndex();
 		Set<RDFNode> set = Sets.newHashSet();
 		Stack<MutableTreeNode> stack = new Stack<MutableTreeNode>();
 		stack.push(q.tree.getRoot());

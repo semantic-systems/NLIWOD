@@ -18,11 +18,16 @@ import com.google.common.base.Joiner;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class Annotater {
+
 	Logger log = LoggerFactory.getLogger(Annotater.class);
 	IndexDBO_classes classesIndex = new IndexDBO_classes();
 	IndexDBO_properties propertiesIndex = new IndexDBO_properties();
 	DBOIndex dboIndex = new DBOIndex();
-	DBAbstractsIndex index = new DBAbstractsIndex();
+	DBAbstractsIndex index;
+
+	public Annotater( DBAbstractsIndex index) {
+		this.index =  index;
+	}
 
 	public void annotateTree(Question q) {
 		MutableTree tree = q.tree;
@@ -186,7 +191,6 @@ public class Annotater {
 						}
 					} else {
 						// full text lookup
-						DBAbstractsIndex index = new DBAbstractsIndex();
 						List<String> uris = index.listAbstractsContaining(label);
 						for (String resourceURL : uris) {
 							tmp.addAnnotation(new ResourceImpl(resourceURL));

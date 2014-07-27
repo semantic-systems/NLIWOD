@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 
 import org.aksw.autosparql.commons.qald.QALD_Loader;
+import org.aksw.hawk.cache.AbstractIndexCache;
+import org.aksw.hawk.index.DBAbstractsIndex;
 import org.aksw.hawk.module.ModuleBuilder;
 import org.aksw.hawk.module.PseudoQueryBuilder;
 import org.aksw.hawk.module.SystemAnswerer;
@@ -28,14 +30,16 @@ public class QALD4_long {
 		controller.datasetLoader = new QALD_Loader();
 		controller.nerdModule = new Fox();
 		controller.cParseTree = new CachedParseTree();
-		controller.sentenceToSequence = new SentenceToSequence();
+		AbstractIndexCache cache = new AbstractIndexCache();
+		DBAbstractsIndex index = new DBAbstractsIndex(cache);
+		controller.sentenceToSequence = new SentenceToSequence(index);
 		controller.pruner = new Pruner();
 		controller.moduleBuilder = new ModuleBuilder();
 		controller.pseudoQueryBuilder = new PseudoQueryBuilder();
 		controller.queryVariableHomomorphPruner = new QueryVariableHomomorphPruner();
 		controller.graphNonSCCPruner = new GraphNonSCCPruner();
 		String endpoint = "http://dbpedia.org/sparql";
-		controller.systemAnswerer = new SystemAnswerer(endpoint, controller.nerdModule);
+		controller.systemAnswerer = new SystemAnswerer(endpoint, controller.nerdModule, index);
 
 		log.info("Run controller");
 		controller.run();

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+import org.aksw.hawk.cache.AbstractIndexCache;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
@@ -59,13 +60,16 @@ public class DBAbstractsIndex {
 	public static String FIELD_NAME_PREDICATE = "predicate";
 	public static String FIELD_NAME_OBJECT = "object";
 	private int numberOfDocsRetrievedFromIndex = 100000;
+	private boolean useCache = true;
 	public Version LUCENE_VERSION = Version.LUCENE_46;
 
 	private Directory directory;
 	private IndexSearcher isearcher;
 	private DirectoryReader ireader;
+	private AbstractIndexCache cache;
 
-	public DBAbstractsIndex() {
+	public DBAbstractsIndex(AbstractIndexCache cache) {
+		this.cache = cache;
 		try {
 			File index = new File("resources/indexAbstract");
 			if (!index.exists()) {
@@ -116,37 +120,51 @@ public class DBAbstractsIndex {
 	}
 
 	public List<String> listAbstractsContaining(String tokens) {
-		List<String> triples = new ArrayList<String>();
+		ArrayList<String> triples = new ArrayList<String>();
 		try {
 			log.debug("\t start asking index...");
-
-			String[] words = tokens.split(" ");
-			// PhraseQuery query = new PhraseQuery();
-			// for (String token : words) {
-			// query.add(new Term(FIELD_NAME_OBJECT, token));
-			// }
-			// BooleanQuery q = new BooleanQuery();
-			// q.add(query, BooleanClause.Occur.MUST);
-
-			SpanQuery[] clauses = new SpanQuery[words.length];
-			for (int i = 0; i < words.length; i++) {
-				clauses[i] = new SpanMultiTermQueryWrapper<FuzzyQuery>(new FuzzyQuery(new Term(FIELD_NAME_OBJECT, words[i])));
+			if (useCache) {
+				if (cache.containsKey(tokens)) {
+					return cache.get(tokens);
+				}
 			}
-			SpanNearQuery query = new SpanNearQuery(clauses, 0, true);
 
-			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
-			isearcher.search(query, collector);
-			ScoreDoc[] hits = collector.topDocs().scoreDocs;
-			for (int i = 0; i < hits.length; i++) {
-				Document hitDoc = isearcher.doc(hits[i].doc);
-				String s = hitDoc.get(FIELD_NAME_SUBJECT);
-				triples.add(s);
+			search(tokens, triples);
+
+			cache.put(tokens, triples);
+			if (useCache) {
+				cache.writeCache();
 			}
 
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(), e);
 		}
 		return triples;
+	}
+
+	private void search(String tokens, List<String> triples) throws IOException {
+		String[] words = tokens.split(" ");
+		// PhraseQuery query = new PhraseQuery();
+		// for (String token : words) {
+		// query.add(new Term(FIELD_NAME_OBJECT, token));
+		// }
+		// BooleanQuery q = new BooleanQuery();
+		// q.add(query, BooleanClause.Occur.MUST);
+
+		SpanQuery[] clauses = new SpanQuery[words.length];
+		for (int i = 0; i < words.length; i++) {
+			clauses[i] = new SpanMultiTermQueryWrapper<FuzzyQuery>(new FuzzyQuery(new Term(FIELD_NAME_OBJECT, words[i])));
+		}
+		SpanNearQuery query = new SpanNearQuery(clauses, 0, true);
+
+		TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
+		isearcher.search(query, collector);
+		ScoreDoc[] hits = collector.topDocs().scoreDocs;
+		for (int i = 0; i < hits.length; i++) {
+			Document hitDoc = isearcher.doc(hits[i].doc);
+			String s = hitDoc.get(FIELD_NAME_SUBJECT);
+			triples.add(s);
+		}
 	}
 
 	private void index() {
@@ -264,7 +282,8 @@ public class DBAbstractsIndex {
 	}
 
 	public static void main(String args[]) {
-		DBAbstractsIndex index = new DBAbstractsIndex();
+		AbstractIndexCache cache = new AbstractIndexCache();
+		DBAbstractsIndex index = new DBAbstractsIndex(cache);
 		// index.askForPredicateWithBoundAbstract("assassin",
 		// "http://dbpedia.org/resource/Martin_Luther_King%2C_Jr.");
 
