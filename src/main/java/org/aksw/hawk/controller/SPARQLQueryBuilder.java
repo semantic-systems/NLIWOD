@@ -40,18 +40,8 @@ public class SPARQLQueryBuilder {
 		Set<StringBuilder> sb = Sets.newHashSet();
 		MutableTreeNode root = q.tree.getRoot();
 
-		{ // full-text stuff like protected
-			//TODO bug here, this gets added to early to all other things, must be handled like variant 5 below
-			for (StringBuilder query : queryStrings) {
-				List<String> uris = index.listAbstractsContaining(root.label);
-				StringBuilder fulltextConstraint = new StringBuilder("FILTER (?proj IN (\n");
-				for (String annotation : uris) {
-					fulltextConstraint.append("<" + annotation + "> , ");
-				}
-				fulltextConstraint.deleteCharAt(fulltextConstraint.lastIndexOf(",")).append(")).");
-				sb.add(query.append(fulltextConstraint.toString()));
-			}
-		}
+	 // full-text stuff e.g. "protected"
+		List<String> uris = index.listAbstractsContaining(root.label);
 		if (!root.getAnnotations().isEmpty()) {
 			for (StringBuilder query : queryStrings) {
 				for (ResourceImpl anno : root.getAnnotations()) {
@@ -61,6 +51,13 @@ public class SPARQLQueryBuilder {
 					// root has annotations but they are not valuable, e.g. took, is, was, ride
 					StringBuilder variant3 = new StringBuilder(query.toString()).append("?const  ?p ?proj.");
 					StringBuilder variant4 = new StringBuilder(query.toString()).append("?proj   ?p ?const.");
+					
+					StringBuilder variant5 = new StringBuilder(query.toString()).append("FILTER (?proj IN (\n");
+					for (String annotation : uris) {
+						variant5.append("<" + annotation + "> , ");
+					}
+					variant5.deleteCharAt(variant5.lastIndexOf(",")).append(")).");
+					sb.add(variant5);
 
 					sb.add(variant1);
 					sb.add(variant2);
