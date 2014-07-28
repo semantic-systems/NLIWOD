@@ -56,13 +56,14 @@ public class SPARQLQueryBuilder {
 					StringBuilder variant3 = new StringBuilder(query.toString()).append("?const  ?p ?proj.");
 					StringBuilder variant4 = new StringBuilder(query.toString()).append("?proj   ?p ?const.");
 
-					StringBuilder variant5 = new StringBuilder(query.toString()).append("FILTER (?proj IN (\n");
-					for (String annotation : uris) {
-						variant5.append("<" + annotation + "> , ");
+					if (!uris.isEmpty()) {
+						StringBuilder variant5 = new StringBuilder(query.toString()).append("FILTER (?proj IN (");
+						for (String annotation : uris) {
+							variant5.append("<" + annotation + "> , ");
+						}
+						variant5.deleteCharAt(variant5.lastIndexOf(",")).append(")).");
+						sb.add(variant5);
 					}
-					variant5.deleteCharAt(variant5.lastIndexOf(",")).append(")).");
-					sb.add(variant5);
-
 					sb.add(variant1);
 					sb.add(variant2);
 					sb.add(variant3);

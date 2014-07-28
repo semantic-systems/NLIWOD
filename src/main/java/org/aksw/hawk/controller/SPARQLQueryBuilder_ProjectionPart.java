@@ -54,7 +54,7 @@ public class SPARQLQueryBuilder_ProjectionPart {
 					if (queries.isEmpty()) {
 						// combined nouns are lists of abstracts containing does words, i.e., type constraints
 						if (bottom.getAnnotations().size() > 0) {
-							StringBuilder queryString = new StringBuilder("?proj ?p ?o.\nFILTER (?proj IN (\n");
+							StringBuilder queryString = new StringBuilder("?proj ?p ?o. FILTER (?proj IN (");
 							joinURIsForFilterExpression(bottom, queryString);
 							queries.add(queryString);
 						} else {
@@ -64,7 +64,7 @@ public class SPARQLQueryBuilder_ProjectionPart {
 						// combined nouns are lists of abstracts containing does words, i.e., type constraints
 						if (bottom.getAnnotations().size() > 0) {
 							for (StringBuilder existingQueries : queries) {
-								existingQueries.append("?proj ?p ?o.\nFILTER (?proj IN (\n");
+								existingQueries.append("?proj ?p ?o. FILTER (?proj IN ( ");
 								joinURIsForFilterExpression(bottom, existingQueries);
 							}
 						} else {
@@ -81,13 +81,15 @@ public class SPARQLQueryBuilder_ProjectionPart {
 				// for a predicates
 				if (bottomposTag.equals("CombinedNN") && topPosTag.matches("VB(.)*|NN(.)*")) {
 					for (ResourceImpl predicates : top.getAnnotations()) {
-						StringBuilder queryString = new StringBuilder("?proj <" + predicates + "> ?o.\nFILTER (?proj IN (\n");
-						joinURIsForFilterExpression(bottom, queryString);
-						queries.add(queryString);
+						if (bottom.getAnnotations().size() > 0) {
+							StringBuilder queryString = new StringBuilder("?proj <" + predicates + "> ?o. FILTER (?proj IN (");
+							joinURIsForFilterExpression(bottom, queryString);
+							queries.add(queryString);
 
-						queryString = new StringBuilder("?o <" + predicates + "> ?proj.\nFILTER (?proj IN (\n");
-						joinURIsForFilterExpression(bottom, queryString);
-						queries.add(queryString);
+							queryString = new StringBuilder("?o <" + predicates + "> ?proj.FILTER (?proj IN (");
+							joinURIsForFilterExpression(bottom, queryString);
+							queries.add(queryString);
+						}
 					}
 					i++;
 				} else if (bottomposTag.matches("ADD|NN") && topPosTag.matches("VB(.)*|NN(.)*|CombinedNN")) {
@@ -99,13 +101,15 @@ public class SPARQLQueryBuilder_ProjectionPart {
 						}
 					}
 					// or it stems from a full-text look up (+ reversing of the predicates)
-					StringBuilder queryString = new StringBuilder("?proj ?p <" + bottom.label + ">.\nFILTER (?proj IN (\n");
-					joinURIsForFilterExpression(top, queryString);
-					queries.add(queryString);
+					if (top.getAnnotations().size() > 0) {
+						StringBuilder queryString = new StringBuilder("?proj ?p <" + bottom.label + ">. FILTER (?proj IN ( ");
+						joinURIsForFilterExpression(top, queryString);
+						queries.add(queryString);
 
-					queryString = new StringBuilder("<" + bottom.label + "> ?p ?proj.\nFILTER (?proj IN (\n");
-					joinURIsForFilterExpression(top, queryString);
-					queries.add(queryString);
+						queryString = new StringBuilder("<" + bottom.label + "> ?p ?proj. FILTER (?proj IN ( ");
+						joinURIsForFilterExpression(top, queryString);
+						queries.add(queryString);
+					}
 					i++;
 				} else {
 					sparqlQueryBuilder.log.error("Strange case that never should happen: " + bottomposTag);

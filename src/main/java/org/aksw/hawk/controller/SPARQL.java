@@ -1,5 +1,6 @@
 package org.aksw.hawk.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -28,9 +29,26 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class SPARQL {
 	Logger log = LoggerFactory.getLogger(SPARQL.class);
-	int sizeOfFilterThreshold = 100;
-
 	// TODO treshhold can be increased by introducing prefixes
+	int sizeOfFilterThreshold = 100;
+	QueryExecutionFactory qef;
+
+	public SPARQL() {
+		try {
+			// AKSW SPARQL API call
+			// QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql", "http://dbpedia.org");
+			qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
+			// QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/", "http://dbpedia.org");
+			// qef = new QueryExecutionFactoryDelay(qef, 2000); --> No reason to be nice
+			long timeToLive = 30l * 24l * 60l * 60l * 1000l;
+			CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
+			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
+			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public Set<RDFNode> sparql(String query) {
 		ArrayList<String> queries = Lists.newArrayList();
@@ -39,20 +57,13 @@ public class SPARQL {
 		try {
 			if (query.contains("FILTER")) {
 				query = intersectFILTERS(query);
-				queries = splitLongFilterSPARQL(query);
+				if (query != null) {
+					queries = splitLongFilterSPARQL(query);
+				}
 			} else {
 				queries.add(query);
 			}
 			for (String q : queries) {
-				// AKSW SPARQL API call
-				// QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql", "http://dbpedia.org");
-				QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
-				// QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/", "http://dbpedia.org");
-				// qef = new QueryExecutionFactoryDelay(qef, 2000);
-				long timeToLive = 30l * 24l * 60l * 60l * 1000l;
-				CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
-				CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
-				qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
 
 				QueryExecution qe = qef.createQueryExecution(q);
 
@@ -98,6 +109,11 @@ public class SPARQL {
 			Set<String> uris = intersectionSets.get(projectionVariable);
 			query = query.replace("}", "FILTER ( ?" + projectionVariable + " IN (" + Joiner.on(", ").join(uris) + ")). }");
 		}
+		//prevents execution of queries with empty intersection of FILTERS
+		//TODO could be buggy if not ?proj is the variable to be intersected
+		if(query.contains("FILTER ( ?proj IN ())")){
+			return null;
+		}
 		return query;
 	}
 
@@ -108,14 +124,14 @@ public class SPARQL {
 	}
 
 	// TODO currently only ?proj gets splitted but not other long filter.
-	//think about the right semantics to do so
+	// think about the right semantics to do so
 	private ArrayList<String> splitLongFilterSPARQL(String query) {
 		ArrayList<String> queries = Lists.newArrayList();
 
 		query = query.replaceAll("\n", "");
 		Pattern pattern = Pattern.compile(".+FILTER\\s*\\(\\s*\\?proj IN\\s*\\((.+)\\)\\).+");
 		Matcher m = pattern.matcher(query);
-		log.debug("FILTER Pattern found" + m.find());
+		log.debug("FILTER Pattern found: " + (m.find() ? true : query));
 		String group = m.group(1);
 		query = query.replace(group, "XXAKSWXX");
 
@@ -142,6 +158,7 @@ public class SPARQL {
 				+ "FILTER (?s IN ( <http://4Bs> , <http://5Bs>, <http://6> , <http://7B>   ))."
 				+ " ?s ?p ?oo."
 				+ "}";
+
 		SPARQL sqb = new SPARQL();
 		query = sqb.intersectFILTERS(query);
 		ArrayList<String> i = sqb.splitLongFilterSPARQL(query, 2);
