@@ -14,6 +14,8 @@
 # Project-specific Files #
 src/main/resources/general-en/
 spotterCache
+cache/
+indexCache
 src/main/resources/hawk.properties
 indexAbstract/
 indexOntology/
