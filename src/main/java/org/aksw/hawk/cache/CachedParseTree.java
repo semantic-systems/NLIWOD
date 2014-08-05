@@ -65,7 +65,7 @@ public class CachedParseTree {
 	private String isStored(Question q) {
 		String question = q.languageToQuestion.get("en");
 		int hash = question.hashCode();
-		String serializedFileName = "resources/trees/" + hash + ".tree";
+		String serializedFileName = "cache/trees/" + hash + ".tree";
 
 		File ser = new File(serializedFileName);
 		if (ser.exists()) {

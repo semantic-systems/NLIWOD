@@ -38,9 +38,16 @@ public class AbstractIndexCache {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(cacheLocation), "UTF8"));
 				String s = reader.readLine();
 				while (s != null) {
-					String input = s.split("\t")[0];
-					String[] output = s.split("\t")[1].split(";;;");
-					cache.put(input, Lists.newArrayList(output));
+
+					String[] split = s.split("\t");
+
+					String input = split[0];
+					if (split.length > 1) {
+						String[] output = split[1].split(";;;");
+						cache.put(input, Lists.newArrayList(output));
+					} else {
+						cache.put(input, new ArrayList<String>());
+					}
 					s = reader.readLine();
 				}
 				reader.close();

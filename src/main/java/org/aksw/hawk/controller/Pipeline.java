@@ -65,20 +65,27 @@ public class Pipeline {
 				// 6. Build queries via subqueries
 				Map<String, Set<RDFNode>> answer = queryBuilder.build(q);
 
-				// fulltexter.fulltext(q);
+				double fmax = 0;
+				double pmax = 0;
+				double rmax = 0;
 				for (String query : answer.keySet()) {
 					Set<RDFNode> systemAnswers = answer.get(query);
 					// 11. Compare to set of resources from benchmark
 					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
 					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-					counter++;
-					log.info(query.substring(0, Math.min(300, query.length())));
-					log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
-					overallf += fMeasure;
-					overallp += precision;
-					overallr += recall;
+					if (fMeasure > fmax) {
+						log.info(query.substring(0, Math.min(300, query.length())));
+						log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+						fmax = fMeasure;
+						pmax = precision;
+						rmax = recall;
+					}
 				}
+				overallf += fmax;
+				overallp += pmax;
+				overallr += rmax;
+				counter++;
 				// break;
 			}
 		}
