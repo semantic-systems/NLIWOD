@@ -13,13 +13,14 @@
 
 # Project-specific Files #
 src/main/resources/general-en/
-spotterCache
-cache/
-indexCache
 src/main/resources/hawk.properties
-indexAbstract/
-indexOntology/
+
+
+cache/indexCache
+cache/sparql/sparql.h2.db
+
+resources/indexAbstract/
+resources/indexOntology/
 resources/ontologyClasses/
 resources/ontologyProperties/
-trees.html
 log.out

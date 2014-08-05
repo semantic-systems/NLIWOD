@@ -10,8 +10,7 @@ import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.autosparql.commons.qald.uri.GoldEntity;
-import org.aksw.hawk.module.Module;
-import org.aksw.hawk.nlp.posTree.MutableTree;
+import org.aksw.hawk.nlp.MutableTree;
 import org.apache.commons.lang3.StringUtils;
 
 public class Question implements Serializable {
@@ -35,9 +34,6 @@ public class Question implements Serializable {
 	public Map<String, List<Entity>> languageToNounPhrases = new LinkedHashMap<String, List<Entity>>();
 	public Map<String, List<GoldEntity>> goldEntites = new HashMap<String, List<GoldEntity>>();
 	public Map<String, Set<String>> goldenAnswers = new HashMap<String, Set<String>>();
-	public List<Module> modules;
-
-
 
 
 	public Question() {

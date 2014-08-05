@@ -1,7 +1,5 @@
 package org.aksw.hawk.nlp;
 
-import org.aksw.hawk.nlp.posTree.MutableTreeNode;
-
 import com.clearnlp.dependency.DEPNode;
 
 public class TreeTraversal {

@@ -6,7 +6,6 @@ import java.util.Stack;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.index.DBAbstractsIndex;
-import org.aksw.hawk.nlp.posTree.MutableTreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

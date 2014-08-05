@@ -23,7 +23,7 @@ public class AbstractIndexCache {
 	int i = 0;
 
 	public AbstractIndexCache() {
-		cacheLocation = new File("indexCache").getAbsolutePath();
+		cacheLocation = new File("cache/indexCache").getAbsolutePath();
 		log.debug("cacheLocation: " + cacheLocation);
 		readCache();
 	}
