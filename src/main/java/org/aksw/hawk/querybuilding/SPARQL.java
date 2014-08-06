@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,7 +30,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class SPARQL {
 	Logger log = LoggerFactory.getLogger(SPARQL.class);
-	// TODO treshhold can be increased by introducing prefixes
+	// TODO treshold can be increased by introducing prefixes
 	int sizeOfFilterThreshold = 100;
 	QueryExecutionFactory qef;
 
@@ -45,11 +46,16 @@ public class SPARQL {
 			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
 			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Could not create SPARQL interface! ", e);
 		}
 	}
 
+	/**
+	 * using the AKSW library for wrapping Jena API
+	 * 
+	 * @param query
+	 * @return
+	 */
 	public Set<RDFNode> sparql(String query) {
 		ArrayList<String> queries = Lists.newArrayList();
 		Set<RDFNode> set = Sets.newHashSet();
@@ -64,20 +70,17 @@ public class SPARQL {
 				queries.add(query);
 			}
 			for (String q : queries) {
-
 				QueryExecution qe = qef.createQueryExecution(q);
-
 				ResultSet results = qe.execSelect();
 
-				// Standard Jena SPARQL call
-				// qexec = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", q);
-				// ResultSet results = qexec.execSelect();
 				while (results.hasNext()) {
 					set.add(results.next().get("?proj"));
 				}
 			}
 		} catch (Exception e) {
-			log.error("Query: " + queries.get(0), e);
+			log.error("Query: ");
+			// log.error(addLinebreaks(query,200));
+
 		} finally {
 			if (qexec != null) {
 				qexec.close();
@@ -86,11 +89,27 @@ public class SPARQL {
 		return set;
 	}
 
+	private String addLinebreaks(String input, int maxLineLength) {
+		StringTokenizer tok = new StringTokenizer(input, " ");
+		StringBuilder output = new StringBuilder(input.length());
+		int lineLen = 0;
+		while (tok.hasMoreTokens()) {
+			String word = tok.nextToken();
+			if (lineLen + word.length() > maxLineLength) {
+				output.append("\n");
+				lineLen = 0;
+			}
+			output.append(word + " ");
+			lineLen += word.length();
+		}
+		return output.toString();
+	}
+
 	public String intersectFILTERS(String query) {
 		// find all filter expressions
-		Pattern pattern = Pattern.compile("FILTER\\s*\\(\\s*\\?(\\w+) IN\\s*\\(((.+?))\\)\\).", Pattern.MULTILINE);
+		// watch out in URIs could be two closing brackets
+		Pattern pattern = Pattern.compile("FILTER\\s*\\(\\s*\\?(\\w+) IN\\s*\\(((.+?))\\)\\)\\s.", Pattern.MULTILINE);
 		Matcher m = pattern.matcher(query);
-
 		Map<String, Set<String>> intersectionSets = Maps.newHashMap();
 		while (m.find()) {
 			query = query.replace(m.group(0), "");
@@ -109,9 +128,9 @@ public class SPARQL {
 			Set<String> uris = intersectionSets.get(projectionVariable);
 			query = query.replace("}", "FILTER ( ?" + projectionVariable + " IN (" + Joiner.on(", ").join(uris) + ")). }");
 		}
-		//prevents execution of queries with empty intersection of FILTERS
-		//TODO could be buggy if not ?proj is the variable to be intersected
-		if(query.contains("FILTER ( ?proj IN ())")){
+		// prevents execution of queries with empty intersection of FILTERS
+		// TODO could be buggy if not ?proj is the variable to be intersected
+		if (query.contains("FILTER ( ?proj IN ())")) {
 			return null;
 		}
 		return query;
@@ -127,9 +146,9 @@ public class SPARQL {
 	// think about the right semantics to do so
 	private ArrayList<String> splitLongFilterSPARQL(String query) {
 		ArrayList<String> queries = Lists.newArrayList();
-
 		query = query.replaceAll("\n", "");
-		Pattern pattern = Pattern.compile(".+FILTER\\s*\\(\\s*\\?proj IN\\s*\\((.+)\\)\\).+");
+		// watch out in URIs could be two closing brackets
+		Pattern pattern = Pattern.compile(".+FILTER\\s*\\(\\s*\\?proj IN\\s*\\((.+)\\)\\)\\s.+");
 		Matcher m = pattern.matcher(query);
 		log.debug("FILTER Pattern found: " + (m.find() ? true : query));
 		String group = m.group(1);
@@ -154,13 +173,14 @@ public class SPARQL {
 	public static void main(String args[]) {
 		String query = "SELECT ?proj WHERE {?proj ?p ?o. "
 				+ "FILTER (?proj IN (<http://(1)> , <http://2,3> , <http://3> , <http://4> , <http://5>, <http://6> , <http://7>   )). "
-				+ "FILTER (?proj IN (<http://(1A)> , <http://2,3> , <http://3> , <http://4B> , <http://5B>, <http://6> , <http://7B>   ))."
+				+ "FILTER (?proj IN (<http://(1A)> , <http://2,3> , <http://3> , <http://4B> , <http://5B>, <http://6>   ))."
 				+ "FILTER (?s IN ( <http://4Bs> , <http://5Bs>, <http://6> , <http://7B>   ))."
 				+ " ?s ?p ?oo."
 				+ "}";
 
 		SPARQL sqb = new SPARQL();
 		query = sqb.intersectFILTERS(query);
+		System.out.println(query);
 		ArrayList<String> i = sqb.splitLongFilterSPARQL(query, 2);
 		for (String q : i) {
 			System.out.println(q);
