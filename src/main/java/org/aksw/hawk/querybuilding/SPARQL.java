@@ -108,7 +108,7 @@ public class SPARQL {
 	public String intersectFILTERS(String query) {
 		// find all filter expressions
 		// watch out in URIs could be two closing brackets
-		Pattern pattern = Pattern.compile("FILTER\\s*\\(\\s*\\?(\\w+) IN\\s*\\(((.+?))\\)\\)\\s.", Pattern.MULTILINE);
+		Pattern pattern = Pattern.compile("FILTER\\s*\\(\\s*\\?(\\w+) IN\\s*\\(((.+?))\\)\\)\\.", Pattern.MULTILINE);
 		Matcher m = pattern.matcher(query);
 		Map<String, Set<String>> intersectionSets = Maps.newHashMap();
 		while (m.find()) {
@@ -148,7 +148,7 @@ public class SPARQL {
 		ArrayList<String> queries = Lists.newArrayList();
 		query = query.replaceAll("\n", "");
 		// watch out in URIs could be two closing brackets
-		Pattern pattern = Pattern.compile(".+FILTER\\s*\\(\\s*\\?proj IN\\s*\\((.+)\\)\\)\\s.+");
+		Pattern pattern = Pattern.compile(".+FILTER\\s*\\(\\s*\\?proj IN\\s*\\((.+)\\)\\).+");
 		Matcher m = pattern.matcher(query);
 		log.debug("FILTER Pattern found: " + (m.find() ? true : query));
 		String group = m.group(1);
@@ -172,15 +172,14 @@ public class SPARQL {
 
 	public static void main(String args[]) {
 		String query = "SELECT ?proj WHERE {?proj ?p ?o. "
-				+ "FILTER (?proj IN (<http://(1)> , <http://2,3> , <http://3> , <http://4> , <http://5>, <http://6> , <http://7>   )). "
-				+ "FILTER (?proj IN (<http://(1A)> , <http://2,3> , <http://3> , <http://4B> , <http://5B>, <http://6>   ))."
-				+ "FILTER (?s IN ( <http://4Bs> , <http://5Bs>, <http://6> , <http://7B>   ))."
+				+ "FILTER (?proj IN (<http://(1)> , <http://2,3> , <http://3> , <http://4> , <http://5>, <http://6> , <http://61> , <http://62> , <http://7>)). "
+				+ "FILTER (?proj IN (<http://(1A)> , <http://2,3> , <http://3> , <http://4B> , <http://5B>, <http://61> , <http://62> , <http://6(X(XY))>)). "
+				+ "FILTER (?s IN ( <http://4Bs> , <http://5Bs>, <http://6> , <http://7B>   )). "
 				+ " ?s ?p ?oo."
 				+ "}";
 
 		SPARQL sqb = new SPARQL();
 		query = sqb.intersectFILTERS(query);
-		System.out.println(query);
 		ArrayList<String> i = sqb.splitLongFilterSPARQL(query, 2);
 		for (String q : i) {
 			System.out.println(q);

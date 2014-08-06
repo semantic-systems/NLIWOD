@@ -69,13 +69,13 @@ public class Pipeline {
 				double pmax = 0;
 				double rmax = 0;
 				for (String query : answer.keySet()) {
+					log.info(query.substring(0, Math.min(300, query.length())));
 					Set<RDFNode> systemAnswers = answer.get(query);
 					// 11. Compare to set of resources from benchmark
 					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
 					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
 					if (fMeasure > fmax) {
-						log.info(query.substring(0, Math.min(300, query.length())));
 						log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
 						fmax = fMeasure;
 						pmax = precision;
@@ -86,7 +86,6 @@ public class Pipeline {
 				overallp += pmax;
 				overallr += rmax;
 				counter++;
-				// break;
 			}
 		}
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
