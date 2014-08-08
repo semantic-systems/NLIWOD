@@ -86,6 +86,9 @@ public class Pipeline {
 				overallp += pmax;
 				overallr += rmax;
 				counter++;
+				if (counter == 4) {
+					break;
+				}
 			}
 		}
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);

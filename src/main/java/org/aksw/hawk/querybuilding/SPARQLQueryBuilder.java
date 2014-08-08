@@ -29,9 +29,11 @@ public class SPARQLQueryBuilder {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		// build projection part
 		Set<StringBuilder> queryStrings = projection.buildProjectionPart(this, q);
+		queryStrings = buildRootPart(queryStrings, q);
 		queryStrings = buildConstraintPart(queryStrings, q);
 		for (StringBuilder queryString : queryStrings) {
 			String query = "SELECT ?proj WHERE {\n " + queryString.toString() + "}";
+			log.debug(query);
 			Set<RDFNode> answerSet = sparql.sparql(query);
 			if (!answerSet.isEmpty()) {
 				answer.put(queryString.toString(), answerSet);
@@ -41,6 +43,10 @@ public class SPARQLQueryBuilder {
 	}
 
 	private Set<StringBuilder> buildConstraintPart(Set<StringBuilder> queryStrings, Question q) {
+		return queryStrings;
+	}
+
+	private Set<StringBuilder> buildRootPart(Set<StringBuilder> queryStrings, Question q) {
 		Set<StringBuilder> sb = Sets.newHashSet();
 		MutableTreeNode root = q.tree.getRoot();
 

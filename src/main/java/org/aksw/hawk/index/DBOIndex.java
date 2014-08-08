@@ -1,9 +1,14 @@
 package org.aksw.hawk.index;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.Document;
@@ -23,6 +28,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
 import org.apache.lucene.util.automaton.LevenshteinAutomata;
+import org.openrdf.model.impl.LiteralImpl;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
@@ -34,6 +40,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class DBOIndex {
@@ -72,11 +79,11 @@ public class DBOIndex {
 	}
 
 	public ArrayList<String> search(String object) {
-		ArrayList<String> uris= Lists.newArrayList();
+		ArrayList<String> uris = Lists.newArrayList();
 		try {
 			log.debug("\t start asking index...");
 
-			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object),LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE);   
+			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
 
 			isearcher.search(q, collector);
@@ -88,7 +95,7 @@ public class DBOIndex {
 			}
 			log.debug("\t finished asking index...");
 		} catch (Exception e) {
-			log.error(e.getLocalizedMessage() + " -> " + object,e);
+			log.error(e.getLocalizedMessage() + " -> " + object, e);
 		}
 		return uris;
 	}
@@ -105,24 +112,26 @@ public class DBOIndex {
 	private void index() {
 		try {
 			Model dbpedia = ModelFactory.createDefaultModel();
-			InputStream url = ClassLoader.getSystemResourceAsStream("dbpedia_3.9.owl");
+			InputStream url = new FileInputStream("resources/dbpedia_3.9.owl");
 			dbpedia.read(url, "RDF/XML");
 			StmtIterator stmts = dbpedia.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();
 				RDFNode label = stmt.getObject();
 				if (label.asLiteral().getLanguage().equals("en")) {
-					addDocumentToIndex(stmt.getSubject(), "rdfs:label", label.asLiteral());
+					addDocumentToIndex(stmt.getSubject(), "rdfs:label", label.asLiteral().getString());
 					NodeIterator comment = dbpedia.listObjectsOfProperty(stmt.getSubject(), RDFS.comment);
 					while (comment.hasNext()) {
 						RDFNode next = comment.next();
 						if (next.asLiteral().getLanguage().equals("en")) {
-							addDocumentToIndex(stmt.getSubject(), "rdfs:comment", next);
+							addDocumentToIndex(stmt.getSubject(), "rdfs:comment", next.asLiteral().getString());
 						}
 					}
 				}
 			}
+			iwriter.commit();
 
+			indexYagoClasses();
 			iwriter.commit();
 			iwriter.close();
 		} catch (IOException e) {
@@ -130,17 +139,30 @@ public class DBOIndex {
 		}
 	}
 
-	private void addDocumentToIndex(Resource resource, String predicate, RDFNode next) throws IOException {
+	private void indexYagoClasses() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("resources/yagoClassLabel.ttl"));
+		Pattern pattern = Pattern.compile(".+\"(.+)\".+<(.+)>.*");
+
+		while (br.ready()) {
+			String readLine = br.readLine();
+			Matcher m = pattern.matcher(readLine);
+			m.find();
+			addDocumentToIndex((Resource) new ResourceImpl(m.group(2)), "rdfs:label", m.group(1));
+		}
+		br.close();
+	}
+
+	private void addDocumentToIndex(Resource resource, String predicate, String object) throws IOException {
 		Document doc = new Document();
 		doc.add(new StringField(FIELD_NAME_SUBJECT, resource.getURI(), Store.YES));
 		doc.add(new StringField(FIELD_NAME_PREDICATE, predicate, Store.YES));
-		doc.add(new TextField(FIELD_NAME_OBJECT, next.asLiteral().getString(), Store.YES));
+		doc.add(new TextField(FIELD_NAME_OBJECT, object, Store.YES));
 		iwriter.addDocument(doc);
 	}
 
-	public static void main(String args[]) {
+	public static void main(String args[]) throws IOException {
 		DBOIndex index = new DBOIndex();
-		//TODO compose findet nicht music composer label
+		// TODO compose findet nicht music composer label
 		System.out.println(Joiner.on("\t").join(index.search("currencies")));
 
 	}

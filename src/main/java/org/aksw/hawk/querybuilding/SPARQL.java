@@ -78,8 +78,7 @@ public class SPARQL {
 				}
 			}
 		} catch (Exception e) {
-			log.error("Query: ");
-			// log.error(addLinebreaks(query,200));
+			log.error("Query: "+ addLinebreaks(query,200),e);
 
 		} finally {
 			if (qexec != null) {
