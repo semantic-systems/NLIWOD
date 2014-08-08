@@ -1,23 +1,22 @@
 <?xml version="1.0" ?>
 <dataset id="qald-4_hybrid_train">
-	<question answertype="resource" id="5" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Which recipients of the Victoria Cross died in the Battle of Arnhem?]]></string>
+	<question answertype="resource" id="10" aggregation="false"
+		onlydbo="false">
+		<string lang="en"><![CDATA[Under which king did the British prime minister that signed the Munich agreement serve?]]></string>
 		<pseudoquery><![CDATA[
 PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX res: <http://dbpedia.org/resource/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX yago: <http://dbpedia.org/class/yago/>
 SELECT DISTINCT ?uri 
 WHERE {
-	?uri dbo:award res:Victoria_Cross .
-	?uri text:"died in" text:"Battle of Arnhem" .
+        ?x rdf:type yago:PrimeMinistersOfTheUnitedKingdom .
+        ?x text:"sign" text:"Munich Agreement" .
+        ?x dbo:monarch ?uri .
 }
 ]]></pseudoquery>
 		<answers>
 			<answer>
-				<uri>http://dbpedia.org/resource/John_Hollington_Grayburn</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/John_Baskeyfield</uri>
+				<uri>http://dbpedia.org/resource/George_VI</uri>
 			</answer>
 		</answers>
 	</question>
@@ -41,6 +40,92 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
+	<question answertype="resource" id="13" aggregation="false"
+		onlydbo="false">
+		<string lang="en"><![CDATA[On which island did the national poet of Greece die?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX yago: <http://dbpedia.org/class/yago/>
+SELECT DISTINCT ?uri 
+WHERE {
+        ?x text:"considered" text:"national poet of Greece" .
+        ?x dbo:deathPlace ?uri .
+        ?uri rdf:type yago:Island109316454 .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Corfu</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="25" aggregation="false"
+		onlydbo="false">
+		<string lang="en"><![CDATA[Which street basketball player was diagnosed with Sarcoidosis?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX yago: <http://dbpedia.org/class/yago/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?uri 
+WHERE {
+  ?uri rdf:type yago:StreetBasketballPlayers .
+  ?uri text:"diagnosed with" text:"Sarcoidosis".
+}
+]]>
+		</pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Slick_Watts</uri>
+			</answer>
+		</answers>
+	</question>
+
+
+
+
+
+	<question answertype="resource" id="16" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Which buildings owned by the crown overlook the North Sea?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?uri 
+WHERE {
+        ?uri rdf:type dbo:Building.
+        ?uri dbo:owner res:The_Crown . 
+        ?uri text:"overlook" text:"North Sea" .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Scarborough_Castle</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="5" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Which recipients of the Victoria Cross died in the Battle of Arnhem?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?uri 
+WHERE {
+	?uri dbo:award res:Victoria_Cross .
+	?uri text:"died in" text:"Battle of Arnhem" .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/John_Hollington_Grayburn</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/John_Baskeyfield</uri>
+			</answer>
+		</answers>
+	</question>
+
 	<question answertype="resource" id="14" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Which horses did The Long Fellow ride?]]></string>
@@ -246,26 +331,7 @@ WHERE {
 
 
 
-	<question answertype="resource" id="13" aggregation="false"
-		onlydbo="false">
-		<string lang="en"><![CDATA[On which island did the national poet of Greece die?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX yago: <http://dbpedia.org/class/yago/>
-SELECT DISTINCT ?uri 
-WHERE {
-        ?x text:"considered" text:"national poet of Greece" .
-        ?x dbo:deathPlace ?uri .
-        ?uri rdf:type yago:Island109316454 .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Corfu</uri>
-			</answer>
-		</answers>
-	</question>
+
 
 
 
@@ -292,25 +358,7 @@ WHERE {
 		</answers>
 	</question>
 
-	<question answertype="resource" id="16" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Which buildings owned by the crown overlook the North Sea?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT ?uri 
-WHERE {
-        ?uri rdf:type dbo:Building.
-        ?uri dbo:owner res:The_Crown . 
-        ?uri text:"overlook" text:"North Sea" .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Scarborough_Castle</uri>
-			</answer>
-		</answers>
-	</question>
+
 
 	<question answertype="resource" id="17" aggregation="false"
 		onlydbo="true">
@@ -480,26 +528,7 @@ WHERE {
 		</answers>
 	</question>
 
-	<question answertype="resource" id="25" aggregation="false"
-		onlydbo="false">
-		<string lang="en"><![CDATA[Which street basketball player was diagnosed with Sarcoidosis?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX yago: <http://dbpedia.org/class/yago/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT DISTINCT ?uri 
-WHERE {
-  ?uri rdf:type yago:StreetBasketballPlayers .
-  ?uri text:"diagnosed with" text:"Sarcoidosis".
-}
-]]>
-		</pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Slick_Watts</uri>
-			</answer>
-		</answers>
-	</question>
+
 	<question answertype="resource" id="9" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Which writers had influenced the philosopher that refused a Nobel Prize?]]></string>
@@ -573,26 +602,7 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-	<question answertype="resource" id="10" aggregation="false"
-		onlydbo="false">
-		<string lang="en"><![CDATA[Under which king did the British prime minister that signed the Munich agreement serve?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX yago: <http://dbpedia.org/class/yago/>
-SELECT DISTINCT ?uri 
-WHERE {
-        ?x rdf:type yago:PrimeMinistersOfTheUnitedKingdom .
-        ?x text:"sign" text:"Munich Agreement" .
-        ?x dbo:monarch ?uri .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/George_VI</uri>
-			</answer>
-		</answers>
-	</question>
+
 	<question answertype="resource" id="11" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Who composed the music for the film that depicts the early life of Jane Austin?]]></string>
