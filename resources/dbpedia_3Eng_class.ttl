@@ -651,3 +651,7 @@
 <http://dbpedia.org/ontology/Tournament> <http://www.w3.org/2000/01/rdf-schema#label> "tournament" .
 <http://dbpedia.org/ontology/SkiResort> <http://www.w3.org/2000/01/rdf-schema#label> "ski resort" .
 <http://dbpedia.org/ontology/HotSpring> <http://www.w3.org/2000/01/rdf-schema#label> "hot spring" .
+
+<http://dbpedia.org/ontology/Actor> <http://www.w3.org/2000/01/rdf-schema#label> "actress" .
+<http://dbpedia.org/ontology/Monarch> <http://www.w3.org/2000/01/rdf-schema#label> "king" .
+

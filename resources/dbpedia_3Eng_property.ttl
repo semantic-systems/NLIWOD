@@ -478,3 +478,5 @@
 <http://dbpedia.org/ontology/owningOrganization> <http://www.w3.org/2000/01/rdf-schema#label> "own" .
 <http://dbpedia.org/ontology/cinematographer> <http://www.w3.org/2000/01/rdf-schema#label> "shoot" .
 <http://dbpedia.org/ontology/raceHorse> <http://www.w3.org/2000/01/rdf-schema#label> "ride" .
+<http://dbpedia.org/ontology/musicComposer> <http://www.w3.org/2000/01/rdf-schema#label> "composer" .
+<http://dbpedia.org/ontology/monarch> <http://www.w3.org/2000/01/rdf-schema#label> "king" .
