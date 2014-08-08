@@ -15,9 +15,8 @@
 src/main/resources/general-en/
 src/main/resources/hawk.properties
 
-
 cache/indexCache
-cache/sparql/sparql.h2.db
+cache/sparql/
 
 resources/indexAbstract/
 resources/indexOntology/
