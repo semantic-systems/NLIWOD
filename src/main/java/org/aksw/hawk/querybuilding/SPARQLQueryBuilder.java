@@ -29,8 +29,12 @@ public class SPARQLQueryBuilder {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		// build projection part
 		Set<StringBuilder> queryStrings = projection.buildProjectionPart(this, q);
+		System.gc();
 		queryStrings = buildRootPart(queryStrings, q);
+		System.gc();
 		queryStrings = buildConstraintPart(queryStrings, q);
+		System.gc();
+
 		for (StringBuilder queryString : queryStrings) {
 			String query = "SELECT ?proj WHERE {\n " + queryString.toString() + "}";
 			log.debug(query);

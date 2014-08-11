@@ -131,26 +131,13 @@ public class DBOIndex {
 			}
 			iwriter.commit();
 
-			indexYagoClasses();
-			iwriter.commit();
 			iwriter.close();
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);
 		}
 	}
 
-	private void indexYagoClasses() throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader("resources/yagoClassLabel.ttl"));
-		Pattern pattern = Pattern.compile(".+\"(.+)\".+<(.+)>.*");
 
-		while (br.ready()) {
-			String readLine = br.readLine();
-			Matcher m = pattern.matcher(readLine);
-			m.find();
-			addDocumentToIndex((Resource) new ResourceImpl(m.group(2)), "rdfs:label", m.group(1));
-		}
-		br.close();
-	}
 
 	private void addDocumentToIndex(Resource resource, String predicate, String object) throws IOException {
 		Document doc = new Document();
@@ -162,8 +149,6 @@ public class DBOIndex {
 
 	public static void main(String args[]) throws IOException {
 		DBOIndex index = new DBOIndex();
-		// TODO compose findet nicht music composer label
-		System.out.println(Joiner.on("\t").join(index.search("currencies")));
-
+		System.out.println(Joiner.on("\n").join(index.search("compose")));
 	}
 }
