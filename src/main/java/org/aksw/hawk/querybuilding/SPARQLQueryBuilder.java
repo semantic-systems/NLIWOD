@@ -10,6 +10,7 @@ import org.aksw.hawk.nlp.MutableTreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -32,7 +33,7 @@ public class SPARQLQueryBuilder {
 		System.gc();
 		queryStrings = buildRootPart(queryStrings, q);
 		System.gc();
-		queryStrings = buildConstraintPart(queryStrings, q);
+//		queryStrings = buildConstraintPart(queryStrings, q);
 		System.gc();
 
 		for (StringBuilder queryString : queryStrings) {
@@ -47,7 +48,36 @@ public class SPARQLQueryBuilder {
 	}
 
 	private Set<StringBuilder> buildConstraintPart(Set<StringBuilder> queryStrings, Question q) {
-		return queryStrings;
+		Set<StringBuilder> sb = Sets.newHashSet();
+		List<MutableTreeNode> bottomUp = Lists.newArrayList();
+		// iterate through left tree part
+		// assumption: this part of the tree is a path
+		System.out.println(q.tree);
+//		MutableTreeNode tmp = q.tree.getRoot().getChildren().get(1);
+//		while (tmp != null) {
+//			bottomUp.add(tmp);
+//			if (!tmp.getChildren().isEmpty()) {
+//				tmp = tmp.getChildren().get(0);
+//			} else {
+//				tmp = null;
+//			}
+//		}
+//		bottomUp = Lists.reverse(bottomUp);
+
+		// full-text stuff e.g. "protected"
+		// List<String> uris = index.listAbstractsContaining(root.label);
+		// if (!root.getAnnotations().isEmpty()) {
+		// for (StringBuilder query : queryStrings) {
+		// for (ResourceImpl anno : root.getAnnotations()) {
+		// // root has a valuable annotation from NN* or VB*
+		// StringBuilder variant1 = new StringBuilder(query.toString()).append("?proj  <" + anno + "> ?const.");
+		// }
+		// }
+		// } else {
+		// // TODO do the full text stuff
+		// sb.addAll(queryStrings);
+		// }
+		return sb;
 	}
 
 	private Set<StringBuilder> buildRootPart(Set<StringBuilder> queryStrings, Question q) {

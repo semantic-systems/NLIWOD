@@ -43,7 +43,7 @@ public class Pipeline {
 		double counter = 0;
 		for (Question q : questions) {
 			// by now only work on resource questions
-			if (q.answerType.equals("resource") && isSELECTquery(q.pseudoSparqlQuery, q.sparqlQuery)) {
+			if (q.answerType.equals("resource") && q.onlydbo && !q.aggregation && isSELECTquery(q.pseudoSparqlQuery, q.sparqlQuery)) {
 				// log.info("->" + q.languageToQuestion);
 				// 2. Disambiguate parts of the query
 				q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
@@ -75,8 +75,9 @@ public class Pipeline {
 					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
 					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+					log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
 					if (fMeasure > fmax) {
-						log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+						log.info("\tSTEP UP");
 						fmax = fMeasure;
 						pmax = precision;
 						rmax = recall;
@@ -86,9 +87,6 @@ public class Pipeline {
 				overallp += pmax;
 				overallr += rmax;
 				counter++;
-				if (counter == 4) {
-					break;
-				}
 			}
 		}
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);

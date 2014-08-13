@@ -126,14 +126,14 @@ public class SPARQLQueryBuilder_ProjectionPart {
 	 * @param queryString
 	 *            contains so far a SOMETHING. FILTER (?proj IN (...)). Goal is to insert the URIs into the brackets in a valid SPARQL way
 	 */
-	void joinURIsForFilterExpression(MutableTreeNode top, StringBuilder queryString) {
+	private void joinURIsForFilterExpression(MutableTreeNode top, StringBuilder queryString) {
 		for (ResourceImpl annotation : top.getAnnotations()) {
 			queryString.append("<" + annotation.getURI() + "> , ");
 		}
 		queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).");
 	}
 
-	List<MutableTreeNode> getProjectionPathBottumUp(Question q) {
+	private List<MutableTreeNode> getProjectionPathBottumUp(Question q) {
 		List<MutableTreeNode> bottomUp = Lists.newArrayList();
 		// iterate through left tree part
 		// assumption: this part of the tree is a path

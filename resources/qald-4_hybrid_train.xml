@@ -1,85 +1,6 @@
 <?xml version="1.0" ?>
 <dataset id="qald-4_hybrid_train">
-	<question answertype="resource" id="10" aggregation="false"
-		onlydbo="false">
-		<string lang="en"><![CDATA[Under which king did the British prime minister that signed the Munich agreement serve?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX yago: <http://dbpedia.org/class/yago/>
-SELECT DISTINCT ?uri 
-WHERE {
-        ?x rdf:type yago:PrimeMinistersOfTheUnitedKingdom .
-        ?x text:"sign" text:"Munich Agreement" .
-        ?x dbo:monarch ?uri .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/George_VI</uri>
-			</answer>
-		</answers>
-	</question>
-	<question answertype="resource" id="12" aggregation="false"
-		onlydbo="false">
-		<string lang="en"><![CDATA[Who succeeded the pope that reigned only 33 days?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX yago: <http://dbpedia.org/class/yago/>
-SELECT DISTINCT ?uri 
-WHERE {
-        ?x rdf:type yago:Popes .
-        ?x text:"reign" text:"33 days" .
-        ?x dbo:successor ?uri .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Pope_John_Paul_II</uri>
-			</answer>
-		</answers>
-	</question>
-	<question answertype="resource" id="13" aggregation="false"
-		onlydbo="false">
-		<string lang="en"><![CDATA[On which island did the national poet of Greece die?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX yago: <http://dbpedia.org/class/yago/>
-SELECT DISTINCT ?uri 
-WHERE {
-        ?x text:"considered" text:"national poet of Greece" .
-        ?x dbo:deathPlace ?uri .
-        ?uri rdf:type yago:Island109316454 .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Corfu</uri>
-			</answer>
-		</answers>
-	</question>
-	<question answertype="resource" id="25" aggregation="false"
-		onlydbo="false">
-		<string lang="en"><![CDATA[Which street basketball player was diagnosed with Sarcoidosis?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX yago: <http://dbpedia.org/class/yago/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT DISTINCT ?uri 
-WHERE {
-  ?uri rdf:type yago:StreetBasketballPlayers .
-  ?uri text:"diagnosed with" text:"Sarcoidosis".
-}
-]]>
-		</pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Slick_Watts</uri>
-			</answer>
-		</answers>
-	</question>
+
 
 
 
@@ -403,7 +324,6 @@ SELECT DISTINCT ?uri
 WHERE {
 	?uri rdf:type dbo:Bird .	
 	?uri text:"protected under" text:"National Parks and Wildlife Act".
-	
 }
 ]]></pseudoquery>
 		<answers>
@@ -638,6 +558,86 @@ WHERE {
 		<answers>
 			<answer>
 				<uri>http://dbpedia.org/resource/Kirzhach</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="10" aggregation="false"
+		onlydbo="false">
+		<string lang="en"><![CDATA[Under which king did the British prime minister that signed the Munich agreement serve?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX yago: <http://dbpedia.org/class/yago/>
+SELECT DISTINCT ?uri 
+WHERE {
+        ?x rdf:type yago:PrimeMinistersOfTheUnitedKingdom .
+        ?x text:"sign" text:"Munich Agreement" .
+        ?x dbo:monarch ?uri .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/George_VI</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="12" aggregation="false"
+		onlydbo="false">
+		<string lang="en"><![CDATA[Who succeeded the pope that reigned only 33 days?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX yago: <http://dbpedia.org/class/yago/>
+SELECT DISTINCT ?uri 
+WHERE {
+        ?x rdf:type yago:Popes .
+        ?x text:"reign" text:"33 days" .
+        ?x dbo:successor ?uri .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Pope_John_Paul_II</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="13" aggregation="false"
+		onlydbo="false">
+		<string lang="en"><![CDATA[On which island did the national poet of Greece die?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX yago: <http://dbpedia.org/class/yago/>
+SELECT DISTINCT ?uri 
+WHERE {
+        ?x text:"considered" text:"national poet of Greece" .
+        ?x dbo:deathPlace ?uri .
+        ?uri rdf:type yago:Island109316454 .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Corfu</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="25" aggregation="false"
+		onlydbo="false">
+		<string lang="en"><![CDATA[Which street basketball player was diagnosed with Sarcoidosis?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX yago: <http://dbpedia.org/class/yago/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?uri 
+WHERE {
+  ?uri rdf:type yago:StreetBasketballPlayers .
+  ?uri text:"diagnosed with" text:"Sarcoidosis".
+}
+]]>
+		</pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Slick_Watts</uri>
 			</answer>
 		</answers>
 	</question>
