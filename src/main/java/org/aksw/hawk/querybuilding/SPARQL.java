@@ -147,7 +147,7 @@ public class SPARQL {
 		ArrayList<String> queries = Lists.newArrayList();
 		query = query.replaceAll("\n", "");
 		// watch out in URIs could be two closing brackets
-		Pattern pattern = Pattern.compile(".+FILTER\\s*\\(\\s*\\?proj IN\\s*\\((.+)\\)\\).+");
+		Pattern pattern = Pattern.compile(".+FILTER\\s*\\(\\s*\\?[a-z]+ IN\\s*\\((.+)\\)\\).+");
 		Matcher m = pattern.matcher(query);
 		log.debug("FILTER Pattern found: " + (m.find() ? true : query));
 		String group = m.group(1);

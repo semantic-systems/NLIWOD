@@ -10,7 +10,6 @@ import org.aksw.hawk.nlp.MutableTreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -33,13 +32,13 @@ public class SPARQLQueryBuilder {
 		System.gc();
 		queryStrings = buildRootPart(queryStrings, q);
 		System.gc();
-//		queryStrings = buildConstraintPart(queryStrings, q);
+		queryStrings = buildConstraintPart(queryStrings, q);
 		System.gc();
 
 		for (StringBuilder queryString : queryStrings) {
 			String query = "SELECT ?proj WHERE {\n " + queryString.toString() + "}";
-			log.debug(query);
 			Set<RDFNode> answerSet = sparql.sparql(query);
+			log.debug(query.substring(0, Math.min(1000, query.length())));
 			if (!answerSet.isEmpty()) {
 				answer.put(queryString.toString(), answerSet);
 			}
@@ -49,34 +48,49 @@ public class SPARQLQueryBuilder {
 
 	private Set<StringBuilder> buildConstraintPart(Set<StringBuilder> queryStrings, Question q) {
 		Set<StringBuilder> sb = Sets.newHashSet();
-		List<MutableTreeNode> bottomUp = Lists.newArrayList();
-		// iterate through left tree part
-		// assumption: this part of the tree is a path
-		System.out.println(q.tree);
-//		MutableTreeNode tmp = q.tree.getRoot().getChildren().get(1);
-//		while (tmp != null) {
-//			bottomUp.add(tmp);
-//			if (!tmp.getChildren().isEmpty()) {
-//				tmp = tmp.getChildren().get(0);
-//			} else {
-//				tmp = null;
-//			}
-//		}
-//		bottomUp = Lists.reverse(bottomUp);
+		if (q.tree.getRoot().getChildren().size() == 2) {
+			System.out.println(q.tree);
+			MutableTreeNode tmp = q.tree.getRoot().getChildren().get(1);
 
-		// full-text stuff e.g. "protected"
-		// List<String> uris = index.listAbstractsContaining(root.label);
-		// if (!root.getAnnotations().isEmpty()) {
-		// for (StringBuilder query : queryStrings) {
-		// for (ResourceImpl anno : root.getAnnotations()) {
-		// // root has a valuable annotation from NN* or VB*
-		// StringBuilder variant1 = new StringBuilder(query.toString()).append("?proj  <" + anno + "> ?const.");
-		// }
-		// }
-		// } else {
-		// // TODO do the full text stuff
-		// sb.addAll(queryStrings);
-		// }
+			if (tmp.posTag.equals("ADD")) {
+				for (StringBuilder query : queryStrings) {
+					// GIVEN ?s ?root ?const or ?const ?root ?s
+					if (query.toString().contains("?const") && !tmp.getAnnotations().isEmpty()) {
+						StringBuilder variant1 = new StringBuilder(query.toString()).append("?proj ?pbridge <" + tmp.label + ">.");
+						sb.add(variant1);
+					}
+					// GIVEN no constraint yet given and root incapable for those purposes
+					else {
+						StringBuilder variant2 = new StringBuilder(query.toString()).append("?proj ?pbridge <" + tmp.label + ">.");
+						sb.add(variant2);
+					}
+				}
+			} else if (tmp.posTag.equals("CombinedNN")) {
+				for (StringBuilder query : queryStrings) {
+					if (!tmp.getAnnotations().isEmpty()) {
+						StringBuilder variant1 = new StringBuilder(query.toString()).append("FILTER (?proj IN (");
+						for (ResourceImpl annotation : tmp.getAnnotations()) {
+							variant1.append("<" + annotation.getURI() + "> , ");
+						}
+						variant1.deleteCharAt(variant1.lastIndexOf(",")).append(")).");
+						sb.add(variant1);
+
+						StringBuilder variant2 = new StringBuilder(query.toString()).append("FILTER (?const IN (");
+						for (ResourceImpl annotation : tmp.getAnnotations()) {
+							variant2.append("<" + annotation.getURI() + "> , ");
+						}
+						variant2.deleteCharAt(variant2.lastIndexOf(",")).append(")).");
+						sb.add(variant2);
+					}
+				}
+			} else {
+				log.error("unhandled path");
+				sb.addAll(queryStrings);
+			}
+		} else {
+			log.error("more children than expected");
+			sb.addAll(queryStrings);
+		}
 		return sb;
 	}
 

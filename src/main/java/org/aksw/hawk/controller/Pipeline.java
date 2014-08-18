@@ -68,8 +68,9 @@ public class Pipeline {
 				double fmax = 0;
 				double pmax = 0;
 				double rmax = 0;
+				log.info("########################################################");
 				for (String query : answer.keySet()) {
-					log.info(query.substring(0, Math.min(300, query.length())));
+					log.info(query.substring(0, Math.min(1000, query.length())));
 					Set<RDFNode> systemAnswers = answer.get(query);
 					// 11. Compare to set of resources from benchmark
 					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);

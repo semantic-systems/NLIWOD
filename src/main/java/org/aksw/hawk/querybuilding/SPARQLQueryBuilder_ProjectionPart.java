@@ -32,6 +32,8 @@ public class SPARQLQueryBuilder_ProjectionPart {
 						if (bottom.getAnnotations().size() > 0) {
 							for (ResourceImpl annotation : bottom.getAnnotations()) {
 								queries.add(new StringBuilder("?proj a <" + annotation + ">."));
+								queries.add(new StringBuilder("?proj a ?type."));
+								//TODO cities like http://dbpedia.org/page/Kirzhach are not annotated as db-owl:Place
 								// TODO add super class,e.g., City -> Settlement
 							}
 						} else {
