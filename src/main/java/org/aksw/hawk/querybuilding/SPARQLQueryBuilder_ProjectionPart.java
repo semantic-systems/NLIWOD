@@ -35,10 +35,10 @@ public class SPARQLQueryBuilder_ProjectionPart {
 							for (String annotation : bottom.getAnnotations()) {
 								//TODO probably here is a bug 
 								queries.add(new SPARQLQuery("?proj a <" + annotation + ">."));
-								queries.add(new SPARQLQuery("?proj a ?type."));
-								// TODO cities like http://dbpedia.org/page/Kirzhach are not annotated as db-owl:Place
 								// TODO add super class,e.g., City -> Settlement
 							}
+							// TODO cities like http://dbpedia.org/page/Kirzhach are not annotated as db-owl:Place
+							queries.add(new SPARQLQuery("?proj a ?type."));
 						} else {
 							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 						}

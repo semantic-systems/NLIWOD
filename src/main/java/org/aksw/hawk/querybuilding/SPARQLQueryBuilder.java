@@ -28,8 +28,10 @@ public class SPARQLQueryBuilder {
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		try {
+			if (q.languageToQuestion.get("en").contains("philosopher")) {
+				System.out.println();
+			}
 			// build projection part
-			//Bug here when working on anti-apartheid thingie
 			Set<SPARQLQuery> queryStrings = projection.buildProjectionPart(this, q);
 			System.gc();
 			queryStrings = buildRootPart(queryStrings, q);
@@ -46,7 +48,7 @@ public class SPARQLQueryBuilder {
 				}
 			}
 		} catch (CloneNotSupportedException e) {
-			log.error(e.getLocalizedMessage(),e);
+			log.error(e.getLocalizedMessage(), e);
 		}
 		return answer;
 	}
@@ -60,8 +62,8 @@ public class SPARQLQueryBuilder {
 			if (tmp.posTag.equals("ADD")) {
 				for (SPARQLQuery query : queryStrings) {
 					// GIVEN ?proj ?root ?const or ?const ?root ?proj
-					//TODO ??? && !tmp.getAnnotations().isEmpty()
-					if (query.constraintsContains("?const") ) {
+					// TODO ??? && !tmp.getAnnotations().isEmpty()
+					if (query.constraintsContains("?const")) {
 						SPARQLQuery variant1 = (SPARQLQuery) query.clone();
 						variant1.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
 						sb.add(variant1);
@@ -122,8 +124,9 @@ public class SPARQLQueryBuilder {
 					SPARQLQuery variant4 = ((SPARQLQuery) query.clone());
 					variant4.addConstraint("?proj   ?p ?const.");
 
-					//TODO vllt &&uris.size()< 100?
-					if (!uris.isEmpty()) {
+					// TODO vllt &&uris.size()< 100?
+//					otherwise this filter will explode
+					if (!uris.isEmpty() &&uris.size()< 100) {
 						SPARQLQuery variant5 = ((SPARQLQuery) query.clone());
 						variant5.addFilter("proj", uris);
 						sb.add(variant5);

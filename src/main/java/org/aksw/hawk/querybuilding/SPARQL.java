@@ -154,6 +154,7 @@ public class SPARQL {
 		query = query.replace(group, "XXAKSWXX");
 
 		String[] uris = group.split(", ");
+		log.debug("Size of Filter"+ uris.length);
 		for (int i = 0; i < uris.length;) {
 			String filter = "";
 			for (int sizeOfFilter = 0; sizeOfFilter < sizeOfFilterThreshold && sizeOfFilter + i < uris.length; sizeOfFilter++) {
