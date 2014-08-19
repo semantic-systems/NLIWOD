@@ -38,11 +38,11 @@ public class SPARQLQueryBuilder {
 			System.gc();
 			queryStrings = buildConstraintPart(queryStrings, q);
 			System.gc();
-
+			int i = 0;
 			for (SPARQLQuery queryString : queryStrings) {
 				String query = queryString.toString();
+				log.info(i++ + "/" + queryStrings.size() + "= " + query.substring(0, Math.min(1000, query.length())));
 				Set<RDFNode> answerSet = sparql.sparql(query);
-				log.debug(query.substring(0, Math.min(1000, query.length())));
 				if (!answerSet.isEmpty()) {
 					answer.put(query, answerSet);
 				}
@@ -55,8 +55,9 @@ public class SPARQLQueryBuilder {
 
 	private Set<SPARQLQuery> buildConstraintPart(Set<SPARQLQuery> queryStrings, Question q) throws CloneNotSupportedException {
 		Set<SPARQLQuery> sb = Sets.newHashSet();
-		if (q.tree.getRoot().getChildren().size() == 2) {
-			System.out.println(q.tree);
+		//TODO only valid for questions with one constraint node
+		if (q.tree.getRoot().getChildren().size() == 2&&q.tree.getRoot().getChildren().get(1).getChildren().isEmpty()) {
+			log.info(q.tree.toString());
 			MutableTreeNode tmp = q.tree.getRoot().getChildren().get(1);
 
 			if (tmp.posTag.equals("ADD")) {
@@ -92,13 +93,17 @@ public class SPARQLQueryBuilder {
 				}
 			} else {
 				log.error("unhandled path");
-				sb.addAll(queryStrings);
+				// TODO go on here
+
+				// sb.addAll(queryStrings);
 			}
 		} else {
 			log.error("more children than expected");
-			sb.addAll(queryStrings);
+			// TODO go on here
+			// sb.addAll(queryStrings);
 		}
 		return sb;
+
 	}
 
 	private Set<SPARQLQuery> buildRootPart(Set<SPARQLQuery> queryStrings, Question q) throws CloneNotSupportedException {
@@ -125,8 +130,8 @@ public class SPARQLQueryBuilder {
 					variant4.addConstraint("?proj   ?p ?const.");
 
 					// TODO vllt &&uris.size()< 100?
-//					otherwise this filter will explode
-					if (!uris.isEmpty() &&uris.size()< 100) {
+					// otherwise this filter will explode
+					if (!uris.isEmpty() && uris.size() < 100) {
 						SPARQLQuery variant5 = ((SPARQLQuery) query.clone());
 						variant5.addFilter("proj", uris);
 						sb.add(variant5);

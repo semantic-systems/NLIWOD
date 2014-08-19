@@ -2,9 +2,6 @@ package org.aksw.hawk.querybuilding;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -20,9 +17,7 @@ import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.ResultSet;
@@ -31,7 +26,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 public class SPARQL {
 	Logger log = LoggerFactory.getLogger(SPARQL.class);
 	// TODO treshold can be increased by introducing prefixes
-	int sizeOfFilterThreshold = 100;
+	int sizeOfFilterThreshold = 50;
 	QueryExecutionFactory qef;
 
 	public SPARQL() {
@@ -62,7 +57,6 @@ public class SPARQL {
 		QueryExecution qexec = null;
 		try {
 			if (query.contains("FILTER")) {
-//				query = intersectFILTERS(query);
 				if (query != null) {
 					queries = splitLongFilterSPARQL(query);
 				}
@@ -104,37 +98,6 @@ public class SPARQL {
 		return output.toString();
 	}
 
-	public String intersectFILTERS(String query) {
-		// find all filter expressions
-		// watch out in URIs could be two closing brackets
-		Pattern pattern = Pattern.compile("FILTER\\s*\\(\\s*\\?(\\w+) IN\\s*\\(((.+?))\\)\\)\\.", Pattern.MULTILINE);
-		Matcher m = pattern.matcher(query);
-		Map<String, Set<String>> intersectionSets = Maps.newHashMap();
-		while (m.find()) {
-			query = query.replace(m.group(0), "");
-			String proj = m.group(1);
-			HashSet<String> c = new HashSet<String>(Arrays.asList(m.group(2).split(", ")));
-			if (intersectionSets.containsKey(proj)) {
-				// intersect FILTER IN expressions with the same projection variable, so the endpoint does not need to do it
-				Set<String> alreadyIdentifiedSet = intersectionSets.get(proj);
-				alreadyIdentifiedSet.retainAll(c);
-			} else {
-				intersectionSets.put(proj, c);
-			}
-		}
-		// rebuild the SPARQL query
-		for (String projectionVariable : intersectionSets.keySet()) {
-			Set<String> uris = intersectionSets.get(projectionVariable);
-			query = query.replace("}", "FILTER ( ?" + projectionVariable + " IN (" + Joiner.on(", ").join(uris) + ")). }");
-		}
-		// prevents execution of queries with empty intersection of FILTERS
-		// TODO could be buggy if not ?proj is the variable to be intersected
-		if (query.contains("FILTER ( ?proj IN ())")) {
-			return null;
-		}
-		return query;
-	}
-
 	public ArrayList<String> splitLongFilterSPARQL(String query, int threshold) {
 		this.sizeOfFilterThreshold = threshold;
 		return splitLongFilterSPARQL(query);
@@ -143,7 +106,12 @@ public class SPARQL {
 
 	// TODO currently only ?proj gets splitted but not other long filter.
 	// think about the right semantics to do so
+	
+	//TODO build this on top of the new structure of SPARQLQuery object
 	private ArrayList<String> splitLongFilterSPARQL(String query) {
+		if(query.contains("production")){
+			System.out.println();
+		}
 		ArrayList<String> queries = Lists.newArrayList();
 		query = query.replaceAll("\n", "");
 		// watch out in URIs could be two closing brackets
@@ -179,7 +147,6 @@ public class SPARQL {
 				+ "}";
 
 		SPARQL sqb = new SPARQL();
-		query = sqb.intersectFILTERS(query);
 		ArrayList<String> i = sqb.splitLongFilterSPARQL(query, 2);
 		for (String q : i) {
 			System.out.println(q);
