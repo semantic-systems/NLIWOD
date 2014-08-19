@@ -18,7 +18,6 @@ public class SPARQLQueryBuilder_ProjectionPart {
 	Set<SPARQLQuery> buildProjectionPart(SPARQLQueryBuilder sparqlQueryBuilder, Question q) {
 		Set<SPARQLQuery> queries = Sets.newHashSet();
 		List<MutableTreeNode> bottomUp = getProjectionPathBottumUp(q);
-
 		// empty restriction for projection part in order to account for misinformation in left tree
 		// TODO this leads to tremendous increase of runtime
 		// queries.add(new StringBuilder("?proj ?p ?o."));
@@ -61,7 +60,7 @@ public class SPARQLQueryBuilder_ProjectionPart {
 						// combined nouns are lists of abstracts containing does words, i.e., type constraints
 						if (bottom.getAnnotations().size() > 0) {
 							SPARQLQuery queryString = new SPARQLQuery("?proj ?p ?o.");
-							queryString.addFilter("proj", top.getAnnotations());
+							queryString.addFilter("proj", bottom.getAnnotations());
 							queries.add(queryString);
 						} else {
 							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));

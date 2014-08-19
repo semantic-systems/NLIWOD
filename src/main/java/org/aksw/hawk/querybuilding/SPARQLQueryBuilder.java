@@ -10,6 +10,7 @@ import org.aksw.hawk.nlp.MutableTreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -58,11 +59,15 @@ public class SPARQLQueryBuilder {
 
 			if (tmp.posTag.equals("ADD")) {
 				for (SPARQLQuery query : queryStrings) {
-					// GIVEN ?s ?root ?const or ?const ?root ?s
-					if (query.constraintsContains("?const") && !tmp.getAnnotations().isEmpty()) {
+					// GIVEN ?proj ?root ?const or ?const ?root ?proj
+					//TODO ??? && !tmp.getAnnotations().isEmpty()
+					if (query.constraintsContains("?const") ) {
 						SPARQLQuery variant1 = (SPARQLQuery) query.clone();
 						variant1.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
 						sb.add(variant1);
+						SPARQLQuery variant2 = (SPARQLQuery) query.clone();
+						variant2.addFilter("const", Lists.newArrayList(tmp.label));
+						sb.add(variant2);
 					}
 					// GIVEN no constraint yet given and root incapable for those purposes
 					else {

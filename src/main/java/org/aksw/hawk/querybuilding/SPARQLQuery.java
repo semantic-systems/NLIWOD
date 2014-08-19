@@ -42,7 +42,10 @@ public class SPARQLQuery implements Cloneable {
 	protected Object clone() throws CloneNotSupportedException {
 		SPARQLQuery q = new SPARQLQuery();
 		q.constraintTriples = (ArrayList<String>) this.constraintTriples.clone();
-		q.filter = (HashMap<String, List<String>>) this.filter.clone();
+		q.filter = Maps.newHashMap();
+		for(String key:  this.filter.keySet()){
+			q.filter.put(key, Lists.newArrayList(this.filter.get(key)));
+		}
 		return q;
 	}
 

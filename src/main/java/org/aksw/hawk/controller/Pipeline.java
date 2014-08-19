@@ -68,7 +68,6 @@ public class Pipeline {
 				double fmax = 0;
 				double pmax = 0;
 				double rmax = 0;
-				log.info("########################################################");
 				for (String query : answer.keySet()) {
 					Set<RDFNode> systemAnswers = answer.get(query);
 					// 11. Compare to set of resources from benchmark
@@ -88,6 +87,7 @@ public class Pipeline {
 				overallr += rmax;
 				counter++;
 			}
+			log.info("########################################################");
 		}
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
 	}
