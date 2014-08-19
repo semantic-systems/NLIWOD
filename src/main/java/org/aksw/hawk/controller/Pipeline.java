@@ -50,8 +50,6 @@ public class Pipeline {
 			if (q.answerType.equals("resource")) {
 				if (q.onlydbo) {
 					if (!q.aggregation) {
-						if (isSELECTquery(q.pseudoSparqlQuery, q.sparqlQuery)) {
-
 							Map<String, Set<RDFNode>> answer = calculateSPARQLRepresentation(q);
 
 							double fmax = 0;
@@ -77,11 +75,8 @@ public class Pipeline {
 							overallr += rmax;
 							counter++;
 							log.info("########################################################");
-						} else {
-							evals.add(new EvalObj(question,0, 0, 0, "This question is no SELECT SPARQL query"));
-						}
 					} else {
-						evals.add(new EvalObj(question,0, 0, 0, "This question askes for aggregation"));
+						evals.add(new EvalObj(question,0, 0, 0, "This question askes for aggregation (ASK)"));
 					}
 				} else {
 					evals.add(new EvalObj(question,0, 0, 0, "This question askes for yago types"));
@@ -134,15 +129,6 @@ public class Pipeline {
 		return answer;
 	}
 
-	// TODO throw away and work on identifying ask queries
-	private boolean isSELECTquery(String pseudoSparqlQuery, String sparqlQuery) {
-		if (pseudoSparqlQuery != null) {
-			return pseudoSparqlQuery.contains("\nSELECT\n") || pseudoSparqlQuery.contains("SELECT ");
-		} else if (sparqlQuery != null) {
-			return sparqlQuery.contains("\nSELECT\n") || sparqlQuery.contains("SELECT ");
-		}
-		return false;
-	}
 
 	public static void main(String args[]) throws IOException {
 
