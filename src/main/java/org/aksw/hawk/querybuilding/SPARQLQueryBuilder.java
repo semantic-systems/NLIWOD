@@ -41,7 +41,7 @@ public class SPARQLQueryBuilder {
 			int i = 0;
 			for (SPARQLQuery queryString : queryStrings) {
 				String query = queryString.toString();
-				log.info(i++ + "/" + queryStrings.size() + "= " + query.substring(0, Math.min(1000, query.length())));
+				log.debug(i++ + "/" + queryStrings.size() + "= " + query.substring(0, Math.min(1000, query.length())));
 				Set<RDFNode> answerSet = sparql.sparql(query);
 				if (!answerSet.isEmpty()) {
 					answer.put(query, answerSet);
