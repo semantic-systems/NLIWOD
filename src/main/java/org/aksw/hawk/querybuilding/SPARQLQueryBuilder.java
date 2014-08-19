@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class SPARQLQueryBuilder {
 	Logger log = LoggerFactory.getLogger(SPARQLQueryBuilder.class);
@@ -27,59 +26,60 @@ public class SPARQLQueryBuilder {
 
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
-		// build projection part
-		Set<StringBuilder> queryStrings = projection.buildProjectionPart(this, q);
-		System.gc();
-		queryStrings = buildRootPart(queryStrings, q);
-		System.gc();
-		queryStrings = buildConstraintPart(queryStrings, q);
-		System.gc();
+		try {
+			// build projection part
+			//Bug here when working on anti-apartheid thingie
+			Set<SPARQLQuery> queryStrings = projection.buildProjectionPart(this, q);
+			System.gc();
+			queryStrings = buildRootPart(queryStrings, q);
+			System.gc();
+			queryStrings = buildConstraintPart(queryStrings, q);
+			System.gc();
 
-		for (StringBuilder queryString : queryStrings) {
-			String query = "SELECT ?proj WHERE {\n " + queryString.toString() + "}";
-			Set<RDFNode> answerSet = sparql.sparql(query);
-			log.debug(query.substring(0, Math.min(1000, query.length())));
-			if (!answerSet.isEmpty()) {
-				answer.put(queryString.toString(), answerSet);
+			for (SPARQLQuery queryString : queryStrings) {
+				String query = queryString.toString();
+				Set<RDFNode> answerSet = sparql.sparql(query);
+				log.debug(query.substring(0, Math.min(1000, query.length())));
+				if (!answerSet.isEmpty()) {
+					answer.put(query, answerSet);
+				}
 			}
+		} catch (CloneNotSupportedException e) {
+			log.error(e.getLocalizedMessage(),e);
 		}
 		return answer;
 	}
 
-	private Set<StringBuilder> buildConstraintPart(Set<StringBuilder> queryStrings, Question q) {
-		Set<StringBuilder> sb = Sets.newHashSet();
+	private Set<SPARQLQuery> buildConstraintPart(Set<SPARQLQuery> queryStrings, Question q) throws CloneNotSupportedException {
+		Set<SPARQLQuery> sb = Sets.newHashSet();
 		if (q.tree.getRoot().getChildren().size() == 2) {
 			System.out.println(q.tree);
 			MutableTreeNode tmp = q.tree.getRoot().getChildren().get(1);
 
 			if (tmp.posTag.equals("ADD")) {
-				for (StringBuilder query : queryStrings) {
+				for (SPARQLQuery query : queryStrings) {
 					// GIVEN ?s ?root ?const or ?const ?root ?s
-					if (query.toString().contains("?const") && !tmp.getAnnotations().isEmpty()) {
-						StringBuilder variant1 = new StringBuilder(query.toString()).append("?proj ?pbridge <" + tmp.label + ">.");
+					if (query.constraintsContains("?const") && !tmp.getAnnotations().isEmpty()) {
+						SPARQLQuery variant1 = (SPARQLQuery) query.clone();
+						variant1.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
 						sb.add(variant1);
 					}
 					// GIVEN no constraint yet given and root incapable for those purposes
 					else {
-						StringBuilder variant2 = new StringBuilder(query.toString()).append("?proj ?pbridge <" + tmp.label + ">.");
+						SPARQLQuery variant2 = (SPARQLQuery) query.clone();
+						variant2.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
 						sb.add(variant2);
 					}
 				}
 			} else if (tmp.posTag.equals("CombinedNN")) {
-				for (StringBuilder query : queryStrings) {
+				for (SPARQLQuery query : queryStrings) {
 					if (!tmp.getAnnotations().isEmpty()) {
-						StringBuilder variant1 = new StringBuilder(query.toString()).append("FILTER (?proj IN (");
-						for (ResourceImpl annotation : tmp.getAnnotations()) {
-							variant1.append("<" + annotation.getURI() + "> , ");
-						}
-						variant1.deleteCharAt(variant1.lastIndexOf(",")).append(")).");
+						SPARQLQuery variant1 = (SPARQLQuery) query.clone();
+						variant1.addFilter("proj", tmp.getAnnotations());
 						sb.add(variant1);
 
-						StringBuilder variant2 = new StringBuilder(query.toString()).append("FILTER (?const IN (");
-						for (ResourceImpl annotation : tmp.getAnnotations()) {
-							variant2.append("<" + annotation.getURI() + "> , ");
-						}
-						variant2.deleteCharAt(variant2.lastIndexOf(",")).append(")).");
+						SPARQLQuery variant2 = (SPARQLQuery) query.clone();
+						variant2.addFilter("const", tmp.getAnnotations());
 						sb.add(variant2);
 					}
 				}
@@ -94,28 +94,33 @@ public class SPARQLQueryBuilder {
 		return sb;
 	}
 
-	private Set<StringBuilder> buildRootPart(Set<StringBuilder> queryStrings, Question q) {
-		Set<StringBuilder> sb = Sets.newHashSet();
+	private Set<SPARQLQuery> buildRootPart(Set<SPARQLQuery> queryStrings, Question q) throws CloneNotSupportedException {
+		Set<SPARQLQuery> sb = Sets.newHashSet();
 		MutableTreeNode root = q.tree.getRoot();
 
 		// full-text stuff e.g. "protected"
 		List<String> uris = index.listAbstractsContaining(root.label);
 		if (!root.getAnnotations().isEmpty()) {
-			for (StringBuilder query : queryStrings) {
-				for (ResourceImpl anno : root.getAnnotations()) {
+			for (SPARQLQuery query : queryStrings) {
+				for (String anno : root.getAnnotations()) {
 					// root has a valuable annotation from NN* or VB*
-					StringBuilder variant1 = new StringBuilder(query.toString()).append("?proj  <" + anno + "> ?const.");
-					StringBuilder variant2 = new StringBuilder(query.toString()).append("?const <" + anno + "> ?proj.");
-					// root has annotations but they are not valuable, e.g. took, is, was, ride
-					StringBuilder variant3 = new StringBuilder(query.toString()).append("?const  ?p ?proj.");
-					StringBuilder variant4 = new StringBuilder(query.toString()).append("?proj   ?p ?const.");
+					SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
+					variant1.addConstraint("?proj  <" + anno + "> ?const.");
 
+					SPARQLQuery variant2 = ((SPARQLQuery) query.clone());
+					variant2.addConstraint("?const <" + anno + "> ?proj.");
+
+					// root has annotations but they are not valuable, e.g. took, is, was, ride
+					SPARQLQuery variant3 = ((SPARQLQuery) query.clone());
+					variant3.addConstraint("?const  ?p ?proj.");
+
+					SPARQLQuery variant4 = ((SPARQLQuery) query.clone());
+					variant4.addConstraint("?proj   ?p ?const.");
+
+					//TODO vllt &&uris.size()< 100?
 					if (!uris.isEmpty()) {
-						StringBuilder variant5 = new StringBuilder(query.toString()).append("FILTER (?proj IN (");
-						for (String annotation : uris) {
-							variant5.append("<" + annotation + "> , ");
-						}
-						variant5.deleteCharAt(variant5.lastIndexOf(",")).append(")).");
+						SPARQLQuery variant5 = ((SPARQLQuery) query.clone());
+						variant5.addFilter("proj", uris);
 						sb.add(variant5);
 					}
 					sb.add(variant1);

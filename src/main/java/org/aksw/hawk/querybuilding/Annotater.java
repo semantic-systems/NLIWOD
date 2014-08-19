@@ -15,10 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class Annotater {
-
+//TODO refactor class and add addAll!!! to mutabletreenode
 	Logger log = LoggerFactory.getLogger(Annotater.class);
 	IndexDBO_classes classesIndex = new IndexDBO_classes();
 	IndexDBO_properties propertiesIndex = new IndexDBO_properties();
@@ -61,23 +60,23 @@ public class Annotater {
 				ArrayList<String> search = classesIndex.search(label);
 				if (!search.isEmpty()) {
 					for (String uri : search) {
-						tmp.addAnnotation(new ResourceImpl(uri));
+						tmp.addAnnotation(uri);
 					}
 				} else if (!propertiesIndex.search(label).isEmpty()) {
 					search = propertiesIndex.search(label);
 					for (String uri : search) {
-						tmp.addAnnotation(new ResourceImpl(uri));
+						tmp.addAnnotation(uri);
 					}
 				} else {
 					search = dboIndex.search(label);
 					for (String uri : search) {
-						tmp.addAnnotation(new ResourceImpl(uri));
+						tmp.addAnnotation(uri);
 					}
 				}
 			} else if (posTag.matches("CombinedNN") && tmp.getAnnotations().isEmpty()) {
 				List<String> uris = index.listAbstractsContaining(label);
 				for (String resourceURL : uris) {
-					tmp.addAnnotation(new ResourceImpl(resourceURL));
+					tmp.addAnnotation(resourceURL);
 				}
 			} else if (tmp.getAnnotations().isEmpty() && (posTag.matches("ADD") || posTag.matches("VB(.)*"))) {
 				// expected behaviour
@@ -116,7 +115,7 @@ public class Annotater {
 					search = dboIndex.search(label);
 				}
 				for (String uri : search) {
-					tmp.addAnnotation(new ResourceImpl(uri));
+					tmp.addAnnotation(uri);
 				}
 				log.debug(Joiner.on(", ").join(tmp.getAnnotations()));
 			}
@@ -145,15 +144,15 @@ public class Annotater {
 				if (posTag.matches("WRB|WP")) {
 					// gives only hints towards the type of projection variable
 					if (label.equals("Where")) {
-						tmp.addAnnotation(new ResourceImpl("http://dbpedia.org/ontology/Place"));
+						tmp.addAnnotation("http://dbpedia.org/ontology/Place");
 					} else if (label.equals("Who")) {
-						tmp.addAnnotation(new ResourceImpl("http://dbpedia.org/ontology/Agent"));
+						tmp.addAnnotation("http://dbpedia.org/ontology/Agent");
 					}
 				} else if (posTag.equals("CombinedNN")) {
 					// full text lookup
 					List<String> uris = index.listAbstractsContaining(label);
 					for (String resourceURL : uris) {
-						tmp.addAnnotation(new ResourceImpl(resourceURL));
+						tmp.addAnnotation(resourceURL);
 					}
 				} else if (posTag.matches("NN(.)*")) {
 					// DBO look up
@@ -165,7 +164,7 @@ public class Annotater {
 					if (classesIndex.search(label).size() > 0) {
 						ArrayList<String> uris = classesIndex.search(label);
 						for (String resourceURL : uris) {
-							tmp.addAnnotation(new ResourceImpl(resourceURL));
+							tmp.addAnnotation(resourceURL);
 						}
 					} else {
 						log.error("Strange case that never should happen");
@@ -183,17 +182,17 @@ public class Annotater {
 					if (classesIndex.search(label).size() > 0 || propertiesIndex.search(label).size() > 0 ) {
 						ArrayList<String> uris = classesIndex.search(label);
 						for (String resourceURL : uris) {
-							tmp.addAnnotation(new ResourceImpl(resourceURL));
+							tmp.addAnnotation(resourceURL);
 						}
 						uris = propertiesIndex.search(label);
 						for (String resourceURL : uris) {
-							tmp.addAnnotation(new ResourceImpl(resourceURL));
+							tmp.addAnnotation(resourceURL);
 						}
 					} else {
 						// full text lookup
 						List<String> uris = index.listAbstractsContaining(label);
 						for (String resourceURL : uris) {
-							tmp.addAnnotation(new ResourceImpl(resourceURL));
+							tmp.addAnnotation(resourceURL);
 						}
 						// since a full text lookup takes place we assume
 						// hereafter there will be a FILTER clause needed which

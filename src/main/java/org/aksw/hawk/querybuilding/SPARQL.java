@@ -62,7 +62,7 @@ public class SPARQL {
 		QueryExecution qexec = null;
 		try {
 			if (query.contains("FILTER")) {
-				query = intersectFILTERS(query);
+//				query = intersectFILTERS(query);
 				if (query != null) {
 					queries = splitLongFilterSPARQL(query);
 				}

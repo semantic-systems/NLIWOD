@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
+import com.google.common.collect.Lists;
 
 public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializable {
 	private static final long serialVersionUID = 3684161169564127853L;
@@ -15,7 +15,7 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 	public String depLabel;
 	public int nodeNumber;
 	private boolean used = false;
-	private ArrayList<ResourceImpl> annotations = new ArrayList<>();
+	private List<String> annotations = Lists.newArrayList();
 	public String lemma;
 
 	public MutableTreeNode() {
@@ -61,14 +61,14 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 	}
 
 
-	public void addAnnotation(ResourceImpl resourceImpl) {
+	public void addAnnotation(String resourceImpl) {
 		if (annotations == null) {
 			annotations = new ArrayList<>();
 		}
 		annotations.add(resourceImpl);
 	}
 
-	public List<ResourceImpl> getAnnotations() {
+	public List<String> getAnnotations() {
 		if (annotations == null) {
 			return new ArrayList<>();
 		} else {

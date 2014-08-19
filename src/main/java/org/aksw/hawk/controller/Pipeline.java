@@ -70,15 +70,14 @@ public class Pipeline {
 				double rmax = 0;
 				log.info("########################################################");
 				for (String query : answer.keySet()) {
-					log.info(query.substring(0, Math.min(1000, query.length())));
 					Set<RDFNode> systemAnswers = answer.get(query);
 					// 11. Compare to set of resources from benchmark
 					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
 					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-					log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
 					if (fMeasure > fmax) {
-						log.info("\tSTEP UP");
+						log.info(query.substring(0, Math.min(1000, query.length())));
+						log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
 						fmax = fMeasure;
 						pmax = precision;
 						rmax = recall;
