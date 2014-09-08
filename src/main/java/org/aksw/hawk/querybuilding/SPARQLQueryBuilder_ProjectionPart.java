@@ -5,17 +5,19 @@ import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.nlp.MutableTreeNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class SPARQLQueryBuilder_ProjectionPart {
 
-	Set<StringBuilder> buildProjectionPart(SPARQLQueryBuilder sparqlQueryBuilder, Question q) {
-		Set<StringBuilder> queries = Sets.newHashSet();
-		List<MutableTreeNode> bottomUp = getProjectionPathBottumUp(q);
+	private Logger log = LoggerFactory.getLogger(SPARQLQueryBuilder_ProjectionPart.class);
 
+	Set<SPARQLQuery> buildProjectionPart(SPARQLQueryBuilder sparqlQueryBuilder, Question q) {
+		Set<SPARQLQuery> queries = Sets.newHashSet();
+		List<MutableTreeNode> bottomUp = getProjectionPathBottumUp(q);
 		// empty restriction for projection part in order to account for misinformation in left tree
 		// TODO this leads to tremendous increase of runtime
 		// queries.add(new StringBuilder("?proj ?p ?o."));
@@ -30,47 +32,48 @@ public class SPARQLQueryBuilder_ProjectionPart {
 					if (queries.isEmpty()) {
 						// is either from Where or Who
 						if (bottom.getAnnotations().size() > 0) {
-							for (ResourceImpl annotation : bottom.getAnnotations()) {
-								queries.add(new StringBuilder("?proj a <" + annotation + ">."));
-								queries.add(new StringBuilder("?proj a ?type."));
-								//TODO cities like http://dbpedia.org/page/Kirzhach are not annotated as db-owl:Place
+							for (String annotation : bottom.getAnnotations()) {
+								//TODO probably here is a bug 
+								queries.add(new SPARQLQuery("?proj a <" + annotation + ">."));
 								// TODO add super class,e.g., City -> Settlement
 							}
+							// TODO cities like http://dbpedia.org/page/Kirzhach are not annotated as db-owl:Place
+							queries.add(new SPARQLQuery("?proj a ?type."));
 						} else {
-							sparqlQueryBuilder.log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
+							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 						}
 					} else {
 						// is either from Where or Who
 						if (bottom.getAnnotations().size() > 0) {
-							for (ResourceImpl annotation : bottom.getAnnotations()) {
-								for (StringBuilder existingQueries : queries) {
-									existingQueries.append("?proj a <" + annotation + ">.");
+							for (String annotation : bottom.getAnnotations()) {
+								for (SPARQLQuery existingQuery : queries) {
+									existingQuery.addConstraint("?proj a <" + annotation + ">.");
 									// TODO add super class,e.g., City -> Settlement
 								}
 							}
 						} else {
-							sparqlQueryBuilder.log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
+							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 						}
 					}
 				} else if (bottomposTag.equals("CombinedNN")) {
 					if (queries.isEmpty()) {
 						// combined nouns are lists of abstracts containing does words, i.e., type constraints
 						if (bottom.getAnnotations().size() > 0) {
-							StringBuilder queryString = new StringBuilder("?proj ?p ?o. FILTER (?proj IN (");
-							joinURIsForFilterExpression(bottom, queryString);
+							SPARQLQuery queryString = new SPARQLQuery("?proj ?p ?o.");
+							queryString.addFilter("proj", bottom.getAnnotations());
 							queries.add(queryString);
 						} else {
-							sparqlQueryBuilder.log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
+							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 						}
 					} else {
 						// combined nouns are lists of abstracts containing does words, i.e., type constraints
 						if (bottom.getAnnotations().size() > 0) {
-							for (StringBuilder existingQueries : queries) {
-								existingQueries.append("?proj ?p ?o. FILTER (?proj IN ( ");
-								joinURIsForFilterExpression(bottom, existingQueries);
+							for (SPARQLQuery existingQueries : queries) {
+								existingQueries.addConstraint("?proj ?p ?o.");
+								existingQueries.addFilter("proj", bottom.getAnnotations());
 							}
 						} else {
-							sparqlQueryBuilder.log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
+							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 						}
 					}
 				} else {
@@ -82,14 +85,14 @@ public class SPARQLQueryBuilder_ProjectionPart {
 				// TODO build it in a way, that says that down here are only projection variable constraining modules that need to be advanced by the top heuristically say that here NNs or VBs stand
 				// for a predicates
 				if (bottomposTag.equals("CombinedNN") && topPosTag.matches("VB(.)*|NN(.)*")) {
-					for (ResourceImpl predicates : top.getAnnotations()) {
+					for (String predicates : top.getAnnotations()) {
 						if (bottom.getAnnotations().size() > 0) {
-							StringBuilder queryString = new StringBuilder("?proj <" + predicates + "> ?o. FILTER (?proj IN (");
-							joinURIsForFilterExpression(bottom, queryString);
+							SPARQLQuery queryString = new SPARQLQuery("?proj <" + predicates + "> ?o.");
+							queryString.addFilter("proj", bottom.getAnnotations());
 							queries.add(queryString);
 
-							queryString = new StringBuilder("?o <" + predicates + "> ?proj.FILTER (?proj IN (");
-							joinURIsForFilterExpression(bottom, queryString);
+							queryString = new SPARQLQuery("?o <" + predicates + "> ?proj.");
+							queryString.addFilter("proj", bottom.getAnnotations());
 							queries.add(queryString);
 						}
 					}
@@ -97,42 +100,28 @@ public class SPARQLQueryBuilder_ProjectionPart {
 				} else if (bottomposTag.matches("ADD|NN") && topPosTag.matches("VB(.)*|NN(.)*|CombinedNN")) {
 					// either way it is an unprecise verb binding
 					if (!topPosTag.matches("CombinedNN")) {
-						for (ResourceImpl annotation : top.getAnnotations()) {
-							StringBuilder queryString = new StringBuilder("?proj <" + annotation + "> <" + bottom.label + ">.");
+						for (String annotation : top.getAnnotations()) {
+							SPARQLQuery queryString = new SPARQLQuery("?proj <" + annotation + "> <" + bottom.label + ">.");
 							queries.add(queryString);
 						}
 					}
 					// or it stems from a full-text look up (+ reversing of the predicates)
 					if (top.getAnnotations().size() > 0) {
-						StringBuilder queryString = new StringBuilder("?proj ?p <" + bottom.label + ">. FILTER (?proj IN ( ");
-						joinURIsForFilterExpression(top, queryString);
+						SPARQLQuery queryString = new SPARQLQuery("?proj ?p <" + bottom.label + ">.");
+						queryString.addFilter("proj", top.getAnnotations());
 						queries.add(queryString);
 
-						queryString = new StringBuilder("<" + bottom.label + "> ?p ?proj. FILTER (?proj IN ( ");
-						joinURIsForFilterExpression(top, queryString);
+						queryString = new SPARQLQuery("<" + bottom.label + "> ?p ?proj.");
+						queryString.addFilter("proj", top.getAnnotations());
 						queries.add(queryString);
 					}
 					i++;
 				} else {
-					sparqlQueryBuilder.log.error("Strange case that never should happen: " + bottomposTag);
+					log.error("Strange case that never should happen: " + bottomposTag);
 				}
 			}
 		}
 		return queries;
-	}
-
-	/**
-	 * 
-	 * @param top
-	 *            contains |URIs|=n
-	 * @param queryString
-	 *            contains so far a SOMETHING. FILTER (?proj IN (...)). Goal is to insert the URIs into the brackets in a valid SPARQL way
-	 */
-	private void joinURIsForFilterExpression(MutableTreeNode top, StringBuilder queryString) {
-		for (ResourceImpl annotation : top.getAnnotations()) {
-			queryString.append("<" + annotation.getURI() + "> , ");
-		}
-		queryString.deleteCharAt(queryString.lastIndexOf(",")).append(")).");
 	}
 
 	private List<MutableTreeNode> getProjectionPathBottumUp(Question q) {

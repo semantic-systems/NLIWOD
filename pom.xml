@@ -39,6 +39,24 @@
 	</properties>
 	<build>
 		<plugins>
+			 <plugin>
+        			<groupId>org.codehaus.mojo</groupId>
+        			<artifactId>exec-maven-plugin</artifactId>
+        			<configuration>
+          				<executable>java</executable>
+          					<arguments>
+            						<argument>-Xms512m</argument>
+            						<argument>-Xmx6G</argument>
+            						<argument>-XX:NewRatio=3</argument>
+            						<argument>-XX:+PrintGCTimeStamps</argument>
+           						<argument>-XX:+PrintGCDetails</argument>
+        	   					<argument>-Xloggc:gc.log</argument>
+	            					<argument>-classpath</argument>
+            					<classpath/>
+            					<argument>org.aksw.hawk.controller.Pipeline</argument>
+          				</arguments>
+        			</configuration>
+      			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

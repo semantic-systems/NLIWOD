@@ -1,6 +1,8 @@
 package org.aksw.hawk.controller;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,7 @@ import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class Pipeline {
@@ -41,67 +44,91 @@ public class Pipeline {
 		double overallp = 0;
 		double overallr = 0;
 		double counter = 0;
+		Set<EvalObj> evals = Sets.newHashSet();
 		for (Question q : questions) {
-			// by now only work on resource questions
-			if (q.answerType.equals("resource") && q.onlydbo && !q.aggregation && isSELECTquery(q.pseudoSparqlQuery, q.sparqlQuery)) {
-				// log.info("->" + q.languageToQuestion);
-				// 2. Disambiguate parts of the query
-				q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
+			String question = q.languageToQuestion.get("en");
+			if (q.answerType.equals("resource")) {
+				if (q.onlydbo) {
+					if (!q.aggregation) {
+							Map<String, Set<RDFNode>> answer = calculateSPARQLRepresentation(q);
 
-				// 3. Build trees from questions and cache them
-				q.tree = cParseTree.process(q);
-				// noun combiner, decrease #nodes in the DEPTree
-				// decreases
-				sentenceToSequence.combineSequences(q);
-				// 4. Apply pruning rules
-
-				q.tree = pruner.prune(q);
-
-				// 5. Annotate tree
-				log.info(q.languageToQuestion.get("en"));
-				annotater.annotateTree(q);
-				// log.debug(q.tree.toString());
-
-				// 6. Build queries via subqueries
-				Map<String, Set<RDFNode>> answer = queryBuilder.build(q);
-
-				double fmax = 0;
-				double pmax = 0;
-				double rmax = 0;
-				log.info("########################################################");
-				for (String query : answer.keySet()) {
-					log.info(query.substring(0, Math.min(1000, query.length())));
-					Set<RDFNode> systemAnswers = answer.get(query);
-					// 11. Compare to set of resources from benchmark
-					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
-					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-					log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
-					if (fMeasure > fmax) {
-						log.info("\tSTEP UP");
-						fmax = fMeasure;
-						pmax = precision;
-						rmax = recall;
+							double fmax = 0;
+							double pmax = 0;
+							double rmax = 0;
+							for (String query : answer.keySet()) {
+								Set<RDFNode> systemAnswers = answer.get(query);
+								// 11. Compare to set of resources from benchmark
+								double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+								double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+								double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+								if (fMeasure > fmax) {
+									log.info(query.substring(0, Math.min(1000, query.length())));
+									log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+									fmax = fMeasure;
+									pmax = precision;
+									rmax = recall;
+								}
+							}
+							evals.add(new EvalObj(question,fmax, pmax, rmax, "Assuming Optimal Ranking Function, Spotter: " + nerdModule.toString()));
+							overallf += fmax;
+							overallp += pmax;
+							overallr += rmax;
+							counter++;
+							log.info("########################################################");
+					} else {
+						evals.add(new EvalObj(question,0, 0, 0, "This question askes for aggregation (ASK)"));
 					}
+				} else {
+					evals.add(new EvalObj(question,0, 0, 0, "This question askes for yago types"));
 				}
-				overallf += fmax;
-				overallp += pmax;
-				overallr += rmax;
-				counter++;
+			} else {
+				evals.add(new EvalObj(question,0, 0, 0, "This is no question asking for resources only"));
 			}
 		}
+		write(evals);
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
 	}
 
-	// TODO throw away and work on identifying ask queries
-	private boolean isSELECTquery(String pseudoSparqlQuery, String sparqlQuery) {
-		if (pseudoSparqlQuery != null) {
-			return pseudoSparqlQuery.contains("\nSELECT\n") || pseudoSparqlQuery.contains("SELECT ");
-		} else if (sparqlQuery != null) {
-			return sparqlQuery.contains("\nSELECT\n") || sparqlQuery.contains("SELECT ");
+	private void write(Set<EvalObj> evals) {
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter("results.html"));
+			bw.write("<table>");
+			bw.newLine();
+			bw.write(" <tr>     <th>Question</th><th>F-measure</th><th>Precision</th><th>Recall</th><th>Comment</th>  </tr>");
+			for (EvalObj eval : evals) {
+				bw.write(" <tr>    <td>" + eval.getQuestion() + "</td><td>" + eval.getFmax() + "</td><td>" + eval.getPmax() + "</td><td>" + eval.getRmax() + "</td><td>" + eval.getComment() + "</td>  </tr>");
+				bw.newLine();
+			}
+			bw.write("</table>");
+			bw.newLine();
+			bw.close();
+		} catch (IOException e) {
+			log.error(e.getMessage(), e);
 		}
-		return false;
 	}
+
+	private Map<String, Set<RDFNode>> calculateSPARQLRepresentation(Question q) {
+		// 2. Disambiguate parts of the query
+		q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
+
+		// 3. Build trees from questions and cache them
+		q.tree = cParseTree.process(q);
+		// noun combiner, decrease #nodes in the DEPTree decreases
+		sentenceToSequence.combineSequences(q);
+		// 4. Apply pruning rules
+
+		q.tree = pruner.prune(q);
+
+		// 5. Annotate tree
+		log.info(q.languageToQuestion.get("en"));
+		annotater.annotateTree(q);
+		// log.debug(q.tree.toString());
+
+		// 6. Build queries via subqueries
+		Map<String, Set<RDFNode>> answer = queryBuilder.build(q);
+		return answer;
+	}
+
 
 	public static void main(String args[]) throws IOException {
 
@@ -128,5 +155,4 @@ public class Pipeline {
 			cache.writeCache();
 		}
 	}
-
 }
