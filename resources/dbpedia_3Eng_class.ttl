@@ -1,0 +1,657 @@
+<http://dbpedia.org/ontology/Agent> <http://www.w3.org/2000/01/rdf-schema#label> "agent" .
+<http://dbpedia.org/ontology/Person> <http://www.w3.org/2000/01/rdf-schema#label> "person" .
+<http://dbpedia.org/ontology/Politician> <http://www.w3.org/2000/01/rdf-schema#label> "politician" .
+<http://dbpedia.org/ontology/MemberOfParliament> <http://www.w3.org/2000/01/rdf-schema#label> "member of parliament" .
+<http://dbpedia.org/ontology/Event> <http://www.w3.org/2000/01/rdf-schema#label> "event" .
+<http://dbpedia.org/ontology/SportsEvent> <http://www.w3.org/2000/01/rdf-schema#label> "sports event" .
+<http://dbpedia.org/ontology/FootballMatch> <http://www.w3.org/2000/01/rdf-schema#label> "match" .
+<http://dbpedia.org/ontology/FootballMatch> <http://www.w3.org/2000/01/rdf-schema#label> "football match" .
+<http://dbpedia.org/ontology/Species> <http://www.w3.org/2000/01/rdf-schema#label> "species" .
+<http://dbpedia.org/ontology/Eukaryote> <http://www.w3.org/2000/01/rdf-schema#label> "eukaryotic" .
+<http://dbpedia.org/ontology/Eukaryote> <http://www.w3.org/2000/01/rdf-schema#label> "eukaryote" .
+<http://dbpedia.org/ontology/Plant> <http://www.w3.org/2000/01/rdf-schema#label> "plant" .
+<http://dbpedia.org/ontology/GreenAlga> <http://www.w3.org/2000/01/rdf-schema#label> "green alga" .
+<http://dbpedia.org/ontology/Cycad> <http://www.w3.org/2000/01/rdf-schema#label> "cycad" .
+<http://dbpedia.org/ontology/Ginkgo> <http://www.w3.org/2000/01/rdf-schema#label> "ginkgo" .
+<http://dbpedia.org/ontology/Place> <http://www.w3.org/2000/01/rdf-schema#label> "place" .
+<http://dbpedia.org/ontology/Place> <http://www.w3.org/2000/01/rdf-schema#label> "location" .
+<http://dbpedia.org/ontology/Monument> <http://www.w3.org/2000/01/rdf-schema#label> "monument" .
+<http://dbpedia.org/ontology/Animal> <http://www.w3.org/2000/01/rdf-schema#label> "animal" .
+<http://dbpedia.org/ontology/Reptile> <http://www.w3.org/2000/01/rdf-schema#label> "reptile" .
+<http://dbpedia.org/ontology/YearInSpaceflight> <http://www.w3.org/2000/01/rdf-schema#label> "year in spaceflight" .
+<http://dbpedia.org/ontology/Royalty> <http://www.w3.org/2000/01/rdf-schema#label> "royalty" .
+<http://dbpedia.org/ontology/AnatomicalStructure> <http://www.w3.org/2000/01/rdf-schema#label> "anatomical structure" .
+<http://dbpedia.org/ontology/Bone> <http://www.w3.org/2000/01/rdf-schema#label> "bone" .
+<http://dbpedia.org/ontology/Organisation> <http://www.w3.org/2000/01/rdf-schema#label> "organisation" .
+<http://dbpedia.org/ontology/Arachnid> <http://www.w3.org/2000/01/rdf-schema#label> "arachnid" .
+<http://dbpedia.org/ontology/Cleric> <http://www.w3.org/2000/01/rdf-schema#label> "cleric" .
+<http://dbpedia.org/ontology/Cleric> <http://www.w3.org/2000/01/rdf-schema#label> "clerk" .
+<http://dbpedia.org/ontology/ChristianPatriarch> <http://www.w3.org/2000/01/rdf-schema#label> "patriarch" .
+<http://dbpedia.org/ontology/ChristianPatriarch> <http://www.w3.org/2000/01/rdf-schema#label> "Christian patriarch" .
+<http://dbpedia.org/ontology/Work> <http://www.w3.org/2000/01/rdf-schema#label> "work" .
+<http://dbpedia.org/ontology/MusicalWork> <http://www.w3.org/2000/01/rdf-schema#label> "musical work" .
+<http://dbpedia.org/ontology/MusicalWork> <http://www.w3.org/2000/01/rdf-schema#label> "piece of work" .
+<http://dbpedia.org/ontology/Song> <http://www.w3.org/2000/01/rdf-schema#label> "song" .
+<http://dbpedia.org/ontology/Song> <http://www.w3.org/2000/01/rdf-schema#label> "track" .
+<http://dbpedia.org/ontology/EurovisionSongContestEntry> <http://www.w3.org/2000/01/rdf-schema#label> "Eurovision song contest entry" .
+<http://dbpedia.org/ontology/Cardinal> <http://www.w3.org/2000/01/rdf-schema#label> "cardinal" .
+<http://dbpedia.org/ontology/Holiday> <http://www.w3.org/2000/01/rdf-schema#label> "holiday" .
+<http://dbpedia.org/ontology/NaturalPlace> <http://www.w3.org/2000/01/rdf-schema#label> "natural place" .
+<http://dbpedia.org/ontology/BodyOfWater> <http://www.w3.org/2000/01/rdf-schema#label> "body of water" .
+<http://dbpedia.org/ontology/Award> <http://www.w3.org/2000/01/rdf-schema#label> "prize" .
+<http://dbpedia.org/ontology/Award> <http://www.w3.org/2000/01/rdf-schema#label> "award" .
+<http://dbpedia.org/ontology/Decoration> <http://www.w3.org/2000/01/rdf-schema#label> "decoration" .
+<http://dbpedia.org/ontology/SportsLeague> <http://www.w3.org/2000/01/rdf-schema#label> "sports league" .
+<http://dbpedia.org/ontology/SportsLeague> <http://www.w3.org/2000/01/rdf-schema#label> "league" .
+<http://dbpedia.org/ontology/CanadianFootballLeague> <http://www.w3.org/2000/01/rdf-schema#label> "Canadian Football league" .
+<http://dbpedia.org/ontology/Mayor> <http://www.w3.org/2000/01/rdf-schema#label> "mayor" .
+<http://dbpedia.org/ontology/Athlete> <http://www.w3.org/2000/01/rdf-schema#label> "athlete" .
+<http://dbpedia.org/ontology/Athlete> <http://www.w3.org/2000/01/rdf-schema#label> "sportsman" .
+<http://dbpedia.org/ontology/Swimmer> <http://www.w3.org/2000/01/rdf-schema#label> "swimmer" .
+<http://dbpedia.org/ontology/PrimeMinister> <http://www.w3.org/2000/01/rdf-schema#label> "prime minister" .
+<http://dbpedia.org/ontology/PrimeMinister> <http://www.w3.org/2000/01/rdf-schema#label> "premier" .
+<http://dbpedia.org/ontology/Device> <http://www.w3.org/2000/01/rdf-schema#label> "device" .
+<http://dbpedia.org/ontology/PopulatedPlace> <http://www.w3.org/2000/01/rdf-schema#label> "populated place" .
+<http://dbpedia.org/ontology/Artist> <http://www.w3.org/2000/01/rdf-schema#label> "artist" .
+<http://dbpedia.org/ontology/ComicsCreator> <http://www.w3.org/2000/01/rdf-schema#label> "comics creator" .
+<http://dbpedia.org/ontology/Biomolecule> <http://www.w3.org/2000/01/rdf-schema#label> "biomolecule" .
+<http://dbpedia.org/ontology/Country> <http://www.w3.org/2000/01/rdf-schema#label> "country" .
+<http://dbpedia.org/ontology/Country> <http://www.w3.org/2000/01/rdf-schema#label> "nation" .
+<http://dbpedia.org/ontology/Atoll> <http://www.w3.org/2000/01/rdf-schema#label> "atoll" .
+<http://dbpedia.org/ontology/Artwork> <http://www.w3.org/2000/01/rdf-schema#label> "artwork" .
+<http://dbpedia.org/ontology/WrittenWork> <http://www.w3.org/2000/01/rdf-schema#label> "written work" .
+<http://dbpedia.org/ontology/PeriodicalLiterature> <http://www.w3.org/2000/01/rdf-schema#label> "periodical literature" .
+<http://dbpedia.org/ontology/PeriodicalLiterature> <http://www.w3.org/2000/01/rdf-schema#label> "periodical" .
+<http://dbpedia.org/ontology/GridironFootballPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "Gridiron Football player" .
+<http://dbpedia.org/ontology/SportsTeam> <http://www.w3.org/2000/01/rdf-schema#label> "team" .
+<http://dbpedia.org/ontology/SportsTeam> <http://www.w3.org/2000/01/rdf-schema#label> "sports team" .
+<http://dbpedia.org/ontology/HockeyTeam> <http://www.w3.org/2000/01/rdf-schema#label> "hockey team" .
+<http://dbpedia.org/ontology/Race> <http://www.w3.org/2000/01/rdf-schema#label> "race" .
+<http://dbpedia.org/ontology/Company> <http://www.w3.org/2000/01/rdf-schema#label> "company" .
+<http://dbpedia.org/ontology/RecordLabel> <http://www.w3.org/2000/01/rdf-schema#label> "label" .
+<http://dbpedia.org/ontology/RecordLabel> <http://www.w3.org/2000/01/rdf-schema#label> "record label" .
+<http://dbpedia.org/ontology/OrganisationMember> <http://www.w3.org/2000/01/rdf-schema#label> "organisation member" .
+<http://dbpedia.org/ontology/Insect> <http://www.w3.org/2000/01/rdf-schema#label> "insect" .
+<http://dbpedia.org/ontology/Fungus> <http://www.w3.org/2000/01/rdf-schema#label> "fungus" .
+<http://dbpedia.org/ontology/Fungus> <http://www.w3.org/2000/01/rdf-schema#label> "mushroom" .
+<http://dbpedia.org/ontology/SoccerLeague> <http://www.w3.org/2000/01/rdf-schema#label> "soccer league" .
+<http://dbpedia.org/ontology/Mountain> <http://www.w3.org/2000/01/rdf-schema#label> "mountain" .
+<http://dbpedia.org/ontology/AustralianFootballLeague> <http://www.w3.org/2000/01/rdf-schema#label> "Australian Football league" .
+<http://dbpedia.org/ontology/FilmFestival> <http://www.w3.org/2000/01/rdf-schema#label> "film festival" .
+<http://dbpedia.org/ontology/MilitaryConflict> <http://www.w3.org/2000/01/rdf-schema#label> "military conflict" .
+<http://dbpedia.org/ontology/MilitaryConflict> <http://www.w3.org/2000/01/rdf-schema#label> "battle" .
+<http://dbpedia.org/ontology/MilitaryConflict> <http://www.w3.org/2000/01/rdf-schema#label> "war" .
+<http://dbpedia.org/ontology/Model> <http://www.w3.org/2000/01/rdf-schema#label> "model" .
+<http://dbpedia.org/ontology/Website> <http://www.w3.org/2000/01/rdf-schema#label> "website" .
+<http://dbpedia.org/ontology/Website> <http://www.w3.org/2000/01/rdf-schema#label> "web page" .
+<http://dbpedia.org/ontology/TeamMember> <http://www.w3.org/2000/01/rdf-schema#label> "team member" .
+<http://dbpedia.org/ontology/WomensTennisAssociationTournament> <http://www.w3.org/2000/01/rdf-schema#label> "Women's Tennis Association tournament" .
+<http://dbpedia.org/ontology/WomensTennisAssociationTournament> <http://www.w3.org/2000/01/rdf-schema#label> "WTA tournament" .
+<http://dbpedia.org/ontology/EducationalInstitution> <http://www.w3.org/2000/01/rdf-schema#label> "educational institution" .
+<http://dbpedia.org/ontology/ProgrammingLanguage> <http://www.w3.org/2000/01/rdf-schema#label> "programming language" .
+<http://dbpedia.org/ontology/PokerPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "poker player" .
+<http://dbpedia.org/ontology/BasketballTeam> <http://www.w3.org/2000/01/rdf-schema#label> "basketball team" .
+<http://dbpedia.org/ontology/Activity> <http://www.w3.org/2000/01/rdf-schema#label> "activity" .
+<http://dbpedia.org/ontology/SoftballLeague> <http://www.w3.org/2000/01/rdf-schema#label> "softball league" .
+<http://dbpedia.org/ontology/BadmintonPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "badminton player" .
+<http://dbpedia.org/ontology/ArchitecturalStructure> <http://www.w3.org/2000/01/rdf-schema#label> "architectural structure" .
+<http://dbpedia.org/ontology/Building> <http://www.w3.org/2000/01/rdf-schema#label> "building" .
+<http://dbpedia.org/ontology/Lighthouse> <http://www.w3.org/2000/01/rdf-schema#label> "lighthouse" .
+<http://dbpedia.org/ontology/Lighthouse> <http://www.w3.org/2000/01/rdf-schema#label> "beacon" .
+<http://dbpedia.org/ontology/Stadium> <http://www.w3.org/2000/01/rdf-schema#label> "stadium" .
+<http://dbpedia.org/ontology/BowlingLeague> <http://www.w3.org/2000/01/rdf-schema#label> "bowling league" .
+<http://dbpedia.org/ontology/WineRegion> <http://www.w3.org/2000/01/rdf-schema#label> "wine region" .
+<http://dbpedia.org/ontology/TelevisionSeason> <http://www.w3.org/2000/01/rdf-schema#label> "TV season" .
+<http://dbpedia.org/ontology/TelevisionSeason> <http://www.w3.org/2000/01/rdf-schema#label> "television season" .
+<http://dbpedia.org/ontology/TelevisionSeason> <http://www.w3.org/2000/01/rdf-schema#label> "season" .
+<http://dbpedia.org/ontology/ChemicalSubstance> <http://www.w3.org/2000/01/rdf-schema#label> "chemical substance" .
+<http://dbpedia.org/ontology/ChemicalCompound> <http://www.w3.org/2000/01/rdf-schema#label> "chemical compound" .
+<http://dbpedia.org/ontology/FigureSkater> <http://www.w3.org/2000/01/rdf-schema#label> "figure skater" .
+<http://dbpedia.org/ontology/Ideology> <http://www.w3.org/2000/01/rdf-schema#label> "ideology" .
+<http://dbpedia.org/ontology/Album> <http://www.w3.org/2000/01/rdf-schema#label> "LP" .
+<http://dbpedia.org/ontology/Album> <http://www.w3.org/2000/01/rdf-schema#label> "album" .
+<http://dbpedia.org/ontology/Musical> <http://www.w3.org/2000/01/rdf-schema#label> "musical" .
+<http://dbpedia.org/ontology/MilitaryPerson> <http://www.w3.org/2000/01/rdf-schema#label> "military personnel" .
+<http://dbpedia.org/ontology/MilitaryPerson> <http://www.w3.org/2000/01/rdf-schema#label> "military person" .
+<http://dbpedia.org/ontology/Weapon> <http://www.w3.org/2000/01/rdf-schema#label> "weapon" .
+<http://dbpedia.org/ontology/VicePrimeMinister> <http://www.w3.org/2000/01/rdf-schema#label> "vice prime minister" .
+<http://dbpedia.org/ontology/Stream> <http://www.w3.org/2000/01/rdf-schema#label> "stream" .
+<http://dbpedia.org/ontology/SportsTeamMember> <http://www.w3.org/2000/01/rdf-schema#label> "sports team member" .
+<http://dbpedia.org/ontology/Gene> <http://www.w3.org/2000/01/rdf-schema#label> "gene" .
+<http://dbpedia.org/ontology/MouseGene> <http://www.w3.org/2000/01/rdf-schema#label> "mouse gene" .
+<http://dbpedia.org/ontology/VicePresident> <http://www.w3.org/2000/01/rdf-schema#label> "vice president" .
+<http://dbpedia.org/ontology/SnookerWorldRanking> <http://www.w3.org/2000/01/rdf-schema#label> "snooker world ranking" .
+<http://dbpedia.org/ontology/MeanOfTransportation> <http://www.w3.org/2000/01/rdf-schema#label> "mean of transportation" .
+<http://dbpedia.org/ontology/Spacecraft> <http://www.w3.org/2000/01/rdf-schema#label> "spaceship" .
+<http://dbpedia.org/ontology/Spacecraft> <http://www.w3.org/2000/01/rdf-schema#label> "spacecraft" .
+<http://dbpedia.org/ontology/GaelicGamesPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "Gaelic games player" .
+<http://dbpedia.org/ontology/GolfPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "golf player" .
+<http://dbpedia.org/ontology/FloweringPlant> <http://www.w3.org/2000/01/rdf-schema#label> "flowering plant" .
+<http://dbpedia.org/ontology/Grape> <http://www.w3.org/2000/01/rdf-schema#label> "grape" .
+<http://dbpedia.org/ontology/CelestialBody> <http://www.w3.org/2000/01/rdf-schema#label> "celestial body" .
+<http://dbpedia.org/ontology/Planet> <http://www.w3.org/2000/01/rdf-schema#label> "planet" .
+<http://dbpedia.org/ontology/BullFighter> <http://www.w3.org/2000/01/rdf-schema#label> "bull fighter" .
+<http://dbpedia.org/ontology/BullFighter> <http://www.w3.org/2000/01/rdf-schema#label> "bullfighter" .
+<http://dbpedia.org/ontology/WorldHeritageSite> <http://www.w3.org/2000/01/rdf-schema#label> "world heritage site" .
+<http://dbpedia.org/ontology/ProtectedArea> <http://www.w3.org/2000/01/rdf-schema#label> "protected area" .
+<http://dbpedia.org/ontology/SpaceMission> <http://www.w3.org/2000/01/rdf-schema#label> "space mission" .
+<http://dbpedia.org/ontology/Artery> <http://www.w3.org/2000/01/rdf-schema#label> "artery" .
+<http://dbpedia.org/ontology/MilitaryUnit> <http://www.w3.org/2000/01/rdf-schema#label> "military unit" .
+<http://dbpedia.org/ontology/BritishRoyalty> <http://www.w3.org/2000/01/rdf-schema#label> "British royalty" .
+<http://dbpedia.org/ontology/University> <http://www.w3.org/2000/01/rdf-schema#label> "university" .
+<http://dbpedia.org/ontology/TelevisionShow> <http://www.w3.org/2000/01/rdf-schema#label> "show" .
+<http://dbpedia.org/ontology/TelevisionShow> <http://www.w3.org/2000/01/rdf-schema#label> "television show" .
+<http://dbpedia.org/ontology/TelevisionShow> <http://www.w3.org/2000/01/rdf-schema#label> "TV show" .
+<http://dbpedia.org/ontology/Hotel> <http://www.w3.org/2000/01/rdf-schema#label> "hotel" .
+<http://dbpedia.org/ontology/Broadcaster> <http://www.w3.org/2000/01/rdf-schema#label> "broadcaster" .
+<http://dbpedia.org/ontology/BroadcastNetwork> <http://www.w3.org/2000/01/rdf-schema#label> "broadcast network" .
+<http://dbpedia.org/ontology/BroadcastNetwork> <http://www.w3.org/2000/01/rdf-schema#label> "network" .
+<http://dbpedia.org/ontology/Priest> <http://www.w3.org/2000/01/rdf-schema#label> "priest" .
+<http://dbpedia.org/ontology/MartialArtist> <http://www.w3.org/2000/01/rdf-schema#label> "martial artist" .
+<http://dbpedia.org/ontology/AmericanFootballTeam> <http://www.w3.org/2000/01/rdf-schema#label> "American Football team" .
+<http://dbpedia.org/ontology/Comedian> <http://www.w3.org/2000/01/rdf-schema#label> "comedian" .
+<http://dbpedia.org/ontology/PoliticalParty> <http://www.w3.org/2000/01/rdf-schema#label> "party" .
+<http://dbpedia.org/ontology/PoliticalParty> <http://www.w3.org/2000/01/rdf-schema#label> "political party" .
+<http://dbpedia.org/ontology/School> <http://www.w3.org/2000/01/rdf-schema#label> "school" .
+<http://dbpedia.org/ontology/Cyclist> <http://www.w3.org/2000/01/rdf-schema#label> "cyclist" .
+<http://dbpedia.org/ontology/Infrastructure> <http://www.w3.org/2000/01/rdf-schema#label> "infrastructure" .
+<http://dbpedia.org/ontology/RouteOfTransportation> <http://www.w3.org/2000/01/rdf-schema#label> "route of transportation" .
+<http://dbpedia.org/ontology/Tunnel> <http://www.w3.org/2000/01/rdf-schema#label> "tunnel" .
+<http://dbpedia.org/ontology/RoadTunnel> <http://www.w3.org/2000/01/rdf-schema#label> "road tunnel" .
+<http://dbpedia.org/ontology/CurlingLeague> <http://www.w3.org/2000/01/rdf-schema#label> "curling league" .
+<http://dbpedia.org/ontology/Library> <http://www.w3.org/2000/01/rdf-schema#label> "library" .
+<http://dbpedia.org/ontology/Scientist> <http://www.w3.org/2000/01/rdf-schema#label> "researcher" .
+<http://dbpedia.org/ontology/Scientist> <http://www.w3.org/2000/01/rdf-schema#label> "scientist" .
+<http://dbpedia.org/ontology/Road> <http://www.w3.org/2000/01/rdf-schema#label> "road" .
+<http://dbpedia.org/ontology/Road> <http://www.w3.org/2000/01/rdf-schema#label> "highway" .
+<http://dbpedia.org/ontology/Road> <http://www.w3.org/2000/01/rdf-schema#label> "street" .
+<http://dbpedia.org/ontology/Road> <http://www.w3.org/2000/01/rdf-schema#label> "route" .
+<http://dbpedia.org/ontology/MountainPass> <http://www.w3.org/2000/01/rdf-schema#label> "mountain pass" .
+<http://dbpedia.org/ontology/ChemicalElement> <http://www.w3.org/2000/01/rdf-schema#label> "chemical element" .
+<http://dbpedia.org/ontology/AdministrativeRegion> <http://www.w3.org/2000/01/rdf-schema#label> "administrative region" .
+<http://dbpedia.org/ontology/Letter> <http://www.w3.org/2000/01/rdf-schema#label> "letter" .
+<http://dbpedia.org/ontology/RadioStation> <http://www.w3.org/2000/01/rdf-schema#label> "radio station" .
+<http://dbpedia.org/ontology/RadioStation> <http://www.w3.org/2000/01/rdf-schema#label> "broadcasting station" .
+<http://dbpedia.org/ontology/Disease> <http://www.w3.org/2000/01/rdf-schema#label> "disease" .
+<http://dbpedia.org/ontology/Disease> <http://www.w3.org/2000/01/rdf-schema#label> "sickness" .
+<http://dbpedia.org/ontology/Disease> <http://www.w3.org/2000/01/rdf-schema#label> "illness" .
+<http://dbpedia.org/ontology/Project> <http://www.w3.org/2000/01/rdf-schema#label> "project" .
+<http://dbpedia.org/ontology/Play> <http://www.w3.org/2000/01/rdf-schema#label> "play" .
+<http://dbpedia.org/ontology/HistoricBuilding> <http://www.w3.org/2000/01/rdf-schema#label> "historic building" .
+<http://dbpedia.org/ontology/HistoricBuilding> <http://www.w3.org/2000/01/rdf-schema#label> "historical building" .
+<http://dbpedia.org/ontology/SoccerPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "soccer player" .
+<http://dbpedia.org/ontology/Instrument> <http://www.w3.org/2000/01/rdf-schema#label> "instrument" .
+<http://dbpedia.org/ontology/LegalCase> <http://www.w3.org/2000/01/rdf-schema#label> "law case" .
+<http://dbpedia.org/ontology/LegalCase> <http://www.w3.org/2000/01/rdf-schema#label> "legal matter" .
+<http://dbpedia.org/ontology/LegalCase> <http://www.w3.org/2000/01/rdf-schema#label> "court case" .
+<http://dbpedia.org/ontology/LegalCase> <http://www.w3.org/2000/01/rdf-schema#label> "legal case" .
+<http://dbpedia.org/ontology/Currency> <http://www.w3.org/2000/01/rdf-schema#label> "currency" .
+<http://dbpedia.org/ontology/Magazine> <http://www.w3.org/2000/01/rdf-schema#label> "magazine" .
+<http://dbpedia.org/ontology/CollegeCoach> <http://www.w3.org/2000/01/rdf-schema#label> "college coach" .
+<http://dbpedia.org/ontology/CyclingLeague> <http://www.w3.org/2000/01/rdf-schema#label> "cycling league" .
+<http://dbpedia.org/ontology/Cave> <http://www.w3.org/2000/01/rdf-schema#label> "grotto" .
+<http://dbpedia.org/ontology/Cave> <http://www.w3.org/2000/01/rdf-schema#label> "cavern" .
+<http://dbpedia.org/ontology/Cave> <http://www.w3.org/2000/01/rdf-schema#label> "cave" .
+<http://dbpedia.org/ontology/Constellation> <http://www.w3.org/2000/01/rdf-schema#label> "constellation" .
+<http://dbpedia.org/ontology/Drug> <http://www.w3.org/2000/01/rdf-schema#label> "drug" .
+<http://dbpedia.org/ontology/Drug> <http://www.w3.org/2000/01/rdf-schema#label> "medicine" .
+<http://dbpedia.org/ontology/Drug> <http://www.w3.org/2000/01/rdf-schema#label> "medicament" .
+<http://dbpedia.org/ontology/Drug> <http://www.w3.org/2000/01/rdf-schema#label> "pharmaceutical" .
+<http://dbpedia.org/ontology/Tax> <http://www.w3.org/2000/01/rdf-schema#label> "tax" .
+<http://dbpedia.org/ontology/LawFirm> <http://www.w3.org/2000/01/rdf-schema#label> "law firm" .
+<http://dbpedia.org/ontology/Boxer> <http://www.w3.org/2000/01/rdf-schema#label> "boxer" .
+<http://dbpedia.org/ontology/SupremeCourtOfTheUnitedStatesCase> <http://www.w3.org/2000/01/rdf-schema#label> "Supreme Court of the United States case" .
+<http://dbpedia.org/ontology/MotorcycleRacingLeague> <http://www.w3.org/2000/01/rdf-schema#label> "motorcycle racing league" .
+<http://dbpedia.org/ontology/HandballLeague> <http://www.w3.org/2000/01/rdf-schema#label> "handball league" .
+<http://dbpedia.org/ontology/Canal> <http://www.w3.org/2000/01/rdf-schema#label> "canal" .
+<http://dbpedia.org/ontology/Celebrity> <http://www.w3.org/2000/01/rdf-schema#label> "celebrity" .
+<http://dbpedia.org/ontology/GovernmentType> <http://www.w3.org/2000/01/rdf-schema#label> "government type" .
+<http://dbpedia.org/ontology/Non_ProfitOrganisation> <http://www.w3.org/2000/01/rdf-schema#label> "non-profit organisation" .
+<http://dbpedia.org/ontology/Ambassador> <http://www.w3.org/2000/01/rdf-schema#label> "ambassador" .
+<http://dbpedia.org/ontology/OlympicResult> <http://www.w3.org/2000/01/rdf-schema#label> "olympic result" .
+<http://dbpedia.org/ontology/Judge> <http://www.w3.org/2000/01/rdf-schema#label> "magistrate" .
+<http://dbpedia.org/ontology/Judge> <http://www.w3.org/2000/01/rdf-schema#label> "judge" .
+<http://dbpedia.org/ontology/Mineral> <http://www.w3.org/2000/01/rdf-schema#label> "mineral" .
+<http://dbpedia.org/ontology/Settlement> <http://www.w3.org/2000/01/rdf-schema#label> "settlement" .
+<http://dbpedia.org/ontology/Village> <http://www.w3.org/2000/01/rdf-schema#label> "village" .
+<http://dbpedia.org/ontology/RugbyPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "rugby player" .
+<http://dbpedia.org/ontology/AutoRacingLeague> <http://www.w3.org/2000/01/rdf-schema#label> "auto racing league" .
+<http://dbpedia.org/ontology/AutoRacingLeague> <http://www.w3.org/2000/01/rdf-schema#label> "car racing league" .
+<http://dbpedia.org/ontology/AutoRacingLeague> <http://www.w3.org/2000/01/rdf-schema#label> "racing league" .
+<http://dbpedia.org/ontology/Lake> <http://www.w3.org/2000/01/rdf-schema#label> "lake" .
+<http://dbpedia.org/ontology/AcademicJournal> <http://www.w3.org/2000/01/rdf-schema#label> "journal" .
+<http://dbpedia.org/ontology/ClubMoss> <http://www.w3.org/2000/01/rdf-schema#label> "club moss" .
+<http://dbpedia.org/ontology/Sculpture> <http://www.w3.org/2000/01/rdf-schema#label> "sculpture" .
+<http://dbpedia.org/ontology/Sales> <http://www.w3.org/2000/01/rdf-schema#label> "sales" .
+<http://dbpedia.org/ontology/Sport> <http://www.w3.org/2000/01/rdf-schema#label> "sport" .
+<http://dbpedia.org/ontology/Automobile> <http://www.w3.org/2000/01/rdf-schema#label> "auto" .
+<http://dbpedia.org/ontology/Automobile> <http://www.w3.org/2000/01/rdf-schema#label> "vehicle" .
+<http://dbpedia.org/ontology/Automobile> <http://www.w3.org/2000/01/rdf-schema#label> "car" .
+<http://dbpedia.org/ontology/Automobile> <http://www.w3.org/2000/01/rdf-schema#label> "automobile" .
+<http://dbpedia.org/ontology/Game> <http://www.w3.org/2000/01/rdf-schema#label> "game" .
+<http://dbpedia.org/ontology/Nerve> <http://www.w3.org/2000/01/rdf-schema#label> "nerve" .
+<http://dbpedia.org/ontology/SoccerTournament> <http://www.w3.org/2000/01/rdf-schema#label> "soccer tournament" .
+<http://dbpedia.org/ontology/Architect> <http://www.w3.org/2000/01/rdf-schema#label> "architect" .
+<http://dbpedia.org/ontology/Conifer> <http://www.w3.org/2000/01/rdf-schema#label> "conifer" .
+<http://dbpedia.org/ontology/GovernmentAgency> <http://www.w3.org/2000/01/rdf-schema#label> "government agency" .
+<http://dbpedia.org/ontology/Bird> <http://www.w3.org/2000/01/rdf-schema#label> "bird" .
+<http://dbpedia.org/ontology/TennisPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "tennis player" .
+<http://dbpedia.org/ontology/RugbyLeague> <http://www.w3.org/2000/01/rdf-schema#label> "rugby league" .
+<http://dbpedia.org/ontology/Protein> <http://www.w3.org/2000/01/rdf-schema#label> "protein" .
+<http://dbpedia.org/ontology/SkiArea> <http://www.w3.org/2000/01/rdf-schema#label> "ski region" .
+<http://dbpedia.org/ontology/RugbyClub> <http://www.w3.org/2000/01/rdf-schema#label> "rugby club" .
+<http://dbpedia.org/ontology/LacrosseLeague> <http://www.w3.org/2000/01/rdf-schema#label> "lacrosse league" .
+<http://dbpedia.org/ontology/Muscle> <http://www.w3.org/2000/01/rdf-schema#label> "muscle" .
+<http://dbpedia.org/ontology/Band> <http://www.w3.org/2000/01/rdf-schema#label> "band" .
+<http://dbpedia.org/ontology/Wrestler> <http://www.w3.org/2000/01/rdf-schema#label> "wrestler" .
+<http://dbpedia.org/ontology/RailwayTunnel> <http://www.w3.org/2000/01/rdf-schema#label> "railway tunnel" .
+<http://dbpedia.org/ontology/City> <http://www.w3.org/2000/01/rdf-schema#label> "city" .
+<http://dbpedia.org/ontology/TennisTournament> <http://www.w3.org/2000/01/rdf-schema#label> "tennis tournament" .
+<http://dbpedia.org/ontology/VolleyballPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "volleyball player" .
+<http://dbpedia.org/ontology/BasketballLeague> <http://www.w3.org/2000/01/rdf-schema#label> "basketball league" .
+<http://dbpedia.org/ontology/Valley> <http://www.w3.org/2000/01/rdf-schema#label> "valley" .
+<http://dbpedia.org/ontology/College> <http://www.w3.org/2000/01/rdf-schema#label> "college" .
+<http://dbpedia.org/ontology/TelevisionStation> <http://www.w3.org/2000/01/rdf-schema#label> "television station" .
+<http://dbpedia.org/ontology/TelevisionStation> <http://www.w3.org/2000/01/rdf-schema#label> "TV station" .
+<http://dbpedia.org/ontology/MusicFestival> <http://www.w3.org/2000/01/rdf-schema#label> "music festival" .
+<http://dbpedia.org/ontology/NationalCollegiateAthleticAssociationAthlete> <http://www.w3.org/2000/01/rdf-schema#label> "National Collegiate Athletic Association athlete" .
+<http://dbpedia.org/ontology/NationalCollegiateAthleticAssociationAthlete> <http://www.w3.org/2000/01/rdf-schema#label> "NCAA athlete" .
+<http://dbpedia.org/ontology/SnookerPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "snooker player" .
+<http://dbpedia.org/ontology/SnookerChamp> <http://www.w3.org/2000/01/rdf-schema#label> "snooker champ" .
+<http://dbpedia.org/ontology/SnookerChamp> <http://www.w3.org/2000/01/rdf-schema#label> "snooker champion" .
+<http://dbpedia.org/ontology/Software> <http://www.w3.org/2000/01/rdf-schema#label> "piece of software" .
+<http://dbpedia.org/ontology/Software> <http://www.w3.org/2000/01/rdf-schema#label> "software" .
+<http://dbpedia.org/ontology/Lymph> <http://www.w3.org/2000/01/rdf-schema#label> "lymph" .
+<http://dbpedia.org/ontology/Aircraft> <http://www.w3.org/2000/01/rdf-schema#label> "plane" .
+<http://dbpedia.org/ontology/Aircraft> <http://www.w3.org/2000/01/rdf-schema#label> "aircraft" .
+<http://dbpedia.org/ontology/Aircraft> <http://www.w3.org/2000/01/rdf-schema#label> "airplane" .
+<http://dbpedia.org/ontology/SoccerManager> <http://www.w3.org/2000/01/rdf-schema#label> "soccer manager" .
+<http://dbpedia.org/ontology/Election> <http://www.w3.org/2000/01/rdf-schema#label> "election" .
+<http://dbpedia.org/ontology/Monarch> <http://www.w3.org/2000/01/rdf-schema#label> "monarch" .
+<http://dbpedia.org/ontology/Senator> <http://www.w3.org/2000/01/rdf-schema#label> "senator" .
+<http://dbpedia.org/ontology/Gnetophytes> <http://www.w3.org/2000/01/rdf-schema#label> "gnetophyte" .
+<http://dbpedia.org/ontology/PoloLeague> <http://www.w3.org/2000/01/rdf-schema#label> "polo league" .
+<http://dbpedia.org/ontology/Chancellor> <http://www.w3.org/2000/01/rdf-schema#label> "chancellor" .
+<http://dbpedia.org/ontology/TelevisionEpisode> <http://www.w3.org/2000/01/rdf-schema#label> "TV episode" .
+<http://dbpedia.org/ontology/TelevisionEpisode> <http://www.w3.org/2000/01/rdf-schema#label> "television episode" .
+<http://dbpedia.org/ontology/TelevisionEpisode> <http://www.w3.org/2000/01/rdf-schema#label> "episode" .
+<http://dbpedia.org/ontology/Name> <http://www.w3.org/2000/01/rdf-schema#label> "name" .
+<http://dbpedia.org/ontology/GivenName> <http://www.w3.org/2000/01/rdf-schema#label> "given name" .
+<http://dbpedia.org/ontology/GivenName> <http://www.w3.org/2000/01/rdf-schema#label> "first name" .
+<http://dbpedia.org/ontology/MusicGenre> <http://www.w3.org/2000/01/rdf-schema#label> "music genre" .
+<http://dbpedia.org/ontology/ReligiousBuilding> <http://www.w3.org/2000/01/rdf-schema#label> "religious building" .
+<http://dbpedia.org/ontology/Church> <http://www.w3.org/2000/01/rdf-schema#label> "church" .
+<http://dbpedia.org/ontology/PublicTransitSystem> <http://www.w3.org/2000/01/rdf-schema#label> "public transit system" .
+<http://dbpedia.org/ontology/GolfLeague> <http://www.w3.org/2000/01/rdf-schema#label> "golf league" .
+<http://dbpedia.org/ontology/GrandPrix> <http://www.w3.org/2000/01/rdf-schema#label> "grand prix" .
+<http://dbpedia.org/ontology/Astronaut> <http://www.w3.org/2000/01/rdf-schema#label> "astronaut" .
+<http://dbpedia.org/ontology/MountainRange> <http://www.w3.org/2000/01/rdf-schema#label> "mountain chain" .
+<http://dbpedia.org/ontology/MountainRange> <http://www.w3.org/2000/01/rdf-schema#label> "ridge" .
+<http://dbpedia.org/ontology/MountainRange> <http://www.w3.org/2000/01/rdf-schema#label> "mountain range" .
+<http://dbpedia.org/ontology/Congressman> <http://www.w3.org/2000/01/rdf-schema#label> "congress man" .
+<http://dbpedia.org/ontology/AutomobileEngine> <http://www.w3.org/2000/01/rdf-schema#label> "automobile engine" .
+<http://dbpedia.org/ontology/FieldHockeyLeague> <http://www.w3.org/2000/01/rdf-schema#label> "field hockey league" .
+<http://dbpedia.org/ontology/HumanGene> <http://www.w3.org/2000/01/rdf-schema#label> "human gene" .
+<http://dbpedia.org/ontology/Station> <http://www.w3.org/2000/01/rdf-schema#label> "station" .
+<http://dbpedia.org/ontology/WaterwayTunnel> <http://www.w3.org/2000/01/rdf-schema#label> "waterway tunnel" .
+<http://dbpedia.org/ontology/CricketLeague> <http://www.w3.org/2000/01/rdf-schema#label> "cricket league" .
+<http://dbpedia.org/ontology/Painting> <http://www.w3.org/2000/01/rdf-schema#label> "painting" .
+<http://dbpedia.org/ontology/Continent> <http://www.w3.org/2000/01/rdf-schema#label> "continent" .
+<http://dbpedia.org/ontology/Actor> <http://www.w3.org/2000/01/rdf-schema#label> "actor" .
+<http://dbpedia.org/ontology/VoiceActor> <http://www.w3.org/2000/01/rdf-schema#label> "voice actor" .
+<http://dbpedia.org/ontology/BasketballPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "basketball player" .
+<http://dbpedia.org/ontology/GeneLocation> <http://www.w3.org/2000/01/rdf-schema#label> "gene location" .
+<http://dbpedia.org/ontology/Cricketer> <http://www.w3.org/2000/01/rdf-schema#label> "cricketer" .
+<http://dbpedia.org/ontology/Flag> <http://www.w3.org/2000/01/rdf-schema#label> "flag" .
+<http://dbpedia.org/ontology/Colour> <http://www.w3.org/2000/01/rdf-schema#label> "colour" .
+<http://dbpedia.org/ontology/AdultActor> <http://www.w3.org/2000/01/rdf-schema#label> "adult actor" .
+<http://dbpedia.org/ontology/AdultActor> <http://www.w3.org/2000/01/rdf-schema#label> "pornographic actor" .
+<http://dbpedia.org/ontology/FormulaOneRacer> <http://www.w3.org/2000/01/rdf-schema#label> "Formula One racer" .
+<http://dbpedia.org/ontology/President> <http://www.w3.org/2000/01/rdf-schema#label> "president" .
+<http://dbpedia.org/ontology/Journalist> <http://www.w3.org/2000/01/rdf-schema#label> "journalist" .
+<http://dbpedia.org/ontology/MixedMartialArtsLeague> <http://www.w3.org/2000/01/rdf-schema#label> "martial arts league" .
+<http://dbpedia.org/ontology/MixedMartialArtsLeague> <http://www.w3.org/2000/01/rdf-schema#label> "mixed martial arts league" .
+<http://dbpedia.org/ontology/MixedMartialArtsLeague> <http://www.w3.org/2000/01/rdf-schema#label> "MMA league" .
+<http://dbpedia.org/ontology/PolishKing> <http://www.w3.org/2000/01/rdf-schema#label> "Polish king" .
+<http://dbpedia.org/ontology/Airline> <http://www.w3.org/2000/01/rdf-schema#label> "airline" .
+<http://dbpedia.org/ontology/NascarDriver> <http://www.w3.org/2000/01/rdf-schema#label> "NASCAR driver" .
+<http://dbpedia.org/ontology/PowerStation> <http://www.w3.org/2000/01/rdf-schema#label> "electricity station" .
+<http://dbpedia.org/ontology/PowerStation> <http://www.w3.org/2000/01/rdf-schema#label> "generating station" .
+<http://dbpedia.org/ontology/PowerStation> <http://www.w3.org/2000/01/rdf-schema#label> "generating plant" .
+<http://dbpedia.org/ontology/PowerStation> <http://www.w3.org/2000/01/rdf-schema#label> "power plant" .
+<http://dbpedia.org/ontology/PowerStation> <http://www.w3.org/2000/01/rdf-schema#label> "power station" .
+<http://dbpedia.org/ontology/Convention> <http://www.w3.org/2000/01/rdf-schema#label> "convention" .
+<http://dbpedia.org/ontology/Mollusca> <http://www.w3.org/2000/01/rdf-schema#label> "mollusc" .
+<http://dbpedia.org/ontology/Restaurant> <http://www.w3.org/2000/01/rdf-schema#label> "restaurant" .
+<http://dbpedia.org/ontology/Skyscraper> <http://www.w3.org/2000/01/rdf-schema#label> "skyscraper" .
+<http://dbpedia.org/ontology/Film> <http://www.w3.org/2000/01/rdf-schema#label> "film" .
+<http://dbpedia.org/ontology/Film> <http://www.w3.org/2000/01/rdf-schema#label> "movie" .
+<http://dbpedia.org/ontology/FictionalCharacter> <http://www.w3.org/2000/01/rdf-schema#label> "character" .
+<http://dbpedia.org/ontology/FictionalCharacter> <http://www.w3.org/2000/01/rdf-schema#label> "fictional character" .
+<http://dbpedia.org/ontology/ComicsCharacter> <http://www.w3.org/2000/01/rdf-schema#label> "comics character" .
+<http://dbpedia.org/ontology/Rocket> <http://www.w3.org/2000/01/rdf-schema#label> "rocket" .
+<http://dbpedia.org/ontology/Asteroid> <http://www.w3.org/2000/01/rdf-schema#label> "asteroid" .
+<http://dbpedia.org/ontology/WrestlingEvent> <http://www.w3.org/2000/01/rdf-schema#label> "wrestling event" .
+<http://dbpedia.org/ontology/Saint> <http://www.w3.org/2000/01/rdf-schema#label> "saint" .
+<http://dbpedia.org/ontology/Brain> <http://www.w3.org/2000/01/rdf-schema#label> "brain" .
+<http://dbpedia.org/ontology/AustralianRulesFootballPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "Australian rules football player" .
+<http://dbpedia.org/ontology/Crustacean> <http://www.w3.org/2000/01/rdf-schema#label> "shellfish" .
+<http://dbpedia.org/ontology/Crustacean> <http://www.w3.org/2000/01/rdf-schema#label> "crustacean" .
+<http://dbpedia.org/ontology/Food> <http://www.w3.org/2000/01/rdf-schema#label> "food" .
+<http://dbpedia.org/ontology/Beverage> <http://www.w3.org/2000/01/rdf-schema#label> "beverage" .
+<http://dbpedia.org/ontology/Beverage> <http://www.w3.org/2000/01/rdf-schema#label> "drink" .
+<http://dbpedia.org/ontology/Legislature> <http://www.w3.org/2000/01/rdf-schema#label> "legislature" .
+<http://dbpedia.org/ontology/PlayboyPlaymate> <http://www.w3.org/2000/01/rdf-schema#label> "playmate" .
+<http://dbpedia.org/ontology/PlayboyPlaymate> <http://www.w3.org/2000/01/rdf-schema#label> "playboy playmate" .
+<http://dbpedia.org/ontology/VideoGame> <http://www.w3.org/2000/01/rdf-schema#label> "video game" .
+<http://dbpedia.org/ontology/Vein> <http://www.w3.org/2000/01/rdf-schema#label> "vein" .
+<http://dbpedia.org/ontology/Hospital> <http://www.w3.org/2000/01/rdf-schema#label> "infirmary" .
+<http://dbpedia.org/ontology/Hospital> <http://www.w3.org/2000/01/rdf-schema#label> "hospital" .
+<http://dbpedia.org/ontology/Deputy> <http://www.w3.org/2000/01/rdf-schema#label> "deputy" .
+<http://dbpedia.org/ontology/MusicalArtist> <http://www.w3.org/2000/01/rdf-schema#label> "musician" .
+<http://dbpedia.org/ontology/TradeUnion> <http://www.w3.org/2000/01/rdf-schema#label> "trade union" .
+<http://dbpedia.org/ontology/TradeUnion> <http://www.w3.org/2000/01/rdf-schema#label> "labor union" .
+<http://dbpedia.org/ontology/AmericanFootballLeague> <http://www.w3.org/2000/01/rdf-schema#label> "American Football league" .
+<http://dbpedia.org/ontology/Theatre> <http://www.w3.org/2000/01/rdf-schema#label> "theatre" .
+<http://dbpedia.org/ontology/Museum> <http://www.w3.org/2000/01/rdf-schema#label> "museum" .
+<http://dbpedia.org/ontology/Pope> <http://www.w3.org/2000/01/rdf-schema#label> "pope" .
+<http://dbpedia.org/ontology/PaintballLeague> <http://www.w3.org/2000/01/rdf-schema#label> "paintball league" .
+<http://dbpedia.org/ontology/ChristianBishop> <http://www.w3.org/2000/01/rdf-schema#label> "Christian bishop" .
+<http://dbpedia.org/ontology/ChristianBishop> <http://www.w3.org/2000/01/rdf-schema#label> "bishop" .
+<http://dbpedia.org/ontology/MixedMartialArtsEvent> <http://www.w3.org/2000/01/rdf-schema#label> "MMA event" .
+<http://dbpedia.org/ontology/MixedMartialArtsEvent> <http://www.w3.org/2000/01/rdf-schema#label> "Mixed Martial Arts event" .
+<http://dbpedia.org/ontology/Ship> <http://www.w3.org/2000/01/rdf-schema#label> "boat" .
+<http://dbpedia.org/ontology/Ship> <http://www.w3.org/2000/01/rdf-schema#label> "ship" .
+<http://dbpedia.org/ontology/VolleyballLeague> <http://www.w3.org/2000/01/rdf-schema#label> "volleyball league" .
+<http://dbpedia.org/ontology/AmericanFootballPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "American Football player" .
+<http://dbpedia.org/ontology/ResearchProject> <http://www.w3.org/2000/01/rdf-schema#label> "research project" .
+<http://dbpedia.org/ontology/Single> <http://www.w3.org/2000/01/rdf-schema#label> "single" .
+<http://dbpedia.org/ontology/SoccerClub> <http://www.w3.org/2000/01/rdf-schema#label> "soccer team" .
+<http://dbpedia.org/ontology/SoccerClub> <http://www.w3.org/2000/01/rdf-schema#label> "soccer club" .
+<http://dbpedia.org/ontology/Airport> <http://www.w3.org/2000/01/rdf-schema#label> "airport" .
+<http://dbpedia.org/ontology/Philosopher> <http://www.w3.org/2000/01/rdf-schema#label> "philosopher" .
+<http://dbpedia.org/ontology/Database> <http://www.w3.org/2000/01/rdf-schema#label> "database" .
+<http://dbpedia.org/ontology/BiologicalDatabase> <http://www.w3.org/2000/01/rdf-schema#label> "biological database" .
+<http://dbpedia.org/ontology/Bacteria> <http://www.w3.org/2000/01/rdf-schema#label> "bacteria" .
+<http://dbpedia.org/ontology/BaseballTeam> <http://www.w3.org/2000/01/rdf-schema#label> "baseball team" .
+<http://dbpedia.org/ontology/Book> <http://www.w3.org/2000/01/rdf-schema#label> "book" .
+<http://dbpedia.org/ontology/Bridge> <http://www.w3.org/2000/01/rdf-schema#label> "bridge" .
+<http://dbpedia.org/ontology/RailwayLine> <http://www.w3.org/2000/01/rdf-schema#label> "railway line" .
+<http://dbpedia.org/ontology/RailwayLine> <http://www.w3.org/2000/01/rdf-schema#label> "railroad track" .
+<http://dbpedia.org/ontology/SambaSchool> <http://www.w3.org/2000/01/rdf-schema#label> "samba school" .
+<http://dbpedia.org/ontology/SpaceShuttle> <http://www.w3.org/2000/01/rdf-schema#label> "space shuttle" .
+<http://dbpedia.org/ontology/IceHockeyPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "ice hockey player" .
+<http://dbpedia.org/ontology/TopicalConcept> <http://www.w3.org/2000/01/rdf-schema#label> "topical concept" .
+<http://dbpedia.org/ontology/Governor> <http://www.w3.org/2000/01/rdf-schema#label> "governor" .
+<http://dbpedia.org/ontology/Archaea> <http://www.w3.org/2000/01/rdf-schema#label> "archaea" .
+<http://dbpedia.org/ontology/RadioControlledRacingLeague> <http://www.w3.org/2000/01/rdf-schema#label> "radio-controlled racing league" .
+<http://dbpedia.org/ontology/Referee> <http://www.w3.org/2000/01/rdf-schema#label> "referee" .
+<http://dbpedia.org/ontology/Newspaper> <http://www.w3.org/2000/01/rdf-schema#label> "journal" .
+<http://dbpedia.org/ontology/Newspaper> <http://www.w3.org/2000/01/rdf-schema#label> "paper" .
+<http://dbpedia.org/ontology/Newspaper> <http://www.w3.org/2000/01/rdf-schema#label> "newspaper" .
+<http://dbpedia.org/ontology/Embryology> <http://www.w3.org/2000/01/rdf-schema#label> "embryology" .
+<http://dbpedia.org/ontology/Moss> <http://www.w3.org/2000/01/rdf-schema#label> "moss" .
+<http://dbpedia.org/ontology/GeopoliticalOrganisation> <http://www.w3.org/2000/01/rdf-schema#label> "geopolitical organisation" .
+<http://dbpedia.org/ontology/BaseballLeague> <http://www.w3.org/2000/01/rdf-schema#label> "baseball league" .
+<http://dbpedia.org/ontology/CanadianFootballPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "Canadian Football player" .
+<http://dbpedia.org/ontology/InlineHockeyLeague> <http://www.w3.org/2000/01/rdf-schema#label> "inline hockey league" .
+<http://dbpedia.org/ontology/BoxingLeague> <http://www.w3.org/2000/01/rdf-schema#label> "boxing league" .
+<http://dbpedia.org/ontology/SpeedwayLeague> <http://www.w3.org/2000/01/rdf-schema#label> "speedway league" .
+<http://dbpedia.org/ontology/Amphibian> <http://www.w3.org/2000/01/rdf-schema#label> "amphibian" .
+<http://dbpedia.org/ontology/Locomotive> <http://www.w3.org/2000/01/rdf-schema#label> "engine" .
+<http://dbpedia.org/ontology/Locomotive> <http://www.w3.org/2000/01/rdf-schema#label> "locomotive" .
+<http://dbpedia.org/ontology/SiteOfSpecialScientificInterest> <http://www.w3.org/2000/01/rdf-schema#label> "site of special scientific interest" .
+<http://dbpedia.org/ontology/Language> <http://www.w3.org/2000/01/rdf-schema#label> "language" .
+<http://dbpedia.org/ontology/LaunchPad> <http://www.w3.org/2000/01/rdf-schema#label> "launchpad" .
+<http://dbpedia.org/ontology/LaunchPad> <http://www.w3.org/2000/01/rdf-schema#label> "launch pad" .
+<http://dbpedia.org/ontology/BaseballPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "baseball player" .
+<http://dbpedia.org/ontology/ShoppingMall> <http://www.w3.org/2000/01/rdf-schema#label> "shopping center" .
+<http://dbpedia.org/ontology/ShoppingMall> <http://www.w3.org/2000/01/rdf-schema#label> "mall" .
+<http://dbpedia.org/ontology/ShoppingMall> <http://www.w3.org/2000/01/rdf-schema#label> "shopping mall" .
+<http://dbpedia.org/ontology/LunarCrater> <http://www.w3.org/2000/01/rdf-schema#label> "moon crater" .
+<http://dbpedia.org/ontology/LunarCrater> <http://www.w3.org/2000/01/rdf-schema#label> "lunar crater" .
+<http://dbpedia.org/ontology/SpeedwayTeam> <http://www.w3.org/2000/01/rdf-schema#label> "speedway team" .
+<http://dbpedia.org/ontology/ChessPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "chess player" .
+<http://dbpedia.org/ontology/River> <http://www.w3.org/2000/01/rdf-schema#label> "river" .
+<http://dbpedia.org/ontology/Island> <http://www.w3.org/2000/01/rdf-schema#label> "island" .
+<http://dbpedia.org/ontology/Fern> <http://www.w3.org/2000/01/rdf-schema#label> "fern" .
+<http://dbpedia.org/ontology/OfficeHolder> <http://www.w3.org/2000/01/rdf-schema#label> "office holder" .
+<http://dbpedia.org/ontology/MouseGeneLocation> <http://www.w3.org/2000/01/rdf-schema#label> "mouse gene location" .
+<http://dbpedia.org/ontology/Writer> <http://www.w3.org/2000/01/rdf-schema#label> "writer" .
+<http://dbpedia.org/ontology/Park> <http://www.w3.org/2000/01/rdf-schema#label> "park" .
+<http://dbpedia.org/ontology/Mammal> <http://www.w3.org/2000/01/rdf-schema#label> "mammal" .
+<http://dbpedia.org/ontology/Galaxy> <http://www.w3.org/2000/01/rdf-schema#label> "galaxy" .
+<http://dbpedia.org/ontology/Surname> <http://www.w3.org/2000/01/rdf-schema#label> "surname" .
+<http://dbpedia.org/ontology/Surname> <http://www.w3.org/2000/01/rdf-schema#label> "last name" .
+<http://dbpedia.org/ontology/IceHockeyLeague> <http://www.w3.org/2000/01/rdf-schema#label> "ice hockey league" .
+<http://dbpedia.org/ontology/NationalSoccerClub> <http://www.w3.org/2000/01/rdf-schema#label> "national soccer team" .
+<http://dbpedia.org/ontology/NationalSoccerClub> <http://www.w3.org/2000/01/rdf-schema#label> "national soccer club" .
+<http://dbpedia.org/ontology/Volcano> <http://www.w3.org/2000/01/rdf-schema#label> "volcano" .
+<http://dbpedia.org/ontology/TennisLeague> <http://www.w3.org/2000/01/rdf-schema#label> "tennis league" .
+<http://dbpedia.org/ontology/Year> <http://www.w3.org/2000/01/rdf-schema#label> "year" .
+<http://dbpedia.org/ontology/EthnicGroup> <http://www.w3.org/2000/01/rdf-schema#label> "ethnic group" .
+<http://dbpedia.org/ontology/Fish> <http://www.w3.org/2000/01/rdf-schema#label> "fish" .
+<http://dbpedia.org/ontology/Town> <http://www.w3.org/2000/01/rdf-schema#label> "town" .
+<http://dbpedia.org/ontology/Lieutenant> <http://www.w3.org/2000/01/rdf-schema#label> "lieutenant" .
+<http://dbpedia.org/ontology/CanadianFootballTeam> <http://www.w3.org/2000/01/rdf-schema#label> "Canadian Football team" .
+<http://dbpedia.org/ontology/SpaceStation> <http://www.w3.org/2000/01/rdf-schema#label> "space station" .
+<http://dbpedia.org/ontology/HumanGeneLocation> <http://www.w3.org/2000/01/rdf-schema#label> "human gene location" .
+<http://dbpedia.org/ontology/Criminal> <http://www.w3.org/2000/01/rdf-schema#label> "thug" .
+<http://dbpedia.org/ontology/Criminal> <http://www.w3.org/2000/01/rdf-schema#label> "criminal" .
+<http://dbpedia.org/ontology/Arena> <http://www.w3.org/2000/01/rdf-schema#label> "arena" .
+<http://dbpedia.org/ontology/Murderer> <http://www.w3.org/2000/01/rdf-schema#label> "murderer" .
+<http://dbpedia.org/ontology/Murderer> <http://www.w3.org/2000/01/rdf-schema#label> "killer" .
+<http://dbpedia.org/ontology/Treadmill> <http://www.w3.org/2000/01/rdf-schema#label> "treadmill" .
+<http://dbpedia.org/ontology/Curler> <http://www.w3.org/2000/01/rdf-schema#label> "curler" .
+<http://dbpedia.org/ontology/HandballPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "handball player" .
+<http://dbpedia.org/ontology/PublicServiceOutput> <http://www.w3.org/2000/01/rdf-schema#label> "public service output" .
+<http://dbpedia.org/ontology/FrenchLocality> <http://www.w3.org/2000/01/rdf-schema#label> "French locality" .
+<http://dbpedia.org/ontology/Synagogue> <http://www.w3.org/2000/01/rdf-schema#label> "synagogue" .
+<http://dbpedia.org/ontology/kilometre> <http://www.w3.org/2000/01/rdf-schema#label> "km" .
+<http://dbpedia.org/ontology/kilometre> <http://www.w3.org/2000/01/rdf-schema#label> "kilometer" .
+<http://dbpedia.org/ontology/Municipality> <http://www.w3.org/2000/01/rdf-schema#label> "municipality" .
+<http://dbpedia.org/ontology/IranSettlement> <http://www.w3.org/2000/01/rdf-schema#label> "Iran settlement" .
+<http://dbpedia.org/ontology/litre> <http://www.w3.org/2000/01/rdf-schema#label> "l" .
+<http://dbpedia.org/ontology/litre> <http://www.w3.org/2000/01/rdf-schema#label> "liter" .
+<http://dbpedia.org/ontology/Camera> <http://www.w3.org/2000/01/rdf-schema#label> "camera" .
+<http://dbpedia.org/ontology/Manhua> <http://www.w3.org/2000/01/rdf-schema#label> "manhua" .
+<http://dbpedia.org/ontology/Cartoon> <http://www.w3.org/2000/01/rdf-schema#label> "cartoon" .
+<http://dbpedia.org/ontology/ClericalOrder> <http://www.w3.org/2000/01/rdf-schema#label> "clerical order" .
+<http://dbpedia.org/ontology/Sculptor> <http://www.w3.org/2000/01/rdf-schema#label> "sculptor" .
+<http://dbpedia.org/ontology/Beer> <http://www.w3.org/2000/01/rdf-schema#label> "beer" .
+<http://dbpedia.org/ontology/BloodType> <http://www.w3.org/2000/01/rdf-schema#label> "blood type" .
+<http://dbpedia.org/ontology/AmateurBoxer> <http://www.w3.org/2000/01/rdf-schema#label> "amateur boxer" .
+<http://dbpedia.org/ontology/SportsManager> <http://www.w3.org/2000/01/rdf-schema#label> "manager" .
+<http://dbpedia.org/ontology/SportsManager> <http://www.w3.org/2000/01/rdf-schema#label> "sports manager" .
+<http://dbpedia.org/ontology/Family> <http://www.w3.org/2000/01/rdf-schema#label> "family" .
+<http://dbpedia.org/ontology/GeologicalPeriod> <http://www.w3.org/2000/01/rdf-schema#label> "geological period" .
+<http://dbpedia.org/ontology/Cheese> <http://www.w3.org/2000/01/rdf-schema#label> "cheese" .
+<http://dbpedia.org/ontology/megabyte> <http://www.w3.org/2000/01/rdf-schema#label> "megabyte" .
+<http://dbpedia.org/ontology/megabyte> <http://www.w3.org/2000/01/rdf-schema#label> "mb" .
+<http://dbpedia.org/ontology/BoardGame> <http://www.w3.org/2000/01/rdf-schema#label> "board game" .
+<http://dbpedia.org/ontology/Intercommunality> <http://www.w3.org/2000/01/rdf-schema#label> "intercommunality" .
+<http://dbpedia.org/ontology/Locality> <http://www.w3.org/2000/01/rdf-schema#label> "locality" .
+<http://dbpedia.org/ontology/PublicService> <http://www.w3.org/2000/01/rdf-schema#label> "public service" .
+<http://dbpedia.org/ontology/Medician> <http://www.w3.org/2000/01/rdf-schema#label> "medician" .
+<http://dbpedia.org/ontology/Jockey> <http://www.w3.org/2000/01/rdf-schema#label> "jockey" .
+<http://dbpedia.org/ontology/Monastery> <http://www.w3.org/2000/01/rdf-schema#label> "monastery" .
+<http://dbpedia.org/ontology/Novel> <http://www.w3.org/2000/01/rdf-schema#label> "novel" .
+<http://dbpedia.org/ontology/SoapCharacter> <http://www.w3.org/2000/01/rdf-schema#label> "soap character" .
+<http://dbpedia.org/ontology/Skier> <http://www.w3.org/2000/01/rdf-schema#label> "skier" .
+<http://dbpedia.org/ontology/FashionDesigner> <http://www.w3.org/2000/01/rdf-schema#label> "designer" .
+<http://dbpedia.org/ontology/FashionDesigner> <http://www.w3.org/2000/01/rdf-schema#label> "fashion designer" .
+<http://dbpedia.org/ontology/OldTerritory> <http://www.w3.org/2000/01/rdf-schema#label> "old territory" .
+<http://dbpedia.org/ontology/Ligament> <http://www.w3.org/2000/01/rdf-schema#label> "ligament" .
+<http://dbpedia.org/ontology/millimetre> <http://www.w3.org/2000/01/rdf-schema#label> "millimeter" .
+<http://dbpedia.org/ontology/millimetre> <http://www.w3.org/2000/01/rdf-schema#label> "mm" .
+<http://dbpedia.org/ontology/Memorial> <http://www.w3.org/2000/01/rdf-schema#label> "memorial" .
+<http://dbpedia.org/ontology/List> <http://www.w3.org/2000/01/rdf-schema#label> "list" .
+<http://dbpedia.org/ontology/SportCompetitionResult> <http://www.w3.org/2000/01/rdf-schema#label> "sport competition result" .
+<http://dbpedia.org/ontology/SportCompetitionResult> <http://www.w3.org/2000/01/rdf-schema#label> "result" .
+<http://dbpedia.org/ontology/Blazon> <http://www.w3.org/2000/01/rdf-schema#label> "blazon" .
+<http://dbpedia.org/ontology/RailwayStation> <http://www.w3.org/2000/01/rdf-schema#label> "railway station" .
+<http://dbpedia.org/ontology/cubicMetrePerSecond> <http://www.w3.org/2000/01/rdf-schema#label> "cubic meter per second" .
+<http://dbpedia.org/ontology/CultivatedVariety> <http://www.w3.org/2000/01/rdf-schema#label> "cultivated variety" .
+<http://dbpedia.org/ontology/CultivatedVariety> <http://www.w3.org/2000/01/rdf-schema#label> "cultivar" .
+<http://dbpedia.org/ontology/MilitaryStructure> <http://www.w3.org/2000/01/rdf-schema#label> "military structure" .
+<http://dbpedia.org/ontology/PeriodOfArtisticStyle> <http://www.w3.org/2000/01/rdf-schema#label> "art period" .
+<http://dbpedia.org/ontology/Publisher> <http://www.w3.org/2000/01/rdf-schema#label> "publisher" .
+<http://dbpedia.org/ontology/Province> <http://www.w3.org/2000/01/rdf-schema#label> "province" .
+<http://dbpedia.org/ontology/TableTennisPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "table tennis player" .
+<http://dbpedia.org/ontology/Professor> <http://www.w3.org/2000/01/rdf-schema#label> "professor" .
+<http://dbpedia.org/ontology/CityDistrict> <http://www.w3.org/2000/01/rdf-schema#label> "city district" .
+<http://dbpedia.org/ontology/NetballPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "netball player" .
+<http://dbpedia.org/ontology/Drama> <http://www.w3.org/2000/01/rdf-schema#label> "drama" .
+<http://dbpedia.org/ontology/Engineer> <http://www.w3.org/2000/01/rdf-schema#label> "engineer" .
+<http://dbpedia.org/ontology/VideoGamesLeague> <http://www.w3.org/2000/01/rdf-schema#label> "video games league" .
+<http://dbpedia.org/ontology/DartsPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "darts player" .
+<http://dbpedia.org/ontology/Factory> <http://www.w3.org/2000/01/rdf-schema#label> "factory" .
+<http://dbpedia.org/ontology/HollywoodCartoon> <http://www.w3.org/2000/01/rdf-schema#label> "Hollywood cartoon" .
+<http://dbpedia.org/ontology/kilometrePerHour> <http://www.w3.org/2000/01/rdf-schema#label> "km/h" .
+<http://dbpedia.org/ontology/kilometrePerHour> <http://www.w3.org/2000/01/rdf-schema#label> "kilometer per hour" .
+<http://dbpedia.org/ontology/Abbey> <http://www.w3.org/2000/01/rdf-schema#label> "abbey" .
+<http://dbpedia.org/ontology/WaterTower> <http://www.w3.org/2000/01/rdf-schema#label> "water tower" .
+<http://dbpedia.org/ontology/RacingDriver> <http://www.w3.org/2000/01/rdf-schema#label> "race driver" .
+<http://dbpedia.org/ontology/RacingDriver> <http://www.w3.org/2000/01/rdf-schema#label> "racing driver" .
+<http://dbpedia.org/ontology/CollectionOfValuables> <http://www.w3.org/2000/01/rdf-schema#label> "collection of valuables" .
+<http://dbpedia.org/ontology/CollectionOfValuables> <http://www.w3.org/2000/01/rdf-schema#label> "collection" .
+<http://dbpedia.org/ontology/Deity> <http://www.w3.org/2000/01/rdf-schema#label> "deity" .
+<http://dbpedia.org/ontology/kilogramPerCubicMetre> <http://www.w3.org/2000/01/rdf-schema#label> "kilogram per cubic meter" .
+<http://dbpedia.org/ontology/cubicKilometre> <http://www.w3.org/2000/01/rdf-schema#label> "cubic kilometer" .
+<http://dbpedia.org/ontology/VolleyballCoach> <http://www.w3.org/2000/01/rdf-schema#label> "volleyball coach" .
+<http://dbpedia.org/ontology/kilogram> <http://www.w3.org/2000/01/rdf-schema#label> "kilogram" .
+<http://dbpedia.org/ontology/kilogram> <http://www.w3.org/2000/01/rdf-schema#label> "kg" .
+<http://dbpedia.org/ontology/WindMotor> <http://www.w3.org/2000/01/rdf-schema#label> "wind motor" .
+<http://dbpedia.org/ontology/TrackList> <http://www.w3.org/2000/01/rdf-schema#label> "track list" .
+<http://dbpedia.org/ontology/Presenter> <http://www.w3.org/2000/01/rdf-schema#label> "presenter" .
+<http://dbpedia.org/ontology/Comics> <http://www.w3.org/2000/01/rdf-schema#label> "comic" .
+<http://dbpedia.org/ontology/Castle> <http://www.w3.org/2000/01/rdf-schema#label> "castle" .
+<http://dbpedia.org/ontology/BeautyQueen> <http://www.w3.org/2000/01/rdf-schema#label> "beauty queen" .
+<http://dbpedia.org/ontology/kelvin> <http://www.w3.org/2000/01/rdf-schema#label> "degree kelvin" .
+<http://dbpedia.org/ontology/kelvin> <http://www.w3.org/2000/01/rdf-schema#label> "kelvin" .
+<http://dbpedia.org/ontology/SystemOfLaw> <http://www.w3.org/2000/01/rdf-schema#label> "system of law" .
+<http://dbpedia.org/ontology/LacrossePlayer> <http://www.w3.org/2000/01/rdf-schema#label> "lacrosse player" .
+<http://dbpedia.org/ontology/kilowatt> <http://www.w3.org/2000/01/rdf-schema#label> "kw" .
+<http://dbpedia.org/ontology/kilowatt> <http://www.w3.org/2000/01/rdf-schema#label> "kilowatt" .
+<http://dbpedia.org/ontology/Racecourse> <http://www.w3.org/2000/01/rdf-schema#label> "race course" .
+<http://dbpedia.org/ontology/PublicServiceInput> <http://www.w3.org/2000/01/rdf-schema#label> "public service input" .
+<http://dbpedia.org/ontology/MotorcycleRider> <http://www.w3.org/2000/01/rdf-schema#label> "motorcyclist" .
+<http://dbpedia.org/ontology/MotorcycleRider> <http://www.w3.org/2000/01/rdf-schema#label> "motorcycle rider" .
+<http://dbpedia.org/ontology/State> <http://www.w3.org/2000/01/rdf-schema#label> "state" .
+<http://dbpedia.org/ontology/kilometrePerSecond> <http://www.w3.org/2000/01/rdf-schema#label> "kilometer per second" .
+<http://dbpedia.org/ontology/District> <http://www.w3.org/2000/01/rdf-schema#label> "district" .
+<http://dbpedia.org/ontology/Prefecture> <http://www.w3.org/2000/01/rdf-schema#label> "prefecture" .
+<http://dbpedia.org/ontology/Windmill> <http://www.w3.org/2000/01/rdf-schema#label> "windmill" .
+<http://dbpedia.org/ontology/Chef> <http://www.w3.org/2000/01/rdf-schema#label> "chef" .
+<http://dbpedia.org/ontology/metre> <http://www.w3.org/2000/01/rdf-schema#label> "m" .
+<http://dbpedia.org/ontology/metre> <http://www.w3.org/2000/01/rdf-schema#label> "meter" .
+<http://dbpedia.org/ontology/TelevisionHost> <http://www.w3.org/2000/01/rdf-schema#label> "TV host" .
+<http://dbpedia.org/ontology/TelevisionHost> <http://www.w3.org/2000/01/rdf-schema#label> "television host" .
+<http://dbpedia.org/ontology/CyclingCompetition> <http://www.w3.org/2000/01/rdf-schema#label> "cycling competition" .
+<http://dbpedia.org/ontology/SquashPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "squash player" .
+<http://dbpedia.org/ontology/Region> <http://www.w3.org/2000/01/rdf-schema#label> "region" .
+<http://dbpedia.org/ontology/Genre> <http://www.w3.org/2000/01/rdf-schema#label> "genre" .
+<http://dbpedia.org/ontology/Host> <http://www.w3.org/2000/01/rdf-schema#label> "host" .
+<http://dbpedia.org/ontology/Star> <http://www.w3.org/2000/01/rdf-schema#label> "star" .
+<http://dbpedia.org/ontology/Star> <http://www.w3.org/2000/01/rdf-schema#label> "sun" .
+<http://dbpedia.org/ontology/Skater> <http://www.w3.org/2000/01/rdf-schema#label> "skater" .
+<http://dbpedia.org/ontology/Parish> <http://www.w3.org/2000/01/rdf-schema#label> "parish" .
+<http://dbpedia.org/ontology/HorseTrainer> <http://www.w3.org/2000/01/rdf-schema#label> "horse trainer" .
+<http://dbpedia.org/ontology/SumoWrestler> <http://www.w3.org/2000/01/rdf-schema#label> "sumo wrestler" .
+<http://dbpedia.org/ontology/Painter> <http://www.w3.org/2000/01/rdf-schema#label> "painter" .
+<http://dbpedia.org/ontology/Manga> <http://www.w3.org/2000/01/rdf-schema#label> "manga" .
+<http://dbpedia.org/ontology/ProtohistoricalPeriod> <http://www.w3.org/2000/01/rdf-schema#label> "protohistorical period" .
+<http://dbpedia.org/ontology/second> <http://www.w3.org/2000/01/rdf-schema#label> "second" .
+<http://dbpedia.org/ontology/Train> <http://www.w3.org/2000/01/rdf-schema#label> "train" .
+<http://dbpedia.org/ontology/minute> <http://www.w3.org/2000/01/rdf-schema#label> "minute" .
+<http://dbpedia.org/ontology/gramPerKilometre> <http://www.w3.org/2000/01/rdf-schema#label> "gram per kilometer" .
+<http://dbpedia.org/ontology/DistrictWaterBoard> <http://www.w3.org/2000/01/rdf-schema#label> "district water board" .
+<http://dbpedia.org/ontology/DistrictWaterBoard> <http://www.w3.org/2000/01/rdf-schema#label> "water board" .
+<http://dbpedia.org/ontology/Temple> <http://www.w3.org/2000/01/rdf-schema#label> "temple" .
+<http://dbpedia.org/ontology/Regency> <http://www.w3.org/2000/01/rdf-schema#label> "regency" .
+<http://dbpedia.org/ontology/SpeedwayRider> <http://www.w3.org/2000/01/rdf-schema#label> "speedway rider" .
+<http://dbpedia.org/ontology/newtonMetre> <http://www.w3.org/2000/01/rdf-schema#label> "newton meter" .
+<http://dbpedia.org/ontology/Fashion> <http://www.w3.org/2000/01/rdf-schema#label> "fashion" .
+<http://dbpedia.org/ontology/HorseRider> <http://www.w3.org/2000/01/rdf-schema#label> "horse rider" .
+<http://dbpedia.org/ontology/inhabitantsPerSquareKilometre> <http://www.w3.org/2000/01/rdf-schema#label> "inhabitants per square kilometer" .
+<http://dbpedia.org/ontology/centimetre> <http://www.w3.org/2000/01/rdf-schema#label> "cm" .
+<http://dbpedia.org/ontology/centimetre> <http://www.w3.org/2000/01/rdf-schema#label> "centimeter" .
+<http://dbpedia.org/ontology/FormulaOneRacingLeague> <http://www.w3.org/2000/01/rdf-schema#label> "Formula One racing league" .
+<http://dbpedia.org/ontology/FormulaOneRacingLeague> <http://www.w3.org/2000/01/rdf-schema#label> "racing league" .
+<http://dbpedia.org/ontology/RaceHorse> <http://www.w3.org/2000/01/rdf-schema#label> "race horse" .
+<http://dbpedia.org/ontology/UnitOfWork> <http://www.w3.org/2000/01/rdf-schema#label> "unit of work" .
+<http://dbpedia.org/ontology/Pornstar> <http://www.w3.org/2000/01/rdf-schema#label> "porn star" .
+<http://dbpedia.org/ontology/Pornstar> <http://www.w3.org/2000/01/rdf-schema#label> "pornographic actor" .
+<http://dbpedia.org/ontology/GovernmentalAdministrativeRegion> <http://www.w3.org/2000/01/rdf-schema#label> "governmental administrative region" .
+<http://dbpedia.org/ontology/NaturalRegion> <http://www.w3.org/2000/01/rdf-schema#label> "natural region" .
+<http://dbpedia.org/ontology/cubicCentimetre> <http://www.w3.org/2000/01/rdf-schema#label> "cubic centimeter" .
+<http://dbpedia.org/ontology/CareerStation> <http://www.w3.org/2000/01/rdf-schema#label> "career station" .
+<http://dbpedia.org/ontology/Wine> <http://www.w3.org/2000/01/rdf-schema#label> "wine" .
+<http://dbpedia.org/ontology/Venue> <http://www.w3.org/2000/01/rdf-schema#label> "venue" .
+<http://dbpedia.org/ontology/Author> <http://www.w3.org/2000/01/rdf-schema#label> "author" .
+<http://dbpedia.org/ontology/DigitalCamera> <http://www.w3.org/2000/01/rdf-schema#label> "digital camera" .
+<http://dbpedia.org/ontology/CyclingTeam> <http://www.w3.org/2000/01/rdf-schema#label> "cycling team" .
+<http://dbpedia.org/ontology/ComedyGroup> <http://www.w3.org/2000/01/rdf-schema#label> "comedy group" .
+<http://dbpedia.org/ontology/TimePeriod> <http://www.w3.org/2000/01/rdf-schema#label> "time period" .
+<http://dbpedia.org/ontology/SportFacility> <http://www.w3.org/2000/01/rdf-schema#label> "sport facility" .
+<http://dbpedia.org/ontology/OlympicEvent> <http://www.w3.org/2000/01/rdf-schema#label> "olympic event" .
+<http://dbpedia.org/ontology/OverseasDepartment> <http://www.w3.org/2000/01/rdf-schema#label> "overseas department" .
+<http://dbpedia.org/ontology/Manhwa> <http://www.w3.org/2000/01/rdf-schema#label> "manhwa" .
+<http://dbpedia.org/ontology/Casino> <http://www.w3.org/2000/01/rdf-schema#label> "casino" .
+<http://dbpedia.org/ontology/ControlledDesignationOfOriginWine> <http://www.w3.org/2000/01/rdf-schema#label> "quality wine" .
+<http://dbpedia.org/ontology/cubicMetre> <http://www.w3.org/2000/01/rdf-schema#label> "cubic meter" .
+<http://dbpedia.org/ontology/ClericalAdministrativeRegion> <http://www.w3.org/2000/01/rdf-schema#label> "clerical administrative region" .
+<http://dbpedia.org/ontology/Webiste> <http://www.w3.org/2000/01/rdf-schema#label> "homepage" .
+<http://dbpedia.org/ontology/Broadcast> <http://www.w3.org/2000/01/rdf-schema#label> "broadcast" .
+<http://dbpedia.org/ontology/MultiVolumePublication> <http://www.w3.org/2000/01/rdf-schema#label> "multi-volume publication" .
+<http://dbpedia.org/ontology/HistoricalPeriod> <http://www.w3.org/2000/01/rdf-schema#label> "historical period" .
+<http://dbpedia.org/ontology/hour> <http://www.w3.org/2000/01/rdf-schema#label> "hour" .
+<http://dbpedia.org/ontology/squareMetre> <http://www.w3.org/2000/01/rdf-schema#label> "square meter" .
+<http://dbpedia.org/ontology/Dog> <http://www.w3.org/2000/01/rdf-schema#label> "dog" .
+<http://dbpedia.org/ontology/BodyBuilder> <http://www.w3.org/2000/01/rdf-schema#label> "body builder" .
+<http://dbpedia.org/ontology/Case> <http://www.w3.org/2000/01/rdf-schema#label> "case" .
+<http://dbpedia.org/ontology/RadioProgram> <http://www.w3.org/2000/01/rdf-schema#label> "radio program" .
+<http://dbpedia.org/ontology/Enzyme> <http://www.w3.org/2000/01/rdf-schema#label> "enzyme" .
+<http://dbpedia.org/ontology/Anime> <http://www.w3.org/2000/01/rdf-schema#label> "anime" .
+<http://dbpedia.org/ontology/Department> <http://www.w3.org/2000/01/rdf-schema#label> "department" .
+<http://dbpedia.org/ontology/LightNovel> <http://www.w3.org/2000/01/rdf-schema#label> "light novel" .
+<http://dbpedia.org/ontology/Territory> <http://www.w3.org/2000/01/rdf-schema#label> "territory" .
+<http://dbpedia.org/ontology/Swarm> <http://www.w3.org/2000/01/rdf-schema#label> "swarm" .
+<http://dbpedia.org/ontology/Opera> <http://www.w3.org/2000/01/rdf-schema#label> "opera" .
+<http://dbpedia.org/ontology/Polyhedron> <http://www.w3.org/2000/01/rdf-schema#label> "polyhedron" .
+<http://dbpedia.org/ontology/Mill> <http://www.w3.org/2000/01/rdf-schema#label> "mill" .
+<http://dbpedia.org/ontology/Gymnast> <http://www.w3.org/2000/01/rdf-schema#label> "gymnast" .
+<http://dbpedia.org/ontology/BeachVolleyballPlayer> <http://www.w3.org/2000/01/rdf-schema#label> "beach volleyball player" .
+<http://dbpedia.org/ontology/Aristocrat> <http://www.w3.org/2000/01/rdf-schema#label> "aristocrat" .
+<http://dbpedia.org/ontology/Prison> <http://www.w3.org/2000/01/rdf-schema#label> "prison" .
+<http://dbpedia.org/ontology/ArtistDiscography> <http://www.w3.org/2000/01/rdf-schema#label> "discography" .
+<http://dbpedia.org/ontology/OpenSwarm> <http://www.w3.org/2000/01/rdf-schema#label> "open swarm" .
+<http://dbpedia.org/ontology/AcademicalJournal> <http://www.w3.org/2000/01/rdf-schema#label> "academical journal" .
+<http://dbpedia.org/ontology/PenaltyShootout> <http://www.w3.org/2000/01/rdf-schema#label> "penalty shootout" .
+<http://dbpedia.org/ontology/AnimangaCharacter> <http://www.w3.org/2000/01/rdf-schema#label> "animanga character" .
+<http://dbpedia.org/ontology/Watermill> <http://www.w3.org/2000/01/rdf-schema#label> "watermill" .
+<http://dbpedia.org/ontology/MovieGenre> <http://www.w3.org/2000/01/rdf-schema#label> "movie genre" .
+<http://dbpedia.org/ontology/InformationAppliance> <http://www.w3.org/2000/01/rdf-schema#label> "information appliance" .
+<http://dbpedia.org/ontology/ChristianDoctrine> <http://www.w3.org/2000/01/rdf-schema#label> "Christian doctrine" .
+<http://dbpedia.org/ontology/Shrine> <http://www.w3.org/2000/01/rdf-schema#label> "shrine" .
+<http://dbpedia.org/ontology/Noble> <http://www.w3.org/2000/01/rdf-schema#label> "noble" .
+<http://dbpedia.org/ontology/RadioHost> <http://www.w3.org/2000/01/rdf-schema#label> "radio host" .
+<http://dbpedia.org/ontology/Group> <http://www.w3.org/2000/01/rdf-schema#label> "group" .
+<http://dbpedia.org/ontology/LineOfFashion> <http://www.w3.org/2000/01/rdf-schema#label> "line of fashion" .
+<http://dbpedia.org/ontology/Community> <http://www.w3.org/2000/01/rdf-schema#label> "community" .
+<http://dbpedia.org/ontology/SubMunicipality> <http://www.w3.org/2000/01/rdf-schema#label> "sub-municipality" .
+<http://dbpedia.org/ontology/squareKilometre> <http://www.w3.org/2000/01/rdf-schema#label> "square kilometer" .
+<http://dbpedia.org/ontology/RaceTrack> <http://www.w3.org/2000/01/rdf-schema#label> "race track" .
+<http://dbpedia.org/ontology/PrehistoricalPeriod> <http://www.w3.org/2000/01/rdf-schema#label> "prehistorical period" .
+<http://dbpedia.org/ontology/Installment> <http://www.w3.org/2000/01/rdf-schema#label> "installment" .
+<http://dbpedia.org/ontology/Mosque> <http://www.w3.org/2000/01/rdf-schema#label> "mosque" .
+<http://dbpedia.org/ontology/Deanary> <http://www.w3.org/2000/01/rdf-schema#label> "deanery" .
+<http://dbpedia.org/ontology/Diocese> <http://www.w3.org/2000/01/rdf-schema#label> "diocese" .
+<http://dbpedia.org/ontology/Religious> <http://www.w3.org/2000/01/rdf-schema#label> "religious" .
+<http://dbpedia.org/ontology/Tournament> <http://www.w3.org/2000/01/rdf-schema#label> "tournament" .
+<http://dbpedia.org/ontology/SkiResort> <http://www.w3.org/2000/01/rdf-schema#label> "ski resort" .
+<http://dbpedia.org/ontology/HotSpring> <http://www.w3.org/2000/01/rdf-schema#label> "hot spring" .
+
+<http://dbpedia.org/ontology/Actor> <http://www.w3.org/2000/01/rdf-schema#label> "actress" .
+<http://dbpedia.org/ontology/Monarch> <http://www.w3.org/2000/01/rdf-schema#label> "king" .
+

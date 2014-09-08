@@ -1,5 +1,27 @@
 <?xml version="1.0" ?>
 <dataset id="qald-4_hybrid_train">
+
+
+
+	<question answertype="resource" id="16" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Which buildings owned by the crown overlook the North Sea?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?uri 
+WHERE {
+        ?uri rdf:type dbo:Building.
+        ?uri dbo:owner res:The_Crown . 
+        ?uri text:"overlook" text:"North Sea" .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Scarborough_Castle</uri>
+			</answer>
+		</answers>
+	</question>
 	<question answertype="resource" id="5" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Which recipients of the Victoria Cross died in the Battle of Arnhem?]]></string>
@@ -21,74 +43,7 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-	<question answertype="resource" id="12" aggregation="false"
-		onlydbo="false">
-		<string lang="en"><![CDATA[Who succeeded the pope that reigned only 33 days?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX yago: <http://dbpedia.org/class/yago/>
-SELECT DISTINCT ?uri 
-WHERE {
-        ?x rdf:type yago:Popes .
-        ?x text:"reign" text:"33 days" .
-        ?x dbo:successor ?uri .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Pope_John_Paul_II</uri>
-			</answer>
-		</answers>
-	</question>
-	<question answertype="resource" id="14" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Which horses did The Long Fellow ride?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT DISTINCT ?uri 
-WHERE {
-        ?x text:"known as" text:"The Long Fellow" .
-        ?x dbo:raceHorse ?uri .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/St._Paddy</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Petite_Etoile</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Alleged_(horse)</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Crepello</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Sir_Ivor</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Empery</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Nijinsky_II</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/The_Minstrel</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Roberto_(horse)</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Never_Say_Die_(horse)</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Teenoso</uri>
-			</answer>
-		</answers>
-	</question>
+
 	<question answertype="resource" id="3" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Which anti-apartheid activist graduated from the University of South Africa?]]></string>
@@ -108,7 +63,6 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-
 	<question answertype="resource" id="2" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[In which city was the assassin of Martin Luther King born?]]></string>
@@ -129,7 +83,6 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-
 	<question answertype="resource" id="20" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[List all the battles fought by the lover of Cleopatra.]]></string>
@@ -214,9 +167,6 @@ WHERE {
 	</question>
 
 
-
-
-
 	<question answertype="number" id="4" aggregation="true"
 		onlydbo="true">
 		<string lang="en"><![CDATA[How many Golden Globe awards did the husband of Katie Holmes win?]]></string>
@@ -243,32 +193,6 @@ WHERE {
 
 
 
-
-
-
-	<question answertype="resource" id="13" aggregation="false"
-		onlydbo="false">
-		<string lang="en"><![CDATA[On which island did the national poet of Greece die?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX yago: <http://dbpedia.org/class/yago/>
-SELECT DISTINCT ?uri 
-WHERE {
-        ?x text:"considered" text:"national poet of Greece" .
-        ?x dbo:deathPlace ?uri .
-        ?uri rdf:type yago:Island109316454 .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Corfu</uri>
-			</answer>
-		</answers>
-	</question>
-
-
-
 	<question answertype="resource" id="15" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Of the people that died of radiation in Los Alamos, whose death was an accident?]]></string>
@@ -288,26 +212,6 @@ WHERE {
 			</answer>
 			<answer>
 				<uri>http://dbpedia.org/resource/Harry_K._Daghlian,_Jr.</uri>
-			</answer>
-		</answers>
-	</question>
-
-	<question answertype="resource" id="16" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Which buildings owned by the crown overlook the North Sea?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT ?uri 
-WHERE {
-        ?uri rdf:type dbo:Building.
-        ?uri dbo:owner res:The_Crown . 
-        ?uri text:"overlook" text:"North Sea" .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Scarborough_Castle</uri>
 			</answer>
 		</answers>
 	</question>
@@ -344,7 +248,6 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-
 	<question answertype="resource" id="18" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Which birds are protected under the National Parks and Wildlife Act?]]></string>
@@ -355,7 +258,6 @@ SELECT DISTINCT ?uri
 WHERE {
 	?uri rdf:type dbo:Bird .	
 	?uri text:"protected under" text:"National Parks and Wildlife Act".
-	
 }
 ]]></pseudoquery>
 		<answers>
@@ -379,7 +281,6 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-
 	<question answertype="resource" id="19" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Which country did the first known photographer of snowflakes come from?]]></string>
@@ -399,8 +300,6 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-
-
 
 	<question answertype="resource" id="21" aggregation="true"
 		onlydbo="true">
@@ -423,25 +322,6 @@ WHERE {
 		</answers>
 	</question>
 
-	<question answertype="resource" id="22" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Which actress starring in the TV series Friends owns the production company Coquette Productions?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX res: <http://dbpedia.org/resource/>
-SELECT DISTINCT ?uri 
-WHERE {
-	res:Friends dbo:starring ?uri .	
-	?uri text:"own" text:"the production company Coquette Productions" .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Courteney_Cox</uri>
-			</answer>
-		</answers>
-	</question>
-
 	<question answertype="resource" id="23" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Dakar is the capital of which country member of the African Union?]]></string>
@@ -460,7 +340,6 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-
 	<question answertype="date" id="24" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[When was the composer of the opera Madama Butterfly born?]]></string>
@@ -480,26 +359,6 @@ WHERE {
 		</answers>
 	</question>
 
-	<question answertype="resource" id="25" aggregation="false"
-		onlydbo="false">
-		<string lang="en"><![CDATA[Which street basketball player was diagnosed with Sarcoidosis?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX yago: <http://dbpedia.org/class/yago/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT DISTINCT ?uri 
-WHERE {
-  ?uri rdf:type yago:StreetBasketballPlayers .
-  ?uri text:"diagnosed with" text:"Sarcoidosis".
-}
-]]>
-		</pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Slick_Watts</uri>
-			</answer>
-		</answers>
-	</question>
 	<question answertype="resource" id="9" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Which writers had influenced the philosopher that refused a Nobel Prize?]]></string>
@@ -573,6 +432,43 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
+	<question answertype="resource" id="11" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Who composed the music for the film that depicts the early life of Jane Austin?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?uri 
+WHERE {
+        ?x rdf:type dbo:Film .
+        ?x text:"depicts the early life of" text:"Jane Austin" .
+        ?x dbo:musicComposer ?uri .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>dbpedia.org/resource/Adrian_Johnston</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="6" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Where did the first man in space die?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?uri
+WHERE {
+        ?x text:"is" text:"first man in space" .
+        ?x dbo:deathPlace ?uri .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Kirzhach</uri>
+			</answer>
+		</answers>
+	</question>
 	<question answertype="resource" id="10" aggregation="false"
 		onlydbo="false">
 		<string lang="en"><![CDATA[Under which king did the British prime minister that signed the Munich agreement serve?]]></string>
@@ -593,41 +489,129 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-	<question answertype="resource" id="11" aggregation="false"
+	<question answertype="resource" id="12" aggregation="false"
+		onlydbo="false">
+		<string lang="en"><![CDATA[Who succeeded the pope that reigned only 33 days?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX yago: <http://dbpedia.org/class/yago/>
+SELECT DISTINCT ?uri 
+WHERE {
+        ?x rdf:type yago:Popes .
+        ?x text:"reign" text:"33 days" .
+        ?x dbo:successor ?uri .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Pope_John_Paul_II</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="13" aggregation="false"
+		onlydbo="false">
+		<string lang="en"><![CDATA[On which island did the national poet of Greece die?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX yago: <http://dbpedia.org/class/yago/>
+SELECT DISTINCT ?uri 
+WHERE {
+        ?x text:"considered" text:"national poet of Greece" .
+        ?x dbo:deathPlace ?uri .
+        ?uri rdf:type yago:Island109316454 .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Corfu</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="25" aggregation="false"
+		onlydbo="false">
+		<string lang="en"><![CDATA[Which street basketball player was diagnosed with Sarcoidosis?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX yago: <http://dbpedia.org/class/yago/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?uri 
+WHERE {
+  ?uri rdf:type yago:StreetBasketballPlayers .
+  ?uri text:"diagnosed with" text:"Sarcoidosis".
+}
+]]>
+		</pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Slick_Watts</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="22" aggregation="false"
 		onlydbo="true">
-		<string lang="en"><![CDATA[Who composed the music for the film that depicts the early life of Jane Austin?]]></string>
+		<string lang="en"><![CDATA[Which actress starring in the TV series Friends owns the production company Coquette Productions?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?uri 
+WHERE {
+	res:Friends dbo:starring ?uri .	
+	?uri text:"own" text:"the production company Coquette Productions" .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Courteney_Cox</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="14" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Which horses did The Long Fellow ride?]]></string>
 		<pseudoquery><![CDATA[
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 SELECT DISTINCT ?uri 
 WHERE {
-        ?x rdf:type dbo:Film .
-        ?x text:"depicts the early life of" text:"Jane Austin" .
-        ?x dbo:musicComposer ?uri .
+        ?x text:"known as" text:"The Long Fellow" .
+        ?x dbo:raceHorse ?uri .
 }
 ]]></pseudoquery>
 		<answers>
 			<answer>
-				<uri>dbpedia.org/resource/Adrian_Johnston</uri>
+				<uri>http://dbpedia.org/resource/St._Paddy</uri>
 			</answer>
-		</answers>
-	</question>
-
-	<question answertype="resource" id="6" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Where did the first man in space die?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX res: <http://dbpedia.org/resource/>
-SELECT DISTINCT ?uri
-WHERE {
-        ?x text:"is" text:"first man in space" .
-        ?x dbo:deathPlace ?uri .
-}
-]]></pseudoquery>
-		<answers>
 			<answer>
-				<uri>http://dbpedia.org/resource/Kirzhach</uri>
+				<uri>http://dbpedia.org/resource/Petite_Etoile</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Alleged_(horse)</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Crepello</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Sir_Ivor</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Empery</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Nijinsky_II</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/The_Minstrel</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Roberto_(horse)</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Never_Say_Die_(horse)</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Teenoso</uri>
 			</answer>
 		</answers>
 	</question>

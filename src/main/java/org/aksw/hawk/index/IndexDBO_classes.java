@@ -25,7 +25,6 @@ import org.apache.lucene.util.Version;
 import org.apache.lucene.util.automaton.LevenshteinAutomata;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -41,7 +40,7 @@ public class IndexDBO_classes {
 	public String FIELD_NAME_SUBJECT = "subject";
 	public String FIELD_NAME_PREDICATE = "predicate";
 	public String FIELD_NAME_OBJECT = "object";
-	private int numberOfDocsRetrievedFromIndex = 100;
+	private int numberOfDocsRetrievedFromIndex = 1000;
 
 	private Directory directory;
 	private IndexSearcher isearcher;
@@ -70,11 +69,11 @@ public class IndexDBO_classes {
 	}
 
 	public ArrayList<String> search(String object) {
-	ArrayList<String> uris= Lists.newArrayList();
+		ArrayList<String> uris = Lists.newArrayList();
 		try {
 			log.debug("\t start asking index...");
 
-			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object),LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE);   
+			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
 
 			isearcher.search(q, collector);
@@ -86,7 +85,7 @@ public class IndexDBO_classes {
 			}
 			log.debug("\t finished asking index...");
 		} catch (Exception e) {
-			log.error(e.getLocalizedMessage() + " -> " + object,e);
+			log.error(e.getLocalizedMessage() + " -> " + object, e);
 		}
 		return uris;
 	}
@@ -102,32 +101,45 @@ public class IndexDBO_classes {
 
 	private void index() {
 		try {
-			Model model = RDFDataMgr.loadModel("resources/dbpedia_3Eng_class.ttl") ;
+			Model model = RDFDataMgr.loadModel("resources/dbpedia_3Eng_class.ttl");
 			StmtIterator stmts = model.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();
 				RDFNode label = stmt.getObject();
-				addDocumentToIndex(stmt.getSubject(), "rdfs:label", label.asLiteral());
+				addDocumentToIndex(stmt.getSubject(), "rdfs:label", label.asLiteral().getString());
 			}
 
 			iwriter.commit();
+//			model = RDFDataMgr.loadModel("resources/yagoClassLabel.ttl");
+//			stmts = model.listStatements(null, RDFS.label, (RDFNode) null);
+//			while (stmts.hasNext()) {
+//				final Statement stmt = stmts.next();
+//				RDFNode label = stmt.getObject();
+//				addDocumentToIndex(stmt.getSubject(), "rdfs:label", label.asLiteral().getString());
+//			}
+//			iwriter.commit();
+
 			iwriter.close();
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);
 		}
 	}
 
-	private void addDocumentToIndex(Resource resource, String predicate, RDFNode next) throws IOException {
+	private void addDocumentToIndex(Resource resource, String predicate, String object) throws IOException {
 		Document doc = new Document();
 		doc.add(new StringField(FIELD_NAME_SUBJECT, resource.getURI(), Store.YES));
 		doc.add(new StringField(FIELD_NAME_PREDICATE, predicate, Store.YES));
-		doc.add(new TextField(FIELD_NAME_OBJECT, next.asLiteral().getString(), Store.YES));
+		doc.add(new TextField(FIELD_NAME_OBJECT, object, Store.YES));
 		iwriter.addDocument(doc);
 	}
 
 	public static void main(String args[]) {
 		IndexDBO_classes index = new IndexDBO_classes();
-		System.out.println(Joiner.on("\n").join(index.search("king")));
+		System.out.println("king " + index.search("king").size());
+		System.out.println("street basketball player " + index.search("street basketball player").size());
+		System.out.println("basketball player " + index.search("basketball player").size());
+		System.out.println("pope " + index.search("pope").size());
+		System.out.println("island " + index.search("island").size());
 
 	}
 }

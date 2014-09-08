@@ -1,0 +1,136 @@
+package org.aksw.hawk.querybuilding;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.index.DBAbstractsIndex;
+import org.aksw.hawk.nlp.MutableTreeNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
+
+public class SPARQLQueryBuilder {
+	Logger log = LoggerFactory.getLogger(SPARQLQueryBuilder.class);
+	SPARQLQueryBuilder_ProjectionPart projection = new SPARQLQueryBuilder_ProjectionPart();
+	SPARQL sparql = new SPARQL();
+	DBAbstractsIndex index;
+
+	public SPARQLQueryBuilder(DBAbstractsIndex index) {
+		this.index = index;
+	}
+
+	public Map<String, Set<RDFNode>> build(Question q) {
+		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
+		// build projection part
+		Set<StringBuilder> queryStrings = projection.buildProjectionPart(this, q);
+		System.gc();
+		queryStrings = buildRootPart(queryStrings, q);
+		System.gc();
+		queryStrings = buildConstraintPart(queryStrings, q);
+		System.gc();
+
+		for (StringBuilder queryString : queryStrings) {
+			String query = "SELECT ?proj WHERE {\n " + queryString.toString() + "}";
+			Set<RDFNode> answerSet = sparql.sparql(query);
+			log.debug(query.substring(0, Math.min(1000, query.length())));
+			if (!answerSet.isEmpty()) {
+				answer.put(queryString.toString(), answerSet);
+			}
+		}
+		return answer;
+	}
+
+	private Set<StringBuilder> buildConstraintPart(Set<StringBuilder> queryStrings, Question q) {
+		Set<StringBuilder> sb = Sets.newHashSet();
+		if (q.tree.getRoot().getChildren().size() == 2) {
+			System.out.println(q.tree);
+			MutableTreeNode tmp = q.tree.getRoot().getChildren().get(1);
+
+			if (tmp.posTag.equals("ADD")) {
+				for (StringBuilder query : queryStrings) {
+					// GIVEN ?s ?root ?const or ?const ?root ?s
+					if (query.toString().contains("?const") && !tmp.getAnnotations().isEmpty()) {
+						StringBuilder variant1 = new StringBuilder(query.toString()).append("?proj ?pbridge <" + tmp.label + ">.");
+						sb.add(variant1);
+					}
+					// GIVEN no constraint yet given and root incapable for those purposes
+					else {
+						StringBuilder variant2 = new StringBuilder(query.toString()).append("?proj ?pbridge <" + tmp.label + ">.");
+						sb.add(variant2);
+					}
+				}
+			} else if (tmp.posTag.equals("CombinedNN")) {
+				for (StringBuilder query : queryStrings) {
+					if (!tmp.getAnnotations().isEmpty()) {
+						StringBuilder variant1 = new StringBuilder(query.toString()).append("FILTER (?proj IN (");
+						for (ResourceImpl annotation : tmp.getAnnotations()) {
+							variant1.append("<" + annotation.getURI() + "> , ");
+						}
+						variant1.deleteCharAt(variant1.lastIndexOf(",")).append(")).");
+						sb.add(variant1);
+
+						StringBuilder variant2 = new StringBuilder(query.toString()).append("FILTER (?const IN (");
+						for (ResourceImpl annotation : tmp.getAnnotations()) {
+							variant2.append("<" + annotation.getURI() + "> , ");
+						}
+						variant2.deleteCharAt(variant2.lastIndexOf(",")).append(")).");
+						sb.add(variant2);
+					}
+				}
+			} else {
+				log.error("unhandled path");
+				sb.addAll(queryStrings);
+			}
+		} else {
+			log.error("more children than expected");
+			sb.addAll(queryStrings);
+		}
+		return sb;
+	}
+
+	private Set<StringBuilder> buildRootPart(Set<StringBuilder> queryStrings, Question q) {
+		Set<StringBuilder> sb = Sets.newHashSet();
+		MutableTreeNode root = q.tree.getRoot();
+
+		// full-text stuff e.g. "protected"
+		List<String> uris = index.listAbstractsContaining(root.label);
+		if (!root.getAnnotations().isEmpty()) {
+			for (StringBuilder query : queryStrings) {
+				for (ResourceImpl anno : root.getAnnotations()) {
+					// root has a valuable annotation from NN* or VB*
+					StringBuilder variant1 = new StringBuilder(query.toString()).append("?proj  <" + anno + "> ?const.");
+					StringBuilder variant2 = new StringBuilder(query.toString()).append("?const <" + anno + "> ?proj.");
+					// root has annotations but they are not valuable, e.g. took, is, was, ride
+					StringBuilder variant3 = new StringBuilder(query.toString()).append("?const  ?p ?proj.");
+					StringBuilder variant4 = new StringBuilder(query.toString()).append("?proj   ?p ?const.");
+
+					if (!uris.isEmpty()) {
+						StringBuilder variant5 = new StringBuilder(query.toString()).append("FILTER (?proj IN (");
+						for (String annotation : uris) {
+							variant5.append("<" + annotation + "> , ");
+						}
+						variant5.deleteCharAt(variant5.lastIndexOf(",")).append(")).");
+						sb.add(variant5);
+					}
+					sb.add(variant1);
+					sb.add(variant2);
+					sb.add(variant3);
+					sb.add(variant4);
+					// TODO build other variants
+
+				}
+			}
+		} else {
+			// TODO do the full text stuff
+			sb.addAll(queryStrings);
+		}
+		return sb;
+	}
+
+}
