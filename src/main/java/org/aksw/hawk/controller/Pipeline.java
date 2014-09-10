@@ -92,7 +92,7 @@ public class Pipeline {
 	private void write(Set<EvalObj> evals) {
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("results.html"));
-			bw.write("<table>");
+			bw.write("<script src=\"sorttable.js\"></script><table class=\"sortable\">");
 			bw.newLine();
 			bw.write(" <tr>     <th>Question</th><th>F-measure</th><th>Precision</th><th>Recall</th><th>Comment</th>  </tr>");
 			for (EvalObj eval : evals) {
