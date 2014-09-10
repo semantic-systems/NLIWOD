@@ -1,6 +1,5 @@
 package org.aksw.hawk.querybuilding;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,12 +16,13 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class SPARQLQueryBuilder {
 	Logger log = LoggerFactory.getLogger(SPARQLQueryBuilder.class);
-	SPARQLQueryBuilder_ProjectionPart projection = new SPARQLQueryBuilder_ProjectionPart();
+	SPARQLQueryBuilder_ProjectionPart projection;
+	SPARQLQueryBuilder_RootPart root;
 	SPARQL sparql = new SPARQL();
-	DBAbstractsIndex index;
 
 	public SPARQLQueryBuilder(DBAbstractsIndex index) {
-		this.index = index;
+		projection = new SPARQLQueryBuilder_ProjectionPart();
+		root = new SPARQLQueryBuilder_RootPart(index);
 	}
 
 	public Map<String, Set<RDFNode>> build(Question q) {
@@ -33,11 +33,8 @@ public class SPARQLQueryBuilder {
 			}
 			// build projection part
 			Set<SPARQLQuery> queryStrings = projection.buildProjectionPart(this, q);
-			System.gc();
-			queryStrings = buildRootPart(queryStrings, q);
-			System.gc();
+			queryStrings = root.buildRootPart(queryStrings, q);
 			queryStrings = buildConstraintPart(queryStrings, q);
-			System.gc();
 			int i = 0;
 			for (SPARQLQuery queryString : queryStrings) {
 				String query = queryString.toString();
@@ -49,14 +46,16 @@ public class SPARQLQueryBuilder {
 			}
 		} catch (CloneNotSupportedException e) {
 			log.error(e.getLocalizedMessage(), e);
+		} finally {
+			System.gc();
 		}
 		return answer;
 	}
 
 	private Set<SPARQLQuery> buildConstraintPart(Set<SPARQLQuery> queryStrings, Question q) throws CloneNotSupportedException {
 		Set<SPARQLQuery> sb = Sets.newHashSet();
-		//TODO only valid for questions with one constraint node
-		if (q.tree.getRoot().getChildren().size() == 2&&q.tree.getRoot().getChildren().get(1).getChildren().isEmpty()) {
+		// TODO only valid for questions with one constraint node
+		if (q.tree.getRoot().getChildren().size() == 2 && q.tree.getRoot().getChildren().get(1).getChildren().isEmpty()) {
 			log.info(q.tree.toString());
 			MutableTreeNode tmp = q.tree.getRoot().getChildren().get(1);
 
@@ -104,51 +103,6 @@ public class SPARQLQueryBuilder {
 		}
 		return sb;
 
-	}
-
-	private Set<SPARQLQuery> buildRootPart(Set<SPARQLQuery> queryStrings, Question q) throws CloneNotSupportedException {
-		Set<SPARQLQuery> sb = Sets.newHashSet();
-		MutableTreeNode root = q.tree.getRoot();
-
-		// full-text stuff e.g. "protected"
-		List<String> uris = index.listAbstractsContaining(root.label);
-		if (!root.getAnnotations().isEmpty()) {
-			for (SPARQLQuery query : queryStrings) {
-				for (String anno : root.getAnnotations()) {
-					// root has a valuable annotation from NN* or VB*
-					SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
-					variant1.addConstraint("?proj  <" + anno + "> ?const.");
-
-					SPARQLQuery variant2 = ((SPARQLQuery) query.clone());
-					variant2.addConstraint("?const <" + anno + "> ?proj.");
-
-					// root has annotations but they are not valuable, e.g. took, is, was, ride
-					SPARQLQuery variant3 = ((SPARQLQuery) query.clone());
-					variant3.addConstraint("?const  ?p ?proj.");
-
-					SPARQLQuery variant4 = ((SPARQLQuery) query.clone());
-					variant4.addConstraint("?proj   ?p ?const.");
-
-					// TODO vllt &&uris.size()< 100?
-					// otherwise this filter will explode
-					if (!uris.isEmpty() && uris.size() < 100) {
-						SPARQLQuery variant5 = ((SPARQLQuery) query.clone());
-						variant5.addFilter("proj", uris);
-						sb.add(variant5);
-					}
-					sb.add(variant1);
-					sb.add(variant2);
-					sb.add(variant3);
-					sb.add(variant4);
-					// TODO build other variants
-
-				}
-			}
-		} else {
-			// TODO do the full text stuff
-			sb.addAll(queryStrings);
-		}
-		return sb;
 	}
 
 }
