@@ -60,7 +60,7 @@ public class SPARQLQueryBuilder {
 				return true;
 			}
 		}
-		if(queryString.filter.isEmpty()){
+		if (queryString.filter.isEmpty()) {
 			return false;
 		}
 		return false;
@@ -108,9 +108,11 @@ public class SPARQLQueryBuilder {
 				} else if (tmp.posTag.equals("NN")) {
 					for (SPARQLQuery query : queryStrings) {
 						if (!tmp.getAnnotations().isEmpty()) {
-							SPARQLQuery variant1 = (SPARQLQuery) query.clone();
-							variant1.addFilter("proj", tmp.getAnnotations());
-							sb.add(variant1);
+							for (String annotation : tmp.getAnnotations()) {
+								SPARQLQuery variant1 = (SPARQLQuery) query.clone();
+								variant1.addConstraint("?proj a <" + annotation+ ">.");
+								sb.add(variant1);
+							}
 						}
 					}
 				} else {
