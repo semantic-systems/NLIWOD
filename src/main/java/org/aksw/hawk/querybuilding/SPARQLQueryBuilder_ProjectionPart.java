@@ -62,6 +62,9 @@ public class SPARQLQueryBuilder_ProjectionPart {
 							SPARQLQuery queryString = new SPARQLQuery("?proj ?p ?o.");
 							queryString.addFilter("proj", bottom.getAnnotations());
 							queries.add(queryString);
+							  queryString = new SPARQLQuery("?proj ?p ?o.");
+							queryString.addFilter("o", bottom.getAnnotations());
+							queries.add(queryString);
 						} else {
 							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 						}

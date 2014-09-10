@@ -28,7 +28,7 @@ public class SPARQLQueryBuilder {
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		try {
-			if (q.languageToQuestion.get("en").contains("philosopher")) {
+			if (q.languageToQuestion.get("en").contains("snow")) {
 				System.out.println();
 			}
 			// build projection part
@@ -38,10 +38,12 @@ public class SPARQLQueryBuilder {
 			int i = 0;
 			for (SPARQLQuery queryString : queryStrings) {
 				String query = queryString.toString();
-				log.debug(i++ + "/" + queryStrings.size() + "= " + query.substring(0, Math.min(1000, query.length())));
-				Set<RDFNode> answerSet = sparql.sparql(query);
-				if (!answerSet.isEmpty()) {
-					answer.put(query, answerSet);
+				if (queryHasBoundVariables(queryString)) {
+					log.debug(i++ + "/" + queryStrings.size() + "= " + query.substring(0, Math.min(1000, query.length())));
+					Set<RDFNode> answerSet = sparql.sparql(query);
+					if (!answerSet.isEmpty()) {
+						answer.put(query, answerSet);
+					}
 				}
 			}
 		} catch (CloneNotSupportedException e) {
@@ -52,49 +54,71 @@ public class SPARQLQueryBuilder {
 		return answer;
 	}
 
+	private boolean queryHasBoundVariables(SPARQLQuery queryString) {
+		for (String triple : queryString.constraintTriples) {
+			if (triple.contains("http")) {
+				return true;
+			}
+		}
+		if(queryString.filter.isEmpty()){
+			return false;
+		}
+		return false;
+	}
+
 	private Set<SPARQLQuery> buildConstraintPart(Set<SPARQLQuery> queryStrings, Question q) throws CloneNotSupportedException {
 		Set<SPARQLQuery> sb = Sets.newHashSet();
 		// TODO only valid for questions with one constraint node
-		if (q.tree.getRoot().getChildren().size() == 2 && q.tree.getRoot().getChildren().get(1).getChildren().isEmpty()) {
-			log.info(q.tree.toString());
-			MutableTreeNode tmp = q.tree.getRoot().getChildren().get(1);
+		if (q.tree.getRoot().getChildren().size() == 2) {
+			if (q.tree.getRoot().getChildren().get(1).getChildren().isEmpty()) {
+				log.info(q.tree.toString());
+				MutableTreeNode tmp = q.tree.getRoot().getChildren().get(1);
 
-			if (tmp.posTag.equals("ADD")) {
-				for (SPARQLQuery query : queryStrings) {
-					// GIVEN ?proj ?root ?const or ?const ?root ?proj
-					// TODO ??? && !tmp.getAnnotations().isEmpty()
-					if (query.constraintsContains("?const")) {
-						SPARQLQuery variant1 = (SPARQLQuery) query.clone();
-						variant1.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
-						sb.add(variant1);
-						SPARQLQuery variant2 = (SPARQLQuery) query.clone();
-						variant2.addFilter("const", Lists.newArrayList(tmp.label));
-						sb.add(variant2);
+				if (tmp.posTag.equals("ADD")) {
+					for (SPARQLQuery query : queryStrings) {
+						// GIVEN ?proj ?root ?const or ?const ?root ?proj
+						// TODO ??? && !tmp.getAnnotations().isEmpty()
+						if (query.constraintsContains("?const")) {
+							SPARQLQuery variant1 = (SPARQLQuery) query.clone();
+							variant1.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
+							sb.add(variant1);
+							SPARQLQuery variant2 = (SPARQLQuery) query.clone();
+							variant2.addFilter("const", Lists.newArrayList(tmp.label));
+							sb.add(variant2);
+						}
+						// GIVEN no constraint yet given and root incapable for those purposes
+						else {
+							SPARQLQuery variant2 = (SPARQLQuery) query.clone();
+							variant2.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
+							sb.add(variant2);
+						}
 					}
-					// GIVEN no constraint yet given and root incapable for those purposes
-					else {
-						SPARQLQuery variant2 = (SPARQLQuery) query.clone();
-						variant2.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
-						sb.add(variant2);
-					}
-				}
-			} else if (tmp.posTag.equals("CombinedNN")) {
-				for (SPARQLQuery query : queryStrings) {
-					if (!tmp.getAnnotations().isEmpty()) {
-						SPARQLQuery variant1 = (SPARQLQuery) query.clone();
-						variant1.addFilter("proj", tmp.getAnnotations());
-						sb.add(variant1);
+				} else if (tmp.posTag.equals("CombinedNN")) {
+					for (SPARQLQuery query : queryStrings) {
+						if (!tmp.getAnnotations().isEmpty()) {
+							SPARQLQuery variant1 = (SPARQLQuery) query.clone();
+							variant1.addFilter("proj", tmp.getAnnotations());
+							sb.add(variant1);
 
-						SPARQLQuery variant2 = (SPARQLQuery) query.clone();
-						variant2.addFilter("const", tmp.getAnnotations());
-						sb.add(variant2);
+							SPARQLQuery variant2 = (SPARQLQuery) query.clone();
+							variant2.addFilter("const", tmp.getAnnotations());
+							sb.add(variant2);
+						}
 					}
+				} else if (tmp.posTag.equals("NN")) {
+					for (SPARQLQuery query : queryStrings) {
+						if (!tmp.getAnnotations().isEmpty()) {
+							SPARQLQuery variant1 = (SPARQLQuery) query.clone();
+							variant1.addFilter("proj", tmp.getAnnotations());
+							sb.add(variant1);
+						}
+					}
+				} else {
+					log.error("unhandled path");
 				}
 			} else {
-				log.error("unhandled path");
-				// TODO go on here
-
-				// sb.addAll(queryStrings);
+				// deeper than one child
+				// what to do?
 			}
 		} else {
 			log.error("more children than expected");
