@@ -28,7 +28,7 @@ public class SPARQLQueryBuilder {
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		try {
-			if (q.languageToQuestion.get("en").contains("snow")) {
+			if (q.languageToQuestion.get("en").contains("anti")) {
 				System.out.println();
 			}
 			// build projection part
@@ -39,7 +39,7 @@ public class SPARQLQueryBuilder {
 			for (SPARQLQuery queryString : queryStrings) {
 				String query = queryString.toString();
 				if (queryHasBoundVariables(queryString)) {
-					log.debug(i++ + "/" + queryStrings.size() + "= " + query.substring(0, Math.min(1000, query.length())));
+					log.info(i++ + "/" + queryStrings.size() + "= " + query.substring(0, Math.min(1000, query.length())));
 					Set<RDFNode> answerSet = sparql.sparql(query);
 					if (!answerSet.isEmpty()) {
 						answer.put(query, answerSet);
