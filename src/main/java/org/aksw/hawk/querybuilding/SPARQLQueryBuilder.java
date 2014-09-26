@@ -48,6 +48,8 @@ public class SPARQLQueryBuilder {
 			}
 		} catch (CloneNotSupportedException e) {
 			log.error(e.getLocalizedMessage(), e);
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
 		} finally {
 			System.gc();
 		}

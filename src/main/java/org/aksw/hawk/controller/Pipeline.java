@@ -30,12 +30,12 @@ public class Pipeline {
 	static Logger log = LoggerFactory.getLogger(Pipeline.class);
 	String dataset;
 	QALD_Loader datasetLoader;
-	ASpotter nerdModule;
-	CachedParseTree cParseTree;
-	Pruner pruner;
-	SentenceToSequence sentenceToSequence;
-	Annotater annotater;
-	SPARQLQueryBuilder queryBuilder;
+	public ASpotter nerdModule;
+	public CachedParseTree cParseTree;
+	public Pruner pruner;
+	public SentenceToSequence sentenceToSequence;
+	public Annotater annotater;
+	public SPARQLQueryBuilder queryBuilder;
 
 	void run() throws IOException {
 		// 1. read in Questions from QALD 4
@@ -107,7 +107,7 @@ public class Pipeline {
 		}
 	}
 
-	private Map<String, Set<RDFNode>> calculateSPARQLRepresentation(Question q) {
+	public Map<String, Set<RDFNode>> calculateSPARQLRepresentation(Question q) {
 		// 2. Disambiguate parts of the query
 		q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
 
@@ -115,8 +115,8 @@ public class Pipeline {
 		q.tree = cParseTree.process(q);
 		// noun combiner, decrease #nodes in the DEPTree decreases
 		sentenceToSequence.combineSequences(q);
+		
 		// 4. Apply pruning rules
-
 		q.tree = pruner.prune(q);
 
 		// 5. Annotate tree
@@ -131,7 +131,7 @@ public class Pipeline {
 
 
 	public static void main(String args[]) throws IOException {
-
+		
 		for (String file : new String[] { "resources/qald-4_hybrid_train.xml" }) { // ,"resources/qald-4_multilingual_train_withanswers.xml"
 			Pipeline controller = new Pipeline();
 
