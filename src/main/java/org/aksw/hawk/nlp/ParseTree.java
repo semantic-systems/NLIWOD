@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
-import org.apache.jena.iri.ViolationCodes.Initialize;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

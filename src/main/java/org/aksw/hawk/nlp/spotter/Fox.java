@@ -60,7 +60,7 @@ public class Fox extends ASpotter {
 
 			JSONParser parser = new JSONParser();
             JSONObject jsonArray = (JSONObject) parser.parse(foxJSONOutput);
-            String output = URLDecoder.decode((String) ((JSONObject) jsonArray).get("output"), "UTF-8");
+            String output = URLDecoder.decode((String) jsonArray.get("output"), "UTF-8");
 
 			String baseURI = "http://dbpedia.org";
 			Model model = ModelFactory.createDefaultModel();

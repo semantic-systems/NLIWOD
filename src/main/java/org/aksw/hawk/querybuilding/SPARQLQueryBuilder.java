@@ -28,9 +28,6 @@ public class SPARQLQueryBuilder {
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		try {
-			if (q.languageToQuestion.get("en").contains("anti")) {
-				System.out.println();
-			}
 			// build projection part
 			Set<SPARQLQuery> queryStrings = projection.buildProjectionPart(this, q);
 			queryStrings = root.buildRootPart(queryStrings, q);
@@ -39,7 +36,7 @@ public class SPARQLQueryBuilder {
 			for (SPARQLQuery queryString : queryStrings) {
 				String query = queryString.toString();
 				if (queryHasBoundVariables(queryString)) {
-					log.info(i++ + "/" + queryStrings.size() + "= " + query.substring(0, Math.min(1000, query.length())));
+					log.debug(i++ + "/" + queryStrings.size() + "= " + query.substring(0, Math.min(1000, query.length())));
 					Set<RDFNode> answerSet = sparql.sparql(query);
 					if (!answerSet.isEmpty()) {
 						answer.put(query, answerSet);
@@ -69,15 +66,14 @@ public class SPARQLQueryBuilder {
 	private Set<SPARQLQuery> buildConstraintPart(Set<SPARQLQuery> queryStrings, Question q) throws CloneNotSupportedException {
 		Set<SPARQLQuery> sb = Sets.newHashSet();
 		// TODO only valid for questions with one constraint node
+		log.info(q.tree.toString());
 		if (q.tree.getRoot().getChildren().size() == 2) {
-			if (q.tree.getRoot().getChildren().get(1).getChildren().isEmpty()) {
-				log.info(q.tree.toString());
-				MutableTreeNode tmp = q.tree.getRoot().getChildren().get(1);
-
+			MutableTreeNode tmp = q.tree.getRoot().getChildren().get(1);
+			while (tmp != null) {
+				log.info("Current node: " + tmp);
 				if (tmp.posTag.equals("ADD")) {
 					for (SPARQLQuery query : queryStrings) {
 						// GIVEN ?proj ?root ?const or ?const ?root ?proj
-						// TODO ??? && !tmp.getAnnotations().isEmpty()
 						if (query.constraintsContains("?const")) {
 							SPARQLQuery variant1 = (SPARQLQuery) query.clone();
 							variant1.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
@@ -110,17 +106,28 @@ public class SPARQLQueryBuilder {
 						if (!tmp.getAnnotations().isEmpty()) {
 							for (String annotation : tmp.getAnnotations()) {
 								SPARQLQuery variant1 = (SPARQLQuery) query.clone();
-								variant1.addConstraint("?proj a <" + annotation+ ">.");
+								variant1.addConstraint("?proj a <" + annotation + ">.");
 								sb.add(variant1);
+								SPARQLQuery variant2 = (SPARQLQuery) query.clone();
+								variant2.addConstraint("?const a <" + annotation + ">.");
+								sb.add(variant2);
 							}
 						}
 					}
+				} else if (tmp.posTag.equals("VBD")) {
+					// TODO refuse
 				} else {
 					log.error("unhandled path");
 				}
-			} else {
-				// deeper than one child
-				// what to do?
+				if (!tmp.getChildren().isEmpty()) {
+					if (tmp.getChildren().size() > 0) {
+						tmp = tmp.getChildren().get(0);
+					} else {
+						log.error("More children in constraint part than expected");
+					}
+				} else {
+					tmp = null;
+				}
 			}
 		} else {
 			log.error("more children than expected");
@@ -130,5 +137,4 @@ public class SPARQLQueryBuilder {
 		return sb;
 
 	}
-
 }

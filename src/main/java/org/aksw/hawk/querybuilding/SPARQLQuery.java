@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.jena.atlas.logging.Log;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -49,13 +51,13 @@ public class SPARQLQuery implements Cloneable {
 		return q;
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT ?proj WHERE {\n ");
 		for (String constraint : constraintTriples) {
 			sb.append(constraint + " ");
 		}
-
 		for (String proj : filter.keySet()) {
 			if (!filter.get(proj).isEmpty()) {
 				sb.append("FILTER (?" + proj + " IN ( ");

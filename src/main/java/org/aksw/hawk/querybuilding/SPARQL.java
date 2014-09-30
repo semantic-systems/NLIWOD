@@ -26,16 +26,17 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 public class SPARQL {
 	Logger log = LoggerFactory.getLogger(SPARQL.class);
 	// TODO treshold can be increased by introducing prefixes
-	int sizeOfFilterThreshold = 50;
+	int sizeOfFilterThreshold = 25;
 	QueryExecutionFactory qef;
 
 	public SPARQL() {
 		try {
 			// AKSW SPARQL API call
 			// QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql", "http://dbpedia.org");
-			qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
+			qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");// "http://lod.openlinksw.com/sparql"
 			// QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/", "http://dbpedia.org");
-			// qef = new QueryExecutionFactoryDelay(qef, 2000); --> No reason to be nice
+			// qef = new QueryExecutionFactoryDelay(qef, 2000);
+			// --> No reason to be nice
 			long timeToLive = 30l * 24l * 60l * 60l * 1000l;
 			CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
 			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
@@ -64,15 +65,20 @@ public class SPARQL {
 				queries.add(query);
 			}
 			for (String q : queries) {
-				QueryExecution qe = qef.createQueryExecution(q);
-				ResultSet results = qe.execSelect();
+				//FIXME queries longer than 250000 characters do not work with VIRTUOSO
+				if (q.length() < 250000) {
+					QueryExecution qe = qef.createQueryExecution(q);
+					ResultSet results = qe.execSelect();
 
-				while (results.hasNext()) {
-					set.add(results.next().get("?proj"));
+					while (results.hasNext()) {
+						set.add(results.next().get("?proj"));
+					}
+				}else{
+					log.debug("Query limit discovered");
 				}
 			}
 		} catch (Exception e) {
-			log.error("Query: "+ addLinebreaks(query,200),e);
+			log.error("Query: " + addLinebreaks(query, 200), e);
 
 		} finally {
 			if (qexec != null) {
@@ -106,12 +112,9 @@ public class SPARQL {
 
 	// TODO currently only ?proj gets splitted but not other long filter.
 	// think about the right semantics to do so
-	
-	//TODO build this on top of the new structure of SPARQLQuery object
+
+	// TODO build this on top of the new structure of SPARQLQuery object
 	private ArrayList<String> splitLongFilterSPARQL(String query) {
-		if(query.contains("production")){
-			System.out.println();
-		}
 		ArrayList<String> queries = Lists.newArrayList();
 		query = query.replaceAll("\n", "");
 		// watch out in URIs could be two closing brackets
@@ -122,7 +125,7 @@ public class SPARQL {
 		query = query.replace(group, "XXAKSWXX");
 
 		String[] uris = group.split(", ");
-		log.debug("Size of Filter"+ uris.length);
+		log.debug("Size of Filter" + uris.length);
 		for (int i = 0; i < uris.length;) {
 			String filter = "";
 			for (int sizeOfFilter = 0; sizeOfFilter < sizeOfFilterThreshold && sizeOfFilter + i < uris.length; sizeOfFilter++) {

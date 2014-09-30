@@ -46,43 +46,43 @@ public class Pipeline {
 		double counter = 0;
 		Set<EvalObj> evals = Sets.newHashSet();
 		for (Question q : questions) {
-			String question = q.languageToQuestion.get("en");
 			if (q.answerType.equals("resource")) {
 				if (q.onlydbo) {
 					if (!q.aggregation) {
-							Map<String, Set<RDFNode>> answer = calculateSPARQLRepresentation(q);
+						String question = q.languageToQuestion.get("en");
+						Map<String, Set<RDFNode>> answer = calculateSPARQLRepresentation(q);
 
-							double fmax = 0;
-							double pmax = 0;
-							double rmax = 0;
-							for (String query : answer.keySet()) {
-								Set<RDFNode> systemAnswers = answer.get(query);
-								// 11. Compare to set of resources from benchmark
-								double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
-								double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-								double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-								if (fMeasure > fmax) {
-									log.info(query.substring(0, Math.min(1000, query.length())));
-									log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
-									fmax = fMeasure;
-									pmax = precision;
-									rmax = recall;
-								}
+						double fmax = 0;
+						double pmax = 0;
+						double rmax = 0;
+						for (String query : answer.keySet()) {
+							Set<RDFNode> systemAnswers = answer.get(query);
+							// 11. Compare to set of resources from benchmark
+							double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+							double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+							double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+							if (fMeasure > fmax) {
+								log.info(query.substring(0, Math.min(1000, query.length())));
+								log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+								fmax = fMeasure;
+								pmax = precision;
+								rmax = recall;
 							}
-							evals.add(new EvalObj(question,fmax, pmax, rmax, "Assuming Optimal Ranking Function, Spotter: " + nerdModule.toString()));
-							overallf += fmax;
-							overallp += pmax;
-							overallr += rmax;
-							counter++;
-							log.info("########################################################");
+						}
+						evals.add(new EvalObj(question, fmax, pmax, rmax, "Assuming Optimal Ranking Function, Spotter: " + nerdModule.toString()));
+						overallf += fmax;
+						overallp += pmax;
+						overallr += rmax;
+						counter++;
+						log.info("########################################################");
 					} else {
-						evals.add(new EvalObj(question,0, 0, 0, "This question askes for aggregation (ASK)"));
+						// evals.add(new EvalObj(question,0, 0, 0, "This question askes for aggregation (ASK)"));
 					}
 				} else {
-					evals.add(new EvalObj(question,0, 0, 0, "This question askes for yago types"));
+					// evals.add(new EvalObj(question,0, 0, 0, "This question askes for yago types"));
 				}
 			} else {
-				evals.add(new EvalObj(question,0, 0, 0, "This is no question asking for resources only"));
+				// evals.add(new EvalObj(question,0, 0, 0, "This is no question asking for resources only"));
 			}
 		}
 		write(evals);
@@ -128,7 +128,6 @@ public class Pipeline {
 		Map<String, Set<RDFNode>> answer = queryBuilder.build(q);
 		return answer;
 	}
-
 
 	public static void main(String args[]) throws IOException {
 
