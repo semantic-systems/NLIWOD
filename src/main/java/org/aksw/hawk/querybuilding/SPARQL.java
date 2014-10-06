@@ -34,9 +34,13 @@ public class SPARQL {
 			CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
 			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
 			// AKSW SPARQL API call
-			// qef = new QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql", "http://dbpedia.org");
+			// qef = new
+			// QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql",
+			// "http://dbpedia.org");
 			qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");//
-			// qef = new QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/", "http://dbpedia.org");
+			// qef = new
+			// QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/",
+			// "http://dbpedia.org");
 			// --> No reason to be nice
 			// qef = new QueryExecutionFactoryDelay(qef, 2000);
 			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
@@ -67,7 +71,7 @@ public class SPARQL {
 		ResultSet results = qe.execSelect();
 
 		while (results.hasNext()) {
-			set.add(results.next().get("?proj"));
+			set.add(results.next().get("proj"));
 		}
 	}
 
@@ -79,21 +83,23 @@ public class SPARQL {
 	 */
 	private void sparqlWithFilterOnServerSite(SPARQLQuery query, Set<RDFNode> set) {
 		QueryExecution qe = qef.createQueryExecution(query.toStringWithoutFilter());
-		ResultSet results = qe.execSelect();
-		while (results.hasNext()) {
-			QuerySolution next = results.next();
-			boolean addToFinalSet = true;
-			for (String var : results.getResultVars()) {
-				RDFNode valueFromEndpoint = next.get(var);
-				List<String> valuesFromGeneratedQuery = query.filter.get(var);
-				// filter current URI with URI list from generated query
-				if (!valuesFromGeneratedQuery.contains(valueFromEndpoint.toString())) {
-					addToFinalSet = false;
-					break;
+		if (qe != null) {
+			ResultSet results = qe.execSelect();
+			while (results.hasNext()) {
+				QuerySolution next = results.next();
+				boolean addToFinalSet = true;
+				for (String var : results.getResultVars()) {
+					RDFNode valueFromEndpoint = next.get(var);
+					List<String> valuesFromGeneratedQuery = query.filter.get(var);
+					// filter current URI with URI list from generated query
+					if (!valuesFromGeneratedQuery.contains(valueFromEndpoint.toString())) {
+						addToFinalSet = false;
+						break;
+					}
 				}
-			}
-			if (addToFinalSet) {
-				set.add(next.get("proj"));
+				if (addToFinalSet) {
+					set.add(next.get("proj"));
+				}
 			}
 		}
 	}
