@@ -3,7 +3,6 @@ package org.aksw.hawk.querybuilding;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
@@ -25,6 +24,8 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class SPARQL {
 	Logger log = LoggerFactory.getLogger(SPARQL.class);
+	// TODO treshold can be increased by introducing prefixes
+	int sizeOfFilterThreshold = 25;
 	QueryExecutionFactory qef;
 
 	public SPARQL() {
@@ -51,51 +52,53 @@ public class SPARQL {
 	 * @param query
 	 * @return
 	 */
-	public Set<RDFNode> sparqlWithFilterOnServerSite(SPARQLQuery query) {
+	public Set<RDFNode> sparql(SPARQLQuery query) {
 		Set<RDFNode> set = Sets.newHashSet();
-		try {
-			QueryExecution qe = qef.createQueryExecution(query.toStringWithoutFilter());
-			ResultSet results = qe.execSelect();
-			while (results.hasNext()) {
-				QuerySolution next = results.next();
-				boolean addToFinalSet = true;
-				for (String var : results.getResultVars()) {
-					RDFNode valueFromEndpoint = next.get(var);
-					List<String> valuesFromGeneratedQuery = query.filter.get(var);
-					// filter current URI with URI list from generated query
-					if (!valuesFromGeneratedQuery.contains(valueFromEndpoint.toString())) {
-						addToFinalSet = false;
-						break;
-					}
-				}
-				if (addToFinalSet) {
-					set.add(next.get("proj"));
-				}
-			}
-		} catch (Exception e) {
-			log.error("Query: " + addLinebreaks(query.toStringWithoutFilter(), 200), e);
+		if (query.toString().length() > 10000) {
+			sparqlWithFilterOnServerSite(query, set);
+		} else {
+			sparqlShortQueriesServerSided(query, set);
 		}
 		return set;
 	}
 
-	private String addLinebreaks(String input, int maxLineLength) {
-		StringTokenizer tok = new StringTokenizer(input, " ");
-		StringBuilder output = new StringBuilder(input.length());
-		int lineLen = 0;
-		while (tok.hasMoreTokens()) {
-			String word = tok.nextToken();
-			if (lineLen + word.length() > maxLineLength) {
-				output.append("\n");
-				lineLen = 0;
-			}
-			output.append(word + " ");
-			lineLen += word.length();
+	private void sparqlShortQueriesServerSided(SPARQLQuery query, Set<RDFNode> set) {
+		QueryExecution qe = qef.createQueryExecution(query.toString());
+		ResultSet results = qe.execSelect();
+
+		while (results.hasNext()) {
+			set.add(results.next().get("?proj"));
 		}
-		return output.toString();
+	}
+
+	/**
+	 * using the AKSW library for wrapping Jena API
+	 * 
+	 * @param query
+	 * @return
+	 */
+	private void sparqlWithFilterOnServerSite(SPARQLQuery query, Set<RDFNode> set) {
+		QueryExecution qe = qef.createQueryExecution(query.toStringWithoutFilter());
+		ResultSet results = qe.execSelect();
+		while (results.hasNext()) {
+			QuerySolution next = results.next();
+			boolean addToFinalSet = true;
+			for (String var : results.getResultVars()) {
+				RDFNode valueFromEndpoint = next.get(var);
+				List<String> valuesFromGeneratedQuery = query.filter.get(var);
+				// filter current URI with URI list from generated query
+				if (!valuesFromGeneratedQuery.contains(valueFromEndpoint.toString())) {
+					addToFinalSet = false;
+					break;
+				}
+			}
+			if (addToFinalSet) {
+				set.add(next.get("proj"));
+			}
+		}
 	}
 
 	public static void main(String args[]) {
-
 		SPARQL sqb = new SPARQL();
 
 		SPARQLQuery query = new SPARQLQuery();
@@ -104,7 +107,7 @@ public class SPARQL {
 		query.addFilter("proj", Lists.newArrayList("http://dbpedia.org/resource/Pope_John_Paul_I", "http://dbpedia.org/resource/Pope_John_Paul_II"));
 		query.addFilter("const", Lists.newArrayList("http://dbpedia.org/resource/Canale_d'Agordo"));
 
-		Set<RDFNode> set = sqb.sparqlWithFilterOnServerSite(query);
+		Set<RDFNode> set = sqb.sparql(query);
 		for (RDFNode item : set) {
 			System.out.println(item);
 		}

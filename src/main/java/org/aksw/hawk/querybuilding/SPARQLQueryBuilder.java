@@ -33,12 +33,12 @@ public class SPARQLQueryBuilder {
 			queryStrings = root.buildRootPart(queryStrings, q);
 			queryStrings = buildConstraintPart(queryStrings, q);
 			int i = 0;
-			for (SPARQLQuery queryString : queryStrings) {
-				if (queryHasBoundVariables(queryString)) {
-					log.debug(i++ + "/" + queryStrings.size() + "= " + queryString.toString().substring(0, Math.min(1000, queryString.toString().length())));
-					Set<RDFNode> answerSet = sparql.sparqlWithFilterOnServerSite(queryString);
+			for (SPARQLQuery query : queryStrings) {
+				if (queryHasBoundVariables(query)) {
+					log.debug(i++ + "/" + queryStrings.size() + "= " + query.toString().substring(0, Math.min(1000, query.toString().length())));
+					Set<RDFNode> answerSet = sparql.sparql(query);
 					if (!answerSet.isEmpty()) {
-						answer.put(queryString.toString(), answerSet);
+						answer.put(query.toString(), answerSet);
 					}
 				}
 			}
