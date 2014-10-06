@@ -17,6 +17,10 @@ import org.aksw.hawk.index.DBAbstractsIndex;
 import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
+import org.aksw.hawk.nlp.spotter.MultiSpotter;
+import org.aksw.hawk.nlp.spotter.Spotlight;
+import org.aksw.hawk.nlp.spotter.TagMe;
+import org.aksw.hawk.nlp.spotter.WikipediaMiner;
 import org.aksw.hawk.pruner.Pruner;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
@@ -115,7 +119,7 @@ public class Pipeline {
 		q.tree = cParseTree.process(q);
 		// noun combiner, decrease #nodes in the DEPTree decreases
 		sentenceToSequence.combineSequences(q);
-		
+
 		// 4. Apply pruning rules
 		q.tree = pruner.prune(q);
 
@@ -130,7 +134,7 @@ public class Pipeline {
 	}
 
 	public static void main(String args[]) throws IOException {
-		
+
 		for (String file : new String[] { "resources/qald-4_hybrid_train.xml" }) { // ,"resources/qald-4_multilingual_train_withanswers.xml"
 			Pipeline controller = new Pipeline();
 
@@ -138,7 +142,16 @@ public class Pipeline {
 
 			controller.dataset = new File(file).getAbsolutePath();
 			controller.datasetLoader = new QALD_Loader();
-			controller.nerdModule = new Fox();
+			// ASpotter fox = new Fox();
+			// ASpotter spot = new Spotlight();
+			// ASpotter tagMe = new TagMe();
+			// ASpotter wiki = new WikipediaMiner();
+			// controller.nerdModule = new MultiSpotter(fox, tagMe, wiki, spot);
+			 controller.nerdModule = new Fox();
+//			 controller.nerdModule = new Spotlight();
+//			 controller.nerdModule =new TagMe();
+//			 controller.nerdModule = new WikipediaMiner();
+
 			controller.cParseTree = new CachedParseTree();
 
 			AbstractIndexCache cache = new AbstractIndexCache();

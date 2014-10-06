@@ -105,7 +105,7 @@ public class MultiSpotter extends ASpotter{
 	}
 	
 	public static void main(String[] args) throws Exception {
-		String question = "Which recipients of the Victoria Cross died in the Battle of Arnhem?";
+		String question = "Which building owned by the crown overlook the North Sea?";
 		
 		ASpotter fox = new Fox();
 		System.out.println(fox.getEntities(question));
@@ -116,7 +116,10 @@ public class MultiSpotter extends ASpotter{
 		ASpotter wiki = new WikipediaMiner();
 		System.out.println(wiki.getEntities(question));
 		
-		MultiSpotter multiSpotter = new MultiSpotter(fox, tagMe, wiki);
+		ASpotter spot = new Spotlight();
+		System.out.println(spot.getEntities(question));
+		
+		MultiSpotter multiSpotter = new MultiSpotter(fox, tagMe, wiki,spot);
 		System.out.println(multiSpotter.getEntities(question));
 	}
 

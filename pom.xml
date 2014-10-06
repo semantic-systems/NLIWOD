@@ -193,6 +193,12 @@
 			<artifactId>org.abego.treelayout.core</artifactId>
 			<version>1.0.1</version>
 		</dependency>
+		<!-- for Debugging, IO Fileutils -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
 
 	</dependencies>
 </project>
