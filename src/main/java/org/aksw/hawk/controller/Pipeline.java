@@ -80,14 +80,18 @@ public class Pipeline {
 						counter++;
 						log.info("########################################################");
 					} else {
-						// evals.add(new EvalObj(question,0, 0, 0, "This question askes for aggregation (ASK)"));
+						// evals.add(new EvalObj(question,0, 0, 0,
+						// "This question askes for aggregation (ASK)"));
 					}
 				} else {
-					// evals.add(new EvalObj(question,0, 0, 0, "This question askes for yago types"));
+					// evals.add(new EvalObj(question,0, 0, 0,
+					// "This question askes for yago types"));
 				}
 			} else {
-				// evals.add(new EvalObj(question,0, 0, 0, "This is no question asking for resources only"));
+				// evals.add(new EvalObj(question,0, 0, 0,
+				// "This is no question asking for resources only"));
 			}
+			break;
 		}
 		write(evals);
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
@@ -147,10 +151,10 @@ public class Pipeline {
 			// ASpotter tagMe = new TagMe();
 			// ASpotter wiki = new WikipediaMiner();
 			// controller.nerdModule = new MultiSpotter(fox, tagMe, wiki, spot);
-			 controller.nerdModule = new Fox();
-//			 controller.nerdModule = new Spotlight();
-//			 controller.nerdModule =new TagMe();
-//			 controller.nerdModule = new WikipediaMiner();
+			controller.nerdModule = new Fox();
+			// controller.nerdModule = new Spotlight();
+			// controller.nerdModule =new TagMe();
+			// controller.nerdModule = new WikipediaMiner();
 
 			controller.cParseTree = new CachedParseTree();
 

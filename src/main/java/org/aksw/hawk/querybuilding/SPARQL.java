@@ -34,17 +34,20 @@ public class SPARQL {
 			CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
 			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
 			// AKSW SPARQL API call
+			 qef = new QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql","http://dbpedia.org/");
+
+//			qef = new QueryExecutionFactoryHttp("http://localhost:8890/sparql", "http://dbpedia.org/");
+			//			qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql","http://dbpedia.org");
+
+//			 qef = new QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql","http://dbpedia.org");
+//			qef = new QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/", "http://dbpedia.org");
 			// qef = new
-			// QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql",
-			// "http://dbpedia.org");
-			qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");//
-			// qef = new
-			// QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/",
+			// QueryExecutionFactoryHttp("http://vtentacle.techfak.uni-bielefeld.de:443/sparql",
 			// "http://dbpedia.org");
 			// --> No reason to be nice
 			// qef = new QueryExecutionFactoryDelay(qef, 2000);
 			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
-			qef = new QueryExecutionFactoryPaginated(qef, 20000);
+			qef = new QueryExecutionFactoryPaginated(qef, 10000);
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error("Could not create SPARQL interface! ", e);
 		}
@@ -58,20 +61,22 @@ public class SPARQL {
 	 */
 	public Set<RDFNode> sparql(SPARQLQuery query) {
 		Set<RDFNode> set = Sets.newHashSet();
-		if (query.toString().length() > 10000) {
+		if (query.toString().length() > 100000) {
 			sparqlWithFilterOnServerSite(query, set);
 		} else {
 			sparqlShortQueriesServerSided(query, set);
 		}
+//		log.info("Size of result set: " + set.size());
 		return set;
 	}
 
 	private void sparqlShortQueriesServerSided(SPARQLQuery query, Set<RDFNode> set) {
 		QueryExecution qe = qef.createQueryExecution(query.toString());
-		ResultSet results = qe.execSelect();
-
-		while (results.hasNext()) {
-			set.add(results.next().get("proj"));
+		if (qe != null) {
+			ResultSet results = qe.execSelect();
+			while (results.hasNext()) {
+				set.add(results.next().get("proj"));
+			}
 		}
 	}
 
@@ -109,9 +114,9 @@ public class SPARQL {
 
 		SPARQLQuery query = new SPARQLQuery();
 		query.addConstraint("?proj a <http://dbpedia.org/ontology/Cleric>.");
-		query.addConstraint("?proj ?p ?const.");
-		query.addFilter("proj", Lists.newArrayList("http://dbpedia.org/resource/Pope_John_Paul_I", "http://dbpedia.org/resource/Pope_John_Paul_II"));
-		query.addFilter("const", Lists.newArrayList("http://dbpedia.org/resource/Canale_d'Agordo"));
+//		query.addConstraint("?proj ?p ?const.");
+//		query.addFilter("proj", Lists.newArrayList("http://dbpedia.org/resource/Pope_John_Paul_I", "http://dbpedia.org/resource/Pope_John_Paul_II"));
+//		query.addFilter("const", Lists.newArrayList("http://dbpedia.org/resource/Canale_d'Agordo"));
 
 		Set<RDFNode> set = sqb.sparql(query);
 		for (RDFNode item : set) {
