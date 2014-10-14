@@ -91,7 +91,6 @@ public class Pipeline {
 				// evals.add(new EvalObj(question,0, 0, 0,
 				// "This is no question asking for resources only"));
 			}
-			break;
 		}
 		write(evals);
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
@@ -116,6 +115,7 @@ public class Pipeline {
 	}
 
 	public Map<String, Set<RDFNode>> calculateSPARQLRepresentation(Question q) {
+		log.info(q.languageToQuestion.get("en"));
 		// 2. Disambiguate parts of the query
 		q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
 
@@ -128,9 +128,8 @@ public class Pipeline {
 		q.tree = pruner.prune(q);
 
 		// 5. Annotate tree
-		log.info(q.languageToQuestion.get("en"));
 		annotater.annotateTree(q);
-		// log.debug(q.tree.toString());
+		log.info(q.tree.toString());
 
 		// 6. Build queries via subqueries
 		Map<String, Set<RDFNode>> answer = queryBuilder.build(q);

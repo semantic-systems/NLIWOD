@@ -35,7 +35,7 @@ public class SPARQLQueryBuilder {
 			int i = 0;
 			for (SPARQLQuery query : queryStrings) {
 				if (queryHasBoundVariables(query)) {
-					log.debug(i++ + "/" + queryStrings.size() + "= " + query.toString().substring(0, Math.min(1000, query.toString().length())));
+					log.info(i++ + "/" + queryStrings.size() + "= " + query.toString().substring(0, Math.min(1000, query.toString().length())));
 					Set<RDFNode> answerSet = sparql.sparql(query);
 					if (!answerSet.isEmpty()) {
 						answer.put(query.toString(), answerSet);
@@ -67,7 +67,6 @@ public class SPARQLQueryBuilder {
 	private Set<SPARQLQuery> buildConstraintPart(Set<SPARQLQuery> queryStrings, Question q) throws CloneNotSupportedException {
 		Set<SPARQLQuery> sb = Sets.newHashSet();
 		// TODO only valid for questions with one constraint node
-		log.info(q.tree.toString());
 		if (q.tree.getRoot().getChildren().size() == 2) {
 			MutableTreeNode tmp = q.tree.getRoot().getChildren().get(1);
 			while (tmp != null) {

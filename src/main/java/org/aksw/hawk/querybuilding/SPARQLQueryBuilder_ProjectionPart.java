@@ -39,6 +39,9 @@ public class SPARQLQueryBuilder_ProjectionPart {
 							}
 							// TODO cities like http://dbpedia.org/page/Kirzhach are not annotated as db-owl:Place
 							queries.add(new SPARQLQuery("?proj a ?type."));
+							// need to add this due to Kirzhach which is in DBpedia 3.9 not typed, not even as db-owl:Place
+							// so we leaf out the urgent generation of a type information
+							queries.add(new SPARQLQuery());
 						} else {
 							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 						}
