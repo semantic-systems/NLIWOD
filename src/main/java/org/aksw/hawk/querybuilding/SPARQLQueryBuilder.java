@@ -4,12 +4,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.Question;
-import org.aksw.hawk.index.DBAbstractsIndex;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -20,9 +18,9 @@ public class SPARQLQueryBuilder {
 	SPARQLQueryBuilder_RootPart root;
 	SPARQL sparql = new SPARQL();
 
-	public SPARQLQueryBuilder(DBAbstractsIndex index) {
+	public SPARQLQueryBuilder() {
 		projection = new SPARQLQueryBuilder_ProjectionPart();
-		root = new SPARQLQueryBuilder_RootPart(index);
+		root = new SPARQLQueryBuilder_RootPart();
 	}
 
 	public Map<String, Set<RDFNode>> build(Question q) {
@@ -79,10 +77,11 @@ public class SPARQLQueryBuilder {
 							variant1.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
 							sb.add(variant1);
 							SPARQLQuery variant2 = (SPARQLQuery) query.clone();
-							variant2.addFilter("const", Lists.newArrayList(tmp.label));
+							variant2.addFilter("?proj IN (<" + tmp.label + ">)");
 							sb.add(variant2);
 						}
-						// GIVEN no constraint yet given and root incapable for those purposes
+						// GIVEN no constraint yet given and root incapable for
+						// those purposes
 						else {
 							SPARQLQuery variant2 = (SPARQLQuery) query.clone();
 							variant2.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
@@ -93,11 +92,11 @@ public class SPARQLQueryBuilder {
 					for (SPARQLQuery query : queryStrings) {
 						if (!tmp.getAnnotations().isEmpty()) {
 							SPARQLQuery variant1 = (SPARQLQuery) query.clone();
-							variant1.addFilter("proj", tmp.getAnnotations());
+							variant1.addFilter("<bif:contains>(?proj,\"" + tmp.label + "\")");
 							sb.add(variant1);
 
 							SPARQLQuery variant2 = (SPARQLQuery) query.clone();
-							variant2.addFilter("const", tmp.getAnnotations());
+							variant2.addFilter("<bif:contains>(?const,\"" + tmp.label + "\")");
 							sb.add(variant2);
 						}
 					}
@@ -115,7 +114,14 @@ public class SPARQLQueryBuilder {
 						}
 					}
 				} else if (tmp.posTag.equals("VBD")) {
-					// TODO refuse
+						for (SPARQLQuery query : queryStrings) {
+							SPARQLQuery variant1 = (SPARQLQuery) query.clone();
+							variant1.addFilter("<bif:contains>(?proj,\"" + tmp.label + "\")");
+							sb.add(variant1);
+							SPARQLQuery variant2 = (SPARQLQuery) query.clone();
+							variant1.addFilter("<bif:contains>(?const,\"" + tmp.label + "\")");
+							sb.add(variant2);
+					}
 				} else {
 					log.error("unhandled path");
 				}

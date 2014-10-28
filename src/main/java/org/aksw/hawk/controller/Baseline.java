@@ -10,14 +10,11 @@ import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.cache.AbstractIndexCache;
-import org.aksw.hawk.index.DBAbstractsIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class Baseline {
 	static Logger log = LoggerFactory.getLogger(Baseline.class);
@@ -77,15 +74,15 @@ public class Baseline {
 
 	public Map<String, Set<RDFNode>> calculateSPARQLRepresentation(Question q) {
 		AbstractIndexCache cache = new AbstractIndexCache();
-		DBAbstractsIndex index = new DBAbstractsIndex(cache);
+//		DBAbstractsIndex index = new DBAbstractsIndex(cache);
 
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
-		List<String> abstracts = index.listAbstractsContaining(q.languageToQuestion.get("en"));
-		Set<RDFNode> set = Sets.newHashSet();
-		for (String uri : abstracts) {
-			set.add(new ResourceImpl(uri));
-		}
-		answer.put("Baseline", set);
+//		List<String> abstracts = index.listAbstractsContaining(q.languageToQuestion.get("en"));
+//		Set<RDFNode> set = Sets.newHashSet();
+//		for (String uri : abstracts) {
+//			set.add(new ResourceImpl(uri));
+//		}
+//		answer.put("Baseline", set);
 		return answer;
 	}
 
