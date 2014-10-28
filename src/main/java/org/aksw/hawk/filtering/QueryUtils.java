@@ -24,6 +24,7 @@ import com.hp.hpl.jena.sparql.syntax.ElementTriplesBlock;
 import com.hp.hpl.jena.sparql.syntax.ElementUnion;
 import com.hp.hpl.jena.sparql.syntax.ElementVisitorBase;
 import com.hp.hpl.jena.sparql.util.VarUtils;
+import com.hp.hpl.jena.vocabulary.RDF;
 
 public class QueryUtils extends ElementVisitorBase {
 	
@@ -95,6 +96,24 @@ public class QueryUtils extends ElementVisitorBase {
 		}
 		
 		return vars;
+	}
+	
+	/**
+	 * Returns all triples with rdf:type as predicate.
+	 * @param query
+	 * @return
+	 */
+	public Set<Triple> getRDFTypeTriples(Query query){
+		Set<Triple> triplePatterns = extractTriplePattern(query);
+		
+		for (Iterator<Triple> iterator = triplePatterns.iterator(); iterator.hasNext();) {
+			Triple triple = iterator.next();
+			if(!triple.getPredicate().matches(RDF.type.asNode())){
+				iterator.remove();
+			}
+		}
+		
+		return triplePatterns;
 	}
 	
 	/**
