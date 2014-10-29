@@ -2,7 +2,6 @@ package org.aksw.hawk.querybuilding;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 import org.aksw.autosparql.commons.qald.Question;
@@ -39,8 +38,8 @@ public class Annotater {
 		try {
 			CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
 			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
-
-			this.qef = new QueryExecutionFactoryHttp("http://localhost:8890/sparql", "http://dbpedia.org/");
+			// FIXME do not use qef here better use common sparql object
+			this.qef = new QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql", "http://dbpedia.org/");
 			this.qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
 			this.qef = new QueryExecutionFactoryPaginated(qef, 10000);
 		} catch (ClassNotFoundException | SQLException e) {
@@ -94,7 +93,7 @@ public class Annotater {
 					}
 				}
 			} else if (posTag.matches("CombinedNN") && tmp.getAnnotations().isEmpty()) {
-				addAbstractsContainingLabel(tmp, label);
+				addAbstractsContainingLabel("?proj", tmp, label);
 			} else if (tmp.getAnnotations().isEmpty() && (posTag.matches("ADD") || posTag.matches("VB(.)*"))) {
 				// expected behaviour
 			} else {
@@ -105,16 +104,11 @@ public class Annotater {
 			}
 		}
 	}
+//FIXME think about wheter this is really needed, i.e. whether CombinedNouns need to be materialised here
+	private void addAbstractsContainingLabel(String variable, MutableTreeNode tmp, String label) {
 
-	private void addAbstractsContainingLabel(MutableTreeNode tmp, String label) {
-		// FIXME
-		SPARQLQuery q = new SPARQLQuery("?proj <http://dbpedia.org/ontology/abstract> ?abstract.");
-		String[] whitespaceSeparatedLabel = label.split(" ");
-//		for (String x : whitespaceSeparatedLabel) {
-			q.addFilter("<bif:contains>(?abstract,\"" + whitespaceSeparatedLabel[0] + "\")");
-//		}
-
-		log.debug(q.toString());
+		SPARQLQuery q = new SPARQLQuery();
+		q.addFilterOverAbstractsContraint(variable, label, q);
 		QueryExecution qe = qef.createQueryExecution(q.toString());
 		if (qe != null && q.toString() != null) {
 			ResultSet results = qe.execSelect();
@@ -123,6 +117,8 @@ public class Annotater {
 			}
 		}
 	}
+
+
 
 	/**
 	 * "Verbs most often refer to properties, thus a lexical entry with a
@@ -185,7 +181,7 @@ public class Annotater {
 					}
 				} else if (posTag.equals("CombinedNN")) {
 					// full text lookup
-					addAbstractsContainingLabel(tmp, label);
+					addAbstractsContainingLabel("?proj",tmp, label);
 				} else if (posTag.matches("NN(.)*")) {
 					// DBO look up
 					if (posTag.matches("NNS")) {
@@ -222,7 +218,7 @@ public class Annotater {
 						}
 					} else {
 						// full text lookup
-						addAbstractsContainingLabel(tmp, label);
+						addAbstractsContainingLabel("?proj",tmp, label);
 
 						// since a full text lookup takes place we assume
 						// hereafter there will be a FILTER clause needed which
