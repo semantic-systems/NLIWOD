@@ -40,7 +40,7 @@ public class SPARQLQueryBuilder {
 			log.info("Number of Queries: " + queryStrings.size());
 			for (SPARQLQuery query : queryStrings) {
 				if (queryHasBoundVariables(query)) {
-					log.info(i++ + "/" + queryStrings.size() + "= " + query.toString());
+					log.debug(i++ + "/" + queryStrings.size() + "= " + query.toString());
 					Set<RDFNode> answerSet = sparql.sparql(query);
 					if (!answerSet.isEmpty()) {
 						answer.put(query.toString(), answerSet);

@@ -63,7 +63,7 @@ public class GraphNonSCCPruner {
 		boolean[][] edgeMatrix = null;
 
 		public Graph(SPARQLQuery query) {
-			for (String triple : query.getConstraints()) {
+			for (String triple : query.constraintTriples) {
 				String s = triple.split(" ")[0];
 				String o = triple.split(" ")[2];
 				if (!mapStringInt.containsKey(s)) {
@@ -79,7 +79,7 @@ public class GraphNonSCCPruner {
 			for (int i = 0; i < nodeCount; i++) {
 				edgeMatrix[i] = new boolean[nodeCount];
 			}
-			for (String triple : query.getConstraints()) {
+			for (String triple : query.constraintTriples) {
 				String s = triple.split(" ")[0];
 				String o = triple.split(" ")[2];
 				int ss = mapStringInt.get(s);

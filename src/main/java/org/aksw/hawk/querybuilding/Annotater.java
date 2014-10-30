@@ -104,7 +104,9 @@ public class Annotater {
 			}
 		}
 	}
-//FIXME think about wheter this is really needed, i.e. whether CombinedNouns need to be materialised here
+
+	// FIXME think about whether this is really needed, i.e. whether
+	// CombinedNouns need to be materialized here
 	private void addAbstractsContainingLabel(String variable, MutableTreeNode tmp, String label) {
 
 		SPARQLQuery q = new SPARQLQuery();
@@ -117,8 +119,6 @@ public class Annotater {
 			}
 		}
 	}
-
-
 
 	/**
 	 * "Verbs most often refer to properties, thus a lexical entry with a
@@ -181,7 +181,7 @@ public class Annotater {
 					}
 				} else if (posTag.equals("CombinedNN")) {
 					// full text lookup
-					addAbstractsContainingLabel("?proj",tmp, label);
+					addAbstractsContainingLabel("?proj", tmp, label);
 				} else if (posTag.matches("NN(.)*")) {
 					// DBO look up
 					if (posTag.matches("NNS")) {
@@ -218,7 +218,7 @@ public class Annotater {
 						}
 					} else {
 						// full text lookup
-						addAbstractsContainingLabel("?proj",tmp, label);
+						addAbstractsContainingLabel("?proj", tmp, label);
 
 						// since a full text lookup takes place we assume
 						// hereafter there will be a FILTER clause needed which

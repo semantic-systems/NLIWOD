@@ -64,16 +64,6 @@ public class SPARQL {
 	 */
 	public Set<RDFNode> sparql(SPARQLQuery query) {
 		Set<RDFNode> set = Sets.newHashSet();
-		// if (query.toString().length() > 15000) {
-		// sparqlWithFilterOnServerSite(query, set);
-		// } else {
-		sparqlShortQueriesServerSided(query, set);
-		// }
-		// log.info("Size of result set: " + set.size());
-		return set;
-	}
-
-	private void sparqlShortQueriesServerSided(SPARQLQuery query, Set<RDFNode> set) {
 		try {
 			QueryExecution qe = qef.createQueryExecution(query.toString());
 			if (qe != null && query.toString() != null) {
@@ -85,38 +75,8 @@ public class SPARQL {
 		} catch (Exception e) {
 			log.error(query.toString());
 		}
+		return set;
 	}
-
-	// /**
-	// * using the AKSW library for wrapping Jena API
-	// *
-	// * @param query
-	// * @return
-	// */
-	// private void sparqlWithFilterOnServerSite(SPARQLQuery query, Set<RDFNode>
-	// set) {
-	// QueryExecution qe =
-	// qef.createQueryExecution(query.toStringWithoutFilter());
-	// if (qe != null && query.toStringWithoutFilter() != null) {
-	// ResultSet results = qe.execSelect();
-	// while (results.hasNext()) {
-	// QuerySolution next = results.next();
-	// boolean addToFinalSet = true;
-	// for (String var : results.getResultVars()) {
-	// RDFNode valueFromEndpoint = next.get(var);
-	// List<String> valuesFromGeneratedQuery = query.filter.get(var);
-	// // filter current URI with URI list from generated query
-	// if (!valuesFromGeneratedQuery.contains(valueFromEndpoint.toString())) {
-	// addToFinalSet = false;
-	// break;
-	// }
-	// }
-	// if (addToFinalSet) {
-	// set.add(next.get("proj"));
-	// }
-	// }
-	// }
-	// }
 
 	public static void main(String args[]) {
 		SPARQL sqb = new SPARQL();
