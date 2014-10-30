@@ -44,7 +44,6 @@ public class SPARQLQueryBuilder_RootPart {
 					// FIXME is this correct
 					SPARQLQuery variant5 = ((SPARQLQuery) query.clone());
 					variant5.addFilterOverAbstractsContraint("?proj", root.label, variant5);
-//					variant5.addFilter("<bif:contains>(?proj,\"" + root.label + "\")");
 					sb.add(variant5);
 
 				}

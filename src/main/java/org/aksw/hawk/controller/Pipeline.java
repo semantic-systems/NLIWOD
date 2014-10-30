@@ -61,7 +61,7 @@ public class Pipeline {
 							double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
 							double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
 							if (fMeasure > fmax) {
-								log.info(query.substring(0, Math.min(1000, query.length())));
+								log.info(query.toString());
 								log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
 								fmax = fMeasure;
 								pmax = precision;
@@ -85,7 +85,8 @@ public class Pipeline {
 			} else {
 				// evals.add(new EvalObj(question,0, 0, 0,
 				// "This is no question asking for resources only"));
-			}}
+			}
+		}
 		write(evals);
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
 	}
@@ -152,7 +153,7 @@ public class Pipeline {
 			controller.cParseTree = new CachedParseTree();
 
 			AbstractIndexCache cache = new AbstractIndexCache();
-//			DBAbstractsIndex index = new DBAbstractsIndex(cache);
+			// DBAbstractsIndex index = new DBAbstractsIndex(cache);
 			controller.sentenceToSequence = new SentenceToSequence();
 			controller.queryBuilder = new SPARQLQueryBuilder();
 			controller.annotater = new Annotater();

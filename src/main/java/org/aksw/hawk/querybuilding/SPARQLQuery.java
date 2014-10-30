@@ -10,7 +10,7 @@ import com.google.common.collect.Sets;
 
 public class SPARQLQuery implements Cloneable {
 
-	public ArrayList<String> constraintTriples = Lists.newArrayList();
+	public Set<String> constraintTriples =  Sets.newHashSet();
 	public Set<String> filter = Sets.newHashSet();
 	public Map<String, Set<String>> filterBifContains = Maps.newHashMap();
 
@@ -61,7 +61,10 @@ public class SPARQLQuery implements Cloneable {
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		SPARQLQuery q = new SPARQLQuery();
-		q.constraintTriples = (ArrayList<String>) this.constraintTriples.clone();
+		q.constraintTriples = Sets.newHashSet();
+		for(String constraint: this.constraintTriples){
+			q.constraintTriples.add(constraint);
+		}
 		q.filter = Sets.newHashSet();
 		for (String key : this.filter) {
 			q.filter.add(key);
@@ -77,7 +80,7 @@ public class SPARQLQuery implements Cloneable {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT ?proj WHERE {\n ");
+		sb.append("SELECT DISTINCT ?proj WHERE {\n ");
 		for (String constraint : constraintTriples) {
 			sb.append(constraint + " \n");
 		}
@@ -85,13 +88,12 @@ public class SPARQLQuery implements Cloneable {
 			sb.append("FILTER (" + filterString + ").\n ");
 		}
 		for (String variable : filterBifContains.keySet()) {
-			sb.append(variable + " <http://dbpedia.org/ontology/abstract> ?abstract" + variable.replace("?", "") + ".\n ");
 			sb.append("FILTER (");
 			sb.append("<bif:contains>(?abstract" + variable.replace("?", "") + ",\"");
 			ArrayList<String> list = Lists.newArrayList(filterBifContains.get(variable));
 			for (int i = 0; i < list.size(); i++) {
 				sb.append(list.get(i));
-				if (i + 1 < filterBifContains.get(variable).size()) {
+				if (i + 1 < list.size()) {
 					sb.append(" and ");
 				}
 			}

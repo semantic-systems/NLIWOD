@@ -100,14 +100,10 @@ public class SPARQLQueryBuilder {
 						if (!tmp.getAnnotations().isEmpty()) {
 							SPARQLQuery variant1 = (SPARQLQuery) query.clone();
 							variant1.addFilterOverAbstractsContraint("?proj", tmp.label, variant1);
-							// variant1.addFilter("<bif:contains>(?proj,\"" +
-							// tmp.label + "\")");
 							sb.add(variant1);
 
 							SPARQLQuery variant2 = (SPARQLQuery) query.clone();
-							variant2.addFilterOverAbstractsContraint("?const", tmp.label, variant1);
-							// variant2.addFilter("<bif:contains>(?const,\"" +
-							// tmp.label + "\")");
+							variant2.addFilterOverAbstractsContraint("?const", tmp.label, variant2);
 							sb.add(variant2);
 						}
 					}
@@ -129,13 +125,9 @@ public class SPARQLQueryBuilder {
 					for (SPARQLQuery query : queryStrings) {
 						SPARQLQuery variant1 = (SPARQLQuery) query.clone();
 						variant1.addFilterOverAbstractsContraint("?proj", tmp.label, variant1);
-						// variant1.addFilter("<bif:contains>(?proj,\"" +
-						// tmp.label + "\")");
 						sb.add(variant1);
 						SPARQLQuery variant2 = (SPARQLQuery) query.clone();
 						variant2.addFilterOverAbstractsContraint("?const", tmp.label, variant2);
-						// variant1.addFilter("<bif:contains>(?const,\"" +
-						// tmp.label + "\")");
 						sb.add(variant2);
 					}
 				} else {
