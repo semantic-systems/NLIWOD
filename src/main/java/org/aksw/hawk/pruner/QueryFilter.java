@@ -1,15 +1,18 @@
 /**
  * 
  */
-package org.aksw.hawk.filtering;
+package org.aksw.hawk.pruner;
 
 import java.util.Set;
+
+import org.aksw.hawk.querybuilding.SPARQLQuery;
 
 /**
  * 
  * @author Lorenz Buehmann
  *
  */
+//FIXME convert other query filter to implement this interface
 public interface QueryFilter {
 
 	/**
@@ -18,5 +21,6 @@ public interface QueryFilter {
 	 * @param sparqlQueries the set of SPARQL queries
 	 * @return a filtered set of SPARQL queries
 	 */
-	Set<String> filter(Set<String> sparqlQueries);
+	Set<SPARQLQuery>  filter(Set<SPARQLQuery>  sparqlQueries);
+
 }

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.nlp.MutableTreeNode;
+import org.aksw.hawk.pruner.DisjointnessBasedQueryFilter;
 import org.aksw.hawk.pruner.GraphNonSCCPruner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class SPARQLQueryBuilder {
+	int numberOfOverallQueriesExecuted=0;
 	Logger log = LoggerFactory.getLogger(SPARQLQueryBuilder.class);
 	SPARQLQueryBuilder_ProjectionPart projection;
 	SPARQLQueryBuilder_RootPart root;
@@ -31,13 +33,17 @@ public class SPARQLQueryBuilder {
 			Set<SPARQLQuery> queryStrings = projection.buildProjectionPart(this, q);
 			queryStrings = root.buildRootPart(queryStrings, q);
 			queryStrings = buildConstraintPart(queryStrings, q);
+
 			//Pruning
-			GraphNonSCCPruner gSCCPruner = new GraphNonSCCPruner();
 			log.info("Number of Queries before pruning: " + queryStrings.size());
+			GraphNonSCCPruner gSCCPruner = new GraphNonSCCPruner();
+			DisjointnessBasedQueryFilter filter = new DisjointnessBasedQueryFilter(sparql.qef);
+			
+			queryStrings  = filter.filter(queryStrings);
 			queryStrings = gSCCPruner.prune(queryStrings);
+			log.info("Number of Queries: " + queryStrings.size());
 			
 			int i = 0;
-			log.info("Number of Queries: " + queryStrings.size());
 			for (SPARQLQuery query : queryStrings) {
 				if (queryHasBoundVariables(query)) {
 					log.debug(i++ + "/" + queryStrings.size() + "= " + query.toString());
@@ -45,6 +51,7 @@ public class SPARQLQueryBuilder {
 					if (!answerSet.isEmpty()) {
 						answer.put(query.toString(), answerSet);
 					}
+					numberOfOverallQueriesExecuted++;
 				}
 			}
 		} catch (CloneNotSupportedException e) {
@@ -54,6 +61,7 @@ public class SPARQLQueryBuilder {
 		} finally {
 			System.gc();
 		}
+		log.info("Number of sofar executed queries: "+numberOfOverallQueriesExecuted); 
 		return answer;
 	}
 

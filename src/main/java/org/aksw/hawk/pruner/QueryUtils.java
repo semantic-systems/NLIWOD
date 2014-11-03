@@ -1,4 +1,4 @@
-package org.aksw.hawk.filtering;
+package org.aksw.hawk.pruner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
