@@ -1,6 +1,71 @@
 <?xml version="1.0" ?>
 <dataset id="qald-4_hybrid_train">
-<question answertype="resource" id="6" aggregation="false"
+	<question answertype="resource" id="18" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Which birds are protected under the National Parks and Wildlife Act?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?uri 
+WHERE {
+	?uri rdf:type dbo:Bird .	
+	?uri text:"protected under" text:"National Parks and Wildlife Act".
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Australian_Shelduck</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Chestnut_Teal</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Bar-shouldered_Dove</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Black-faced_Cuckoo-shrike</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Yellow_Thornbill</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Australasian_Shoveler</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="9" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Which writers had influenced the philosopher that refused a Nobel Prize?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?uri 
+WHERE {
+        ?x rdf:type dbo:Philosopher .
+        ?x text:"refuse" text:"Nobel Prize" .
+        ?x dbo:influencedBy ?uri .
+        ?uri rdf:type dbo:Writer .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Gustave_Flaubert</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Fyodor_Dostoyevsky</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Voltaire</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Louis-Ferdinand_Céline</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/John_Dos_Passos</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="6" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Where did the first man in space die?]]></string>
 		<pseudoquery><![CDATA[
@@ -294,7 +359,7 @@ WHERE {
 				<uri>http://dbpedia.org/resource/Yellow_Thornbill</uri>
 			</answer>
 			<answer>
-				<uri>http://dbpedia.org/resource/Australian_Shelduck</uri>
+				<uri>http://dbpedia.org/resource/Australasian_Shoveler</uri>
 			</answer>
 		</answers>
 	</question>
@@ -376,38 +441,7 @@ WHERE {
 		</answers>
 	</question>
 
-	<question answertype="resource" id="9" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Which writers had influenced the philosopher that refused a Nobel Prize?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT DISTINCT ?uri 
-WHERE {
-        ?x rdf:type dbo:Philosopher .
-        ?x text:"refuse" text:"Nobel Prize" .
-        ?x dbo:influencedBy ?uri .
-        ?uri rdf:type dbo:Writer .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Gustave_Flaubert</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Fyodor_Dostoyevsky</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Voltaire</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Louis-Ferdinand_Céline</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/John_Dos_Passos</uri>
-			</answer>
-		</answers>
-	</question>
+
 	<question answertype="resource" id="8" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Which members of the Wu-Tang Clan took their stage name from a movie?]]></string>
@@ -468,7 +502,7 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-	
+
 	<question answertype="resource" id="10" aggregation="false"
 		onlydbo="false">
 		<string lang="en"><![CDATA[Under which king did the British prime minister that signed the Munich agreement serve?]]></string>

@@ -153,7 +153,7 @@ public class DisjointnessBasedQueryFilter implements QueryFilter {
 				// the types of the subject
 				for (Triple tp : outgoingTriplePatterns) {
 					Node predicate = tp.getPredicate();
-					if (predicate.isURI()) {
+					if (predicate.isURI()&&!predicate.toString().equals("http://dbpedia.org/ontology/abstract")) {
 						Set<Node> domain = getDomain(predicate.getURI());
 						if (conflicts(subjectTypes, domain)) {
 							logger.debug("Domain of " + predicate + " does not match types " + subjectTypes);
