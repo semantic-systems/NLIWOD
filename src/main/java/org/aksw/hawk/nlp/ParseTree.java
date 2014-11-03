@@ -22,28 +22,38 @@ import com.clearnlp.tokenization.AbstractTokenizer;
  * 
  */
 public class ParseTree {
-	//TODO find the point where the performance is lost here
-	Logger log = LoggerFactory.getLogger(ParseTree.class);
+	// TODO find the point where the performance is lost here
+	static Logger log = LoggerFactory.getLogger(ParseTree.class);
 
-	final String language = AbstractReader.LANG_EN;
-	final String modelType = "general-en";
+	final static String language = AbstractReader.LANG_EN;
+	final static String modelType = "general-en";
 
-	private AbstractComponent[] components;
-	private AbstractTokenizer tokenizer;
+	private static AbstractTokenizer tokenizer = NLPGetter.getTokenizer(language);
+	private static AbstractComponent tagger;
+	private static AbstractComponent parser;
+	private static AbstractComponent identifier;
+	private static AbstractComponent classifier;
+	private static AbstractComponent labeler;
+
+	private static AbstractComponent[] components;
+
+	protected static synchronized void initialize() {
+		if (components == null) {
+			try {
+				tagger = NLPGetter.getComponent(modelType, language, NLPMode.MODE_POS);
+				parser = NLPGetter.getComponent(modelType, language, NLPMode.MODE_DEP);
+				identifier = NLPGetter.getComponent(modelType, language, NLPMode.MODE_PRED);
+				classifier = NLPGetter.getComponent(modelType, language, NLPMode.MODE_ROLE);
+				labeler = NLPGetter.getComponent(modelType, language, NLPMode.MODE_SRL);
+				components = new AbstractComponent[] { tagger, parser, identifier, classifier, labeler };
+			} catch (IOException e) {
+				log.error(e.getMessage(), e);
+			}
+		}
+	}
 
 	public ParseTree() {
-		try {
-			this.tokenizer = NLPGetter.getTokenizer(language);
-			AbstractComponent tagger = NLPGetter.getComponent(modelType, language, NLPMode.MODE_POS);
-			AbstractComponent parser = NLPGetter.getComponent(modelType, language, NLPMode.MODE_DEP);
-			AbstractComponent identifier = NLPGetter.getComponent(modelType, language, NLPMode.MODE_PRED);
-			AbstractComponent classifier = NLPGetter.getComponent(modelType, language, NLPMode.MODE_ROLE);
-			AbstractComponent labeler = NLPGetter.getComponent(modelType, language, NLPMode.MODE_SRL);
-
-			this.components = new AbstractComponent[] { tagger, parser, identifier, classifier, labeler };
-		} catch (IOException e) {
-			log.error("IO Error while initializing ParseTree", e);
-		}
+		initialize();
 	}
 
 	public DEPTree process(Question q) {

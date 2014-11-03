@@ -1,10 +1,10 @@
 package org.aksw.hawk.index;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.Document;
@@ -106,8 +106,12 @@ public class DBOIndex {
 	private void index() {
 		try {
 			Model dbpedia = ModelFactory.createDefaultModel();
-			InputStream url = new FileInputStream("resources/dbpedia_3.9.owl");
-			dbpedia.read(url, "RDF/XML");
+			Properties prop = new Properties();
+			InputStream input = getClass().getClassLoader().getResourceAsStream("hawk.properties");
+			prop.load(input);
+			String file = prop.getProperty("owl");
+
+			dbpedia.read(file, "RDF/XML");
 			StmtIterator stmts = dbpedia.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();

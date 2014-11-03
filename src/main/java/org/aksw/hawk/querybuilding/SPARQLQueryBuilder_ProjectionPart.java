@@ -33,12 +33,15 @@ public class SPARQLQueryBuilder_ProjectionPart {
 						// is either from Where or Who
 						if (bottom.getAnnotations().size() > 0) {
 							for (String annotation : bottom.getAnnotations()) {
-								//TODO probably here is a bug 
+								// TODO probably here is a bug
 								queries.add(new SPARQLQuery("?proj a <" + annotation + ">."));
 								// TODO add super class,e.g., City -> Settlement
 							}
 							// TODO cities like http://dbpedia.org/page/Kirzhach are not annotated as db-owl:Place
 							queries.add(new SPARQLQuery("?proj a ?type."));
+							// need to add this due to Kirzhach which is in DBpedia 3.9 not typed, not even as db-owl:Place
+							// so we leaf out the urgent generation of a type information
+							queries.add(new SPARQLQuery());
 						} else {
 							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 						}
@@ -60,6 +63,16 @@ public class SPARQLQueryBuilder_ProjectionPart {
 						// combined nouns are lists of abstracts containing does words, i.e., type constraints
 						if (bottom.getAnnotations().size() > 0) {
 							SPARQLQuery queryString = new SPARQLQuery("?proj ?p ?o.");
+							queryString.addFilter("proj", bottom.getAnnotations());
+							queries.add(queryString);
+							queryString = new SPARQLQuery("?proj ?p ?o.");
+							queryString.addFilter("o", bottom.getAnnotations());
+							queries.add(queryString);
+							// IMPORTANT if tree has not the projection variable in the left most path the projection variable could be on the right side and thus in case of not inverse properties we need to turn around this logic
+							queryString = new SPARQLQuery("?o ?p ?proj.");
+							queryString.addFilter("o", bottom.getAnnotations());
+							queries.add(queryString);
+							queryString = new SPARQLQuery("?o ?p ?proj.");
 							queryString.addFilter("proj", bottom.getAnnotations());
 							queries.add(queryString);
 						} else {

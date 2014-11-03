@@ -1,11 +1,8 @@
 package org.aksw.hawk.querybuilding;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
@@ -14,32 +11,43 @@ import org.aksw.jena_sparql_api.cache.extra.CacheEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheExImpl;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
+import org.aksw.jena_sparql_api.pagination.core.QueryExecutionFactoryPaginated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class SPARQL {
 	Logger log = LoggerFactory.getLogger(SPARQL.class);
 	// TODO treshold can be increased by introducing prefixes
-	int sizeOfFilterThreshold = 50;
+	int sizeOfFilterThreshold = 25;
 	QueryExecutionFactory qef;
 
 	public SPARQL() {
 		try {
-			// AKSW SPARQL API call
-			// QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql", "http://dbpedia.org");
-			qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
-			// QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/", "http://dbpedia.org");
-			// qef = new QueryExecutionFactoryDelay(qef, 2000); --> No reason to be nice
 			long timeToLive = 30l * 24l * 60l * 60l * 1000l;
 			CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
 			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
+			// AKSW SPARQL API call
+			 qef = new QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql","http://dbpedia.org/");
+
+//			qef = new QueryExecutionFactoryHttp("http://localhost:8890/sparql", "http://dbpedia.org/");
+			//			qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql","http://dbpedia.org");
+
+//			 qef = new QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql","http://dbpedia.org");
+//			qef = new QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/", "http://dbpedia.org");
+			// qef = new
+			// QueryExecutionFactoryHttp("http://vtentacle.techfak.uni-bielefeld.de:443/sparql",
+			// "http://dbpedia.org");
+			// --> No reason to be nice
+			// qef = new QueryExecutionFactoryDelay(qef, 2000);
 			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
+			qef = new QueryExecutionFactoryPaginated(qef, 10000);
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error("Could not create SPARQL interface! ", e);
 		}
@@ -51,105 +59,68 @@ public class SPARQL {
 	 * @param query
 	 * @return
 	 */
-	public Set<RDFNode> sparql(String query) {
-		ArrayList<String> queries = Lists.newArrayList();
+	public Set<RDFNode> sparql(SPARQLQuery query) {
 		Set<RDFNode> set = Sets.newHashSet();
-		QueryExecution qexec = null;
-		try {
-			if (query.contains("FILTER")) {
-				if (query != null) {
-					queries = splitLongFilterSPARQL(query);
-				}
-			} else {
-				queries.add(query);
-			}
-			for (String q : queries) {
-				QueryExecution qe = qef.createQueryExecution(q);
-				ResultSet results = qe.execSelect();
-
-				while (results.hasNext()) {
-					set.add(results.next().get("?proj"));
-				}
-			}
-		} catch (Exception e) {
-			log.error("Query: "+ addLinebreaks(query,200),e);
-
-		} finally {
-			if (qexec != null) {
-				qexec.close();
-			}
+		if (query.toString().length() > 100000) {
+			sparqlWithFilterOnServerSite(query, set);
+		} else {
+			sparqlShortQueriesServerSided(query, set);
 		}
+//		log.info("Size of result set: " + set.size());
 		return set;
 	}
 
-	private String addLinebreaks(String input, int maxLineLength) {
-		StringTokenizer tok = new StringTokenizer(input, " ");
-		StringBuilder output = new StringBuilder(input.length());
-		int lineLen = 0;
-		while (tok.hasMoreTokens()) {
-			String word = tok.nextToken();
-			if (lineLen + word.length() > maxLineLength) {
-				output.append("\n");
-				lineLen = 0;
+	private void sparqlShortQueriesServerSided(SPARQLQuery query, Set<RDFNode> set) {
+		QueryExecution qe = qef.createQueryExecution(query.toString());
+		if (qe != null) {
+			ResultSet results = qe.execSelect();
+			while (results.hasNext()) {
+				set.add(results.next().get("proj"));
 			}
-			output.append(word + " ");
-			lineLen += word.length();
 		}
-		return output.toString();
 	}
 
-	public ArrayList<String> splitLongFilterSPARQL(String query, int threshold) {
-		this.sizeOfFilterThreshold = threshold;
-		return splitLongFilterSPARQL(query);
-
-	}
-
-	// TODO currently only ?proj gets splitted but not other long filter.
-	// think about the right semantics to do so
-	
-	//TODO build this on top of the new structure of SPARQLQuery object
-	private ArrayList<String> splitLongFilterSPARQL(String query) {
-		if(query.contains("production")){
-			System.out.println();
-		}
-		ArrayList<String> queries = Lists.newArrayList();
-		query = query.replaceAll("\n", "");
-		// watch out in URIs could be two closing brackets
-		Pattern pattern = Pattern.compile(".+FILTER\\s*\\(\\s*\\?[a-z]+ IN\\s*\\((.+)\\)\\).+");
-		Matcher m = pattern.matcher(query);
-		log.debug("FILTER Pattern found: " + (m.find() ? true : query));
-		String group = m.group(1);
-		query = query.replace(group, "XXAKSWXX");
-
-		String[] uris = group.split(", ");
-		log.debug("Size of Filter"+ uris.length);
-		for (int i = 0; i < uris.length;) {
-			String filter = "";
-			for (int sizeOfFilter = 0; sizeOfFilter < sizeOfFilterThreshold && sizeOfFilter + i < uris.length; sizeOfFilter++) {
-				filter += uris[i + sizeOfFilter].trim();
-				if (sizeOfFilter < (sizeOfFilterThreshold - 1) && sizeOfFilter + i < (uris.length - 1)) {
-					filter += ", ";
+	/**
+	 * using the AKSW library for wrapping Jena API
+	 * 
+	 * @param query
+	 * @return
+	 */
+	private void sparqlWithFilterOnServerSite(SPARQLQuery query, Set<RDFNode> set) {
+		QueryExecution qe = qef.createQueryExecution(query.toStringWithoutFilter());
+		if (qe != null) {
+			ResultSet results = qe.execSelect();
+			while (results.hasNext()) {
+				QuerySolution next = results.next();
+				boolean addToFinalSet = true;
+				for (String var : results.getResultVars()) {
+					RDFNode valueFromEndpoint = next.get(var);
+					List<String> valuesFromGeneratedQuery = query.filter.get(var);
+					// filter current URI with URI list from generated query
+					if (!valuesFromGeneratedQuery.contains(valueFromEndpoint.toString())) {
+						addToFinalSet = false;
+						break;
+					}
+				}
+				if (addToFinalSet) {
+					set.add(next.get("proj"));
 				}
 			}
-			i += sizeOfFilterThreshold;
-			String newQuery = query.replace("XXAKSWXX", filter);
-			queries.add(newQuery);
 		}
-		return queries;
 	}
 
 	public static void main(String args[]) {
-		String query = "SELECT ?proj WHERE {?proj ?p ?o. "
-				+ "FILTER (?proj IN (<http://(1)> , <http://2,3> , <http://3> , <http://4> , <http://5>, <http://6> , <http://61> , <http://62> , <http://7>)). "
-				+ "FILTER (?proj IN (<http://(1A)> , <http://2,3> , <http://3> , <http://4B> , <http://5B>, <http://61> , <http://62> , <http://6(X(XY))>)). "
-				+ "FILTER (?s IN ( <http://4Bs> , <http://5Bs>, <http://6> , <http://7B>   )). "
-				+ " ?s ?p ?oo."
-				+ "}";
-
 		SPARQL sqb = new SPARQL();
-		ArrayList<String> i = sqb.splitLongFilterSPARQL(query, 2);
-		for (String q : i) {
-			System.out.println(q);
+
+		SPARQLQuery query = new SPARQLQuery();
+		query.addConstraint("?proj a <http://dbpedia.org/ontology/Cleric>.");
+//		query.addConstraint("?proj ?p ?const.");
+//		query.addFilter("proj", Lists.newArrayList("http://dbpedia.org/resource/Pope_John_Paul_I", "http://dbpedia.org/resource/Pope_John_Paul_II"));
+//		query.addFilter("const", Lists.newArrayList("http://dbpedia.org/resource/Canale_d'Agordo"));
+
+		Set<RDFNode> set = sqb.sparql(query);
+		for (RDFNode item : set) {
+			System.out.println(item);
 		}
 	}
 }

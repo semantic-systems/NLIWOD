@@ -17,6 +17,10 @@ import org.aksw.hawk.index.DBAbstractsIndex;
 import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
+import org.aksw.hawk.nlp.spotter.MultiSpotter;
+import org.aksw.hawk.nlp.spotter.Spotlight;
+import org.aksw.hawk.nlp.spotter.TagMe;
+import org.aksw.hawk.nlp.spotter.WikipediaMiner;
 import org.aksw.hawk.pruner.Pruner;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
@@ -30,12 +34,12 @@ public class Pipeline {
 	static Logger log = LoggerFactory.getLogger(Pipeline.class);
 	String dataset;
 	QALD_Loader datasetLoader;
-	ASpotter nerdModule;
-	CachedParseTree cParseTree;
-	Pruner pruner;
-	SentenceToSequence sentenceToSequence;
-	Annotater annotater;
-	SPARQLQueryBuilder queryBuilder;
+	public ASpotter nerdModule;
+	public CachedParseTree cParseTree;
+	public Pruner pruner;
+	public SentenceToSequence sentenceToSequence;
+	public Annotater annotater;
+	public SPARQLQueryBuilder queryBuilder;
 
 	void run() throws IOException {
 		// 1. read in Questions from QALD 4
@@ -46,43 +50,46 @@ public class Pipeline {
 		double counter = 0;
 		Set<EvalObj> evals = Sets.newHashSet();
 		for (Question q : questions) {
-			String question = q.languageToQuestion.get("en");
 			if (q.answerType.equals("resource")) {
 				if (q.onlydbo) {
 					if (!q.aggregation) {
-							Map<String, Set<RDFNode>> answer = calculateSPARQLRepresentation(q);
+						String question = q.languageToQuestion.get("en");
+						Map<String, Set<RDFNode>> answer = calculateSPARQLRepresentation(q);
 
-							double fmax = 0;
-							double pmax = 0;
-							double rmax = 0;
-							for (String query : answer.keySet()) {
-								Set<RDFNode> systemAnswers = answer.get(query);
-								// 11. Compare to set of resources from benchmark
-								double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
-								double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-								double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-								if (fMeasure > fmax) {
-									log.info(query.substring(0, Math.min(1000, query.length())));
-									log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
-									fmax = fMeasure;
-									pmax = precision;
-									rmax = recall;
-								}
+						double fmax = 0;
+						double pmax = 0;
+						double rmax = 0;
+						for (String query : answer.keySet()) {
+							Set<RDFNode> systemAnswers = answer.get(query);
+							// 11. Compare to set of resources from benchmark
+							double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+							double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+							double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+							if (fMeasure > fmax) {
+								log.info(query.substring(0, Math.min(1000, query.length())));
+								log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
+								fmax = fMeasure;
+								pmax = precision;
+								rmax = recall;
 							}
-							evals.add(new EvalObj(question,fmax, pmax, rmax, "Assuming Optimal Ranking Function, Spotter: " + nerdModule.toString()));
-							overallf += fmax;
-							overallp += pmax;
-							overallr += rmax;
-							counter++;
-							log.info("########################################################");
+						}
+						evals.add(new EvalObj(question, fmax, pmax, rmax, "Assuming Optimal Ranking Function, Spotter: " + nerdModule.toString()));
+						overallf += fmax;
+						overallp += pmax;
+						overallr += rmax;
+						counter++;
+						log.info("########################################################");
 					} else {
-						evals.add(new EvalObj(question,0, 0, 0, "This question askes for aggregation (ASK)"));
+						// evals.add(new EvalObj(question,0, 0, 0,
+						// "This question askes for aggregation (ASK)"));
 					}
 				} else {
-					evals.add(new EvalObj(question,0, 0, 0, "This question askes for yago types"));
+					// evals.add(new EvalObj(question,0, 0, 0,
+					// "This question askes for yago types"));
 				}
 			} else {
-				evals.add(new EvalObj(question,0, 0, 0, "This is no question asking for resources only"));
+				// evals.add(new EvalObj(question,0, 0, 0,
+				// "This is no question asking for resources only"));
 			}
 		}
 		write(evals);
@@ -107,7 +114,8 @@ public class Pipeline {
 		}
 	}
 
-	private Map<String, Set<RDFNode>> calculateSPARQLRepresentation(Question q) {
+	public Map<String, Set<RDFNode>> calculateSPARQLRepresentation(Question q) {
+		log.info(q.languageToQuestion.get("en"));
 		// 2. Disambiguate parts of the query
 		q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
 
@@ -115,20 +123,18 @@ public class Pipeline {
 		q.tree = cParseTree.process(q);
 		// noun combiner, decrease #nodes in the DEPTree decreases
 		sentenceToSequence.combineSequences(q);
-		// 4. Apply pruning rules
 
+		// 4. Apply pruning rules
 		q.tree = pruner.prune(q);
 
 		// 5. Annotate tree
-		log.info(q.languageToQuestion.get("en"));
 		annotater.annotateTree(q);
-		// log.debug(q.tree.toString());
+		log.info(q.tree.toString());
 
 		// 6. Build queries via subqueries
 		Map<String, Set<RDFNode>> answer = queryBuilder.build(q);
 		return answer;
 	}
-
 
 	public static void main(String args[]) throws IOException {
 
@@ -139,7 +145,16 @@ public class Pipeline {
 
 			controller.dataset = new File(file).getAbsolutePath();
 			controller.datasetLoader = new QALD_Loader();
+			// ASpotter fox = new Fox();
+			// ASpotter spot = new Spotlight();
+			// ASpotter tagMe = new TagMe();
+			// ASpotter wiki = new WikipediaMiner();
+			// controller.nerdModule = new MultiSpotter(fox, tagMe, wiki, spot);
 			controller.nerdModule = new Fox();
+			// controller.nerdModule = new Spotlight();
+			// controller.nerdModule =new TagMe();
+			// controller.nerdModule = new WikipediaMiner();
+
 			controller.cParseTree = new CachedParseTree();
 
 			AbstractIndexCache cache = new AbstractIndexCache();

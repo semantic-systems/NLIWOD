@@ -43,19 +43,19 @@ public class SPARQLQuery implements Cloneable {
 		SPARQLQuery q = new SPARQLQuery();
 		q.constraintTriples = (ArrayList<String>) this.constraintTriples.clone();
 		q.filter = Maps.newHashMap();
-		for(String key:  this.filter.keySet()){
+		for (String key : this.filter.keySet()) {
 			q.filter.put(key, Lists.newArrayList(this.filter.get(key)));
 		}
 		return q;
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT ?proj WHERE {\n ");
 		for (String constraint : constraintTriples) {
 			sb.append(constraint + " ");
 		}
-
 		for (String proj : filter.keySet()) {
 			if (!filter.get(proj).isEmpty()) {
 				sb.append("FILTER (?" + proj + " IN ( ");
@@ -64,6 +64,25 @@ public class SPARQLQuery implements Cloneable {
 				}
 				sb.deleteCharAt(sb.lastIndexOf(",")).append(")).");
 			}
+		}
+		sb.append("}");
+		return sb.toString();
+	}
+
+	public String toStringWithoutFilter() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT ");
+		if (filter.isEmpty()) {
+			sb.append("?proj ");
+		} else {
+			for (String projVariable : filter.keySet()) {
+				sb.append("?" + projVariable + " ");
+
+			}
+		}
+		sb.append(" WHERE {\n ");
+		for (String constraint : constraintTriples) {
+			sb.append(constraint + " ");
 		}
 		sb.append("}");
 		return sb.toString();
