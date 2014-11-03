@@ -5,7 +5,6 @@ import java.util.Queue;
 import java.util.Stack;
 
 import org.aksw.autosparql.commons.qald.Question;
-import org.aksw.hawk.index.DBAbstractsIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,11 +15,11 @@ import com.google.common.collect.Queues;
 
 public class SentenceToSequence {
 	Logger log = LoggerFactory.getLogger(SentenceToSequence.class);
-	DBAbstractsIndex index;
+//	DBAbstractsIndex index;
 
-	public SentenceToSequence(DBAbstractsIndex index) {
-		this.index = index;
-	}
+//	public SentenceToSequence(DBAbstractsIndex index) {
+//		this.index = index;
+//	}
 
 	// combine noun phrases
 	// TODO improve noun phrases e.g. combine following nulls, i.e., URLs to get

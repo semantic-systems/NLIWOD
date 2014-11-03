@@ -1,31 +1,50 @@
 package org.aksw.hawk.querybuilding;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 import org.aksw.autosparql.commons.qald.Question;
-import org.aksw.hawk.index.DBAbstractsIndex;
 import org.aksw.hawk.index.DBOIndex;
 import org.aksw.hawk.index.IndexDBO_classes;
 import org.aksw.hawk.index.IndexDBO_properties;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
+import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
+import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
+import org.aksw.jena_sparql_api.cache.extra.CacheCoreH2;
+import org.aksw.jena_sparql_api.cache.extra.CacheEx;
+import org.aksw.jena_sparql_api.cache.extra.CacheExImpl;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
+import org.aksw.jena_sparql_api.pagination.core.QueryExecutionFactoryPaginated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.ResultSet;
 
 public class Annotater {
-//TODO refactor class and add addAll!!! to mutabletreenode
+	// TODO refactor class and add addAll!!! to mutabletreenode
 	Logger log = LoggerFactory.getLogger(Annotater.class);
 	IndexDBO_classes classesIndex = new IndexDBO_classes();
 	IndexDBO_properties propertiesIndex = new IndexDBO_properties();
 	DBOIndex dboIndex = new DBOIndex();
-	DBAbstractsIndex index;
+	QueryExecutionFactory qef;
 
-	public Annotater( DBAbstractsIndex index) {
-		this.index =  index;
+	public Annotater() {
+		long timeToLive = 30l * 24l * 60l * 60l * 1000l;
+		try {
+			CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
+			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
+			// FIXME do not use qef here better use common sparql object
+			this.qef = new QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql", "http://dbpedia.org/");
+			this.qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
+			this.qef = new QueryExecutionFactoryPaginated(qef, 10000);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void annotateTree(Question q) {
@@ -74,10 +93,7 @@ public class Annotater {
 					}
 				}
 			} else if (posTag.matches("CombinedNN") && tmp.getAnnotations().isEmpty()) {
-				List<String> uris = index.listAbstractsContaining(label);
-				for (String resourceURL : uris) {
-					tmp.addAnnotation(resourceURL);
-				}
+				addAbstractsContainingLabel("?proj", tmp, label);
 			} else if (tmp.getAnnotations().isEmpty() && (posTag.matches("ADD") || posTag.matches("VB(.)*"))) {
 				// expected behaviour
 			} else {
@@ -85,6 +101,21 @@ public class Annotater {
 			}
 			for (MutableTreeNode child : tmp.getChildren()) {
 				stack.push(child);
+			}
+		}
+	}
+
+	// FIXME think about whether this is really needed, i.e. whether
+	// CombinedNouns need to be materialized here
+	private void addAbstractsContainingLabel(String variable, MutableTreeNode tmp, String label) {
+
+		SPARQLQuery q = new SPARQLQuery();
+		q.addFilterOverAbstractsContraint(variable, label, q);
+		QueryExecution qe = qef.createQueryExecution(q.toString());
+		if (qe != null && q.toString() != null) {
+			ResultSet results = qe.execSelect();
+			while (results.hasNext()) {
+				tmp.addAnnotation(results.next().get("proj").asResource().toString());
 			}
 		}
 	}
@@ -150,10 +181,7 @@ public class Annotater {
 					}
 				} else if (posTag.equals("CombinedNN")) {
 					// full text lookup
-					List<String> uris = index.listAbstractsContaining(label);
-					for (String resourceURL : uris) {
-						tmp.addAnnotation(resourceURL);
-					}
+					addAbstractsContainingLabel("?proj", tmp, label);
 				} else if (posTag.matches("NN(.)*")) {
 					// DBO look up
 					if (posTag.matches("NNS")) {
@@ -179,7 +207,7 @@ public class Annotater {
 				// parse trees where the root is a NN(.)*
 				if (posTag.matches("NN(.)*")) {
 					// TODO ask actress also in dbo owl
-					if (classesIndex.search(label).size() > 0 || propertiesIndex.search(label).size() > 0 ) {
+					if (classesIndex.search(label).size() > 0 || propertiesIndex.search(label).size() > 0) {
 						ArrayList<String> uris = classesIndex.search(label);
 						for (String resourceURL : uris) {
 							tmp.addAnnotation(resourceURL);
@@ -190,10 +218,8 @@ public class Annotater {
 						}
 					} else {
 						// full text lookup
-						List<String> uris = index.listAbstractsContaining(label);
-						for (String resourceURL : uris) {
-							tmp.addAnnotation(resourceURL);
-						}
+						addAbstractsContainingLabel("?proj", tmp, label);
+
 						// since a full text lookup takes place we assume
 						// hereafter there will be a FILTER clause needed which
 						// can only be handled it annotated as CombinedNoun

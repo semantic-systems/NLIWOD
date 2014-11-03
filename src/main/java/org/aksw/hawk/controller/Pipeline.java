@@ -13,14 +13,9 @@ import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.cache.AbstractIndexCache;
 import org.aksw.hawk.cache.CachedParseTree;
-import org.aksw.hawk.index.DBAbstractsIndex;
 import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
-import org.aksw.hawk.nlp.spotter.MultiSpotter;
-import org.aksw.hawk.nlp.spotter.Spotlight;
-import org.aksw.hawk.nlp.spotter.TagMe;
-import org.aksw.hawk.nlp.spotter.WikipediaMiner;
 import org.aksw.hawk.pruner.Pruner;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
@@ -66,7 +61,7 @@ public class Pipeline {
 							double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
 							double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
 							if (fMeasure > fmax) {
-								log.info(query.substring(0, Math.min(1000, query.length())));
+								log.info(query.toString());
 								log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
 								fmax = fMeasure;
 								pmax = precision;
@@ -158,10 +153,10 @@ public class Pipeline {
 			controller.cParseTree = new CachedParseTree();
 
 			AbstractIndexCache cache = new AbstractIndexCache();
-			DBAbstractsIndex index = new DBAbstractsIndex(cache);
-			controller.sentenceToSequence = new SentenceToSequence(index);
-			controller.queryBuilder = new SPARQLQueryBuilder(index);
-			controller.annotater = new Annotater(index);
+			// DBAbstractsIndex index = new DBAbstractsIndex(cache);
+			controller.sentenceToSequence = new SentenceToSequence();
+			controller.queryBuilder = new SPARQLQueryBuilder();
+			controller.annotater = new Annotater();
 
 			controller.pruner = new Pruner();
 			log.info("Run controller");
