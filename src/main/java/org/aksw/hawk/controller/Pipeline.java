@@ -132,10 +132,12 @@ public class Pipeline {
 	}
 
 	public static void main(String args[]) throws IOException {
-
+		
 		for (String file : new String[] { "resources/qald-4_hybrid_train.xml" }) { // ,"resources/qald-4_multilingual_train_withanswers.xml"
-			Pipeline controller = new Pipeline();
+//			for (String file : new String[] { "resources/qald-4_multilingual_test_withanswers.xml" }) { // ,"resources/qald-4_multilingual_train_withanswers.xml"
 
+			Pipeline controller = new Pipeline();
+//		
 			log.info("Configuring controller");
 
 			controller.dataset = new File(file).getAbsolutePath();

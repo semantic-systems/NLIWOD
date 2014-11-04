@@ -39,9 +39,10 @@ public class Annotater {
 			CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
 			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
 			// FIXME do not use qef here better use common sparql object
+			//FIXME reuse SPARQL from main method to lower the number of queries
 			this.qef = new QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql", "http://dbpedia.org/");
-			this.qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
-			this.qef = new QueryExecutionFactoryPaginated(qef, 10000);
+//			this.qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
+//			this.qef = new QueryExecutionFactoryPaginated(qef, 10000);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -108,15 +109,18 @@ public class Annotater {
 	// FIXME think about whether this is really needed, i.e. whether
 	// CombinedNouns need to be materialized here
 	private void addAbstractsContainingLabel(String variable, MutableTreeNode tmp, String label) {
-
 		SPARQLQuery q = new SPARQLQuery();
-		q.addFilterOverAbstractsContraint(variable, label, q);
-		QueryExecution qe = qef.createQueryExecution(q.toString());
-		if (qe != null && q.toString() != null) {
-			ResultSet results = qe.execSelect();
-			while (results.hasNext()) {
-				tmp.addAnnotation(results.next().get("proj").asResource().toString());
+		try {
+			q.addFilterOverAbstractsContraint(variable, label, q);
+			QueryExecution qe = qef.createQueryExecution(q.toString());
+			if (qe != null && q.toString() != null) {
+				ResultSet results = qe.execSelect();
+				while (results.hasNext()) {
+					tmp.addAnnotation(results.next().get("proj").asResource().toString());
+				}
 			}
+		} catch (Exception e) {
+			log.error("variable: " + variable + " , label: " + label + " query: " + q, e);
 		}
 	}
 

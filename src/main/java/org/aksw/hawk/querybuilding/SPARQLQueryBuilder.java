@@ -15,7 +15,7 @@ import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class SPARQLQueryBuilder {
-	int numberOfOverallQueriesExecuted=0;
+	int numberOfOverallQueriesExecuted = 0;
 	Logger log = LoggerFactory.getLogger(SPARQLQueryBuilder.class);
 	SPARQLQueryBuilder_ProjectionPart projection;
 	SPARQLQueryBuilder_RootPart root;
@@ -34,15 +34,23 @@ public class SPARQLQueryBuilder {
 			queryStrings = root.buildRootPart(queryStrings, q);
 			queryStrings = buildConstraintPart(queryStrings, q);
 
-			//Pruning
+			// Pruning
 			log.info("Number of Queries before pruning: " + queryStrings.size());
 			GraphNonSCCPruner gSCCPruner = new GraphNonSCCPruner();
+			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+			//FIXME disjointness killt die richtige antwort für philosopher
+			//ohne die filter werden mehr fragen richtig beantwortet aber das programm zerbricht!!!!!!!!!!!!
+			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+
 			DisjointnessBasedQueryFilter filter = new DisjointnessBasedQueryFilter(sparql.qef);
-			
-			queryStrings  = filter.filter(queryStrings);
+//FIXME influence of  pruner? 
+			queryStrings = filter.filter(queryStrings);
 			queryStrings = gSCCPruner.prune(queryStrings);
 			log.info("Number of Queries: " + queryStrings.size());
-			
+			for (SPARQLQuery qq : queryStrings) {
+				log.debug(qq.toString());
+			}
+
 			int i = 0;
 			for (SPARQLQuery query : queryStrings) {
 				if (queryHasBoundVariables(query)) {
@@ -61,7 +69,7 @@ public class SPARQLQueryBuilder {
 		} finally {
 			System.gc();
 		}
-		log.info("Number of sofar executed queries: "+numberOfOverallQueriesExecuted); 
+		log.info("Number of sofar executed queries: " + numberOfOverallQueriesExecuted);
 		return answer;
 	}
 
@@ -83,7 +91,13 @@ public class SPARQLQueryBuilder {
 		if (q.tree.getRoot().getChildren().size() == 2) {
 			MutableTreeNode tmp = q.tree.getRoot().getChildren().get(1);
 			while (tmp != null) {
-				log.info("Current node: " + tmp);
+				if (!sb.isEmpty()) {
+					//to be able to add to queries that have been created in the last iteration, i.e., nodes that come before this node in the constraint path
+					queryStrings = sb;
+				  sb = Sets.newHashSet();
+
+				}
+				log.debug("Current node in constraint part: " + tmp);
 				if (tmp.posTag.equals("ADD")) {
 					for (SPARQLQuery query : queryStrings) {
 						// GIVEN ?proj ?root ?const or ?const ?root ?proj

@@ -73,7 +73,12 @@ public class IndexDBO_classes {
 		try {
 			log.debug("\t start asking index...");
 
-			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE);
+			// FIXME distance evaluation should be done to reduce number of
+			// queries
+			// Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object),
+			// LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE);
+			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 0);
+
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
 
 			isearcher.search(q, collector);
@@ -110,14 +115,15 @@ public class IndexDBO_classes {
 			}
 
 			iwriter.commit();
-//			model = RDFDataMgr.loadModel("resources/yagoClassLabel.ttl");
-//			stmts = model.listStatements(null, RDFS.label, (RDFNode) null);
-//			while (stmts.hasNext()) {
-//				final Statement stmt = stmts.next();
-//				RDFNode label = stmt.getObject();
-//				addDocumentToIndex(stmt.getSubject(), "rdfs:label", label.asLiteral().getString());
-//			}
-//			iwriter.commit();
+			// model = RDFDataMgr.loadModel("resources/yagoClassLabel.ttl");
+			// stmts = model.listStatements(null, RDFS.label, (RDFNode) null);
+			// while (stmts.hasNext()) {
+			// final Statement stmt = stmts.next();
+			// RDFNode label = stmt.getObject();
+			// addDocumentToIndex(stmt.getSubject(), "rdfs:label",
+			// label.asLiteral().getString());
+			// }
+			// iwriter.commit();
 
 			iwriter.close();
 		} catch (IOException e) {

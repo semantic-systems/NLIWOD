@@ -102,7 +102,7 @@ public class SPARQLQuery implements Cloneable {
 		sb.append("}\n");
 		// FIXME quick fix for reducing processing time assuming result set is
 		// smaller than 10
-		sb.append("LIMIT 1000");
+		sb.append("LIMIT 12");
 		return sb.toString();
 	}
 }
