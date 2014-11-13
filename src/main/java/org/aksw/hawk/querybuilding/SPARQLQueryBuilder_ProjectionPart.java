@@ -63,17 +63,17 @@ public class SPARQLQueryBuilder_ProjectionPart {
 						// combined nouns are lists of abstracts containing does words, i.e., type constraints
 						if (bottom.getAnnotations().size() > 0) {
 							SPARQLQuery queryString = new SPARQLQuery("?proj ?p ?o.");
-							queryString.addFilterOverAbstractsContraint("?proj", bottom.label, queryString);
+							queryString.addFilterOverAbstractsContraint("?proj", bottom.label);
 							queries.add(queryString);
 							queryString = new SPARQLQuery("?proj ?p ?o.");
-							queryString.addFilterOverAbstractsContraint("?o", bottom.label, queryString);
+							queryString.addFilterOverAbstractsContraint("?o", bottom.label);
 							queries.add(queryString);
 							// IMPORTANT if tree has not the projection variable in the left most path the projection variable could be on the right side and thus in case of not inverse properties we need to turn around this logic
 							queryString = new SPARQLQuery("?o ?p ?proj.");
-							queryString.addFilterOverAbstractsContraint("?o", bottom.label, queryString);
+							queryString.addFilterOverAbstractsContraint("?o", bottom.label);
 							queries.add(queryString);
 							queryString = new SPARQLQuery("?o ?p ?proj.");
-							queryString.addFilterOverAbstractsContraint("?proj", bottom.label, queryString);
+							queryString.addFilterOverAbstractsContraint("?proj", bottom.label);
 							queries.add(queryString);
 						} else {
 							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
@@ -83,7 +83,7 @@ public class SPARQLQueryBuilder_ProjectionPart {
 						if (bottom.getAnnotations().size() > 0) {
 							for (SPARQLQuery existingQueries : queries) {
 								existingQueries.addConstraint("?proj ?p ?o.");
-								existingQueries.addFilterOverAbstractsContraint("?proj", bottom.label, existingQueries);
+								existingQueries.addFilterOverAbstractsContraint("?proj", bottom.label);
 							}
 						} else {
 							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
@@ -101,11 +101,11 @@ public class SPARQLQueryBuilder_ProjectionPart {
 					for (String predicates : top.getAnnotations()) {
 						if (bottom.getAnnotations().size() > 0) {
 							SPARQLQuery queryString = new SPARQLQuery("?proj <" + predicates + "> ?o.");
-							queryString.addFilterOverAbstractsContraint("?proj", bottom.label, queryString);
+							queryString.addFilterOverAbstractsContraint("?proj", bottom.label);
 							queries.add(queryString);
 
 							queryString = new SPARQLQuery("?o <" + predicates + "> ?proj.");
-							queryString.addFilterOverAbstractsContraint("?proj", bottom.label, queryString);
+							queryString.addFilterOverAbstractsContraint("?proj", bottom.label);
 							queries.add(queryString);
 						}
 					}
@@ -121,11 +121,11 @@ public class SPARQLQueryBuilder_ProjectionPart {
 					// or it stems from a full-text look up (+ reversing of the predicates)
 					if (top.getAnnotations().size() > 0) {
 						SPARQLQuery queryString = new SPARQLQuery("?proj ?p <" + bottom.label + ">.");
-						queryString.addFilterOverAbstractsContraint("?proj", top.label, queryString);
+						queryString.addFilterOverAbstractsContraint("?proj", top.label);
 						queries.add(queryString);
 
 						queryString = new SPARQLQuery("<" + bottom.label + "> ?p ?proj.");
-						queryString.addFilterOverAbstractsContraint("?proj", top.label, queryString);
+						queryString.addFilterOverAbstractsContraint("?proj", top.label);
 						queries.add(queryString);
 					}
 					i++;

@@ -28,8 +28,8 @@ public class SPARQLQuery implements Cloneable {
 		constraintTriples.add(constraint);
 	}
 
-	public void addFilterOverAbstractsContraint(String variable, String label, SPARQLQuery q) {
-		q.addConstraint(variable + " <http://dbpedia.org/ontology/abstract> ?abstract" + variable.replace("?", "") + ".");
+	public void addFilterOverAbstractsContraint(String variable, String label) {
+		addConstraint(variable + " <http://dbpedia.org/ontology/abstract> ?abstract" + variable.replace("?", "") + ".");
 		String[] whitespaceSeparatedLabel = label.split(" ");
 		// to search in a string with whitespaces like "Nobel Prize"
 		if (whitespaceSeparatedLabel.length > 1) {

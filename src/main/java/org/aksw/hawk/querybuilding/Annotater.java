@@ -111,7 +111,7 @@ public class Annotater {
 	private void addAbstractsContainingLabel(String variable, MutableTreeNode tmp, String label) {
 		SPARQLQuery q = new SPARQLQuery();
 		try {
-			q.addFilterOverAbstractsContraint(variable, label, q);
+			q.addFilterOverAbstractsContraint(variable, label);
 			QueryExecution qe = qef.createQueryExecution(q.toString());
 			if (qe != null && q.toString() != null) {
 				ResultSet results = qe.execSelect();

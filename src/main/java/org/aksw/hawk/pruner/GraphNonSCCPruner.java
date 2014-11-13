@@ -1,5 +1,6 @@
 package org.aksw.hawk.pruner;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
@@ -8,8 +9,10 @@ import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.hp.hpl.jena.query.ParameterizedSparqlString;
 
 public class GraphNonSCCPruner {
 	static Logger log = LoggerFactory.getLogger(GraphNonSCCPruner.class);
@@ -40,7 +43,15 @@ public class GraphNonSCCPruner {
 
 	public static void main(String args[]) {
 		// FIXME transform me to a UNIT test
-		// List<SPARQLQuery> queries = Lists.newArrayList();
+		Set<SPARQLQuery> queries = Sets.newHashSet();
+		SPARQLQuery query = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Writer>.");
+		query.addConstraint("?const a <http://dbpedia.org/ontology/Philosopher>. ");
+		query.addConstraint("?const <http://dbpedia.org/ontology/influencedBy> ?proj. ");
+		query.addConstraint("?const <http://dbpedia.org/ontology/abstract> ?abstractconst. ");
+		query.addFilterOverAbstractsContraint("?const", "Nobel Prize");
+		query.addFilterOverAbstractsContraint("?const", "refused");
+		System.out.println(query);
+		queries.add(query);
 		// String queryString =
 		// "SELECT ?a0 WHERE {?a0 a <http://dbpedia.org/ontology/City>. ?a1 <http://dbpedia.org/ontology/birthPlace> ?a0. }";
 		// queries.add(new ParameterizedSparqlString(queryString));
@@ -55,6 +66,12 @@ public class GraphNonSCCPruner {
 		// log.debug("" + queries.size());
 		// queries = gSCCPruner.prune(queries);
 		// log.debug("" + queries.size());
+
+		GraphNonSCCPruner gSCCPruner = new GraphNonSCCPruner();
+		System.out.println("" + queries.size());
+		queries = gSCCPruner.prune(queries);
+		System.out.println("" + queries.size());
+
 	}
 
 	private class Graph {
@@ -63,9 +80,14 @@ public class GraphNonSCCPruner {
 		boolean[][] edgeMatrix = null;
 
 		public Graph(SPARQLQuery query) {
+			String split[];
 			for (String triple : query.constraintTriples) {
-				String s = triple.split(" ")[0];
-				String o = triple.split(" ")[2];
+				split = triple.split(" ");
+				String s = split[0];
+				String o = split[2];
+				if(o.endsWith(".")) {
+					o = o.substring(0, o.length() - 1);
+				}
 				if (!mapStringInt.containsKey(s)) {
 					mapStringInt.put(s, nodeCount);
 					nodeCount++;
@@ -80,8 +102,12 @@ public class GraphNonSCCPruner {
 				edgeMatrix[i] = new boolean[nodeCount];
 			}
 			for (String triple : query.constraintTriples) {
-				String s = triple.split(" ")[0];
-				String o = triple.split(" ")[2];
+				split = triple.split(" ");
+				String s = split[0];
+				String o = split[2];
+				if(o.endsWith(".")) {
+					o = o.substring(0, o.length() - 1);
+				}
 				int ss = mapStringInt.get(s);
 				int oo = mapStringInt.get(o);
 				edgeMatrix[ss][oo] = true;

@@ -36,20 +36,17 @@ public class SPARQLQueryBuilder {
 
 			// Pruning
 			log.info("Number of Queries before pruning: " + queryStrings.size());
-			GraphNonSCCPruner gSCCPruner = new GraphNonSCCPruner();
 			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
 			//FIXME disjointness killt die richtige antwort für philosopher
 			//ohne die filter werden mehr fragen richtig beantwortet aber das programm zerbricht!!!!!!!!!!!!
 			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-
-			DisjointnessBasedQueryFilter filter = new DisjointnessBasedQueryFilter(sparql.qef);
 //FIXME influence of  pruner? 
+
+			GraphNonSCCPruner gSCCPruner = new GraphNonSCCPruner();
+			DisjointnessBasedQueryFilter filter = new DisjointnessBasedQueryFilter(sparql.qef);
 			queryStrings = filter.filter(queryStrings);
 			queryStrings = gSCCPruner.prune(queryStrings);
 			log.info("Number of Queries: " + queryStrings.size());
-			for (SPARQLQuery qq : queryStrings) {
-				log.debug(qq.toString());
-			}
 
 			int i = 0;
 			for (SPARQLQuery query : queryStrings) {
@@ -121,11 +118,11 @@ public class SPARQLQueryBuilder {
 					for (SPARQLQuery query : queryStrings) {
 						if (!tmp.getAnnotations().isEmpty()) {
 							SPARQLQuery variant1 = (SPARQLQuery) query.clone();
-							variant1.addFilterOverAbstractsContraint("?proj", tmp.label, variant1);
+							variant1.addFilterOverAbstractsContraint("?proj", tmp.label);
 							sb.add(variant1);
 
 							SPARQLQuery variant2 = (SPARQLQuery) query.clone();
-							variant2.addFilterOverAbstractsContraint("?const", tmp.label, variant2);
+							variant2.addFilterOverAbstractsContraint("?const", tmp.label);
 							sb.add(variant2);
 						}
 					}
@@ -146,10 +143,10 @@ public class SPARQLQueryBuilder {
 				} else if (tmp.posTag.equals("VBD")) {
 					for (SPARQLQuery query : queryStrings) {
 						SPARQLQuery variant1 = (SPARQLQuery) query.clone();
-						variant1.addFilterOverAbstractsContraint("?proj", tmp.label, variant1);
+						variant1.addFilterOverAbstractsContraint("?proj", tmp.label);
 						sb.add(variant1);
 						SPARQLQuery variant2 = (SPARQLQuery) query.clone();
-						variant2.addFilterOverAbstractsContraint("?const", tmp.label, variant2);
+						variant2.addFilterOverAbstractsContraint("?const", tmp.label);
 						sb.add(variant2);
 					}
 				} else {
