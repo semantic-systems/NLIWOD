@@ -9,6 +9,7 @@ import org.aksw.jena_sparql_api.cache.extra.CacheCoreH2;
 import org.aksw.jena_sparql_api.cache.extra.CacheEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheExImpl;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.delay.core.QueryExecutionFactoryDelay;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.aksw.jena_sparql_api.pagination.core.QueryExecutionFactoryPaginated;
 import org.slf4j.Logger;
@@ -27,30 +28,16 @@ public class SPARQL {
 
 	public SPARQL() {
 		try {
-			long timeToLive = 30l * 24l * 60l * 60l * 1000l;
+			long timeToLive = 360l * 24l * 60l * 60l * 1000l;
 			CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
 			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
 			// AKSW SPARQL API call
-			qef = new QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql", "http://dbpedia.org/");
+//			qef = new QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql", "http://dbpedia.org/");
 
-			// qef = new
-			// QueryExecutionFactoryHttp("http://localhost:8890/sparql",
-			// "http://dbpedia.org/");
-			// qef = new
-			// QueryExecutionFactoryHttp("http://dbpedia.org/sparql","http://dbpedia.org");
-
-			// qef = new
-			// QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql","http://dbpedia.org");
-			// qef = new
-			// QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/",
-			// "http://dbpedia.org");
-			// qef = new
-			// QueryExecutionFactoryHttp("http://vtentacle.techfak.uni-bielefeld.de:443/sparql",
-			// "http://dbpedia.org");
-			// --> No reason to be nice
-			// qef = new QueryExecutionFactoryDelay(qef, 2000);
+			 qef = new QueryExecutionFactoryHttp("http://localhost:8890/sparql", "http://dbpedia.org/");
 			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
-			qef = new QueryExecutionFactoryPaginated(qef, 10000);
+			qef = new QueryExecutionFactoryDelay(qef, 150);
+			// qef = new QueryExecutionFactoryPaginated(qef, 10000);
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error("Could not create SPARQL interface! ", e);
 		}
@@ -67,7 +54,7 @@ public class SPARQL {
 		try {
 			QueryExecution qe = qef.createQueryExecution(query.toString());
 			if (qe != null && query.toString() != null) {
-				log.info(query.toString());
+				System.out.println(query.toString());
 				ResultSet results = qe.execSelect();
 				while (results.hasNext()) {
 					set.add(results.next().get("proj"));
@@ -75,7 +62,7 @@ public class SPARQL {
 			}
 
 		} catch (Exception e) {
-			log.error(query.toString());
+//			log.error(query.toString(), e);
 		}
 		return set;
 	}

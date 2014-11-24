@@ -18,6 +18,7 @@ import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.pruner.Pruner;
 import org.aksw.hawk.querybuilding.Annotater;
+import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +86,7 @@ public class Pipeline {
 			} else {
 				// evals.add(new EvalObj(question,0, 0, 0,
 				// "This is no question asking for resources only"));
-			}
+			}break;
 		}
 		write(evals);
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
@@ -157,8 +158,10 @@ public class Pipeline {
 			AbstractIndexCache cache = new AbstractIndexCache();
 			// DBAbstractsIndex index = new DBAbstractsIndex(cache);
 			controller.sentenceToSequence = new SentenceToSequence();
-			controller.queryBuilder = new SPARQLQueryBuilder();
-			controller.annotater = new Annotater();
+			
+			SPARQL sparql = new SPARQL();
+			controller.queryBuilder = new SPARQLQueryBuilder(sparql);
+			controller.annotater = new Annotater(sparql);
 
 			controller.pruner = new Pruner();
 			log.info("Run controller");

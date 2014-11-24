@@ -1,6 +1,5 @@
 package org.aksw.hawk.pruner;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
@@ -9,10 +8,8 @@ import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.hp.hpl.jena.query.ParameterizedSparqlString;
 
 public class GraphNonSCCPruner {
 	static Logger log = LoggerFactory.getLogger(GraphNonSCCPruner.class);

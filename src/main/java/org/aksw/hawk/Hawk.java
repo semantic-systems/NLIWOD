@@ -14,6 +14,7 @@ import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.pruner.Pruner;
 import org.aksw.hawk.querybuilding.Annotater;
+import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -32,17 +33,19 @@ public class Hawk {
 
 		AbstractIndexCache cache = new AbstractIndexCache();
 		controller.sentenceToSequence = new SentenceToSequence();
-		controller.queryBuilder = new SPARQLQueryBuilder();
-		controller.annotater = new Annotater();
+		
+		SPARQL sparql = new SPARQL();
+		controller.queryBuilder = new SPARQLQueryBuilder(sparql);
+		controller.annotater = new Annotater(sparql);
 
 		controller.pruner = new Pruner();
 		
 		Question q = new Question();
 		q.languageToQuestion.put("en", "Which recipients of the Victoria Cross died in the Battle of Arnhem?");
 		
-		Map<String, Set<RDFNode>> sparql = controller.calculateSPARQLRepresentation(q);
+		Map<String, Set<RDFNode>> sparqll = controller.calculateSPARQLRepresentation(q);
 		
-		System.out.println(sparql);
+		System.out.println(sparqll);
 	}
 
 }
