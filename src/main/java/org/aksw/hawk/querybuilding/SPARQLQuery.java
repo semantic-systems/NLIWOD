@@ -81,25 +81,26 @@ public class SPARQLQuery implements Cloneable {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append("PREFIX text:    <http://jena.apache.org/text#> \n");
 		sb.append("SELECT DISTINCT ?proj WHERE {\n ");
-		for (String constraint : constraintTriples) {
-			sb.append(constraint + " \n");
-		}
-		for (String filterString : filter) {
-			sb.append("FILTER (" + filterString + ").\n ");
-		}
 		for (String variable : textMapFromVariableToSetOfFullTextToken.keySet()) {
 			// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
 			// anti-apartheid activist').
 			sb.append( variable + " text:query (<http://dbpedia.org/ontology/abstract> '");
 			ArrayList<String> list = Lists.newArrayList(textMapFromVariableToSetOfFullTextToken.get(variable));
 			for (int i = 0; i < list.size(); i++) {
-				sb.append(list.get(i));
+				sb.append("\""+list.get(i)+"\"");
 				if (i + 1 < list.size()) {
 					sb.append(" AND ");
 				}
 			}
 			sb.append("'). \n");
+		}
+		for (String filterString : filter) {
+			sb.append("FILTER (" + filterString + ").\n ");
+		}
+		for (String constraint : constraintTriples) {
+			sb.append(constraint + " \n");
 		}
 		sb.append("}\n");
 		// FIXME quick fix for reducing processing time assuming result set is

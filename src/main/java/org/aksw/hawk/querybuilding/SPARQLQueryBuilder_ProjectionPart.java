@@ -62,7 +62,10 @@ public class SPARQLQueryBuilder_ProjectionPart {
 					if (queries.isEmpty()) {
 						// combined nouns are lists of abstracts containing does words, i.e., type constraints
 						if (bottom.getAnnotations().size() > 0) {
-							SPARQLQuery queryString = new SPARQLQuery("?proj ?p ?o.");
+//							SPARQLQuery queryString = new SPARQLQuery("?proj ?p ?o.");
+							//auskommentiert um zuviele unbound triple zu vermeiden
+
+							SPARQLQuery queryString = new SPARQLQuery();
 							queryString.addFilterOverAbstractsContraint("?proj", bottom.label);
 							queries.add(queryString);
 							queryString = new SPARQLQuery("?proj ?p ?o.");
@@ -72,7 +75,9 @@ public class SPARQLQueryBuilder_ProjectionPart {
 							queryString = new SPARQLQuery("?o ?p ?proj.");
 							queryString.addFilterOverAbstractsContraint("?o", bottom.label);
 							queries.add(queryString);
-							queryString = new SPARQLQuery("?o ?p ?proj.");
+//							queryString = new SPARQLQuery("?o ?p ?proj.");
+							//auskommentiert um zuviele unbound triple zu vermeiden
+							 queryString = new SPARQLQuery();
 							queryString.addFilterOverAbstractsContraint("?proj", bottom.label);
 							queries.add(queryString);
 						} else {

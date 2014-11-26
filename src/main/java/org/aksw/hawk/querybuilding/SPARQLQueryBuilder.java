@@ -21,7 +21,6 @@ public class SPARQLQueryBuilder {
 	SPARQLQueryBuilder_ProjectionPart projection;
 	SPARQLQueryBuilder_RootPart root;
 	private SPARQL sparql;
-	
 
 	public SPARQLQueryBuilder(SPARQL sparql) {
 		this.projection = new SPARQLQueryBuilder_ProjectionPart();
@@ -52,8 +51,8 @@ public class SPARQLQueryBuilder {
 			DisjointnessBasedQueryFilter filter = new DisjointnessBasedQueryFilter(sparql.qef);
 			queryStrings = filter.filter(queryStrings);
 			queryStrings = gSCCPruner.prune(queryStrings);
-			queryStrings = UnboundTriple.prune(queryStrings, 1);
-//			queryStrings = UnboundTriple.pruneLooseEndsOfBGP(queryStrings);
+			queryStrings = UnboundTriple.prune(queryStrings, 0);
+			// queryStrings = UnboundTriple.pruneLooseEndsOfBGP(queryStrings);
 			log.info("Number of Queries: " + queryStrings.size());
 
 			int i = 0;
