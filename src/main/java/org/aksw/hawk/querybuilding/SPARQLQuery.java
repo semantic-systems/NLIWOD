@@ -10,9 +10,9 @@ import com.google.common.collect.Sets;
 
 public class SPARQLQuery implements Cloneable {
 
-	public Set<String> constraintTriples =  Sets.newHashSet();
+	public Set<String> constraintTriples = Sets.newHashSet();
 	public Set<String> filter = Sets.newHashSet();
-	public Map<String, Set<String>> filterBifContains = Maps.newHashMap();
+	public Map<String, Set<String>> textMapFromVariableToSetOfFullTextToken = Maps.newHashMap();
 
 	public SPARQLQuery(String initialConstraint) {
 		constraintTriples.add(initialConstraint);
@@ -29,18 +29,19 @@ public class SPARQLQuery implements Cloneable {
 	}
 
 	public void addFilterOverAbstractsContraint(String variable, String label) {
-		addConstraint(variable + " <http://dbpedia.org/ontology/abstract> ?abstract" + variable.replace("?", "") + ".");
+		// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
+		// anti-apartheid activist').
+
 		String[] whitespaceSeparatedLabel = label.split(" ");
 		// to search in a string with whitespaces like "Nobel Prize"
-		if (whitespaceSeparatedLabel.length > 1) {
-			label = "'" + label + "'";
-		}
-		if (filterBifContains.containsKey(variable)) {
-			Set<String> set = filterBifContains.get(variable);
-			set.add(label);
-			filterBifContains.put(variable, set);
+		if (textMapFromVariableToSetOfFullTextToken.containsKey(variable)) {
+			Set<String> set = textMapFromVariableToSetOfFullTextToken.get(variable);
+			for (String item : whitespaceSeparatedLabel) {
+				set.add(item);
+			}
+			textMapFromVariableToSetOfFullTextToken.put(variable, set);
 		} else {
-			filterBifContains.put(variable, Sets.newHashSet(label));
+			textMapFromVariableToSetOfFullTextToken.put(variable, Sets.newHashSet(whitespaceSeparatedLabel));
 		}
 	}
 
@@ -62,17 +63,17 @@ public class SPARQLQuery implements Cloneable {
 	protected Object clone() throws CloneNotSupportedException {
 		SPARQLQuery q = new SPARQLQuery();
 		q.constraintTriples = Sets.newHashSet();
-		for(String constraint: this.constraintTriples){
+		for (String constraint : this.constraintTriples) {
 			q.constraintTriples.add(constraint);
 		}
 		q.filter = Sets.newHashSet();
 		for (String key : this.filter) {
 			q.filter.add(key);
 		}
-		q.filterBifContains = Maps.newHashMap();
-		for (String key : this.filterBifContains.keySet()) {
-			Set<String> list = Sets.newHashSet(this.filterBifContains.get(key));
-			q.filterBifContains.put(key, list);
+		q.textMapFromVariableToSetOfFullTextToken = Maps.newHashMap();
+		for (String key : this.textMapFromVariableToSetOfFullTextToken.keySet()) {
+			Set<String> list = Sets.newHashSet(this.textMapFromVariableToSetOfFullTextToken.get(key));
+			q.textMapFromVariableToSetOfFullTextToken.put(key, list);
 		}
 		return q;
 	}
@@ -87,17 +88,18 @@ public class SPARQLQuery implements Cloneable {
 		for (String filterString : filter) {
 			sb.append("FILTER (" + filterString + ").\n ");
 		}
-		for (String variable : filterBifContains.keySet()) {
-			sb.append("FILTER (");
-			sb.append("<bif:contains>(?abstract" + variable.replace("?", "") + ",\"");
-			ArrayList<String> list = Lists.newArrayList(filterBifContains.get(variable));
+		for (String variable : textMapFromVariableToSetOfFullTextToken.keySet()) {
+			// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
+			// anti-apartheid activist').
+			sb.append( variable + " text:query (<http://dbpedia.org/ontology/abstract> '");
+			ArrayList<String> list = Lists.newArrayList(textMapFromVariableToSetOfFullTextToken.get(variable));
 			for (int i = 0; i < list.size(); i++) {
 				sb.append(list.get(i));
 				if (i + 1 < list.size()) {
-					sb.append(" and ");
+					sb.append(" AND ");
 				}
 			}
-			sb.append("\")).\n");
+			sb.append("'). \n");
 		}
 		sb.append("}\n");
 		// FIXME quick fix for reducing processing time assuming result set is

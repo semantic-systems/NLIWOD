@@ -31,11 +31,11 @@ public class SPARQL {
 			CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
 			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
 			// AKSW SPARQL API call
-			qef = new QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql", "http://dbpedia.org/");
-
 			// qef = new
-			// QueryExecutionFactoryHttp("http://localhost:8890/sparql",
+			// QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql",
 			// "http://dbpedia.org/");
+
+			qef = new QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
 			// qef = new
 			// QueryExecutionFactoryHttp("http://dbpedia.org/sparql","http://dbpedia.org");
 
