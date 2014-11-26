@@ -1,6 +1,5 @@
 package org.aksw.hawk.querybuilding;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -10,14 +9,7 @@ import org.aksw.hawk.index.IndexDBO_classes;
 import org.aksw.hawk.index.IndexDBO_properties;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
-import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheCoreH2;
-import org.aksw.jena_sparql_api.cache.extra.CacheEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheExImpl;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
-import org.aksw.jena_sparql_api.pagination.core.QueryExecutionFactoryPaginated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,19 +25,8 @@ public class Annotater {
 	DBOIndex dboIndex = new DBOIndex();
 	QueryExecutionFactory qef;
 
-	public Annotater() {
-		long timeToLive = 30l * 24l * 60l * 60l * 1000l;
-		try {
-			CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
-			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
-			// FIXME do not use qef here better use common sparql object
-			//FIXME reuse SPARQL from main method to lower the number of queries
-			this.qef = new QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql", "http://dbpedia.org/");
-//			this.qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
-//			this.qef = new QueryExecutionFactoryPaginated(qef, 10000);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+	public Annotater(SPARQL sparql) {
+		qef= sparql.qef;
 	}
 
 	public void annotateTree(Question q) {

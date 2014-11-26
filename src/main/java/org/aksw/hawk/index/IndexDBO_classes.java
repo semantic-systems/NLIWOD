@@ -22,7 +22,6 @@ import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
-import org.apache.lucene.util.automaton.LevenshteinAutomata;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
