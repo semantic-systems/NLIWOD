@@ -77,7 +77,7 @@ public class DBOIndex {
 		try {
 			log.debug("\t start asking index...");
 
-			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE);
+			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 0);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
 
 			isearcher.search(q, collector);
@@ -134,8 +134,6 @@ public class DBOIndex {
 			log.error(e.getLocalizedMessage(), e);
 		}
 	}
-
-
 
 	private void addDocumentToIndex(Resource resource, String predicate, String object) throws IOException {
 		Document doc = new Document();

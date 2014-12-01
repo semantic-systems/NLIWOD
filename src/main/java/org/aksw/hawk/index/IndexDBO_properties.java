@@ -74,7 +74,7 @@ public class IndexDBO_properties {
 		try {
 			log.debug("\t start asking index...");
 
-			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object),LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE);   
+			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 0);   
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
 
 			isearcher.search(q, collector);
