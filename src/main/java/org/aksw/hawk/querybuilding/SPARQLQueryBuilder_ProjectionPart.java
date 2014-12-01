@@ -37,8 +37,9 @@ public class SPARQLQueryBuilder_ProjectionPart {
 								queries.add(new SPARQLQuery("?proj a <" + annotation + ">."));
 								// TODO add super class,e.g., City -> Settlement
 							}
-							// TODO cities like http://dbpedia.org/page/Kirzhach are not annotated as db-owl:Place
-//					FIXME		queries.add(new SPARQLQuery("?proj a ?type."));
+//							 TODO cities like http://dbpedia.org/page/Kirzhach are not annotated as db-owl:Place
+//					 		queries.add(new SPARQLQuery("?proj a ?type."));
+							queries.add(new SPARQLQuery());
 							// need to add this due to Kirzhach which is in DBpedia 3.9 not typed, not even as db-owl:Place
 							// so we leaf out the urgent generation of a type information
 //							FIXME		queries.add(new SPARQLQuery());

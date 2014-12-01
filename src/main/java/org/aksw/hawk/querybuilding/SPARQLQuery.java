@@ -104,7 +104,8 @@ public class SPARQLQuery implements Cloneable {
 			}
 			sb.append(fulltext.toString());
 			// return 100 uris from text index
-			sb.append("' 1000). \n");
+			//TODO decrease that number by introducing a ranking factor
+			sb.append("' 100). \n");
 		}
 		for (String constraint : constraintTriples) {
 			sb.append(constraint + " \n");

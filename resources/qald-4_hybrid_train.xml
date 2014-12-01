@@ -1,5 +1,23 @@
 <?xml version="1.0" ?>
 <dataset id="qald-4_hybrid_train">
+	<question answertype="resource" id="6" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Where did the first man in space die?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?uri
+WHERE {
+        ?x text:"is" text:"first man in space" .
+        ?x dbo:deathPlace ?uri .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Kirzhach</uri>
+			</answer>
+		</answers>
+	</question>
 	<question answertype="resource" id="18" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Which birds are protected under the National Parks and Wildlife Act?]]></string>
@@ -62,24 +80,6 @@ WHERE {
 			</answer>
 			<answer>
 				<uri>http://dbpedia.org/resource/John_Dos_Passos</uri>
-			</answer>
-		</answers>
-	</question>
-	<question answertype="resource" id="6" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Where did the first man in space die?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX res: <http://dbpedia.org/resource/>
-SELECT DISTINCT ?uri
-WHERE {
-        ?x text:"is" text:"first man in space" .
-        ?x dbo:deathPlace ?uri .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Kirzhach</uri>
 			</answer>
 		</answers>
 	</question>
