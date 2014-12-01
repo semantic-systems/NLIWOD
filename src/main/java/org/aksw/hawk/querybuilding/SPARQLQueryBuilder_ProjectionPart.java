@@ -38,10 +38,10 @@ public class SPARQLQueryBuilder_ProjectionPart {
 								// TODO add super class,e.g., City -> Settlement
 							}
 							// TODO cities like http://dbpedia.org/page/Kirzhach are not annotated as db-owl:Place
-							queries.add(new SPARQLQuery("?proj a ?type."));
+//					FIXME		queries.add(new SPARQLQuery("?proj a ?type."));
 							// need to add this due to Kirzhach which is in DBpedia 3.9 not typed, not even as db-owl:Place
 							// so we leaf out the urgent generation of a type information
-							queries.add(new SPARQLQuery());
+//							FIXME		queries.add(new SPARQLQuery());
 						} else {
 							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 						}
@@ -68,13 +68,17 @@ public class SPARQLQueryBuilder_ProjectionPart {
 							SPARQLQuery queryString = new SPARQLQuery();
 							queryString.addFilterOverAbstractsContraint("?proj", bottom.label);
 							queries.add(queryString);
-							queryString = new SPARQLQuery("?proj ?p ?o.");
-							queryString.addFilterOverAbstractsContraint("?o", bottom.label);
+							
+							queryString = new SPARQLQuery();
+							queryString.addFilterOverAbstractsContraint("?const", bottom.label);
 							queries.add(queryString);
+//							FIXME		queryString = new SPARQLQuery("?proj ?p ?o.");
+//							FIXME	queryString.addFilterOverAbstractsContraint("?o", bottom.label);
+//							FIXME	queries.add(queryString);
 							// IMPORTANT if tree has not the projection variable in the left most path the projection variable could be on the right side and thus in case of not inverse properties we need to turn around this logic
-							queryString = new SPARQLQuery("?o ?p ?proj.");
-							queryString.addFilterOverAbstractsContraint("?o", bottom.label);
-							queries.add(queryString);
+//							FIXME		queryString = new SPARQLQuery("?o ?p ?proj.");
+//							FIXME	queryString.addFilterOverAbstractsContraint("?o", bottom.label);
+//							FIXME queries.add(queryString);
 //							queryString = new SPARQLQuery("?o ?p ?proj.");
 							//auskommentiert um zuviele unbound triple zu vermeiden
 							 queryString = new SPARQLQuery();

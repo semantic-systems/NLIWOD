@@ -27,16 +27,16 @@ public class GraphNonSCCPruner {
 		return returnList;
 	}
 
-	public boolean isSCC(SPARQLQuery query) {
-		// build graph
-		Graph g = new Graph(query);
-		// look whether each node is reachable from each other
-		if (g.isSCC()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+//	public boolean isSCC(SPARQLQuery query) {
+//		// build graph
+//		Graph g = new Graph(query);
+//		// look whether each node is reachable from each other
+//		if (g.isSCC()) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
 
 	public static void main(String args[]) {
 		// FIXME transform me to a UNIT test
@@ -49,6 +49,20 @@ public class GraphNonSCCPruner {
 		query.addFilterOverAbstractsContraint("?const", "refused");
 		System.out.println(query);
 		queries.add(query);
+		
+		  query = new SPARQLQuery("?const a <http://dbpedia.org/ontology/Philosopher>.");
+		query.addFilterOverAbstractsContraint("?const", "Nobel Prize");
+		query.addFilterOverAbstractsContraint("?proj", "influenced");
+		System.out.println(query);
+		queries.add(query);
+		
+		
+		query = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Country>.");
+		query.addConstraint("?const  ?p ?proj. ");
+		query.addFilterOverAbstractsContraint("?const", "first known fotographer of snowflakes");
+		System.out.println(query);
+		queries.add(query);
+			
 		// String queryString =
 		// "SELECT ?a0 WHERE {?a0 a <http://dbpedia.org/ontology/City>. ?a1 <http://dbpedia.org/ontology/birthPlace> ?a0. }";
 		// queries.add(new ParameterizedSparqlString(queryString));
@@ -78,7 +92,15 @@ public class GraphNonSCCPruner {
 
 		public Graph(SPARQLQuery query) {
 			String split[];
+			for(String fusekiVariable: query.textMapFromVariableToSetOfFullTextToken.keySet()){
+				//?proj text:query (<http://dbpedia.org/ontology/abstract> 'influenced~1'). 
+				if (!mapStringInt.containsKey(fusekiVariable)) {
+					mapStringInt.put(fusekiVariable, nodeCount);
+					nodeCount++;
+				}
+			}
 			for (String triple : query.constraintTriples) {
+				triple = triple.replaceAll("\\s+", " ");
 				split = triple.split(" ");
 				String s = split[0];
 				String o = split[2];
@@ -99,6 +121,7 @@ public class GraphNonSCCPruner {
 				edgeMatrix[i] = new boolean[nodeCount];
 			}
 			for (String triple : query.constraintTriples) {
+				triple = triple.replaceAll("\\s+", " ");
 				split = triple.split(" ");
 				String s = split[0];
 				String o = split[2];

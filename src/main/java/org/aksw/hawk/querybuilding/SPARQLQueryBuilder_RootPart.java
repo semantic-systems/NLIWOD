@@ -33,13 +33,14 @@ public class SPARQLQueryBuilder_RootPart {
 					SPARQLQuery variant3 = ((SPARQLQuery) query.clone());
 					variant3.addConstraint("?const  ?p ?proj.");
 
-					SPARQLQuery variant4 = ((SPARQLQuery) query.clone());
-					variant4.addConstraint("?proj   ?p ?const.");
+					// FIXME SPARQLQuery variant4 = ((SPARQLQuery)
+					// query.clone());
+					// FIXME variant4.addConstraint("?proj   ?p ?const.");
 
 					sb.add(variant1);
 					sb.add(variant2);
 					sb.add(variant3);
-					sb.add(variant4);
+					// FIXME sb.add(variant4);
 
 					// FIXME is this correct
 					SPARQLQuery variant5 = ((SPARQLQuery) query.clone());

@@ -51,7 +51,7 @@ public class SPARQL {
 			// --> No reason to be nice
 			// qef = new QueryExecutionFactoryDelay(qef, 2000);
 			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
-			qef = new QueryExecutionFactoryDelay(qef, 150);
+//			qef = new QueryExecutionFactoryDelay(qef, 150);
 			// qef = new QueryExecutionFactoryPaginated(qef, 10000);
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error("Could not create SPARQL interface! ", e);

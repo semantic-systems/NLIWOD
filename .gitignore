@@ -23,3 +23,4 @@ resources/indexOntology/
 resources/ontologyClasses/
 resources/ontologyProperties/
 log.out
+/target
