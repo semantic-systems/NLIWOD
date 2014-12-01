@@ -24,6 +24,7 @@ public class CachedParseTree {
 		if (isStored(q) != null) {
 			return StorageHelper.readFromFileSavely(isStored(q));
 		} else {
+			log.info("Tree not cached.");
 			if (parseTree == null) {
 				parseTree = new ParseTree();
 			}
@@ -65,7 +66,7 @@ public class CachedParseTree {
 	private String isStored(Question q) {
 		String question = q.languageToQuestion.get("en");
 		int hash = question.hashCode();
-		String serializedFileName = "cache/trees/" + hash + ".tree";
+		String serializedFileName = "cache/" + hash + ".tree";
 
 		File ser = new File(serializedFileName);
 		if (ser.exists()) {
