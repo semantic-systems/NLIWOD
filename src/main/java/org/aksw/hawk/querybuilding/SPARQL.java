@@ -69,7 +69,7 @@ public class SPARQL {
 		try {
 			QueryExecution qe = qef.createQueryExecution(query.toString());
 			if (qe != null && query.toString() != null) {
-				log.info(query.toString());
+				log.debug(query.toString());
 				ResultSet results = qe.execSelect();
 				while (results.hasNext()) {
 					set.add(results.next().get("proj"));

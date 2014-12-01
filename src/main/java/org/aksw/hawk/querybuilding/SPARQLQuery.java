@@ -11,7 +11,7 @@ import com.google.common.collect.Sets;
 
 public class SPARQLQuery implements Cloneable {
 
-	private static HashSet<String> stopwords = Sets.newHashSet("of", "and");
+	private static HashSet<String> stopwords = Sets.newHashSet("of", "and", "in");
 	public Set<String> constraintTriples = Sets.newHashSet();
 	public Set<String> filter = Sets.newHashSet();
 	public Map<String, Set<String>> textMapFromVariableToSetOfFullTextToken = Maps.newHashMap();
@@ -90,17 +90,19 @@ public class SPARQLQuery implements Cloneable {
 			// anti-apartheid activist').
 			sb.append(variable + " text:query (<http://dbpedia.org/ontology/abstract> '");
 			ArrayList<String> list = Lists.newArrayList(textMapFromVariableToSetOfFullTextToken.get(variable));
+			StringBuilder fulltext = new StringBuilder();
 			for (int i = 0; i < list.size(); i++) {
 				// Stopwords introduced to prevent Lucene from doing quatsch
 				if (!stopwords.contains(list.get(i))) {
 					// TODO photographer does not match photographers in index
 					// temporary solution is a a hack with ~ for fuzzy
-					sb.append(list.get(i) + "~1");
-					if (i + 1 < list.size()) {
-						sb.append(" AND ");
+					if (i > 0 && fulltext.length() > 0) {
+						fulltext.append(" AND ");
 					}
+					fulltext.append(list.get(i) + "~1");
 				}
 			}
+			sb.append(fulltext.toString());
 			// return 100 uris from text index
 			sb.append("' 1000). \n");
 		}
