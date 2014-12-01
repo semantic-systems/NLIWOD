@@ -24,3 +24,7 @@ resources/ontologyClasses/
 resources/ontologyProperties/
 log.out
 /target
+
+resources/qald-4_hybrid_train.xml
+results.html
+
