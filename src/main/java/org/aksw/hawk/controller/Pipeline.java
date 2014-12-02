@@ -87,6 +87,7 @@ public class Pipeline {
 				// evals.add(new EvalObj(question,0, 0, 0,
 				// "This is no question asking for resources only"));
 			} 
+//			break;
 		}
 		write(evals);
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);

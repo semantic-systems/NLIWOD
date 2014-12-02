@@ -14,8 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.ResultSet;
 
 public class Annotater {
 	// TODO refactor class and add addAll!!! to mutabletreenode
@@ -26,7 +24,7 @@ public class Annotater {
 	QueryExecutionFactory qef;
 
 	public Annotater(SPARQL sparql) {
-		qef= sparql.qef;
+		qef = sparql.qef;
 	}
 
 	public void annotateTree(Question q) {
@@ -74,8 +72,12 @@ public class Annotater {
 						tmp.addAnnotation(uri);
 					}
 				}
+				// add fall back to full text for cases like
+				// "crown"->"The_Crown" which are not found yet by NED
+				// approaches
+//				FIXME addAbstractsContainingLabel(tmp);
 			} else if (posTag.matches("CombinedNN") && tmp.getAnnotations().isEmpty()) {
-				addAbstractsContainingLabel("?proj", tmp, label);
+//			FIXME	addAbstractsContainingLabel(tmp);
 			} else if (tmp.getAnnotations().isEmpty() && (posTag.matches("ADD") || posTag.matches("VB(.)*"))) {
 				// expected behaviour
 			} else {
@@ -89,21 +91,25 @@ public class Annotater {
 
 	// FIXME think about whether this is really needed, i.e. whether
 	// CombinedNouns need to be materialized here
-	private void addAbstractsContainingLabel(String variable, MutableTreeNode tmp, String label) {
-		SPARQLQuery q = new SPARQLQuery();
-		try {
-			q.addFilterOverAbstractsContraint(variable, label);
-			QueryExecution qe = qef.createQueryExecution(q.toString());
-			if (qe != null && q.toString() != null) {
-				ResultSet results = qe.execSelect();
-				while (results.hasNext()) {
-					tmp.addAnnotation(results.next().get("proj").asResource().toString());
-				}
-			}
-		} catch (Exception e) {
-			log.error("variable: " + variable + " , label: " + label + " query: " + q, e);
-		}
-	}
+	// no we do not need it
+	
+//	private void addAbstractsContainingLabel(MutableTreeNode tmp) {
+//		log.error(tmp.toString());
+//		SPARQLQuery q = new SPARQLQuery();
+//		try {
+//			q.addFilterOverAbstractsContraint("?proj", tmp.label);
+//			q.setLuceneLimit(3000);
+//			QueryExecution qe = qef.createQueryExecution(q.toString());
+//			if (qe != null && q.toString() != null) {
+//				ResultSet results = qe.execSelect();
+//				while (results.hasNext()) {
+//					tmp.addAnnotation(results.next().get("proj").asResource().toString());
+//				}
+//			}
+//		} catch (Exception e) {
+//			log.error("label: " + tmp.label + " query: " + q, e);
+//		}
+//	}
 
 	/**
 	 * "Verbs most often refer to properties, thus a lexical entry with a
@@ -166,7 +172,7 @@ public class Annotater {
 					}
 				} else if (posTag.equals("CombinedNN")) {
 					// full text lookup
-					addAbstractsContainingLabel("?proj", tmp, label);
+//				FIXME	addAbstractsContainingLabel(tmp);
 				} else if (posTag.matches("NN(.)*")) {
 					// DBO look up
 					if (posTag.matches("NNS")) {
@@ -192,7 +198,7 @@ public class Annotater {
 				// parse trees where the root is a NN(.)*
 				if (posTag.matches("NN(.)*")) {
 					// TODO ask actress also in dbo owl
-					if (classesIndex.search(label).size() > 0 || propertiesIndex.search(label).size() > 0) {
+					if (classesIndex.search(label).size() > 0 || propertiesIndex.search(label).size() > 0 || dboIndex.search(label).size() > 0) {
 						ArrayList<String> uris = classesIndex.search(label);
 						for (String resourceURL : uris) {
 							tmp.addAnnotation(resourceURL);
@@ -201,15 +207,20 @@ public class Annotater {
 						for (String resourceURL : uris) {
 							tmp.addAnnotation(resourceURL);
 						}
+						uris = dboIndex.search(label);
+						for (String resourceURL : uris) {
+							tmp.addAnnotation(resourceURL);
+						}
+
 					} else {
 						// full text lookup
-						addAbstractsContainingLabel("?proj", tmp, label);
+//						addAbstractsContainingLabel(tmp);
 
 						// since a full text lookup takes place we assume
 						// hereafter there will be a FILTER clause needed which
 						// can only be handled it annotated as CombinedNoun
 						// w.r.t. its postag
-						tmp.posTag = "CombinedNN";
+//						tmp.posTag = "CombinedNN";
 					}
 				} else {
 					log.error("Strange case that never should happen: " + posTag);

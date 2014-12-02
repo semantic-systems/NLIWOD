@@ -23,7 +23,6 @@ import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
-import org.apache.lucene.util.automaton.LevenshteinAutomata;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
@@ -77,7 +76,7 @@ public class DBOIndex {
 		try {
 			log.debug("\t start asking index...");
 
-			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 0);
+			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 1);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
 
 			isearcher.search(q, collector);
@@ -145,6 +144,8 @@ public class DBOIndex {
 
 	public static void main(String args[]) throws IOException {
 		DBOIndex index = new DBOIndex();
-		System.out.println(Joiner.on("\n").join(index.search("compose")));
+//		System.out.println(Joiner.on("\n").join(index.search("compose")));
+		
+		System.out.println(Joiner.on("\n").join(index.search("buildings")));
 	}
 }

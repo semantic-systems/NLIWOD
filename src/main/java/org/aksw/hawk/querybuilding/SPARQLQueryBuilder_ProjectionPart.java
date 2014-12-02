@@ -15,7 +15,7 @@ public class SPARQLQueryBuilder_ProjectionPart {
 
 	private Logger log = LoggerFactory.getLogger(SPARQLQueryBuilder_ProjectionPart.class);
 
-	Set<SPARQLQuery> buildProjectionPart(SPARQLQueryBuilder sparqlQueryBuilder, Question q) {
+	Set<SPARQLQuery> buildProjectionPart(SPARQLQueryBuilder sparqlQueryBuilder, Question q) throws CloneNotSupportedException {
 		Set<SPARQLQuery> queries = Sets.newHashSet();
 		List<MutableTreeNode> bottomUp = getProjectionPathBottumUp(q);
 		// empty restriction for projection part in order to account for misinformation in left tree
@@ -49,12 +49,16 @@ public class SPARQLQueryBuilder_ProjectionPart {
 					} else {
 						// is either from Where or Who
 						if (bottom.getAnnotations().size() > 0) {
+							Set<SPARQLQuery> setTmp = Sets.newHashSet();
 							for (String annotation : bottom.getAnnotations()) {
 								for (SPARQLQuery existingQuery : queries) {
-									existingQuery.addConstraint("?proj a <" + annotation + ">.");
+									SPARQLQuery tmpQuery = (SPARQLQuery) existingQuery.clone();
+									tmpQuery.addConstraint("?proj a <" + annotation + ">.");
 									// TODO add super class,e.g., City -> Settlement
+									setTmp.add(tmpQuery);
 								}
 							}
+							queries = setTmp;
 						} else {
 							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
 						}
@@ -62,7 +66,6 @@ public class SPARQLQueryBuilder_ProjectionPart {
 				} else if (bottomposTag.equals("CombinedNN")) {
 					if (queries.isEmpty()) {
 						// combined nouns are lists of abstracts containing does words, i.e., type constraints
-						if (bottom.getAnnotations().size() > 0) {
 //							SPARQLQuery queryString = new SPARQLQuery("?proj ?p ?o.");
 							//auskommentiert um zuviele unbound triple zu vermeiden
 
@@ -82,17 +85,11 @@ public class SPARQLQueryBuilder_ProjectionPart {
 //							FIXME queries.add(queryString);
 //							queryString = new SPARQLQuery("?o ?p ?proj.");
 							//auskommentiert um zuviele unbound triple zu vermeiden
-							 queryString = new SPARQLQuery();
-							queryString.addFilterOverAbstractsContraint("?proj", bottom.label);
-							queries.add(queryString);
-						} else {
-							log.error("Too less annotations for projection part of the tree!", q.languageToQuestion.get("en"));
-						}
 					} else {
 						// combined nouns are lists of abstracts containing does words, i.e., type constraints
 						if (bottom.getAnnotations().size() > 0) {
 							for (SPARQLQuery existingQueries : queries) {
-								existingQueries.addConstraint("?proj ?p ?o.");
+//				FIXME?				existingQueries.addConstraint("?proj ?p ?o.");
 								existingQueries.addFilterOverAbstractsContraint("?proj", bottom.label);
 							}
 						} else {
@@ -126,6 +123,10 @@ public class SPARQLQueryBuilder_ProjectionPart {
 						for (String annotation : top.getAnnotations()) {
 							SPARQLQuery queryString = new SPARQLQuery("?proj <" + annotation + "> <" + bottom.label + ">.");
 							queries.add(queryString);
+				            for(String bottomAnnotation: bottom.getAnnotations()){
+				            	  queryString = new SPARQLQuery("?proj <" + annotation + "> <" + bottomAnnotation + ">.");
+								queries.add(queryString);
+				            }
 						}
 					}
 					// or it stems from a full-text look up (+ reversing of the predicates)

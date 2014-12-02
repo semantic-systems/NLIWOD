@@ -127,7 +127,6 @@ public class SPARQLQueryBuilder {
 					}
 				} else if (tmp.posTag.equals("CombinedNN")) {
 					for (SPARQLQuery query : queryStrings) {
-						if (!tmp.getAnnotations().isEmpty()) {
 							SPARQLQuery variant1 = (SPARQLQuery) query.clone();
 							variant1.addFilterOverAbstractsContraint("?proj", tmp.label);
 							sb.add(variant1);
@@ -156,8 +155,6 @@ public class SPARQLQueryBuilder {
 							variant4.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \"" + str + "\"@en.");
 							variant4.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?const.");
 							sb.add(variant4);
-
-						}
 					}
 				} else if (tmp.posTag.equals("NN")) {
 					for (SPARQLQuery query : queryStrings) {

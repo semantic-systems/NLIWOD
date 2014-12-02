@@ -15,6 +15,7 @@ public class SPARQLQuery implements Cloneable {
 	public Set<String> constraintTriples = Sets.newHashSet();
 	public Set<String> filter = Sets.newHashSet();
 	public Map<String, Set<String>> textMapFromVariableToSetOfFullTextToken = Maps.newHashMap();
+	private int luceneLimit = 100;
 
 	public SPARQLQuery(String initialConstraint) {
 		constraintTriples.add(initialConstraint);
@@ -104,8 +105,8 @@ public class SPARQLQuery implements Cloneable {
 			}
 			sb.append(fulltext.toString());
 			// return 100 uris from text index
-			//TODO decrease that number by introducing a ranking factor
-			sb.append("' 100). \n");
+			// TODO decrease that number by introducing a ranking factor
+			sb.append("' " + luceneLimit + "). \n");
 		}
 		for (String constraint : constraintTriples) {
 			sb.append(constraint + " \n");
@@ -116,7 +117,15 @@ public class SPARQLQuery implements Cloneable {
 		sb.append("}\n");
 		// FIXME quick fix for reducing processing time assuming result set is
 		// smaller than 10
-		sb.append("LIMIT 12");
+		if(luceneLimit!=100){
+			sb.append("LIMIT "+luceneLimit);	
+		}else{
+		sb.append("LIMIT 12");}
 		return sb.toString();
+	}
+
+	public void setLuceneLimit(int limit) {
+		this.luceneLimit = limit;
+
 	}
 }
