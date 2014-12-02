@@ -49,7 +49,7 @@ public class SPARQLQueryBuilder {
 
 			GraphNonSCCPruner gSCCPruner = new GraphNonSCCPruner();
 			DisjointnessBasedQueryFilter filter = new DisjointnessBasedQueryFilter(sparql.qef);
-			// queryStrings = filter.filter(queryStrings);
+//			 queryStrings = filter.filter(queryStrings);
 			queryStrings = gSCCPruner.prune(queryStrings);
 			queryStrings = UnboundTriple.prune(queryStrings, 1);
 			// queryStrings = UnboundTriple.pruneLooseEndsOfBGP(queryStrings);
