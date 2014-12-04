@@ -75,9 +75,9 @@ public class Annotater {
 				// add fall back to full text for cases like
 				// "crown"->"The_Crown" which are not found yet by NED
 				// approaches
-//				FIXME addAbstractsContainingLabel(tmp);
+				// FIXME addAbstractsContainingLabel(tmp);
 			} else if (posTag.matches("CombinedNN") && tmp.getAnnotations().isEmpty()) {
-//			FIXME	addAbstractsContainingLabel(tmp);
+				// FIXME addAbstractsContainingLabel(tmp);
 			} else if (tmp.getAnnotations().isEmpty() && (posTag.matches("ADD") || posTag.matches("VB(.)*"))) {
 				// expected behaviour
 			} else {
@@ -92,24 +92,24 @@ public class Annotater {
 	// FIXME think about whether this is really needed, i.e. whether
 	// CombinedNouns need to be materialized here
 	// no we do not need it
-	
-//	private void addAbstractsContainingLabel(MutableTreeNode tmp) {
-//		log.error(tmp.toString());
-//		SPARQLQuery q = new SPARQLQuery();
-//		try {
-//			q.addFilterOverAbstractsContraint("?proj", tmp.label);
-//			q.setLuceneLimit(3000);
-//			QueryExecution qe = qef.createQueryExecution(q.toString());
-//			if (qe != null && q.toString() != null) {
-//				ResultSet results = qe.execSelect();
-//				while (results.hasNext()) {
-//					tmp.addAnnotation(results.next().get("proj").asResource().toString());
-//				}
-//			}
-//		} catch (Exception e) {
-//			log.error("label: " + tmp.label + " query: " + q, e);
-//		}
-//	}
+
+	// private void addAbstractsContainingLabel(MutableTreeNode tmp) {
+	// log.error(tmp.toString());
+	// SPARQLQuery q = new SPARQLQuery();
+	// try {
+	// q.addFilterOverAbstractsContraint("?proj", tmp.label);
+	// q.setLuceneLimit(3000);
+	// QueryExecution qe = qef.createQueryExecution(q.toString());
+	// if (qe != null && q.toString() != null) {
+	// ResultSet results = qe.execSelect();
+	// while (results.hasNext()) {
+	// tmp.addAnnotation(results.next().get("proj").asResource().toString());
+	// }
+	// }
+	// } catch (Exception e) {
+	// log.error("label: " + tmp.label + " query: " + q, e);
+	// }
+	// }
 
 	/**
 	 * "Verbs most often refer to properties, thus a lexical entry with a
@@ -155,78 +155,83 @@ public class Annotater {
 	 */
 	private void annotateProjectionLeftTree(MutableTree tree) {
 		Stack<MutableTreeNode> stack = new Stack<>();
-		stack.push(tree.getRoot().getChildren().get(0));
+		if (tree.getRoot()!=null&&tree.getRoot().getChildren() != null&&!tree.getRoot().getChildren().isEmpty()) {
+			stack.push(tree.getRoot().getChildren().get(0));
 
-		while (!stack.isEmpty()) {
-			MutableTreeNode tmp = stack.pop();
-			String label = tmp.label;
-			String posTag = tmp.posTag;
-			// only one projection variable node
-			if (tmp.children.size() == 0) {
-				if (posTag.matches("WRB|WP")) {
-					// gives only hints towards the type of projection variable
-					if (label.equals("Where")) {
-						tmp.addAnnotation("http://dbpedia.org/ontology/Place");
-					} else if (label.equals("Who")) {
-						tmp.addAnnotation("http://dbpedia.org/ontology/Agent");
-					}
-				} else if (posTag.equals("CombinedNN")) {
-					// full text lookup
-//				FIXME	addAbstractsContainingLabel(tmp);
-				} else if (posTag.matches("NN(.)*")) {
-					// DBO look up
-					if (posTag.matches("NNS")) {
-						// TODO improve lemmatization. e.g., birds->bird
-						if (tmp.lemma != null)
-							label = tmp.lemma;
-					}
-					if (classesIndex.search(label).size() > 0) {
-						ArrayList<String> uris = classesIndex.search(label);
-						for (String resourceURL : uris) {
-							tmp.addAnnotation(resourceURL);
+			while (!stack.isEmpty()) {
+				MutableTreeNode tmp = stack.pop();
+				String label = tmp.label;
+				String posTag = tmp.posTag;
+				// only one projection variable node
+				if (tmp.children.size() == 0) {
+					if (posTag.matches("WRB|WP")) {
+						// gives only hints towards the type of projection
+						// variable
+						if (label.equals("Where")) {
+							tmp.addAnnotation("http://dbpedia.org/ontology/Place");
+						} else if (label.equals("Who")) {
+							tmp.addAnnotation("http://dbpedia.org/ontology/Agent");
 						}
-					} else {
-						log.error("Strange case that never should happen");
-					}
-				} else if (posTag.equals("ADD")) {
-					// strange case
-					// since entities should not be the question word type
-					log.error("Strange case that never should happen: " + posTag);
-				}
-			} else {
-				// imperative word queries like "List .." or "Give me.." do have
-				// parse trees where the root is a NN(.)*
-				if (posTag.matches("NN(.)*")) {
-					// TODO ask actress also in dbo owl
-					if (classesIndex.search(label).size() > 0 || propertiesIndex.search(label).size() > 0 || dboIndex.search(label).size() > 0) {
-						ArrayList<String> uris = classesIndex.search(label);
-						for (String resourceURL : uris) {
-							tmp.addAnnotation(resourceURL);
-						}
-						uris = propertiesIndex.search(label);
-						for (String resourceURL : uris) {
-							tmp.addAnnotation(resourceURL);
-						}
-						uris = dboIndex.search(label);
-						for (String resourceURL : uris) {
-							tmp.addAnnotation(resourceURL);
-						}
-
-					} else {
+					} else if (posTag.equals("CombinedNN")) {
 						// full text lookup
-//						addAbstractsContainingLabel(tmp);
-
-						// since a full text lookup takes place we assume
-						// hereafter there will be a FILTER clause needed which
-						// can only be handled it annotated as CombinedNoun
-						// w.r.t. its postag
-//						tmp.posTag = "CombinedNN";
+						// FIXME addAbstractsContainingLabel(tmp);
+					} else if (posTag.matches("NN(.)*")) {
+						// DBO look up
+						if (posTag.matches("NNS")) {
+							// TODO improve lemmatization. e.g., birds->bird
+							if (tmp.lemma != null)
+								label = tmp.lemma;
+						}
+						if (classesIndex.search(label).size() > 0) {
+							ArrayList<String> uris = classesIndex.search(label);
+							for (String resourceURL : uris) {
+								tmp.addAnnotation(resourceURL);
+							}
+						} else {
+							log.error("Strange case that never should happen");
+						}
+					} else if (posTag.equals("ADD")) {
+						// strange case
+						// since entities should not be the question word type
+						log.error("Strange case that never should happen: " + posTag);
 					}
 				} else {
-					log.error("Strange case that never should happen: " + posTag);
+					// imperative word queries like "List .." or "Give me.." do
+					// have
+					// parse trees where the root is a NN(.)*
+					if (posTag.matches("NN(.)*")) {
+						// TODO ask actress also in dbo owl
+						if (classesIndex.search(label).size() > 0 || propertiesIndex.search(label).size() > 0 || dboIndex.search(label).size() > 0) {
+							ArrayList<String> uris = classesIndex.search(label);
+							for (String resourceURL : uris) {
+								tmp.addAnnotation(resourceURL);
+							}
+							uris = propertiesIndex.search(label);
+							for (String resourceURL : uris) {
+								tmp.addAnnotation(resourceURL);
+							}
+							uris = dboIndex.search(label);
+							for (String resourceURL : uris) {
+								tmp.addAnnotation(resourceURL);
+							}
+
+						} else {
+							// full text lookup
+							// addAbstractsContainingLabel(tmp);
+
+							// since a full text lookup takes place we assume
+							// hereafter there will be a FILTER clause needed
+							// which
+							// can only be handled it annotated as CombinedNoun
+							// w.r.t. its postag
+							// tmp.posTag = "CombinedNN";
+						}
+					} else {
+						log.error("Strange case that never should happen: " + posTag);
+					}
 				}
+				break;
 			}
-			break;
 		}
 	}
 }

@@ -1,5 +1,72 @@
 <?xml version="1.0" ?>
 <dataset id="qald-4_hybrid_train">
+	<question answertype="resource" id="14" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Which horses did The Long Fellow ride?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?uri 
+WHERE {
+        ?x text:"known as" text:"The Long Fellow" .
+        ?x dbo:raceHorse ?uri .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/St._Paddy</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Petite_Etoile</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Alleged_(horse)</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Crepello</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Sir_Ivor</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Empery</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Nijinsky_II</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/The_Minstrel</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Roberto_(horse)</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Never_Say_Die_(horse)</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Teenoso</uri>
+			</answer>
+		</answers>
+	</question>
+	<question answertype="resource" id="16" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Which buildings owned by the crown overlook the North Sea?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?uri 
+WHERE {
+        ?uri rdf:type dbo:Building.
+        ?uri dbo:owner res:The_Crown . 
+        ?uri text:"overlook" text:"North Sea" .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Scarborough_Castle</uri>
+			</answer>
+		</answers>
+	</question>
 	<question answertype="resource" id="6" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Where did the first man in space die?]]></string>
@@ -15,39 +82,6 @@ WHERE {
 		<answers>
 			<answer>
 				<uri>http://dbpedia.org/resource/Kirzhach</uri>
-			</answer>
-		</answers>
-	</question>
-	<question answertype="resource" id="18" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Which birds are protected under the National Parks and Wildlife Act?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX res: <http://dbpedia.org/resource/>
-SELECT DISTINCT ?uri 
-WHERE {
-	?uri rdf:type dbo:Bird .	
-	?uri text:"protected under" text:"National Parks and Wildlife Act".
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Australian_Shelduck</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Chestnut_Teal</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Bar-shouldered_Dove</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Black-faced_Cuckoo-shrike</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Yellow_Thornbill</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Australasian_Shoveler</uri>
 			</answer>
 		</answers>
 	</question>
@@ -85,25 +119,6 @@ WHERE {
 	</question>
 
 
-	<question answertype="resource" id="16" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Which buildings owned by the crown overlook the North Sea?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT ?uri 
-WHERE {
-        ?uri rdf:type dbo:Building.
-        ?uri dbo:owner res:The_Crown . 
-        ?uri text:"overlook" text:"North Sea" .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Scarborough_Castle</uri>
-			</answer>
-		</answers>
-	</question>
 	<question answertype="resource" id="5" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Which recipients of the Victoria Cross died in the Battle of Arnhem?]]></string>
@@ -601,52 +616,5 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-	<question answertype="resource" id="14" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Which horses did The Long Fellow ride?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT DISTINCT ?uri 
-WHERE {
-        ?x text:"known as" text:"The Long Fellow" .
-        ?x dbo:raceHorse ?uri .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/St._Paddy</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Petite_Etoile</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Alleged_(horse)</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Crepello</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Sir_Ivor</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Empery</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Nijinsky_II</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/The_Minstrel</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Roberto_(horse)</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Never_Say_Die_(horse)</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Teenoso</uri>
-			</answer>
-		</answers>
-	</question>
+
 </dataset>
