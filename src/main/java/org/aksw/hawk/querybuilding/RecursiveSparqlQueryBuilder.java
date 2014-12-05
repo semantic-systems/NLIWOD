@@ -19,7 +19,7 @@ public class RecursiveSparqlQueryBuilder {
 			MutableTreeNode tmp = q.tree.getRoot();
 
 			recursion(returnSet, variableSet, tmp);
-			
+
 		} catch (CloneNotSupportedException e) {
 			log.error("Exception while recursion", e);
 		}
@@ -63,10 +63,9 @@ public class RecursiveSparqlQueryBuilder {
 				for (SPARQLQuery query : returnSet) {
 					SPARQLQuery variant1 = (SPARQLQuery) query.clone();
 					variant1.addFilterOverAbstractsContraint("?proj", tmp.label);
-					sb.add(variant1);
+
 					SPARQLQuery variant2 = (SPARQLQuery) query.clone();
 					variant2.addFilterOverAbstractsContraint("?const", tmp.label);
-					sb.add(variant2);
 
 					sb.add(variant1);
 					sb.add(variant2);
@@ -75,13 +74,26 @@ public class RecursiveSparqlQueryBuilder {
 				for (SPARQLQuery query : returnSet) {
 					SPARQLQuery variant1 = (SPARQLQuery) query.clone();
 					variant1.addFilterOverAbstractsContraint("?proj", tmp.label);
-					sb.add(variant1);
+
 					SPARQLQuery variant2 = (SPARQLQuery) query.clone();
 					variant2.addFilterOverAbstractsContraint("?const", tmp.label);
-					sb.add(variant2);
 
 					sb.add(variant1);
 					sb.add(variant2);
+				}
+			} else if (tmp.posTag.matches("ADD")) {
+				for (SPARQLQuery query : returnSet) {
+					SPARQLQuery variant1 = (SPARQLQuery) query.clone();
+					variant1.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
+					
+					SPARQLQuery variant2 = (SPARQLQuery) query.clone();
+					variant2.addFilter("?proj IN (<" + tmp.label + ">)");
+					
+					SPARQLQuery variant3 = (SPARQLQuery) query.clone();
+
+					sb.add(variant1);
+					sb.add(variant2);
+					sb.add(variant3);
 				}
 			} else {
 				log.error("Tmp: " + tmp.label + " pos: " + tmp.posTag);
