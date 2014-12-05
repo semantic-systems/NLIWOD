@@ -147,6 +147,8 @@ public class IndexDBO_classes {
 		System.out.println("pope " + index.search("pope").size());
 		System.out.println("island " + index.search("island").size());
 		System.out.println("building " + Joiner.on("\n").join(index.search("building")));
+		System.out.println("recipient " + Joiner.on("\n").join(index.search("recipient")));
+		System.out.println("recipients " + Joiner.on("\n").join(index.search("recipients")));
 
 	}
 }

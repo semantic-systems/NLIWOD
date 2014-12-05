@@ -145,7 +145,9 @@ public class DBOIndex {
 	public static void main(String args[]) throws IOException {
 		DBOIndex index = new DBOIndex();
 //		System.out.println(Joiner.on("\n").join(index.search("compose")));
-		
+		System.out.println("recipient " + Joiner.on("\n").join(index.search("recipient")));
+		System.out.println("recipients " + Joiner.on("\n").join(index.search("recipients")));
+
 		System.out.println(Joiner.on("\n").join(index.search("buildings")));
 	}
 }

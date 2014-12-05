@@ -51,8 +51,11 @@ public class RecursiveSparqlQueryBuilder {
 						SPARQLQuery variant4 = ((SPARQLQuery) query.clone());
 						variant4.addConstraint("?proj a <" + anno + ">.");
 
+						SPARQLQuery variant5 = ((SPARQLQuery) query.clone());
+						
 						sb.add(variant3);
 						sb.add(variant4);
+						sb.add(variant5);
 					} else {
 						log.error("Tmp: " + tmp.label + " pos: " + tmp.posTag);
 					}
