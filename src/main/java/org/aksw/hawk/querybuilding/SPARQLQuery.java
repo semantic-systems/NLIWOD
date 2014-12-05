@@ -11,7 +11,7 @@ import com.google.common.collect.Sets;
 
 public class SPARQLQuery implements Cloneable {
 
-	private static HashSet<String> stopwords = Sets.newHashSet("of", "and", "in");
+	private static HashSet<String> stopwords = Sets.newHashSet("of", "and", "in", "name");
 	public Set<String> constraintTriples = Sets.newHashSet();
 	public Set<String> filter = Sets.newHashSet();
 	public Map<String, Set<String>> textMapFromVariableToSetOfFullTextToken = Maps.newHashMap();

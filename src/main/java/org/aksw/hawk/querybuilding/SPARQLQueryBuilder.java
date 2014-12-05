@@ -21,23 +21,28 @@ public class SPARQLQueryBuilder {
 	SPARQLQueryBuilder_ProjectionPart projection;
 	SPARQLQueryBuilder_RootPart root;
 	private SPARQL sparql;
+	private RecursiveSparqlQueryBuilder recursiveSparqlQueryBuilder;
 
 	public SPARQLQueryBuilder(SPARQL sparql) {
 		this.projection = new SPARQLQueryBuilder_ProjectionPart();
 		this.root = new SPARQLQueryBuilder_RootPart();
 		this.sparql = sparql;
+
+		this.recursiveSparqlQueryBuilder = new RecursiveSparqlQueryBuilder();
 	}
 
 	public Map<String, Set<RDFNode>> build(Question q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		try {
 			// build projection part
-			Set<SPARQLQuery> queryStrings = projection.buildProjectionPart(this, q);
-			queryStrings = root.buildRootPart(queryStrings, q);
-			queryStrings = buildConstraintPart(queryStrings, q);
+			Set<SPARQLQuery> queryStrings = recursiveSparqlQueryBuilder.start(this, q);
+			// Set<SPARQLQuery> queryStrings =
+			// projection.buildProjectionPart(this, q);
+			// queryStrings = root.buildRootPart(queryStrings, q);
+			// queryStrings = buildConstraintPart(queryStrings, q);
 
 			// Pruning
-			log.info("Number of Queries before pruning: " + queryStrings.size());
+			log.debug("Number of Queries before pruning: " + queryStrings.size());
 			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
 			// FIXME disjointness killt die richtige antwort für philosopher
 			// ohne die filter werden mehr fragen richtig beantwortet aber das
@@ -49,11 +54,12 @@ public class SPARQLQueryBuilder {
 
 			GraphNonSCCPruner gSCCPruner = new GraphNonSCCPruner();
 			DisjointnessBasedQueryFilter filter = new DisjointnessBasedQueryFilter(sparql.qef);
-//			 queryStrings = filter.filter(queryStrings);
+			// queryStrings = filter.filter(queryStrings);
+			queryStrings = pruneIfTextFilterOverMoreThanOneVariable(queryStrings);
 			queryStrings = gSCCPruner.prune(queryStrings);
 			queryStrings = UnboundTriple.prune(queryStrings, 1);
 			// queryStrings = UnboundTriple.pruneLooseEndsOfBGP(queryStrings);
-			log.info("Number of Queries: " + queryStrings.size());
+			log.debug("Number of Queries: " + queryStrings.size());
 
 			int i = 0;
 			for (SPARQLQuery query : queryStrings) {
@@ -66,15 +72,25 @@ public class SPARQLQueryBuilder {
 					numberOfOverallQueriesExecuted++;
 				}
 			}
-		} catch (CloneNotSupportedException e) {
-			log.error(e.getLocalizedMessage(), e);
+			// } catch (CloneNotSupportedException e) {
+			// log.error(e.getLocalizedMessage(), e);
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(), e);
 		} finally {
 			System.gc();
 		}
-		log.info("Number of sofar executed queries: " + numberOfOverallQueriesExecuted);
+		log.debug("Number of sofar executed queries: " + numberOfOverallQueriesExecuted);
 		return answer;
+	}
+
+	private Set<SPARQLQuery> pruneIfTextFilterOverMoreThanOneVariable(Set<SPARQLQuery> queryStrings) {
+		Set<SPARQLQuery> returnList = Sets.newHashSet();
+		for (SPARQLQuery query : queryStrings) {
+			if (query.textMapFromVariableToSetOfFullTextToken.size() <= 1) {
+				returnList.add(query);
+			}
+		}
+		return returnList;
 	}
 
 	private boolean queryHasBoundVariables(SPARQLQuery queryString) {
@@ -127,34 +143,34 @@ public class SPARQLQueryBuilder {
 					}
 				} else if (tmp.posTag.equals("CombinedNN")) {
 					for (SPARQLQuery query : queryStrings) {
-							SPARQLQuery variant1 = (SPARQLQuery) query.clone();
-							variant1.addFilterOverAbstractsContraint("?proj", tmp.label);
-							sb.add(variant1);
+						SPARQLQuery variant1 = (SPARQLQuery) query.clone();
+						variant1.addFilterOverAbstractsContraint("?proj", tmp.label);
+						sb.add(variant1);
 
-							SPARQLQuery variant2 = (SPARQLQuery) query.clone();
-							variant2.addFilterOverAbstractsContraint("?const", tmp.label);
-							sb.add(variant2);
+						SPARQLQuery variant2 = (SPARQLQuery) query.clone();
+						variant2.addFilterOverAbstractsContraint("?const", tmp.label);
+						sb.add(variant2);
 
-							// Yuri Gagarin is the first man in space but in
-							// wikipedia he is refered to as first human in
-							// space thats why we are also looking into redirect
-							// labels
-							// TODO hack to do true casing
-							// to my future I:
-							// solve that by indexing redirects like you did for
-							// dbastracts so you can full-text search them
-							char[] stringArray = tmp.label.trim().toCharArray();
-							stringArray[0] = Character.toUpperCase(stringArray[0]);
-							String str = new String(stringArray);
-							
-							SPARQLQuery variant3 = (SPARQLQuery) query.clone();
-							variant3.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \"" + str + "\"@en.");
-							variant3.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?proj.");
-							sb.add(variant3);
-							SPARQLQuery variant4 = (SPARQLQuery) query.clone();
-							variant4.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \"" + str + "\"@en.");
-							variant4.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?const.");
-							sb.add(variant4);
+						// Yuri Gagarin is the first man in space but in
+						// wikipedia he is refered to as first human in
+						// space thats why we are also looking into redirect
+						// labels
+						// TODO hack to do true casing
+						// to my future I:
+						// solve that by indexing redirects like you did for
+						// dbastracts so you can full-text search them
+						char[] stringArray = tmp.label.trim().toCharArray();
+						stringArray[0] = Character.toUpperCase(stringArray[0]);
+						String str = new String(stringArray);
+
+						SPARQLQuery variant3 = (SPARQLQuery) query.clone();
+						variant3.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \"" + str + "\"@en.");
+						variant3.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?proj.");
+						sb.add(variant3);
+						SPARQLQuery variant4 = (SPARQLQuery) query.clone();
+						variant4.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \"" + str + "\"@en.");
+						variant4.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?const.");
+						sb.add(variant4);
 					}
 				} else if (tmp.posTag.equals("NN")) {
 					for (SPARQLQuery query : queryStrings) {
