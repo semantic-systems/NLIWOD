@@ -24,6 +24,7 @@ import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -145,6 +146,7 @@ public class IndexDBO_classes {
 		System.out.println("basketball player " + index.search("basketball player").size());
 		System.out.println("pope " + index.search("pope").size());
 		System.out.println("island " + index.search("island").size());
+		System.out.println("building " + Joiner.on("\n").join(index.search("building")));
 
 	}
 }

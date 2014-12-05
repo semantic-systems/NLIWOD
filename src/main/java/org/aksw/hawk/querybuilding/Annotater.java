@@ -155,7 +155,7 @@ public class Annotater {
 	 */
 	private void annotateProjectionLeftTree(MutableTree tree) {
 		Stack<MutableTreeNode> stack = new Stack<>();
-		if (tree.getRoot()!=null&&tree.getRoot().getChildren() != null&&!tree.getRoot().getChildren().isEmpty()) {
+		if (tree.getRoot() != null && tree.getRoot().getChildren() != null && !tree.getRoot().getChildren().isEmpty()) {
 			stack.push(tree.getRoot().getChildren().get(0));
 
 			while (!stack.isEmpty()) {
@@ -201,7 +201,13 @@ public class Annotater {
 					// parse trees where the root is a NN(.)*
 					if (posTag.matches("NN(.)*")) {
 						// TODO ask actress also in dbo owl
-						if (classesIndex.search(label).size() > 0 || propertiesIndex.search(label).size() > 0 || dboIndex.search(label).size() > 0) {
+						if (posTag.matches("NNS")) {
+							// TODO improve lemmatization. e.g.,
+							// birds->bird, buildings -> building
+							if (tmp.lemma != null)
+								label = tmp.lemma;
+						}
+						if (classesIndex.search(label).size() > 0 || propertiesIndex.search(label).size() > 0) {
 							ArrayList<String> uris = classesIndex.search(label);
 							for (String resourceURL : uris) {
 								tmp.addAnnotation(resourceURL);
@@ -210,11 +216,13 @@ public class Annotater {
 							for (String resourceURL : uris) {
 								tmp.addAnnotation(resourceURL);
 							}
-							uris = dboIndex.search(label);
+
+						} else if (dboIndex.search(label).size() > 0) {
+							// is not the prefered lookup
+							ArrayList<String> uris = dboIndex.search(label);
 							for (String resourceURL : uris) {
 								tmp.addAnnotation(resourceURL);
 							}
-
 						} else {
 							// full text lookup
 							// addAbstractsContainingLabel(tmp);
