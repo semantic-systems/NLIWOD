@@ -42,8 +42,12 @@ public class RecursiveSparqlQueryBuilder {
 						SPARQLQuery variant2 = ((SPARQLQuery) query.clone());
 						variant2.addConstraint("?const <" + anno + "> ?proj.");
 
+						SPARQLQuery variant3 = ((SPARQLQuery) query.clone());
+						variant3.addConstraint("?const ?proot ?proj.");
+						
 						sb.add(variant1);
 						sb.add(variant2);
+						sb.add(variant3);
 					} else if (tmp.posTag.matches("NN(.)*")) {
 						SPARQLQuery variant3 = ((SPARQLQuery) query.clone());
 						variant3.addConstraint("?const a <" + anno + ">.");
