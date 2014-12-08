@@ -127,6 +127,8 @@ public class IndexDBO_properties {
 	public static void main(String args[]) {
 		IndexDBO_properties index = new IndexDBO_properties();
 		System.out.println(Joiner.on("\t").join(index.search("king")));
+		System.out.println("currencies " + Joiner.on("\n").join(index.search("currencies")));
+		System.out.println("currency " + Joiner.on("\n").join(index.search("currency")));
 
 	}
 }

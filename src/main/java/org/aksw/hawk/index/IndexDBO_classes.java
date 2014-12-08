@@ -149,6 +149,8 @@ public class IndexDBO_classes {
 		System.out.println("building " + Joiner.on("\n").join(index.search("building")));
 		System.out.println("recipient " + Joiner.on("\n").join(index.search("recipient")));
 		System.out.println("recipients " + Joiner.on("\n").join(index.search("recipients")));
+		System.out.println("currencies " + Joiner.on("\n").join(index.search("currencies")));
+		System.out.println("currency " + Joiner.on("\n").join(index.search("currency")));
 
 	}
 }
