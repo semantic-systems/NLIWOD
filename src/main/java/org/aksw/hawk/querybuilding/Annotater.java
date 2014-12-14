@@ -72,6 +72,25 @@ public class Annotater {
 						tmp.addAnnotation(uri);
 					}
 				}
+				// use lemma to increase chances to find sth.
+				if (tmp.getAnnotations().isEmpty()) {
+					if (tmp.lemma != null) {
+						label = tmp.lemma;
+					}
+					search = classesIndex.search(label);
+					for (String uri : search) {
+						tmp.addAnnotation(uri);
+					}
+					search = propertiesIndex.search(label);
+					for (String uri : search) {
+						tmp.addAnnotation(uri);
+					}
+					search = dboIndex.search(label);
+					for (String uri : search) {
+						tmp.addAnnotation(uri);
+					}
+
+				}
 				// add fall back to full text for cases like
 				// "crown"->"The_Crown" which are not found yet by NED
 				// approaches

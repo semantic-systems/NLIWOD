@@ -49,6 +49,13 @@ public class RecursiveSparqlQueryBuilder {
 						sb.add(variant2);
 						sb.add(variant3);
 					} else if (tmp.posTag.matches("NN(.)*|WRB")) {
+						//nn can be predicats, e.g. currency
+						SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
+						variant1.addConstraint("?proj  <" + anno + "> ?const.");
+
+						SPARQLQuery variant2 = ((SPARQLQuery) query.clone());
+						variant2.addConstraint("?const <" + anno + "> ?proj.");
+						
 						SPARQLQuery variant3 = ((SPARQLQuery) query.clone());
 						variant3.addConstraint("?const a <" + anno + ">.");
 
@@ -57,6 +64,8 @@ public class RecursiveSparqlQueryBuilder {
 
 						SPARQLQuery variant5 = ((SPARQLQuery) query.clone());
 						
+//						sb.add(variant1);
+						sb.add(variant2);
 						sb.add(variant3);
 						sb.add(variant4);
 						sb.add(variant5);
@@ -66,7 +75,7 @@ public class RecursiveSparqlQueryBuilder {
 				}
 			}
 		} else {
-			if (tmp.posTag.equals("CombinedNN")) {
+			if (tmp.posTag.matches("CombinedNN|NNP(.)*")) {
 				for (SPARQLQuery query : returnSet) {
 					SPARQLQuery variant1 = (SPARQLQuery) query.clone();
 					variant1.addFilterOverAbstractsContraint("?proj", tmp.label);
@@ -83,18 +92,18 @@ public class RecursiveSparqlQueryBuilder {
 					// to my future I: solve that by indexing redirects like you did for dbastracts so you can full-text search them
 					
 					// FIXME FIXME TODO BUG fix it by better indexing all literal values
-					char[] stringArray = tmp.label.trim().toCharArray();
-					stringArray[0] = Character.toUpperCase(stringArray[0]);
-					String str = new String(stringArray);
-
-					SPARQLQuery variant3 = (SPARQLQuery) query.clone();
-					variant3.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \"" + str + "\"@en.");
-					variant3.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?proj.");
-					sb.add(variant3);
-					SPARQLQuery variant4 = (SPARQLQuery) query.clone();
-					variant4.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \"" + str + "\"@en.");
-					variant4.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?const.");
-					sb.add(variant4);
+//					char[] stringArray = tmp.label.trim().toCharArray();
+//					stringArray[0] = Character.toUpperCase(stringArray[0]);
+//					String str = new String(stringArray);
+//
+//					SPARQLQuery variant3 = (SPARQLQuery) query.clone();
+//					variant3.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \"" + str + "\"@en.");
+//					variant3.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?proj.");
+//					sb.add(variant3);
+//					SPARQLQuery variant4 = (SPARQLQuery) query.clone();
+//					variant4.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \"" + str + "\"@en.");
+//					variant4.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?const.");
+//					sb.add(variant4);
 				}
 			} else if (tmp.posTag.matches("VB(.)*")) {
 				for (SPARQLQuery query : returnSet) {
