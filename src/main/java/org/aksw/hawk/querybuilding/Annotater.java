@@ -1,6 +1,7 @@
 package org.aksw.hawk.querybuilding;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.Stack;
 
 import org.aksw.autosparql.commons.qald.Question;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.Sets;
 
 public class Annotater {
 	// TODO refactor class and add addAll!!! to mutabletreenode
@@ -21,6 +23,8 @@ public class Annotater {
 	IndexDBO_classes classesIndex = new IndexDBO_classes();
 	IndexDBO_properties propertiesIndex = new IndexDBO_properties();
 	DBOIndex dboIndex = new DBOIndex();
+	// blacklisting is a bad solution but good for ambiguous nouns like "people"
+	Set<String> blacklist = Sets.newHashSet("people");
 	QueryExecutionFactory qef;
 
 	public Annotater(SPARQL sparql) {
@@ -55,55 +59,58 @@ public class Annotater {
 			MutableTreeNode tmp = stack.pop();
 			String label = tmp.label;
 			String posTag = tmp.posTag;
-			if (posTag.matches("NN(.)*") && tmp.getAnnotations().isEmpty()) {
-				ArrayList<String> search = classesIndex.search(label);
-				if (!search.isEmpty()) {
-					for (String uri : search) {
-						tmp.addAnnotation(uri);
-					}
-				} else if (!propertiesIndex.search(label).isEmpty()) {
-					search = propertiesIndex.search(label);
-					for (String uri : search) {
-						tmp.addAnnotation(uri);
-					}
-				} else {
-					search = dboIndex.search(label);
-					for (String uri : search) {
-						tmp.addAnnotation(uri);
-					}
-				}
-				// use lemma to increase chances to find sth.
-				if (tmp.getAnnotations().isEmpty()) {
-					if (tmp.lemma != null) {
-						label = tmp.lemma;
-					}
-					search = classesIndex.search(label);
-					for (String uri : search) {
-						tmp.addAnnotation(uri);
-					}
-					search = propertiesIndex.search(label);
-					for (String uri : search) {
-						tmp.addAnnotation(uri);
-					}
-					search = dboIndex.search(label);
-					for (String uri : search) {
-						tmp.addAnnotation(uri);
-					}
+			if (!blacklist.contains(label)) {
 
+				if (posTag.matches("NN(.)*") && tmp.getAnnotations().isEmpty()) {
+					ArrayList<String> search = classesIndex.search(label);
+					if (!search.isEmpty()) {
+						for (String uri : search) {
+							tmp.addAnnotation(uri);
+						}
+					} else if (!propertiesIndex.search(label).isEmpty()) {
+						search = propertiesIndex.search(label);
+						for (String uri : search) {
+							tmp.addAnnotation(uri);
+						}
+					} else {
+						search = dboIndex.search(label);
+						for (String uri : search) {
+							tmp.addAnnotation(uri);
+						}
+					}
+					// use lemma to increase chances to find sth.
+					if (tmp.getAnnotations().isEmpty()) {
+						if (tmp.lemma != null) {
+							label = tmp.lemma;
+						}
+						search = classesIndex.search(label);
+						for (String uri : search) {
+							tmp.addAnnotation(uri);
+						}
+						search = propertiesIndex.search(label);
+						for (String uri : search) {
+							tmp.addAnnotation(uri);
+						}
+						search = dboIndex.search(label);
+						for (String uri : search) {
+							tmp.addAnnotation(uri);
+						}
+
+					}
+					// add fall back to full text for cases like
+					// "crown"->"The_Crown" which are not found yet by NED
+					// approaches
+					// FIXME addAbstractsContainingLabel(tmp);
+				} else if (posTag.matches("CombinedNN") && tmp.getAnnotations().isEmpty()) {
+					// FIXME addAbstractsContainingLabel(tmp);
+				} else if (tmp.getAnnotations().isEmpty() && (posTag.matches("ADD") || posTag.matches("VB(.)*"))) {
+					// expected behaviour
+				} else {
+					log.debug("Unrecognized node: " + tmp);
 				}
-				// add fall back to full text for cases like
-				// "crown"->"The_Crown" which are not found yet by NED
-				// approaches
-				// FIXME addAbstractsContainingLabel(tmp);
-			} else if (posTag.matches("CombinedNN") && tmp.getAnnotations().isEmpty()) {
-				// FIXME addAbstractsContainingLabel(tmp);
-			} else if (tmp.getAnnotations().isEmpty() && (posTag.matches("ADD") || posTag.matches("VB(.)*"))) {
-				// expected behaviour
-			} else {
-				log.debug("Unrecognized node: " + tmp);
-			}
-			for (MutableTreeNode child : tmp.getChildren()) {
-				stack.push(child);
+				for (MutableTreeNode child : tmp.getChildren()) {
+					stack.push(child);
+				}
 			}
 		}
 	}
@@ -182,79 +189,86 @@ public class Annotater {
 				String label = tmp.label;
 				String posTag = tmp.posTag;
 				// only one projection variable node
-				if (tmp.children.size() == 0) {
-					if (posTag.matches("WRB|WP")) {
-						// gives only hints towards the type of projection
-						// variable
-						if (label.equals("Where")) {
-							tmp.addAnnotation("http://dbpedia.org/ontology/Place");
-						} else if (label.equals("Who")) {
-							tmp.addAnnotation("http://dbpedia.org/ontology/Agent");
-						}
-					} else if (posTag.equals("CombinedNN")) {
-						// full text lookup
-						// FIXME addAbstractsContainingLabel(tmp);
-					} else if (posTag.matches("NN(.)*")) {
-						// DBO look up
-						if (posTag.matches("NNS")) {
-							// TODO improve lemmatization. e.g., birds->bird
-							if (tmp.lemma != null)
-								label = tmp.lemma;
-						}
-						if (classesIndex.search(label).size() > 0) {
-							ArrayList<String> uris = classesIndex.search(label);
-							for (String resourceURL : uris) {
-								tmp.addAnnotation(resourceURL);
+				if (!blacklist.contains(label)) {
+					if (tmp.children.size() == 0) {
+						if (posTag.matches("WRB|WP")) {
+							// gives only hints towards the type of projection
+							// variable
+							if (label.equals("Where")) {
+								tmp.addAnnotation("http://dbpedia.org/ontology/Place");
+							} else if (label.equals("Who")) {
+								tmp.addAnnotation("http://dbpedia.org/ontology/Agent");
 							}
-						} else {
-							log.error("Strange case that never should happen");
-						}
-					} else if (posTag.equals("ADD")) {
-						// strange case
-						// since entities should not be the question word type
-						log.error("Strange case that never should happen: " + posTag);
-					}
-				} else {
-					// imperative word queries like "List .." or "Give me.." do
-					// have
-					// parse trees where the root is a NN(.)*
-					if (posTag.matches("NN(.)*")) {
-						// TODO ask actress also in dbo owl
-						if (posTag.matches("NNS")) {
-							// TODO improve lemmatization. e.g.,
-							// birds->bird, buildings -> building
-							if (tmp.lemma != null)
-								label = tmp.lemma;
-						}
-						if (classesIndex.search(label).size() > 0 || propertiesIndex.search(label).size() > 0) {
-							ArrayList<String> uris = classesIndex.search(label);
-							for (String resourceURL : uris) {
-								tmp.addAnnotation(resourceURL);
-							}
-							uris = propertiesIndex.search(label);
-							for (String resourceURL : uris) {
-								tmp.addAnnotation(resourceURL);
-							}
-
-						} else if (dboIndex.search(label).size() > 0) {
-							// is not the prefered lookup
-							ArrayList<String> uris = dboIndex.search(label);
-							for (String resourceURL : uris) {
-								tmp.addAnnotation(resourceURL);
-							}
-						} else {
+						} else if (posTag.equals("CombinedNN")) {
 							// full text lookup
-							// addAbstractsContainingLabel(tmp);
-
-							// since a full text lookup takes place we assume
-							// hereafter there will be a FILTER clause needed
-							// which
-							// can only be handled it annotated as CombinedNoun
-							// w.r.t. its postag
-							// tmp.posTag = "CombinedNN";
+							// FIXME addAbstractsContainingLabel(tmp);
+						} else if (posTag.matches("NN(.)*")) {
+							// DBO look up
+							if (posTag.matches("NNS")) {
+								// TODO improve lemmatization. e.g., birds->bird
+								if (tmp.lemma != null)
+									label = tmp.lemma;
+							}
+							if (classesIndex.search(label).size() > 0) {
+								ArrayList<String> uris = classesIndex.search(label);
+								for (String resourceURL : uris) {
+									tmp.addAnnotation(resourceURL);
+								}
+							} else {
+								log.error("Strange case that never should happen");
+							}
+						} else if (posTag.equals("ADD")) {
+							// strange case
+							// since entities should not be the question word
+							// type
+							log.error("Strange case that never should happen: " + posTag);
 						}
 					} else {
-						log.error("Strange case that never should happen: " + posTag);
+						// imperative word queries like "List .." or "Give me.."
+						// do
+						// have
+						// parse trees where the root is a NN(.)*
+						if (posTag.matches("NN(.)*")) {
+							// TODO ask actress also in dbo owl
+							if (posTag.matches("NNS")) {
+								// TODO improve lemmatization. e.g.,
+								// birds->bird, buildings -> building
+								if (tmp.lemma != null)
+									label = tmp.lemma;
+							}
+							if (classesIndex.search(label).size() > 0 || propertiesIndex.search(label).size() > 0) {
+								ArrayList<String> uris = classesIndex.search(label);
+								for (String resourceURL : uris) {
+									tmp.addAnnotation(resourceURL);
+								}
+								uris = propertiesIndex.search(label);
+								for (String resourceURL : uris) {
+									tmp.addAnnotation(resourceURL);
+								}
+
+							} else if (dboIndex.search(label).size() > 0) {
+								// is not the prefered lookup
+								ArrayList<String> uris = dboIndex.search(label);
+								for (String resourceURL : uris) {
+									tmp.addAnnotation(resourceURL);
+								}
+							} else {
+								// full text lookup
+								// addAbstractsContainingLabel(tmp);
+
+								// since a full text lookup takes place we
+								// assume
+								// hereafter there will be a FILTER clause
+								// needed
+								// which
+								// can only be handled it annotated as
+								// CombinedNoun
+								// w.r.t. its postag
+								// tmp.posTag = "CombinedNN";
+							}
+						} else {
+							log.error("Strange case that never should happen: " + posTag);
+						}
 					}
 				}
 				break;

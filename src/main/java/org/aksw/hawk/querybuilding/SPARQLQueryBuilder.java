@@ -28,7 +28,7 @@ public class SPARQLQueryBuilder {
 		this.root = new SPARQLQueryBuilder_RootPart();
 		this.sparql = sparql;
 
-		this.recursiveSparqlQueryBuilder = new RecursiveSparqlQueryBuilder();
+		this.recursiveSparqlQueryBuilder = new RecursiveSparqlQueryBuilder(sparql);
 	}
 
 	public Map<String, Set<RDFNode>> build(Question q) {
@@ -58,9 +58,12 @@ public class SPARQLQueryBuilder {
 			queryStrings = pruneIfTextFilterOverMoreThanOneVariable(queryStrings);
 			queryStrings = gSCCPruner.prune(queryStrings);
 			queryStrings = UnboundTriple.prune(queryStrings, 1);
+			queryStrings = UnboundTriple.prunecyclicStuff(queryStrings);
 			// queryStrings = UnboundTriple.pruneLooseEndsOfBGP(queryStrings);
 			log.debug("Number of Queries: " + queryStrings.size());
-
+			// TODO prune things like
+			// ?const <http://dbpedia.org/ontology/deathDate> ?proj.
+			// ?const <http://dbpedia.org/ontology/deathYear> ?proj.
 			int i = 0;
 			for (SPARQLQuery query : queryStrings) {
 				if (queryHasBoundVariables(query)) {

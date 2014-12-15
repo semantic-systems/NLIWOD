@@ -11,7 +11,8 @@ import com.google.common.collect.Sets;
 
 public class SPARQLQuery implements Cloneable {
 
-	private static HashSet<String> stopwords = Sets.newHashSet("of", "and", "in", "name");
+	// prune by lemma for verbs
+	private static HashSet<String> stopwords = Sets.newHashSet("of", "and", "in", "name", "was");
 	public Set<String> constraintTriples = Sets.newHashSet();
 	public Set<String> filter = Sets.newHashSet();
 	public Map<String, Set<String>> textMapFromVariableToSetOfFullTextToken = Maps.newHashMap();
@@ -88,12 +89,13 @@ public class SPARQLQuery implements Cloneable {
 		for (String variable : textMapFromVariableToSetOfFullTextToken.keySet()) {
 			// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
 			// anti-apartheid activist').
-			sb.append(variable + " text:query (<http://dbpedia.org/ontology/abstract> '");
 			ArrayList<String> list = Lists.newArrayList(textMapFromVariableToSetOfFullTextToken.get(variable));
-			StringBuilder fulltext = new StringBuilder();
-			for (int i = 0; i < list.size(); i++) {
-				// Stopwords introduced to prevent Lucene from doing quatsch
-				if (!stopwords.contains(list.get(i))) {
+			// Stopwords introduced to prevent Lucene from doing quatsch
+			list.removeAll(stopwords);
+			if (!list.isEmpty()) {
+				sb.append(variable + " text:query (<http://dbpedia.org/ontology/abstract> '");
+				StringBuilder fulltext = new StringBuilder();
+				for (int i = 0; i < list.size(); i++) {
 					// TODO photographer does not match photographers in index
 					// temporary solution is a a hack with ~ for fuzzy
 					if (i > 0 && fulltext.length() > 0) {
@@ -101,11 +103,11 @@ public class SPARQLQuery implements Cloneable {
 					}
 					fulltext.append(list.get(i) + "~1");
 				}
+				sb.append(fulltext.toString());
+				// return 100 uris from text index
+				// TODO decrease that number by introducing a ranking factor
+				sb.append("' " + 1000 + "). \n");
 			}
-			sb.append(fulltext.toString());
-			// return 100 uris from text index
-			// TODO decrease that number by introducing a ranking factor
-			sb.append("' " + 1000 + "). \n");
 		}
 		for (String constraint : constraintTriples) {
 			sb.append(constraint + " \n");

@@ -76,7 +76,7 @@ public class DBOIndex {
 		try {
 			log.debug("\t start asking index...");
 
-			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 1);
+			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 0);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
 
 			isearcher.search(q, collector);
@@ -150,5 +150,6 @@ public class DBOIndex {
 		System.out.println("currencies " + Joiner.on("\n").join(index.search("currencies")));
 		System.out.println("currency " + Joiner.on("\n").join(index.search("currency")));
 		System.out.println("buildings " + Joiner.on("\n").join(index.search("buildings")));
+		System.out.println("people " + Joiner.on("\n").join(index.search("people")));
 	}
 }

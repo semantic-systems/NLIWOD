@@ -4,13 +4,22 @@ import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.nlp.MutableTreeNode;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.ResultSet;
 
 public class RecursiveSparqlQueryBuilder {
 	Logger log = LoggerFactory.getLogger(RecursiveSparqlQueryBuilder.class);
+	private SPARQL sparql;
+
+	public RecursiveSparqlQueryBuilder(SPARQL sparql) {
+		this.sparql = sparql;
+	}
 
 	public Set<SPARQLQuery> start(SPARQLQueryBuilder sparqlQueryBuilder, Question q) {
 		Set<SPARQLQuery> returnSet = Sets.newHashSet(new SPARQLQuery());
@@ -44,18 +53,18 @@ public class RecursiveSparqlQueryBuilder {
 
 						SPARQLQuery variant3 = ((SPARQLQuery) query.clone());
 						variant3.addConstraint("?const ?proot ?proj.");
-						
+
 						sb.add(variant1);
 						sb.add(variant2);
 						sb.add(variant3);
 					} else if (tmp.posTag.matches("NN(.)*|WRB")) {
-						//nn can be predicats, e.g. currency
+						// nn can be predicats, e.g. currency
 						SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
 						variant1.addConstraint("?proj  <" + anno + "> ?const.");
 
 						SPARQLQuery variant2 = ((SPARQLQuery) query.clone());
 						variant2.addConstraint("?const <" + anno + "> ?proj.");
-						
+
 						SPARQLQuery variant3 = ((SPARQLQuery) query.clone());
 						variant3.addConstraint("?const a <" + anno + ">.");
 
@@ -63,13 +72,13 @@ public class RecursiveSparqlQueryBuilder {
 						variant4.addConstraint("?proj a <" + anno + ">.");
 
 						SPARQLQuery variant5 = ((SPARQLQuery) query.clone());
-						
-//						sb.add(variant1);
+
+						// sb.add(variant1);
 						sb.add(variant2);
 						sb.add(variant3);
 						sb.add(variant4);
 						sb.add(variant5);
-					}   else {
+					} else {
 						log.error("Tmp: " + tmp.label + " pos: " + tmp.posTag);
 					}
 				}
@@ -85,25 +94,31 @@ public class RecursiveSparqlQueryBuilder {
 
 					sb.add(variant1);
 					sb.add(variant2);
-					
-					// Yuri Gagarin is the first man in space but in wikipedia he is refered to as first human in space thats why we are also looking into redirect
+
+					// Yuri Gagarin is the first man in space but in wikipedia
+					// he is refered to as first human in space thats why we are
+					// also looking into redirect
 					// labels
 					// TODO hack to do true casing
-					// to my future I: solve that by indexing redirects like you did for dbastracts so you can full-text search them
-					
-					// FIXME FIXME TODO BUG fix it by better indexing all literal values
-//					char[] stringArray = tmp.label.trim().toCharArray();
-//					stringArray[0] = Character.toUpperCase(stringArray[0]);
-//					String str = new String(stringArray);
-//
-//					SPARQLQuery variant3 = (SPARQLQuery) query.clone();
-//					variant3.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \"" + str + "\"@en.");
-//					variant3.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?proj.");
-//					sb.add(variant3);
-//					SPARQLQuery variant4 = (SPARQLQuery) query.clone();
-//					variant4.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \"" + str + "\"@en.");
-//					variant4.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?const.");
-//					sb.add(variant4);
+					// to my future I: solve that by indexing redirects like you
+					// did for dbastracts so you can full-text search them
+
+					// FIXME FIXME TODO BUG fix it by better indexing all
+					// literal values
+					// char[] stringArray = tmp.label.trim().toCharArray();
+					// stringArray[0] = Character.toUpperCase(stringArray[0]);
+					// String str = new String(stringArray);
+					//
+					// SPARQLQuery variant3 = (SPARQLQuery) query.clone();
+					// variant3.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \""
+					// + str + "\"@en.");
+					// variant3.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?proj.");
+					// sb.add(variant3);
+					// SPARQLQuery variant4 = (SPARQLQuery) query.clone();
+					// variant4.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \""
+					// + str + "\"@en.");
+					// variant4.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?const.");
+					// sb.add(variant4);
 				}
 			} else if (tmp.posTag.matches("VB(.)*")) {
 				for (SPARQLQuery query : returnSet) {
@@ -117,13 +132,39 @@ public class RecursiveSparqlQueryBuilder {
 					sb.add(variant2);
 				}
 			} else if (tmp.posTag.matches("ADD")) {
+				Set<String> origLabels = getOrigLabel(tmp.label);
 				for (SPARQLQuery query : returnSet) {
 					SPARQLQuery variant1 = (SPARQLQuery) query.clone();
 					variant1.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
-					
+
 					SPARQLQuery variant2 = (SPARQLQuery) query.clone();
 					variant2.addFilter("?proj IN (<" + tmp.label + ">)");
-					
+
+					SPARQLQuery variant3 = (SPARQLQuery) query.clone();
+
+					// TODO hack query for correct label of node ie Cleopatra
+					for (String origLabel : origLabels) {
+						SPARQLQuery variant4 = (SPARQLQuery) query.clone();
+						variant4.addFilterOverAbstractsContraint("?proj", origLabel);
+
+						SPARQLQuery variant5 = (SPARQLQuery) query.clone();
+						variant5.addFilterOverAbstractsContraint("?const", origLabel);
+						sb.add(variant4);
+						sb.add(variant5);
+					}
+
+					sb.add(variant1);
+					sb.add(variant2);
+					sb.add(variant3);
+				}
+			} else if (tmp.posTag.matches("NN|NNS")) {
+				for (SPARQLQuery query : returnSet) {
+					SPARQLQuery variant1 = (SPARQLQuery) query.clone();
+					variant1.addFilterOverAbstractsContraint("?proj", tmp.label);
+
+					SPARQLQuery variant2 = (SPARQLQuery) query.clone();
+					variant2.addFilterOverAbstractsContraint("?const", tmp.label);
+
 					SPARQLQuery variant3 = (SPARQLQuery) query.clone();
 
 					sb.add(variant1);
@@ -141,5 +182,26 @@ public class RecursiveSparqlQueryBuilder {
 			recursion(returnSet, variableSet, child);
 		}
 
+	}
+
+	private Set<String> getOrigLabel(String label) {
+		// TODO reindex fulltext index with skos:alternate label instead of
+		// rdf-schema
+		Set<String> resultset = Sets.newHashSet();
+		String query = "SELECT str(?proj) as ?proj WHERE { <" + label + "> <http://www.w3.org/2000/01/rdf-schema#label> ?proj. FILTER(langMatches( lang(?proj), \"EN\" ))}";
+		try {
+			QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql");
+			QueryExecution qe = qef.createQueryExecution(query);
+			if (qe != null) {
+				log.debug(query.toString());
+				ResultSet results = qe.execSelect();
+				while (results.hasNext()) {
+					resultset.add(results.next().get("proj").toString());
+				}
+			}
+		} catch (Exception e) {
+			log.error(query.toString(), e);
+		}
+		return resultset;
 	}
 }
