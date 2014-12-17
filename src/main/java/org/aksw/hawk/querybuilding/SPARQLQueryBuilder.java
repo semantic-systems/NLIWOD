@@ -67,12 +67,14 @@ public class SPARQLQueryBuilder {
 			int i = 0;
 			for (SPARQLQuery query : queryStrings) {
 				if (queryHasBoundVariables(query)) {
-					log.debug(i++ + "/" + queryStrings.size() + "= " + query.toString());
-					Set<RDFNode> answerSet = sparql.sparql(query);
-					if (!answerSet.isEmpty()) {
-						answer.put(query.toString(), answerSet);
+					for (String queryString : query.generateQueries()) {
+						log.debug(i++ + "/" + queryStrings.size() + "= " + queryString);
+						Set<RDFNode> answerSet = sparql.sparql(queryString);
+						if (!answerSet.isEmpty()) {
+							answer.put(queryString, answerSet);
+						}
+						numberOfOverallQueriesExecuted++;
 					}
-					numberOfOverallQueriesExecuted++;
 				}
 			}
 			// } catch (CloneNotSupportedException e) {
@@ -89,7 +91,7 @@ public class SPARQLQueryBuilder {
 	private Set<SPARQLQuery> pruneIfTextFilterOverMoreThanOneVariable(Set<SPARQLQuery> queryStrings) {
 		Set<SPARQLQuery> returnList = Sets.newHashSet();
 		for (SPARQLQuery query : queryStrings) {
-			if (query.textMapFromVariableToSetOfFullTextToken.size() <= 1) {
+			if (query.textMapFromVariableToSingleFuzzyToken.size() <= 1) {
 				returnList.add(query);
 			}
 		}

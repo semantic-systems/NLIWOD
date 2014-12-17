@@ -92,7 +92,7 @@ public class GraphNonSCCPruner {
 
 		public Graph(SPARQLQuery query) {
 			String split[];
-			for(String fusekiVariable: query.textMapFromVariableToSetOfFullTextToken.keySet()){
+			for(String fusekiVariable: query.textMapFromVariableToSingleFuzzyToken.keySet()){
 				//?proj text:query (<http://dbpedia.org/ontology/abstract> 'influenced~1'). 
 				if (!mapStringInt.containsKey(fusekiVariable)) {
 					mapStringInt.put(fusekiVariable, nodeCount);

@@ -49,7 +49,7 @@ public class SPARQL {
 			// --> No reason to be nice
 			// qef = new QueryExecutionFactoryDelay(qef, 2000);
 			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
-//			qef = new QueryExecutionFactoryDelay(qef, 150);
+			// qef = new QueryExecutionFactoryDelay(qef, 150);
 			// qef = new QueryExecutionFactoryPaginated(qef, 10000);
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error("Could not create SPARQL interface! ", e);
@@ -62,10 +62,10 @@ public class SPARQL {
 	 * @param query
 	 * @return
 	 */
-	public Set<RDFNode> sparql(SPARQLQuery query) {
+	public Set<RDFNode> sparql(String query) {
 		Set<RDFNode> set = Sets.newHashSet();
 		try {
-			QueryExecution qe = qef.createQueryExecution(query.toString());
+			QueryExecution qe = qef.createQueryExecution(query);
 			if (qe != null && query.toString() != null) {
 				log.debug(query.toString());
 				ResultSet results = qe.execSelect();
@@ -74,7 +74,7 @@ public class SPARQL {
 				}
 			}
 		} catch (Exception e) {
-			 log.error(query.toString(), e);
+			log.error(query.toString(), e);
 		}
 		return set;
 	}
@@ -90,10 +90,11 @@ public class SPARQL {
 		// "http://dbpedia.org/resource/Pope_John_Paul_II"));
 		// query.addFilter("const",
 		// Lists.newArrayList("http://dbpedia.org/resource/Canale_d'Agordo"));
-
-		Set<RDFNode> set = sqb.sparql(query);
-		for (RDFNode item : set) {
-			System.out.println(item);
+		for (String q : query.generateQueries()) {
+			Set<RDFNode> set = sqb.sparql(q);
+			for (RDFNode item : set) {
+				System.out.println(item);
+			}
 		}
 	}
 }
