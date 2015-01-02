@@ -15,11 +15,6 @@ import com.hp.hpl.jena.query.ResultSet;
 
 public class RecursiveSparqlQueryBuilder {
 	Logger log = LoggerFactory.getLogger(RecursiveSparqlQueryBuilder.class);
-	private SPARQL sparql;
-
-	public RecursiveSparqlQueryBuilder(SPARQL sparql) {
-		this.sparql = sparql;
-	}
 
 	public Set<SPARQLQuery> start(SPARQLQueryBuilder sparqlQueryBuilder, Question q) {
 		Set<SPARQLQuery> returnSet = Sets.newHashSet(new SPARQLQuery());
@@ -78,13 +73,25 @@ public class RecursiveSparqlQueryBuilder {
 						sb.add(variant3);
 						sb.add(variant4);
 						sb.add(variant5);
+					} else if (tmp.posTag.matches("WP")) {
+						SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
+						variant1.addConstraint("?const a <" + anno + ">.");
+
+						SPARQLQuery variant2 = ((SPARQLQuery) query.clone());
+						variant2.addConstraint("?proj a <" + anno + ">.");
+
+						SPARQLQuery variant3 = ((SPARQLQuery) query.clone());
+
+						sb.add(variant1);
+						sb.add(variant2);
+						sb.add(variant3);
 					} else {
 						log.error("Tmp: " + tmp.label + " pos: " + tmp.posTag);
 					}
 				}
 			}
 		} else {
-			if (tmp.posTag.matches("CombinedNN|NNP(.)*")) {
+			if (tmp.posTag.matches("CombinedNN|NNP(.)*|JJ")) {
 				for (SPARQLQuery query : returnSet) {
 					SPARQLQuery variant1 = (SPARQLQuery) query.clone();
 					variant1.addFilterOverAbstractsContraint("?proj", tmp.label);
@@ -94,31 +101,6 @@ public class RecursiveSparqlQueryBuilder {
 
 					sb.add(variant1);
 					sb.add(variant2);
-
-					// Yuri Gagarin is the first man in space but in wikipedia
-					// he is refered to as first human in space thats why we are
-					// also looking into redirect
-					// labels
-					// TODO hack to do true casing
-					// to my future I: solve that by indexing redirects like you
-					// did for dbastracts so you can full-text search them
-
-					// FIXME FIXME TODO BUG fix it by better indexing all
-					// literal values
-					// char[] stringArray = tmp.label.trim().toCharArray();
-					// stringArray[0] = Character.toUpperCase(stringArray[0]);
-					// String str = new String(stringArray);
-					//
-					// SPARQLQuery variant3 = (SPARQLQuery) query.clone();
-					// variant3.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \""
-					// + str + "\"@en.");
-					// variant3.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?proj.");
-					// sb.add(variant3);
-					// SPARQLQuery variant4 = (SPARQLQuery) query.clone();
-					// variant4.addConstraint("?redir <http://www.w3.org/2000/01/rdf-schema#label> \""
-					// + str + "\"@en.");
-					// variant4.addConstraint("?redir <http://dbpedia.org/ontology/wikiPageRedirects> ?const.");
-					// sb.add(variant4);
 				}
 			} else if (tmp.posTag.matches("VB(.)*")) {
 				for (SPARQLQuery query : returnSet) {
@@ -128,8 +110,12 @@ public class RecursiveSparqlQueryBuilder {
 					SPARQLQuery variant2 = (SPARQLQuery) query.clone();
 					variant2.addFilterOverAbstractsContraint("?const", tmp.label);
 
+					SPARQLQuery variant3 = (SPARQLQuery) query.clone();
+
 					sb.add(variant1);
 					sb.add(variant2);
+					sb.add(variant3);
+
 				}
 			} else if (tmp.posTag.matches("ADD")) {
 				Set<String> origLabels = getOrigLabel(tmp.label);

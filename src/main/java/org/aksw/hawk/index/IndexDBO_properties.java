@@ -69,11 +69,11 @@ public class IndexDBO_properties {
 	}
 
 	public ArrayList<String> search(String object) {
-	ArrayList<String> uris= Lists.newArrayList();
+		ArrayList<String> uris = Lists.newArrayList();
 		try {
 			log.debug("\t start asking index...");
 
-			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 0);   
+			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 0);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
 
 			isearcher.search(q, collector);
@@ -85,7 +85,7 @@ public class IndexDBO_properties {
 			}
 			log.debug("\t finished asking index...");
 		} catch (Exception e) {
-			log.error(e.getLocalizedMessage() + " -> " + object,e);
+			log.error(e.getLocalizedMessage() + " -> " + object, e);
 		}
 		return uris;
 	}
@@ -101,7 +101,7 @@ public class IndexDBO_properties {
 
 	private void index() {
 		try {
-			Model model = RDFDataMgr.loadModel("resources/dbpedia_3Eng_property.ttl") ;
+			Model model = RDFDataMgr.loadModel("resources/dbpedia_3Eng_property.ttl");
 			StmtIterator stmts = model.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();
@@ -124,11 +124,4 @@ public class IndexDBO_properties {
 		iwriter.addDocument(doc);
 	}
 
-	public static void main(String args[]) {
-		IndexDBO_properties index = new IndexDBO_properties();
-		System.out.println(Joiner.on("\t").join(index.search("king")));
-		System.out.println("currencies " + Joiner.on("\n").join(index.search("currencies")));
-		System.out.println("currency " + Joiner.on("\n").join(index.search("currency")));
-
-	}
 }

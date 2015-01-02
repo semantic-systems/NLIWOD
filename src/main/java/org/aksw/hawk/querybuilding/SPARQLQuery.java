@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.jena.atlas.logging.Log;
+
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -56,13 +58,14 @@ public class SPARQLQuery implements Cloneable {
 	private void fuzzyToken(String variable, String label) {
 		// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
 		// anti-apartheid activist').
-
 		String[] separatedLabel = label.split("[ \\-]");
 		// to search in a string with whitespaces like "Nobel Prize"
 		if (textMapFromVariableToSingleFuzzyToken.containsKey(variable)) {
 			Set<String> set = textMapFromVariableToSingleFuzzyToken.get(variable);
 			for (String item : separatedLabel) {
-				set.add(item);
+				if (!item.isEmpty()) {
+					set.add(item);
+				}
 			}
 			textMapFromVariableToSingleFuzzyToken.put(variable, set);
 		} else {
@@ -100,6 +103,11 @@ public class SPARQLQuery implements Cloneable {
 			Set<String> list = Sets.newHashSet(this.textMapFromVariableToSingleFuzzyToken.get(key));
 			q.textMapFromVariableToSingleFuzzyToken.put(key, list);
 		}
+		q.textMapFromVariableToCombinedNNExactMatchToken = Maps.newHashMap();
+		for (String key : this.textMapFromVariableToCombinedNNExactMatchToken.keySet()) {
+			Set<String> list = Sets.newHashSet(this.textMapFromVariableToCombinedNNExactMatchToken.get(key));
+			q.textMapFromVariableToCombinedNNExactMatchToken.put(key, list);
+		}
 		return q;
 	}
 
@@ -110,9 +118,9 @@ public class SPARQLQuery implements Cloneable {
 
 	public HashSet<String> generateQueries() {
 		String fuzzyQuery = generateQueryStringWithFuzzy();
-		 String exactQuery = generateQueryStringWithExactMatch();
+		String exactQuery = generateQueryStringWithExactMatch();
 
-		return Sets.newHashSet(fuzzyQuery,exactQuery);
+		return Sets.newHashSet(fuzzyQuery, exactQuery);
 	}
 
 	private String generateQueryStringWithExactMatch() {

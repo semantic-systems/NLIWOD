@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.Question;
-import org.aksw.hawk.cache.AbstractIndexCache;
 import org.aksw.hawk.cache.CachedParseTree;
 import org.aksw.hawk.controller.Pipeline;
 import org.aksw.hawk.nlp.SentenceToSequence;
@@ -31,7 +30,6 @@ public class Hawk {
 		controller.nerdModule = new Fox();
 		controller.cParseTree = new CachedParseTree();
 
-		AbstractIndexCache cache = new AbstractIndexCache();
 		controller.sentenceToSequence = new SentenceToSequence();
 		
 		SPARQL sparql = new SPARQL();

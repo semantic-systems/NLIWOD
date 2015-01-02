@@ -135,18 +135,13 @@ public class Pipeline {
 
 	public static void main(String args[]) throws IOException {
 		
-		for (String file : new String[] { "resources/qald-4_hybrid_train.xml" }) { //"resources/qald-4_hybrid_test_withanswers.xml"}) { // "resources/qald-4_hybrid_train.xml" }) { // ,"resources/qald-4_multilingual_test_withanswers.xml"
-//			for (String file : new String[] { "resources/qald-4_multilingual_test_withanswers.xml" }) { // ,"resources/qald-4_multilingual_train_withanswers.xml"
-
+		for (String file : new String[] { "resources/qald-4_hybrid_train.xml" }) { // test_withanswers train 
 			Pipeline controller = new Pipeline();
 //		
 			log.info("Configuring controller");
 
 			controller.dataset = new File(file).getAbsolutePath();
 			controller.datasetLoader = new QALD_Loader();
-			// ASpotter fox = new Fox();
-			// ASpotter spot = new Spotlight();
-			// ASpotter tagMe = new TagMe();
 			// ASpotter wiki = new WikipediaMiner();
 			// controller.nerdModule = new MultiSpotter(fox, tagMe, wiki, spot);
 			controller.nerdModule = new Fox();

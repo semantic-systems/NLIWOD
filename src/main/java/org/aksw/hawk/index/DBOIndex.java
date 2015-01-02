@@ -25,7 +25,6 @@ import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -127,7 +126,6 @@ public class DBOIndex {
 				}
 			}
 			iwriter.commit();
-
 			iwriter.close();
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);
@@ -142,14 +140,4 @@ public class DBOIndex {
 		iwriter.addDocument(doc);
 	}
 
-	public static void main(String args[]) throws IOException {
-		DBOIndex index = new DBOIndex();
-//		System.out.println(Joiner.on("\n").join(index.search("compose")));
-		System.out.println("recipient " + Joiner.on("\n").join(index.search("recipient")));
-		System.out.println("recipients " + Joiner.on("\n").join(index.search("recipients")));
-		System.out.println("currencies " + Joiner.on("\n").join(index.search("currencies")));
-		System.out.println("currency " + Joiner.on("\n").join(index.search("currency")));
-		System.out.println("buildings " + Joiner.on("\n").join(index.search("buildings")));
-		System.out.println("people " + Joiner.on("\n").join(index.search("people")));
-	}
 }

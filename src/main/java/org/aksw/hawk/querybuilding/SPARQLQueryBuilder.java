@@ -7,7 +7,6 @@ import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.pruner.DisjointnessBasedQueryFilter;
 import org.aksw.hawk.pruner.GraphNonSCCPruner;
-import org.aksw.hawk.pruner.UnboundTriple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +27,7 @@ public class SPARQLQueryBuilder {
 		this.root = new SPARQLQueryBuilder_RootPart();
 		this.sparql = sparql;
 
-		this.recursiveSparqlQueryBuilder = new RecursiveSparqlQueryBuilder(sparql);
+		this.recursiveSparqlQueryBuilder = new RecursiveSparqlQueryBuilder();
 	}
 
 	public Map<String, Set<RDFNode>> build(Question q) {
@@ -56,9 +55,9 @@ public class SPARQLQueryBuilder {
 			DisjointnessBasedQueryFilter filter = new DisjointnessBasedQueryFilter(sparql.qef);
 			// queryStrings = filter.filter(queryStrings);
 			queryStrings = pruneIfTextFilterOverMoreThanOneVariable(queryStrings);
-			queryStrings = gSCCPruner.prune(queryStrings);
-			queryStrings = UnboundTriple.prune(queryStrings, 1);
-			queryStrings = UnboundTriple.prunecyclicStuff(queryStrings);
+//			queryStrings = gSCCPruner.prune(queryStrings);
+//			queryStrings = UnboundTriple.prune(queryStrings, 1);
+//			queryStrings = UnboundTriple.prunecyclicStuff(queryStrings);
 			// queryStrings = UnboundTriple.pruneLooseEndsOfBGP(queryStrings);
 			log.debug("Number of Queries: " + queryStrings.size());
 			// TODO prune things like
