@@ -1,11 +1,12 @@
 /**
  * 
  */
-package org.aksw.hawk.pruner;
+package org.aksw.hawk.pruner.disjointness;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import org.aksw.hawk.pruner.ISPARQLQueryPruner;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
@@ -29,7 +30,7 @@ import com.hp.hpl.jena.sparql.core.Var;
  * @author Lorenz Buehmann
  * 
  */
-public class DisjointnessBasedQueryFilter implements QueryFilter {
+public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 
 	private static final ParameterizedSparqlString domainQueryTemplate = new ParameterizedSparqlString("PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> SELECT ?dom WHERE {?p rdfs:domain ?o . ?o rdfs:subClassOf* ?dom .}");
 
@@ -53,7 +54,7 @@ public class DisjointnessBasedQueryFilter implements QueryFilter {
 	 * @see org.aksw.hawk.filtering.QueryFilter#filter(java.util.Set)
 	 */
 	@Override
-	public Set<SPARQLQuery> filter(Set<SPARQLQuery> queryStrings) {
+	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings) {
 		Set<SPARQLQuery> filteredQueries = Sets.newHashSet();
 
 		for (SPARQLQuery sparqlQuery : queryStrings) {
@@ -153,7 +154,7 @@ public class DisjointnessBasedQueryFilter implements QueryFilter {
 				// the types of the subject
 				for (Triple tp : outgoingTriplePatterns) {
 					Node predicate = tp.getPredicate();
-					if (predicate.isURI()&&!predicate.toString().equals("http://dbpedia.org/ontology/abstract")) {
+					if (predicate.isURI() && !predicate.toString().equals("http://dbpedia.org/ontology/abstract")) {
 						Set<Node> domain = getDomain(predicate.getURI());
 						if (conflicts(subjectTypes, domain)) {
 							logger.debug("Domain of " + predicate + " does not match types " + subjectTypes);
@@ -206,7 +207,8 @@ public class DisjointnessBasedQueryFilter implements QueryFilter {
 		SPARQLQuery query2 = new SPARQLQuery("?s a <http://dbpedia.org/ontology/Book>.");
 		query2.addConstraint("?s <http://dbpedia.org/ontology/birthDate> ?o.");
 
-		Set<SPARQLQuery> filtered = filter.filter(Sets.newHashSet(query1, query2));
+		Set<SPARQLQuery> filtered = filter.prune(Sets.newHashSet(query1, query2));
 		System.out.println(filtered);
 	}
+
 }

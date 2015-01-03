@@ -1,4 +1,4 @@
-package org.aksw.hawk.pruner;
+package org.aksw.hawk.nlp;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -6,16 +6,14 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import org.aksw.autosparql.commons.qald.Question;
-import org.aksw.hawk.nlp.MutableTree;
-import org.aksw.hawk.nlp.MutableTreeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 
-public class Pruner {
-	Logger log = LoggerFactory.getLogger(Pruner.class);
+public class MutableTreePruner {
+	Logger log = LoggerFactory.getLogger(MutableTreePruner.class);
 
 	public MutableTree prune(Question q) {
 		log.debug(q.tree.toString());

@@ -11,12 +11,11 @@ import java.util.Set;
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.autosparql.commons.qald.Question;
-import org.aksw.hawk.cache.AbstractIndexCache;
 import org.aksw.hawk.cache.CachedParseTree;
+import org.aksw.hawk.nlp.MutableTreePruner;
 import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
-import org.aksw.hawk.pruner.Pruner;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
@@ -32,7 +31,7 @@ public class Pipeline {
 	QALD_Loader datasetLoader;
 	public ASpotter nerdModule;
 	public CachedParseTree cParseTree;
-	public Pruner pruner;
+	public MutableTreePruner pruner;
 	public SentenceToSequence sentenceToSequence;
 	public Annotater annotater;
 	public SPARQLQueryBuilder queryBuilder;
@@ -135,7 +134,7 @@ public class Pipeline {
 
 	public static void main(String args[]) throws IOException {
 		
-		for (String file : new String[] { "resources/qald-4_hybrid_train.xml" }) { // test_withanswers train 
+		for (String file : new String[] { "resources/qald-4_hybrid_test_withanswers.xml" }) { // test_withanswers train 
 			Pipeline controller = new Pipeline();
 //		
 			log.info("Configuring controller");
@@ -151,19 +150,16 @@ public class Pipeline {
 
 			controller.cParseTree = new CachedParseTree();
 
-			AbstractIndexCache cache = new AbstractIndexCache();
-			// DBAbstractsIndex index = new DBAbstractsIndex(cache);
 			controller.sentenceToSequence = new SentenceToSequence();
 			
+			controller.annotater = new Annotater();
+
 			SPARQL sparql = new SPARQL();
 			controller.queryBuilder = new SPARQLQueryBuilder(sparql);
-			controller.annotater = new Annotater(sparql);
 
-			controller.pruner = new Pruner();
+			controller.pruner = new MutableTreePruner();
 			log.info("Run controller");
 			controller.run();
-			// TODO if transformed to webapp solve caching more clever
-			cache.writeCache();
 		}
 	}
 }

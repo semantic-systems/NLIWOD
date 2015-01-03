@@ -5,9 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.jena.atlas.logging.Log;
-
-import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -113,7 +110,7 @@ public class SPARQLQuery implements Cloneable {
 
 	@Override
 	public String toString() {
-		return Joiner.on("\n").join(generateQueries());
+		return generateQueryStringWithExactMatch();
 	}
 
 	public HashSet<String> generateQueries() {
@@ -125,7 +122,7 @@ public class SPARQLQuery implements Cloneable {
 
 	private String generateQueryStringWithExactMatch() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("PREFIX text:    <http://jena.apache.org/text#> \n");
+		sb.append("PREFIX text:<http://jena.apache.org/text#> \n");
 		sb.append("SELECT DISTINCT ?proj WHERE {\n ");
 		for (String variable : textMapFromVariableToCombinedNNExactMatchToken.keySet()) {
 			// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
@@ -161,7 +158,7 @@ public class SPARQLQuery implements Cloneable {
 
 	private String generateQueryStringWithFuzzy() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("PREFIX text:    <http://jena.apache.org/text#> \n");
+		sb.append("PREFIX text:<http://jena.apache.org/text#> \n");
 		sb.append("SELECT DISTINCT ?proj WHERE {\n ");
 		for (String variable : textMapFromVariableToSingleFuzzyToken.keySet()) {
 			// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela

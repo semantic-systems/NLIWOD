@@ -1,4 +1,4 @@
-package org.aksw.hawk.pruner;
+package org.aksw.hawk.pruner.disjointness;
 
 import java.util.ArrayList;
 import java.util.HashMap;

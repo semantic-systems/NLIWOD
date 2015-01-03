@@ -22,7 +22,7 @@ public class SPARQL {
 	Logger log = LoggerFactory.getLogger(SPARQL.class);
 	// TODO treshold can be increased by introducing prefixes
 	int sizeOfFilterThreshold = 25;
-	QueryExecutionFactory qef;
+	public QueryExecutionFactory qef;
 
 	public SPARQL() {
 		try {

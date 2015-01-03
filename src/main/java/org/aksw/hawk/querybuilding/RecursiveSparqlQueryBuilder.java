@@ -21,7 +21,6 @@ public class RecursiveSparqlQueryBuilder {
 		Set<String> variableSet = Sets.newHashSet("?proj", "?const");
 		try {
 			MutableTreeNode tmp = q.tree.getRoot();
-
 			recursion(returnSet, variableSet, tmp);
 
 		} catch (CloneNotSupportedException e) {
@@ -54,6 +53,7 @@ public class RecursiveSparqlQueryBuilder {
 						sb.add(variant3);
 					} else if (tmp.posTag.matches("NN(.)*|WRB")) {
 						// nn can be predicats, e.g. currency
+
 						SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
 						variant1.addConstraint("?proj  <" + anno + "> ?const.");
 
@@ -92,6 +92,10 @@ public class RecursiveSparqlQueryBuilder {
 			}
 		} else {
 			if (tmp.posTag.matches("CombinedNN|NNP(.)*|JJ")) {
+				/*
+				 * fall back to full text for cases like "crown"->"The_Crown"
+				 * which are not found yet by NED
+				 */
 				for (SPARQLQuery query : returnSet) {
 					SPARQLQuery variant1 = (SPARQLQuery) query.clone();
 					variant1.addFilterOverAbstractsContraint("?proj", tmp.label);
@@ -128,7 +132,13 @@ public class RecursiveSparqlQueryBuilder {
 
 					SPARQLQuery variant3 = (SPARQLQuery) query.clone();
 
-					// TODO hack query for correct label of node ie Cleopatra
+					sb.add(variant1);
+					sb.add(variant2);
+					sb.add(variant3);
+					/*
+					 * TODO hack query for correct label of node ie Cleopatra
+					 * can be undone when each ADD node knows is original label
+					 */
 					for (String origLabel : origLabels) {
 						SPARQLQuery variant4 = (SPARQLQuery) query.clone();
 						variant4.addFilterOverAbstractsContraint("?proj", origLabel);
@@ -138,10 +148,6 @@ public class RecursiveSparqlQueryBuilder {
 						sb.add(variant4);
 						sb.add(variant5);
 					}
-
-					sb.add(variant1);
-					sb.add(variant2);
-					sb.add(variant3);
 				}
 			} else if (tmp.posTag.matches("NN|NNS")) {
 				for (SPARQLQuery query : returnSet) {
@@ -171,8 +177,6 @@ public class RecursiveSparqlQueryBuilder {
 	}
 
 	private Set<String> getOrigLabel(String label) {
-		// TODO reindex fulltext index with skos:alternate label instead of
-		// rdf-schema
 		Set<String> resultset = Sets.newHashSet();
 		String query = "SELECT str(?proj) as ?proj WHERE { <" + label + "> <http://www.w3.org/2000/01/rdf-schema#label> ?proj. FILTER(langMatches( lang(?proj), \"EN\" ))}";
 		try {

@@ -10,7 +10,6 @@ import org.aksw.hawk.index.IndexDBO_classes;
 import org.aksw.hawk.index.IndexDBO_properties;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,18 +17,12 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 
 public class Annotater {
-	// TODO refactor class and add addAll!!! to mutabletreenode
 	Logger log = LoggerFactory.getLogger(Annotater.class);
 	IndexDBO_classes classesIndex = new IndexDBO_classes();
 	IndexDBO_properties propertiesIndex = new IndexDBO_properties();
 	DBOIndex dboIndex = new DBOIndex();
 	// blacklisting is a bad solution but good for ambiguous nouns like "people"
 	Set<String> blacklist = Sets.newHashSet("people");
-	QueryExecutionFactory qef;
-
-	public Annotater(SPARQL sparql) {
-		qef = sparql.qef;
-	}
 
 	public void annotateTree(Question q) {
 		MutableTree tree = q.tree;
@@ -95,18 +88,9 @@ public class Annotater {
 						for (String uri : search) {
 							tmp.addAnnotation(uri);
 						}
-
 					}
-					// add fall back to full text for cases like
-					// "crown"->"The_Crown" which are not found yet by NED
-					// approaches
-					// FIXME addAbstractsContainingLabel(tmp);
-				} else if (posTag.matches("CombinedNN") && tmp.getAnnotations().isEmpty()) {
-					// FIXME addAbstractsContainingLabel(tmp);
-				} else if (tmp.getAnnotations().isEmpty() && (posTag.matches("ADD") || posTag.matches("VB(.)*"))) {
-					// expected behaviour
 				} else {
-					log.debug("Unrecognized node: " + tmp);
+					log.debug("Not annotated node: " + tmp);
 				}
 				for (MutableTreeNode child : tmp.getChildren()) {
 					stack.push(child);
@@ -114,28 +98,6 @@ public class Annotater {
 			}
 		}
 	}
-
-	// FIXME think about whether this is really needed, i.e. whether
-	// CombinedNouns need to be materialized here
-	// no we do not need it
-
-	// private void addAbstractsContainingLabel(MutableTreeNode tmp) {
-	// log.error(tmp.toString());
-	// SPARQLQuery q = new SPARQLQuery();
-	// try {
-	// q.addFilterOverAbstractsContraint("?proj", tmp.label);
-	// q.setLuceneLimit(3000);
-	// QueryExecution qe = qef.createQueryExecution(q.toString());
-	// if (qe != null && q.toString() != null) {
-	// ResultSet results = qe.execSelect();
-	// while (results.hasNext()) {
-	// tmp.addAnnotation(results.next().get("proj").asResource().toString());
-	// }
-	// }
-	// } catch (Exception e) {
-	// log.error("label: " + tmp.label + " query: " + q, e);
-	// }
-	// }
 
 	/**
 	 * "Verbs most often refer to properties, thus a lexical entry with a
@@ -199,9 +161,6 @@ public class Annotater {
 							} else if (label.equals("Who")) {
 								tmp.addAnnotation("http://dbpedia.org/ontology/Agent");
 							}
-						} else if (posTag.equals("CombinedNN")) {
-							// full text lookup
-							// FIXME addAbstractsContainingLabel(tmp);
 						} else if (posTag.matches("NN(.)*")) {
 							// DBO look up
 							if (posTag.matches("NNS")) {
@@ -217,17 +176,14 @@ public class Annotater {
 							} else {
 								log.error("Strange case that never should happen");
 							}
-						} else if (posTag.equals("ADD")) {
-							// strange case
-							// since entities should not be the question word
-							// type
-							log.error("Strange case that never should happen: " + posTag);
+						} else {
+							log.debug("Not annotated node: " + tmp);
 						}
 					} else {
-						// imperative word queries like "List .." or "Give me.."
-						// do
-						// have
-						// parse trees where the root is a NN(.)*
+						/*
+						 * imperative word queries like "List .." or "Give me.."
+						 * do have parse trees where the root is a NN(.)*
+						 */
 						if (posTag.matches("NN(.)*")) {
 							// TODO ask actress also in dbo owl
 							if (posTag.matches("NNS")) {
@@ -254,17 +210,14 @@ public class Annotater {
 								}
 							} else {
 								// full text lookup
-								// addAbstractsContainingLabel(tmp);
 
-								// since a full text lookup takes place we
-								// assume
-								// hereafter there will be a FILTER clause
-								// needed
-								// which
-								// can only be handled it annotated as
-								// CombinedNoun
-								// w.r.t. its postag
-								// tmp.posTag = "CombinedNN";
+								/*
+								 * since a full text lookup takes place we
+								 * assume hereafter there will be a FILTER
+								 * clause needed which can only be handled it
+								 * annotated as CombinedNoun w.r.t. its postag
+								 */
+								log.debug("Not annotated node: " + tmp);
 							}
 						} else {
 							log.error("Strange case that never should happen: " + posTag);
