@@ -39,7 +39,7 @@ public class IndexDBO_classes {
 	public String FIELD_NAME_SUBJECT = "subject";
 	public String FIELD_NAME_PREDICATE = "predicate";
 	public String FIELD_NAME_OBJECT = "object";
-	private int numberOfDocsRetrievedFromIndex = 1000;
+	private int numberOfDocsRetrievedFromIndex = 100;
 
 	private Directory directory;
 	private IndexSearcher isearcher;
@@ -72,12 +72,7 @@ public class IndexDBO_classes {
 		try {
 			log.debug("\t start asking index...");
 
-			// FIXME distance evaluation should be done to reduce number of
-			// queries
-			// Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object),
-			// LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE);
 			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 0);
-
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
 
 			isearcher.search(q, collector);
@@ -114,16 +109,6 @@ public class IndexDBO_classes {
 			}
 
 			iwriter.commit();
-			// model = RDFDataMgr.loadModel("resources/yagoClassLabel.ttl");
-			// stmts = model.listStatements(null, RDFS.label, (RDFNode) null);
-			// while (stmts.hasNext()) {
-			// final Statement stmt = stmts.next();
-			// RDFNode label = stmt.getObject();
-			// addDocumentToIndex(stmt.getSubject(), "rdfs:label",
-			// label.asLiteral().getString());
-			// }
-			// iwriter.commit();
-
 			iwriter.close();
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);
@@ -138,13 +123,4 @@ public class IndexDBO_classes {
 		iwriter.addDocument(doc);
 	}
 
-	public static void main(String args[]) {
-		IndexDBO_classes index = new IndexDBO_classes();
-		System.out.println("king " + index.search("king").size());
-		System.out.println("street basketball player " + index.search("street basketball player").size());
-		System.out.println("basketball player " + index.search("basketball player").size());
-		System.out.println("pope " + index.search("pope").size());
-		System.out.println("island " + index.search("island").size());
-
-	}
 }

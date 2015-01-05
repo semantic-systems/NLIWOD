@@ -1,0 +1,42 @@
+SPARQL SELECT * {?proj <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Artist>. ?proj <http://www.w3.org/2000/01/rdf-schema#label> ?l . FILTER (bif:contains(?l,"Sean" ))};
+
+SPARQL SELECT * {?proj a <http://dbpedia.org/ontology/Artist> ;  <http://www.w3.org/2000/01/rdf-schema#label> ?l .};
+
+SPARQL SELECT * {?proj a <http://dbpedia.org/ontology/Artist>.};
+
+
+SPARQL SELECT DISTINCT ?p WHERE {?s ?p ?o};
+
+SPARQL SELECT DISTINCT * WHERE {?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?o} LIMIT 100;
+
+SPARQL SELECT DISTINCT * WHERE {?s ?p <http://dbpedia.org/ontology/Person>};
+
+SPARQL SELECT * {?proj <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Person>. ?proj <http://www.w3.org/2000/01/rdf-schema#label> ?l . FILTER (<bif:contains>(?l,"Angela" )) };
+
+SPARQL SELECT * {?s ?p ?l . FILTER (bif:contains(?l,"Thing" )) };
+
+SPARQL SELECT * {?s <http://www.w3.org/2000/01/rdf-schema#label> ?o} LIMIT 10;
+
+
+SPARQL SELECT * {?proj <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Artist>. ?proj <http://www.w3.org/2000/01/rdf-schema#label> ?l .?proj <http://xmlns.com/foaf/0.1/surname> ?o. FILTER (bif:contains(?l,"Sean" ))  };
+
+SPARQL SELECT * WHERE {
+ ?proj <http://dbpedia.org/ontology/abstract> ?o. 
+ FILTER (<bif:contains>(?o,"Greek")).
+ } 
+
+SPARQL SELECT * {<http://dbpedia.org/resource/Berlin> ?p ?proj};
+SPARQL SELECT * {<http://dbpedia.org/resource/Voltaire> <http://dbpedia.org/ontology/influenced> ?proj};
+SPARQL SELECT * {<http://dbpedia.org/resource/Louis-Ferdinand_Céline> <http://dbpedia.org/ontology/influenced> ?proj};
+
+SPARQL SELECT * {<http://dbpedia.org/resource/Jean-Paul_Sartre> ?p ?o};
+
+
+
+SPARQL SELECT ?const {?const ?p ?proj. FILTER (bif:contains(?proj,"refuse"))};
+SPARQL SELECT ?const ?p ?proj {?const ?p ?proj. FILTER (bif:contains(?proj,"Merkel"))};
+
+SPARQL SELECT ?proj {?o ?p ?proj. FILTER(<bif:contains>(?proj,'refuse'))};
+
+SPARQL SELECT DISTINCT ?proj  {?proj a <http://dbpedia.org/ontology/Writer>. ?proj <http://dbpedia.org/ontology/influenced> ?const. {?proj <http://dbpedia.org/ontology/abstract> ?abs.  FILTER ( bif:contains(?abs,"\'Nobel Prize\'"))}}
+explain('SPARQL SELECT DISTINCT ?proj  {?proj a <http://dbpedia.org/ontology/Writer>. ?proj <http://dbpedia.org/ontology/influenced> ?const. {?proj <http://dbpedia.org/ontology/abstract> ?abs.  FILTER ( bif:contains(?abs,"\'Nobel Prize\'"))}}');

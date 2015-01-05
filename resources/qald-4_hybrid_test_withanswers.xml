@@ -145,7 +145,7 @@ WHERE {
 </answers>
 </question>
 
-<question answertype="resource" id="9" aggregation="false" onlydbo="true">
+<!-- <question answertype="resource" id="9" aggregation="false" onlydbo="true">
 <string lang="en"><![CDATA[Who plays Phileas Fogg in the adaptation of Around the World in 80 Days directed by Buzz Kulik?]]></string>
 <pseudoquery><![CDATA[
 PREFIX dbo:  <http://dbpedia.org/ontology/>
@@ -165,7 +165,7 @@ WHERE {
 <uri>http://dbpedia.org/resource/Pierce_Brosnan</uri>
 </answer>
 </answers>
-</question>
+</question> -->
 
 <question answertype="resource" id="10" aggregation="false" onlydbo="true">
 <string lang="en"><![CDATA[Who played the drums in the band that wrote Complete Control?]]></string>

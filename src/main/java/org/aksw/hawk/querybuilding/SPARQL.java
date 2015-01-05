@@ -9,9 +9,7 @@ import org.aksw.jena_sparql_api.cache.extra.CacheCoreH2;
 import org.aksw.jena_sparql_api.cache.extra.CacheEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheExImpl;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.delay.core.QueryExecutionFactoryDelay;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
-import org.aksw.jena_sparql_api.pagination.core.QueryExecutionFactoryPaginated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +22,7 @@ public class SPARQL {
 	Logger log = LoggerFactory.getLogger(SPARQL.class);
 	// TODO treshold can be increased by introducing prefixes
 	int sizeOfFilterThreshold = 25;
-	QueryExecutionFactory qef;
+	public QueryExecutionFactory qef;
 
 	public SPARQL() {
 		try {
@@ -32,11 +30,27 @@ public class SPARQL {
 			CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
 			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
 			// AKSW SPARQL API call
-//			qef = new QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql", "http://dbpedia.org/");
+			// qef = new
+			// QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql",
+			// "http://dbpedia.org/");
+			qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
 
-			 qef = new QueryExecutionFactoryHttp("http://localhost:8890/sparql", "http://dbpedia.org/");
+//			qef = new QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
+			// qef = new
+			// QueryExecutionFactoryHttp("http://dbpedia.org/sparql","http://dbpedia.org");
+
+			// qef = new
+			// QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql","http://dbpedia.org");
+			// qef = new
+			// QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/",
+			// "http://dbpedia.org");
+			// qef = new
+			// QueryExecutionFactoryHttp("http://vtentacle.techfak.uni-bielefeld.de:443/sparql",
+			// "http://dbpedia.org");
+			// --> No reason to be nice
+			// qef = new QueryExecutionFactoryDelay(qef, 2000);
 			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
-			qef = new QueryExecutionFactoryDelay(qef, 150);
+			// qef = new QueryExecutionFactoryDelay(qef, 150);
 			// qef = new QueryExecutionFactoryPaginated(qef, 10000);
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error("Could not create SPARQL interface! ", e);
@@ -49,20 +63,19 @@ public class SPARQL {
 	 * @param query
 	 * @return
 	 */
-	public Set<RDFNode> sparql(SPARQLQuery query) {
+	public Set<RDFNode> sparql(String query) {
 		Set<RDFNode> set = Sets.newHashSet();
 		try {
-			QueryExecution qe = qef.createQueryExecution(query.toString());
+			QueryExecution qe = qef.createQueryExecution(query);
 			if (qe != null && query.toString() != null) {
-				System.out.println(query.toString());
+				log.debug(query.toString());
 				ResultSet results = qe.execSelect();
 				while (results.hasNext()) {
 					set.add(results.next().get("proj"));
 				}
 			}
-
 		} catch (Exception e) {
-//			log.error(query.toString(), e);
+			log.error(query.toString(), e);
 		}
 		return set;
 	}
@@ -78,10 +91,11 @@ public class SPARQL {
 		// "http://dbpedia.org/resource/Pope_John_Paul_II"));
 		// query.addFilter("const",
 		// Lists.newArrayList("http://dbpedia.org/resource/Canale_d'Agordo"));
-
-		Set<RDFNode> set = sqb.sparql(query);
-		for (RDFNode item : set) {
-			System.out.println(item);
+		for (String q : query.generateQueries()) {
+			Set<RDFNode> set = sqb.sparql(q);
+			for (RDFNode item : set) {
+				System.out.println(item);
+			}
 		}
 	}
 }

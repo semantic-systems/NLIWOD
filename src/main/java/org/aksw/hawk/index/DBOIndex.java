@@ -23,10 +23,8 @@ import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
-import org.apache.lucene.util.automaton.LevenshteinAutomata;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -77,7 +75,7 @@ public class DBOIndex {
 		try {
 			log.debug("\t start asking index...");
 
-			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE);
+			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 0);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
 
 			isearcher.search(q, collector);
@@ -128,14 +126,11 @@ public class DBOIndex {
 				}
 			}
 			iwriter.commit();
-
 			iwriter.close();
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);
 		}
 	}
-
-
 
 	private void addDocumentToIndex(Resource resource, String predicate, String object) throws IOException {
 		Document doc = new Document();
@@ -145,8 +140,4 @@ public class DBOIndex {
 		iwriter.addDocument(doc);
 	}
 
-	public static void main(String args[]) throws IOException {
-		DBOIndex index = new DBOIndex();
-		System.out.println(Joiner.on("\n").join(index.search("compose")));
-	}
 }

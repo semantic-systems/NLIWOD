@@ -15,11 +15,7 @@ import com.google.common.collect.Queues;
 
 public class SentenceToSequence {
 	Logger log = LoggerFactory.getLogger(SentenceToSequence.class);
-//	DBAbstractsIndex index;
 
-//	public SentenceToSequence(DBAbstractsIndex index) {
-//		this.index = index;
-//	}
 
 	// combine noun phrases
 	// TODO improve noun phrases e.g. combine following nulls, i.e., URLs to get
@@ -33,7 +29,7 @@ public class SentenceToSequence {
 			String token = list.get(tcounter);
 			String pos = pos(token, q);
 			// look for start "RB|JJ|NN(.)*"
-			if (subsequence.isEmpty() && null != pos && pos.matches("CD|JJ|NN(.)*")) {
+			if (subsequence.isEmpty() && null != pos && pos.matches("CD|JJ|NN(.)*|RB(.)*")) {
 				subsequence.add(token);
 			}
 			// split "of the" or "of all" via pos_i=IN and pos_i+1=DT
@@ -51,11 +47,9 @@ public class SentenceToSequence {
 				}
 				subsequence = Lists.newArrayList();
 			}
-			// finish via VB* or IN -> null or IN -> DT or WDT (now a that or
-			// which follows)
-			else if (!subsequence.isEmpty() &&
-					!pos(list.get(tcounter - 1), q).matches("JJ") &&
-					(null == pos || pos.matches("VB(.)*|\\.|WDT") || (pos.matches("IN") && pos(list.get(tcounter + 1), q) == null) || (pos.matches("IN") && pos(list.get(tcounter + 1), q).matches("DT")))) {
+			// finish via VB* or IN -> null or IN -> DT or WDT (now a that or which follows)
+			else if (!subsequence.isEmpty() && !pos(list.get(tcounter - 1), q).matches("JJ|HYPH")
+					&& (null == pos || pos.matches("VB(.)*|\\.|WDT") || (pos.matches("IN") && pos(list.get(tcounter + 1), q) == null) || (pos.matches("IN") && pos(list.get(tcounter + 1), q).matches("DT")))) {
 				// more than one token, so summarizing makes sense
 				if (subsequence.size() > 1) {
 					transformTree(subsequence, q);
@@ -120,7 +114,8 @@ public class SentenceToSequence {
 	}
 
 	/**
-	 * to match correct subtree it is important to find the top most node in the subtree that contains every token of the combined noun
+	 * to match correct subtree it is important to find the top most node in the
+	 * subtree that contains every token of the combined noun
 	 * 
 	 * @param root
 	 * @param tokenSet

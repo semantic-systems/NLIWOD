@@ -27,7 +27,6 @@ public class AllSpotterOnQALD4 {
 		for (Question q : questions) {
 			log.info(q.languageToQuestion.get("en"));
 			try {
-				// 2. Disambiguate parts of the query
 				for (ASpotter nerdModule : new ASpotter[] { new Spotlight(), new Fox(), new TagMe(), new WikipediaMiner() }) {
 					q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
 					if (!q.languageToNamedEntites.isEmpty()) {

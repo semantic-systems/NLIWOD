@@ -9,7 +9,6 @@ import java.util.Set;
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.autosparql.commons.qald.Question;
-import org.aksw.hawk.cache.AbstractIndexCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +21,6 @@ public class Baseline {
 	QALD_Loader datasetLoader;
 
 	void run() throws IOException {
-		// 1. read in Questions from QALD 4
 		List<Question> questions = datasetLoader.load(dataset);
 		double overallf = 0;
 		double overallp = 0;
@@ -39,7 +37,6 @@ public class Baseline {
 						double rmax = 0;
 						for (String query : answer.keySet()) {
 							Set<RDFNode> systemAnswers = answer.get(query);
-							// 11. Compare to set of resources from benchmark
 							double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 							double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
 							double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
@@ -56,33 +53,15 @@ public class Baseline {
 						overallr += rmax;
 						counter++;
 						log.info("########################################################");
-					} else {
-						// evals.add(new EvalObj(question,0, 0, 0,
-						// "This question askes for aggregation (ASK)"));
 					}
-				} else {
-					// evals.add(new EvalObj(question,0, 0, 0,
-					// "This question askes for yago types"));
 				}
-			} else {
-				// evals.add(new EvalObj(question,0, 0, 0,
-				// "This is no question asking for resources only"));
 			}
 		}
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
 	}
 
 	public Map<String, Set<RDFNode>> calculateSPARQLRepresentation(Question q) {
-		AbstractIndexCache cache = new AbstractIndexCache();
-//		DBAbstractsIndex index = new DBAbstractsIndex(cache);
-
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
-//		List<String> abstracts = index.listAbstractsContaining(q.languageToQuestion.get("en"));
-//		Set<RDFNode> set = Sets.newHashSet();
-//		for (String uri : abstracts) {
-//			set.add(new ResourceImpl(uri));
-//		}
-//		answer.put("Baseline", set);
 		return answer;
 	}
 

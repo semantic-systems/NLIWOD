@@ -1,0 +1,11 @@
+ld_dir_all ('/Users/ricardousbeck/dbpedia_en_39/', '*.ttl', 'http://dbpedia.org');
+
+select * from DB.DBA.load_list;
+
+rdf_loader_run();
+
+checkpoint;
+
+DB.DBA.RDF_OBJ_FT_RULE_ADD (null, 'http://dbpedia.org/ontology/abstract', null);
+
+checkpoint;

@@ -1,6 +1,7 @@
 package org.aksw.hawk.querybuilding;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,9 +11,12 @@ import com.google.common.collect.Sets;
 
 public class SPARQLQuery implements Cloneable {
 
-	public Set<String> constraintTriples =  Sets.newHashSet();
+	// prune by lemma for verbs
+	private static HashSet<String> stopwords = Sets.newHashSet("of", "and", "in", "name", "was");
+	public Set<String> constraintTriples = Sets.newHashSet();
 	public Set<String> filter = Sets.newHashSet();
-	public Map<String, Set<String>> filterBifContains = Maps.newHashMap();
+	public Map<String, Set<String>> textMapFromVariableToSingleFuzzyToken = Maps.newHashMap();
+	public Map<String, Set<String>> textMapFromVariableToCombinedNNExactMatchToken = Maps.newHashMap();
 
 	public SPARQLQuery(String initialConstraint) {
 		constraintTriples.add(initialConstraint);
@@ -29,18 +33,40 @@ public class SPARQLQuery implements Cloneable {
 	}
 
 	public void addFilterOverAbstractsContraint(String variable, String label) {
-		addConstraint(variable + " <http://dbpedia.org/ontology/abstract> ?abstract" + variable.replace("?", "") + ".");
-		String[] whitespaceSeparatedLabel = label.split(" ");
+		fuzzyToken(variable, label);
+		exactToken(variable, label);
+
+	}
+
+	private void exactToken(String variable, String label) {
+		// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
+		// anti-apartheid activist').
+
 		// to search in a string with whitespaces like "Nobel Prize"
-		if (whitespaceSeparatedLabel.length > 1) {
-			label = "'" + label + "'";
-		}
-		if (filterBifContains.containsKey(variable)) {
-			Set<String> set = filterBifContains.get(variable);
+		if (textMapFromVariableToCombinedNNExactMatchToken.containsKey(variable)) {
+			Set<String> set = textMapFromVariableToCombinedNNExactMatchToken.get(variable);
 			set.add(label);
-			filterBifContains.put(variable, set);
+			textMapFromVariableToCombinedNNExactMatchToken.put(variable, set);
 		} else {
-			filterBifContains.put(variable, Sets.newHashSet(label));
+			textMapFromVariableToCombinedNNExactMatchToken.put(variable, Sets.newHashSet(label));
+		}
+	}
+
+	private void fuzzyToken(String variable, String label) {
+		// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
+		// anti-apartheid activist').
+		String[] separatedLabel = label.split("[ \\-]");
+		// to search in a string with whitespaces like "Nobel Prize"
+		if (textMapFromVariableToSingleFuzzyToken.containsKey(variable)) {
+			Set<String> set = textMapFromVariableToSingleFuzzyToken.get(variable);
+			for (String item : separatedLabel) {
+				if (!item.isEmpty()) {
+					set.add(item);
+				}
+			}
+			textMapFromVariableToSingleFuzzyToken.put(variable, set);
+		} else {
+			textMapFromVariableToSingleFuzzyToken.put(variable, Sets.newHashSet(separatedLabel));
 		}
 	}
 
@@ -62,47 +88,110 @@ public class SPARQLQuery implements Cloneable {
 	protected Object clone() throws CloneNotSupportedException {
 		SPARQLQuery q = new SPARQLQuery();
 		q.constraintTriples = Sets.newHashSet();
-		for(String constraint: this.constraintTriples){
+		for (String constraint : this.constraintTriples) {
 			q.constraintTriples.add(constraint);
 		}
 		q.filter = Sets.newHashSet();
 		for (String key : this.filter) {
 			q.filter.add(key);
 		}
-		q.filterBifContains = Maps.newHashMap();
-		for (String key : this.filterBifContains.keySet()) {
-			Set<String> list = Sets.newHashSet(this.filterBifContains.get(key));
-			q.filterBifContains.put(key, list);
+		q.textMapFromVariableToSingleFuzzyToken = Maps.newHashMap();
+		for (String key : this.textMapFromVariableToSingleFuzzyToken.keySet()) {
+			Set<String> list = Sets.newHashSet(this.textMapFromVariableToSingleFuzzyToken.get(key));
+			q.textMapFromVariableToSingleFuzzyToken.put(key, list);
+		}
+		q.textMapFromVariableToCombinedNNExactMatchToken = Maps.newHashMap();
+		for (String key : this.textMapFromVariableToCombinedNNExactMatchToken.keySet()) {
+			Set<String> list = Sets.newHashSet(this.textMapFromVariableToCombinedNNExactMatchToken.get(key));
+			q.textMapFromVariableToCombinedNNExactMatchToken.put(key, list);
 		}
 		return q;
 	}
 
 	@Override
 	public String toString() {
+		return generateQueryStringWithExactMatch();
+	}
+
+	public HashSet<String> generateQueries() {
+		String fuzzyQuery = generateQueryStringWithFuzzy();
+		String exactQuery = generateQueryStringWithExactMatch();
+
+		return Sets.newHashSet(fuzzyQuery, exactQuery);
+	}
+
+	private String generateQueryStringWithExactMatch() {
 		StringBuilder sb = new StringBuilder();
+		sb.append("PREFIX text:<http://jena.apache.org/text#> \n");
 		sb.append("SELECT DISTINCT ?proj WHERE {\n ");
+		for (String variable : textMapFromVariableToCombinedNNExactMatchToken.keySet()) {
+			// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
+			// anti-apartheid activist').
+			ArrayList<String> list = Lists.newArrayList(textMapFromVariableToCombinedNNExactMatchToken.get(variable));
+			if (!list.isEmpty()) {
+				sb.append(variable + " text:query (<http://dbpedia.org/ontology/abstract> '");
+				StringBuilder fulltext = new StringBuilder();
+				for (int i = 0; i < list.size(); i++) {
+					// TODO photographer does not match photographers in index
+					// temporary solution is a a hack with ~ for fuzzy
+					if (i > 0 && fulltext.length() > 0) {
+						fulltext.append(" AND ");
+					}
+					fulltext.append("\"" + list.get(i) + "\"");
+				}
+				sb.append(fulltext.toString());
+				// return 100 uris from text index
+				// TODO decrease that number by introducing a ranking factor
+				sb.append("' " + 1000 + "). \n");
+			}
+		}
 		for (String constraint : constraintTriples) {
 			sb.append(constraint + " \n");
 		}
 		for (String filterString : filter) {
 			sb.append("FILTER (" + filterString + ").\n ");
 		}
-		for (String variable : filterBifContains.keySet()) {
-			sb.append("FILTER (");
-			sb.append("<bif:contains>(?abstract" + variable.replace("?", "") + ",\"");
-			ArrayList<String> list = Lists.newArrayList(filterBifContains.get(variable));
-			for (int i = 0; i < list.size(); i++) {
-				sb.append(list.get(i));
-				if (i + 1 < list.size()) {
-					sb.append(" and ");
-				}
-			}
-			sb.append("\")).\n");
-		}
 		sb.append("}\n");
-		// FIXME quick fix for reducing processing time assuming result set is
-		// smaller than 10
 		sb.append("LIMIT 12");
 		return sb.toString();
 	}
+
+	private String generateQueryStringWithFuzzy() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("PREFIX text:<http://jena.apache.org/text#> \n");
+		sb.append("SELECT DISTINCT ?proj WHERE {\n ");
+		for (String variable : textMapFromVariableToSingleFuzzyToken.keySet()) {
+			// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
+			// anti-apartheid activist').
+			ArrayList<String> list = Lists.newArrayList(textMapFromVariableToSingleFuzzyToken.get(variable));
+			// Stopwords introduced to prevent Lucene from doing quatsch
+			list.removeAll(stopwords);
+			if (!list.isEmpty()) {
+				sb.append(variable + " text:query (<http://dbpedia.org/ontology/abstract> '");
+				StringBuilder fulltext = new StringBuilder();
+				for (int i = 0; i < list.size(); i++) {
+					// TODO photographer does not match photographers in index
+					// temporary solution is a a hack with ~ for fuzzy
+					if (i > 0 && fulltext.length() > 0) {
+						fulltext.append(" AND ");
+					}
+					fulltext.append(list.get(i) + "~1");
+				}
+				sb.append(fulltext.toString());
+				// return 100 uris from text index
+				// TODO decrease that number by introducing a ranking factor
+				sb.append("' " + 1000 + "). \n");
+			}
+		}
+		for (String constraint : constraintTriples) {
+			sb.append(constraint + " \n");
+		}
+		for (String filterString : filter) {
+			sb.append("FILTER (" + filterString + ").\n ");
+		}
+		sb.append("}\n");
+		sb.append("LIMIT 12");
+		return sb.toString();
+	}
+
 }

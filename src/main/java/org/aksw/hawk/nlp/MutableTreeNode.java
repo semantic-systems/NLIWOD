@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-
+//TODO refactor class
 public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializable {
 	private static final long serialVersionUID = 3684161169564127853L;
+	public List<MutableTreeNode> children = new ArrayList<>();
+	private boolean used = false;
+	public MutableTreeNode parent;
+	public int nodeNumber;
+	public String depLabel;
 	public String label;
 	public String posTag;
-	public List<MutableTreeNode> children = new ArrayList<>();
-	public MutableTreeNode parent;
-	public String depLabel;
-	public int nodeNumber;
-	private boolean used = false;
-	private List<String> annotations = Lists.newArrayList();
 	public String lemma;
+	private List<String> annotations = Lists.newArrayList();
 
 	public MutableTreeNode() {
 	}
@@ -40,7 +40,7 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 
 	@Override
 	public String toString() {
-		return label + ": " + posTag;
+		return label + ":" +"\n posTag: " +posTag +"\n lemma: " +lemma;
 	}
 
 	@Override
