@@ -1,5 +1,60 @@
 <?xml version="1.0" ?>
 <dataset id="qald-4_hybrid_train">
+<question answertype="resource" id="1" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Give me the currencies of all G8 countries.]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?uri
+WHERE {
+        ?x text:"member of" text:"G8" . 
+        ?x dbo:currency ?uri . 
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Euro</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Euro_sign</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Pound_sterling</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/United_States_dollar</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Canadian_dollar</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Russian_ruble</uri>
+			</answer>
+			<answer>
+				<uri>http://dbpedia.org/resource/Japanese_yen</uri>
+			</answer>
+		</answers>
+	</question>
+
+	<question answertype="resource" id="22" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Which actress starring in the TV series Friends owns the production company Coquette Productions?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?uri 
+WHERE {
+	res:Friends dbo:starring ?uri .	
+	?uri text:"own" text:"the production company Coquette Productions" .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Courteney_Cox</uri>
+			</answer>
+		</answers>
+	</question>
 	<question answertype="resource" id="14" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Which horses did The Long Fellow ride?]]></string>
@@ -226,43 +281,7 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-	<question answertype="resource" id="1" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Give me the currencies of all G8 countries.]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT DISTINCT ?uri
-WHERE {
-        ?x text:"member of" text:"G8" . 
-        ?x dbo:currency ?uri . 
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Euro</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Euro_sign</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Pound_sterling</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/United_States_dollar</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Canadian_dollar</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Russian_ruble</uri>
-			</answer>
-			<answer>
-				<uri>http://dbpedia.org/resource/Japanese_yen</uri>
-			</answer>
-		</answers>
-	</question>
-
+	
 
 	<question answertype="number" id="4" aggregation="true"
 		onlydbo="true">
@@ -498,25 +517,7 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-	<question answertype="resource" id="11" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Who composed the music for the film that depicts the early life of Jane Austin?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT DISTINCT ?uri 
-WHERE {
-        ?x rdf:type dbo:Film .
-        ?x text:"depicts the early life of" text:"Jane Austin" .
-        ?x dbo:musicComposer ?uri .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>dbpedia.org/resource/Adrian_Johnston</uri>
-			</answer>
-		</answers>
-	</question>
+
 
 	<question answertype="resource" id="10" aggregation="false"
 		onlydbo="false">
@@ -598,21 +599,22 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-	<question answertype="resource" id="22" aggregation="false"
+	<question answertype="resource" id="11" aggregation="false"
 		onlydbo="true">
-		<string lang="en"><![CDATA[Which actress starring in the TV series Friends owns the production company Coquette Productions?]]></string>
+		<string lang="en"><![CDATA[Who composed the music for the film that depicts the early life of Jane Austin?]]></string>
 		<pseudoquery><![CDATA[
 PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX res: <http://dbpedia.org/resource/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 SELECT DISTINCT ?uri 
 WHERE {
-	res:Friends dbo:starring ?uri .	
-	?uri text:"own" text:"the production company Coquette Productions" .
+        ?x rdf:type dbo:Film .
+        ?x text:"depicts the early life of" text:"Jane Austin" .
+        ?x dbo:musicComposer ?uri .
 }
 ]]></pseudoquery>
 		<answers>
 			<answer>
-				<uri>http://dbpedia.org/resource/Courteney_Cox</uri>
+				<uri>dbpedia.org/resource/Adrian_Johnston</uri>
 			</answer>
 		</answers>
 	</question>
