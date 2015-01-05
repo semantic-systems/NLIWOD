@@ -43,6 +43,11 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 	private QueryExecutionFactory qef;
 
 	QueryUtils queryUtils = new QueryUtils();
+	
+	// properties that are ignored when checking for disjointness
+	private static final Set<String> ignoredProperties = Sets.newHashSet(
+			"http://jena.apache.org/text#query",
+			"http://dbpedia.org/ontology/abstract");
 
 	public DisjointnessBasedQueryFilter(QueryExecutionFactory qef) {
 		this.qef = qef;
@@ -154,7 +159,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 				// the types of the subject
 				for (Triple tp : outgoingTriplePatterns) {
 					Node predicate = tp.getPredicate();
-					if (predicate.isURI() && !predicate.toString().equals("http://dbpedia.org/ontology/abstract")) {
+					if (predicate.isURI() && !ignoredProperties.contains(predicate.toString())) {
 						Set<Node> domain = getDomain(predicate.getURI());
 						if (conflicts(subjectTypes, domain)) {
 							logger.debug("Domain of " + predicate + " does not match types " + subjectTypes);
@@ -180,7 +185,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 				// the types of the subject
 				for (Triple tp : incomingTriplePatterns) {
 					Node predicate = tp.getPredicate();
-					if (predicate.isURI()) {
+					if (predicate.isURI() && !ignoredProperties.contains(predicate.toString())) {
 						Set<Node> range = getRange(predicate.getURI());
 						if (conflicts(objectTypes, range)) {
 							logger.debug("Range of " + predicate + " does not match types " + objectTypes);
