@@ -219,6 +219,13 @@ public class Annotater {
 								 */
 								log.debug("Not annotated node: " + tmp);
 							}
+						} else if (posTag.matches("WRB|WP")) {
+							// gives only hints towards the type of projection variable
+							if (label.equals("Where")) {
+								tmp.addAnnotation("http://dbpedia.org/ontology/Place");
+							} else if (label.equals("Who")) {
+								tmp.addAnnotation("http://dbpedia.org/ontology/Agent");
+							}
 						} else {
 							log.error("Strange case that never should happen: " + posTag);
 						}

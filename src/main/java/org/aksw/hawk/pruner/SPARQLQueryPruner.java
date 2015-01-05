@@ -33,10 +33,10 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 		// Pruning
 		log.debug("Number of Queries before pruning: " + queries.size());
 
-//		queries = disjointness.prune(queries);
+		queries = disjointness.prune(queries);
 		queries = BGPisConnected.prune(queries);
 		queries = cyclicTriple.prune(queries);
-//		queries = hasBoundVariables.prune(queries);
+		queries = hasBoundVariables.prune(queries);
 		queries = textFilterOverVariables.prune(queries);
 		queries = unboundTriple.prune(queries);
 		

@@ -17,9 +17,9 @@ public class HasBoundVariables implements ISPARQLQueryPruner {
 					flag = true;
 				}
 			}
-			if (queryString.filter.isEmpty()) {
-				flag = false;
-			}
+//			if (queryString.filter.isEmpty()) {
+//				flag = false;
+//			}
 			if (flag) {
 				returnList.add(queryString);
 			}

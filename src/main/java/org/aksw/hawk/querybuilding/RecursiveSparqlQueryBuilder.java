@@ -91,7 +91,7 @@ public class RecursiveSparqlQueryBuilder {
 				}
 			}
 		} else {
-			if (tmp.posTag.matches("CombinedNN|NNP(.)*|JJ")) {
+			if (tmp.posTag.matches("CombinedNN|NNP(.)*|JJ|CD")) {
 				/*
 				 * fall back to full text for cases like "crown"->"The_Crown"
 				 * which are not found yet by NED
@@ -163,6 +163,9 @@ public class RecursiveSparqlQueryBuilder {
 					sb.add(variant2);
 					sb.add(variant3);
 				}
+			} else if (tmp.posTag.matches("WP")) {
+				// for Who and What
+				sb.addAll(returnSet);
 			} else {
 				log.error("Tmp: " + tmp.label + " pos: " + tmp.posTag);
 			}
