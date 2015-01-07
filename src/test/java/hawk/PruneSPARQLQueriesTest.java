@@ -3,6 +3,8 @@ package hawk;
 import java.util.Set;
 
 import org.aksw.hawk.pruner.BGPisConnected;
+import org.aksw.hawk.pruner.NumberOfTypesPerVariable;
+import org.aksw.hawk.pruner.PredicatesPerVariableEdge;
 import org.aksw.hawk.pruner.UnboundTriple;
 import org.aksw.hawk.pruner.disjointness.DisjointnessBasedQueryFilter;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
@@ -12,16 +14,89 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 
 public class PruneSPARQLQueriesTest {
 	Logger log = LoggerFactory.getLogger(PruneSPARQLQueriesTest.class);
 	BGPisConnected gSCCPruner = new BGPisConnected();
 	UnboundTriple unboundTriple = new UnboundTriple();
+	PredicatesPerVariableEdge predicatesPerVariableEdge = new PredicatesPerVariableEdge();
+	NumberOfTypesPerVariable numberOfTypesPerVariable= new NumberOfTypesPerVariable();
+	
+	@Test
+	public void numberOfTypesperVariable() {
+
+		Set<SPARQLQuery> queries = Sets.newHashSet();
+		SPARQLQuery query = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Bird>.");
+		query.addConstraint("?proj <http://dbpedia.org/ontology/date> ?const.");
+		query.addFilterOverAbstractsContraint("?proj", "protected");
+		log.debug(query.toString());
+		queries.add(query);
+
+		query = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Bird>.");
+		query.addConstraint("?proj a <http://dbpedia.org/ontology/Car>.");
+		query.addFilterOverAbstractsContraint("?proj", "protected");
+		log.debug(query.toString());
+		queries.add(query);
+		
+		query = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Bird>.");
+		query.addConstraint("?const a <http://dbpedia.org/ontology/Car>.");
+		query.addFilterOverAbstractsContraint("?proj", "protected");
+		log.debug(query.toString());
+		queries.add(query);
+
+		log.debug("Size before pruning: " + queries.size());
+		queries = numberOfTypesPerVariable.prune(queries);
+		log.debug("Size after pruning: " + queries.size());
+		log.debug(Joiner.on("\n").join(queries));
+		Assert.assertTrue(queries.size() == 2);
+
+	}
+	
+	@Test
+	public void predicatesPerVariableEdge() {
+
+		Set<SPARQLQuery> queries = Sets.newHashSet();
+		SPARQLQuery query = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Bird>.");
+		query.addFilterOverAbstractsContraint("?proj", "protected");
+		query.addFilterOverAbstractsContraint("?proj", "National Parks and Wildlife Act");
+		log.debug(query.toString());
+		queries.add(query);
+
+		query = new SPARQLQuery("?const <http://dbpedia.org/ontology/Film> ?proj.");
+		query.addFilterOverAbstractsContraint("?proj", "stage");
+		log.debug(query.toString());
+		queries.add(query);
+		query = new SPARQLQuery("?const <http://dbpedia.org/ontology/Film> ?proj.");
+		query.addConstraint("?const <http://dbpedia.org/ontology/date> ?proj.");
+		query.addFilterOverAbstractsContraint("?proj", "stage");
+		log.debug(query.toString());
+		queries.add(query);
+		query = new SPARQLQuery("?const <http://dbpedia.org/ontology/Film> ?proj.");
+		query.addConstraint("?const <http://dbpedia.org/ontology/board> ?proj.");
+		query.addConstraint("?const <http://dbpedia.org/ontology/date> ?proj.");
+		query.addFilterOverAbstractsContraint("?proj", "stage");
+		log.debug(query.toString());
+		queries.add(query);
+
+		query = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/RaceHorse>.");
+		query.addConstraint("?const <http://dbpedia.org/ontology/raceHorse> ?proj.");
+		query.addFilterOverAbstractsContraint("?proj", "Long Fellow");
+		log.debug(query.toString());
+		queries.add(query);
+
+		log.debug("Size before pruning: " + queries.size());
+		queries = predicatesPerVariableEdge.prune(queries);
+		log.debug("Size after pruning: " + queries.size());
+		log.debug(Joiner.on("\n").join(queries));
+		Assert.assertTrue(queries.size() == 3);
+
+	}
 
 	@Test
 	public void disjointness() {
-		
+
 		DisjointnessBasedQueryFilter disjoint = new DisjointnessBasedQueryFilter(new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql"));
 		Set<SPARQLQuery> queries = Sets.newHashSet();
 		SPARQLQuery query = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Bird>.");
@@ -29,7 +104,7 @@ public class PruneSPARQLQueriesTest {
 		query.addFilterOverAbstractsContraint("?proj", "National Parks and Wildlife Act");
 		log.debug(query.toString());
 		queries.add(query);
-	
+
 		log.debug("Size before pruning: " + queries.size());
 		queries = disjoint.prune(queries);
 		log.debug("Size after pruning: " + queries.size());

@@ -16,6 +16,9 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 	private HasBoundVariables hasBoundVariables;
 	private TextFilterOverVariables textFilterOverVariables;
 	private UnboundTriple unboundTriple;
+	private UnderDefinedQueries underdefined;
+	private PredicatesPerVariableEdge predicatesPerVariableEdge;
+	private NumberOfTypesPerVariable numberOfTypesPerVariable;
 
 	public SPARQLQueryPruner(SPARQL sparql) {
 		this.disjointness = new DisjointnessBasedQueryFilter(sparql.qef);
@@ -25,21 +28,56 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 		this.hasBoundVariables = new HasBoundVariables();
 		this.textFilterOverVariables = new TextFilterOverVariables();
 		this.unboundTriple = new UnboundTriple();
+		this.underdefined = new UnderDefinedQueries();
+		this.predicatesPerVariableEdge = new PredicatesPerVariableEdge();
+this.numberOfTypesPerVariable = new NumberOfTypesPerVariable();
 
 	}
 
 	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queries) {
 
 		// Pruning
-		log.debug("Number of Queries before pruning: " + queries.size());
+		int initialQueriesNumber = queries.size();
+		log.debug("Number of Queries before pruning: " + initialQueriesNumber);
+
+		// this pruning should be first since it assures valid queries for the
+		// following steps
+		queries = underdefined.prune(queries);
+		log.debug("underdefined pruned: " + (initialQueriesNumber - queries.size()));
+		initialQueriesNumber = queries.size();
+		
+		queries = predicatesPerVariableEdge.prune(queries);
+		log.debug("predicatesPerVariableEdge pruned: " + (initialQueriesNumber - queries.size()));
+		initialQueriesNumber = queries.size();
+		
+		queries = numberOfTypesPerVariable.prune(queries);
+		log.debug("numberOfTypesPerVariable pruned: " + (initialQueriesNumber - queries.size()));
+		initialQueriesNumber = queries.size();
+		
+		queries = BGPisConnected.prune(queries);
+		log.debug("BGPisConnected pruned: " + (initialQueriesNumber - queries.size()));
+		initialQueriesNumber = queries.size();
+		
+		queries = cyclicTriple.prune(queries);
+		log.debug("cyclicTriple pruned: " + (initialQueriesNumber - queries.size()));
+		initialQueriesNumber = queries.size();
+
+		queries = hasBoundVariables.prune(queries);
+		log.debug("hasBoundVariables pruned: " + (initialQueriesNumber - queries.size()));
+		initialQueriesNumber = queries.size();
+
+		queries = textFilterOverVariables.prune(queries);
+		log.debug("textFilterOverVariables pruned: " + (initialQueriesNumber - queries.size()));
+		initialQueriesNumber = queries.size();
+
+		queries = unboundTriple.prune(queries);
+		log.debug("unboundTriple pruned: " + (initialQueriesNumber - queries.size()));
+		initialQueriesNumber = queries.size();
 
 		queries = disjointness.prune(queries);
-		queries = BGPisConnected.prune(queries);
-		queries = cyclicTriple.prune(queries);
-		queries = hasBoundVariables.prune(queries);
-		queries = textFilterOverVariables.prune(queries);
-		queries = unboundTriple.prune(queries);
-		
+		log.debug("disjointness pruned: " + (initialQueriesNumber - queries.size()));
+		initialQueriesNumber = queries.size();
+
 		log.debug("Number of Queries after pruning: " + queries.size());
 		// TODO prune things like
 		// ?const <http://dbpedia.org/ontology/deathDate> ?proj.

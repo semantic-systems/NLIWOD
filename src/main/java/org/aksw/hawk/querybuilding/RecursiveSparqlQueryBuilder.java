@@ -46,7 +46,7 @@ public class RecursiveSparqlQueryBuilder {
 						variant2.addConstraint("?const <" + anno + "> ?proj.");
 
 						SPARQLQuery variant3 = ((SPARQLQuery) query.clone());
-						variant3.addConstraint("?const ?proot ?proj.");
+//						variant3.addConstraint("?const ?proot ?proj.");
 
 						sb.add(variant1);
 						sb.add(variant2);
@@ -103,8 +103,11 @@ public class RecursiveSparqlQueryBuilder {
 					SPARQLQuery variant2 = (SPARQLQuery) query.clone();
 					variant2.addFilterOverAbstractsContraint("?const", tmp.label);
 
+					SPARQLQuery variant3 = (SPARQLQuery) query.clone();
+
 					sb.add(variant1);
 					sb.add(variant2);
+					sb.add(variant3);
 				}
 			} else if (tmp.posTag.matches("VB(.)*")) {
 				for (SPARQLQuery query : returnSet) {
