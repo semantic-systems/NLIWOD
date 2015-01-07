@@ -137,6 +137,7 @@ SELECT DISTINCT ?uri
 WHERE {
         ?x text:"is" text:"leader of the Xposé girls" .
         ?x dbo:residence ?uri .
+        }
 ]]></pseudoquery>
 <answers>  
 <answer>

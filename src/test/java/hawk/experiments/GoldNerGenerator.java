@@ -31,7 +31,10 @@ import com.hp.hpl.jena.vocabulary.RDFS;
  */
 public class GoldNerGenerator {
 	
-	static final List<String> datasets = Lists.newArrayList("resources/qald-4_hybrid_train.xml");
+	static final List<String> datasets = Lists.newArrayList(
+			"resources/qald-4_hybrid_train.xml"
+			, "resources/qald-4_hybrid_test_withanswers.xml"
+			);
 
 	/**
 	 * @param args
