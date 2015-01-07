@@ -3,6 +3,7 @@ package hawk;
 import java.util.Set;
 
 import org.aksw.hawk.pruner.BGPisConnected;
+import org.aksw.hawk.pruner.NumberOfTypesPerVariable;
 import org.aksw.hawk.pruner.PredicatesPerVariableEdge;
 import org.aksw.hawk.pruner.UnboundTriple;
 import org.aksw.hawk.pruner.disjointness.DisjointnessBasedQueryFilter;
@@ -21,7 +22,38 @@ public class PruneSPARQLQueriesTest {
 	BGPisConnected gSCCPruner = new BGPisConnected();
 	UnboundTriple unboundTriple = new UnboundTriple();
 	PredicatesPerVariableEdge predicatesPerVariableEdge = new PredicatesPerVariableEdge();
+	NumberOfTypesPerVariable numberOfTypesPerVariable= new NumberOfTypesPerVariable();
+	
+	@Test
+	public void numberOfTypesperVariable() {
 
+		Set<SPARQLQuery> queries = Sets.newHashSet();
+		SPARQLQuery query = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Bird>.");
+		query.addConstraint("?proj <http://dbpedia.org/ontology/date> ?const.");
+		query.addFilterOverAbstractsContraint("?proj", "protected");
+		log.debug(query.toString());
+		queries.add(query);
+
+		query = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Bird>.");
+		query.addConstraint("?proj a <http://dbpedia.org/ontology/Car>.");
+		query.addFilterOverAbstractsContraint("?proj", "protected");
+		log.debug(query.toString());
+		queries.add(query);
+		
+		query = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Bird>.");
+		query.addConstraint("?const a <http://dbpedia.org/ontology/Car>.");
+		query.addFilterOverAbstractsContraint("?proj", "protected");
+		log.debug(query.toString());
+		queries.add(query);
+
+		log.debug("Size before pruning: " + queries.size());
+		queries = numberOfTypesPerVariable.prune(queries);
+		log.debug("Size after pruning: " + queries.size());
+		log.debug(Joiner.on("\n").join(queries));
+		Assert.assertTrue(queries.size() == 2);
+
+	}
+	
 	@Test
 	public void predicatesPerVariableEdge() {
 

@@ -18,6 +18,7 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 	private UnboundTriple unboundTriple;
 	private UnderDefinedQueries underdefined;
 	private PredicatesPerVariableEdge predicatesPerVariableEdge;
+	private NumberOfTypesPerVariable numberOfTypesPerVariable;
 
 	public SPARQLQueryPruner(SPARQL sparql) {
 		this.disjointness = new DisjointnessBasedQueryFilter(sparql.qef);
@@ -29,7 +30,7 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 		this.unboundTriple = new UnboundTriple();
 		this.underdefined = new UnderDefinedQueries();
 		this.predicatesPerVariableEdge = new PredicatesPerVariableEdge();
-
+this.numberOfTypesPerVariable = new NumberOfTypesPerVariable();
 
 	}
 
@@ -47,6 +48,10 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 		
 		queries = predicatesPerVariableEdge.prune(queries);
 		log.debug("predicatesPerVariableEdge pruned: " + (initialQueriesNumber - queries.size()));
+		initialQueriesNumber = queries.size();
+		
+		queries = numberOfTypesPerVariable.prune(queries);
+		log.debug("numberOfTypesPerVariable pruned: " + (initialQueriesNumber - queries.size()));
 		initialQueriesNumber = queries.size();
 		
 		queries = BGPisConnected.prune(queries);
