@@ -1,5 +1,23 @@
 <?xml version="1.0" ?>
 <dataset id="qald-4_hybrid_train">
+	<question answertype="resource" id="22" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[Which actress starring in the TV series Friends owns the production company Coquette Productions?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?uri 
+WHERE {
+	res:Friends dbo:starring ?uri .	
+	?uri text:"own" text:"the production company Coquette Productions" .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Courteney_Cox</uri>
+			</answer>
+		</answers>
+	</question>
 <question answertype="resource" id="1" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Give me the currencies of all G8 countries.]]></string>
@@ -37,24 +55,6 @@ WHERE {
 		</answers>
 	</question>
 
-	<question answertype="resource" id="22" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Which actress starring in the TV series Friends owns the production company Coquette Productions?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX res: <http://dbpedia.org/resource/>
-SELECT DISTINCT ?uri 
-WHERE {
-	res:Friends dbo:starring ?uri .	
-	?uri text:"own" text:"the production company Coquette Productions" .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://dbpedia.org/resource/Courteney_Cox</uri>
-			</answer>
-		</answers>
-	</question>
 	<question answertype="resource" id="14" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Which horses did The Long Fellow ride?]]></string>
