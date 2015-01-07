@@ -45,10 +45,24 @@ public class SpecificQueryTest {
 		log.debug(query.toString());
 		queries.add(query);
 
+//		PREFIX text:    <http://jena.apache.org/text#> 
+//			SELECT DISTINCT ?proj WHERE {
+//			 ?proj text:query (<http://dbpedia.org/ontology/abstract> 'Wu~1 AND Clan~1 AND stage~1 AND Tang~1' 1000). 
+//			?const ?proot ?proj. 
+//			?const a <http://dbpedia.org/ontology/Film>. 
+//			}
+//			LIMIT 12
+		
+		query = new SPARQLQuery("?const ?proot ?proj.");
+		query.addFilterOverAbstractsContraint("?proj", "Wu Tang Clan");
+		query.addConstraint("?const a <http://dbpedia.org/ontology/Film>.");
+		log.debug(query.toString());
+		queries.add(query);
+		
 		log.debug("Size before pruning: " + queries.size());
 		queries = pruner.prune(queries);
 		log.debug("Size after pruning: " + queries.size());
-		Assert.assertTrue(queries.size() == 2);
+		Assert.assertTrue(queries.size() == 3);
 
 	}
 

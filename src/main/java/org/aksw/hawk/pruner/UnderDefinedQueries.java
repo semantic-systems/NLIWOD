@@ -35,11 +35,11 @@ public class UnderDefinedQueries implements ISPARQLQueryPruner {
 				continue;
 			}
 			String[] split = new String[3];
-			boolean containsUnboundTriple = false;
+			boolean containsOnlyUnboundTriple = true;
 			for (String triple : sparqlQuery.constraintTriples) {
 				split = triple.split(" ");
-				if (split[0].startsWith("?") && split[1].startsWith("?") && split[2].startsWith("?")) {
-					containsUnboundTriple = true;
+				if (!split[0].startsWith("?") || !split[1].startsWith("?") || !split[2].startsWith("?")) {
+					containsOnlyUnboundTriple = false;
 				}
 			}
 			boolean containsOnlyTypeDefinitions = true;
@@ -57,7 +57,7 @@ public class UnderDefinedQueries implements ISPARQLQueryPruner {
 					wellDefinedTextFilter = true;
 				}
 			}
-			if ((!containsUnboundTriple && !containsOnlyTypeDefinitions) || (containsOnlyTypeDefinitions && wellDefinedTextFilter)) {
+			if ((!containsOnlyUnboundTriple && !containsOnlyTypeDefinitions) || (containsOnlyTypeDefinitions && wellDefinedTextFilter)) {
 				returnSet.add(sparqlQuery);
 			}
 		}

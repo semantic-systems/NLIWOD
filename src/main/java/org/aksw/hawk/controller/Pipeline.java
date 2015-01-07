@@ -134,7 +134,7 @@ public class Pipeline {
 
 	public static void main(String args[]) throws IOException {
 		
-		for (String file : new String[] { "resources/qald-4_hybrid_train.xml" }) { // test_withanswers train 
+		for (String file : new String[] { "resources/qald-4_hybrid_train.xml" , "resources/qald-4_hybrid_test_withanswers.xml" }) { // test_withanswers train 
 			Pipeline controller = new Pipeline();
 //		
 			log.info("Configuring controller");

@@ -53,9 +53,9 @@ public class RecursiveSparqlQueryBuilder {
 						sb.add(variant3);
 					} else if (tmp.posTag.matches("NN(.)*|WRB")) {
 						// nn can be predicats, e.g. currency
-
-						SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
-						variant1.addConstraint("?proj  <" + anno + "> ?const.");
+//commented things 
+//						SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
+//						variant1.addConstraint("?proj  <" + anno + "> ?const.");
 
 						SPARQLQuery variant2 = ((SPARQLQuery) query.clone());
 						variant2.addConstraint("?const <" + anno + "> ?proj.");
@@ -66,13 +66,23 @@ public class RecursiveSparqlQueryBuilder {
 						SPARQLQuery variant4 = ((SPARQLQuery) query.clone());
 						variant4.addConstraint("?proj a <" + anno + ">.");
 
-						SPARQLQuery variant5 = ((SPARQLQuery) query.clone());
+//						SPARQLQuery variant5 = ((SPARQLQuery) query.clone());
+//						variant5.addFilterOverAbstractsContraint("?proj", tmp.label);
+						
+						SPARQLQuery variant6 = ((SPARQLQuery) query.clone());
+						variant6.addFilterOverAbstractsContraint("?const", tmp.label);
+
+						SPARQLQuery variant7 = ((SPARQLQuery) query.clone());
+						
 
 						// sb.add(variant1);
 						sb.add(variant2);
 						sb.add(variant3);
 						sb.add(variant4);
-						sb.add(variant5);
+//						sb.add(variant5);
+						sb.add(variant6);
+						sb.add(variant7);
+
 					} else if (tmp.posTag.matches("WP")) {
 						SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
 						variant1.addConstraint("?const a <" + anno + ">.");
