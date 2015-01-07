@@ -1,0 +1,10 @@
+#id	question	entities	rewritten question
+1	For which movie did the daughter of Francis Ford Coppola receive an Oscar?	[http://dbpedia.org/ontology/child, http://dbpedia.org/resource/Francis_Ford_Coppola]	For which movie did the daughter of http://dbpedia.org/resource/Francis_Ford_Coppola receive an Oscar?
+2	Which city does the first person to climb all 14 eight-thousanders come from?	[http://dbpedia.org/ontology/Settlement, http://dbpedia.org/ontology/birthPlace]	Which city does the first person to climb all 14 eight-thousanders come from?
+3	At which college did the only American actor that received the César Award study?	[http://dbpedia.org/ontology/almaMater]	At which college did the only American actor that received the César Award study?
+4	Did Napoleon's first wife die in France?	[http://dbpedia.org/ontology/deathPlace, http://dbpedia.org/resource/France]	Did Napoleon's first wife die in http://dbpedia.org/resource/France?
+5	Who is the current James Bond?	[http://dbpedia.org/ontology/lastAppearance, http://dbpedia.org/resource/James_Bond]	Who is the current http://dbpedia.org/resource/James_Bond?
+6	What eating disorder is characterized by eating substances such as clay and sand?	[http://dbpedia.org/class/yago/EatingDisorders]	What eating disorder is characterized by eating substances such as clay and sand?
+7	What is the birth place of Hollywood's highest-paid actress?	[http://dbpedia.org/ontology/birthPlace]	What is the birth place of Hollywood's highest-paid actress?
+8	In which city does the leader of the Xposé girls live?	[http://dbpedia.org/ontology/residence]	In which city does the leader of the Xposé girls live?
+10	Who played the drums in the band that wrote Complete Control?	[http://dbpedia.org/ontology/bandMember, http://dbpedia.org/ontology/musicalArtist, http://dbpedia.org/resource/Complete_Control]	Who played the drums in the band that wrote http://dbpedia.org/resource/Complete_Control?

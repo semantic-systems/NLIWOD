@@ -224,7 +224,7 @@ PREFIX res: <http://dbpedia.org/resource/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 SELECT DISTINCT ?uri
 WHERE {
-        res:Martin_Luther_King,_Jr. text:"assassin" ?x . 
+        <http://dbpedia.org/resource/Martin_Luther_King,_Jr.> text:"assassin" ?x . 
         ?x dbo:birthPlace ?uri .
         ?uri rdf:type dbo:Settlement .
 }
@@ -341,7 +341,7 @@ PREFIX res: <http://dbpedia.org/resource/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 SELECT DISTINCT ?uri 
 WHERE {
-        ?uri dbo:architect res:Shreve,_Lamb_&_Harmon .
+        ?uri dbo:architect <http://dbpedia.org/resource/Shreve,_Lamb_&_Harmon> .
       { ?uri dbo:architecturalStyle res:Art_Deco . }
       UNION
       { ?uri text:"style" text:"art deco" . } 
