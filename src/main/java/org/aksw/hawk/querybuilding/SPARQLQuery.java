@@ -66,7 +66,13 @@ public class SPARQLQuery implements Cloneable {
 			}
 			textMapFromVariableToSingleFuzzyToken.put(variable, set);
 		} else {
-			textMapFromVariableToSingleFuzzyToken.put(variable, Sets.newHashSet(separatedLabel));
+			Set<String> set = Sets.newHashSet();
+			for (String item : separatedLabel) {
+				if (!item.isEmpty()) {
+					set.add(item);
+				}
+			}
+			textMapFromVariableToSingleFuzzyToken.put(variable, set);
 		}
 	}
 
@@ -175,7 +181,11 @@ public class SPARQLQuery implements Cloneable {
 					if (i > 0 && fulltext.length() > 0) {
 						fulltext.append(" AND ");
 					}
-					fulltext.append(list.get(i) + "~1");
+					if (isInteger(list.get(i))) {
+						fulltext.append(list.get(i));
+					} else {
+						fulltext.append(list.get(i) + "~1");
+					}
 				}
 				sb.append(fulltext.toString());
 				// return 100 uris from text index
@@ -194,4 +204,29 @@ public class SPARQLQuery implements Cloneable {
 		return sb.toString();
 	}
 
+	// taken from
+	// http://stackoverflow.com/questions/237159/whats-the-best-way-to-check-to-see-if-a-string-represents-an-integer-in-java
+	private boolean isInteger(String str) {
+		if (str == null) {
+			return false;
+		}
+		int length = str.length();
+		if (length == 0) {
+			return false;
+		}
+		int i = 0;
+		if (str.charAt(0) == '-') {
+			if (length == 1) {
+				return false;
+			}
+			i = 1;
+		}
+		for (; i < length; i++) {
+			char c = str.charAt(i);
+			if (c <= '/' || c >= ':') {
+				return false;
+			}
+		}
+		return true;
+	}
 }
