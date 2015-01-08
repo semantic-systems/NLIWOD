@@ -481,4 +481,5 @@
 <http://dbpedia.org/ontology/musicComposer> <http://www.w3.org/2000/01/rdf-schema#label> "composer" .
 <http://dbpedia.org/ontology/monarch> <http://www.w3.org/2000/01/rdf-schema#label> "king" .
 <http://dbpedia.org/ontology/birthPlace> <http://www.w3.org/2000/01/rdf-schema#label> "come from" .
+<http://dbpedia.org/ontology/birthPlace> <http://www.w3.org/2000/01/rdf-schema#label> "birthplace" .
 <http://dbpedia.org/ontology/residence> <http://www.w3.org/2000/01/rdf-schema#label> "live" .

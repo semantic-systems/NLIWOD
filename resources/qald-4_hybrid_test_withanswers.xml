@@ -1,5 +1,23 @@
 <?xml version="1.0" ?>
 <dataset id="qald-4_hybrid_test">
+	<question answertype="resource" id="7" aggregation="false"
+		onlydbo="true">
+		<string lang="en"><![CDATA[What is the birthplace of Hollywood's highest-paid actress?]]></string>
+		<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?uri 
+WHERE {
+        ?x text:"is" text:"Hollywood's highest-paid actress" .
+        ?x dbo:birthPlace ?uri .
+}
+]]></pseudoquery>
+		<answers>
+			<answer>
+				<uri>http://dbpedia.org/resource/Los_Angeles</uri>
+			</answer>
+		</answers>
+	</question>
 	<question answertype="resource" id="8" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[In which city does the leader of the Xposé girls live?]]></string>
@@ -17,25 +35,27 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-
-	<question answertype="resource" id="7" aggregation="false"
+	<question answertype="resource" id="2" aggregation="false"
 		onlydbo="true">
-		<string lang="en"><![CDATA[What is the birth place of Hollywood's highest-paid actress?]]></string>
+		<string lang="en"><![CDATA[Which city does the first person to climb all 14 eight-thousanders come from?]]></string>
 		<pseudoquery><![CDATA[
 PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX res: <http://dbpedia.org/resource/>
-SELECT DISTINCT ?uri 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+SELECT DISTINCT ?uri
 WHERE {
-        ?x text:"is" text:"Hollywood's highest-paid actress" .
+        ?x text:"is" text:"first person to climb all fourteen eight-thousanders" .
         ?x dbo:birthPlace ?uri .
+        ?uri rdf:type dbo:Settlement .
 }
 ]]></pseudoquery>
 		<answers>
 			<answer>
-				<uri>http://dbpedia.org/resource/Los_Angeles</uri>
+				<uri>http://dbpedia.org/resource/Brixen</uri>
 			</answer>
 		</answers>
 	</question>
+
+
 
 	<question answertype="resource" id="6" aggregation="false"
 		onlydbo="false">
@@ -104,25 +124,7 @@ WHERE {
 			</answer>
 		</answers>
 	</question>
-	<question answertype="resource" id="2" aggregation="false"
-		onlydbo="true">
-		<string lang="en"><![CDATA[Which city does the first person to climb all 14 eight-thousanders come from?]]></string>
-		<pseudoquery><![CDATA[
-PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-SELECT DISTINCT ?uri
-WHERE {
-        ?x text:"is" text:"first person to climb all fourteen eight-thousanders" .
-        ?x dbo:birthPlace ?uri .
-        ?uri rdf:type dbo:Settlement .
-}
-]]></pseudoquery>
-		<answers>
-			<answer>
-				<uri>http://http://dbpedia.org/page/Brixen</uri>
-			</answer>
-		</answers>
-	</question>
+
 
 	<question answertype="string" id="1" aggregation="false"
 		onlydbo="true">
