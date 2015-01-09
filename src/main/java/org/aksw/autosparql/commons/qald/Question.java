@@ -35,6 +35,8 @@ public class Question implements Serializable {
 	public Map<String, List<GoldEntity>> goldEntites = new HashMap<String, List<GoldEntity>>();
 	public Map<String, Set<String>> goldenAnswers = new HashMap<String, Set<String>>();
 
+	public int cardinality;
+
 
 	public Question() {
 

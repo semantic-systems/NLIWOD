@@ -32,7 +32,11 @@ public class SPARQLQueryBuilder {
 
 			// pruning
 			queryStrings = sparqlQueryPruner.prune(queryStrings);
-			
+
+			// identify the cardinality of the answers
+			int cardinality= cardinality(q, queryStrings);
+			log.info(q.languageToQuestion.get("en").toString() + "-> " +cardinality );
+
 			// transforming to SPARQL
 			int i = 0;
 			for (SPARQLQuery query : queryStrings) {
@@ -52,5 +56,15 @@ public class SPARQLQueryBuilder {
 		}
 		log.debug("Number of sofar executed queries: " + numberOfOverallQueriesExecuted);
 		return answer;
+	}
+
+	private int cardinality(Question q, Set<SPARQLQuery> queryStrings) {
+		int cardinality = q.cardinality;
+		// find a way to determine the cardinality of the answer
+		
+		for (SPARQLQuery s : queryStrings) {
+			s.setLimit(cardinality);
+		}
+		return cardinality;
 	}
 }

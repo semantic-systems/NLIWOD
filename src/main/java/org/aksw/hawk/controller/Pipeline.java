@@ -12,6 +12,7 @@ import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.cache.CachedParseTree;
+import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.nlp.MutableTreePruner;
 import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.hawk.nlp.spotter.ASpotter;
@@ -85,10 +86,11 @@ public class Pipeline {
 			} else {
 				// evals.add(new EvalObj(question,0, 0, 0,
 				// "This is no question asking for resources only"));
-			} 
-//			break;
+			}
+			// break;
 		}
 		write(evals);
+		
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
 	}
 
@@ -117,6 +119,9 @@ public class Pipeline {
 
 		// 3. Build trees from questions and cache them
 		q.tree = cParseTree.process(q);
+		log.info(""+q.tree);
+
+		q.cardinality = cardinality(q);
 		// noun combiner, decrease #nodes in the DEPTree decreases
 		sentenceToSequence.combineSequences(q);
 
@@ -132,11 +137,50 @@ public class Pipeline {
 		return answer;
 	}
 
+	private int cardinality(Question q) {
+		// look at the first child of root and determine the quality based on
+		// the POS Tag
+		int cardinality = 12;
+		MutableTreeNode root = q.tree.getRoot();
+		// IN because of "In which..."
+		if (root.posTag.matches("VB(.)*")) {
+			MutableTreeNode firstChild = root.children.get(0);
+			String posTag = firstChild.posTag;
+			if (posTag.equals("NNS")) {
+				cardinality = 12;
+			} else if (posTag.matches("WP||WRB||ADD||NN||VBZ||IN")) {
+				cardinality = 1;
+			}else if (posTag.matches("IN")) {
+				MutableTreeNode secondChild = firstChild.getChildren().get(0);
+				 posTag = secondChild.posTag;
+				if (posTag.equals("NN")) {
+					cardinality = 1;
+				} else {
+					cardinality = 12;
+				}
+			}
+			else {
+				cardinality = 12;
+			}
+
+			
+		} else {
+			String posTag = root.posTag;
+			if (posTag.matches("NNS||NNP(.)*")) {
+				cardinality = 12;
+			} else {
+				cardinality = 1;
+			}
+		}
+		return cardinality;
+	}
+
 	public static void main(String args[]) throws IOException {
-		
-		for (String file : new String[] { "resources/qald-4_hybrid_train.xml" , "resources/qald-4_hybrid_test_withanswers.xml" }) { // test_withanswers train 
+
+		for (String file : new String[] {  "resources/qald-4_hybrid_train.xml", "resources/qald-4_hybrid_test_withanswers.xml"}) { // test_withanswers
+																					// train
 			Pipeline controller = new Pipeline();
-//		
+			//
 			log.info("Configuring controller");
 
 			controller.dataset = new File(file).getAbsolutePath();
@@ -151,7 +195,7 @@ public class Pipeline {
 			controller.cParseTree = new CachedParseTree();
 
 			controller.sentenceToSequence = new SentenceToSequence();
-			
+
 			controller.annotater = new Annotater();
 
 			SPARQL sparql = new SPARQL();

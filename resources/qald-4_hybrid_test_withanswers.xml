@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <dataset id="qald-4_hybrid_test">
-	<question answertype="resource" id="9" aggregation="false"
+<!--  	<question answertype="resource" id="9" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Who plays Phileas Fogg in the adaptation of Around 
 		the World in 80 Days directed by Buzz Kulik?]]></string>
@@ -21,7 +21,7 @@
 				<uri>http://dbpedia.org/resource/Pierce_Brosnan</uri>
 			</answer>
 		</answers>
-	</question>
+	</question>-->
 	<question answertype="resource" id="10" aggregation="false"
 		onlydbo="true">
 		<string lang="en"><![CDATA[Who played the drums in the band that wrote Complete Control?]]></string>

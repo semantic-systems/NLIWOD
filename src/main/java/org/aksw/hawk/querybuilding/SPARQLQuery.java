@@ -12,11 +12,12 @@ import com.google.common.collect.Sets;
 public class SPARQLQuery implements Cloneable {
 
 	// prune by lemma for verbs
-	private static HashSet<String> stopwords = Sets.newHashSet("of", "and", "in", "name", "was");
+	private static HashSet<String> stopwords = Sets.newHashSet("of", "is", "and", "in", "name", "was");
 	public Set<String> constraintTriples = Sets.newHashSet();
 	public Set<String> filter = Sets.newHashSet();
 	public Map<String, Set<String>> textMapFromVariableToSingleFuzzyToken = Maps.newHashMap();
 	public Map<String, Set<String>> textMapFromVariableToCombinedNNExactMatchToken = Maps.newHashMap();
+	private int limit = 1;
 
 	public SPARQLQuery(String initialConstraint) {
 		constraintTriples.add(initialConstraint);
@@ -119,11 +120,18 @@ public class SPARQLQuery implements Cloneable {
 		return generateQueryStringWithExactMatch();
 	}
 
-	public HashSet<String> generateQueries() {
-		String fuzzyQuery = generateQueryStringWithFuzzy();
-		String exactQuery = generateQueryStringWithExactMatch();
+	public Set<String> generateQueries() {
+		Set<String> set = Sets.newHashSet();
+		if (!textMapFromVariableToSingleFuzzyToken.isEmpty()) {
+			String fuzzyQuery = generateQueryStringWithFuzzy();
+			set.add(fuzzyQuery);
+		}
+		if (!textMapFromVariableToCombinedNNExactMatchToken.isEmpty()) {
+			String exactQuery = generateQueryStringWithExactMatch();
+			set.add(exactQuery);
+		}
 
-		return Sets.newHashSet(fuzzyQuery, exactQuery);
+		return set;
 	}
 
 	private String generateQueryStringWithExactMatch() {
@@ -158,7 +166,7 @@ public class SPARQLQuery implements Cloneable {
 			sb.append("FILTER (" + filterString + ").\n ");
 		}
 		sb.append("}\n");
-		sb.append("LIMIT 12");
+		sb.append("LIMIT " + limit);
 		return sb.toString();
 	}
 
@@ -200,7 +208,7 @@ public class SPARQLQuery implements Cloneable {
 			sb.append("FILTER (" + filterString + ").\n ");
 		}
 		sb.append("}\n");
-		sb.append("LIMIT 12");
+		sb.append("LIMIT " + limit);
 		return sb.toString();
 	}
 
@@ -228,5 +236,10 @@ public class SPARQLQuery implements Cloneable {
 			}
 		}
 		return true;
+	}
+
+	public void setLimit(int cardinality) {
+		this.limit = cardinality;
+
 	}
 }
