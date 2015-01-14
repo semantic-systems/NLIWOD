@@ -40,7 +40,7 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 
 	@Override
 	public String toString() {
-		return label + ":" +"\n posTag: " +posTag +"\n lemma: " +lemma;
+		return label + ":" +"\t posTag: " +posTag +"\t lemma: " +lemma;
 	}
 
 	@Override

@@ -40,7 +40,7 @@ public class RecursiveSparqlQueryBuilder {
 					if (tmp.posTag.matches("VB(.)*")) {
 						// FIXME variablen iterieren
 						SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
-						variant1.addConstraint("?proj  <" + anno + "> ?const.");
+						variant1.addConstraint("?proj <" + anno + "> ?const.");
 
 						SPARQLQuery variant2 = ((SPARQLQuery) query.clone());
 						variant2.addConstraint("?const <" + anno + "> ?proj.");

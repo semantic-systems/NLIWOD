@@ -1,16 +1,18 @@
 package org.aksw.hawk.querybuilding;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.controller.Answer;
 import org.aksw.hawk.pruner.SPARQLQueryPruner;
 import org.aksw.hawk.ranking.VotingBasedRanker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class SPARQLQueryBuilder {
 	int numberOfOverallQueriesExecuted = 0;
@@ -25,8 +27,8 @@ public class SPARQLQueryBuilder {
 		this.sparqlQueryPruner = new SPARQLQueryPruner(sparql);
 	}
 
-	public Map<SPARQLQuery, Set<RDFNode>> build(Question q, VotingBasedRanker ranker) {
-		Map<SPARQLQuery, Set<RDFNode>> answer = Maps.newHashMap();
+	public Map<String, Answer> buildWithRanking(Question q, VotingBasedRanker ranker) {
+		Map<String, Answer> answer = Maps.newHashMap();
 		try {
 			// build sparql queries
 			Set<SPARQLQuery> queryStrings = recursiveSparqlQueryBuilder.start(this, q);
@@ -36,21 +38,73 @@ public class SPARQLQueryBuilder {
 
 			// identify the cardinality of the answers
 			int cardinality = cardinality(q, queryStrings);
-			log.info(q.languageToQuestion.get("en").toString() + "-> " + cardinality);
-
-			queryStrings = ranker.rank(queryStrings, 1);
+			log.debug("Cardinality:" + q.languageToQuestion.get("en").toString() + "-> " + cardinality);
+			// TODO refactor the next line with this senseless list creation
+			List<SPARQLQuery> rankedQueries = ranker.rank(Lists.newArrayList(queryStrings), 1000);
 			// transforming to SPARQL
 			int i = 0;
-			for (SPARQLQuery query : queryStrings) {
+			// TODO this for-loop is a hack because ranking does not always
+			// deliver a filled result set stuff
+			// thus take the first query generating any result
+
+			// FIXME refactor this and the pipeline class to allow training on
+			// the one side and real testing on the other. this influences
+			// RAnker, Pipeline and this class
+			for (int x = 0; x < rankedQueries.size() && answer.keySet().isEmpty(); x++) {
+				SPARQLQuery query = rankedQueries.get(x);
 				for (String queryString : query.generateQueries()) {
-					log.debug(i++ + "/" + queryStrings.size() * query.generateQueries().size() + "= " + queryString);
-					Set<RDFNode> answerSet = sparql.sparql(queryString);
-					if (!answerSet.isEmpty()) {
-						answer.put(query, answerSet);
+					log.debug(i++ + "/" + rankedQueries.size() * query.generateQueries().size() + "= " + queryString);
+					Answer a = new Answer();
+					a.answerSet = sparql.sparql(queryString);
+					a.query = query;
+					if (!a.answerSet.isEmpty()) {
+						answer.put(queryString, a);
 					}
 					numberOfOverallQueriesExecuted++;
 				}
 			}
+			if (answer.keySet().isEmpty())
+				log.debug("AnswerSet isEmpty");
+			else
+				log.debug("AnswerSet not isEmpty");
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		} finally {
+			System.gc();
+		}
+		log.debug("Number of sofar executed queries: " + numberOfOverallQueriesExecuted);
+		return answer;
+	}
+
+	public Map<String, Answer> build(Question q, VotingBasedRanker ranker) {
+		Map<String, Answer> answer = Maps.newHashMap();
+		try {
+			// build sparql queries
+			Set<SPARQLQuery> queryStrings = recursiveSparqlQueryBuilder.start(this, q);
+
+			// pruning
+			queryStrings = sparqlQueryPruner.prune(queryStrings);
+
+			// identify the cardinality of the answers
+			int cardinality = cardinality(q, queryStrings);
+			log.debug("Cardinality:" + q.languageToQuestion.get("en").toString() + "-> " + cardinality);
+			int i = 0;
+			for (SPARQLQuery query : queryStrings) {
+				for (String queryString : query.generateQueries()) {
+					log.debug(i++ + "/" + queryStrings.size() * query.generateQueries().size() + "= " + queryString);
+					Answer a = new Answer();
+					a.answerSet = sparql.sparql(queryString);
+					a.query = query;
+					if (!a.answerSet.isEmpty()) {
+						answer.put(queryString, a);
+					}
+					numberOfOverallQueriesExecuted++;
+				}
+			}
+			if (answer.keySet().isEmpty())
+				log.debug("AnswerSet isEmpty");
+			else
+				log.debug("AnswerSet not isEmpty");
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(), e);
 		} finally {
@@ -69,4 +123,5 @@ public class SPARQLQueryBuilder {
 		}
 		return cardinality;
 	}
+
 }

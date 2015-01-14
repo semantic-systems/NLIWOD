@@ -59,10 +59,34 @@ public class SpecificQueryTest {
 		log.debug(query.toString());
 		queries.add(query);
 		
+//		PREFIX text:<http://jena.apache.org/text#> 
+//			SELECT DISTINCT ?proj WHERE {
+//			 ?const text:query (<http://dbpedia.org/ontology/abstract> '"first man in space"' 1000). 
+//			?const <http://dbpedia.org/ontology/deathPlace> ?proj. 
+//			?proj a <http://dbpedia.org/ontology/Place>. 
+//			}
+//			LIMIT 1
+		query = new SPARQLQuery("?const <http://dbpedia.org/ontology/deathPlace> ?proj.");
+		query.addFilterOverAbstractsContraint("?const", "first man in space");
+		log.debug(query.toString());
+		queries.add(query);
+
+//		PREFIX text:    <http://jena.apache.org/text#> 
+//			SELECT DISTINCT ?proj WHERE {
+//			 ?const text:query (<http://dbpedia.org/ontology/abstract> 'assassin~1' 1000). 
+//			?const <http://dbpedia.org/ontology/birthPlace> ?proj. 
+//			}
+//			LIMIT 12
+			
+		query = new SPARQLQuery("?const <http://dbpedia.org/ontology/birthPlace> ?proj.");
+		query.addFilterOverAbstractsContraint("?const", "assassin");
+		log.debug(query.toString());
+		queries.add(query);
+		
 		log.debug("Size before pruning: " + queries.size());
 		queries = pruner.prune(queries);
 		log.debug("Size after pruning: " + queries.size());
-		Assert.assertTrue(queries.size() == 3);
+		Assert.assertTrue(queries.size() == 5);
 
 	}
 

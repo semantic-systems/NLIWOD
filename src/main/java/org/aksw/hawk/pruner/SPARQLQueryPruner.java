@@ -19,6 +19,8 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 	private UnderDefinedQueries underdefined;
 	private PredicatesPerVariableEdge predicatesPerVariableEdge;
 	private NumberOfTypesPerVariable numberOfTypesPerVariable;
+	private ContainsProjVariable containsProjVariable;
+	private ContainsTooManyNodesAsTextLookUp containsTooManyNodesAsTextLookUp;
 
 	public SPARQLQueryPruner(SPARQL sparql) {
 		this.disjointness = new DisjointnessBasedQueryFilter(sparql.qef);
@@ -31,6 +33,8 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 		this.underdefined = new UnderDefinedQueries();
 		this.predicatesPerVariableEdge = new PredicatesPerVariableEdge();
 		this.numberOfTypesPerVariable = new NumberOfTypesPerVariable();
+		this.containsProjVariable = new ContainsProjVariable();
+		this.containsTooManyNodesAsTextLookUp = new ContainsTooManyNodesAsTextLookUp();
 
 	}
 
@@ -44,6 +48,14 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 		// following steps
 		queries = underdefined.prune(queries);
 		log.debug("underdefined pruned: " + (initialQueriesNumber - queries.size()));
+		initialQueriesNumber = queries.size();
+
+		queries = containsProjVariable.prune(queries);
+		log.debug("containsProjVariable pruned: " + (initialQueriesNumber - queries.size()));
+		initialQueriesNumber = queries.size();
+
+		queries = containsTooManyNodesAsTextLookUp.prune(queries);
+		log.debug("containsTooManyNodesAsTextLookUp pruned: " + (initialQueriesNumber - queries.size()));
 		initialQueriesNumber = queries.size();
 
 		queries = predicatesPerVariableEdge.prune(queries);

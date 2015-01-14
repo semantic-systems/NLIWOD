@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 
 public class VotingBasedRanker {
 	static Logger log = LoggerFactory.getLogger(VotingBasedRanker.class);
@@ -25,7 +24,7 @@ public class VotingBasedRanker {
 
 	public static void main(String args[]) {
 		// TODO transform this to unit test
-		Set<SPARQLQuery> queries = Sets.newHashSet();
+		List<SPARQLQuery> queries = Lists.newArrayList();
 
 		SPARQLQuery query = new SPARQLQuery("?const <http://dbpedia.org/ontology/starring> ?proj.");
 		query.addFilterOverAbstractsContraint("?proj", "Coquette Productions");
@@ -67,18 +66,95 @@ public class VotingBasedRanker {
 
 		for (String key : vec.keySet()) {
 			vec.put(key, vec.get(key) / queries.size());
+			log.debug(key + ": " + vec.get(key));
 		}
 
 	}
 
 	private Map<String, Double> calculateRanking(SPARQLQuery q) {
+		// a priori assumption
+		Collections.sort(q.constraintTriples);
+
 		// here are the features
 		Map<String, Double> features = Maps.newHashMap();
 		features.putAll(usedPredicates(q));
-		features.put("feature:numberOfConstraints", numberOfConstraints(q));
-		features.put("feature:numberOfTypes", numberOfTypes(q));
+		features.putAll(usedPattern(q));
+		features.put("feature:numberOfTermsInTextQuery", numberOfTermsInTextQuery(q));
+		// features.put("feature:numberOfConstraints", numberOfConstraints(q));
+		// features.put("feature:numberOfTypes", numberOfTypes(q));
 
 		return features;
+	}
+
+	private Map<String, Double> usedPattern(SPARQLQuery q) {
+		// build list of patterns, indicate text position
+		Map<String, Double> map = Maps.newHashMap();
+		String[] split = new String[3];
+		// TODO maybe many bugs down here
+		// http://mathinsight.org/media/image/image/three_node_motifs.png
+		// 1) find out the text node
+		String textNode = null;
+		for (String var : q.textMapFromVariableToCombinedNNExactMatchToken.keySet()) {
+			textNode = var;
+		}
+
+		// 2) measure for all one edge motifs (without the text:query edge)
+		// measure all 16 motifs, take always text node as central node
+		List<String> constraintTriples = q.constraintTriples;
+		for (String triple : constraintTriples) {
+			triple = triple.replaceAll("\\s+", " ");
+			split = triple.split(" ");
+			String subject = split[0];
+			String predicate = split[1];
+			if (subject.equals(textNode) && predicate.startsWith("?") && object(split).startsWith("?")) {
+				String key = "textNode_?var_?var";
+				addOneToMapAtKey(map, key);
+			} else if (subject.equals(textNode) && !predicate.startsWith("?") && object(split).startsWith("?")) {
+				String key = "textNode_bound_?var";
+				addOneToMapAtKey(map, key);
+			} else if (subject.equals(textNode) && predicate.startsWith("?") && !object(split).startsWith("?")) {
+				String key = "textNode_?var_bound";
+				addOneToMapAtKey(map, key);
+			} else if (subject.equals(textNode) && !predicate.startsWith("?") && !object(split).startsWith("?")) {
+				String key = "textNode_bound_bound";
+				addOneToMapAtKey(map, key);
+			} else if (object(split).equals(textNode) && predicate.startsWith("?") && subject.startsWith("?")) {
+				String key = "?var_?var_textNode";
+				addOneToMapAtKey(map, key);
+			} else if (object(split).equals(textNode) && !predicate.startsWith("?") && subject.startsWith("?")) {
+				String key = "?var_bound_textNode";
+				addOneToMapAtKey(map, key);
+			} else if (object(split).equals(textNode) && predicate.startsWith("?") && !subject.startsWith("?")) {
+				String key = "bound_?var_textNode";
+				addOneToMapAtKey(map, key);
+			} else if (object(split).equals(textNode) && !predicate.startsWith("?") && !subject.startsWith("?")) {
+				String key = "bound_bound_textNode";
+				addOneToMapAtKey(map, key);
+			}
+
+		}
+
+		return map;
+	}
+
+	private String object(String[] split) {
+		return split[2];
+	}
+
+	private void addOneToMapAtKey(Map<String, Double> map, String key) {
+		if (map.containsKey(key)) {
+			map.put(key, map.get(key) + 1.0);
+		} else {
+			map.put(key, 1.0);
+		}
+	}
+
+	private Double numberOfTermsInTextQuery(SPARQLQuery q) {
+		// assuming there is only one variable left to search the text
+		for (String key : q.textMapFromVariableToSingleFuzzyToken.keySet()) {
+			return (double) q.textMapFromVariableToSingleFuzzyToken.get(key).size();
+		}
+		return 0.0;
 	}
 
 	private Map<String, Double> usedPredicates(SPARQLQuery q) {
@@ -86,6 +162,7 @@ public class VotingBasedRanker {
 		Map<String, Double> map = Maps.newHashMap();
 		String[] split = new String[3];
 		for (String triple : q.constraintTriples) {
+			triple = triple.replaceAll("\\s+", " ");
 			split = triple.split(" ");
 			if (map.containsKey(split[1])) {
 				double tmp = map.get(split[1]);
@@ -95,14 +172,14 @@ public class VotingBasedRanker {
 			}
 		}
 		// TODO talk to Axel about strange normalisation here
-		double sum = 0;
-		for (String predicateKey : map.keySet()) {
-			sum += map.get(predicateKey);
-		}
-		for (String predicateKey : map.keySet()) {
-			double count = map.get(predicateKey);
-			map.put(predicateKey, count / sum);
-		}
+		// double sum = 0;
+		// for (String predicateKey : map.keySet()) {
+		// sum += map.get(predicateKey);
+		// }
+		// for (String predicateKey : map.keySet()) {
+		// double count = map.get(predicateKey);
+		// map.put(predicateKey, count / sum);
+		// }
 		return map;
 	}
 
@@ -122,7 +199,7 @@ public class VotingBasedRanker {
 		return query.constraintTriples.size();
 	}
 
-	public Set<SPARQLQuery> rank(Set<SPARQLQuery> queries, int numberOfReturnQueries) {
+	public List<SPARQLQuery> rank(List<SPARQLQuery> queries, int numberOfReturnQueries) {
 		// TODO bug: differentiate between fuzzy and exact matches
 		for (SPARQLQuery s : queries) {
 			Map<String, Double> calculateRanking = calculateRanking(s);
@@ -131,7 +208,8 @@ public class VotingBasedRanker {
 		}
 		List<SPARQLQuery> list = Lists.newArrayList(queries);
 		Collections.sort(list);
-		return Sets.newHashSet(list.subList(0, numberOfReturnQueries));
+		Collections.reverse(list);
+		return list.subList(0, Math.min(numberOfReturnQueries, queries.size()));
 	}
 
 	private double cosinus(Map<String, Double> calculateRanking, Map<String, Double> goldVector) {

@@ -3,6 +3,7 @@ package org.aksw.hawk.querybuilding;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,8 +15,8 @@ public class SPARQLQuery implements Cloneable, Serializable, Comparable<SPARQLQu
 
 	private static final long serialVersionUID = 6652694466896208327L;
 	// prune by lemma for verbs
-	private static HashSet<String> stopwords = Sets.newHashSet("of", "is", "and", "in", "name", "was");
-	public Set<String> constraintTriples = Sets.newHashSet();
+	private static HashSet<String> stopwords = Sets.newHashSet("of", "is", "and", "in", "name", "was", "did", "person", "location", "organization");
+	public List<String> constraintTriples = Lists.newArrayList();
 	public Set<String> filter = Sets.newHashSet();
 	public Map<String, Set<String>> textMapFromVariableToSingleFuzzyToken = Maps.newHashMap();
 	public Map<String, Set<String>> textMapFromVariableToCombinedNNExactMatchToken = Maps.newHashMap();
@@ -97,7 +98,7 @@ public class SPARQLQuery implements Cloneable, Serializable, Comparable<SPARQLQu
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		SPARQLQuery q = new SPARQLQuery();
-		q.constraintTriples = Sets.newHashSet();
+		q.constraintTriples = Lists.newArrayList();
 		for (String constraint : this.constraintTriples) {
 			q.constraintTriples.add(constraint);
 		}

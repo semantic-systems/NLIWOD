@@ -19,7 +19,6 @@ import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQL;
-import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
 import org.aksw.hawk.ranking.VotingBasedRanker;
 import org.slf4j.Logger;
@@ -28,8 +27,8 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
-public class Pipeline {
-	static Logger log = LoggerFactory.getLogger(Pipeline.class);
+public class EvalPipeline {
+	static Logger log = LoggerFactory.getLogger(EvalPipeline.class);
 	String dataset;
 	QALD_Loader datasetLoader;
 	public ASpotter nerdModule;
@@ -40,26 +39,25 @@ public class Pipeline {
 	public SPARQLQueryBuilder queryBuilder;
 	private VotingBasedRanker ranker;
 
-	void run() throws IOException {
+	void run(Set<EvalObj> evals) throws IOException {
 		// 1. read in Questions from QALD 4
 		List<Question> questions = datasetLoader.load(dataset);
 		double overallf = 0;
 		double overallp = 0;
 		double overallr = 0;
 		double counter = 0;
-		Set<EvalObj> evals = Sets.newHashSet();
 		for (Question q : questions) {
 			if (q.answerType.equals("resource")) {
 				if (q.onlydbo) {
 					if (!q.aggregation) {
 						String question = q.languageToQuestion.get("en");
-						Map<SPARQLQuery, Set<RDFNode>> answer = calculateSPARQLRepresentation(q);
+						Map<String, Answer> answer = calculateSPARQLRepresentation(q);
 
 						double fmax = 0;
 						double pmax = 0;
 						double rmax = 0;
-						for (SPARQLQuery query : answer.keySet()) {
-							Set<RDFNode> systemAnswers = answer.get(query);
+						for (String query : answer.keySet()) {
+							Set<RDFNode> systemAnswers = answer.get(query).answerSet;
 							// 11. Compare to set of resources from benchmark
 							double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 							double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
@@ -70,8 +68,6 @@ public class Pipeline {
 								fmax = fMeasure;
 								pmax = precision;
 								rmax = recall;
-								//learn ranking function
-								this.ranker.learn(q,query);
 							}
 						}
 						evals.add(new EvalObj(question, fmax, pmax, rmax, "Assuming Optimal Ranking Function, Spotter: " + nerdModule.toString()));
@@ -94,12 +90,11 @@ public class Pipeline {
 			}
 			// break;
 		}
-		write(evals);
 
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
 	}
 
-	private void write(Set<EvalObj> evals) {
+	private static void write(Set<EvalObj> evals) {
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("results.html"));
 			bw.write("<script src=\"sorttable.js\"></script><table class=\"sortable\">");
@@ -117,7 +112,7 @@ public class Pipeline {
 		}
 	}
 
-	public Map<SPARQLQuery, Set<RDFNode>> calculateSPARQLRepresentation(Question q) {
+	public Map<String, Answer> calculateSPARQLRepresentation(Question q) {
 		log.info(q.languageToQuestion.get("en"));
 		// 2. Disambiguate parts of the query
 		q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
@@ -137,9 +132,8 @@ public class Pipeline {
 		annotater.annotateTree(q);
 		log.info(q.tree.toString());
 
-		
 		// 6. Build queries via subqueries
-		Map<SPARQLQuery, Set<RDFNode>> answer = queryBuilder.build(q,ranker);
+		Map<String, Answer> answer = queryBuilder.buildWithRanking(q, ranker);
 		return answer;
 	}
 
@@ -181,36 +175,39 @@ public class Pipeline {
 
 	public static void main(String args[]) throws IOException {
 
+		Set<EvalObj> evals = Sets.newHashSet();
+
+		log.info("Configuring controller");
+		EvalPipeline controller = new EvalPipeline();
+
+		controller.datasetLoader = new QALD_Loader();
+
+		// ASpotter wiki = new WikipediaMiner();
+		// controller.nerdModule = new MultiSpotter(fox, tagMe, wiki, spot);
+		controller.nerdModule = new Fox();
+		// controller.nerdModule = new Spotlight();
+		// controller.nerdModule =new TagMe();
+		// controller.nerdModule = new WikipediaMiner();
+
+		controller.cParseTree = new CachedParseTree();
+
+		controller.sentenceToSequence = new SentenceToSequence();
+		controller.pruner = new MutableTreePruner();
+
+		controller.annotater = new Annotater();
+
+		controller.ranker = new VotingBasedRanker();
+		 controller.ranker.train();
+
+		SPARQL sparql = new SPARQL();
+		controller.queryBuilder = new SPARQLQueryBuilder(sparql);
+
+		log.info("Run controller");
 		for (String file : new String[] { "resources/qald-4_hybrid_train.xml", "resources/qald-4_hybrid_test_withanswers.xml" }) { // test_withanswers
-			// train
-			Pipeline controller = new Pipeline();
-			//
-			log.info("Configuring controller");
-
 			controller.dataset = new File(file).getAbsolutePath();
-			controller.datasetLoader = new QALD_Loader();
-			// ASpotter wiki = new WikipediaMiner();
-			// controller.nerdModule = new MultiSpotter(fox, tagMe, wiki, spot);
-			controller.nerdModule = new Fox();
-			// controller.nerdModule = new Spotlight();
-			// controller.nerdModule =new TagMe();
-			// controller.nerdModule = new WikipediaMiner();
-
-			controller.cParseTree = new CachedParseTree();
-
-			controller.sentenceToSequence = new SentenceToSequence();
-
-			controller.annotater = new Annotater();
-
-			controller.ranker = new VotingBasedRanker();
-			controller.ranker.train();
-			
-			SPARQL sparql = new SPARQL();
-			controller.queryBuilder = new SPARQLQueryBuilder(sparql);
-
-			controller.pruner = new MutableTreePruner();
-			log.info("Run controller");
-			controller.run();
+			controller.run(evals);
 		}
+		log.info("Writing results");
+		write(evals);
 	}
 }

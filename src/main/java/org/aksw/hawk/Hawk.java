@@ -8,7 +8,8 @@ import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.cache.CachedParseTree;
-import org.aksw.hawk.controller.Pipeline;
+import org.aksw.hawk.controller.Answer;
+import org.aksw.hawk.controller.TrainPipeline;
 import org.aksw.hawk.nlp.MutableTreePruner;
 import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.hawk.nlp.spotter.Fox;
@@ -26,7 +27,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 public class Hawk {
 
 	public static void main(String[] args) throws Exception {
-		Pipeline controller = new Pipeline();
+		TrainPipeline controller = new TrainPipeline();
 
 		controller.nerdModule = new Fox();
 		controller.cParseTree = new CachedParseTree();
@@ -43,7 +44,7 @@ public class Hawk {
 		Question q = new Question();
 		q.languageToQuestion.put("en", "Which recipients of the Victoria Cross died in the Battle of Arnhem?");
 
-		Map<SPARQLQuery, Set<RDFNode>> sparqll = controller.calculateSPARQLRepresentation(q);
+		Map<String, Answer> sparqll = controller.calculateSPARQLRepresentation(q);
 
 		System.out.println(sparqll);
 	}
