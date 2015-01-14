@@ -162,7 +162,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 					if (predicate.isURI() && !ignoredProperties.contains(predicate.toString())) {
 						Set<Node> domain = getDomain(predicate.getURI());
 						if (conflicts(subjectTypes, domain)) {
-							logger.debug("Domain of " + predicate + " does not match types " + subjectTypes);
+//							logger.debug("Domain of " + predicate + " does not match types " + subjectTypes);
 							return false;
 						}
 					}
@@ -188,7 +188,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 					if (predicate.isURI() && !ignoredProperties.contains(predicate.toString())) {
 						Set<Node> range = getRange(predicate.getURI());
 						if (conflicts(objectTypes, range)) {
-							logger.debug("Range of " + predicate + " does not match types " + objectTypes);
+//							logger.debug("Range of " + predicate + " does not match types " + objectTypes);
 							return false;
 						}
 					}

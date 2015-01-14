@@ -14,6 +14,7 @@ import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQL;
+import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -42,7 +43,7 @@ public class Hawk {
 		Question q = new Question();
 		q.languageToQuestion.put("en", "Which recipients of the Victoria Cross died in the Battle of Arnhem?");
 
-		Map<String, Set<RDFNode>> sparqll = controller.calculateSPARQLRepresentation(q);
+		Map<SPARQLQuery, Set<RDFNode>> sparqll = controller.calculateSPARQLRepresentation(q);
 
 		System.out.println(sparqll);
 	}

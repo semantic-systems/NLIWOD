@@ -30,7 +30,7 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 		this.unboundTriple = new UnboundTriple();
 		this.underdefined = new UnderDefinedQueries();
 		this.predicatesPerVariableEdge = new PredicatesPerVariableEdge();
-this.numberOfTypesPerVariable = new NumberOfTypesPerVariable();
+		this.numberOfTypesPerVariable = new NumberOfTypesPerVariable();
 
 	}
 
@@ -45,19 +45,19 @@ this.numberOfTypesPerVariable = new NumberOfTypesPerVariable();
 		queries = underdefined.prune(queries);
 		log.debug("underdefined pruned: " + (initialQueriesNumber - queries.size()));
 		initialQueriesNumber = queries.size();
-		
+
 		queries = predicatesPerVariableEdge.prune(queries);
 		log.debug("predicatesPerVariableEdge pruned: " + (initialQueriesNumber - queries.size()));
 		initialQueriesNumber = queries.size();
-		
+
 		queries = numberOfTypesPerVariable.prune(queries);
 		log.debug("numberOfTypesPerVariable pruned: " + (initialQueriesNumber - queries.size()));
 		initialQueriesNumber = queries.size();
-		
+
 		queries = BGPisConnected.prune(queries);
 		log.debug("BGPisConnected pruned: " + (initialQueriesNumber - queries.size()));
 		initialQueriesNumber = queries.size();
-		
+
 		queries = cyclicTriple.prune(queries);
 		log.debug("cyclicTriple pruned: " + (initialQueriesNumber - queries.size()));
 		initialQueriesNumber = queries.size();

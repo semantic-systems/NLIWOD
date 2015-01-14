@@ -1,5 +1,6 @@
 package org.aksw.hawk.querybuilding;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
@@ -9,8 +10,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
-public class SPARQLQuery implements Cloneable {
+public class SPARQLQuery implements Cloneable, Serializable, Comparable<SPARQLQuery> {
 
+	private static final long serialVersionUID = 6652694466896208327L;
 	// prune by lemma for verbs
 	private static HashSet<String> stopwords = Sets.newHashSet("of", "is", "and", "in", "name", "was");
 	public Set<String> constraintTriples = Sets.newHashSet();
@@ -18,6 +20,7 @@ public class SPARQLQuery implements Cloneable {
 	public Map<String, Set<String>> textMapFromVariableToSingleFuzzyToken = Maps.newHashMap();
 	public Map<String, Set<String>> textMapFromVariableToCombinedNNExactMatchToken = Maps.newHashMap();
 	private int limit = 1;
+	private double score = 1;
 
 	public SPARQLQuery(String initialConstraint) {
 		constraintTriples.add(initialConstraint);
@@ -241,5 +244,15 @@ public class SPARQLQuery implements Cloneable {
 	public void setLimit(int cardinality) {
 		this.limit = cardinality;
 
+	}
+
+	public void setScore(double distance) {
+		this.score = distance;
+
+	}
+
+	@Override
+	public int compareTo(SPARQLQuery o2) {
+		return Double.compare(this.score, o2.score);
 	}
 }

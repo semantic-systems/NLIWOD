@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.pruner.SPARQLQueryPruner;
+import org.aksw.hawk.ranking.VotingBasedRanker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,8 +25,8 @@ public class SPARQLQueryBuilder {
 		this.sparqlQueryPruner = new SPARQLQueryPruner(sparql);
 	}
 
-	public Map<String, Set<RDFNode>> build(Question q) {
-		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
+	public Map<SPARQLQuery, Set<RDFNode>> build(Question q, VotingBasedRanker ranker) {
+		Map<SPARQLQuery, Set<RDFNode>> answer = Maps.newHashMap();
 		try {
 			// build sparql queries
 			Set<SPARQLQuery> queryStrings = recursiveSparqlQueryBuilder.start(this, q);
@@ -34,9 +35,10 @@ public class SPARQLQueryBuilder {
 			queryStrings = sparqlQueryPruner.prune(queryStrings);
 
 			// identify the cardinality of the answers
-			int cardinality= cardinality(q, queryStrings);
-			log.info(q.languageToQuestion.get("en").toString() + "-> " +cardinality );
+			int cardinality = cardinality(q, queryStrings);
+			log.info(q.languageToQuestion.get("en").toString() + "-> " + cardinality);
 
+			queryStrings = ranker.rank(queryStrings, 1);
 			// transforming to SPARQL
 			int i = 0;
 			for (SPARQLQuery query : queryStrings) {
@@ -44,7 +46,7 @@ public class SPARQLQueryBuilder {
 					log.debug(i++ + "/" + queryStrings.size() * query.generateQueries().size() + "= " + queryString);
 					Set<RDFNode> answerSet = sparql.sparql(queryString);
 					if (!answerSet.isEmpty()) {
-						answer.put(queryString, answerSet);
+						answer.put(query, answerSet);
 					}
 					numberOfOverallQueriesExecuted++;
 				}
@@ -61,7 +63,7 @@ public class SPARQLQueryBuilder {
 	private int cardinality(Question q, Set<SPARQLQuery> queryStrings) {
 		int cardinality = q.cardinality;
 		// find a way to determine the cardinality of the answer
-		
+
 		for (SPARQLQuery s : queryStrings) {
 			s.setLimit(cardinality);
 		}

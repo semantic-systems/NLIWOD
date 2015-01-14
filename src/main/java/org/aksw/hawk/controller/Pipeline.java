@@ -19,7 +19,9 @@ import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQL;
+import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
+import org.aksw.hawk.ranking.VotingBasedRanker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +38,7 @@ public class Pipeline {
 	public SentenceToSequence sentenceToSequence;
 	public Annotater annotater;
 	public SPARQLQueryBuilder queryBuilder;
+	private VotingBasedRanker ranker;
 
 	void run() throws IOException {
 		// 1. read in Questions from QALD 4
@@ -50,23 +53,25 @@ public class Pipeline {
 				if (q.onlydbo) {
 					if (!q.aggregation) {
 						String question = q.languageToQuestion.get("en");
-						Map<String, Set<RDFNode>> answer = calculateSPARQLRepresentation(q);
+						Map<SPARQLQuery, Set<RDFNode>> answer = calculateSPARQLRepresentation(q);
 
 						double fmax = 0;
 						double pmax = 0;
 						double rmax = 0;
-						for (String query : answer.keySet()) {
+						for (SPARQLQuery query : answer.keySet()) {
 							Set<RDFNode> systemAnswers = answer.get(query);
 							// 11. Compare to set of resources from benchmark
 							double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
 							double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
 							double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-							if (fMeasure > fmax) {
+							if (fMeasure >= fmax && fMeasure > 0) {
 								log.info(query.toString());
 								log.info("\tP=" + precision + " R=" + recall + " F=" + fMeasure);
 								fmax = fMeasure;
 								pmax = precision;
 								rmax = recall;
+								//learn ranking function
+								this.ranker.learn(q,query);
 							}
 						}
 						evals.add(new EvalObj(question, fmax, pmax, rmax, "Assuming Optimal Ranking Function, Spotter: " + nerdModule.toString()));
@@ -90,7 +95,7 @@ public class Pipeline {
 			// break;
 		}
 		write(evals);
-		
+
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
 	}
 
@@ -112,14 +117,14 @@ public class Pipeline {
 		}
 	}
 
-	public Map<String, Set<RDFNode>> calculateSPARQLRepresentation(Question q) {
+	public Map<SPARQLQuery, Set<RDFNode>> calculateSPARQLRepresentation(Question q) {
 		log.info(q.languageToQuestion.get("en"));
 		// 2. Disambiguate parts of the query
 		q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
 
 		// 3. Build trees from questions and cache them
 		q.tree = cParseTree.process(q);
-		log.info(""+q.tree);
+		log.info("" + q.tree);
 
 		q.cardinality = cardinality(q);
 		// noun combiner, decrease #nodes in the DEPTree decreases
@@ -132,8 +137,9 @@ public class Pipeline {
 		annotater.annotateTree(q);
 		log.info(q.tree.toString());
 
+		
 		// 6. Build queries via subqueries
-		Map<String, Set<RDFNode>> answer = queryBuilder.build(q);
+		Map<SPARQLQuery, Set<RDFNode>> answer = queryBuilder.build(q,ranker);
 		return answer;
 	}
 
@@ -150,20 +156,18 @@ public class Pipeline {
 				cardinality = 12;
 			} else if (posTag.matches("WP||WRB||ADD||NN||VBZ||IN")) {
 				cardinality = 1;
-			}else if (posTag.matches("IN")) {
+			} else if (posTag.matches("IN")) {
 				MutableTreeNode secondChild = firstChild.getChildren().get(0);
-				 posTag = secondChild.posTag;
+				posTag = secondChild.posTag;
 				if (posTag.equals("NN")) {
 					cardinality = 1;
 				} else {
 					cardinality = 12;
 				}
-			}
-			else {
+			} else {
 				cardinality = 12;
 			}
 
-			
 		} else {
 			String posTag = root.posTag;
 			if (posTag.matches("NNS||NNP(.)*")) {
@@ -177,8 +181,8 @@ public class Pipeline {
 
 	public static void main(String args[]) throws IOException {
 
-		for (String file : new String[] {  "resources/qald-4_hybrid_train.xml", "resources/qald-4_hybrid_test_withanswers.xml"}) { // test_withanswers
-																					// train
+		for (String file : new String[] { "resources/qald-4_hybrid_train.xml", "resources/qald-4_hybrid_test_withanswers.xml" }) { // test_withanswers
+			// train
 			Pipeline controller = new Pipeline();
 			//
 			log.info("Configuring controller");
@@ -198,6 +202,9 @@ public class Pipeline {
 
 			controller.annotater = new Annotater();
 
+			controller.ranker = new VotingBasedRanker();
+			controller.ranker.train();
+			
 			SPARQL sparql = new SPARQL();
 			controller.queryBuilder = new SPARQLQueryBuilder(sparql);
 
