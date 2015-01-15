@@ -21,6 +21,7 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 	private NumberOfTypesPerVariable numberOfTypesPerVariable;
 	private ContainsProjVariable containsProjVariable;
 	private ContainsTooManyNodesAsTextLookUp containsTooManyNodesAsTextLookUp;
+	private TypeMismatch typemismatch;
 
 	public SPARQLQueryPruner(SPARQL sparql) {
 		this.disjointness = new DisjointnessBasedQueryFilter(sparql.qef);
@@ -35,6 +36,7 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 		this.numberOfTypesPerVariable = new NumberOfTypesPerVariable();
 		this.containsProjVariable = new ContainsProjVariable();
 		this.containsTooManyNodesAsTextLookUp = new ContainsTooManyNodesAsTextLookUp();
+		this.typemismatch = new TypeMismatch(sparql.qef);
 
 	}
 
@@ -84,6 +86,10 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 
 		queries = unboundTriple.prune(queries);
 		log.debug("unboundTriple pruned: " + (initialQueriesNumber - queries.size()));
+		initialQueriesNumber = queries.size();
+
+		queries = typemismatch.prune(queries);
+		log.debug("typemismatch pruned: " + (initialQueriesNumber - queries.size()));
 		initialQueriesNumber = queries.size();
 
 		queries = disjointness.prune(queries);
