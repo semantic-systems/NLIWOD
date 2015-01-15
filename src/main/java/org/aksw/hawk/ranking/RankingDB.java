@@ -30,16 +30,17 @@ public class RankingDB {
 	/**
 	 * stores a question
 	 * 
-	 * @param query
+	 * @param queries
 	 * 
 	 */
-	public void store(Question q, SPARQLQuery query) {
-		String question = q.languageToQuestion.get("en");
-		int hash = question.hashCode();
-		String serializedFileName = getFileName(hash);
-		File tmp = new File(serializedFileName);
-		StorageHelper.storeToFileSavely(query, serializedFileName);
+	public void store(Question q, Set<SPARQLQuery> queries) {
+		for (SPARQLQuery query : queries) {
+			int hash = query.hashCode();
+			String serializedFileName = getFileName(hash);
+			File tmp = new File(serializedFileName);
+			StorageHelper.storeToFileSavely(query, serializedFileName);
 
+		}
 	}
 
 	private String getFileName(int hash) {

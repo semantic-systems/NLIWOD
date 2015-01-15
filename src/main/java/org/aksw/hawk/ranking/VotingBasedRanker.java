@@ -231,7 +231,7 @@ public class VotingBasedRanker {
 		return dotProduct / (magnitude_A * magnitude_B);
 	}
 
-	public void learn(Question q, SPARQLQuery query) {
-		db.store(q, query);
+	public void learn(Question q, Set<SPARQLQuery> queries) {
+		db.store(q, queries);
 	}
 }
