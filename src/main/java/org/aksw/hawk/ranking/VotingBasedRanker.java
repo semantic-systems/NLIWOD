@@ -106,28 +106,29 @@ public class VotingBasedRanker {
 			split = triple.split(" ");
 			String subject = split[0];
 			String predicate = split[1];
-			if (subject.equals(textNode) && predicate.startsWith("?") && object(split).startsWith("?")) {
+			String object = split[2];
+			if (subject.equals(textNode) && predicate.startsWith("?") && object.startsWith("?")) {
 				String key = "textNode_?var_?var";
 				addOneToMapAtKey(map, key);
-			} else if (subject.equals(textNode) && !predicate.startsWith("?") && object(split).startsWith("?")) {
+			} else if (subject.equals(textNode) && !predicate.startsWith("?") && object.startsWith("?")) {
 				String key = "textNode_bound_?var";
 				addOneToMapAtKey(map, key);
-			} else if (subject.equals(textNode) && predicate.startsWith("?") && !object(split).startsWith("?")) {
+			} else if (subject.equals(textNode) && predicate.startsWith("?") && !object.startsWith("?")) {
 				String key = "textNode_?var_bound";
 				addOneToMapAtKey(map, key);
-			} else if (subject.equals(textNode) && !predicate.startsWith("?") && !object(split).startsWith("?")) {
+			} else if (subject.equals(textNode) && !predicate.startsWith("?") && !object.startsWith("?")) {
 				String key = "textNode_bound_bound";
 				addOneToMapAtKey(map, key);
-			} else if (object(split).equals(textNode) && predicate.startsWith("?") && subject.startsWith("?")) {
+			} else if (object.equals(textNode) && predicate.startsWith("?") && subject.startsWith("?")) {
 				String key = "?var_?var_textNode";
 				addOneToMapAtKey(map, key);
-			} else if (object(split).equals(textNode) && !predicate.startsWith("?") && subject.startsWith("?")) {
+			} else if (object.equals(textNode) && !predicate.startsWith("?") && subject.startsWith("?")) {
 				String key = "?var_bound_textNode";
 				addOneToMapAtKey(map, key);
-			} else if (object(split).equals(textNode) && predicate.startsWith("?") && !subject.startsWith("?")) {
+			} else if (object.equals(textNode) && predicate.startsWith("?") && !subject.startsWith("?")) {
 				String key = "bound_?var_textNode";
 				addOneToMapAtKey(map, key);
-			} else if (object(split).equals(textNode) && !predicate.startsWith("?") && !subject.startsWith("?")) {
+			} else if (object.equals(textNode) && !predicate.startsWith("?") && !subject.startsWith("?")) {
 				String key = "bound_bound_textNode";
 				addOneToMapAtKey(map, key);
 			}
@@ -135,10 +136,6 @@ public class VotingBasedRanker {
 		}
 
 		return map;
-	}
-
-	private String object(String[] split) {
-		return split[2];
 	}
 
 	private void addOneToMapAtKey(Map<String, Double> map, String key) {
