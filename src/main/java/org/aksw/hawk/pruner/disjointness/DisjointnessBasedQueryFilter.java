@@ -25,6 +25,8 @@ import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.sparql.core.Var;
+import com.jamonapi.Monitor;
+import com.jamonapi.MonitorFactory;
 
 /**
  * @author Lorenz Buehmann
@@ -60,6 +62,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 	 */
 	@Override
 	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings) {
+		MonitorFactory.getTimeMonitor("parse").reset();
 		Set<SPARQLQuery> filteredQueries = Sets.newHashSet();
 
 		for (SPARQLQuery sparqlQuery : queryStrings) {
@@ -67,7 +70,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 				filteredQueries.add(sparqlQuery);
 			}
 		}
-
+		System.err.println(MonitorFactory.getTimeMonitor("parse"));
 		return filteredQueries;
 	}
 
@@ -124,8 +127,11 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 
 	private boolean accept(SPARQLQuery sparqlQuery) {
 		// build Query object
+		Monitor mon = MonitorFactory.getTimeMonitor("parse");
+		mon.start();
 		Query query = QueryFactory.create(sparqlQuery.toString());
-
+		mon.stop();
+		
 		// get all rdf:type triples
 		Set<Triple> typeTriples = queryUtils.getRDFTypeTriples(query);
 
