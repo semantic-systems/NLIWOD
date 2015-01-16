@@ -81,6 +81,7 @@ public class IndexDBO_properties {
 
 			for (int i = 0; i < hits.length; i++) {
 				Document hitDoc = isearcher.doc(hits[i].doc);
+				log.debug(object + "->" + hitDoc.get(FIELD_NAME_SUBJECT) + ", " + hitDoc.get(FIELD_NAME_OBJECT));
 				uris.add(hitDoc.get(FIELD_NAME_SUBJECT));
 			}
 			log.debug("\t finished asking index...");

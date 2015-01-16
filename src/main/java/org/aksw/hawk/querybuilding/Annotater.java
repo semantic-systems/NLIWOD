@@ -1,6 +1,7 @@
 package org.aksw.hawk.querybuilding;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
@@ -14,7 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.ResultSet;
 
 public class Annotater {
 	Logger log = LoggerFactory.getLogger(Annotater.class);
@@ -23,6 +27,11 @@ public class Annotater {
 	DBOIndex dboIndex = new DBOIndex();
 	// blacklisting is a bad solution but good for ambiguous nouns like "people"
 	Set<String> blacklist = Sets.newHashSet("people");
+	private SPARQL sparql;
+
+	public Annotater(SPARQL sparql) {
+		this.sparql = sparql;
+	}
 
 	public void annotateTree(Question q) {
 		MutableTree tree = q.tree;
@@ -118,12 +127,13 @@ public class Annotater {
 			String label = tmp.label;
 			String posTag = tmp.posTag;
 			if (posTag.matches("VB(.)*")) {
-				ArrayList<String> search = propertiesIndex.search(label);
+				List<String> search = propertiesIndex.search(label);
 				if (search.isEmpty() && tmp.lemma != null) {
 					search = propertiesIndex.search(tmp.lemma);
 				} else if (search.isEmpty()) {
 					search = dboIndex.search(label);
 				}
+				search = rank(search);
 				for (String uri : search) {
 					tmp.addAnnotation(uri);
 				}
@@ -133,6 +143,36 @@ public class Annotater {
 				stack.push(child);
 			}
 		}
+	}
+
+	private List<String> rank(List<String> search) {
+		// TODO this ranking killed a certain predicate important for some
+		// queries form training but stabilized ranking :)
+		List<String> predicates = Lists.newArrayList();
+		try {
+			int maxNum = 0;
+			String maxPred = "";
+			for (String predicate : search) {
+				QueryExecution qe = sparql.qef.createQueryExecution("SELECT count(*) WHERE { ?const <" + predicate + "> ?var.}");
+				if (qe != null) {
+					ResultSet results = qe.execSelect();
+					while (results.hasNext()) {
+						int predicateCount = results.next().get(".1").asLiteral().getInt();
+						log.debug(predicate + "\t" + predicateCount);
+						// TODO hack because of date properties
+						if (predicateCount > maxNum && !(predicate.contains("Year") || predicate.contains("Date"))) {
+							maxNum = predicateCount;
+							maxPred = predicate;
+						}
+					}
+				}
+			}
+			predicates.add(maxPred);
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+		return predicates;
+
 	}
 
 	/**
@@ -220,7 +260,8 @@ public class Annotater {
 								log.debug("Not annotated node: " + tmp);
 							}
 						} else if (posTag.matches("WRB|WP")) {
-							// gives only hints towards the type of projection variable
+							// gives only hints towards the type of projection
+							// variable
 							if (label.equals("Where")) {
 								tmp.addAnnotation("http://dbpedia.org/ontology/Place");
 							} else if (label.equals("Who")) {

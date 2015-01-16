@@ -140,13 +140,13 @@ public class RecursiveSparqlQueryBuilder {
 					SPARQLQuery variant1 = (SPARQLQuery) query.clone();
 					variant1.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
 
-					SPARQLQuery variant2 = (SPARQLQuery) query.clone();
-					variant2.addFilter("?proj IN (<" + tmp.label + ">)");
+//					SPARQLQuery variant2 = (SPARQLQuery) query.clone();
+//					variant2.addFilter("?proj IN (<" + tmp.label + ">)");
 
 					SPARQLQuery variant3 = (SPARQLQuery) query.clone();
 
 					sb.add(variant1);
-					sb.add(variant2);
+//					sb.add(variant2);
 					sb.add(variant3);
 					/*
 					 * TODO hack query for correct label of node ie Cleopatra

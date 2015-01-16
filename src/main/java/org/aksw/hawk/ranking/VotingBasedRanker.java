@@ -77,14 +77,17 @@ public class VotingBasedRanker {
 
 		// here are the features
 		Map<String, Double> features = Maps.newHashMap();
-		features.putAll(usedPredicates(q));
-//		features.putAll(usedPattern(q));
+//		features.putAll(usedPredicates(q));
+//		features.putAll(	usedPattern(q));
 		features.put("feature:numberOfTermsInTextQuery", numberOfTermsInTextQuery(q));
-		// features.put("feature:numberOfConstraints", numberOfConstraints(q));
-		// features.put("feature:numberOfTypes", numberOfTypes(q));
+//		features.put("feature:CNNinConstOrProj", CNNinConstOrProj(q));
+
+//		 features.put("feature:numberOfConstraints", numberOfConstraints(q));
+//		 features.put("feature:numberOfTypes", numberOfTypes(q));
 
 		return features;
 	}
+
 
 	private Map<String, Double> usedPattern(SPARQLQuery q) {
 		// build list of patterns, indicate text position

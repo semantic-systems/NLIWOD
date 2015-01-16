@@ -56,9 +56,8 @@ public abstract class Pipeline {
 
 		pruner = new MutableTreePruner();
 
-		annotater = new Annotater();
-
 		SPARQL sparql = new SPARQL();
+		annotater = new Annotater(sparql);
 		queryBuilder = new SPARQLQueryBuilder(sparql);
 
 		ranker = new VotingBasedRanker();
