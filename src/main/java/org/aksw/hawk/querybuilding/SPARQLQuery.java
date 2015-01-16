@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -254,6 +255,6 @@ public class SPARQLQuery implements Cloneable, Serializable, Comparable<SPARQLQu
 
 	@Override
 	public int compareTo(SPARQLQuery o2) {
-		return Double.compare(this.score, o2.score);
+		return ComparisonChain.start().compare(this.score, o2.score).compare(this.toString(), o2.toString()).result();
 	}
 }

@@ -21,6 +21,7 @@ import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
 import org.aksw.hawk.ranking.VotingBasedRanker;
+import org.aksw.hawk.ranking.VotingBasedRanker.Feature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,7 +69,7 @@ public abstract class Pipeline {
 
 	abstract Map<String, Answer> buildQuery(Question q);
 
-	void run(Set<EvalObj> evals) throws IOException {
+	void run(Set<EvalObj> evals, Set<Feature> featureSet) throws IOException {
 		// 1. read in Questions from QALD 4
 		List<Question> questions = datasetLoader.load(dataset);
 		double overallf = 0;
@@ -80,7 +81,7 @@ public abstract class Pipeline {
 				if (q.onlydbo) {
 					if (!q.aggregation) {
 						String question = q.languageToQuestion.get("en");
-						Map<String, Answer> answer = calculateSPARQLRepresentation(q);
+						Map<String, Answer> answer = calculateSPARQLRepresentation(q, featureSet);
 
 						double fmax = 0;
 						double pmax = 0;
@@ -129,11 +130,11 @@ public abstract class Pipeline {
 			}
 			// break;
 		}
-
+		log.info("Features: " + featureSet);
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
 	}
 
-	public Map<String, Answer> calculateSPARQLRepresentation(Question q) {
+	public Map<String, Answer> calculateSPARQLRepresentation(Question q, Set<Feature> featureSet) {
 		log.info(q.languageToQuestion.get("en"));
 		// 2. Disambiguate parts of the query
 		q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));

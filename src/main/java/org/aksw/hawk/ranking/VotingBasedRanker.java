@@ -1,5 +1,6 @@
 package org.aksw.hawk.ranking;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +13,18 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 public class VotingBasedRanker {
 	static Logger log = LoggerFactory.getLogger(VotingBasedRanker.class);
 	private RankingDB db;
 	private Map<String, Double> vec;
+	
+	public enum Feature {
+		PREDICATES, PATTERN, NR_OF_CONSTRAINTS, NR_OF_TYPES, NR_OF_TERMS
+	}
+	
+	Collection<Feature> features;
 
 	public VotingBasedRanker() {
 		this.db = new RankingDB();
@@ -41,6 +49,13 @@ public class VotingBasedRanker {
 		for (SPARQLQuery q : queries) {
 			log.debug(q.toString());
 		}
+	}
+	
+	/**
+	 * @param features the features to set
+	 */
+	public void setFeatures(Collection<Feature> features) {
+		this.features = features;
 	}
 
 	public void train() {
@@ -76,16 +91,31 @@ public class VotingBasedRanker {
 		Collections.sort(q.constraintTriples);
 
 		// here are the features
-		Map<String, Double> features = Maps.newHashMap();
-//		features.putAll(usedPredicates(q));
-//		features.putAll(	usedPattern(q));
-		features.put("feature:numberOfTermsInTextQuery", numberOfTermsInTextQuery(q));
-//		features.put("feature:CNNinConstOrProj", CNNinConstOrProj(q));
+		Map<String, Double> featureValues = Maps.newHashMap();
+		
+		for (Feature feature : features) {
+			switch (feature) {
+			case PREDICATES:
+				featureValues.putAll(usedPredicates(q));
+				break;
+			case PATTERN:
+				featureValues.putAll(	usedPattern(q));
+				break;
+			case NR_OF_CONSTRAINTS:
+				featureValues.put("feature:numberOfConstraints", numberOfConstraints(q));
+				break;
+			case NR_OF_TERMS:
+				featureValues.put("feature:numberOfTermsInTextQuery", numberOfTermsInTextQuery(q));
+				break;
+			case NR_OF_TYPES:
+				featureValues.put("feature:numberOfTypes", numberOfTypes(q));
+				break;
+			default:
+				break;
+			}
+		}
 
-//		 features.put("feature:numberOfConstraints", numberOfConstraints(q));
-//		 features.put("feature:numberOfTypes", numberOfTypes(q));
-
-		return features;
+		return featureValues;
 	}
 
 

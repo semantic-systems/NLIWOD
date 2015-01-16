@@ -59,6 +59,7 @@ public class SPARQLQueryBuilder {
 					a.query = query;
 					if (!a.answerSet.isEmpty()) {
 						answer.put(queryString, a);
+						return answer;
 					}
 					numberOfOverallQueriesExecuted++;
 				}
