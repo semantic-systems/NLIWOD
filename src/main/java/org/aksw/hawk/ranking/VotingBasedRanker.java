@@ -264,4 +264,8 @@ public class VotingBasedRanker {
 	public void learn(Question q, Set<SPARQLQuery> queries) {
 		db.store(q, queries);
 	}
+
+	public Collection<Feature> getFeatures() {
+		return features;
+	}
 }

@@ -15,13 +15,14 @@ public class CachedParseTree {
 	private Logger log = LoggerFactory.getLogger(CachedParseTree.class);
 	private ParseTree parseTree;
 	private TreeTransformer treeTransform;
+	private boolean useCache = false;
 
 	public CachedParseTree() {
 		treeTransform = new TreeTransformer();
 	}
 
 	public MutableTree process(Question q) {
-		if (isStored(q) != null) {
+		if (isStored(q) != null && useCache) {
 			return StorageHelper.readFromFileSavely(isStored(q));
 		} else {
 			log.info("Tree not cached.");

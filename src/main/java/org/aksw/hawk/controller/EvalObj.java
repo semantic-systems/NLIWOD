@@ -6,13 +6,19 @@ public class EvalObj {
 	private double pmax;
 	private double rmax;
 	private String question;
+	private int id;
 
-	public EvalObj(String question, double fmax, double pmax, double rmax, String comment) {
+	public EvalObj(int id, String question, double fmax, double pmax, double rmax, String comment) {
+		this.id = id;
 		this.question = question;
 		this.fmax = fmax;
 		this.rmax = rmax;
 		this.pmax = pmax;
 		this.comment = comment;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public String getComment() {

@@ -33,7 +33,9 @@ public class SPARQL {
 			// qef = new
 			// QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql",
 			// "http://dbpedia.org/");
-			qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
+			qef = new QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
+
+//			qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
 
 //			qef = new QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
 			// qef = new

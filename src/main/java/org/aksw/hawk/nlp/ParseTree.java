@@ -82,7 +82,7 @@ public class ParseTree {
 		for (Entity entity : list) {
 			if (!entity.label.equals("")) {
 				// " " inserted so punctuation gets seperated correctly from URIs
-				sentence = sentence.replace(entity.label, entity.uris.get(0).getURI() + " ");
+				sentence = sentence.replace(entity.label, entity.uris.get(0).getURI() + " ").trim();
 			} else {
 				log.error("Entity has no label in sentence: " + sentence);
 			}

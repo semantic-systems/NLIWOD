@@ -19,7 +19,7 @@ public abstract class ASpotter {
 
 	public abstract Map<String, List<Entity>> getEntities(String question);
 
-	private boolean useCache = true;
+	private boolean useCache = false;
 	private static PersistentCache cache = new PersistentCache();
 
 	protected String requestPOST(String input, String requestURL) {

@@ -40,7 +40,7 @@ public class SPARQLQueryBuilder {
 			int cardinality = cardinality(q, queryStrings);
 			log.debug("Cardinality:" + q.languageToQuestion.get("en").toString() + "-> " + cardinality);
 			// TODO refactor the next line with this senseless list creation
-			List<SPARQLQuery> rankedQueries = ranker.rank(Lists.newArrayList(queryStrings), 1000);
+			List<SPARQLQuery> rankedQueries = ranker.rank(Lists.newArrayList(queryStrings), Integer.MAX_VALUE);
 			// transforming to SPARQL
 			int i = 0;
 			// TODO this for-loop is a hack because ranking does not always
@@ -50,7 +50,11 @@ public class SPARQLQueryBuilder {
 			// FIXME refactor this and the pipeline class to allow training on
 			// the one side and real testing on the other. this influences
 			// RAnker, Pipeline and this class
-			for (int x = 0; x < rankedQueries.size() && answer.keySet().isEmpty(); x++) {
+
+			// measuring f-measure at n
+			// for (int x = 0; x < rankedQueries.size() &&
+			// answer.keySet().isEmpty(); x++) {
+			for (int x = 0; x < rankedQueries.size(); x++) {
 				SPARQLQuery query = rankedQueries.get(x);
 				for (String queryString : query.generateQueries()) {
 					log.debug(i++ + "/" + rankedQueries.size() * query.generateQueries().size() + "= " + queryString);
@@ -59,15 +63,11 @@ public class SPARQLQueryBuilder {
 					a.query = query;
 					if (!a.answerSet.isEmpty()) {
 						answer.put(queryString, a);
-						return answer;
+						// return answer;
 					}
 					numberOfOverallQueriesExecuted++;
 				}
 			}
-			if (answer.keySet().isEmpty())
-				log.debug("AnswerSet isEmpty");
-			else
-				log.debug("AnswerSet not isEmpty");
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(), e);
 		} finally {
@@ -102,10 +102,6 @@ public class SPARQLQueryBuilder {
 					numberOfOverallQueriesExecuted++;
 				}
 			}
-			if (answer.keySet().isEmpty())
-				log.debug("AnswerSet isEmpty");
-			else
-				log.debug("AnswerSet not isEmpty");
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(), e);
 		} finally {

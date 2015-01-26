@@ -21,7 +21,7 @@ public class Hawk {
 		Question q = new Question();
 		q.languageToQuestion.put("en", "Which recipients of the Victoria Cross died in the Battle of Arnhem?");
 
-		Map<String, Answer> sparqll = controller.calculateSPARQLRepresentation(q);
+		Map<String, Answer> sparqll = controller.calculateSPARQLRepresentation(q,null);
 
 		System.out.println(sparqll);
 	}

@@ -2,8 +2,6 @@ package org.aksw.hawk.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,26 +10,29 @@ import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.cache.CachedParseTree;
-import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.nlp.MutableTreePruner;
 import org.aksw.hawk.nlp.SentenceToSequence;
+import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
+import org.aksw.hawk.nlp.spotter.MultiSpotter;
+import org.aksw.hawk.nlp.spotter.OptimalAnnotator;
+import org.aksw.hawk.nlp.spotter.Spotlight;
+import org.aksw.hawk.nlp.spotter.TagMe;
+import org.aksw.hawk.nlp.spotter.WikipediaMiner;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
 import org.aksw.hawk.ranking.VotingBasedRanker;
-import org.aksw.hawk.ranking.VotingBasedRanker.Feature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
-public class RankingEvalPipeline {
-	static Logger log = LoggerFactory.getLogger(RankingEvalPipeline.class);
+public class NEREvalPipeline {
+	static Logger log = LoggerFactory.getLogger(NEREvalPipeline.class);
 	private QALD_Loader datasetLoader;
-	private Fox nerdModule;
+	private ASpotter nerdModule;
 	private CachedParseTree cParseTree;
 	private SentenceToSequence sentenceToSequence;
 	private MutableTreePruner pruner;
@@ -41,35 +42,26 @@ public class RankingEvalPipeline {
 	private String dataset;
 	private Cardinality cardinality;
 
-	public RankingEvalPipeline() {
-
+	public NEREvalPipeline() {
 		datasetLoader = new QALD_Loader();
-
 		cardinality = new Cardinality();
-		// ASpotter wiki = new WikipediaMiner();
-		// controller.nerdModule = new MultiSpotter(fox, tagMe, wiki, spot);
-		nerdModule = new Fox();
-		// controller.nerdModule = new Spotlight();
-		// controller.nerdModule =new TagMe();
-		// controller.nerdModule = new WikipediaMiner();
-
 		cParseTree = new CachedParseTree();
-
 		sentenceToSequence = new SentenceToSequence();
-
 		pruner = new MutableTreePruner();
+		ranker = new VotingBasedRanker();
 
 		SPARQL sparql = new SPARQL();
 		annotater = new Annotater(sparql);
 		queryBuilder = new SPARQLQueryBuilder(sparql);
-
-		ranker = new VotingBasedRanker();
-
 	}
 
-	void run(Set<Feature> featureSet) throws IOException {
-		for (int count : Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50)) {
+	void run() throws IOException {
+		log.info("QuestionId\tPrecision\tRecall\tF-measure\tSpotter");
+		for (ASpotter nerdModule : Lists.newArrayList(new OptimalAnnotator())) {
+
+//		for (ASpotter nerdModule : Lists.newArrayList(new TagMe(),new Fox(),  new WikipediaMiner(), new Spotlight(), new MultiSpotter(new Fox(), new TagMe(), new WikipediaMiner(), new Spotlight()))) {
 			List<Question> questions = datasetLoader.load(dataset);
+			this.nerdModule = nerdModule;
 			double overallf = 0;
 			double overallp = 0;
 			double overallr = 0;
@@ -78,39 +70,34 @@ public class RankingEvalPipeline {
 				if (q.answerType.equals("resource")) {
 					if (q.onlydbo) {
 						if (!q.aggregation) {
-							String question = q.languageToQuestion.get("en");
-							Map<String, Answer> answer = calculateSPARQLRepresentation(q, featureSet);
+							Map<String, Answer> answer = calculateSPARQLRepresentation(q);
 
 							double fmax = 0;
 							double pmax = 0;
 							double rmax = 0;
-							int i = 0;
 							for (String query : answer.keySet()) {
-								if (i < count) {
-									Set<RDFNode> systemAnswers = answer.get(query).answerSet;
-									// 11. Compare to set of resources from
-									// benchmark
-									double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
-									double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-									double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-									if (fMeasure >= fmax && fMeasure > 0) {
-										log.debug(query.toString());
-										log.debug("P=" + precision + " R=" + recall + " F=" + fMeasure);
-										if (fMeasure > fmax) {
-											// used if query with score of 0.4
-											// is in set and a new one with 0.6
-											// comes into save only worthy
-											// queries with constant f-measure
-										}
-										fmax = fMeasure;
-										pmax = precision;
-										rmax = recall;
+								Set<RDFNode> systemAnswers = answer.get(query).answerSet;
+								// 11. Compare to set of resources from
+								// benchmark
+								double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+								double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+								double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+								if (fMeasure >= fmax && fMeasure > 0) {
+									log.debug(query.toString());
+									log.debug("P=" + precision + " R=" + recall + " F=" + fMeasure);
+									if (fMeasure > fmax) {
+										// used if query with score of 0.4
+										// is in set and a new one with 0.6
+										// comes into save only worthy
+										// queries with constant f-measure
 									}
-									i++;
-								} else {
-									break;
+									fmax = fMeasure;
+									pmax = precision;
+									rmax = recall;
 								}
 							}
+							log.info(q.id + "\t" + pmax + "\t" + rmax + "\t" + fmax + "\t" + nerdModule.toString());
+
 							overallf += fmax;
 							overallp += pmax;
 							overallr += rmax;
@@ -130,38 +117,26 @@ public class RankingEvalPipeline {
 				}
 				// break;
 			}
-			log.debug("Features: " + featureSet);
-			log.debug("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
-			log.info("F@n\t" + count + "\tF=" + +overallf / counter + "\t" + ranker.getFeatures() + "\t" + dataset);
+			log.debug(overallp / counter + "\t" + overallr / counter + "\t" + overallf / counter + "\t" + nerdModule.toString());
 		}
 	}
 
 	public static void main(String args[]) throws IOException {
 		// #######################
-		// Calculated the F@N
+		// Calculated the influence of spotting with optimal ranker
 		// #######################
 		log.info("Configuring controller");
-		Set<Set<Feature>> featureSets = Sets.powerSet(new HashSet<>(Arrays.asList(Feature.values())));
-		RankingEvalPipeline controller = new RankingEvalPipeline();
+		NEREvalPipeline controller = new NEREvalPipeline();
 
-		for (Set<Feature> featureSet : featureSets) {
-			if (!featureSet.isEmpty()) {
-				log.info("Training of the ranking function");
-				controller.ranker.setFeatures(featureSet);
-				controller.ranker.train();
-
-				for (String file : new String[] { "resources/qald-4_hybrid_train.xml" }) { // test_withanswers
-					controller.dataset = new File(file).getAbsolutePath();
-					log.info("Run controller");
-					controller.run(featureSet);
-				}
-				log.info("Writing results");
-			}
+		for (String file : new String[] { "resources/qald-4_hybrid_train.xml" }) { // test_withanswers
+			controller.dataset = new File(file).getAbsolutePath();
+			log.info("Run controller");
+			controller.run();
 		}
 
 	}
 
-	public Map<String, Answer> calculateSPARQLRepresentation(Question q, Set<Feature> featureSet) {
+	public Map<String, Answer> calculateSPARQLRepresentation(Question q) {
 		log.info(q.languageToQuestion.get("en"));
 		// 2. Disambiguate parts of the query
 		q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
@@ -181,7 +156,7 @@ public class RankingEvalPipeline {
 		annotater.annotateTree(q);
 		log.info(q.tree.toString());
 
-		Map<String, Answer> answer = queryBuilder.buildWithRanking(q, ranker);
+		Map<String, Answer> answer = queryBuilder.build(q, ranker);
 		return answer;
 	}
 
