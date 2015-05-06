@@ -9,6 +9,8 @@ import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.controller.Answer;
 import org.aksw.hawk.controller.TrainPipeline;
 
+import com.hp.hpl.jena.rdf.model.RDFNode;
+
 /**
  * @author Lorenz Buehmann
  * 
@@ -19,11 +21,16 @@ public class Hawk {
 		TrainPipeline controller = new TrainPipeline();
 
 		Question q = new Question();
-		q.languageToQuestion.put("en", "Which recipients of the Victoria Cross died in the Battle of Arnhem?");
+		q.languageToQuestion.put("en", "Which actress starring in the TV series Friends owns the production company Coquette Productions?");
 
-		Map<String, Answer> sparqll = controller.calculateSPARQLRepresentation(q,null);
+		Map<String, Answer> sparqll = controller.calculateSPARQLRepresentation(q, null);
 
-		System.out.println(sparqll);
+		for (String key : sparqll.keySet()) {
+			System.out.println(key);
+			for (RDFNode answer : sparqll.get(key).answerSet) {
+				System.out.println("\t" + answer);
+			}
+		}
 	}
 
 }

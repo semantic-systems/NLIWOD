@@ -155,13 +155,15 @@ public class TrainPipeline {
 		// 2. Disambiguate parts of the query
 		q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
 
+		// noun combiner, decrease #nodes in the DEPTree 
+		sentenceToSequence.combineSequences(q);
+
 		// 3. Build trees from questions and cache them
 		q.tree = cParseTree.process(q);
 		log.info("" + q.tree);
 
+		// Cardinality identifies the integer i used for LIMIT i 
 		q.cardinality = cardinality.cardinality(q);
-		// noun combiner, decrease #nodes in the DEPTree decreases
-		sentenceToSequence.combineSequences(q);
 
 		// 4. Apply pruning rules
 		q.tree = pruner.prune(q);
