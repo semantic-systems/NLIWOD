@@ -1,7 +1,7 @@
 package org.aksw.autosparql.commons.qald;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -26,8 +26,7 @@ public class QALD_Loader {
 
 	public static void main(String[] args) {
 
-		URL resource = QALD_Loader.class.getClassLoader().getResource("qald-4_hybrid_train.xml");
-		String file = resource.getFile();
+		String file = new File("resources/qald-5_train.xml").getAbsolutePath();
 		QALD_Loader ql = new QALD_Loader();
 		for (Question q : ql.load(file)) {
 			System.out.println(q.languageToQuestion);
@@ -57,6 +56,7 @@ public class QALD_Loader {
 				question.answerType = questionNode.getAttribute("answertype");
 				question.aggregation = Boolean.valueOf(questionNode.getAttribute("aggregation"));
 				question.onlydbo = Boolean.valueOf(questionNode.getAttribute("onlydbo"));
+				question.hybrid = Boolean.valueOf(questionNode.getAttribute("hybrid"));
 
 				// Read question
 				NodeList nlrs = questionNode.getElementsByTagName("string");
