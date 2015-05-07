@@ -75,60 +75,65 @@ public class RankingEvalPipeline {
 			double overallr = 0;
 			double counter = 0;
 			for (Question q : questions) {
-				if (q.answerType.equals("resource")) {
-					if (q.onlydbo) {
-						if (!q.aggregation) {
-							String question = q.languageToQuestion.get("en");
-							Map<String, Answer> answer = calculateSPARQLRepresentation(q, featureSet);
+				if (q.hybrid) {
+					if (q.answerType.equals("resource")) {
+						if (q.onlydbo) {
+							if (!q.aggregation) {
+								String question = q.languageToQuestion.get("en");
+								Map<String, Answer> answer = calculateSPARQLRepresentation(q, featureSet);
 
-							double fmax = 0;
-							double pmax = 0;
-							double rmax = 0;
-							int i = 0;
-							for (String query : answer.keySet()) {
-								if (i < count) {
-									Set<RDFNode> systemAnswers = answer.get(query).answerSet;
-									// 11. Compare to set of resources from
-									// benchmark
-									double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
-									double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-									double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-									if (fMeasure >= fmax && fMeasure > 0) {
-										log.debug(query.toString());
-										log.debug("P=" + precision + " R=" + recall + " F=" + fMeasure);
-										if (fMeasure > fmax) {
-											// used if query with score of 0.4
-											// is in set and a new one with 0.6
-											// comes into save only worthy
-											// queries with constant f-measure
+								double fmax = 0;
+								double pmax = 0;
+								double rmax = 0;
+								int i = 0;
+								for (String query : answer.keySet()) {
+									if (i < count) {
+										Set<RDFNode> systemAnswers = answer.get(query).answerSet;
+										// 11. Compare to set of resources from
+										// benchmark
+										double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+										double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+										double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+										if (fMeasure >= fmax && fMeasure > 0) {
+											log.debug(query.toString());
+											log.debug("P=" + precision + " R=" + recall + " F=" + fMeasure);
+											if (fMeasure > fmax) {
+												// used if query with score of
+												// 0.4
+												// is in set and a new one with
+												// 0.6
+												// comes into save only worthy
+												// queries with constant
+												// f-measure
+											}
+											fmax = fMeasure;
+											pmax = precision;
+											rmax = recall;
 										}
-										fmax = fMeasure;
-										pmax = precision;
-										rmax = recall;
+										i++;
+									} else {
+										break;
 									}
-									i++;
-								} else {
-									break;
 								}
+								overallf += fmax;
+								overallp += pmax;
+								overallr += rmax;
+								counter++;
+								log.info("########################################################");
+							} else {
+								// evals.add(new EvalObj(question,0, 0, 0,
+								// "This question askes for aggregation (ASK)"));
 							}
-							overallf += fmax;
-							overallp += pmax;
-							overallr += rmax;
-							counter++;
-							log.info("########################################################");
 						} else {
 							// evals.add(new EvalObj(question,0, 0, 0,
-							// "This question askes for aggregation (ASK)"));
+							// "This question askes for yago types"));
 						}
 					} else {
 						// evals.add(new EvalObj(question,0, 0, 0,
-						// "This question askes for yago types"));
+						// "This is no question asking for resources only"));
 					}
-				} else {
-					// evals.add(new EvalObj(question,0, 0, 0,
-					// "This is no question asking for resources only"));
+					// break;
 				}
-				// break;
 			}
 			log.debug("Features: " + featureSet);
 			log.debug("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
@@ -150,7 +155,7 @@ public class RankingEvalPipeline {
 				controller.ranker.setFeatures(featureSet);
 				controller.ranker.train();
 
-				for (String file : new String[] { "resources/qald-4_hybrid_train.xml" }) { // test_withanswers
+				for (String file : new String[] { "resources/qald-5_train.xml" }) { // test_withanswers
 					controller.dataset = new File(file).getAbsolutePath();
 					log.info("Run controller");
 					controller.run(featureSet);

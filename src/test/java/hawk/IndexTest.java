@@ -21,6 +21,8 @@ public class IndexTest {
 	public void dbpediaOWLTest() {
 		log.info("currencies \n" + Joiner.on("\n").join(dboindex.search("currencies")));
 		Assert.assertFalse(dboindex.search("currencies").contains("http://dbpedia.org/ontology/currency"));
+		log.info("vice-president \n" + Joiner.on("\n").join(dboindex.search("vice-president")));
+		Assert.assertTrue(dboindex.search("vice-president").contains("http://dbpedia.org/ontology/vicePresident"));
 		log.info("currency \n" + Joiner.on("\n").join(dboindex.search("currency")));
 		Assert.assertTrue(dboindex.search("currency").contains("http://dbpedia.org/ontology/currency"));
 	}

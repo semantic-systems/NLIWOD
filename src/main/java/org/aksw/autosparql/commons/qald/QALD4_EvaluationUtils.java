@@ -37,7 +37,7 @@ public class QALD4_EvaluationUtils {
 			} else {
 				log.error("Unsupported Query Type" + question.pseudoSparqlQuery);
 			}
-		} else {
+		} else if (question.sparqlQuery != null) {
 			if (isSelectType(question.sparqlQuery)) {
 				SetView<RDFNode> intersection = Sets.intersection(goldenRDFNodes, systemAnswer);
 				if (systemAnswer.size() != 0) {
@@ -80,7 +80,7 @@ public class QALD4_EvaluationUtils {
 			} else {
 				log.error("Unsupported Query Type" + question.pseudoSparqlQuery);
 			}
-		} else {
+		} else if (question.sparqlQuery != null) {
 			if (isSelectType(question.sparqlQuery)) {
 				// if queries contain aggregation return always 1
 				if (question.aggregation) {

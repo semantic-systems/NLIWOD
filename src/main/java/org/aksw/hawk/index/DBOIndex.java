@@ -15,6 +15,7 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -75,10 +76,16 @@ public class DBOIndex {
 		try {
 			log.debug("\t start asking index...");
 
-			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 0);
+			// remove hyphens assertTrue
+//			if (object.contains("-")) {
+//				object = "\"" + object.replace("-", " ") + "\"";
+//			}
+//			FuzzyQuery q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 0);
+			
+			QueryParser qp = new QueryParser(LUCENE_VERSION, FIELD_NAME_OBJECT, analyzer);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
-
-			isearcher.search(q, collector);
+			isearcher.search(qp.createPhraseQuery(FIELD_NAME_OBJECT, object), collector);
+//			isearcher.search(q, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
 
 			for (int i = 0; i < hits.length; i++) {

@@ -35,8 +35,13 @@ public class RecursiveSparqlQueryBuilder {
 
 		// if no annotations maybe a CombinedNN
 		if (!tmp.getAnnotations().isEmpty()) {
-			for (SPARQLQuery query : returnSet) {
+			int i=0;
+			log.debug(returnSet.size()+"");
+			for (SPARQLQuery query : returnSet) {i++;
+			log.debug("Annotationsize: "+tmp.getAnnotations().size()); 
 				for (String anno : tmp.getAnnotations()) {
+					//FIXME anno sometime ""
+					log.debug("Annotation: " + anno +" -> "+ i);
 					if (tmp.posTag.matches("VB(.)*")) {
 						// FIXME variablen iterieren
 						SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
@@ -187,6 +192,7 @@ public class RecursiveSparqlQueryBuilder {
 		returnSet.addAll(sb);
 
 		for (MutableTreeNode child : tmp.getChildren()) {
+			log.debug("Recursion started for :" + child);
 			recursion(returnSet, variableSet, child);
 		}
 

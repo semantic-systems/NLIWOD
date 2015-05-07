@@ -11,4 +11,6 @@ public class Answer {
 
 	public Set<RDFNode> answerSet;
 	public SPARQLQuery query;
+	public String question;
+	public String question_id;
 }

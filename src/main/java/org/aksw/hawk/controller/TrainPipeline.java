@@ -24,6 +24,7 @@ import org.aksw.hawk.ranking.VotingBasedRanker.Feature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
@@ -75,59 +76,60 @@ public class TrainPipeline {
 		double counter = 0;
 		for (Question q : questions) {
 			if (q.hybrid) {
+				if (q.id == 301) {
+					if (q.answerType.equals("resource")) {
+						if (q.onlydbo) {
+							if (!q.aggregation) {
+								String question = q.languageToQuestion.get("en");
+								Map<String, Answer> answer = calculateSPARQLRepresentation(q, featureSet);
 
-				if (q.answerType.equals("resource")) {
-					if (q.onlydbo) {
-						if (!q.aggregation) {
-							String question = q.languageToQuestion.get("en");
-							Map<String, Answer> answer = calculateSPARQLRepresentation(q, featureSet);
-
-							double fmax = 0;
-							double pmax = 0;
-							double rmax = 0;
-							Set<SPARQLQuery> correctQueries = Sets.newHashSet();
-							// Compare to set of resources from benchmark
-							for (String query : answer.keySet()) {
-								Set<RDFNode> systemAnswers = answer.get(query).answerSet;
-								double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
-								double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
-								double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
-								if (fMeasure >= fmax && fMeasure > 0) {
-									log.debug(query.toString());
-									log.debug("P=" + precision + " R=" + recall + " F=" + fMeasure);
-									if (fMeasure > fmax) {
-										// used if query with score of 0.4
-										// is in set and a new one with 0.6
-										// comes into save only worthy
-										// queries with constant f-measure
-										correctQueries.clear();
+								double fmax = 0;
+								double pmax = 0;
+								double rmax = 0;
+								Set<SPARQLQuery> correctQueries = Sets.newHashSet();
+								// Compare to set of resources from benchmark
+								for (String query : answer.keySet()) {
+									Set<RDFNode> systemAnswers = answer.get(query).answerSet;
+									double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+									double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+									double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+									if (fMeasure >= fmax && fMeasure > 0) {
+										log.debug(query.toString());
+										log.debug("P=" + precision + " R=" + recall + " F=" + fMeasure);
+										if (fMeasure > fmax) {
+											// used if query with score of 0.4
+											// is in set and a new one with 0.6
+											// comes into save only worthy
+											// queries with constant f-measure
+											correctQueries.clear();
+										}
+										fmax = fMeasure;
+										pmax = precision;
+										rmax = recall;
+										correctQueries.add(answer.get(query).query);
 									}
-									fmax = fMeasure;
-									pmax = precision;
-									rmax = recall;
-									correctQueries.add(answer.get(query).query);
 								}
+								this.ranker.learn(q, correctQueries);
+								evals.add(new EvalObj(q.id, question, fmax, pmax, rmax, "Assuming Optimal Ranking Function, Spotter: " + nerdModule.toString()));
+								overallf += fmax;
+								overallp += pmax;
+								overallr += rmax;
+								counter++;
+								log.info("########################################################");
+							} else {
+								// evals.add(new EvalObj(question,0, 0, 0,
+								// "This question askes for aggregation (ASK)"));
 							}
-							this.ranker.learn(q, correctQueries);
-							evals.add(new EvalObj(q.id, question, fmax, pmax, rmax, "Assuming Optimal Ranking Function, Spotter: " + nerdModule.toString()));
-							overallf += fmax;
-							overallp += pmax;
-							overallr += rmax;
-							counter++;
-							log.info("########################################################");
 						} else {
 							// evals.add(new EvalObj(question,0, 0, 0,
-							// "This question askes for aggregation (ASK)"));
+							// "This question askes for yago types"));
 						}
 					} else {
 						// evals.add(new EvalObj(question,0, 0, 0,
-						// "This question askes for yago types"));
+						// "This is no question asking for resources only"));
 					}
-				} else {
-					// evals.add(new EvalObj(question,0, 0, 0,
-					// "This is no question asking for resources only"));
+					// break;
 				}
-				// break;
 			}
 		}
 		log.debug("Features: " + featureSet);
@@ -147,7 +149,7 @@ public class TrainPipeline {
 		log.info("Run controller");
 		// for (String file : new String[] { "resources/qald-4_hybrid_train.xml"
 		// }) { // test_withanswers
-		for (String file : new String[] { "resources/qald-5_train.xml" }) {
+		for (String file : new String[] { "resources/qald-5_train.xml", "resources/qald-5_test_questions.xml" }) {
 			controller.dataset = new File(file).getAbsolutePath();
 			controller.run(evals, null);
 		}
@@ -176,7 +178,7 @@ public class TrainPipeline {
 		// 5. Annotate tree
 		annotater.annotateTree(q);
 		log.info(q.tree.toString());
-
+		// Map<String, Answer> answer = Maps.newHashMap();
 		Map<String, Answer> answer = queryBuilder.build(q, ranker);
 		return answer;
 	}

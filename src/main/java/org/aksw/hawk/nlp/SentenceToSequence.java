@@ -41,8 +41,8 @@ public class SentenceToSequence {
 			if (subsequence.isEmpty() && null != pos && pos.matches("CD|JJ|NN(.)*|RB(.)*")) {
 				subsequence.add(token);
 			}
-			// split "of the" or "of all" via pos_i=IN and pos_i+1=DT
-			else if (!subsequence.isEmpty() && null != pos && tcounter + 1 < tokens.size() && null != nextPos && pos.matches("IN") && nextPos.matches("(W)?DT")) {
+			// split "of the" or "of all" or "against" via pos_i=IN and pos_i+1=DT
+			else if (!subsequence.isEmpty() && null != pos && tcounter + 1 < tokens.size() && null != nextPos && pos.matches("IN") && nextPos.matches("(W)?DT|NNP(S)?")) {
 				if (subsequence.size() > 1) {
 					transformTree(subsequence, q);
 				}
@@ -109,7 +109,9 @@ public class SentenceToSequence {
 
 	public static void main(String args[]) {
 		Question q = new Question();
-		q.languageToQuestion.put("en", "Who plays Phileas Fogg in the adaptation of Around the World in 80 Days directed by Buzz Kulik?");
+		q.languageToQuestion.put("en", "Who was vice-president under the president who authorized atomic weapons against Japan during World War II?");
+//		q.languageToQuestion.put("en", "Who plays Phileas Fogg in the adaptation of Around the World in 80 Days directed by Buzz Kulik?");
+		
 		SentenceToSequence.combineSequences(q);
 		System.out.println(q);
 	}
