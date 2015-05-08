@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.autosparql.commons.qald.Question;
@@ -21,10 +25,10 @@ import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
 import org.aksw.hawk.ranking.VotingBasedRanker;
 import org.aksw.hawk.ranking.VotingBasedRanker.Feature;
+import org.aksw.hawk.util.QALDWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
@@ -40,8 +44,9 @@ public class TrainPipeline {
 	private VotingBasedRanker ranker;
 	private String dataset;
 	private Cardinality cardinality;
+	private QALDWriter qw;
 
-	public TrainPipeline() {
+	public TrainPipeline() throws IOException, ParserConfigurationException {
 
 		datasetLoader = new QALD_Loader();
 
@@ -67,9 +72,10 @@ public class TrainPipeline {
 
 	}
 
-	void run(Set<EvalObj> evals, Set<Feature> featureSet) throws IOException {
+	void run(Set<EvalObj> evals, Set<Feature> featureSet) throws IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 		// read in Questions from QALD 4
 		List<Question> questions = datasetLoader.load(dataset);
+		qw = new QALDWriter(dataset);
 		double overallf = 0;
 		double overallp = 0;
 		double overallr = 0;
@@ -88,6 +94,7 @@ public class TrainPipeline {
 								double rmax = 0;
 								Set<SPARQLQuery> correctQueries = Sets.newHashSet();
 								// Compare to set of resources from benchmark
+								Answer finalAnswer = null;
 								for (String query : answer.keySet()) {
 									Set<RDFNode> systemAnswers = answer.get(query).answerSet;
 									double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
@@ -107,8 +114,10 @@ public class TrainPipeline {
 										pmax = precision;
 										rmax = recall;
 										correctQueries.add(answer.get(query).query);
+										finalAnswer = answer.get(query);
 									}
 								}
+								this.qw.write(finalAnswer);
 								this.ranker.learn(q, correctQueries);
 								evals.add(new EvalObj(q.id, question, fmax, pmax, rmax, "Assuming Optimal Ranking Function, Spotter: " + nerdModule.toString()));
 								overallf += fmax;
@@ -134,12 +143,14 @@ public class TrainPipeline {
 		}
 		log.debug("Features: " + featureSet);
 		log.debug("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
+		
+		this.qw.close();
 		// log.info("F@n\t" + count + "\tF=" + +overallf / counter + "\t" +
 		// ranker.getFeatures() + "\t" + dataset);
 		// }
 	}
 
-	public static void main(String args[]) throws IOException {
+	public static void main(String args[]) throws IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 
 		Set<EvalObj> evals = Sets.newHashSet();
 

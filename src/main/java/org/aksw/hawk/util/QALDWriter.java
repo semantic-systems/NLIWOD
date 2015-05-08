@@ -31,7 +31,8 @@ public class QALDWriter {
 	private Document doc;
 
 	public QALDWriter(String dataset) throws IOException, ParserConfigurationException {
-		this.dataset = dataset;
+		//TODO fix this hack by using file instead of string
+		this.dataset = dataset.split("/")[dataset.split("/").length-1];
 		questions = Lists.newArrayList();
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
@@ -39,7 +40,7 @@ public class QALDWriter {
 
 	}
 
-	public static void main(String[] args) throws IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+	private static void main(String[] args) throws IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 
 		String dataset = "qald-5_train";
 		QALDWriter qw = new QALDWriter(dataset);
@@ -51,12 +52,12 @@ public class QALDWriter {
 		a.answerSet.add(new ResourceImpl("http://dbpedia.org/resource/2"));
 		a.query = query;
 		a.question = "Where was the assassin of Martin Luther King born?";
-		a.question_id = "1";
+		a.question_id = 1;
 		qw.write(a);
 		qw.close();
 	}
 
-	private void close() throws IOException, TransformerFactoryConfigurationError, TransformerException {
+	public void close() throws IOException, TransformerFactoryConfigurationError, TransformerException {
 		Element root = doc.createElement("dataset");
 		root.setAttribute("id", dataset);
 		doc.appendChild(root);
@@ -67,7 +68,7 @@ public class QALDWriter {
 		Transformer transformer = TransformerFactory.newInstance().newTransformer();
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		DOMSource source = new DOMSource(doc);
-		StreamResult file = new StreamResult(new File(dataset + "_answer.xml"));
+		StreamResult file = new StreamResult(new File("answer_" + dataset));
 		transformer.transform(source, file);
 
 		System.out.println("\nXML DOM Created Successfully..");
@@ -75,33 +76,35 @@ public class QALDWriter {
 
 	public void write(Answer a) throws ParserConfigurationException, IOException {
 
-		Element question = doc.createElement("question");
-		if (a.question_id != null) {
-			question.setAttribute("id", a.question_id);
+		if (a != null) {
+			Element question = doc.createElement("question");
+			if (a.question_id != null) {
+				question.setAttribute("id", String.valueOf(a.question_id));
+			}
+			// TODO adapt to be more flexible
+			question.setAttribute("answertype", "resouce");
+			question.setAttribute("aggregation", "false");
+			question.setAttribute("onlydbo", "true");
+			question.setAttribute("hybrid", "true");
+
+			Element string = doc.createElement("string");
+			string.setAttribute("lang", "en");
+			string.setTextContent(a.question);
+			question.appendChild(string);
+
+			Element pseudoquery = doc.createElement("pseudoquery");
+			pseudoquery.setTextContent(a.query.toString());
+			question.appendChild(pseudoquery);
+
+			Element answers = doc.createElement("answers");
+
+			for (RDFNode node : a.answerSet) {
+				Element answer = doc.createElement("answer");
+				answer.setTextContent(node.asResource().getURI());
+				answers.appendChild(answer);
+			}
+			question.appendChild(answers);
+			questions.add(question);
 		}
-		// TODO adapt to be more flexible
-		question.setAttribute("answertype", "resouce");
-		question.setAttribute("aggregation", "false");
-		question.setAttribute("onlydbo", "true");
-		question.setAttribute("hybrid", "true");
-
-		Element string = doc.createElement("string");
-		string.setAttribute("lang", "en");
-		string.setTextContent(a.question);
-		question.appendChild(string);
-
-		Element pseudoquery = doc.createElement("pseudoquery");
-		pseudoquery.setTextContent(a.query.toString());
-		question.appendChild(pseudoquery);
-
-		Element answers = doc.createElement("answers");
-
-		for (RDFNode node : a.answerSet) {
-			Element answer = doc.createElement("answer");
-			answer.setTextContent(node.asResource().getURI());
-			answers.appendChild(answer);
-		}
-		question.appendChild(answers);
-		questions.add(question);
 	}
 }

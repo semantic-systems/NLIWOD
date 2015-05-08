@@ -96,6 +96,8 @@ public class SPARQLQueryBuilder {
 					Answer a = new Answer();
 					a.answerSet = sparql.sparql(queryString);
 					a.query = query;
+					a.question_id = q.id;
+					a.question=q.languageToQuestion.get("en").toString();
 					if (!a.answerSet.isEmpty()) {
 						answer.put(queryString, a);
 					}
