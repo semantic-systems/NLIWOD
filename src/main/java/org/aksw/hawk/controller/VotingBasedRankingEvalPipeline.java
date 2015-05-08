@@ -8,19 +8,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.cache.CachedParseTree;
-import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.nlp.MutableTreePruner;
 import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
+import org.aksw.hawk.ranking.OverlapBucketRanker;
 import org.aksw.hawk.ranking.VotingBasedRanker;
 import org.aksw.hawk.ranking.VotingBasedRanker.Feature;
+import org.aksw.hawk.util.QALDWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +33,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
-public class RankingEvalPipeline {
-	static Logger log = LoggerFactory.getLogger(RankingEvalPipeline.class);
+public class VotingBasedRankingEvalPipeline {
+	static Logger log = LoggerFactory.getLogger(VotingBasedRankingEvalPipeline.class);
 	private QALD_Loader datasetLoader;
 	private Fox nerdModule;
 	private CachedParseTree cParseTree;
@@ -40,8 +45,9 @@ public class RankingEvalPipeline {
 	private VotingBasedRanker ranker;
 	private String dataset;
 	private Cardinality cardinality;
+	private QALDWriter qw;
 
-	public RankingEvalPipeline() {
+	public VotingBasedRankingEvalPipeline() {
 
 		datasetLoader = new QALD_Loader();
 
@@ -67,9 +73,13 @@ public class RankingEvalPipeline {
 
 	}
 
-	void run(Set<Feature> featureSet) throws IOException {
-		for (int count : Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50)) {
-			List<Question> questions = datasetLoader.load(dataset);
+	void run(Set<Feature> featureSet) throws IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+		qw = new QALDWriter(dataset);
+
+//		for (int count : Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50)) {
+		for (int count : Lists.newArrayList(1)) {
+
+		List<Question> questions = datasetLoader.load(dataset);
 			double overallf = 0;
 			double overallp = 0;
 			double overallr = 0;
@@ -111,6 +121,7 @@ public class RankingEvalPipeline {
 											rmax = recall;
 										}
 										i++;
+										this.qw.write(answer.get(query));
 									} else {
 										break;
 									}
@@ -135,34 +146,37 @@ public class RankingEvalPipeline {
 					// break;
 				}
 			}
+			this.qw.close();
 			log.debug("Features: " + featureSet);
 			log.debug("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
 			log.info("F@n\t" + count + "\tF=" + +overallf / counter + "\t" + ranker.getFeatures() + "\t" + dataset);
 		}
 	}
 
-	public static void main(String args[]) throws IOException {
+	public static void main(String args[]) throws IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 		// #######################
 		// Calculated the F@N
 		// #######################
 		log.info("Configuring controller");
-		Set<Set<Feature>> featureSets = Sets.powerSet(new HashSet<>(Arrays.asList(Feature.values())));
-		RankingEvalPipeline controller = new RankingEvalPipeline();
+		// Set<Set<Feature>> featureSets = Sets.powerSet(new
+		// HashSet<>(Arrays.asList(Feature.values())));
+		VotingBasedRankingEvalPipeline controller = new VotingBasedRankingEvalPipeline();
 
-		for (Set<Feature> featureSet : featureSets) {
-			if (!featureSet.isEmpty()) {
-				log.info("Training of the ranking function");
-				controller.ranker.setFeatures(featureSet);
-				controller.ranker.train();
+		// for (Set<Feature> featureSet : featureSets) {
+		// if (!featureSet.isEmpty()) {
+		Set<Feature> featureSet = new HashSet<>(Arrays.asList(Feature.values()));
+		log.info("Training of the ranking function");
+		controller.ranker.setFeatures(featureSet);
+		controller.ranker.train();
 
-				for (String file : new String[] { "resources/qald-5_train.xml" }) { // test_withanswers
-					controller.dataset = new File(file).getAbsolutePath();
-					log.info("Run controller");
-					controller.run(featureSet);
-				}
-				log.info("Writing results");
-			}
+		for (String file : new String[] { "resources/qald-5_train.xml", "resources/qald-5_test_questions.xml" }) { // test_withanswers
+			controller.dataset = new File(file).getAbsolutePath();
+			log.info("Run controller");
+			controller.run(featureSet);
 		}
+		log.info("Writing results");
+		// }
+		// }
 
 	}
 
@@ -171,13 +185,15 @@ public class RankingEvalPipeline {
 		// 2. Disambiguate parts of the query
 		q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
 
+		// noun combiner, decrease #nodes in the DEPTree
+		sentenceToSequence.combineSequences(q);
+
 		// 3. Build trees from questions and cache them
 		q.tree = cParseTree.process(q);
 		log.info("" + q.tree);
 
+		// Cardinality identifies the integer i used for LIMIT i
 		q.cardinality = cardinality.cardinality(q);
-		// noun combiner, decrease #nodes in the DEPTree decreases
-		sentenceToSequence.combineSequences(q);
 
 		// 4. Apply pruning rules
 		q.tree = pruner.prune(q);
@@ -185,9 +201,11 @@ public class RankingEvalPipeline {
 		// 5. Annotate tree
 		annotater.annotateTree(q);
 		log.info(q.tree.toString());
+		// Map<String, Answer> answer = Maps.newHashMap();
 
 		Map<String, Answer> answer = queryBuilder.buildWithRanking(q, ranker);
 		return answer;
+
 	}
 
 }

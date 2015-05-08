@@ -61,9 +61,10 @@ public class SPARQLQueryBuilder {
 					Answer a = new Answer();
 					a.answerSet = sparql.sparql(queryString);
 					a.query = query;
+					a.question_id = q.id;
+					a.question=q.languageToQuestion.get("en").toString();
 					if (!a.answerSet.isEmpty()) {
 						answer.put(queryString, a);
-						// return answer;
 					}
 					numberOfOverallQueriesExecuted++;
 				}
@@ -77,7 +78,7 @@ public class SPARQLQueryBuilder {
 		return answer;
 	}
 
-	public Map<String, Answer> build(Question q, VotingBasedRanker ranker) {
+	public Map<String, Answer> build(Question q) {
 		Map<String, Answer> answer = Maps.newHashMap();
 		try {
 			// build sparql queries

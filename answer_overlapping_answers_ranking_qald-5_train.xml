@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dataset id="qald-5_train.xml">
+<question aggregation="false" answertype="resouce" hybrid="true" id="301" onlydbo="true">
+<string lang="en">Who was vice-president under the president who authorized atomic weapons against Japan during World War II?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"atomic weapons"' 1000). 
+?proj a &lt;http://dbpedia.org/ontology/Agent&gt;. 
+?const &lt;http://dbpedia.org/ontology/vicePresident&gt; ?proj. 
+}
+LIMIT 1</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Harry_S._Truman</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="303" onlydbo="true">
+<string lang="en">Which anti-apartheid activist was born in Mvezo?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Mvezo"' 1000). 
+?proj &lt;http://dbpedia.org/ontology/birthPlace&gt; ?const. 
+}
+LIMIT 12</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Nelson_Mandela</answer>
+<answer>http://dbpedia.org/resource/List_of_awards_and_honours_bestowed_upon_Nelson_Mandela</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="305" onlydbo="true">
+<string lang="en">Which recipients of the Victoria Cross died in the Battle of Arnhem?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Battle of Arnhem"' 1000). 
+?proj ?pbridge &lt;http://dbpedia.org/resource/Victoria_Cross&gt;. 
+}
+LIMIT 12</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Robert_Henry_Cain</answer>
+<answer>http://dbpedia.org/resource/John_Grayburn</answer>
+<answer>http://dbpedia.org/resource/John_Baskeyfield</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="306" onlydbo="true">
+<string lang="en">Where did the first man in space die?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"first man in space"' 1000). 
+?proj &lt;http://dbpedia.org/ontology/deathPlace&gt; ?const. 
+}
+LIMIT 1</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Yuri_Gagarin</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="308" onlydbo="true">
+<string lang="en">Which members of the Wu-Tang Clan took their stage name from a movie?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Wu-Tang Clan"' 1000). 
+?const &lt;http://dbpedia.org/ontology/bandMember&gt; ?proj. 
+}
+LIMIT 12</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/4th_Disciple</answer>
+<answer>http://dbpedia.org/resource/Masta_Killa</answer>
+<answer>http://dbpedia.org/resource/Killarmy</answer>
+<answer>http://dbpedia.org/resource/Method_Man</answer>
+<answer>http://dbpedia.org/resource/9th_Prince</answer>
+<answer>http://dbpedia.org/resource/Cappadonna</answer>
+<answer>http://dbpedia.org/resource/Ghostface_Killah</answer>
+<answer>http://dbpedia.org/resource/Gza</answer>
+<answer>http://dbpedia.org/resource/Inspectah_Deck</answer>
+<answer>http://dbpedia.org/resource/Rza</answer>
+<answer>http://dbpedia.org/resource/Raekwon</answer>
+<answer>http://dbpedia.org/resource/U-God</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="309" onlydbo="true">
+<string lang="en">Which writers had influenced the philosopher that refused a Nobel Prize?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Nobel Prize"' 1000). 
+?proj &lt;http://dbpedia.org/ontology/influencedBy&gt; ?const. 
+?proj a &lt;http://dbpedia.org/ontology/Philosopher&gt;. 
+}
+LIMIT 12</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Rudolf_Christoph_Eucken</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="311" onlydbo="true">
+<string lang="en">Who composed the music for the film that depicts the early life of Jane Austin?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"film" AND "Jane Austin"' 1000). 
+?proj &lt;http://dbpedia.org/ontology/composer&gt; ?const. 
+?const a &lt;http://dbpedia.org/ontology/Agent&gt;. 
+}
+LIMIT 1</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Exile_(TV_series)</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="314" onlydbo="true">
+<string lang="en">Which horses did The Long Fellow ride?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Long Fellow"' 1000). 
+?proj &lt;http://dbpedia.org/ontology/raceHorse&gt; ?const. 
+}
+LIMIT 12</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Lester_Piggott</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="315" onlydbo="true">
+<string lang="en">Of the people that died of radiation in Los Alamos, whose death was an accident?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Los Álamos" AND "people"' 1000). 
+?const &lt;http://dbpedia.org/ontology/deathPlace&gt; ?proj. 
+}
+LIMIT 1</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Los_Alamos,_New_Mexico</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="316" onlydbo="true">
+<string lang="en">Which building owned by the Bank of America was featured in the TV series MegaStructures?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Bank of America"' 1000). 
+?const &lt;http://dbpedia.org/ontology/owner&gt; ?proj. 
+}
+LIMIT 1</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Sunbelt_Management</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="317" onlydbo="true">
+<string lang="en">Which buildings in art deco style did Shreve, Lamb and Harmon design?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Lamb and"' 1000). 
+?const &lt;http://dbpedia.org/ontology/architect&gt; ?proj. 
+}
+LIMIT 12</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/R._H._Hunt</answer>
+<answer>http://dbpedia.org/resource/Thomas_W._Lamb</answer>
+<answer>http://dbpedia.org/resource/Shreve,_Lamb_&amp;_Harmon</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="318" onlydbo="true">
+<string lang="en">Which birds are protected under the National Parks and Wildlife Act?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"National Parks and Wildlife Act"' 1000). 
+?proj a &lt;http://dbpedia.org/ontology/Bird&gt;. 
+}
+LIMIT 12</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Black-faced_Cuckooshrike</answer>
+<answer>http://dbpedia.org/resource/Yellow_Thornbill</answer>
+<answer>http://dbpedia.org/resource/Bar-shouldered_Dove</answer>
+<answer>http://dbpedia.org/resource/Chestnut_Teal</answer>
+<answer>http://dbpedia.org/resource/Australian_Shelduck</answer>
+<answer>http://dbpedia.org/resource/Australasian_Shoveler</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="319" onlydbo="true">
+<string lang="en">Which country did the first known photographer of snowflakes come from?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"first known photographer of snowflakes"' 1000). 
+?proj &lt;http://dbpedia.org/ontology/birthPlace&gt; ?const. 
+}
+LIMIT 12</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Wilson_Bentley</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="320" onlydbo="true">
+<string lang="en">List all the battles commanded by the lover of Cleopatra.</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"lover" AND "Cleopatra"' 1000). 
+?const &lt;http://dbpedia.org/ontology/battle&gt; ?proj. 
+?proj &lt;http://dbpedia.org/ontology/commander&gt; ?const. 
+}
+LIMIT 12</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Final_War_of_the_Roman_Republic</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="322" onlydbo="true">
+<string lang="en">Which actress starring in the TV series Friends owns the production company Coquette Productions?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Coquette Productions"' 1000). 
+?proj &lt;http://dbpedia.org/ontology/starring&gt; ?const. 
+}
+LIMIT 1</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Cocoon:_The_Return</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="323" onlydbo="true">
+<string lang="en">Gaborone is the capital of which country member of the African Union?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"country member" AND "African Union"' 1000). 
+?proj ?pbridge &lt;http://dbpedia.org/resource/Gaborone&gt;. 
+}
+LIMIT 1</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Botswana</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="326" onlydbo="true">
+<string lang="en">For which movie did the daughter of Francis Ford Coppola receive an Oscar?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"daughter" AND "Oscar"' 1000). 
+?proj &lt;http://dbpedia.org/ontology/award&gt; ?const. 
+}
+LIMIT 1</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Leon_Shamroy</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="328" onlydbo="true">
+<string lang="en">At which college did the only American actor that received the César Award study?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"only American actor"' 1000). 
+?const &lt;http://dbpedia.org/ontology/award&gt; ?proj. 
+}
+LIMIT 1</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Unbelievable_(Wang_Leehom_album)</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="333" onlydbo="true">
+<string lang="en">In which city does the former main presenter of the Xposé girls live?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"former main presenter" AND "city"' 1000). 
+?proj &lt;http://dbpedia.org/ontology/residence&gt; ?const. 
+}
+LIMIT 1</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Ox_Baker</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="334" onlydbo="true">
+<string lang="en">Who plays Phileas Fogg in the adaptation of Around the World in 80 Days directed by Buzz Kulik?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"World in 80 Days"' 1000). 
+?proj &lt;http://dbpedia.org/ontology/starring&gt; ?const. 
+?const a &lt;http://dbpedia.org/ontology/Agent&gt;. 
+?proj ?pbridge &lt;http://dbpedia.org/resource/Buzz_Kulik&gt;. 
+}
+LIMIT 1</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Around_the_World_in_80_Days_(TV_miniseries)</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="335" onlydbo="true">
+<string lang="en">Who is the front man of the band that wrote Coffee &amp; TV?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"band" AND "Coffee &amp; TV"' 1000). 
+?proj &lt;http://dbpedia.org/ontology/writer&gt; ?const. 
+}
+LIMIT 1</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Coffee_&amp;_TV</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="340" onlydbo="true">
+<string lang="en">A landmark of which city is the home of the Mona Lisa?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"landmark of" AND "Mars Ill"' 1000). 
+?proj a &lt;http://dbpedia.org/ontology/City&gt;. 
+}
+LIMIT 12</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Jacksonville,_Texas</answer>
+</answers>
+</question>
+</dataset>

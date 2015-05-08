@@ -160,7 +160,7 @@ public class TrainPipeline {
 		log.info("Run controller");
 		// for (String file : new String[] { "resources/qald-4_hybrid_train.xml"
 		// }) { // test_withanswers
-		for (String file : new String[] { "resources/qald-5_train.xml", "resources/qald-5_test_questions.xml" }) {
+		for (String file : new String[] { "resources/qald-5_train.xml" }) {
 			controller.dataset = new File(file).getAbsolutePath();
 			controller.run(evals, null);
 		}
@@ -190,7 +190,7 @@ public class TrainPipeline {
 		annotater.annotateTree(q);
 		log.info(q.tree.toString());
 		// Map<String, Answer> answer = Maps.newHashMap();
-		Map<String, Answer> answer = queryBuilder.build(q, ranker);
+		Map<String, Answer> answer = queryBuilder.build(q);
 		return answer;
 	}
 
