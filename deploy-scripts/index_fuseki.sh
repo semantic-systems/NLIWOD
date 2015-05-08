@@ -76,6 +76,8 @@ then
 fi
 
 #Takes a lot of time!
-tdbloader2 --loc=dbpediatbd dbpedia_2014.owl disambiguations_en.ttl instance_types_en.ttl long_abstracts_en.ttl pagerank_en_2014.ttl pnd_en.ttl en_surface_forms.ttl labels_en.ttl mappingbased_properties_en.ttl persondata_en.ttl redirect_resolved.ttl specific_mappingbased_properties_en.ttl
+#/home/rusbeck/apache-jena-2.12.1/bin/tdbloader2 --loc=dbpediatbd dbpedia_2014.owl disambiguations_en.ttl instance_types_en.ttl long_abstracts_en.ttl pnd_en.ttl en_surface_forms.ttl labels_en.ttl mappingbased_properties_en.ttl persondata_en.ttl redirect_resolved.ttl specific_mappingbased_properties_en.ttl
 
-#java -Xmx6G -cp $JENA_FUSEKI_JAR jena.textindexer --desc=fuseki_hawk_assembler.ttl
+/home/rusbeck/apache-jena-2.12.1/bin/tdbloader2 --loc=dbpediatbd dbpedia_2014.owl disambiguations_en.ttl instance_types_en.ttl long_abstracts_en.ttl pagerank_en_2014.ttl pnd_en.ttl en_surface_forms.ttl labels_en.ttl mappingbased_properties_en.ttl persondata_en.ttl redirect_resolved.ttl specific_mappingbased_properties_en.ttl
+
+java -Xmx16G -cp $JENA_FUSEKI_JAR jena.textindexer --desc=fuseki_hawk_assembler.ttl
