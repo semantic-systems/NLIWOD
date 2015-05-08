@@ -76,7 +76,7 @@ public class TrainPipeline {
 		double counter = 0;
 		for (Question q : questions) {
 			if (q.hybrid) {
-				if (q.id == 301) {
+//				if (q.id == 301) {
 					if (q.answerType.equals("resource")) {
 						if (q.onlydbo) {
 							if (!q.aggregation) {
@@ -130,7 +130,7 @@ public class TrainPipeline {
 					}
 					// break;
 				}
-			}
+//			}
 		}
 		log.debug("Features: " + featureSet);
 		log.debug("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);

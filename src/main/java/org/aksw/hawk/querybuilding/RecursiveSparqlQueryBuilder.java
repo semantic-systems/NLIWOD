@@ -35,13 +35,9 @@ public class RecursiveSparqlQueryBuilder {
 
 		// if no annotations maybe a CombinedNN
 		if (!tmp.getAnnotations().isEmpty()) {
-			int i=0;
-			log.debug(returnSet.size()+"");
-			for (SPARQLQuery query : returnSet) {i++;
-			log.debug("Annotationsize: "+tmp.getAnnotations().size()); 
+			for (SPARQLQuery query : returnSet) {
 				for (String anno : tmp.getAnnotations()) {
-					//FIXME anno sometime ""
-					log.debug("Annotation: " + anno +" -> "+ i);
+					// FIXME anno sometime ""
 					if (tmp.posTag.matches("VB(.)*")) {
 						// FIXME variablen iterieren
 						SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
@@ -51,16 +47,17 @@ public class RecursiveSparqlQueryBuilder {
 						variant2.addConstraint("?const <" + anno + "> ?proj.");
 
 						SPARQLQuery variant3 = ((SPARQLQuery) query.clone());
-//						variant3.addConstraint("?const ?proot ?proj.");
+						// variant3.addConstraint("?const ?proot ?proj.");
 
 						sb.add(variant1);
 						sb.add(variant2);
 						sb.add(variant3);
 					} else if (tmp.posTag.matches("NN(.)*|WRB")) {
 						// nn can be predicats, e.g. currency
-//commented things 
-//						SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
-//						variant1.addConstraint("?proj  <" + anno + "> ?const.");
+						// commented things
+						// SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
+						// variant1.addConstraint("?proj  <" + anno +
+						// "> ?const.");
 
 						SPARQLQuery variant2 = ((SPARQLQuery) query.clone());
 						variant2.addConstraint("?const <" + anno + "> ?proj.");
@@ -71,20 +68,20 @@ public class RecursiveSparqlQueryBuilder {
 						SPARQLQuery variant4 = ((SPARQLQuery) query.clone());
 						variant4.addConstraint("?proj a <" + anno + ">.");
 
-//						SPARQLQuery variant5 = ((SPARQLQuery) query.clone());
-//						variant5.addFilterOverAbstractsContraint("?proj", tmp.label);
-						
+						// SPARQLQuery variant5 = ((SPARQLQuery) query.clone());
+						// variant5.addFilterOverAbstractsContraint("?proj",
+						// tmp.label);
+
 						SPARQLQuery variant6 = ((SPARQLQuery) query.clone());
 						variant6.addFilterOverAbstractsContraint("?const", tmp.label);
 
 						SPARQLQuery variant7 = ((SPARQLQuery) query.clone());
-						
 
 						// sb.add(variant1);
 						sb.add(variant2);
 						sb.add(variant3);
 						sb.add(variant4);
-//						sb.add(variant5);
+						// sb.add(variant5);
 						sb.add(variant6);
 						sb.add(variant7);
 
@@ -145,13 +142,13 @@ public class RecursiveSparqlQueryBuilder {
 					SPARQLQuery variant1 = (SPARQLQuery) query.clone();
 					variant1.addConstraint("?proj ?pbridge <" + tmp.label + ">.");
 
-//					SPARQLQuery variant2 = (SPARQLQuery) query.clone();
-//					variant2.addFilter("?proj IN (<" + tmp.label + ">)");
+					// SPARQLQuery variant2 = (SPARQLQuery) query.clone();
+					// variant2.addFilter("?proj IN (<" + tmp.label + ">)");
 
 					SPARQLQuery variant3 = (SPARQLQuery) query.clone();
 
 					sb.add(variant1);
-//					sb.add(variant2);
+					// sb.add(variant2);
 					sb.add(variant3);
 					/*
 					 * TODO hack query for correct label of node ie Cleopatra

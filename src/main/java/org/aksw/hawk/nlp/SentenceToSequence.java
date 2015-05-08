@@ -41,8 +41,9 @@ public class SentenceToSequence {
 			if (subsequence.isEmpty() && null != pos && pos.matches("CD|JJ|NN(.)*|RB(.)*")) {
 				subsequence.add(token);
 			}
-			// split "of the" or "of all" or "against" via pos_i=IN and pos_i+1=DT
-			else if (!subsequence.isEmpty() && null != pos && tcounter + 1 < tokens.size() && null != nextPos && pos.matches("IN") && nextPos.matches("(W)?DT|NNP(S)?")) {
+			// split "of the" or "of all" or "against" via pos_i=IN and
+			// pos_i+1=DT
+			else if (!subsequence.isEmpty() && null != pos && tcounter + 1 < tokens.size() && null != nextPos && pos.matches("IN") && !token.matches("of") && nextPos.matches("(W)?DT|NNP(S)?")) {
 				if (subsequence.size() > 1) {
 					transformTree(subsequence, q);
 				}
@@ -53,7 +54,7 @@ public class SentenceToSequence {
 			else if (!subsequence.isEmpty() && null != pos && null != lastPos && lastPos.matches("NNS") && pos.matches("NNP(S)?")) {
 				if (subsequence.size() > 2) {
 					transformTree(subsequence, q);
-				} 
+				}
 				subsequence = Lists.newArrayList();
 			}
 			// finish via VB* or IN -> null or IN -> DT or WDT (now a that or
@@ -77,7 +78,8 @@ public class SentenceToSequence {
 	private static Map<String, String> generatePOSTags(Question q) {
 		ParseTree parse = new ParseTree();
 		DEPTree tree = parse.process(q);
-//TODO this is horribly wrong, the same label CAN have different pos tags
+		// TODO this is horribly wrong, the same label CAN have different pos
+		// tags
 		Map<String, String> label2pos = Maps.newHashMap();
 		Stack<DEPNode> stack = new Stack<DEPNode>();
 		stack.push(tree.getFirstRoot());
@@ -110,9 +112,17 @@ public class SentenceToSequence {
 	public static void main(String args[]) {
 		Question q = new Question();
 		q.languageToQuestion.put("en", "Who was vice-president under the president who authorized atomic weapons against Japan during World War II?");
-//		q.languageToQuestion.put("en", "Who plays Phileas Fogg in the adaptation of Around the World in 80 Days directed by Buzz Kulik?");
-		
 		SentenceToSequence.combineSequences(q);
-		System.out.println(q);
+		System.out.println(q.languageToNounPhrases.get("en"));
+
+		q = new Question();
+		q.languageToQuestion.put("en", "Who plays Phileas Fogg in the adaptation of Around the World in 80 Days directed by Buzz Kulik?");
+		SentenceToSequence.combineSequences(q);
+		System.out.println(q.languageToNounPhrases.get("en"));
+
+		q = new Question();
+		q.languageToQuestion.put("en", "Which recipients of the Victoria Cross died in the Battle of Arnhem?");
+		SentenceToSequence.combineSequences(q);
+		System.out.println(q.languageToNounPhrases.get("en"));
 	}
 }
