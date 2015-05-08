@@ -1,55 +1,65 @@
 package org.aksw.hawk.nlp;
 
 import java.util.List;
-import java.util.Queue;
+import java.util.Map;
 import java.util.Stack;
 
 import org.aksw.autosparql.commons.qald.Question;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.aksw.autosparql.commons.qald.uri.Entity;
 
-import com.clearnlp.tokenization.EnglishTokenizer;
+import com.clearnlp.dependency.DEPNode;
+import com.clearnlp.dependency.DEPTree;
+import com.clearnlp.nlp.NLPGetter;
+import com.clearnlp.reader.AbstractReader;
+import com.clearnlp.tokenization.AbstractTokenizer;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Queues;
+import com.google.common.collect.Maps;
+import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
+//TODO Talk to Micha about that whole static thing
 public class SentenceToSequence {
-	Logger log = LoggerFactory.getLogger(SentenceToSequence.class);
-
+	private static String language = AbstractReader.LANG_EN;
+	static AbstractTokenizer tokenizer = NLPGetter.getTokenizer(language);
 
 	// combine noun phrases
-	// TODO improve noun phrases e.g. combine following nulls, i.e., URLs to get
-	// early life of Jane Austin instead of early life
-	public void combineSequences(Question q) {
-		String question = q.languageToQuestion.get("en");
-		EnglishTokenizer tok = new EnglishTokenizer();
-		List<String> list = tok.getTokens(question);
+	public static void combineSequences(Question q) {
+		// run pos-tagging
+		String sentence = q.languageToQuestion.get("en");
+		List<String> tokens = tokenizer.getTokens(sentence);
+		Map<String, String> label2pos = generatePOSTags(q);
+
+		// run phrase combination
 		List<String> subsequence = Lists.newArrayList();
-		for (int tcounter = 0; tcounter < list.size(); tcounter++) {
-			String token = list.get(tcounter);
-			String pos = pos(token, q);
+		for (int tcounter = 0; tcounter < tokens.size(); tcounter++) {
+			String token = tokens.get(tcounter);
+			String pos = label2pos.get(token);
+			String nextPos = tcounter + 1 == tokens.size() ? null : label2pos.get(tokens.get(tcounter + 1));
+			String lastPos = tcounter == 0 ? null : label2pos.get(tokens.get(tcounter - 1));
+
 			// look for start "RB|JJ|NN(.)*"
 			if (subsequence.isEmpty() && null != pos && pos.matches("CD|JJ|NN(.)*|RB(.)*")) {
 				subsequence.add(token);
 			}
-			// split "of the" or "of all" via pos_i=IN and pos_i+1=DT
-			else if (!subsequence.isEmpty() && null != pos && tcounter + 1 < list.size() && null != pos(list.get(tcounter + 1), q) && pos.matches("IN") && pos(list.get(tcounter + 1), q).matches("(W)?DT")) {
-				if (subsequence.size() >= 2) {
+			// split "of the" or "of all" or "against" via pos_i=IN and
+			// pos_i+1=DT
+			else if (!subsequence.isEmpty() && null != pos && tcounter + 1 < tokens.size() && null != nextPos && pos.matches("IN") && !token.matches("of") && nextPos.matches("(W)?DT|NNP(S)?")) {
+				if (subsequence.size() > 1) {
 					transformTree(subsequence, q);
 				}
 				subsequence = Lists.newArrayList();
 			}
 			// do not combine NNS and NNPS but combine "stage name",
 			// "British Prime minister"
-			else if (!subsequence.isEmpty() && null != pos && null != pos(list.get(tcounter - 1), q) && pos(list.get(tcounter - 1), q).matches("NNS") && pos.matches("NNP(S)?")) {
+			else if (!subsequence.isEmpty() && null != pos && null != lastPos && lastPos.matches("NNS") && pos.matches("NNP(S)?")) {
 				if (subsequence.size() > 2) {
 					transformTree(subsequence, q);
 				}
 				subsequence = Lists.newArrayList();
 			}
-			// finish via VB* or IN -> null or IN -> DT or WDT (now a that or which follows)
-			else if (!subsequence.isEmpty() && !pos(list.get(tcounter - 1), q).matches("JJ|HYPH")
-					&& (null == pos || pos.matches("VB(.)*|\\.|WDT") || (pos.matches("IN") && pos(list.get(tcounter + 1), q) == null) || (pos.matches("IN") && pos(list.get(tcounter + 1), q).matches("DT")))) {
+			// finish via VB* or IN -> null or IN -> DT or WDT (now a that or
+			// which follows)
+			else if (!subsequence.isEmpty() && !lastPos.matches("JJ|HYPH") && (null == pos || pos.matches("VB(.)*|\\.|WDT") || (pos.matches("IN") && nextPos == null) || (pos.matches("IN") && nextPos.matches("DT")))) {
 				// more than one token, so summarizing makes sense
 				if (subsequence.size() > 1) {
 					transformTree(subsequence, q);
@@ -65,101 +75,54 @@ public class SentenceToSequence {
 		}
 	}
 
-	private void transformTree(List<String> subsequence, Question q) {
-		String newLabel = Joiner.on(" ").join(subsequence);
-		MutableTreeNode top = findTopMostNode(q.tree.getRoot(), subsequence);
-		// if top node equals null the target subsequence is not in one
-		// dependence subtree and thus will not be joined together
-		if (top == null) {
-			return;
-		}
-		for (String sub : subsequence) {
-			Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
-			queue.add(q.tree.getRoot());
-			// delete unnecessary sub nodes
-			while (!queue.isEmpty()) {
-				MutableTreeNode tmp = queue.poll();
-				if (tmp.label.equals(sub) && !tmp.equals(top)) {
-					q.tree.remove(tmp);
-					break;
-				} else {
-					for (MutableTreeNode n : tmp.getChildren()) {
-						queue.add(n);
-					}
-				}
-			}
-		}
-		top.label = newLabel;
-		top.posTag = "CombinedNN";
-	}
-
-	// use breadth first search to find the top most node
-	private MutableTreeNode findTopMostNode(MutableTreeNode root, List<String> tokenSet) {
-		Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
-		queue.add(root);
-		while (!queue.isEmpty()) {
-			MutableTreeNode tmp = queue.poll();
-			for (String token : tokenSet) {
-				if (token.equals(tmp.label)) {
-					if (subTreeContainsOtherToken(tmp, tokenSet)) {
-						return tmp;
-					}
-				}
-			}
-			for (MutableTreeNode n : tmp.getChildren()) {
-				queue.add(n);
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * to match correct subtree it is important to find the top most node in the
-	 * subtree that contains every token of the combined noun
-	 * 
-	 * @param root
-	 * @param tokenSet
-	 * @return
-	 */
-	private boolean subTreeContainsOtherToken(MutableTreeNode root, List<String> tokenSet) {
-		boolean[] tokenCheck = new boolean[tokenSet.size()];
-		for (int i = 0; i < tokenSet.size(); i++) {
-			Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
-			queue.add(root);
-			while (!queue.isEmpty()) {
-				MutableTreeNode tmp = queue.poll();
-				if (tokenSet.get(i).equals(tmp.label)) {
-					tokenCheck[i] = true;
-				}
-				for (MutableTreeNode n : tmp.getChildren()) {
-					queue.add(n);
-				}
-
-			}
-		}
-		for (boolean item : tokenCheck) {
-			if (!item) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	private String pos(String token, Question q) {
-		Stack<MutableTreeNode> stack = new Stack<MutableTreeNode>();
-		stack.push(q.tree.getRoot());
+	private static Map<String, String> generatePOSTags(Question q) {
+		ParseTree parse = new ParseTree();
+		DEPTree tree = parse.process(q);
+		// TODO this is horribly wrong, the same label CAN have different pos
+		// tags
+		Map<String, String> label2pos = Maps.newHashMap();
+		Stack<DEPNode> stack = new Stack<DEPNode>();
+		stack.push(tree.getFirstRoot());
 		while (!stack.isEmpty()) {
-			MutableTreeNode tmp = stack.pop();
-			if (tmp.label.equals(token)) {
-				return tmp.posTag;
-			} else {
-				for (MutableTreeNode child : tmp.getChildren()) {
-					stack.push(child);
-				}
+			DEPNode tmp = stack.pop();
+			label2pos.put(tmp.form, tmp.pos);
+			for (DEPNode child : tmp.getDependentNodeList()) {
+				stack.push(child);
 			}
-
 		}
-		return null;
+		return label2pos;
 	}
 
+	private static void transformTree(List<String> subsequence, Question q) {
+		String combinedNN = Joiner.on(" ").join(subsequence);
+		String combinedURI = "http://aksw.org/combinedNN/" + Joiner.on("_").join(subsequence);
+
+		Entity tmpEntity = new Entity();
+		tmpEntity.label = combinedNN;
+		tmpEntity.uris.add(new ResourceImpl(combinedURI));
+
+		List<Entity> nounphrases = q.languageToNounPhrases.get("en");
+		if (null == nounphrases) {
+			nounphrases = Lists.newArrayList();
+		}
+		nounphrases.add(tmpEntity);
+		q.languageToNounPhrases.put("en", nounphrases);
+	}
+
+	public static void main(String args[]) {
+		Question q = new Question();
+		q.languageToQuestion.put("en", "Who was vice-president under the president who authorized atomic weapons against Japan during World War II?");
+		SentenceToSequence.combineSequences(q);
+		System.out.println(q.languageToNounPhrases.get("en"));
+
+		q = new Question();
+		q.languageToQuestion.put("en", "Who plays Phileas Fogg in the adaptation of Around the World in 80 Days directed by Buzz Kulik?");
+		SentenceToSequence.combineSequences(q);
+		System.out.println(q.languageToNounPhrases.get("en"));
+
+		q = new Question();
+		q.languageToQuestion.put("en", "Which recipients of the Victoria Cross died in the Battle of Arnhem?");
+		SentenceToSequence.combineSequences(q);
+		System.out.println(q.languageToNounPhrases.get("en"));
+	}
 }

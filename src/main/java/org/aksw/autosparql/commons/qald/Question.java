@@ -21,9 +21,11 @@ public class Question implements Serializable {
 	private static final long serialVersionUID = 9130793012431486456L;
 
 	public Integer id;
+	public int cardinality;
 	public Boolean onlydbo;
 	public Boolean outOfScope;
 	public Boolean aggregation;
+	public Boolean hybrid;
 	public String answerType;
 	public String sparqlQuery;
 	public String pseudoSparqlQuery;
@@ -34,9 +36,6 @@ public class Question implements Serializable {
 	public Map<String, List<Entity>> languageToNounPhrases = new LinkedHashMap<String, List<Entity>>();
 	public Map<String, List<GoldEntity>> goldEntites = new HashMap<String, List<GoldEntity>>();
 	public Map<String, Set<String>> goldenAnswers = new HashMap<String, Set<String>>();
-
-	public int cardinality;
-
 
 	public Question() {
 

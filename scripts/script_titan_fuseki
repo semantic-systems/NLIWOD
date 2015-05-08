@@ -1,0 +1,16 @@
+## DOWNLOAD
+
+wget -r -nc -nH --cut-dirs=1 -np -l1 -A '*.ttl.bz2' -A '*.owl' -R '*unredirected*' http://data.dws.informatik.uni-mannheim.de/dbpedia/3.8/en
+wget -r -nc -nH --cut-dirs=1 -np -l1 -A '*.ttl.bz2' -A '*.owl' -R '*unredirected*' http://data.dws.informatik.uni-mannheim.de/dbpedia/3.9/en
+wget -r -nc -nH --cut-dirs=1 -np -l1 -A '*.ttl.bz2' -A '*.owl' -R '*unredirected*' http://data.dws.informatik.uni-mannheim.de/dbpedia/
+/home/rusbeck/dbpediadata/2014/en
+
+
+## LOADING INTO FUSEKI (adapting the memory usage in the tdbloader2 script)
+
+/home/rusbeck/apache-jena-2.12.1/bin/tdbloader2 --loc=/home/rusbeck/dbpedia_38 /home/rusbeck/dbpediadata/38/article_categories_en.ttl /home/rusbeck/dbpediadata/38/labels_en.ttl /home/rusbeck/dbpediadata/38/category_labels_en.ttl /home/rusbeck/dbpediadata/38/long_abstracts_en.ttl /home/rusbeck/dbpediadata/38/disambiguations_en.ttl /home/rusbeck/dbpediadata/38/mappingbased_properties_en.ttl /home/rusbeck/dbpediadata/38/external_links_en.ttl /home/rusbeck/dbpediadata/38/page_ids_en.ttl /home/rusbeck/dbpediadata/38/geo_coordinates_en.ttl /home/rusbeck/dbpediadata/38/page_links_en.ttl /home/rusbeck/dbpediadata/38/homepages_en.ttl /home/rusbeck/dbpediadata/38/persondata_en.ttl /home/rusbeck/dbpediadata/38/images_en.ttl /home/rusbeck/dbpediadata/38/pnd_en.ttl /home/rusbeck/dbpediadata/38/infobox_properties_en.ttl /home/rusbeck/dbpediadata/38/redirects_en.ttl /home/rusbeck/dbpediadata/38/infobox_property_definitions_en.ttl /home/rusbeck/dbpediadata/38/redirects_transitive_en.ttl /home/rusbeck/dbpediadata/38/infobox_test_en.ttl /home/rusbeck/dbpediadata/38/revision_ids_en.ttl /home/rusbeck/dbpediadata/38/instance_types_en.ttl /home/rusbeck/dbpediadata/38/revision_uris_en.ttl /home/rusbeck/dbpediadata/38/interlanguage_links_en.ttl /home/rusbeck/dbpediadata/38/short_abstracts_en.ttl /home/rusbeck/dbpediadata/38/interlanguage_links_same_as_chapters_en.ttl /home/rusbeck/dbpediadata/38/skos_categories_en.ttl /home/rusbeck/dbpediadata/38/interlanguage_links_same_as_en.ttl /home/rusbeck/dbpediadata/38/specific_mappingbased_properties_en.ttl /home/rusbeck/dbpediadata/38/interlanguage_links_see_also_chapters_en.ttl /home/rusbeck/dbpediadata/38/topical_concepts_en.ttl /home/rusbeck/dbpediadata/38/interlanguage_links_see_also_en.ttl /home/rusbeck/dbpediadata/38/wikipedia_links_en.ttl /home/rusbeck/dbpediadata/38/iri_same_as_uri_en.ttl
+
+
+
+## STARTING FUSEKI
+./fuseki-server --conf=assembler.ttl

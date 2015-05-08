@@ -2,6 +2,7 @@ package org.aksw.hawk.nlp;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Stack;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
@@ -9,11 +10,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.clearnlp.component.AbstractComponent;
+import com.clearnlp.dependency.DEPNode;
 import com.clearnlp.dependency.DEPTree;
 import com.clearnlp.nlp.NLPGetter;
 import com.clearnlp.nlp.NLPMode;
 import com.clearnlp.reader.AbstractReader;
 import com.clearnlp.tokenization.AbstractTokenizer;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 
 /**
  * generates a dependency tree called predicate argument tree
@@ -66,7 +70,10 @@ public class ParseTree {
 			sentence = replaceLabelsByIdentifiedURIs(sentence, q.languageToNamedEntites.get("en"));
 			log.debug(sentence);
 		}
-
+		if (!q.languageToNounPhrases.isEmpty()) {
+			sentence = replaceLabelsByIdentifiedURIs(sentence, q.languageToNounPhrases.get("en"));
+			log.debug(sentence);
+		}
 		DEPTree tree = NLPGetter.toDEPTree(tokenizer.getTokens(sentence));
 
 		for (AbstractComponent component : components)
@@ -75,13 +82,35 @@ public class ParseTree {
 		log.debug(TreeTraversal.inorderTraversal(tree.getFirstRoot(), 0, null));
 		log.debug(tree.toStringSRL());
 
+		resolveCompoundNouns(tree, q.languageToNounPhrases.get("en"));
+		log.debug(TreeTraversal.inorderTraversal(tree.getFirstRoot(), 0, null));
 		return tree;
+	}
+
+	private void resolveCompoundNouns(DEPTree tree, List<Entity> list) {
+
+		Stack<DEPNode> stack = new Stack<DEPNode>();
+		stack.push(tree.getFirstRoot());
+		while (!stack.isEmpty()) {
+
+			DEPNode thisNode = stack.pop();
+			String label = thisNode.form;
+			if (label.contains("aksw.org")) {
+				thisNode.form = Joiner.on(" ").join(label.replace("http://aksw.org/combinedNN/", "").split("_"));
+				thisNode.pos = "CombinedNN";
+			}
+			for (DEPNode child : thisNode.getDependentNodeList()) {
+				stack.push(child);
+			}
+		}
+
 	}
 
 	private String replaceLabelsByIdentifiedURIs(String sentence, List<Entity> list) {
 		for (Entity entity : list) {
 			if (!entity.label.equals("")) {
-				// " " inserted so punctuation gets seperated correctly from URIs
+				// " " inserted so punctuation gets separated correctly from
+				// URIs
 				sentence = sentence.replace(entity.label, entity.uris.get(0).getURI() + " ").trim();
 			} else {
 				log.error("Entity has no label in sentence: " + sentence);
