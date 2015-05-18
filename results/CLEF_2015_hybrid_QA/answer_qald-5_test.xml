@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dataset id="qald-5_test.xml">
+<question aggregation="false" answertype="resouce" hybrid="true" id="59" onlydbo="true">
+<string lang="en">Which movie by the Coen brothers stars John Turturro in the role of a New York City playwright?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Coen brothers stars"' 1000). 
+?proj a &lt;http://dbpedia.org/ontology/Film&gt;. 
+?proj ?pbridge &lt;http://dbpedia.org/resource/John_Turturro&gt;. 
+}
+LIMIT 1</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Barton_Fink</answer>
+</answers>
+</question>
+</dataset>
