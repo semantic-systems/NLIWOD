@@ -58,6 +58,8 @@ public class QALD_Loader {
 				question.onlydbo = Boolean.valueOf(questionNode.getAttribute("onlydbo"));
 				question.hybrid = Boolean.valueOf(questionNode.getAttribute("hybrid"));
 
+				question.loadedAsASKQuery = new Boolean(false); // Update when query loaded
+
 				// Read question
 				NodeList nlrs = questionNode.getElementsByTagName("string");
 				for (int j = 0; j < nlrs.getLength(); j++) {
@@ -86,6 +88,8 @@ public class QALD_Loader {
 					NodeList childNodes = element.getChildNodes();
 					Node item = childNodes.item(0);
 					question.sparqlQuery = item.getNodeValue().trim();
+
+					question.loadedAsASKQuery = new Boolean(QALD4_EvaluationUtils.isAskType(question.sparqlQuery));
 				}
 				// check if OUT OF SCOPE marked
 				if (question.pseudoSparqlQuery != null) {
