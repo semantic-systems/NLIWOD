@@ -21,6 +21,7 @@ public class SPARQLQuery implements Cloneable, Serializable, Comparable<SPARQLQu
 	public Set<String> filter = Sets.newHashSet();
 	public Map<String, Set<String>> textMapFromVariableToSingleFuzzyToken = Maps.newHashMap();
 	public Map<String, Set<String>> textMapFromVariableToCombinedNNExactMatchToken = Maps.newHashMap();
+	private boolean isASKQuery = false;
 	private int limit = 1;
 	private double score = 1;
 
@@ -32,6 +33,10 @@ public class SPARQLQuery implements Cloneable, Serializable, Comparable<SPARQLQu
 	 * only for clone()
 	 */
 	protected SPARQLQuery() {
+	}
+
+	public void isASKQuery(boolean isASKQuery) {
+		this.isASKQuery = isASKQuery;
 	}
 
 	public void addConstraint(String constraint) {
@@ -142,7 +147,11 @@ public class SPARQLQuery implements Cloneable, Serializable, Comparable<SPARQLQu
 	private String generateQueryStringWithExactMatch() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("PREFIX text:<http://jena.apache.org/text#> \n");
-		sb.append("SELECT DISTINCT ?proj WHERE {\n ");
+		if (isASKQuery) {
+			sb.append("ASK {\n ");
+		} else {
+			sb.append("SELECT DISTINCT ?proj WHERE {\n ");
+		}
 		for (String variable : textMapFromVariableToCombinedNNExactMatchToken.keySet()) {
 			// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
 			// anti-apartheid activist').
@@ -178,7 +187,11 @@ public class SPARQLQuery implements Cloneable, Serializable, Comparable<SPARQLQu
 	private String generateQueryStringWithFuzzy() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("PREFIX text:<http://jena.apache.org/text#> \n");
-		sb.append("SELECT DISTINCT ?proj WHERE {\n ");
+		if (isASKQuery) {
+			sb.append("ASK {\n ");
+		} else {
+			sb.append("SELECT DISTINCT ?proj WHERE {\n ");
+		}
 		for (String variable : textMapFromVariableToSingleFuzzyToken.keySet()) {
 			// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
 			// anti-apartheid activist').

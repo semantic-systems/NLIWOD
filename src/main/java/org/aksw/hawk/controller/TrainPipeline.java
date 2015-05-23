@@ -44,6 +44,7 @@ public class TrainPipeline {
 	private VotingBasedRanker ranker;
 	private String dataset;
 	private Cardinality cardinality;
+	private QueryTypeClassifier queryTypeClassifier;
 	private QALDWriter qw;
 
 	public TrainPipeline() throws IOException, ParserConfigurationException {
@@ -51,6 +52,7 @@ public class TrainPipeline {
 		datasetLoader = new QALD_Loader();
 
 		cardinality = new Cardinality();
+		queryTypeClassifier = new QueryTypeClassifier();
 		// ASpotter wiki = new WikipediaMiner();
 		// controller.nerdModule = new MultiSpotter(fox, tagMe, wiki, spot);
 		nerdModule = new Fox();
@@ -81,6 +83,11 @@ public class TrainPipeline {
 		double overallr = 0;
 		double counter = 0;
 		for (Question q : questions) {
+			if (!q.loadedAsASKQuery) {
+				//log.debug("Skip non ASK");
+				//continue;
+			}
+
 			if (q.hybrid) {
 //				if (q.id == 301) {
 					if (q.answerType.equals("resource")) {
@@ -179,6 +186,8 @@ public class TrainPipeline {
 		// 3. Build trees from questions and cache them
 		q.tree = cParseTree.process(q);
 		log.info("" + q.tree);
+
+		q.isClassifiedAsASKQuery = queryTypeClassifier.isASKQuery(q);
 
 		// Cardinality identifies the integer i used for LIMIT i
 		q.cardinality = cardinality.cardinality(q);

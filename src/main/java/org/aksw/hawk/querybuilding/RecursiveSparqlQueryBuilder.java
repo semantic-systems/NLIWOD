@@ -17,7 +17,9 @@ public class RecursiveSparqlQueryBuilder {
 	Logger log = LoggerFactory.getLogger(RecursiveSparqlQueryBuilder.class);
 
 	public Set<SPARQLQuery> start(SPARQLQueryBuilder sparqlQueryBuilder, Question q) {
-		Set<SPARQLQuery> returnSet = Sets.newHashSet(new SPARQLQuery());
+		SPARQLQuery initialQuery = new SPARQLQuery();
+		initialQuery.isASKQuery(q.isClassifiedAsASKQuery);
+		Set<SPARQLQuery> returnSet = Sets.newHashSet(initialQuery);
 		Set<String> variableSet = Sets.newHashSet("?proj", "?const");
 		try {
 			MutableTreeNode tmp = q.tree.getRoot();
