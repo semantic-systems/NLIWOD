@@ -2,10 +2,6 @@ package org.aksw.hawk.controller;
 
 import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.autosparql.commons.qald.Question;
-import org.aksw.hawk.cache.CachedParseTree;
-import org.aksw.hawk.nlp.MutableTreeNode;
-import org.aksw.hawk.nlp.SentenceToSequence;
-import org.aksw.hawk.nlp.spotter.Fox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,17 +12,7 @@ public class QueryTypeClassifier
 {
 	static Logger log = LoggerFactory.getLogger(QueryTypeClassifier.class);
 
-	public Boolean isASKQuery(Question q) {
-		if (log.isDebugEnabled()) {
-			log.debug("QUESTION: " + q.languageToQuestion.get("en"));
-			MutableTreeNode root = q.tree.getRoot();
-			log.debug("ROOT: " + root.posTag);
-			if (root.children.size() > 0) {
-				MutableTreeNode firstChild = root.children.get(0);
-				log.debug("ROOT:CHILD: " + firstChild.posTag);
-			}
-		}
-
+	public Boolean isASKQuery(String question) {
 		// Compare to source from: src/main/java/org/aksw/hawk/controller/Cardinality.java
 
 		// From train query set: (better to use keyword list!)
@@ -41,24 +27,19 @@ public class QueryTypeClassifier
 		// VB  -> VBZ (Does)
 		// VBN -> VBZ (Is)
 
-		String query = q.languageToQuestion.get("en").trim();
-
 		// regex: ^(Are|D(id|o(es)?)|Is|Was)( .*)$
-		return query.startsWith("Are ") ||
-				query.startsWith("Did ") ||
-				query.startsWith("Do ") ||
-				query.startsWith("Does ") ||
-				query.startsWith("Is ") ||
-				query.startsWith("Was ");
+		return question.startsWith("Are ") ||
+				question.startsWith("Did ") ||
+				question.startsWith("Do ") ||
+				question.startsWith("Does ") ||
+				question.startsWith("Is ") ||
+				question.startsWith("Was ");
 	}
 
 	public static void main(String args[]) {
 		log.info("Test QueryType classification ...");
 		log.debug("Initialize components ...");
 		QALD_Loader datasetLoader = new QALD_Loader();
-		Fox nerdModule = new Fox();
-		SentenceToSequence sentenceToSequence = new SentenceToSequence();
-		CachedParseTree cParseTree = new CachedParseTree();
 		QueryTypeClassifier queryTypeClassifier = new QueryTypeClassifier();
 
 		log.info("Run queries through components ...");
@@ -70,12 +51,8 @@ public class QueryTypeClassifier
 			int counterClassifiedWrong = 0;
 
 			for (Question q : questions) {
-				q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
-				sentenceToSequence.combineSequences(q);
-				q.tree = cParseTree.process(q);
-				log.info(q.tree.toString());
 				// Classify query type
-				q.isClassifiedAsASKQuery = queryTypeClassifier.isASKQuery(q);
+				q.isClassifiedAsASKQuery = queryTypeClassifier.isASKQuery(q.languageToQuestion.get("en"));
 
 				++counter;
 				if (q.isClassifiedAsASKQuery.booleanValue() != q.loadedAsASKQuery.booleanValue()) {

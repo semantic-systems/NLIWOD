@@ -177,6 +177,10 @@ public class TrainPipeline {
 
 	public Map<String, Answer> calculateSPARQLRepresentation(Question q, Set<Feature> featureSet) {
 		log.info(q.languageToQuestion.get("en"));
+
+		// Determine SPARQL query type (currently working on query)
+		q.isClassifiedAsASKQuery = queryTypeClassifier.isASKQuery(q.languageToQuestion.get("en"));
+
 		// 2. Disambiguate parts of the query
 		q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
 
@@ -186,8 +190,6 @@ public class TrainPipeline {
 		// 3. Build trees from questions and cache them
 		q.tree = cParseTree.process(q);
 		log.info("" + q.tree);
-
-		q.isClassifiedAsASKQuery = queryTypeClassifier.isASKQuery(q);
 
 		// Cardinality identifies the integer i used for LIMIT i
 		q.cardinality = cardinality.cardinality(q);
