@@ -1,0 +1,250 @@
+{
+    "input_question": "Which actress starring in the TV series Friends owns the production company Coquette Productions?",
+    "named_entities": [
+        {
+            "key": "CoquetteProductions",
+            "value": "http://dbpedia.org/resource/Coquette_Productions"
+        }
+    ],
+    "combined_nouns": [
+        {
+            "key": "TV series Friends",
+            "value": "http://aksw.org/combinedNN/TV_series_Friends"
+        },
+        {
+            "key": "production company",
+            "value": "http://aksw.org/combinedNN/production_company"
+        }
+    ],
+    "POS_tags": [
+        {
+            "key": "Which",
+            "POS": "WDT"
+        },
+        {
+            "key": "actress",
+            "POS": "VBP"
+        },
+        {
+            "key": "starring",
+            "POS": "VBG"
+        },
+        {
+            "key": "in",
+            "POS": "IN"
+        },
+        {
+            "key": "the",
+            "POS": "DT"
+        },
+        {
+            "key": "http://aksw.org/combinedNN/TV_series_Friends",
+            "POS": "ADD"
+        },
+        {
+            "key": "owns",
+            "POS": "VBZ"
+        },
+        {
+            "key": "the",
+            "POS": "DT"
+        },
+        {
+            "key": "http://aksw.org/combinedNN/production_company",
+            "POS": "ADD"
+        },
+        {
+            "key": "http://dbpedia.org/resource/Coquette_Productions",
+            "POS": "ADD"
+        },
+        {
+            "key": "?",
+            "POS": "."
+        }
+    ],
+    "tree_full": {
+        "label": "own",
+        "children": [
+            {
+                "label": "actress",
+                "children": [
+                    {
+                        "label": "Which"
+                    },
+                    {
+                        "label": "starring",
+                        "children": [
+                            {
+                                "label": "in",
+                                "children": [
+                                    {
+                                        "label": "TV series Friends",
+                                        "children": [
+                                            {
+                                                "label": "the"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "label": "production company",
+                "children": [
+                    {
+                        "label": "the"
+                    },
+                    {
+                        "label": "http://dbpedia.org/resource/Coquette_Productions"
+                    }
+                ]
+            },
+            {
+                "label": "?"
+            }
+        ]
+    },
+    "tree_pruned": {
+        "label": "own",
+        "children": [
+            {
+                "label": "actress",
+                "children": [
+                    {
+                        "label": "starring",
+                        "children": [
+                            {
+                                "label": "TV series Friends"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "label": "production company",
+                "children": [
+                    {
+                        "label": "http://dbpedia.org/resource/Coquette_Productions"
+                    }
+                ]
+            }
+        ]
+    },
+    "annotation": [
+        {
+            "label": "own",
+            "annotations": [
+                "http://dbpedia.org/ontology/owner"
+            ]
+        },
+        {
+            "label": "starring",
+            "annotations": [
+                "http://dbpedia.org/ontology/starring"
+            ]
+        }
+    ],
+    "tree_final": {
+        "label": "owns",
+        "POS": "VBZ",
+        "children": [
+            {
+                "label": "actress",
+                "POS": "NN",
+                "children": [
+                    {
+                        "label": "starring",
+                        "POS": "VBG",
+                        "children": [
+                            {
+                                "label": "TV series Friends",
+                                "POS": "CombinedNN"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "label": "production company",
+                "POS": "CombinedNN",
+                "children": [
+                    {
+                        "label": "http://dbpedia.org/resource/Coquette_Productions",
+                        "POS": "ADD"
+                    }
+                ]
+            }
+        ]
+    },
+    "pruning_number_of_queries_before": {
+        "key": "Number of queries before pruning",
+        "value": 810
+    },
+    "pruning_underdefined": {
+        "key": "Underdefined SPARQL queries pruned",
+        "value": 4
+    },
+    "pruning_contains_proj_variable": {
+        "key": "SPARQL queries containing no project variable pruned",
+        "value": 24
+    },
+    "pruning_containsTooManyNodesAsTextLookUp": {
+        "key": "SPARQL queries containing too many nodes as text lookup pruned",
+        "value": 86
+    },
+    "pruning_predicatesPerVariableEdge": {
+        "key": "SPARQL queries with more than one predicate between the same variables pruned",
+        "value": 224
+    },
+    "pruning_numberOfTypesPerVariable": {
+        "key": "SPARQL queries with more than one type per variable pruned",
+        "value": 0
+    },
+    "pruning_BGPisConnected": {
+        "key": "SPARQL queries without connected BGP pruned",
+        "value": 31
+    },
+    "pruning_cyclicTriple": {
+        "key": "SPARQL queries containing cycic triple pruned",
+        "value": 0
+    },
+    "pruning_hasBoundVariables": {
+        "key": "SPARQL queries without bound variables pruned",
+        "value": 0
+    },
+    "pruning_textFilterOverVariables": {
+        "key": "SPARQL queries without text filter over existing variables pruned",
+        "value": 144
+    },
+    "pruning_unboundTriple": {
+        "key": "SPARQL queries with unbound triples pruned",
+        "value": 0
+    },
+    "pruning_typemismatch": {
+        "key": "SPARQL queries with mismatching types pruned",
+        "value": 36
+    },
+    "pruning_disjointness": {
+        "key": "SPARQL queries with disjoint classes pruned",
+        "value": 48
+    },
+    "pruning_number_of_queries_after_pruning": {
+        "key": "Number of Queries after pruning:",
+        "value": 213
+    },
+    "cardinality_of_question_results": 1,
+    "final_number_of_SPARQL_queries": {
+        "key": "Final number of SPARQL queries",
+        "value": 426
+    },
+    "final_sparql_base64": "U0VMRUNUIERJU1RJTkNUID9wcm9qIFdIRVJFIHsNCj9jb25zdCB0ZXh0OnF1ZXJ5ICg8aHR0cDovL2RicGVkaWEub3JnL29udG9sb2d5L2Fic3RyYWN0PiAnInByb2R1Y3Rpb24gY29tcGFueSIgQU5EICJUViBzZXJpZXMgRnJpZW5kcyInIDEwMDApLiANCj9jb25zdCA8aHR0cDovL2RicGVkaWEub3JnL29udG9sb2d5L3N0YXJyaW5nPiA/cHJvai4gDQo/cHJvaiA/cGJyaWRnZSA8aHR0cDovL2RicGVkaWEub3JnL3Jlc291cmNlL0NvcXVldHRlX1Byb2R1Y3Rpb25zPi4gDQp9DQpMSU1JVCAxPg==",
+    "final_result": {
+        "key": "Result",
+        "value": [
+            "http://dbpedia.org/resource/Courteney_Cox"
+        ]
+    }
+}
