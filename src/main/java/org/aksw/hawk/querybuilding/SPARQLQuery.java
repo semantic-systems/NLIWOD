@@ -104,6 +104,7 @@ public class SPARQLQuery implements Cloneable, Serializable, Comparable<SPARQLQu
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		SPARQLQuery q = new SPARQLQuery();
+		q.isASKQuery(isASKQuery);
 		q.constraintTriples = Lists.newArrayList();
 		for (String constraint : this.constraintTriples) {
 			q.constraintTriples.add(constraint);
@@ -180,7 +181,9 @@ public class SPARQLQuery implements Cloneable, Serializable, Comparable<SPARQLQu
 			sb.append("FILTER (" + filterString + ").\n ");
 		}
 		sb.append("}\n");
-		sb.append("LIMIT " + limit);
+		if (!isASKQuery) {
+			sb.append("LIMIT " + limit);
+		}
 		return sb.toString();
 	}
 
@@ -226,7 +229,9 @@ public class SPARQLQuery implements Cloneable, Serializable, Comparable<SPARQLQu
 			sb.append("FILTER (" + filterString + ").\n ");
 		}
 		sb.append("}\n");
-		sb.append("LIMIT " + limit);
+		if (!isASKQuery) {
+			sb.append("LIMIT " + limit);
+		}
 		return sb.toString();
 	}
 

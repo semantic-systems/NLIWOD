@@ -84,8 +84,50 @@ public class TrainPipeline {
 		double counter = 0;
 		for (Question q : questions) {
 			if (!q.loadedAsASKQuery) {
-				//log.debug("Skip non ASK");
-				//continue;
+				log.debug("Skip non ASK");
+				continue;
+			}
+
+			if (q.loadedAsASKQuery) {
+				String question = q.languageToQuestion.get("en");
+				Map<String, Answer> answer = calculateSPARQLRepresentation(q, featureSet);
+
+				double fmax = 0;
+				double pmax = 0;
+				double rmax = 0;
+				Set<SPARQLQuery> correctQueries = Sets.newHashSet();
+				// Compare to set of resources from benchmark
+				Answer finalAnswer = null;
+				for (String query : answer.keySet()) {
+					Set<RDFNode> systemAnswers = answer.get(query).answerSet;
+					double precision = QALD4_EvaluationUtils.precision(systemAnswers, q);
+					double recall = QALD4_EvaluationUtils.recall(systemAnswers, q);
+					double fMeasure = QALD4_EvaluationUtils.fMeasure(systemAnswers, q);
+					if (fMeasure >= fmax && fMeasure > 0) {
+						log.debug(query.toString());
+						log.debug("P=" + precision + " R=" + recall + " F=" + fMeasure);
+						if (fMeasure > fmax) {
+							// used if query with score of 0.4
+							// is in set and a new one with 0.6
+							// comes into save only worthy
+							// queries with constant f-measure
+							correctQueries.clear();
+						}
+						fmax = fMeasure;
+						pmax = precision;
+						rmax = recall;
+						correctQueries.add(answer.get(query).query);
+						finalAnswer = answer.get(query);
+					}
+				}
+				this.qw.write(finalAnswer);
+				this.ranker.learn(q, correctQueries);
+				evals.add(new EvalObj(q.id, question, fmax, pmax, rmax, "Assuming Optimal Ranking Function, Spotter: " + nerdModule.toString()));
+				overallf += fmax;
+				overallp += pmax;
+				overallr += rmax;
+				counter++;
+				log.info("########################################################");
 			}
 
 			if (q.hybrid) {
@@ -150,8 +192,12 @@ public class TrainPipeline {
 		}
 		log.debug("Features: " + featureSet);
 		log.debug("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
-		
-		this.qw.close();
+
+		try {
+			this.qw.close();
+		} catch (Exception e) {
+			log.error("Writing answer_* file failed", e);
+		}
 		// log.info("F@n\t" + count + "\tF=" + +overallf / counter + "\t" +
 		// ranker.getFeatures() + "\t" + dataset);
 		// }
