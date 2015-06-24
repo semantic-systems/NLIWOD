@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
 
-public class RankingDB {
-	private Logger log = LoggerFactory.getLogger(RankingDB.class);
+public class FeatureBasedRankerDB {
+	private Logger log = LoggerFactory.getLogger(FeatureBasedRankerDB.class);
 
-	public RankingDB() {
+	public FeatureBasedRankerDB() {
 	}
 
 	public Set<SPARQLQuery> readRankings() {
@@ -37,7 +37,7 @@ public class RankingDB {
 		for (SPARQLQuery query : queries) {
 			int hash = query.hashCode();
 			String serializedFileName = getFileName(hash);
-			File tmp = new File(serializedFileName);
+//			File tmp = new File(serializedFileName);
 			StorageHelper.storeToFileSavely(query, serializedFileName);
 
 		}

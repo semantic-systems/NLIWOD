@@ -17,6 +17,11 @@ public class EvalObj {
 		this.comment = comment;
 	}
 
+	@Override
+	public String toString() {
+		return "EvalObj [comment=" + comment + ", fmax=" + fmax + ", pmax=" + pmax + ", rmax=" + rmax + ", question=" + question + ", id=" + id + "]";
+	}
+
 	public int getId() {
 		return id;
 	}

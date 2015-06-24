@@ -17,7 +17,6 @@ import com.clearnlp.nlp.NLPMode;
 import com.clearnlp.reader.AbstractReader;
 import com.clearnlp.tokenization.AbstractTokenizer;
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
 
 /**
  * generates a dependency tree called predicate argument tree
