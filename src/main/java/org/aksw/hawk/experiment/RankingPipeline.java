@@ -31,8 +31,8 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
  * @author ricardousbeck
  * 
  */
-public class Hawk {
-	static Logger log = LoggerFactory.getLogger(Hawk.class);
+public class RankingPipeline {
+	static Logger log = LoggerFactory.getLogger(RankingPipeline.class);
 
 	public static void main(String args[]) throws IOException, ParserConfigurationException {
 		log.info("Configuring controller");

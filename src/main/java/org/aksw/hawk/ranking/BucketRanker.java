@@ -29,7 +29,7 @@ public class BucketRanker implements Ranking {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<Set<RDFNode>> rank(List<Answer> answers, Question q) {
-
+//FIXME bug here!?!?
 		Map<Set<RDFNode>, Integer> buckets = Maps.newHashMap();
 
 		for (Answer answer : answers) {
