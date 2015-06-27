@@ -26,10 +26,10 @@ public class OptimalRanker implements Ranking {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public List<Set<RDFNode>> rank(List<Answer> answers, Question q) {
+	public List<Answer> rank(List<Answer> answers, Question q) {
 		// Compare to set of resources from benchmark
 		// save score for for answerSet with fmeasure > 0
-		Map<Set<RDFNode>, Double> buckets = Maps.newHashMap();
+		Map<Answer, Double> buckets = Maps.newHashMap();
 
 		for (Answer answer : answers) {
 			Set<RDFNode> answerSet = answer.answerSet;
@@ -37,8 +37,7 @@ public class OptimalRanker implements Ranking {
 			double fMeasure = QALD4_EvaluationUtils.fMeasure(answerSet, q);
 
 			if (fMeasure > 0) {
-
-				buckets.put(answerSet, fMeasure);
+				buckets.put(answer, fMeasure);
 			}
 		}
 
@@ -51,10 +50,10 @@ public class OptimalRanker implements Ranking {
 			}
 		});
 
-		List list = new ArrayList<Set<RDFNode>>();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		List list = new ArrayList<Answer>();
+		for (Iterator it = tmplist.iterator(); it.hasNext();) {
 			Map.Entry entry = (Map.Entry) it.next();
-			list.add(entry.getValue());
+			list.add(entry.getKey());
 		}
 
 		return list;

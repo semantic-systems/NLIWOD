@@ -28,21 +28,21 @@ public class BucketRanker implements Ranking {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<Set<RDFNode>> rank(List<Answer> answers, Question q) {
-//FIXME bug here!?!?
-		Map<Set<RDFNode>, Integer> buckets = Maps.newHashMap();
+	public List<Answer> rank(List<Answer> answers, Question q) {
+		// FIXME bug here!?!?
+		Map<Answer, Integer> buckets = Maps.newHashMap();
 
 		for (Answer answer : answers) {
 
 			if (buckets.containsKey(answer.answerSet)) {
 				int count = buckets.get(answer.answerSet) + 1;
-				buckets.put(answer.answerSet, count);
+				buckets.put(answer, count);
 			} else {
-				buckets.put(answer.answerSet, 1);
+				buckets.put(answer, 1);
 			}
 		}
 
-		//sort according to entries in buckets
+		// sort according to entries in buckets
 		List tmplist = new LinkedList(buckets.entrySet());
 
 		Collections.sort(tmplist, new Comparator() {
@@ -50,14 +50,13 @@ public class BucketRanker implements Ranking {
 				return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
 			}
 		});
-		
+
 		List list = new ArrayList<Set<RDFNode>>();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator it = tmplist.iterator(); it.hasNext();) {
 			Map.Entry entry = (Map.Entry) it.next();
-			list.add(entry.getValue());
+			list.add(entry.getKey());
 		}
 
 		return list;
 	}
-
 }

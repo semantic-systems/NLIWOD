@@ -7,14 +7,20 @@ public class EvalObj {
 	private double rmax;
 	private String question;
 	private int id;
+	private Answer answer;
 
-	public EvalObj(int id, String question, double fmax, double pmax, double rmax, String comment) {
+	public EvalObj(int id, String question, double fmax, double pmax, double rmax, String comment, Answer answer) {
 		this.id = id;
 		this.question = question;
 		this.fmax = fmax;
 		this.rmax = rmax;
 		this.pmax = pmax;
 		this.comment = comment;
+		this.answer = answer;
+	}
+
+	public Answer getAnswer() {
+		return answer;
 	}
 
 	@Override

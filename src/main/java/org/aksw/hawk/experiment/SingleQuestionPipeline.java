@@ -10,7 +10,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.controller.Answer;
-import org.aksw.hawk.controller.EvalObj;
 import org.aksw.hawk.controller.Pipeline;
 import org.aksw.hawk.ranking.BucketRanker;
 import org.aksw.hawk.ranking.FeatureBasedRanker;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /**
  * Made for testing a single pipeline
@@ -63,14 +61,14 @@ public class SingleQuestionPipeline {
 				log.debug("Feature-based ranking: " + featureSet.toString());
 				feature_ranker.setFeatures(featureSet);
 				feature_ranker.train();
-				List<Set<RDFNode>> rankedAnswer = feature_ranker.rank(answers, q);
+				List<Answer> rankedAnswer = feature_ranker.rank(answers, q);
 				log.info(Joiner.on("\n\t").join(rankedAnswer));
 			}
 		}
 
 		// bucket-based ranking
 		log.info("Bucket-based ranking");
-		List<Set<RDFNode>> rankedAnswer = bucket_ranker.rank(answers, q);
+		List<Answer> rankedAnswer = bucket_ranker.rank(answers, q);
 		log.info(Joiner.on("\n\t").join(rankedAnswer));
 
 	}

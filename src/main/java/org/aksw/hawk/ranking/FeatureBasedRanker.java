@@ -1,7 +1,11 @@
 package org.aksw.hawk.ranking;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,7 +16,6 @@ import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
@@ -51,23 +54,34 @@ public class FeatureBasedRanker implements Ranking {
 		db.store(q, queries);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	// TODO bug: differentiate between fuzzy and exact matches
-	public List<Set<RDFNode>> rank(List<Answer> answers, Question q) {
-		List<Answer> tmplist = Lists.newArrayList();
+	public List<Answer> rank(List<Answer> answers, Question q) {
+		Map<Answer, Double> buckets = Maps.newHashMap();
+
 		for (Answer answer : answers) {
 			Map<String, Double> calculateRanking = calculateRanking(answer.query);
 			double distance = cosinus(calculateRanking, vec);
 			answer.score = distance;
-			tmplist.add(answer);
+			buckets.put(answer, answer.score);
 		}
-		Collections.sort(tmplist);
-		Collections.reverse(tmplist);
 
-		List<Set<RDFNode>> list = Lists.newArrayList();
-		for (Answer entry : tmplist) {
-			list.add(entry.answerSet);
+		// sort according to entries in buckets
+		List tmplist = new LinkedList(buckets.entrySet());
+
+		Collections.sort(tmplist, new Comparator() {
+			public int compare(Object o1, Object o2) {
+				return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
+			}
+		});
+
+		List list = new ArrayList<Set<RDFNode>>();
+		for (Iterator it = tmplist.iterator(); it.hasNext();) {
+			Map.Entry entry = (Map.Entry) it.next();
+			list.add(entry.getKey());
 		}
+
 		return list;
 	}
 

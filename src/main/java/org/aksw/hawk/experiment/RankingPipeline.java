@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /**
  * F@N + all ranking experiments for ESWC 2015 publication
@@ -61,7 +60,7 @@ public class RankingPipeline {
 
 				// optimal ranking
 				log.info("Optimal ranking");
-				List<Set<RDFNode>> rankedAnswer = optimal_ranker.rank(answers, q);
+				List<Answer> rankedAnswer = optimal_ranker.rank(answers, q);
 				List<EvalObj> eval = Measures.measure(rankedAnswer, q, maximumPositionToMeasure);
 				log.debug(Joiner.on("\n\t").join(eval));
 
