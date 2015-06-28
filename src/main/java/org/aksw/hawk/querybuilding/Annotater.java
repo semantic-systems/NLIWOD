@@ -11,6 +11,7 @@ import org.aksw.hawk.index.IndexDBO_classes;
 import org.aksw.hawk.index.IndexDBO_properties;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
+import org.aksw.hawk.util.JSONStatusBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,19 +39,14 @@ public class Annotater {
 		annotateProjectionLeftTree(tree);
 		annotateVerbs(tree);
 		annotateNouns(tree);
+		q.tree_final = JSONStatusBuilder.treeToJSON(q.tree);
 	}
 
 	/**
-	 * "Named entities are noun phrases and are usually modelled as resources,
-	 * thus a lexical entry is built comprising a syntactic noun phrase
-	 * representation together with a corresponding semantic representation
-	 * containing a resource slot." citation by Unger et al. tbsl
+	 * "Named entities are noun phrases and are usually modelled as resources, thus a lexical entry is built comprising a syntactic noun phrase representation together with a corresponding semantic representation containing a resource slot." citation by Unger et al. tbsl
 	 */
 	/**
-	 * "Nouns are often referring to classes, while sometimes to properties,
-	 * thus two lexical entries are built { one containing a semantic
-	 * representation with a class slot and one containing a semantic
-	 * representation with a property slot." citation by Unger et al. tbsl
+	 * "Nouns are often referring to classes, while sometimes to properties, thus two lexical entries are built { one containing a semantic representation with a class slot and one containing a semantic representation with a property slot." citation by Unger et al. tbsl
 	 * 
 	 * @param tree
 	 */
@@ -109,13 +105,8 @@ public class Annotater {
 	}
 
 	/**
-	 * "Verbs most often refer to properties, thus a lexical entry with a
-	 * property slot is built. However, in some cases, the verb does not
-	 * contribute anything to the query structure (like have in Which cities
-	 * have more than 2 million inhabitants?), thus an additional entry is
-	 * built, that does not contain a property slot corresponding to the verb
-	 * but assumes that the property slot is contributed by a noun (inhabitants
-	 * in this case)." citation by Unger et al. tbsl
+	 * "Verbs most often refer to properties, thus a lexical entry with a property slot is built. However, in some cases, the verb does not contribute anything to the query structure (like have in Which cities have more than 2 million inhabitants?), thus an additional entry is built, that does not
+	 * contain a property slot corresponding to the verb but assumes that the property slot is contributed by a noun (inhabitants in this case)." citation by Unger et al. tbsl
 	 * 
 	 * @param tree
 	 */
@@ -176,8 +167,7 @@ public class Annotater {
 	}
 
 	/**
-	 * this method annotates the left-most child of the root and uses the inline
-	 * commented heuristics to annotate the tree
+	 * this method annotates the left-most child of the root and uses the inline commented heuristics to annotate the tree
 	 * 
 	 * @param tree
 	 */
@@ -221,8 +211,7 @@ public class Annotater {
 						}
 					} else {
 						/*
-						 * imperative word queries like "List .." or "Give me.."
-						 * do have parse trees where the root is a NN(.)*
+						 * imperative word queries like "List .." or "Give me.." do have parse trees where the root is a NN(.)*
 						 */
 						if (posTag.matches("NN(.)*")) {
 							// TODO ask actress also in dbo owl
@@ -252,10 +241,7 @@ public class Annotater {
 								// full text lookup
 
 								/*
-								 * since a full text lookup takes place we
-								 * assume hereafter there will be a FILTER
-								 * clause needed which can only be handled it
-								 * annotated as CombinedNoun w.r.t. its postag
+								 * since a full text lookup takes place we assume hereafter there will be a FILTER clause needed which can only be handled it annotated as CombinedNoun w.r.t. its postag
 								 */
 								log.debug("Not annotated node: " + tmp);
 							}

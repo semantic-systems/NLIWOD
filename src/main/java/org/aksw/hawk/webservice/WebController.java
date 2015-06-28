@@ -28,7 +28,7 @@ public class WebController {
 
 	private Logger log = LoggerFactory.getLogger(WebController.class);
 	private HashMap<UUID, Future<Question>> runningProcesses = Maps.newHashMap();
-	private HashMap<UUID, Question> runningQuestions = Maps.newHashMap();
+	private HashMap<UUID, Question> UuidQuestionMap = Maps.newHashMap();
 	private SimpleIdGenerator IdGenerator = new SimpleIdGenerator();
 
 	// /search?q=What+is+the+capital+of+Germany+%3F
@@ -44,7 +44,7 @@ public class WebController {
 
 		// put it to queue to fetch while long lasting processing
 		runningProcesses.put(q.UUID, report);
-		runningQuestions.put(q.UUID, q);
+		UuidQuestionMap.put(q.UUID, q);
 
 		// return the UUID
 		return q.UUID;
@@ -56,10 +56,20 @@ public class WebController {
 			Future<Question> q = runningProcesses.get(UUID);
 			if (q.isDone()) {
 				runningProcesses.remove(UUID);
+				try {
+					return q.get().getJSONStatus();
+				} catch (InterruptedException | ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			} else {
+				return UuidQuestionMap.get(UUID).getJSONStatus();
 			}
-			return runningQuestions.get(UUID).getJSONStatus();
+		} else if (UuidQuestionMap.containsKey(UUID)) {
+			// finished working on this query
+			return UuidQuestionMap.get(UUID).getJSONStatus();
 		}
 		return "{Error: \"No such search id.\"}";
 	}
-
 }

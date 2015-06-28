@@ -6,6 +6,7 @@ import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.ParseTree;
 import org.aksw.hawk.nlp.TreeTransformer;
+import org.aksw.hawk.util.JSONStatusBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +32,7 @@ public class CachedParseTree {
 			}
 			DEPTree t = parseTree.process(q);
 			MutableTree DEPtoMutableDEP = treeTransform.DEPtoMutableDEP(t);
+			q.tree_full = JSONStatusBuilder.treeToJSON(DEPtoMutableDEP);
 			store(q, DEPtoMutableDEP);
 			return DEPtoMutableDEP;
 		}

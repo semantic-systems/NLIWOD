@@ -2,6 +2,7 @@ package hawk;
 
 import java.util.Set;
 
+import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.pruner.BGPisConnected;
 import org.aksw.hawk.pruner.NumberOfTypesPerVariable;
 import org.aksw.hawk.pruner.PredicatesPerVariableEdge;
@@ -22,8 +23,8 @@ public class PruneSPARQLQueriesTest {
 	BGPisConnected gSCCPruner = new BGPisConnected();
 	UnboundTriple unboundTriple = new UnboundTriple();
 	PredicatesPerVariableEdge predicatesPerVariableEdge = new PredicatesPerVariableEdge();
-	NumberOfTypesPerVariable numberOfTypesPerVariable= new NumberOfTypesPerVariable();
-	
+	NumberOfTypesPerVariable numberOfTypesPerVariable = new NumberOfTypesPerVariable();
+
 	@Test
 	public void numberOfTypesperVariable() {
 
@@ -39,7 +40,7 @@ public class PruneSPARQLQueriesTest {
 		query.addFilterOverAbstractsContraint("?proj", "protected");
 		log.debug(query.toString());
 		queries.add(query);
-		
+
 		query = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Bird>.");
 		query.addConstraint("?const a <http://dbpedia.org/ontology/Car>.");
 		query.addFilterOverAbstractsContraint("?proj", "protected");
@@ -47,13 +48,13 @@ public class PruneSPARQLQueriesTest {
 		queries.add(query);
 
 		log.debug("Size before pruning: " + queries.size());
-		queries = numberOfTypesPerVariable.prune(queries);
+		queries = numberOfTypesPerVariable.prune(queries, new Question());
 		log.debug("Size after pruning: " + queries.size());
 		log.debug(Joiner.on("\n").join(queries));
 		Assert.assertTrue(queries.size() == 2);
 
 	}
-	
+
 	@Test
 	public void predicatesPerVariableEdge() {
 
@@ -87,7 +88,7 @@ public class PruneSPARQLQueriesTest {
 		queries.add(query);
 
 		log.debug("Size before pruning: " + queries.size());
-		queries = predicatesPerVariableEdge.prune(queries);
+		queries = predicatesPerVariableEdge.prune(queries, new Question());
 		log.debug("Size after pruning: " + queries.size());
 		log.debug(Joiner.on("\n").join(queries));
 		Assert.assertTrue(queries.size() == 3);
@@ -106,7 +107,7 @@ public class PruneSPARQLQueriesTest {
 		queries.add(query);
 
 		log.debug("Size before pruning: " + queries.size());
-		queries = disjoint.prune(queries);
+		queries = disjoint.prune(queries, new Question());
 		log.debug("Size after pruning: " + queries.size());
 		Assert.assertTrue(queries.size() == 1);
 
@@ -141,7 +142,7 @@ public class PruneSPARQLQueriesTest {
 		queries.add(query);
 
 		log.debug("Size before pruning: " + queries.size());
-		queries = gSCCPruner.prune(queries);
+		queries = gSCCPruner.prune(queries, new Question());
 		log.debug("Size after pruning: " + queries.size());
 		Assert.assertTrue(queries.size() == 4);
 
@@ -163,7 +164,7 @@ public class PruneSPARQLQueriesTest {
 		queries.add(query);
 
 		log.debug("Size before pruning: " + queries.size());
-		queries = gSCCPruner.prune(queries);
+		queries = gSCCPruner.prune(queries, new Question());
 		log.debug("Size after pruning: " + queries.size());
 		Assert.assertTrue(queries.size() == 0);
 
@@ -215,7 +216,7 @@ public class PruneSPARQLQueriesTest {
 		log.debug(query.toString());
 
 		log.debug("Size before pruning: " + queries.size());
-		queries = unboundTriple.prune(queries);
+		queries = unboundTriple.prune(queries, new Question());
 		log.debug("Size after pruning: " + queries.size());
 		Assert.assertTrue(queries.size() == 4);
 	}

@@ -13,7 +13,10 @@ import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.autosparql.commons.qald.uri.GoldEntity;
 import org.aksw.hawk.controller.Answer;
 import org.aksw.hawk.nlp.MutableTree;
+import org.aksw.hawk.util.JSONStatusBuilder;
 import org.apache.commons.lang3.StringUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class Question implements Serializable {
 
@@ -39,9 +42,17 @@ public class Question implements Serializable {
 	public Map<String, List<GoldEntity>> goldEntites = new HashMap<String, List<GoldEntity>>();
 	public Map<String, Set<String>> goldenAnswers = new HashMap<String, Set<String>>();
 
+	//for proper handling in webservice
 	public UUID UUID;
 	public boolean finished;
+	//FIXME finalAnswer unused?
 	public List<Answer> finalAnswer;
+	public JSONObject tree_full;
+	public JSONObject tree_pruned;
+	public JSONObject tree_final;
+	public JSONArray pruning_messages;
+
+
 
 	public Question() {
 
@@ -69,8 +80,8 @@ public class Question implements Serializable {
 	}
 
 	public String getJSONStatus() {
-//		FIXME
-		return "{}";
-		
+		JSONObject sb = JSONStatusBuilder.status(this);
+		return sb.toJSONString();
+
 	}
 }

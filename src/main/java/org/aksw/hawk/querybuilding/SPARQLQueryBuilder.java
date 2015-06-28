@@ -6,6 +6,7 @@ import java.util.Set;
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.controller.Answer;
 import org.aksw.hawk.pruner.SPARQLQueryPruner;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,7 @@ public class SPARQLQueryBuilder {
 		this.sparqlQueryPruner = new SPARQLQueryPruner(sparql);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Answer> build(Question q) {
 		// FIXME refactor that to pipeline steps
 		List<Answer> answer = Lists.newArrayList();
@@ -32,10 +34,14 @@ public class SPARQLQueryBuilder {
 			Set<SPARQLQuery> queryStrings = recursiveSparqlQueryBuilder.start(this, q);
 
 			// pruning
-			queryStrings = sparqlQueryPruner.prune(queryStrings);
+			queryStrings = sparqlQueryPruner.prune(queryStrings, q);
 
 			// identify the cardinality of the answers
 			int cardinality = cardinality(q, queryStrings);
+			JSONObject tmp = new JSONObject();
+			tmp.put("label", "Cardinality of question results");
+			tmp.put("value", cardinality);
+			q.pruning_messages.add(tmp);
 			log.debug("Cardinality:" + q.languageToQuestion.get("en").toString() + "-> " + cardinality);
 			int i = 0;
 			for (SPARQLQuery query : queryStrings) {
@@ -48,7 +54,7 @@ public class SPARQLQueryBuilder {
 					a.question_id = q.id;
 					a.question = q.languageToQuestion.get("en").toString();
 					if (!a.answerSet.isEmpty()) {
-						answer.add( a);
+						answer.add(a);
 					}
 					numberOfOverallQueriesExecuted++;
 				}
@@ -58,6 +64,10 @@ public class SPARQLQueryBuilder {
 		} finally {
 			System.gc();
 		}
+		JSONObject tmp = new JSONObject();
+		tmp.put("label", "Number of sofar executed queries");
+		tmp.put("value", numberOfOverallQueriesExecuted);
+		q.pruning_messages.add(tmp);
 		log.debug("Number of sofar executed queries: " + numberOfOverallQueriesExecuted);
 		return answer;
 	}
