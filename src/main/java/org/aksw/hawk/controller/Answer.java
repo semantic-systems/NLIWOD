@@ -5,7 +5,7 @@ import java.util.Set;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
-
+//FIXME mach eine ordentliche toString()
 public class Answer implements Comparable<Answer> {
 
 	public Set<RDFNode> answerSet;

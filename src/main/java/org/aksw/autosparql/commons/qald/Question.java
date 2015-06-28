@@ -7,9 +7,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.autosparql.commons.qald.uri.GoldEntity;
+import org.aksw.hawk.controller.Answer;
 import org.aksw.hawk.nlp.MutableTree;
 import org.apache.commons.lang3.StringUtils;
 
@@ -37,6 +39,10 @@ public class Question implements Serializable {
 	public Map<String, List<GoldEntity>> goldEntites = new HashMap<String, List<GoldEntity>>();
 	public Map<String, Set<String>> goldenAnswers = new HashMap<String, Set<String>>();
 
+	public UUID UUID;
+	public boolean finished;
+	public List<Answer> finalAnswer;
+
 	public Question() {
 
 		goldEntites.put("en", new ArrayList<GoldEntity>());
@@ -60,5 +66,11 @@ public class Question implements Serializable {
 		output += "\tAnswers: " + StringUtils.join(goldenAnswers, ", ") + "\n";
 
 		return output;
+	}
+
+	public String getJSONStatus() {
+//		FIXME
+		return "{}";
+		
 	}
 }

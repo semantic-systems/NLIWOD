@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.cache.CachedParseTree;
 import org.aksw.hawk.nlp.MutableTreePruner;
@@ -29,8 +27,7 @@ public class Pipeline {
 	private SPARQLQueryBuilder queryBuilder;
 	private Cardinality cardinality;
 
-	public Pipeline() throws IOException, ParserConfigurationException {
-
+	public Pipeline() {
 		nerdModule = new Fox();
 		// controller.nerdModule = new Spotlight();
 		// controller.nerdModule =new TagMe();
@@ -60,7 +57,7 @@ public class Pipeline {
 
 		// Noun combiner, decrease #nodes in the DEPTree
 		log.info("Noun phrase combination.");
-		//TODO make this method return the combine sequence and work on this
+		// TODO make this method return the combine sequence and work on this
 		sentenceToSequence.combineSequences(q);
 
 		// Build trees from questions and cache them

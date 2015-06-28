@@ -41,7 +41,7 @@ public class TrainingPipeline {
 		double average = 0;
 		double count = 0;
 		for (Question q : questions) {
-			if (q.hybrid & q.answerType.equals("resource") & q.onlydbo & !q.aggregation) {
+			if (  q.answerType.equals("resource") & q.onlydbo & !q.aggregation) {
 				count++;
 				log.info("Run pipeline on " + q.languageToQuestion.get("en"));
 				List<Answer> answers = pipeline.getAnswersToQuestion(q);
