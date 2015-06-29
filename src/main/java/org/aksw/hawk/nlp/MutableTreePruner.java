@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.util.JSONStatusBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,12 +21,12 @@ public class MutableTreePruner {
 		removalRules(q);
 		removalBasedOnDependencyLabels(q);
 		/*
-		 * interrogative rules last else each interrogative word has at least
-		 * two children, which can't be handled yet by the removal
+		 * interrogative rules last else each interrogative word has at least two children, which can't be handled yet by the removal
 		 */
 		applyInterrogativeRules(q);
 		sortTree(q.tree);
 		log.debug(q.tree.toString());
+		q.tree_pruned = JSONStatusBuilder.treeToJSON(q.tree);
 		return q.tree;
 	}
 
@@ -85,15 +86,15 @@ public class MutableTreePruner {
 	}
 
 	/**
-	 * removes: * punctuations (.) * wh- words(WDT|WP$) * PRP($) * DT *
-	 * BY and IN (possessive) pronouns * PDT predeterminer all both
+	 * removes: * punctuations (.) * wh- words(WDT|WP$) * PRP($) * DT * BY and IN (possessive) pronouns * PDT predeterminer all both
 	 * 
 	 * Who,Where WP|WRB stays in
+	 * 
 	 * @param q
 	 */
 	private void removalRules(Question q) {
 		MutableTreeNode root = q.tree.getRoot();
-		for (String posTag : Lists.newArrayList(".", "WDT", "POS",  "WP\\$", "PRP\\$", "RB","PRP", "DT", "IN", "PDT")) {
+		for (String posTag : Lists.newArrayList(".", "WDT", "POS", "WP\\$", "PRP\\$", "RB", "PRP", "DT", "IN", "PDT")) {
 			Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
 			queue.add(root);
 			while (!queue.isEmpty()) {

@@ -6,7 +6,6 @@ import java.util.Stack;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
-import org.apache.jena.atlas.logging.Log;
 
 import com.clearnlp.dependency.DEPNode;
 import com.clearnlp.dependency.DEPTree;
@@ -74,7 +73,7 @@ public class SentenceToSequence {
 				subsequence = Lists.newArrayList();
 			}
 		}
-		System.out.println(q.languageToNounPhrases.get("en"));
+//		log.debug(q.languageToNounPhrases.get("en"));
 	}
 
 	private static Map<String, String> generatePOSTags(Question q) {

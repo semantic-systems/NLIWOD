@@ -27,7 +27,7 @@ public class SPARQL {
 	public SPARQL() {
 		try {
 			long timeToLive = 360l * 24l * 60l * 60l * 1000l;
-			CacheCoreEx cacheBackend = CacheCoreH2.create("sparql", timeToLive, true);
+			CacheCoreEx cacheBackend = CacheCoreH2.create("./sparql", timeToLive, true);
 			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
 			// AKSW SPARQL API call
 			// qef = new

@@ -24,7 +24,6 @@ import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;

@@ -1,58 +1,93 @@
 package org.aksw.hawk.ranking;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.controller.Answer;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 
-public class VotingBasedRanker {
-	static Logger log = LoggerFactory.getLogger(VotingBasedRanker.class);
-	private RankingDB db;
-	private Map<String, Double> vec;
-	
+public class FeatureBasedRanker implements Ranking {
 	public enum Feature {
 		PREDICATES, PATTERN, NR_OF_CONSTRAINTS, NR_OF_TYPES, NR_OF_TERMS
 	}
-	
-	Collection<Feature> features;
 
-	public VotingBasedRanker() {
-		this.db = new RankingDB();
+	private static Logger log = LoggerFactory.getLogger(FeatureBasedRanker.class);
+	private FeatureBasedRankerDB db = new FeatureBasedRankerDB();
+	private Map<String, Double> vec;
+	private Collection<Feature> features;
+
+	// TODO transform this to unit test
+	// public static void main(String args[]) {
+	// List<SPARQLQuery> queries = Lists.newArrayList();
+	//
+	// SPARQLQuery query = new SPARQLQuery("?const <http://dbpedia.org/ontology/starring> ?proj.");
+	// query.addFilterOverAbstractsContraint("?proj", "Coquette Productions");
+	// queries.add(query);
+	//
+	// query = new SPARQLQuery("?const ?verb ?proj.");
+	// query.addFilterOverAbstractsContraint("?proj", "Coquette Productions");
+	// query.addConstraint("?proj <http://dbpedia.org/ontology/birthPlace> ?const");
+	// queries.add(query);
+	//
+	// FeatureBasedRanker ranker = new FeatureBasedRanker();
+	// ranker.train();
+	// queries = ranker.rank(queries);
+	// for (SPARQLQuery q : queries) {
+	// log.debug(q.toString());
+	// }
+	// }
+
+	public void learn(Question q, Set<SPARQLQuery> queries) {
+		db.store(q, queries);
 	}
 
-	public static void main(String args[]) {
-		// TODO transform this to unit test
-		List<SPARQLQuery> queries = Lists.newArrayList();
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	// TODO bug: differentiate between fuzzy and exact matches
+	public List<Answer> rank(List<Answer> answers, Question q) {
+		Map<Answer, Double> buckets = Maps.newHashMap();
 
-		SPARQLQuery query = new SPARQLQuery("?const <http://dbpedia.org/ontology/starring> ?proj.");
-		query.addFilterOverAbstractsContraint("?proj", "Coquette Productions");
-		queries.add(query);
-
-		query = new SPARQLQuery("?const ?verb ?proj.");
-		query.addFilterOverAbstractsContraint("?proj", "Coquette Productions");
-		query.addConstraint("?proj <http://dbpedia.org/ontology/birthPlace> ?const");
-		queries.add(query);
-
-		VotingBasedRanker ranker = new VotingBasedRanker();
-		ranker.train();
-		queries = ranker.rank(queries, 1);
-		for (SPARQLQuery q : queries) {
-			log.debug(q.toString());
+		for (Answer answer : answers) {
+			Map<String, Double> calculateRanking = calculateRanking(answer.query);
+			double distance = cosinus(calculateRanking, vec);
+			answer.score = distance;
+			buckets.put(answer, answer.score);
 		}
+
+		// sort according to entries in buckets
+		List tmplist = new LinkedList(buckets.entrySet());
+
+		Collections.sort(tmplist, new Comparator() {
+			public int compare(Object o1, Object o2) {
+				return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
+			}
+		});
+
+		List list = new ArrayList<Set<RDFNode>>();
+		for (Iterator it = tmplist.iterator(); it.hasNext();) {
+			Map.Entry entry = (Map.Entry) it.next();
+			list.add(entry.getKey());
+		}
+
+		return list;
 	}
-	
+
 	/**
-	 * @param features the features to set
+	 * @param features
+	 *            the features to set
 	 */
 	public void setFeatures(Collection<Feature> features) {
 		this.features = features;
@@ -86,20 +121,28 @@ public class VotingBasedRanker {
 
 	}
 
+	private void addOneToMapAtKey(Map<String, Double> map, String key) {
+		if (map.containsKey(key)) {
+			map.put(key, map.get(key) + 1.0);
+		} else {
+			map.put(key, 1.0);
+		}
+	}
+
 	private Map<String, Double> calculateRanking(SPARQLQuery q) {
 		// a priori assumption
 		Collections.sort(q.constraintTriples);
 
 		// here are the features
 		Map<String, Double> featureValues = Maps.newHashMap();
-		
+
 		for (Feature feature : features) {
 			switch (feature) {
 			case PREDICATES:
 				featureValues.putAll(usedPredicates(q));
 				break;
 			case PATTERN:
-				featureValues.putAll(	usedPattern(q));
+				featureValues.putAll(usedPattern(q));
 				break;
 			case NR_OF_CONSTRAINTS:
 				featureValues.put("feature:numberOfConstraints", numberOfConstraints(q));
@@ -118,6 +161,48 @@ public class VotingBasedRanker {
 		return featureValues;
 	}
 
+	private double cosinus(Map<String, Double> calculateRanking, Map<String, Double> goldVector) {
+		double dotProduct = 0;
+		for (String key : goldVector.keySet()) {
+			if (calculateRanking.containsKey(key)) {
+				dotProduct += goldVector.get(key) * calculateRanking.get(key);
+			}
+		}
+		double magnitude_A = 0;
+		for (String key : goldVector.keySet()) {
+			magnitude_A += Math.sqrt(goldVector.get(key) * goldVector.get(key));
+		}
+		double magnitude_B = 0;
+		for (String key : calculateRanking.keySet()) {
+			magnitude_B += Math.sqrt(calculateRanking.get(key) * calculateRanking.get(key));
+		}
+
+		return dotProduct / (magnitude_A * magnitude_B);
+	}
+
+	private double numberOfConstraints(SPARQLQuery query) {
+		return query.constraintTriples.size();
+	}
+
+	private Double numberOfTermsInTextQuery(SPARQLQuery q) {
+		// assuming there is only one variable left to search the text
+		for (String key : q.textMapFromVariableToSingleFuzzyToken.keySet()) {
+			return (double) q.textMapFromVariableToSingleFuzzyToken.get(key).size();
+		}
+		return 0.0;
+	}
+
+	private Double numberOfTypes(SPARQLQuery q) {
+		String[] split = new String[3];
+		double numberOfTypes = 0;
+		for (String triple : q.constraintTriples) {
+			split = triple.split(" ");
+			if (split[1].equals("a")) {
+				numberOfTypes++;
+			}
+		}
+		return numberOfTypes;
+	}
 
 	private Map<String, Double> usedPattern(SPARQLQuery q) {
 		// build list of patterns, indicate text position
@@ -171,22 +256,6 @@ public class VotingBasedRanker {
 		return map;
 	}
 
-	private void addOneToMapAtKey(Map<String, Double> map, String key) {
-		if (map.containsKey(key)) {
-			map.put(key, map.get(key) + 1.0);
-		} else {
-			map.put(key, 1.0);
-		}
-	}
-
-	private Double numberOfTermsInTextQuery(SPARQLQuery q) {
-		// assuming there is only one variable left to search the text
-		for (String key : q.textMapFromVariableToSingleFuzzyToken.keySet()) {
-			return (double) q.textMapFromVariableToSingleFuzzyToken.get(key).size();
-		}
-		return 0.0;
-	}
-
 	private Map<String, Double> usedPredicates(SPARQLQuery q) {
 		// build list of all predicates from gold queries
 		Map<String, Double> map = Maps.newHashMap();
@@ -213,59 +282,4 @@ public class VotingBasedRanker {
 		return map;
 	}
 
-	private Double numberOfTypes(SPARQLQuery q) {
-		String[] split = new String[3];
-		double numberOfTypes = 0;
-		for (String triple : q.constraintTriples) {
-			split = triple.split(" ");
-			if (split[1].equals("a")) {
-				numberOfTypes++;
-			}
-		}
-		return numberOfTypes;
-	}
-
-	private double numberOfConstraints(SPARQLQuery query) {
-		return query.constraintTriples.size();
-	}
-
-	public List<SPARQLQuery> rank(List<SPARQLQuery> queries, int numberOfReturnQueries) {
-		// TODO bug: differentiate between fuzzy and exact matches
-		for (SPARQLQuery s : queries) {
-			Map<String, Double> calculateRanking = calculateRanking(s);
-			double distance = cosinus(calculateRanking, vec);
-			s.setScore(distance);
-		}
-		List<SPARQLQuery> list = Lists.newArrayList(queries);
-		Collections.sort(list);
-		Collections.reverse(list);
-		return list.subList(0, Math.min(numberOfReturnQueries, queries.size()));
-	}
-
-	private double cosinus(Map<String, Double> calculateRanking, Map<String, Double> goldVector) {
-		double dotProduct = 0;
-		for (String key : goldVector.keySet()) {
-			if (calculateRanking.containsKey(key)) {
-				dotProduct += goldVector.get(key) * calculateRanking.get(key);
-			}
-		}
-		double magnitude_A = 0;
-		for (String key : goldVector.keySet()) {
-			magnitude_A += Math.sqrt(goldVector.get(key) * goldVector.get(key));
-		}
-		double magnitude_B = 0;
-		for (String key : calculateRanking.keySet()) {
-			magnitude_B += Math.sqrt(calculateRanking.get(key) * calculateRanking.get(key));
-		}
-
-		return dotProduct / (magnitude_A * magnitude_B);
-	}
-
-	public void learn(Question q, Set<SPARQLQuery> queries) {
-		db.store(q, queries);
-	}
-
-	public Collection<Feature> getFeatures() {
-		return features;
-	}
 }

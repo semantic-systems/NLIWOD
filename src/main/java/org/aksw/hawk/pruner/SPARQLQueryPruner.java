@@ -2,9 +2,12 @@ package org.aksw.hawk.pruner;
 
 import java.util.Set;
 
+import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.pruner.disjointness.DisjointnessBasedQueryFilter;
 import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,63 +43,111 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 
 	}
 
-	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queries) {
+	@SuppressWarnings("unchecked")
+	// TODO make this login / JSON more pretty
+	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queries, Question q) {
 
+		JSONArray document = new JSONArray();
 		// Pruning
 		int initialQueriesNumber = queries.size();
-		log.debug("Number of Queries before pruning: " + initialQueriesNumber);
+		JSONObject tmp = new JSONObject();
+		tmp.put("label", "Number of Queries before pruning");
+		tmp.put("value", initialQueriesNumber);
+		document.add(tmp);
 
 		// this pruning should be first since it assures valid queries for the
 		// following steps
-		queries = underdefined.prune(queries);
-		log.debug("underdefined pruned: " + (initialQueriesNumber - queries.size()));
+		queries = underdefined.prune(queries,q);
+		tmp = new JSONObject();
+		tmp.put("label", "Underdefined pruned");
+		tmp.put("value", (initialQueriesNumber - queries.size()));
+		document.add(tmp);
 		initialQueriesNumber = queries.size();
 
-		queries = containsProjVariable.prune(queries);
-		log.debug("containsProjVariable pruned: " + (initialQueriesNumber - queries.size()));
+		queries = containsProjVariable.prune(queries,q);
+		tmp = new JSONObject();
+		tmp.put("label", "SPARQL queries containing no project variable pruned");
+		tmp.put("value", (initialQueriesNumber - queries.size()));
+		document.add(tmp);
 		initialQueriesNumber = queries.size();
 
-		queries = containsTooManyNodesAsTextLookUp.prune(queries);
-		log.debug("containsTooManyNodesAsTextLookUp pruned: " + (initialQueriesNumber - queries.size()));
+		queries = containsTooManyNodesAsTextLookUp.prune(queries,q);
+		tmp = new JSONObject();
+		tmp.put("label", "SPARQL queries containing too many nodes as text lookup pruned");
+		tmp.put("value", (initialQueriesNumber - queries.size()));
+		document.add(tmp);
 		initialQueriesNumber = queries.size();
 
-		queries = predicatesPerVariableEdge.prune(queries);
-		log.debug("predicatesPerVariableEdge pruned: " + (initialQueriesNumber - queries.size()));
+		queries = predicatesPerVariableEdge.prune(queries,q);
+		tmp = new JSONObject();
+		tmp.put("label", "SPARQL queries with more than one predicate between the same variables pruned");
+		tmp.put("value", (initialQueriesNumber - queries.size()));
+		document.add(tmp);
 		initialQueriesNumber = queries.size();
 
-		queries = numberOfTypesPerVariable.prune(queries);
-		log.debug("numberOfTypesPerVariable pruned: " + (initialQueriesNumber - queries.size()));
+		queries = numberOfTypesPerVariable.prune(queries,q);
+		tmp = new JSONObject();
+		tmp.put("label", "SPARQL queries with more than one type per variable pruned");
+		tmp.put("value", (initialQueriesNumber - queries.size()));
+		document.add(tmp);
 		initialQueriesNumber = queries.size();
 
-		queries = BGPisConnected.prune(queries);
-		log.debug("BGPisConnected pruned: " + (initialQueriesNumber - queries.size()));
+		queries = BGPisConnected.prune(queries,q);
+		tmp = new JSONObject();
+		tmp.put("label", "SPARQL queries without connected BGP pruned");
+		tmp.put("value", (initialQueriesNumber - queries.size()));
+		document.add(tmp);
 		initialQueriesNumber = queries.size();
 
-		queries = cyclicTriple.prune(queries);
-		log.debug("cyclicTriple pruned: " + (initialQueriesNumber - queries.size()));
+		queries = cyclicTriple.prune(queries,q);
+		tmp = new JSONObject();
+		tmp.put("label", "SPARQL queries containing cycic triple pruned");
+		tmp.put("value", (initialQueriesNumber - queries.size()));
+		document.add(tmp);
 		initialQueriesNumber = queries.size();
 
-		queries = hasBoundVariables.prune(queries);
-		log.debug("hasBoundVariables pruned: " + (initialQueriesNumber - queries.size()));
+		queries = hasBoundVariables.prune(queries,q);
+		tmp = new JSONObject();
+		tmp.put("label", "SPARQL queries without bound variables pruned");
+		tmp.put("value", (initialQueriesNumber - queries.size()));
+		document.add(tmp);
 		initialQueriesNumber = queries.size();
 
-		queries = textFilterOverVariables.prune(queries);
-		log.debug("textFilterOverVariables pruned: " + (initialQueriesNumber - queries.size()));
+		queries = textFilterOverVariables.prune(queries,q);
+		tmp = new JSONObject();
+		tmp.put("label", "SPARQL queries without text filter over existing variables pruned");
+		tmp.put("value", (initialQueriesNumber - queries.size()));
+		document.add(tmp);
 		initialQueriesNumber = queries.size();
 
-		queries = unboundTriple.prune(queries);
-		log.debug("unboundTriple pruned: " + (initialQueriesNumber - queries.size()));
+		queries = unboundTriple.prune(queries,q);
+		tmp = new JSONObject();
+		tmp.put("label", "SPARQL queries with unbound triples pruned");
+		tmp.put("value", (initialQueriesNumber - queries.size()));
+		document.add(tmp);
 		initialQueriesNumber = queries.size();
 
-		queries = typemismatch.prune(queries);
-		log.debug("typemismatch pruned: " + (initialQueriesNumber - queries.size()));
+		queries = typemismatch.prune(queries,q);
+		tmp = new JSONObject();
+		tmp.put("label", "SPARQL queries with mismatching types pruned");
+		tmp.put("value", (initialQueriesNumber - queries.size()));
+		document.add(tmp);
 		initialQueriesNumber = queries.size();
 
-		queries = disjointness.prune(queries);
-		log.debug("disjointness pruned: " + (initialQueriesNumber - queries.size()));
+		queries = disjointness.prune(queries,q);
+		tmp = new JSONObject();
+		tmp.put("label", "SPARQL queries with disjoint classes pruned");
+		tmp.put("value", (initialQueriesNumber - queries.size()));
+		document.add(tmp);
 		initialQueriesNumber = queries.size();
 
-		log.debug("Number of Queries after pruning: " + queries.size());
+		tmp = new JSONObject();
+		tmp.put("label", "Number of Queries after pruning");
+		tmp.put("value", queries.size());
+		document.add(tmp);
+		
+		q.pruning_messages = document;
+		log.debug(document.toJSONString());
 		// TODO prune things like
 		// ?const <http://dbpedia.org/ontology/deathDate> ?proj.
 		// ?const <http://dbpedia.org/ontology/deathYear> ?proj.

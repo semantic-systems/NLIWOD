@@ -2,6 +2,7 @@ package org.aksw.hawk.pruner;
 
 import java.util.Set;
 
+import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 
 import com.google.common.collect.Sets;
@@ -23,7 +24,7 @@ public class UnderDefinedQueries implements ISPARQLQueryPruner {
 	 * ?proot ?proj. ?proj ?pbridge <http://dbpedia.org/resource/North_Sea>. }
 	 * LIMIT 12
 	 */
-	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings) {
+	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, Question q) {
 		Set<SPARQLQuery> returnSet = Sets.newHashSet();
 		for (SPARQLQuery sparqlQuery : queryStrings) {
 

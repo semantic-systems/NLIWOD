@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
+import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,7 @@ import com.google.common.collect.Sets;
 public class BGPisConnected implements ISPARQLQueryPruner {
 	static Logger log = LoggerFactory.getLogger(BGPisConnected.class);
 
-	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings) {
+	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, Question q) {
 		Set<SPARQLQuery> returnList = Sets.newHashSet();
 		for (SPARQLQuery query : queryStrings) {
 			// build graph

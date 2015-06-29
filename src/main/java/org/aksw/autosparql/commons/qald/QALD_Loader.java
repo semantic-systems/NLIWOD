@@ -11,7 +11,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -26,15 +25,28 @@ public class QALD_Loader {
 
 	public static void main(String[] args) {
 
-		String file = new File("resources/qald-5_train.xml").getAbsolutePath();
+		String file = new File("resources/qald-5_test.xml").getAbsolutePath();
 		QALD_Loader ql = new QALD_Loader();
-		for (Question q : ql.load(file)) {
-			System.out.println(q.languageToQuestion);
-			System.out.println("\tAnswers: " + StringUtils.join(q.goldenAnswers, ", "));
+		List<Question> load = ql.load(file);
+		int hybrid = 0;
+		for (Question q : load) {
+//			System.out.println(q.languageToQuestion);
+//			System.out.println("\tAnswers: " + StringUtils.join(q.goldenAnswers, ", "));
+
+			if (q.hybrid) {
+				if (q.answerType.equals("resource")) {
+					if (q.onlydbo) {
+						if (!q.aggregation) {
+							System.out.println(q.id+"\t"+q.languageToQuestion.get("en"));
+						}
+					}
+				}
+			}
 		}
+		System.out.println(hybrid);
 	}
 
-	public List<Question> load(String file) {
+	public static List<Question> load(String file) {
 
 		List<Question> questions = new ArrayList<Question>();
 
