@@ -97,7 +97,7 @@ public class JSONStatusBuilder {
 		}
 
 		// pruning
-		if (question.pruning_messages != null) {
+		if (!question.pruning_messages.isEmpty()) {
 			document.put("pruning_messages", question.pruning_messages);
 		}
 		// final sparql

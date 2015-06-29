@@ -34,8 +34,8 @@ public class BucketRanker implements Ranking {
 
 		for (Answer answer : answers) {
 
-			if (buckets.containsKey(answer.answerSet)) {
-				int count = buckets.get(answer.answerSet) + 1;
+			if (buckets.containsKey(answer)) {
+				int count = buckets.get(answer) + 1;
 				buckets.put(answer, count);
 			} else {
 				buckets.put(answer, 1);
@@ -50,11 +50,14 @@ public class BucketRanker implements Ranking {
 				return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
 			}
 		});
+		Collections.reverse(tmplist);
 
-		List list = new ArrayList<Set<RDFNode>>();
+		List<Answer> list = new ArrayList<Answer>();
 		for (Iterator it = tmplist.iterator(); it.hasNext();) {
 			Map.Entry entry = (Map.Entry) it.next();
-			list.add(entry.getKey());
+			Answer answer = (Answer) entry.getKey();
+			answer.score = (double) ((Integer) entry.getValue());
+			list.add(answer);
 		}
 
 		return list;

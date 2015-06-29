@@ -76,7 +76,6 @@ public class WebController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 			} else {
 				return UuidQuestionMap.get(UUID).getJSONStatus();
 			}
