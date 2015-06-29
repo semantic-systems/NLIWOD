@@ -26,7 +26,7 @@ public class JSONStatusBuilder {
 			for (Entity key : question.languageToNamedEntites.get("en")) {
 				JSONObject tmpobj = new JSONObject();
 				tmpobj.put("key", key.label);
-				tmpobj.put("value", key.uris.get(0));
+				tmpobj.put("value", new JsonString(key.uris.get(0).getURI()));
 				tmp.add(tmpobj);
 			}
 			document.put("named_entities", tmp);
@@ -37,7 +37,7 @@ public class JSONStatusBuilder {
 			for (Entity key : question.languageToNounPhrases.get("en")) {
 				JSONObject tmpobj = new JSONObject();
 				tmpobj.put("key", key.label);
-				tmpobj.put("value", key.uris.get(0));
+				tmpobj.put("value", new JsonString(key.uris.get(0).getURI()));
 				tmp.add(tmpobj);
 			}
 			document.put("combined_nouns", tmp);

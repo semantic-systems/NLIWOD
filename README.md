@@ -13,3 +13,10 @@ will return a UUID.
 
 
 ``curl http://localhost:8080/status?UUID=00000000-0000-0000-0000-000000000001`` gives you status updates
+
+Building HAWK
+===
+```
+mvn clean package -DskipTests
+java -jar target/hawk-0.1.0.jar
+```
