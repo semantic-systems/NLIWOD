@@ -7,8 +7,11 @@ import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.jena.atlas.json.JsonString;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class JSONStatusBuilder {
 
@@ -77,14 +80,15 @@ public class JSONStatusBuilder {
 			JSONArray tmp = new JSONArray();
 			while (!stack.isEmpty()) {
 				MutableTreeNode node = stack.pop();
+				if (!node.getAnnotations().isEmpty()) {
+					JSONObject tmpobj = new JSONObject();
+					tmpobj.put("label", node.label);
+					JSONArray tmpArray = new JSONArray();
+					tmpArray.addAll(node.getAnnotations());
+					tmpobj.put("annotations", tmpArray);
 
-				JSONObject tmpobj = new JSONObject();
-				tmpobj.put("label", node.label);
-				JSONArray tmpArray = new JSONArray();
-				tmpArray.addAll(node.getAnnotations());
-				tmpobj.put("annotations", tmpArray);
-
-				tmp.add(tmpobj);
+					tmp.add(tmpobj);
+				}
 				for (MutableTreeNode child : node.children) {
 					stack.push(child);
 				}
@@ -102,7 +106,9 @@ public class JSONStatusBuilder {
 			// final answer FIXME schwachsinnige struktur hier
 			JSONObject obj = new JSONObject();
 			JSONArray array = new JSONArray();
-			array.add(question.finalAnswer.get(0).answerSet);
+			for (RDFNode answer : question.finalAnswer.get(0).answerSet) {
+				array.add(new JsonString(answer.asResource().getURI()));
+			}
 			obj.put("value", array);
 			document.put("answer", obj);
 		}

@@ -50,7 +50,7 @@ public class Question implements Serializable {
 	public JSONObject tree_full;
 	public JSONObject tree_pruned;
 	public JSONObject tree_final;
-	public JSONArray pruning_messages;
+	public JSONArray pruning_messages=new JSONArray();
 
 
 
