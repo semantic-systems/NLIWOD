@@ -5,6 +5,8 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.aksw.autosparql.commons.qald.Question;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +35,13 @@ public class WebController {
 
 	// /search?q=What+is+the+capital+of+Germany+%3F
 	@RequestMapping("/search")
-	public UUID search(@RequestParam(value = "q") String question) {
+	public UUID search(@RequestParam(value = "q") String question, HttpServletResponse response) {
+		// CORS
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+
 		// create a question object
 		Question q = new Question();
 		q.languageToQuestion.put("en", question);
@@ -51,7 +59,13 @@ public class WebController {
 	}
 
 	@RequestMapping("/status")
-	public String status(@RequestParam(value = "UUID") UUID UUID) {
+	public String status(@RequestParam(value = "UUID") UUID UUID, HttpServletResponse response) {
+		// CORS
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+
 		if (runningProcesses.containsKey(UUID)) {
 			Future<Question> q = runningProcesses.get(UUID);
 			if (q.isDone()) {
