@@ -10,7 +10,6 @@ import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.pruner.ISPARQLQueryPruner;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -8,18 +8,14 @@ import java.util.concurrent.Future;
 import javax.servlet.http.HttpServletResponse;
 
 import org.aksw.autosparql.commons.qald.Question;
-import org.apache.jena.atlas.json.JsonString;
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.util.SimpleIdGenerator;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Maps;
@@ -91,20 +87,4 @@ public class WebController {
 		throw new SearchIdException(UUID);
 	}
 
-	@SuppressWarnings("serial")
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	static class SearchIdException extends RuntimeException {
-
-		public SearchIdException(UUID UUID) {
-			super(constructException(UUID));
-		}
-
-		@SuppressWarnings("unchecked")
-		private static String constructException(UUID UUID) {
-			JSONObject obj = new JSONObject();
-			obj.put("error", "No such search id");
-			obj.put("UUID", new JsonString(UUID.toString()));
-			return obj.toJSONString();
-		}
-	}
 }
