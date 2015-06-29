@@ -5,15 +5,21 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.aksw.autosparql.commons.qald.Question;
+import org.apache.jena.atlas.json.JsonString;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.util.SimpleIdGenerator;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Maps;
@@ -33,7 +39,13 @@ public class WebController {
 
 	// /search?q=What+is+the+capital+of+Germany+%3F
 	@RequestMapping("/search")
-	public UUID search(@RequestParam(value = "q") String question) {
+	public UUID search(@RequestParam(value = "q") String question, HttpServletResponse response) {
+		// CORS
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+
 		// create a question object
 		Question q = new Question();
 		q.languageToQuestion.put("en", question);
@@ -51,7 +63,13 @@ public class WebController {
 	}
 
 	@RequestMapping("/status")
-	public String status(@RequestParam(value = "UUID") UUID UUID) {
+	public String status(@RequestParam(value = "UUID") UUID UUID, HttpServletResponse response) {
+		// CORS
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+
 		if (runningProcesses.containsKey(UUID)) {
 			Future<Question> q = runningProcesses.get(UUID);
 			if (q.isDone()) {
@@ -70,6 +88,23 @@ public class WebController {
 			// finished working on this query
 			return UuidQuestionMap.get(UUID).getJSONStatus();
 		}
-		return "{Error: \"No such search id.\"}";
+		throw new SearchIdException(UUID);
+	}
+
+	@SuppressWarnings("serial")
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	static class SearchIdException extends RuntimeException {
+
+		public SearchIdException(UUID UUID) {
+			super(constructException(UUID));
+		}
+
+		@SuppressWarnings("unchecked")
+		private static String constructException(UUID UUID) {
+			JSONObject obj = new JSONObject();
+			obj.put("error", "No such search id");
+			obj.put("UUID", new JsonString(UUID.toString()));
+			return obj.toJSONString();
+		}
 	}
 }
