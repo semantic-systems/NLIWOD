@@ -15,8 +15,8 @@
 src/main/resources/general-en/
 src/main/resources/hawk.properties
 
-cache/indexCache
-cache/sparql/
+cache/*
+ranking/*
 
 resources/indexAbstract/
 resources/indexOntology/

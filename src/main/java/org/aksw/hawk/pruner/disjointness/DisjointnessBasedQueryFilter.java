@@ -6,10 +6,10 @@ package org.aksw.hawk.pruner.disjointness;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.pruner.ISPARQLQueryPruner;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,11 +45,9 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 	private QueryExecutionFactory qef;
 
 	QueryUtils queryUtils = new QueryUtils();
-	
+
 	// properties that are ignored when checking for disjointness
-	private static final Set<String> ignoredProperties = Sets.newHashSet(
-			"http://jena.apache.org/text#query",
-			"http://dbpedia.org/ontology/abstract");
+	private static final Set<String> ignoredProperties = Sets.newHashSet("http://jena.apache.org/text#query", "http://dbpedia.org/ontology/abstract");
 
 	public DisjointnessBasedQueryFilter(QueryExecutionFactory qef) {
 		this.qef = qef;
@@ -61,7 +59,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 	 * @see org.aksw.hawk.filtering.QueryFilter#filter(java.util.Set)
 	 */
 	@Override
-	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings) {
+	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, Question q) {
 		MonitorFactory.getTimeMonitor("parse").reset();
 		Set<SPARQLQuery> filteredQueries = Sets.newHashSet();
 
@@ -131,7 +129,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 		mon.start();
 		Query query = QueryFactory.create(sparqlQuery.toString());
 		mon.stop();
-		
+
 		// get all rdf:type triples
 		Set<Triple> typeTriples = queryUtils.getRDFTypeTriples(query);
 
@@ -168,7 +166,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 					if (predicate.isURI() && !ignoredProperties.contains(predicate.toString())) {
 						Set<Node> domain = getDomain(predicate.getURI());
 						if (conflicts(subjectTypes, domain)) {
-//							logger.debug("Domain of " + predicate + " does not match types " + subjectTypes);
+							// logger.debug("Domain of " + predicate + " does not match types " + subjectTypes);
 							return false;
 						}
 					}
@@ -194,7 +192,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 					if (predicate.isURI() && !ignoredProperties.contains(predicate.toString())) {
 						Set<Node> range = getRange(predicate.getURI());
 						if (conflicts(objectTypes, range)) {
-//							logger.debug("Range of " + predicate + " does not match types " + objectTypes);
+							// logger.debug("Range of " + predicate + " does not match types " + objectTypes);
 							return false;
 						}
 					}
@@ -209,17 +207,18 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 		return Sets.intersection(types1, types2).isEmpty();
 	}
 
-	public static void main(String[] args) {
-		QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
-		DisjointnessBasedQueryFilter filter = new DisjointnessBasedQueryFilter(qef);
-		SPARQLQuery query1 = new SPARQLQuery("?s a <http://dbpedia.org/ontology/Book>.");
-		query1.addConstraint("?s <http://dbpedia.org/ontology/author> ?o.");
-
-		SPARQLQuery query2 = new SPARQLQuery("?s a <http://dbpedia.org/ontology/Book>.");
-		query2.addConstraint("?s <http://dbpedia.org/ontology/birthDate> ?o.");
-
-		Set<SPARQLQuery> filtered = filter.prune(Sets.newHashSet(query1, query2));
-		System.out.println(filtered);
-	}
+	//TODO transform to proper unit test
+//	public static void main(String[] args) {
+//		QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
+//		DisjointnessBasedQueryFilter filter = new DisjointnessBasedQueryFilter(qef);
+//		SPARQLQuery query1 = new SPARQLQuery("?s a <http://dbpedia.org/ontology/Book>.");
+//		query1.addConstraint("?s <http://dbpedia.org/ontology/author> ?o.");
+//
+//		SPARQLQuery query2 = new SPARQLQuery("?s a <http://dbpedia.org/ontology/Book>.");
+//		query2.addConstraint("?s <http://dbpedia.org/ontology/birthDate> ?o.");
+//
+//		Set<SPARQLQuery> filtered = filter.prune(Sets.newHashSet(query1, query2));
+//		System.out.println(filtered);
+//	}
 
 }

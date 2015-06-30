@@ -3,7 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.aksw</groupId>
 	<artifactId>hawk</artifactId>
-	<version>0.0.1</version>
+	<version>0.1.0</version>
+	<packaging>jar</packaging>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.2.4.RELEASE</version>
+	</parent>
 	<repositories>
 		<repository>
 			<id>clojars.org</id>
@@ -29,9 +35,19 @@
 			<name>University Leipzig, AKSW Maven2 Repository</name>
 			<url>http://maven.aksw.org/archiva/repository/snapshots</url>
 		</repository>
+		<repository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<properties>
-		<java.version>1.7</java.version>
+		<java.version>1.8</java.version>
 		<slf4j.version>1.7.5</slf4j.version>
 		<lucene.version>4.6.0</lucene.version>
 		<junit.version>4.11</junit.version>
@@ -40,21 +56,13 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<executable>java</executable>
-					<arguments>
-						<argument>-Xms512m</argument>
-						<argument>-Xmx6G</argument>
-						<argument>-XX:NewRatio=3</argument>
-						<argument>-XX:+PrintGCTimeStamps</argument>
-						<argument>-XX:+PrintGCDetails</argument>
-						<argument>-Xloggc:gc.log</argument>
-						<argument>-classpath</argument>
-						<classpath />
-						<argument>org.aksw.hawk.controller.Pipeline</argument>
-					</arguments>
+  					<systemProperties>
+    						<JAVA_OPTS>-Xms415m -Xmx16G -XX:MaxPermSize=1G</JAVA_OPTS>
+  					</systemProperties>
+					<mainClass>org.aksw.hawk.webservice.WebApplication</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -66,21 +74,18 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<archive>
-						<manifest>
-							<mainClass>org.aksw.hawk.controller.PipelineController_QALD4</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>exec-maven-plugin</artifactId> 
+				<configuration> <executable>java</executable> <arguments> <argument>-Xms512m</argument> 
+				<argument>-Xmx6G</argument> <argument>-XX:NewRatio=3</argument> <argument>-XX:+PrintGCTimeStamps</argument> 
+				<argument>-XX:+PrintGCDetails</argument> <argument>-Xloggc:gc.log</argument> 
+				<argument>-classpath</argument> <classpath /> <argument>org.aksw.hawk.controller.Pipeline</argument> 
+				</arguments> </configuration> </plugin> <plugin> <artifactId>maven-assembly-plugin</artifactId> 
+				<version>2.4</version> <configuration> <descriptorRefs> <descriptorRef>jar-with-dependencies</descriptorRef> 
+				</descriptorRefs> <archive> <manifest> <mainClass>org.aksw.hawk.controller.PipelineController_QALD4</mainClass> 
+				</manifest> </archive> </configuration> </plugin> -->
 		</plugins>
+
+
 	</build>
 	<dependencies>
 		<!-- Junit -->
@@ -205,7 +210,21 @@
 			<artifactId>jamon</artifactId>
 			<version>2.80</version>
 		</dependency>
-
-
+		<!-- Restful webservice -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>logback-classic</artifactId>
+					<groupId>ch.qos.logback</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>

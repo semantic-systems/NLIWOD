@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+
 //TODO refactor class
 public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializable {
 	private static final long serialVersionUID = 3684161169564127853L;
@@ -40,7 +41,7 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 
 	@Override
 	public String toString() {
-		return label + ":" +"\t posTag: " +posTag +"\t lemma: " +lemma;
+		return label + ":" + "\t posTag: " + posTag + "\t lemma: " + lemma;
 	}
 
 	@Override
@@ -60,12 +61,13 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 		return used;
 	}
 
-
 	public void addAnnotation(String resourceImpl) {
 		if (annotations == null) {
 			annotations = new ArrayList<>();
 		}
-		annotations.add(resourceImpl);
+		if (!resourceImpl.isEmpty()) {
+			annotations.add(resourceImpl);
+		}
 	}
 
 	public List<String> getAnnotations() {

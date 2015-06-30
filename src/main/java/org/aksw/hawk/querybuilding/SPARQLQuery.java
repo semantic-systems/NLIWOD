@@ -7,12 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
-public class SPARQLQuery implements Cloneable, Serializable, Comparable<SPARQLQuery> {
+public class SPARQLQuery implements Cloneable, Serializable {
 
 	private static final long serialVersionUID = 6652694466896208327L;
 	// prune by lemma for verbs
@@ -23,7 +22,6 @@ public class SPARQLQuery implements Cloneable, Serializable, Comparable<SPARQLQu
 	public Map<String, Set<String>> textMapFromVariableToCombinedNNExactMatchToken = Maps.newHashMap();
 	private boolean isASKQuery = false;
 	private int limit = 1;
-	private double score = 1;
 
 	public SPARQLQuery(String initialConstraint) {
 		constraintTriples.add(initialConstraint);
@@ -266,13 +264,4 @@ public class SPARQLQuery implements Cloneable, Serializable, Comparable<SPARQLQu
 
 	}
 
-	public void setScore(double distance) {
-		this.score = distance;
-
-	}
-
-	@Override
-	public int compareTo(SPARQLQuery o2) {
-		return ComparisonChain.start().compare(this.score, o2.score).compare(this.toString(), o2.toString()).result();
-	}
 }
