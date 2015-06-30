@@ -24,8 +24,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 
 /**
- * F@N + all ranking experiments for ESWC 2015 publication
- * Possibly extendible for testing NER things
+ * F@N + all ranking experiments for ESWC 2015 publication Possibly extendible for testing NER things
+ * 
  * @author Lorenz Buehmann
  * @author ricardousbeck
  * 
@@ -59,10 +59,10 @@ public class RankingPipeline {
 				BucketRanker bucket_ranker = new BucketRanker();
 
 				// optimal ranking
-				log.info("Optimal ranking");
-				List<Answer> rankedAnswer = optimal_ranker.rank(answers, q);
-				List<EvalObj> eval = Measures.measure(rankedAnswer, q, maximumPositionToMeasure);
-				log.debug(Joiner.on("\n\t").join(eval));
+				// log.info("Optimal ranking");
+				// List<Answer> rankedAnswer = optimal_ranker.rank(answers, q);
+				// List<EvalObj> eval = Measures.measure(rankedAnswer, q, maximumPositionToMeasure);
+				// log.debug(Joiner.on("\n\t").join(eval));
 
 				// TODO transfer to a Trainpipeline
 				// correctQueries.add(answer.get(query).query);
@@ -70,23 +70,23 @@ public class RankingPipeline {
 				// this.ranker.learn(q, correctQueries);
 
 				// feature-based ranking
-				log.info("Feature-based ranking begins training.");
-				for (Set<Feature> featureSet : Sets.powerSet(new HashSet<>(Arrays.asList(Feature.values())))) {
-					if (!featureSet.isEmpty()) {
-						log.debug("Feature-based ranking: " + featureSet.toString());
-						feature_ranker.setFeatures(featureSet);
-						feature_ranker.train();
-						rankedAnswer = feature_ranker.rank(answers, q);
-						eval = Measures.measure(rankedAnswer, q, maximumPositionToMeasure);
-						log.debug(Joiner.on("\n\t").join(eval));
-					}
-				}
+				// log.info("Feature-based ranking begins training.");
+				// for (Set<Feature> featureSet : Sets.powerSet(new HashSet<>(Arrays.asList(Feature.values())))) {
+				// if (!featureSet.isEmpty()) {
+				// log.debug("Feature-based ranking: " + featureSet.toString());
+				// feature_ranker.setFeatures(featureSet);
+				// feature_ranker.train();
+				// rankedAnswer = feature_ranker.rank(answers, q);
+				// eval = Measures.measure(rankedAnswer, q, maximumPositionToMeasure);
+				// log.debug(Joiner.on("\n\t").join(eval));
+				// }
+				// }
 
 				// bucket-based ranking
 				log.info("Bucket-based ranking");
-				rankedAnswer = bucket_ranker.rank(answers, q);
-				eval = Measures.measure(rankedAnswer, q, maximumPositionToMeasure);
-				log.debug(Joiner.on("\n\t").join(eval));
+				List<Answer> rankedAnswer = bucket_ranker.rank(answers, q);
+				List<EvalObj> eval = Measures.measure(rankedAnswer, q, maximumPositionToMeasure);
+				log.info(Joiner.on("\n\t").join(eval));
 
 				// this.qw.write(finalAnswer);
 				// evals.add(new EvalObj(q.id, question, fmax, pmax, rmax,

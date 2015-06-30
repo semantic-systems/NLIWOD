@@ -15,8 +15,8 @@
 src/main/resources/general-en/
 src/main/resources/hawk.properties
 
-cache/
-ranking/
+cache/*
+ranking/*
 
 resources/indexAbstract/
 resources/indexOntology/

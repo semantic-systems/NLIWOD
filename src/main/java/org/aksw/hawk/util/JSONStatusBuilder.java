@@ -107,7 +107,7 @@ public class JSONStatusBuilder {
 			JSONObject obj = new JSONObject();
 			JSONArray array = new JSONArray();
 			for (RDFNode answer : question.finalAnswer.get(0).answerSet) {
-				array.add(new JsonString(answer.asResource().getURI()));
+				array.add(AnswerBox.buildAnswerBoxFeatures(answer.asResource().getURI()));
 			}
 			obj.put("value", array);
 			document.put("answer", obj);
