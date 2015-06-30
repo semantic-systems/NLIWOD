@@ -129,7 +129,7 @@ public class JSONStatusBuilder {
 			JSONArray tmp = new JSONArray();
 			for (MutableTreeNode child : node.children) {
 				JSONObject object = new JSONObject();
-				recursiveNodeLabel(child, object);
+				tmp.add(recursiveNodeLabel(child, object));
 			}
 			document.put("children", tmp);
 		}
