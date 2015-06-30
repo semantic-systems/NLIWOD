@@ -104,13 +104,11 @@ public class JSONStatusBuilder {
 		if (question.finalAnswer != null && !question.finalAnswer.isEmpty()) {
 			document.put("final_sparql_base64", new String(Base64.encodeBase64(question.finalAnswer.get(0).queryString.getBytes())));
 			// final answer FIXME schwachsinnige struktur hier
-			JSONObject obj = new JSONObject();
 			JSONArray array = new JSONArray();
 			for (RDFNode answer : question.finalAnswer.get(0).answerSet) {
 				array.add(AnswerBox.buildAnswerBoxFeatures(answer.asResource().getURI()));
 			}
-			obj.put("value", array);
-			document.put("answer", obj);
+			document.put("answer", array);
 		}
 
 		return document;
