@@ -46,7 +46,7 @@ public class RankingPipeline {
 		// "In which city was the assassin of Martin Luther King born?");
 
 		for (Question q : questions) {
-			if (q.hybrid & q.answerType.equals("resource") & q.onlydbo & !q.aggregation) {
+			if ((q.hybrid & q.answerType.equals("resource") & q.onlydbo & !q.aggregation) || q.loadedAsASKQuery) {
 
 				log.info("Run pipeline on " + q.languageToQuestion.get("en"));
 				List<Answer> answers = pipeline.getAnswersToQuestion(q);
