@@ -70,7 +70,7 @@ public class JSONStatusBuilder {
 		}
 		// final tree
 		if (question.tree_final != null) {
-			document.put("tree_pruned", question.tree_final);
+			document.put("tree_final", question.tree_final);
 		}
 
 		// annotation
