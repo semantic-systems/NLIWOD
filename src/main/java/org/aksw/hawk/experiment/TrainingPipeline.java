@@ -40,11 +40,18 @@ public class TrainingPipeline {
 
 		double average = 0;
 		double count = 0;
+		double countNULLAnswer = 0;
 		for (Question q : questions) {
 			if ((  q.answerType.equals("resource") & q.onlydbo & !q.aggregation) || q.loadedAsASKQuery) {
-				count++;
 				log.info("Run pipeline on " + q.languageToQuestion.get("en"));
 				List<Answer> answers = pipeline.getAnswersToQuestion(q);
+
+				if (answers.isEmpty()) {
+					log.warn("Question#" + q.id + " returned no answers! (Q: " + q.languageToQuestion.get("en") + ")");
+					++countNULLAnswer;
+					continue;
+				}
+				++count;
 
 				// ##############~~RANKING~~##############
 				log.info("Run ranking");
@@ -75,6 +82,7 @@ public class TrainingPipeline {
 				feature_ranker.learn(q, queries);
 			}
 		}
+		log.info("Number of questions with answer: " + count + ", number of questions without answer: " + countNULLAnswer);
 		log.info("Average F-measure: " + (average / count));
 
 	}
