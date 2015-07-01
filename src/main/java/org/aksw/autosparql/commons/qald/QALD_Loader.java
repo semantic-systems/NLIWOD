@@ -92,6 +92,8 @@ public class QALD_Loader {
 					NodeList childNodes = element.getChildNodes();
 					Node item = childNodes.item(0);
 					question.pseudoSparqlQuery = item.getNodeValue().trim();
+
+					question.loadedAsASKQuery = question.loadedAsASKQuery || new Boolean(QALD4_EvaluationUtils.isAskType(question.pseudoSparqlQuery));
 				}
 
 				// Read SPARQL query
@@ -101,7 +103,7 @@ public class QALD_Loader {
 					Node item = childNodes.item(0);
 					question.sparqlQuery = item.getNodeValue().trim();
 
-					question.loadedAsASKQuery = new Boolean(QALD4_EvaluationUtils.isAskType(question.sparqlQuery));
+					question.loadedAsASKQuery = question.loadedAsASKQuery || new Boolean(QALD4_EvaluationUtils.isAskType(question.sparqlQuery));
 				}
 				// check if OUT OF SCOPE marked
 				if (question.pseudoSparqlQuery != null) {

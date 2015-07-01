@@ -48,11 +48,21 @@ public class QueryTypeClassifier
 			List<Question> questions = datasetLoader.load(new File(file).getAbsolutePath());
 
 			int counter = 0;
+			int counterASK = 0;
 			int counterClassifiedWrong = 0;
 
 			for (Question q : questions) {
 				// Classify query type
 				q.isClassifiedAsASKQuery = queryTypeClassifier.isASKQuery(q.languageToQuestion.get("en"));
+
+				if (log.isDebugEnabled()) {
+					log.debug("Question ID=" + q.id + ": isASK=" + q.isClassifiedAsASKQuery + " - " +
+							q.languageToQuestion.get("en"));
+				}
+
+				if (q.isClassifiedAsASKQuery) {
+					++counterASK;
+				}
 
 				++counter;
 				if (q.isClassifiedAsASKQuery.booleanValue() != q.loadedAsASKQuery.booleanValue()) {
@@ -62,7 +72,8 @@ public class QueryTypeClassifier
 				}
 			}
 
-			log.info("Classified " + counterClassifiedWrong + " wrong from " + counter + " queries.");
+			log.info("Classified " + counterClassifiedWrong + " wrong from " + counter + " queries. (" +
+					counterASK + " are ASK)");
 		}
 	}
 
