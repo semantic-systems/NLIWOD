@@ -1,0 +1,634 @@
+[
+	{
+		"id":"2",
+		"lang":"en",
+		"question":"What was the naval warfare commanded by Admiral Yi Sun-sin at Myeongnyang Strait in 1597?",
+		"answer":"Battle of Myeongnyang",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x dbo:commander dbr:Yi_Sun-sin. ?x dbo:place dbr:Myeongnyang_Strait. ?x dbo:date \"1597-10-25\"^^xsd:date. }"
+	},
+	{
+		"id":"2",
+		"lang":"ko",
+		"question":"이순신 장군이 1597년에 명량해협에서 지휘한 해전은 무엇인가?",
+		"answer":"명량 해전",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x dbpedia-owl:commander dbpedia-ko:이순신. ?x prop-ko:장소 \"명량해협\"@ko. ?x prop-ko:날짜 1597. }"
+	},
+	{
+		"id":"3",
+		"lang":"en",
+		"question":"When was the year that President Roh Moo-hyun died?",
+		"answer":"2009",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { dbr:Roh_Moo-hyun dbo:deathYear ?x. }"
+	},
+	{
+		"id":"3",
+		"lang":"ko",
+		"question":"노무현 대통령이 사망한 년도는 언제인가?",
+		"answer":"2009년",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { dbpedia-ko:노무현 prop-ko:사망일 ?x. }"
+	},
+	{
+		"id":"4",
+		"lang":"en",
+		"question":"Who was the President of South Korea who won the Nobel Peace Prize in 2000?",
+		"answer":"Kim Dae-jung",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dbp:title dbr:President_of_South_Korea. ?x text:keyword \"2000\". ?x text:keyword \"Nobel Peace Prize\". }"
+	},
+	{
+		"id":"4",
+		"lang":"ko",
+		"question":"2000년에 노벨 평화상을 수상한 대한민국의 대통령은 누구인가?",
+		"answer":"김대중",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x prop-ko:국가 \"대한민국\"@ko. ?x rdf:type dbpedia-owl:President. ?x text:keyworld \"노벨 평화상\". ?x text:keyworld \"2000년\". }"
+	},
+	{
+		"id":"26",
+		"lang":"en",
+		"question":"Who was the Chinese emperor whose reign was called the \"Prosperity of Zhenguan\"?",
+		"answer":"Emperor Taizong of Tang",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x rdf:type yago:7th-centuryChineseMonarchs. ?x dbp:eraName \"Zhenguan\"@en. }"
+	},
+	{
+		"id":"26",
+		"lang":"ko",
+		"question":"그가 다스린 시대를 \"정관의 치\"라고 불리게 만든 중국의 황제는 누구인가?",
+		"answer":"당 태종",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x prop-ko:직책 dbpedia-ko:중국의_황제. ?x text:keyworld \"정관의 치\". } "
+	},
+	{
+		"id":"40",
+		"lang":"en",
+		"question":"What is the South Korean government agency reestablished in 2013 after having closed in 2008 to be in charge of maritime policies?",
+		"answer":"Ministry of Oceans and Fisheries",
+		"type":"1-3",
+		"sparql":"select distinct ?x where { ?x dct:subject dbc:Government_of_South_Korea. ?x text:keyworld \"2013\". ?x text:keyworld \"reestablished\". }"
+	},
+	{
+		"id":"40",
+		"lang":"ko",
+		"question":"2008년에 폐지되었다가 2013년에 재건된 이후로 해양정책을 관장하고 있는 대한민국의 중앙행정기관은 무엇인가?",
+		"answer":"대한민국 해양수산부",
+		"type":"1-3",
+		"sparql":"select distinct ?x where { ?x prop-ko:설립일 ?o. ?x prop-ko:해산일 2008. ?x text:keyworld \"2013\". ?x text:keyworld \"재건\". } "
+	},
+	{
+		"id":"45",
+		"lang":"en",
+		"question":"Who was the general officer of the Goryeo Dynasty that had?civil service experience and won the Battle of Guju??",
+		"answer":"Gang Gam-chan",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { dbr:Battle_of_Kuju dbp:commander ?x. ?x rdf:type yago:GoryeoPeople. } "
+	},
+	{
+		"id":"45",
+		"lang":"ko",
+		"question":"구주 대첩에서 승리한 고려 시대의 문관 출신의 장군은 누구인가?",
+		"answer":"강감찬",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { dbpedia-ko:구주_대첩 dbpedia-owl:commander ?x. ?x dbpedia-owl:country dbpedia-ko:고려. } "
+	},
+	{
+		"id":"70",
+		"lang":"en",
+		"question":"What is the football club established in 1899 and?belonged to La Liga to which Lionel Messi belongs as well??",
+		"answer":"FC Barcelona",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dbp:league dbr:La_Liga. ?x dct:subject dbc:1899_establishments_in_Spain. ?x dbp:name dbr:Lionel_Messi. }"
+	},
+	{
+		"id":"70",
+		"lang":"ko",
+		"question":"1899년에 창단되어?프리메라리가에 소속되어 있으며?리오넬 메시가 소속되어 있기도 한 축구단은 무엇인가?",
+		"answer":"FC 바르셀로나",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dbpedia-owl:league dbpedia-ko:프리메라리가. ?x prop-ko:이름 dbpedia-ko:리오넬_메시. ?x prop-ko:설립연도 1899. } "
+	},
+	{
+		"id":"77",
+		"lang":"en",
+		"question":"Who was the author of 'Samguk Sagi'?",
+		"answer":"Kim Bu-sik",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { dbr:Samguk_Sagi dbo:author ?x. }"
+	},
+	{
+		"id":"77",
+		"lang":"ko",
+		"question":"삼국사기'를 쓴 작가는 누구인가?",
+		"answer":"김부식",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:삼국사기. ?x text:keyworld \"작가\". ?x text:keyworld \"쓴\". } "
+	},
+	{
+		"id":"78",
+		"lang":"en",
+		"question":"Who was the first person to reach the South Pole?",
+		"answer":"Roald Amundsen",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x dbo:knownFor dbr:South_Pole. ?x text:keyworld \"First\". }"
+	},
+	{
+		"id":"78",
+		"lang":"ko",
+		"question":"최초로 남극점에 도달한 사람은 누구인가?",
+		"answer":"로알 아문센",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x rdf:type dbpedia-owl:Person. ?x text:keyworld \"남극점\". ?x text:keyworld \"최초\". } "
+	},
+	{
+		"id":"80",
+		"lang":"en",
+		"question":"Who was the 8th President of South Korea?",
+		"answer":"Kim Dae-jung",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x dbp:title dbr:President_of_South_Korea. ?x text:keyworld \"8th President\". ?x text:keyworld \"South Korea\". }"
+	},
+	{
+		"id":"80",
+		"lang":"ko",
+		"question":"대한민국의 제15대 대통령은 누구인가?",
+		"answer":"김대중",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x prop-ko:짧은설명 ?o. ?x text:keyworld \"대한민국\". ?x text:keyworld \"15대\". ?x text:keyworld \"대통령\". } "
+	},
+	{
+		"id":"226",
+		"lang":"en",
+		"question":"What was the country that King Dongmyeong founded?",
+		"answer":"Goguryeo",
+		"type":"1-2",
+		"sparql":"select distinct * where { ?x dbp:leader dbr:Dongmyeong_of_Goguryeo . }"
+	},
+	{
+		"id":"226",
+		"lang":"ko",
+		"question":"동명성왕은 어느 국가의 조상인가?",
+		"answer":"고구려",
+		"type":"1-2",
+		"sparql":"select distinct * where { dbpedia-ko:동명성왕 prop-ko:직책 ?x. }"
+	},
+	{
+		"id":"228",
+		"lang":"en",
+		"question":"Who was the founder of the masculinism organization Man of Korea?",
+		"answer":"Sung Jae-gi",
+		"type":"1-1",
+		"sparql":"select distinct * where { ?x text:keyworld \"Man of Korea\". ?x text:keyworld \"founder\". }"
+	},
+	{
+		"id":"228",
+		"lang":"ko",
+		"question":"남성연대를 창립한 사람은 누구인가?",
+		"answer":"성재기",
+		"type":"1-1",
+		"sparql":"select distinct * where { ?x prop-ko:직책 dbpedia-ko:남성연대 . ?x text:keyworld \"창립\". }"
+	},
+	{
+		"id":"245",
+		"lang":"en",
+		"question":"Who was the monarch of France called the \"Sun King\"?",
+		"answer":"Louis XIV of France",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x text:keyworld \"Sun King\". }"
+	},
+	{
+		"id":"245",
+		"lang":"ko",
+		"question":"\"태양왕\"이라고 불리는 프랑스의 군주는 누구인가?",
+		"answer":"루이 14세",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x text:keyworld \"태양왕\". }"
+	},
+	{
+		"id":"248",
+		"lang":"en",
+		"question":"Who was the winner of the 2009 Nobel Peace Prize?",
+		"answer":"Barack Obama",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x text:keyworld \"Nobel Peace Prize\". ?x text:keyworld \"2009\". } "
+	},
+	{
+		"id":"248",
+		"lang":"ko",
+		"question":"2009년에 노벨 평화상을 수상한 사람은 누구인가?",
+		"answer":"버락 오바마",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x text:keyworld \"노벨 평화상\". ?x text:keyworld \"2009\". }"
+	},
+	{
+		"id":"256",
+		"lang":"en",
+		"question":"What was the hypothesis that an English scientist James Lovelock proposed?",
+		"answer":"Gaia hypothesis",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { dbr:James_Lovelock dbo:knownFor ?x . ?x rdf:type yago:Hypotheses. }"
+	},
+	{
+		"id":"256",
+		"lang":"ko",
+		"question":"영국의 과학자 제임스 러브록이 주장한 이론은 무엇인가?",
+		"answer":"가이아 이론",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { dbpedia-ko:제임스_러브록 dbpedia-owl:wikiPageWikiLink ?x . ?x text:keyworld \"가설\". }"
+	},
+	{
+		"id":"261",
+		"lang":"en",
+		"question":"What is the novel written by the French writer Victor Hugo in 1862 whose main character was named Jean Valjean?",
+		"answer":"Les Mis?rables",
+		"type":"1-1",
+		"sparql":"select distinct * where { ?x dbo:author dbr:Victor_Hugo . ?x dbp:releaseDate \"1862\"^^xsd:integer . }"
+	},
+	{
+		"id":"261",
+		"lang":"ko",
+		"question":"프랑스의 작가 빅토르 위고가 1862년에 장 발장을 주인공으로 쓴 소설은 무엇인가?",
+		"answer":"레 미제라블",
+		"type":"1-1",
+		"sparql":"select distinct * where { ?x dbpedia-owl:author dbpedia-ko:빅토르_위고 . ?x prop-ko:발행일 \"1862\"^^xsd:integer . }"
+	},
+	{
+		"id":"262",
+		"lang":"en",
+		"question":"What is the number of national associations currently qualified for membership by the FIFA?",
+		"answer":"209",
+		"type":"2",
+		"sparql":"select distinct * where { dbr:FIFA dbo:membership ?x . }"
+	},
+	{
+		"id":"262",
+		"lang":"ko",
+		"question":"국제 축구 연맹이 회원으로 인정하는 축구 연맹은 모두 몇 개 인가?",
+		"answer":"210개",
+		"type":"2",
+		"sparql":"select distinct * where { dbpedia-ko:국제_축구_연맹 prop-ko:회원 ?x }"
+	},
+	{
+		"id":"265",
+		"lang":"en",
+		"question":"What is the highest mountain in the Alps mountain range?",
+		"answer":"Mont Blanc",
+		"type":"1-1",
+		"sparql":"select distinct * where { dbr:Alps dbp:highest ?x . }"
+	},
+	{
+		"id":"265",
+		"lang":"ko",
+		"question":"알프스 산맥의 최고봉은 무엇인가?",
+		"answer":"몽블랑 산",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { dbpedia-ko:알프스_산맥 prop-ko:최고봉 ?x }"
+	},
+	{
+		"id":"275",
+		"lang":"en",
+		"question":"What was the first newspaper of Korea?",
+		"answer":"Tongnip Sinmun",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x text:keyworld \"newspaper\". ?x text:keyworld \"Korea\". ?x text:keyworld \"first\". }"
+	},
+	{
+		"id":"275",
+		"lang":"ko",
+		"question":"한국 최초의 민간 신문은 무엇인가?",
+		"answer":"독립신문",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x text:keyworld \"신문\". ?x text:keyworld \"최초\". }"
+	},
+	{
+		"id":"277",
+		"lang":"en",
+		"question":"What is the capital city of Ireland?",
+		"answer":"Dublin",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { dbr:Republic_of_Ireland dbo:capital ?x . }"
+	},
+	{
+		"id":"277",
+		"lang":"ko",
+		"question":"아일랜드의 수도는 어디인가?",
+		"answer":"더블린",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x prop-ko:위치지도 \"아일랜드\"@ko. ?x text:keyworld \"수도\". }"
+	},
+	{
+		"id":"295",
+		"lang":"en",
+		"question":"When was the year that Steve Jobs, Steve Wozniak and Ronald Wayne founded Apple Inc.?",
+		"answer":"1976",
+		"type":"1-1",
+		"sparql":"select distinct ?o where { dbr:Apple_Inc. dbo:foundingYear ?o }"
+	},
+	{
+		"id":"295",
+		"lang":"ko",
+		"question":"스티브 잡스와 스티브 워즈니악과 로널드 웨인이 애플을 창업한 년도는 언제인가?",
+		"answer":"1976년",
+		"type":"1-1",
+		"sparql":"select distinct ?o where { dbpedia-ko:애플_(기업) prop-ko:창립 ?o }"
+	},
+	{
+		"id":"302",
+		"lang":"en",
+		"question":"What is the international financial services company founded in 1914 and now acquired by Bank of America?",
+		"answer":"Merrill Lynch",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dbo:foundingYear \"1914-01-01\"^^xsd:date. ?x dbo:parentCompany dbr:Bank_of_America. }"
+	},
+	{
+		"id":"302",
+		"lang":"ko",
+		"question":"1914년에 설립되어 현재는 뱅크 오브 아메리카에 인수 합병된 세계 유가증권 회사는 무엇인가?",
+		"answer":"메릴린치",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dcterms:subject dbpedia-ko:분류:1914년_설립. ?x text:keyworld \"뱅크 오브 아메리카\". ?x text:keyworld \"인수\". }"
+	},
+	{
+		"id":"303",
+		"lang":"en",
+		"question":"What was the U.S. international financial services company founded in 1850 and bankrupted in 2008?",
+		"answer":"Lehman Brothers",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dbo:product dbr:Financial_services. ?x dbo:extinctionYear \"2008-01-01\"^^xsd:date. ?x dbp:foundation 1850. }"
+	},
+	{
+		"id":"303",
+		"lang":"ko",
+		"question":"1850년에 설립되어 2008년에 파산한 미국의 국제 금융 회사는 무엇인가?",
+		"answer":"리먼 브라더스",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dbpedia-owl:formationYear \"1850-01-01 00:00:00\"^^xsd:date. ?x dbpedia-owl:extinctionYear \"2008-01-01 00:00:00\"^^xsd:date. ?x prop-ko:서비스 dbpedia-ko:투자은행. }"
+	},
+	{
+		"id":"304",
+		"lang":"en",
+		"question":"What is the ancient city of Inca Empire in Peru?",
+		"answer":"Machu Picchu",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x dbp:location dbr:Peru. ?x dct:subject dbc:Inca. ?x text:keyworld \"emperor\". }"
+	},
+	{
+		"id":"304",
+		"lang":"ko",
+		"question":"페루에 위치한 잉카 문명의 고대 도시는 어디인가?",
+		"answer":"마추 픽추",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x prop-ko:문명 dbpedia-ko:잉카_제국. ?x text:keyworld \"페루\". ?x text:keyworld \"잉카 문명\". ?x text:keyworld \"고대 도시\". }"
+	},
+	{
+		"id":"305",
+		"lang":"en",
+		"question":"What is the capital city of the United States?",
+		"answer":"Washington, D.C.",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { dbr:United_States dbo:capital ?x. }"
+	},
+	{
+		"id":"305",
+		"lang":"ko",
+		"question":"미국의 수도는 어디인가?",
+		"answer":"워싱턴 D.C.",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x prop-ko:위치지도 \"미국\"@ko. ?x text:keyworld \"미국의 수도\". }"
+	},
+	{
+		"id":"308",
+		"lang":"en",
+		"question":"What is the essay commonly known as the 'Moriae Encomium' written by a Dutch humanist Desiderius Erasmus in 1509?",
+		"answer":"The Praise of Folly",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { dbr:Moriae_Encomium dbo:wikiPageRedirects ?x. ?x text:keyworld \"Desiderius Erasmus\". ?x text:keyworld \"1509\". }"
+	},
+	{
+		"id":"308",
+		"lang":"ko",
+		"question":"네덜란드의 인문학자 데시데리위스 에라스뮈스가 1511년에 쓴, \"모리아 예찬\"이라고도 불리는 책은 무엇인가?",
+		"answer":"우신예찬",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:데시데리위스_에라스뮈스. ?x text:keyworld \"1511년\". }"
+	},
+	{
+		"id":"321",
+		"lang":"en",
+		"question":"What is the court that primarily deals with cases related to domestic relationships and children?",
+		"answer":"Family court",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { dbr:Domestic_Relations_Court dbo:wikiPageRedirects ?x. ?x text:keyworld \"children\". ?x text:keyworld \"domestic relationships\". }"
+	},
+	{
+		"id":"321",
+		"lang":"ko",
+		"question":"가정 및 소년에 관한 사건을 관장하는 법원은 무엇인가?",
+		"answer":"가정법원",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x dbpedia-owl:abstract ?o. ?x text:keyworld \"가정에 관한 사건\". ?x text:keyworld \"소년에 관한 사건\". ?x text:keyworld \"법원\". }"
+	},
+	{
+		"id":"324",
+		"lang":"en",
+		"question":"What is the Canal that was opened in November 1869?",
+		"answer":"Suez Canal",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dbp:dateComp \"November 1869\"@en. }"
+	},
+	{
+		"id":"324",
+		"lang":"ko",
+		"question":"1869년 11월에 개통된 운하는 어디인가?",
+		"answer":"수에즈 운하",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dbpedia-owl:abstract ?o. ?x text:keyworld \"1869년 11월\". ?x text:keyworld \"개통\". }"
+	},
+	{
+		"id":"",
+		"lang":"en",
+		"question":"What was the unmanned spacecraft launched by the United States in 1977 to study the outer solar system?",
+		"answer":"Voyager 1",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dct:subject dbc:1977_in_the_United_States. ?x dbp:year \"1977\"^^xsd:integer. ?x text:keyworld \"solar\". }"
+	},
+	{
+		"id":"",
+		"lang":"ko",
+		"question":"미국이 1977년에 발사한 태양계 탐사용 무인 우주선은 무엇인가?",
+		"answer":"보이저 1호",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x prop-ko:발사일 \"1977\"^^xsd:integer. ?x text:keyworld \"태양계\". ?x text:keyworld \"탐사\". }"
+	},
+	{
+		"id":"335",
+		"lang":"en",
+		"question":"What is the average interest rate applied in London's financial market daily at 11:30 a.m.?",
+		"answer":"LIBOR (London Interbank Offered Rate)",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x text:keyworld \"published daily at 11:30 am\". }"
+	},
+	{
+		"id":"335",
+		"lang":"ko",
+		"question":"매일 오전 11시 30분에 발표되는 런던 은행간 금리는 무엇인가?",
+		"answer":"리보",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x text:keyworld \"오전 11시 30분\". ?x text:keyworld \"런던의 주요 은행 사이\". }"
+	},
+	{
+		"id":"336",
+		"lang":"en",
+		"question":"What was the category of the Nobel Prize added in 1969?",
+		"answer":"Nobel Memorial Prize in Economic Sciences",
+		"type":"1-3",
+		"sparql":"select distinct ?x where {  ?x dct:subject dbc:Awards_established_in_1969. ?x dct:subject dbc:Nobel_Prize. }"
+	},
+	{
+		"id":"336",
+		"lang":"ko",
+		"question":"1969년에 추가된 노벨상 분야는 무엇인가?",
+		"answer":"노벨 경제학상",
+		"type":"1-3",
+		"sparql":"select distinct ?x where { ?x dcterms:subject dbpedia-ko:분류:노벨상. ?x text:keyworld \"1969년부터\". }"
+	},
+	{
+		"id":"346",
+		"lang":"en",
+		"question":"What was the fossil discovered in Ethiopia in 1974 and named after the lady in the discoverer's favorite song of the Beatles?",
+		"answer":"Lucy (Australopithecus)",
+		"type":"1-2",
+		"sparql":"select distinct ?x where {   ?x text:keyworld \"1974\". ?x dbp:placeDiscovered dbr:History_of_Ethiopia. }"
+	},
+	{
+		"id":"346",
+		"lang":"ko",
+		"question":"1974년에 에티오피아에서 발굴되었으며, 비틀즈의 노래에 나오는 여성과 이름이 같은 화석은 무엇인가?",
+		"answer":"루시",
+		"type":"1-2",
+		"sparql":"select distinct ?x where {   ?x prop-ko:발굴지 dbpedia-ko:에티오피아.  ?x text:keyworld \"1974\". }"
+	},
+	{
+		"id":"348",
+		"lang":"en",
+		"question":"Who was the German scientist that won the first Nobel Prize in Physics?",
+		"answer":"Wilhelm R?ntgen",
+		"type":"1-2",
+		"sparql":"select distinct ?x where {   ?x dbp:nationality dbr:Germans. ?x rdf:type dbo:Scientist. ?x dct:subject dbc:Nobel_laureates_in_Physics. ?x text:keyworld \"first Nobel Prize\". }"
+	},
+	{
+		"id":"348",
+		"lang":"ko",
+		"question":"최초의 노벨 물리학상을 수상한 독일의 과학자는 누구인가?",
+		"answer":"빌헬름 콘라트 뢴트겐",
+		"type":"1-2",
+		"sparql":"select distinct ?x where {   ?x dbpedia-owl:nationality dbpedia-ko:독일. ?x rdf:type dbpedia-owl:Scientist. ?x prop-ko:수상 dbpedia-ko:노벨_물리학상.  ?x text:keyworld \"최초의 노벨 물리학상\". }"
+	},
+	{
+		"id":"350",
+		"lang":"en",
+		"question":"What is the walled mountain fortress in Gwangjang-dong of Seoul's Gwangjin District?",
+		"answer":"Achasanseong (Acha Mountain Fortress)",
+		"type":"1-2",
+		"sparql":"select distinct ?x where {   ?x dct:subject dbc:Castles_in_South_Korea. ?x dct:subject dbc:Gwangjin_District. }"
+	},
+	{
+		"id":"350",
+		"lang":"ko",
+		"question":"서울특별시 광진구 광장동에 위치한 산성은 무엇인가?",
+		"answer":"아차산성",
+		"type":"1-2",
+		"sparql":"select distinct ?x where {   ?x prop-ko:소재지 ?y. ?x text:keyworld \"서울특별시 광진구 광장동\". ?x text:keyworld \"산성\". }"
+	},
+	{
+		"id":"351",
+		"lang":"en",
+		"question":"What was the anti-art movement taken place across Europe at the end of World War I by Tristan Tzara, Marcel Duchamp and others?",
+		"answer":"Dadaism",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { dbr:Tristan_Tzara dbo:movement ?x. dbr:Marcel_Duchamp dbo:movement ?x. ?x text:keyworld \"anti-war\". }"
+	},
+	{
+		"id":"351",
+		"lang":"ko",
+		"question":"제1차 세계 대전 말에 트리스탄 짜라, 마르셀 뒤샹 등에 의하여 유럽에서 발생한 반예술적 사회 운동은 무엇인가?",
+		"answer":"다다이즘",
+		"type":"1-2",
+		"sparql":"select distinct ?x where {   ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:마르셀_뒤샹. ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:1차_세계_대전. }"
+	},
+	{
+		"id":"353",
+		"lang":"en",
+		"question":"What is the world's oldest recorded code of laws enacted by the king of Babylonia Hammurabi around 1750s BC?",
+		"answer":"Code of Hammurabi",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dbp:purpose <http://dbpedia.org/resource/Code_(law)>. ?x text:keyworld \"1750 BC\". }"
+	},
+	{
+		"id":"353",
+		"lang":"ko",
+		"question":"기원전 1750년 경에 바빌로니아의 함무라비 왕이 반포한 세계에서 가장 오래된 성문법은 무엇인가?",
+		"answer":"함무라비 법전",
+		"type":"1-2",
+		"sparql":"select distinct ?x where {    ?x text:keyworld \"세계에서 가장 오래된 성문법\". }"
+	},
+	{
+		"id":"355",
+		"lang":"en",
+		"question":"What was the book written by Ahn Jeong-bok describing Korean history from Gojoseon to Goryeo?",
+		"answer":"Dongsa Gangmok",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dct:subject dbc:History_books_about_Korea . ?x text:keyworld \"Gojoseon\". ?x text:keyworld \"Goryeo\". ?x text:keyworld \"Ahn Jeong-bok\". }"
+	},
+	{
+		"id":"355",
+		"lang":"ko",
+		"question":"안정복이 고조선부터 고려까지의 한국의 역사를 쓴 책은 무엇인가?",
+		"answer":"동사강목",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x text:keyworld \"안정복\". ?x text:keyworld \"고조선\". ?x text:keyworld \"고려\". }"
+	},
+	{
+		"id":"356",
+		"lang":"en",
+		"question":"What is the most authoritative award for achievements in journalism, literature, and musical composition in the United States?",
+		"answer":"Pulitzer Prize",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x text:keyworld \"journalism\". ?x text:keyworld \"musical composition\". ?x dbp:country \"United States\"@en. }"
+	},
+	{
+		"id":"356",
+		"lang":"ko",
+		"question":"미국에서 가장 권위 있는 저널리즘, 문학, 음악상은 무엇인가?",
+		"answer":"퓰리처상",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x text:keyworld \"미국\". ?x text:keyworld \"저널리즘\". ?x text:keyworld \"문학\". ?x text:keyworld \"음악\". }"
+	},
+	{
+		"id":"361",
+		"lang":"en",
+		"question":"Who is the English zoologist that is world-renowned for her 40-year study of chimpanzees in Tanzania?",
+		"answer":"Jane Goodall",
+		"type":"3-1",
+		"sparql":"select distinct ?x where { ?x dbo:knownFor dbr:Chimpanzee. ?x text:keyworld \"Tanzania\". ?x rdf:type dbo:Scientist. }"
+	},
+	{
+		"id":"361",
+		"lang":"ko",
+		"question":"탄자니아에서 40여년간 침팬지를 연구한 영국의 동물학자는 누구인가?",
+		"answer":"제인 구달",
+		"type":"3-1",
+		"sparql":"select distinct ?x where { ?x dbpedia-owl:occupation dbpedia-ko:동물학자. dbpedia-ko:탄자니아 dbpedia-owl:wikiPageWikiLink ?x. dbpedia-ko:침팬지 dbpedia-owl:wikiPageWikiLink ?x. }"
+	},
+	{
+		"id":"365",
+		"lang":"en",
+		"question":"Who was the Russian physiologist that won the Nobel Prize for Physiology or Medicine in 1904?",
+		"answer":"Ivan Pavlov",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dbo:nationality dbr:Russians. ?x dbo:award dbr:Nobel_Prize_in_Physiology_or_Medicine. ?x dbo:field dbr:Physiology }"
+	}
+]
