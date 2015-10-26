@@ -1,4 +1,5 @@
-== Question answering: datasets ==
+#Question answering datasets
+
 This collection includes the following datasets or respectivly looks at the following datasets to be included:
 
 * added: http://www.okbqa.org/nlq
