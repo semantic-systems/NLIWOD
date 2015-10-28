@@ -1,10 +1,10 @@
-How many books in game of thrones
+How many books in game of thrones	5	number
 How many years did the Hundred Years War last?	116	date
-When was zinc discovered
+When was zinc discovered	1746	date
 Who is the ceo of amazon	http://dbpedia.org/page/Jeff_Bezos
 50 states of america
 a team lyrics
-Adolf hitler became chancellor of Germany in which year?
+Adolf hitler became chancellor of Germany in which year?	1933	date
 Apply an Epipen
 Apply epiduo
 baidu china market share
@@ -158,11 +158,11 @@ Build a bike
 Build a catapult
 Build a fire
 Build a house
-calories in reindeer sausage
-calories in sourdough bread
+calories in reindeer sausage	330	number
+calories in sourdough bread	68	numbers
 calories in vodka
-can a hippopotamus swim?
-can you cry underwater?
+can a hippopotamus swim?	yes 	string
+can you cry underwater?	yes 	string
 canon eos7d
 Care for a peace lily
 Carve a pumpkin
@@ -369,7 +369,7 @@ daffy duck
 daisy duck
 Delete an app
 Directions to a hospital
-Do dogs dream
+Do dogs dream	yes 	string
 do I look fat
 Do you want to build a snowman
 does anyone care that jimmy cracks corn?
@@ -686,7 +686,7 @@ How long to cook green beans
 How long to make compost
 how long was the gettysburg address
 how long was the longest oscar acceptance speech
-How many acres are in a mile
+How many acres are in a mile 	640	number
 How many americans died in the vietnam war
 How many americans died in ww1
 How many americans died in ww2
@@ -838,9 +838,9 @@ How old is Mount Rushmore
 How old is obama
 How old is the bible
 How old is the boston marathon
-How old is the brooklyn bridge
+How old is the brooklyn bridge 	132 Years 	date
 How old is the catholic church
-How old is the colosseum
+How old is the colosseum	between 1935 and 1945 Years 	date
 How old is the declaration of independence
 How old is the earth
 How old is the eiffle tower

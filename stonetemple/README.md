@@ -1,6 +1,6 @@
-Kategorien und Antworten
+possible categorys/answers
 
-Kategorien:
+categorieys:
 - date
 - number
 - string
@@ -8,6 +8,9 @@ Kategorien:
 - guide
 - boolean (yes/no)
 
+
+Difficult questions:
+(question:answer/category)
 - How many days until christmas: ?/procedural (tagesaktuelle Berechnung)
 - Am I fat: ?/guide
 - between x and y
