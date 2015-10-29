@@ -2,36 +2,36 @@ How many books in game of thrones	5	number
 How many years did the Hundred Years War last?	116	date
 When was zinc discovered	1746	date
 Who is the ceo of amazon	http://dbpedia.org/page/Jeff_Bezos
-50 states of america
-a team lyrics
+50 states of america 	Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming	list
+a team lyrics	http://www.lyricsmode.com/lyrics/e/ed_sheeran/a_team_lyrics.html	string
 Adolf hitler became chancellor of Germany in which year?	1933	date
-Apply an Epipen
-Apply epiduo
-baidu china market share
-baking chicken wings in the oven
-Becoming a athletic trainer
-Becoming a bail agent
-Becoming a baker
-Becoming a bank teller
-Becoming a banker
-Becoming a barber
-Becoming a bartender
-Becoming a biologist
-Becoming a biomedical engineer
-Becoming a boxer
-Becoming a buddhist
-Becoming a cashier
-Becoming a chef
-Becoming a chemical engineer
-Becoming a chiropractor
-Becoming a civil engineer
-Becoming a clown
-Becoming a dentist
-Becoming a dermatologist
-Becoming a detective
-Becoming a dietitian
-Becoming a DJ
-Becoming a doctor
+Apply an epipen 	http://www.epipen.ca/en/about-epipen/how-to-use-epipen	string
+Apply epiduo 	http://www.epiduo.co.uk/all-about-epiduo-gel/how-to-apply/	string
+baidu china market share 	7.52%	number
+baking chicken wings in the oven 	http://www.food.com/recipe/oven-crisp-chicken-wings-40497	string
+Becoming a athletic trainer 	http://caate.net/becoming-an-athletic-trainer/	string
+Becoming a bail agent 	http://www.pbus.com/?3	string
+Becoming a baker 	http://study.com/articles/Become_a_Baker_Career_Information_and_Requirements.html	string
+Becoming a bank teller 	http://study.com/bank_teller_education.html	string
+Becoming a banker 	http://study.com/articles/How_to_Be_a_Banker_Education_and_Career_Roadmap.html	string
+Becoming a barber 	http://study.com/articles/Barber_Educational_Requirements_for_Barbers.html	string
+Becoming a bartender 	http://study.com/articles/Bartender_Salary_Duties_Outlook_and_Requirements.html	string
+Becoming a biologist 	http://learn.org/articles/Biology_Become_a_Biologist_in_5_Steps.html	string
+Becoming a biomedical engineer 	http://www.academicinvest.com/science-careers/biochemistry-careers/how-to-become-a-biomedical-engineer	string
+Becoming a boxer 	http://study.com/articles/Be_a_Boxer_Requirements_Description_and_Outlook.html 	string
+Becoming a buddhist 	http://www.wikihow.com/Become-a-Buddhist	string
+Becoming a cashier 	http://study.com/articles/How_to_Become_a_Cashier_Education_and_Career_Roadmap.html string
+Becoming a chef 	http://study.com/how_to_become_a_chef.html 	string
+Becoming a chemical engineer 	http://study.com/articles/Engineer_-_Chemical_Educational_Requirements_for_Entering_the_Field_of_Chemical_Engineering.html 	string
+Becoming a chiropractor 	http://study.com/become_a_chiropractor.html 	string
+Becoming a civil engineer 	http://study.com/articles/Civil_Engineering_Requirements_for_Becoming_a_Civil_Engineer.html 	string
+Becoming a clown 	http://www.wikihow.com/Be-a-Clown 	string
+Becoming a dentist 	http://study.com/how_to_become_a_dentist.html 	string
+Becoming a dermatologist 	http://study.com/dermatologist_training.html 	string
+Becoming a detective 	http://www.learnhowtobecome.org/detective/ 	string
+Becoming a dietitian 	http://careerplanning.about.com/od/dietitianandnutritionist/tp/how-to-become-a-dietitian.htm 	string
+Becoming a DJ 	http://www.passionatedj.com/guides/how-to-become-a-dj-ultimate-guide/ 	string
+Becoming a doctor 	http://study.com/how_to_become_a_doctor.html 	string
 Becoming a dog trainer
 Becoming a entrepreneur
 Becoming a fashion designer

@@ -7,6 +7,7 @@ categorieys:
 - procedural
 - guide
 - boolean (yes/no)
+- list
 
 
 Difficult questions:
