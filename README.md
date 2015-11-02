@@ -16,6 +16,8 @@ to analyze:
 * http://trec.nist.gov/data/qamain.html
 * http://trec.nist.gov/data/qa/add_qaresources.html
 * http://www.slideshare.net/andrenfreitas/schema-agnostic
+* http://research.microsoft.com/en-us/downloads/88c0021c-328a-4148-a158-a42d7331c6cf/
+* http://projects.semwebcentral.org/projehttp://research.microsoft.com/en-us/downloads/88c0021c-
 * needs computation: https://github.com/deepmind/rc-data/
  
 out of scope (?) :
