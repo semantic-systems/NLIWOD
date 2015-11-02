@@ -17,6 +17,7 @@ to analyze:
 * http://trec.nist.gov/data/qa/add_qaresources.html
 * http://www.slideshare.net/andrenfreitas/schema-agnostic
 * needs computation: https://github.com/deepmind/rc-data/
-out of scope ? :
+ 
+out of scope (?) :
 * http://alt.qcri.org/semeval2015/task3/ SemEval-2015 Task 3: Answer Selection in Community Question Answering 
 * http://alt.qcri.org/semeval2016/task3/ Semeval-2016 Task 3: Community Question Answering
