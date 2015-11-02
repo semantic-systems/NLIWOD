@@ -4,7 +4,7 @@ This collection includes the following datasets or respectivly looks at the foll
 
 * added: http://www.okbqa.org/nlq
 * added: http://greententacle.techfak.uni-bielefeld.de/~cunger/qald/
-
+* added: http://linkedspending.org
 in production (adding answers):
 * https://www.stonetemple.com/great-knowledge-box-showdown/
 
