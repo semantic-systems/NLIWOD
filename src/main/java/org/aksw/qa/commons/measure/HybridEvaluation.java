@@ -1,18 +1,18 @@
-package org.aksw.mlqa.commons.qald;
+package org.aksw.qa.commons.measure;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import org.aksw.qa.commons.datastructure.Question;
+import org.apache.jena.ext.com.google.common.collect.Sets;
+import org.apache.jena.ext.com.google.common.collect.Sets.SetView;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Sets;
-import com.google.common.collect.Sets.SetView;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
-
-public class QALD4_EvaluationUtils {
-	static Logger log = LoggerFactory.getLogger(QALD4_EvaluationUtils.class);
+public class HybridEvaluation {
+	static Logger log = LoggerFactory.getLogger(HybridEvaluation.class);
 
 	public static double precision(Set<RDFNode> systemAnswer, Question question) {
 		if (systemAnswer == null) {

@@ -1,23 +1,23 @@
-package qa.commons.qald.uri;
+package org.aksw.qa.commons.datastructure;
 
-import java.io.Serializable;
+/**
+ * 
+ * @author ricardousbeck
+ *
+ */
+public class GoldEntity {
 
-public class GoldEntity implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6101450152774669016L;
 	public String uri;
 	public String label;
 
 	public GoldEntity(String uri, String label) {
-		
 		this.uri = uri;
 		this.label = label;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -28,7 +28,9 @@ public class GoldEntity implements Serializable {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -48,13 +50,14 @@ public class GoldEntity implements Serializable {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return uri;
 	}
-	
-	
+
 }
