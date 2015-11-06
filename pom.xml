@@ -1,9 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.aksw</groupId>
-	<artifactId>qa-commons</artifactId>
+	<groupId>org.aksw.qa</groupId>
+	<artifactId>commons</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<name>Question Answering (QA) common utilities</name>
+	<description>Question Answering (QA) common utilities to load and store QA datasets and calculate performance measures. It provides also basic structures for building QA systems.</description>
 	<build>
 		<plugins>
 			<plugin>
@@ -15,8 +17,35 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
+
+	<developers>
+		<developer>
+			<name>Ricardo Usbeck</name>
+			<url>http://aksw.org/RicardoUsbeck</url>
+			<organization>AKSW</organization>
+			<organizationUrl>http://aksw.org</organizationUrl>
+		</developer>
+	</developers>
+
+	<packaging>jar</packaging>
+	<!-- Change this to pom if it is a multi-module project -->
+	<!-- <packaging>jar</packaging> -->
+
+	<distributionManagement>
+		<repository>
+			<id>maven.aksw.internal</id>
+			<url>http://maven.aksw.org/archiva/repository/internal</url>
+		</repository>
+		<snapshotRepository>
+			<id>maven.aksw.snapshots</id>
+			<name>AKSW Snapshot Repository</name>
+			<url>http://maven.aksw.org/archiva/repository/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.jena</groupId>
@@ -25,4 +54,6 @@
 			<version>3.0.0</version>
 		</dependency>
 	</dependencies>
+
+
 </project>
