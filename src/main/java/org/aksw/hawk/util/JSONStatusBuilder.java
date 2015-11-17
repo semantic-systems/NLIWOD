@@ -122,6 +122,7 @@ public class JSONStatusBuilder {
 		return null;
 	}
 
+	//FIXME if tree is final, do not use label but the first semantic annotation
 	@SuppressWarnings("unchecked")
 	private static JSONObject recursiveNodeLabel(MutableTreeNode node, JSONObject document) {
 		document.put("label", node.label);

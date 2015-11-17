@@ -36,7 +36,7 @@ public class SingleQuestionPipeline {
 		Pipeline pipeline = new Pipeline();
 
 		Question q = new Question();
-		q.languageToQuestion.put("en", "In which city was the assassin of Martin Luther King born?");
+		q.languageToQuestion.put("en", "Which anti-apartheid activist was born in Mvezo?");
 
 		log.info("Run pipeline on " + q.languageToQuestion.get("en"));
 		List<Answer> answers = pipeline.getAnswersToQuestion(q);
