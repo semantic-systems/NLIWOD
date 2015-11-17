@@ -1,13 +1,13 @@
 How many books in game of thrones	5	number
 How many years did the Hundred Years War last?	116	date
 When was zinc discovered	1746	date
-Who is the ceo of amazon	http://dbpedia.org/page/Jeff_Bezos
+Who is the ceo of amazon	http://dbpedia.org/page/Jeff_Bezos	string
 50 states of america 	Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming	list
 a team lyrics	http://www.lyricsmode.com/lyrics/e/ed_sheeran/a_team_lyrics.html	string
 Adolf hitler became chancellor of Germany in which year?	1933	date
 Apply an epipen 	procedural
 Apply epiduo 	procedural
-baidu china market share 	7.52%	number
+baidu china market share 	?/temporal
 baking chicken wings in the oven 	procedural
 Becoming a athletic trainer 	procedural
 Becoming a bail agent 	procedural
@@ -145,9 +145,9 @@ best movies of 2013
 best movies of all time
 best vacation spots
 bet you can't eat just one
-beyonce national anthem
-Big bang theory theme song
-Bind a book
+beyonce national anthem	https://www.google.de/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CCIQ3ywwAGoVChMI38eG5JCXyQIVg1wPCh1XTgZr&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DqGDH18R7GfA&usg=AFQjCNEpg4l7PFbTuJ6USwNevzjLEA8VPA&sig2=3n-RztsHLvdmrHJ5MyJW8w	string
+Big bang theory theme song	The History Of Everything by The Barenaked Ladies	
+Bind a book	procedural
 Boil potatoes	procedural
 Book a flight	procedural
 boondock saints
@@ -159,15 +159,15 @@ Build a catapult	procedural
 Build a fire 	procedural
 Build a house 	procedural
 calories in reindeer sausage	330	number
-calories in sourdough bread	68	numbers
+calories in sourdough bread	68	number
 calories in vodka
-can a hippopotamus swim?	yes 	string
-can you cry underwater?	yes 	string
+can a hippopotamus swim?	yes 	boolean
+can you cry underwater?	yes 	boolean
 canon eos7d
 Care for a peace lily	procedural
 Carve a pumpkin	procedural
-christina aguilera national anthem
-Christopher Cockerill invented what in 1955?
+christina aguilera national anthem	https://www.google.de/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CCAQtwIwAGoVChMIoaK1kZKXyQIVB54OCh04PQ7V&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Dhj5NPNe3jNU&usg=AFQjCNENG7pDdCF7NjRnHyB_dr4KX7YbPA&sig2=qG3-KxVh8Di5jzqwipJDXA&bvm=bv.107467506,d.ZWU	string
+Christopher Cockerill invented what in 1955?	hovercraft
 Clean a car 	procedural
 Clean a gun 	procedural
 Clean a leek 	procedural
@@ -369,7 +369,7 @@ daffy duck
 daisy duck
 Delete an app 	procedural
 Directions to a hospital
-Do dogs dream	yes 	string
+Do dogs dream	yes 	boolean
 do I look fat
 Do you want to build a snowman
 does anyone care that jimmy cracks corn?
@@ -379,7 +379,7 @@ duchy of amalfi
 Dye hair blonde	procedural
 ellipticals
 Embellish jeans	procedural
-emperor of china
+emperor of china	https://www.google.de/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CCAQFjAAahUKEwiw0NHPkpfJAhUGJQ8KHTKyCrg&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FEmperor_of_China&usg=AFQjCNGH7A5vuInpa29zYl22SEdmVVqx5g&sig2=7V2Bf7q4yj65f07ez1IMCQ&bvm=bv.107467506,d.ZWU	string
 fall short
 famous actors
 famous actresses
@@ -448,23 +448,23 @@ Grow tomatoes	procedural
 healthy food recipes
 helping
 historical places
-Ho to do kegels
+Ho to do kegels	procedural	
 horses vs zebras
 housing interest rates
-How are the detroit tigers doing
-How are the red sox doing
-how big is the bermuda triangle
+How are the detroit tigers doing	?	temporal
+How are the red sox doing	?	temporal
+how big is the bermuda triangle	
 how big is the grand canyon
 how big is the universe
-how can I gain weight
-how can I help victims of the phillipines typhoon
-how can I lose weight
-how can I sell my car fast
-how can I sell my kidney
-how did cory montieth die
-how did michael jackson die?
-how did robin williams die?
-how did whitney houston die?
+how can I gain weight	procedural
+how can I help victims of the phillipines typhoon	procedural
+how can I lose weight	procedural
+how can I sell my car fast	procedural
+how can I sell my kidney	procedural
+how did cory montieth die	toxic combination of heroin and alcohol
+how did michael jackson die?	acute propofol and benzodiazepine intoxication
+how did robin williams die?	suicide
+how did whitney houston die?	heart disease and cocaine use 
 how do animals eat
 how do batteries work
 how do you change a tire
@@ -1452,82 +1452,82 @@ How to tread water	procedural
 How to turn off airbags	procedural
 How to turn on car headlights	procedural
 How to turn on wii	procedural
-How to turn on windshield wipers
-How to unlock steering wheel
-How to upload picture to facebook
-How to use a bidget
-How to use a cane
-How to use a car jack
-How to use a compass
-How to use a copier
-How to use a epipen
-How to use a exclamation mark
-How to use a eyelash curler
-How to use a fax machine
-How to use a fire extinguisher
-How to use a first ai kit
-How to use a flash drive
-How to use a foam roller
-How to use a gopro
-How to use a hand drill
-How to use a hashtag
-How to use a hyphen
-How to use a itunes gift card
-How to use a lighter
-How to use a meat thermometer
-How to use a microscope
-How to use a nebulizer
-How to use a needle threader
-How to use a period
-How to use a plunger
-How to use a protractor
-How to use a qr code
-How to use a question mark
-How to use a razor
-How to use a ruler
-How to use a scanner
-How to use a screw driver
-How to use a semicolon
-How to use a shaver
-How to use a sling
-How to use a slow cooker
-How to use a thermometer
-How to use a vacuum
-How to use a visa gift card
-How to use a voltmeter
-How to use a walker
-How to use a wand curler
-How to use a weed waker
-How to use a xbox 360 controller on pc
-How to use a yoyo
-How to use airdrop
-How to use bluetooth
-How to use chop sticks
-How to use chopsticks
-How to use cruise control
-How to use crutches
-How to use curling wand
-How to use emergency brakes
-How to use emoji
-How to use hair chalk
-How to use nasal spray
-How to use paypal
-How to use pepper spray
-How to use siri
-How to use turn signals
-How to wax a car
-How to whistle
-How to whiten teeth
-how to win the lottery
-how to work out percentages
-How to write a ballad
-How to write a check
-How to write a cinquain
-how to write a cover letter
-How to write a haiku
-How to write a limerick
-How to write a sonnet
-How to youtube
+How to turn on windshield wipers	procedural
+How to unlock steering wheel	procedural
+How to upload picture to facebook	procedural
+How to use a bidget	procedural
+How to use a cane	procedural
+How to use a car jack	procedural
+How to use a compass	procedural
+How to use a copier	procedural
+How to use a epipen	procedural
+How to use a exclamation mark	procedural
+How to use a eyelash curler	procedural
+How to use a fax machine	procedural
+How to use a fire extinguisher	procedural
+How to use a first ai kit	procedural
+How to use a flash drive	procedural
+How to use a foam roller	procedural
+How to use a gopro	procedural
+How to use a hand drill	procedural
+How to use a hashtag	procedural
+How to use a hyphen	procedural
+How to use a itunes gift card	procedural
+How to use a lighter	procedural
+How to use a meat thermometer	procedural
+How to use a microscope	procedural
+How to use a nebulizer	procedural
+How to use a needle threader	procedural
+How to use a period	procedural
+How to use a plunger	procedural
+How to use a protractor	procedural
+How to use a qr code	procedural
+How to use a question mark	procedural
+How to use a razor	procedural
+How to use a ruler	procedural
+How to use a scanner	procedural
+How to use a screw driver	procedural
+How to use a semicolon	procedural
+How to use a shaver	procedural
+How to use a sling	procedural
+How to use a slow cooker	procedural
+How to use a thermometer	procedural
+How to use a vacuum	procedural
+How to use a visa gift card	procedural
+How to use a voltmeter	procedural
+How to use a walker	procedural
+How to use a wand curler	procedural
+How to use a weed waker	procedural
+How to use a xbox 360 controller on pc	procedural
+How to use a yoyo	procedural
+How to use airdrop	procedural
+How to use bluetooth	procedural
+How to use chop sticks	procedural
+How to use chopsticks	procedural
+How to use cruise control	procedural
+How to use crutches	procedural
+How to use curling wand	procedural
+How to use emergency brakes	procedural
+How to use emoji	procedural
+How to use hair chalk	procedural
+How to use nasal spray	procedural
+How to use paypal	procedural
+How to use pepper spray	procedural
+How to use siri	procedural
+How to use turn signals	procedural
+How to wax a car	procedural
+How to whistle	procedural
+How to whiten teeth	procedural
+how to win the lottery	procedural
+how to work out percentages	procedural
+How to write a ballad	procedural
+How to write a check	procedural
+How to write a cinquain	procedural
+how to write a cover letter	procedural
+How to write a haiku	procedural
+How to write a limerick	procedural
+How to write a sonnet	procedural
+How to youtube	procedural
 how was adele discovered
 hows the weather gonna be on Wednesday
 Hows the weather in rome
