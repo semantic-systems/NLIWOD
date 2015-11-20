@@ -511,25 +511,25 @@ How fast can a cheetah run	61mph	number
 How fast can a cop car go
 How fast can a corvette go
 How fast can a coyote run	43mph	number
-How fast can a crocodile swim
-How fast can a deer run
+How fast can a crocodile swim	18mph	number
+How fast can a deer run	35mph	number
 How fast can a dirt bike go
-How fast can a dog run
-How fast can a dolphin swim
-How fast can a donkey run
-How fast can a dragonfly fly
-How fast can a falcon fly
+How fast can a dog run	45mph	number
+How fast can a dolphin swim	25mph	number
+How fast can a donkey run	43mph	number
+How fast can a dragonfly fly	38mph	number
+How fast can a falcon fly	200mph	number
 How fast can a ferrari go
-How fast can a fox run
-How fast can a gazelle run
-How fast can a gorilla run
-How fast can a great white shark swim
-How fast can a greyhound run
-How fast can a helicopter fly
-How fast can a horse run
-How fast can a human run
+How fast can a fox run	30mph	number
+How fast can a gazelle run	60mph	number
+How fast can a gorilla run	25mph	number
+How fast can a great white shark swim	35mph	number
+How fast can a greyhound run	45mph	number
+How fast can a helicopter fly	155mph	number
+How fast can a horse run	40mph	number
+How fast can a human run	27.44 mph	number
 How fast can a jet go
-How fast can a jet ski go
+How fast can a jet ski go	80mph	number
 How fast can a kayak go
 How fast can a kidney stone form
 How fast can a moped go
@@ -537,7 +537,7 @@ How fast can a motor cycle go
 How fast can a mustang go
 How fast can a plane fly
 How fast can a porshe go
-How fast can a rocket go
+How fast can a rocket go	36,5000 mph	number
 How fast can a segway go
 How fast can a telsa go
 How fast can a tornado move
@@ -552,26 +552,26 @@ How fast can an audi r8 go
 How fast can an eagle fly
 How fast can an electric car go
 how fast can butterflies fly
-How high is a baketball hoop?
+How high is a baketball hoop?	10 feet	number
 How I met your mother theme song
-How install a hottub
-how long did the war of 1812 last
-How long do alligators live
+How install a hottub	procedural
+how long did the war of 1812 last	2 years and 8 months	number
+How long do alligators live	50 years	number
 How long do alternators last
-How long do ants live
+How long do ants live	30 years	number
 How long do apples last
 How long do avocados last
 How long do bananas last
 How long do baseball games last
-How long do bats live
-How long do bears live
-How long do bees live
+How long do bats live	39 years	number
+How long do bears live	23 years	number
+How long do bees live	4 years	number
 How long do brake pads last
 How long do canker sores last
 How long do car batteries last
-How long do cats live
-How long do cheetahs live
-How long do chickens live
+How long do cats live	37 years	number
+How long do cheetahs live	15 years	number
+How long do chickens live	20 years	number
 How long do cranes live
 How long do deer live
 How long do dishwashers last
