@@ -20,6 +20,7 @@ public class Analyzer {
 		analyzers.add(new QuestionTypeAnalyzer());
 	}
 
+	// produces a feature instance for each question
 	public Instance analyze(String q) {
 		List<IFeature> tmpList = new ArrayList<IFeature>();
 

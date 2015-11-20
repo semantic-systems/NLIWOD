@@ -13,8 +13,6 @@ public class QuestionTypeAnalyzer implements IAnalyzer {
 
 		// returns List, Resource, Boolean, Date
 		List<IFeature> tmpFeature = new ArrayList<IFeature>();
-		// tmpFeature.add(new QuestionTypeFeature("Date"));
-		// tmpFeature.add(new QuestionTypeFeature("Resource"));
 		tmpFeature.add(QuestionTypeFeature.BOOLEAN);
 
 		return tmpFeature;
