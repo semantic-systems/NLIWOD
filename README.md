@@ -6,5 +6,5 @@ QAnswer: Stefan Ruseti
 SemGraphQA: Romain Beaumont 
 
 The following authors did not answer:
-APEQ:  
+APEQ:  Kan Ren 
 Xser: Xu Kun  
