@@ -22,24 +22,26 @@ public class Analyzer {
 	 *            FastVector(2); fvClassVal.addElement("positive");
 	 *            fvClassVal.addElement("negative");
 	 */
-	public Analyzer(Attribute ClassAttribute) {
+	public Analyzer() {
 
 		analyzers = new ArrayList<IAnalyzer>();
-		// Add analyzers here
+		// !!! ADD ANALYZERS HERE !!!
 		analyzers.add(new QuestionTypeAnalyzer());
 
 		// Declare the feature vector, register their attributes
 		for (IAnalyzer analyzer : analyzers) {
 			fvWekaAttributes.addElement(analyzer.getAttribute());
 		}
-		// add class attribute
-		fvWekaAttributes.addElement(ClassAttribute);
 	}
 
-	// produces a feature instance for each question
+	/**
+	 * 
+	 * @param q
+	 * @return feature vector leaving out a slot for the class variable, i.e., the QA system that can answer this feature vector
+	 */
 	public Instance analyze(String q) {
-
-		Instance tmpInstance = new Instance(fvWekaAttributes.size());
+		// +1 to later add class attribute
+		Instance tmpInstance = new Instance(fvWekaAttributes.size() + 1);
 		// the feature adds itself to the instance
 		for (IAnalyzer analyzer : analyzers) {
 			Attribute attribute = analyzer.getAttribute();
@@ -55,17 +57,10 @@ public class Analyzer {
 	}
 
 	public static void main(String[] args) {
-		// Declare the class attribute along with its values
-		FastVector fvClassVal = new FastVector(2);
-		fvClassVal.addElement("positive");
-		fvClassVal.addElement("negative");
-		Attribute ClassAttribute = new Attribute("theClass", fvClassVal);
 
-		Analyzer analyzer = new Analyzer(ClassAttribute);
+		Analyzer analyzer = new Analyzer();
 		// Create an empty training set
 		Instances isTrainingSet = new Instances("training", analyzer.fvWekaAttributes, 10);
-		// Set class index
-		isTrainingSet.setClass(ClassAttribute);
 
 		// input question
 		String q = "What is the capital of Germany?";
@@ -74,6 +69,6 @@ public class Analyzer {
 		Instance tmp = analyzer.analyze(q);
 
 		// output feature vector
-		System.out.println(tmp);
+		System.out.println(tmp.toString());
 	}
 }
