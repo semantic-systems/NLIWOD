@@ -1,196 +1,196 @@
 How many books in game of thrones	5	number
 How many years did the Hundred Years War last?	116	date
 When was zinc discovered	1746	date
-Who is the ceo of amazon	http://dbpedia.org/page/Jeff_Bezos
+Who is the ceo of amazon	http://dbpedia.org/page/Jeff_Bezos	string
 50 states of america 	Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming	list
 a team lyrics	http://www.lyricsmode.com/lyrics/e/ed_sheeran/a_team_lyrics.html	string
 Adolf hitler became chancellor of Germany in which year?	1933	date
-Apply an epipen 	http://www.epipen.ca/en/about-epipen/how-to-use-epipen	string
-Apply epiduo 	http://www.epiduo.co.uk/all-about-epiduo-gel/how-to-apply/	string
-baidu china market share 	7.52%	number
-baking chicken wings in the oven 	http://www.food.com/recipe/oven-crisp-chicken-wings-40497	string
-Becoming a athletic trainer 	http://caate.net/becoming-an-athletic-trainer/	string
-Becoming a bail agent 	http://www.pbus.com/?3	string
-Becoming a baker 	http://study.com/articles/Become_a_Baker_Career_Information_and_Requirements.html	string
-Becoming a bank teller 	http://study.com/bank_teller_education.html	string
-Becoming a banker 	http://study.com/articles/How_to_Be_a_Banker_Education_and_Career_Roadmap.html	string
-Becoming a barber 	http://study.com/articles/Barber_Educational_Requirements_for_Barbers.html	string
-Becoming a bartender 	http://study.com/articles/Bartender_Salary_Duties_Outlook_and_Requirements.html	string
-Becoming a biologist 	http://learn.org/articles/Biology_Become_a_Biologist_in_5_Steps.html	string
-Becoming a biomedical engineer 	http://www.academicinvest.com/science-careers/biochemistry-careers/how-to-become-a-biomedical-engineer	string
-Becoming a boxer 	http://study.com/articles/Be_a_Boxer_Requirements_Description_and_Outlook.html 	string
-Becoming a buddhist 	http://www.wikihow.com/Become-a-Buddhist	string
-Becoming a cashier 	http://study.com/articles/How_to_Become_a_Cashier_Education_and_Career_Roadmap.html string
-Becoming a chef 	http://study.com/how_to_become_a_chef.html 	string
-Becoming a chemical engineer 	http://study.com/articles/Engineer_-_Chemical_Educational_Requirements_for_Entering_the_Field_of_Chemical_Engineering.html 	string
-Becoming a chiropractor 	http://study.com/become_a_chiropractor.html 	string
-Becoming a civil engineer 	http://study.com/articles/Civil_Engineering_Requirements_for_Becoming_a_Civil_Engineer.html 	string
-Becoming a clown 	http://www.wikihow.com/Be-a-Clown 	string
-Becoming a dentist 	http://study.com/how_to_become_a_dentist.html 	string
-Becoming a dermatologist 	http://study.com/dermatologist_training.html 	string
-Becoming a detective 	http://www.learnhowtobecome.org/detective/ 	string
-Becoming a dietitian 	http://careerplanning.about.com/od/dietitianandnutritionist/tp/how-to-become-a-dietitian.htm 	string
-Becoming a DJ 	http://www.passionatedj.com/guides/how-to-become-a-dj-ultimate-guide/ 	string
-Becoming a doctor 	http://study.com/how_to_become_a_doctor.html 	string
-Becoming a dog trainer 	http://study.com/articles/How_to_Become_a_Licensed_Dog_Trainer_Licensure_and_Career_Roadmap.html 	string
-Becoming a entrepreneur 	http://www.wikihow.com/Become-an-Entrepreneur 	string
-Becoming a fashion designer 	http://www.wikihow.com/Become-a-Fashion-Designer 	string
-Becoming a financial advisor 	http://study.com/financial_advisor_education.html 	string
-Becoming a firefighter 	http://www.firerescue1.com/Firefighter-Training/articles/755562-Becoming-a-firefighter-10-must-do-things/	 string
-Becoming a flight attendant 	http://study.com/flight_attendant.html 	string
-Becoming a game maker 	http://www.wikihow.com/Become-a-Game-Designer 	string
-Becoming a general contractor 	http://study.com/how_to_become_a_general_contractor.html 	string
-Becoming a general sergeon 	http://study.com/articles/General_Surgeon_Education_Requirements_and_Career_Information.html 	string
-Becoming a Geneticists 	http://study.com/articles/Geneticist_Career_Information_and_Education_Requirements.html 	string
-Becoming a graphic designer 	http://study.com/articles/Graphic_Designer_Educational_Requirements_for_a_Career_in_Graphic_Design.html 	string
-Becoming a guardian 	http://guardianshipcert.org/questions_how_to_become_cert.cfm 	string
-Becoming a guidance counselor 	https://www.osca.ca/en/about-us/osca/how-to-become-a-guidance-counsellor.html 	string
-Becoming a gunsmith 	http://study.com/articles/How_to_Become_a_Gunsmith_Education_and_Career_Roadmap.html 	string
-Becoming a hair dresser 	http://study.com/articles/Hairdressing_Career_Information_Becoming_a_Hairdresser.html 	string
-Becoming a hair stylist 	http://careerplanning.about.com/od/cosmetologist/tp/how-to-become-a-hairstylist.htm 	string
-Becoming a helicopter pilot 	http://autorotate.com/PHPAInfo/BecomingAHelicopterPilot.aspx 	string
-Becoming a home inspector 	http://www.homeinspector.org/Become-a-home-inspector#6 	string
-Becoming a journalist 	http://study.com/journalist_education.html 	string
-Becoming a judge 	http://study.com/become_a_judge.html 	string
-Becoming a lawyer 	http://www.wikihow.com/Become-a-Lawyer-in-the-United-States 	string
-Becoming a librarian 	http://www.wikihow.com/Become-a-Librarian 	string
-Becoming a lifeguard 	http://www.lifesavingsociety.com/lifeguarding/how-to-become-a-lifeguard.aspx 	string
-Becoming a magician 	http://www.falseshuffle.com/articles/how-to-be-a-magician 	string
-Becoming a makeup artist 	http://study.com/articles/Become_a_Certified_Make-Up_Artist_Certification_and_Career_Roadmap.html 	string
-Becoming a massage therapist 	https://www.amtamassage.org/professional_development/starting.html 	string
-Becoming a mechanical engineer 	http://study.com/mechanical_engineer.html 	string
-Becoming a medical assistant 	http://study.com/articles/Medical_Assistants_Career_Information_and_Requirements_for_Becoming_a_Medical_Assistant.html 	string
-Becoming a model 	http://www.wikihow.com/Become-a-Model 	string
-Becoming a monk 	https://en.wikipedia.org/wiki/Monk 	string
-Becoming a nun 	http://anunslife.org/resources/how-to-become-a-catholic-nun 	string
-Becoming a nurse 	http://www.learnhowtobecome.org/nurse/ 	string
-Becoming a nutritionist 	http://www.learnhowtobecome.org/nutritionist/ 	string
-Becoming a obgyn 	http://study.com/become_an_obgyn.html 	string
-Becoming a paralegal 	http://www.howtobecomeaparalegal.com/#view 	string
-Becoming a paramedic 	http://www.learnhowtobecome.org/paramedic-emt/ 	string
-Becoming a pediatric nurse 	http://nursewithoutborders.org/becoming-a-pediatric-nurse/ 	string
-Becoming a personal trainer 	http://study.com/training_requirements_for_personal_trainer.html 	string
-Becoming a pharmacist 	http://www.learnhowtobecome.org/pharmacist/ 	string
-Becoming a philosopher 	http://www.wikihow.com/Become-a-Philosopher 	string
-Becoming a photographer 	http://study.com/what_education_do_you_need_to_become_a_photographer.html 	string
-Becoming a photojournalist
-Becoming a pilot
-Becoming a police officer
-Becoming a psychiatrist
-Becoming a psychologist
-Becoming a quaker
-Becoming a radiologist
-Becoming a real estate agent
-Becoming a referee
-Becoming a school counselor
-Becoming a social worker
-Becoming a software developer
-Becoming a software engineer
-Becoming a sports agent
-Becoming a sports broadcaster
-Becoming a sports photographer
-Becoming a sports writer
-Becoming a stockbroker
-Becoming a surgeon
-Becoming a taxi driver
-Becoming a teacher
-Becoming a therapist
-Becoming a truck driver
-Becoming a vegetarian
-Becoming a vetrinarian
-Becoming a web designer
-Becoming a web developer
-Becoming a wedding planner
-Becoming a welder
-Becoming a wrestler
-Becoming a xray tech
-Becoming a zookeeper
-Becoming an actor
-Becoming an actress
-Becoming an aerospace engineer
-Becoming an air marshal
-Becoming an airline pilot
-Becoming an allergist
-Becoming an anesthesiologist
-Becoming an app developer
-Becoming an architect
-Becoming an art director
-Becoming an artist
-Becoming an astronaut
-Becoming an astronomer
-Becoming an attorney
-Becoming an author
-Becoming an economist
-Becoming an electrical engineer
-Becoming an electrician
-Becoming an EMT
-Becoming an engineer
-Becoming an enrolled agent
-Becoming an epidemiologist
-Becoming an eskimo
-Becoming an esl teacher
-Becoming an esthetician
-Becoming an eye surgeon
-Becoming an insurance agent
-Becoming an interpreter
-Becoming an occupational therapist
-Becoming an oceanographer
-Becoming an optometrist
-Becoming an ordained minister
-Becoming an orthodontist
-Becoming an uber driver
-Becoming an umpire
+Apply an epipen 	procedural
+Apply epiduo 	procedural
+baidu china market share 	?/temporal
+baking chicken wings in the oven 	procedural
+Becoming a athletic trainer 	procedural
+Becoming a bail agent 	procedural
+Becoming a baker 	procedural
+Becoming a bank teller 	procedural
+Becoming a banker 	procedural
+Becoming a barber 	procedural
+Becoming a bartender 	procedural
+Becoming a biologist 	procedural
+Becoming a biomedical engineer 	procedural
+Becoming a boxer 	procedural
+Becoming a buddhist 	procedural
+Becoming a cashier 	procedural
+Becoming a chef 	procedural
+Becoming a chemical engineer 	procedural
+Becoming a chiropractor 	procedural
+Becoming a civil engineer 	procedural
+Becoming a clown 	procedural
+Becoming a dentist 	procedural
+Becoming a dermatologist 	procedural
+Becoming a detective 	procedural
+Becoming a dietitian 	procedural
+Becoming a DJ 	procedural
+Becoming a doctor 	procedural
+Becoming a dog trainer 	procedural
+Becoming a entrepreneur 	procedural
+Becoming a fashion designer 	procedural
+Becoming a financial advisor 	procedural
+Becoming a firefighter 	procedural
+Becoming a flight attendant 	procedural
+Becoming a game maker 	procedural
+Becoming a general contractor 	procedural
+Becoming a general sergeon 	procedural
+Becoming a Geneticists 	procedural
+Becoming a graphic designer 	procedural
+Becoming a guardian 	procedural
+Becoming a guidance counselor 	procedural
+Becoming a gunsmith 	procedural
+Becoming a hair dresser 	procedural
+Becoming a hair stylist 	procedural
+Becoming a helicopter pilot 	procedural
+Becoming a home inspector 	procedural
+Becoming a journalist 	procedural
+Becoming a judge 	procedural
+Becoming a lawyer 	procedural
+Becoming a librarian 	procedural
+Becoming a lifeguard 	procedural
+Becoming a magician 	procedural
+Becoming a makeup artist 	procedural
+Becoming a massage therapist 	procedural
+Becoming a mechanical engineer procedural
+Becoming a medical assistant 	procedural
+Becoming a model 	procedural
+Becoming a monk 	procedural
+Becoming a nun 	procedural
+Becoming a nurse 	procedural
+Becoming a nutritionist 	procedural
+Becoming a obgyn 	procedural
+Becoming a paralegal 	procedural
+Becoming a paramedic 	procedural
+Becoming a pediatric nurse 	procedural
+Becoming a personal trainer	procedural
+Becoming a pharmacist	procedural
+Becoming a philosopher	procedural
+Becoming a photographer	procedural
+Becoming a photojournalist	procedural
+Becoming a pilot 	procedural
+Becoming a police officer	procedural
+Becoming a psychiatrist	procedural
+Becoming a psychologist	procedural
+Becoming a quaker	procedural
+Becoming a radiologist	procedural
+Becoming a real estate agent	procedural
+Becoming a referee	procedural
+Becoming a school counselor	procedural
+Becoming a social worker	procedural
+Becoming a software developer	procedural
+Becoming a software engineer	procedural
+Becoming a sports agent	procedural
+Becoming a sports broadcaster	procedural
+Becoming a sports photographer	procedural
+Becoming a sports writer	procedural
+Becoming a stockbroker	procedural
+Becoming a surgeon	procedural
+Becoming a taxi driver 	procedural
+Becoming a teacher	procedural
+Becoming a therapist	procedural
+Becoming a truck driver 	procedural
+Becoming a vegetarian	procedural
+Becoming a vetrinarian 	procedural
+Becoming a web designer	procedural
+Becoming a web developer	procedural
+Becoming a wedding planner	procedural
+Becoming a welder	procedural
+Becoming a wrestler	procedural
+Becoming a xray tech 	procedural
+Becoming a zookeeper	procedural
+Becoming an actor 	procedural
+Becoming an actress 	procedural
+Becoming an aerospace engineer	procedural
+Becoming an air marshal	procedural
+Becoming an airline pilot 	procedural
+Becoming an allergist	procedural
+Becoming an anesthesiologist	procedural
+Becoming an app developer	procedural
+Becoming an architect	procedural
+Becoming an art director 	procedural
+Becoming an artist 	procedural
+Becoming an astronaut	procedural
+Becoming an astronomer	procedural
+Becoming an attorney	procedural
+Becoming an author	procedural
+Becoming an economist	procedural
+Becoming an electrical engineer	procedural
+Becoming an electrician	procedural
+Becoming an EMT	procedural
+Becoming an engineer	procedural
+Becoming an enrolled agent	procedural
+Becoming an epidemiologist	procedural
+Becoming an eskimo	procedural
+Becoming an esl teacher	procedural
+Becoming an esthetician	procedural
+Becoming an eye surgeon	procedural
+Becoming an insurance agent	procedural
+Becoming an interpreter	procedural
+Becoming an occupational therapist	procedural
+Becoming an oceanographer	procedural
+Becoming an optometrist	procedural
+Becoming an ordained minister 	procedural
+Becoming an orthodontist	procedural
+Becoming an uber driver 	procedural
+Becoming an umpire	procedural
 best hard rock albums
 best movies of 2013
 best movies of all time
 best vacation spots
 bet you can't eat just one
-beyonce national anthem
-Big bang theory theme song
-Bind a book
-Boil potatoes
-Book a flight
+beyonce national anthem	https://www.google.de/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CCIQ3ywwAGoVChMI38eG5JCXyQIVg1wPCh1XTgZr&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DqGDH18R7GfA&usg=AFQjCNEpg4l7PFbTuJ6USwNevzjLEA8VPA&sig2=3n-RztsHLvdmrHJ5MyJW8w	string
+Big bang theory theme song	The History Of Everything by The Barenaked Ladies	
+Bind a book	procedural
+Boil potatoes	procedural
+Book a flight	procedural
 boondock saints
 boston marathon
 Breaking bad theme song
 bridges in spain
-Build a bike
-Build a catapult
-Build a fire
-Build a house
+Build a bike 	procedural
+Build a catapult	procedural
+Build a fire 	procedural
+Build a house 	procedural
 calories in reindeer sausage	330	number
-calories in sourdough bread	68	numbers
+calories in sourdough bread	68	number
 calories in vodka
-can a hippopotamus swim?	yes 	string
-can you cry underwater?	yes 	string
+can a hippopotamus swim?	yes 	boolean
+can you cry underwater?	yes 	boolean
 canon eos7d
-Care for a peace lily
-Carve a pumpkin
-christina aguilera national anthem
-Christopher Cockerill invented what in 1955?
-Clean a car
-Clean a gun
-Clean a leek
-Clean a microwave
-Clean CD
-Clean contacts
-Clean dishwasher
-Clean dog ears
-Clean dryer vent
-Clean glasses
-Clean granite
-Clean grill
-Clean laminate floors
-Clean leather
-Clean leather boots
-Clean out a pool
-Clean shoes
-Clean silver
-Clean sterling silver jewelry
-Clean sterling silver jewlery
-Clean white canvas shoes
-Clean white sneakers
-Clean white sneakers with toothpaste
+Care for a peace lily	procedural
+Carve a pumpkin	procedural
+christina aguilera national anthem	https://www.google.de/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CCAQtwIwAGoVChMIoaK1kZKXyQIVB54OCh04PQ7V&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Dhj5NPNe3jNU&usg=AFQjCNENG7pDdCF7NjRnHyB_dr4KX7YbPA&sig2=qG3-KxVh8Di5jzqwipJDXA&bvm=bv.107467506,d.ZWU	string
+Christopher Cockerill invented what in 1955?	hovercraft
+Clean a car 	procedural
+Clean a gun 	procedural
+Clean a leek 	procedural
+Clean a microwave	procedural
+Clean CD 	procedural
+Clean contacts	procedural
+Clean dishwasher 	procedural
+Clean dog ears 	procedural
+Clean dryer vent 	procedural
+Clean glasses	procedural
+Clean granite	procedural
+Clean grill 	procedural
+Clean laminate floors 	procedural
+Clean leather	procedural
+Clean leather boots	procedural
+Clean out a pool 	procedural
+Clean shoes 	procedural
+Clean silver	 procedural
+Clean sterling silver jewlry 	procedural
+Clean sterling silver jewlery	procedural
+Clean white canvas shoes 	procedural
+Clean white sneakers	procedural
+Clean white sneakers with toothpaste	procedural
 Compare airplanes and helicopters
 Compare akita and rottweiler
 Compare aligators and crocodiles
@@ -359,27 +359,27 @@ Convert feet to miles
 Convert inches to yards
 Convert ounces to mililiters
 Convert tablespoons to teaspoons
-Cook lobster
-Curl hair with curling iron
-Cut a pineapple
-Cut a pomergranate
-Cut back hydrangea
-Cut dogs nails
+Cook lobster 	procedural
+Curl hair with curling iron 	procedural
+Cut a pineapple	procedural
+Cut a pomergranate	procedural
+Cut back hydrangea 	procedural
+Cut dogs nails	procedural
 daffy duck
 daisy duck
-Delete an app
+Delete an app 	procedural
 Directions to a hospital
-Do dogs dream	yes 	string
+Do dogs dream	yes 	boolean
 do I look fat
 Do you want to build a snowman
 does anyone care that jimmy cracks corn?
 does listening to classical music make you smarter
 donald duck
 duchy of amalfi
-Dye hair blonde
+Dye hair blonde	procedural
 ellipticals
-Embellish jeans
-emperor of china
+Embellish jeans	procedural
+emperor of china	https://www.google.de/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CCAQFjAAahUKEwiw0NHPkpfJAhUGJQ8KHTKyCrg&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FEmperor_of_China&usg=AFQjCNGH7A5vuInpa29zYl22SEdmVVqx5g&sig2=7V2Bf7q4yj65f07ez1IMCQ&bvm=bv.107467506,d.ZWU	string
 fall short
 famous actors
 famous actresses
@@ -390,146 +390,146 @@ famous singers
 female politicians
 File for unemployment
 find me dog obedience lessons around here
-Fix a flat tire
-Fix a fuse box
-Fix a zipper
-Fix an alternator
-Fix an umbrella
-Fix broken bike chain
-Fix leaky faucet
-Fix scratch on glasses
-Fold a pocket square
-Fold a t-shirt
-Get rid of a hickey
-Get rid of acne
-Get rid of bad breath
-Get rid of bloating
-Get rid of canker sores
-Get rid of cockroaches
-Get rid of cold
-Get rid of cold sore
-Get rid of dandruff
-Get rid of dry cough
-Get rid of dust mites
-Get rid of ear infection
-Get rid of eczema
-Get rid of flies
-Get rid of garlic breath
-Get rid of gnats
-Get rid of greasy hair
-Get rid of hangover
-Get rid of heartburn
-Get rid of hiccups
-Get rid of hives
-Get rid of kidney stones
-Get rid of mold
-Get rid of mucus
-Get rid of nausea
-Get rid of nits
-Get rid of oily hair
-Get rid of oily skin
-Get rid of onion breath
-Get rid of pimple scars
-Get rid of pink eye
-Get rid of puffy eyes
-Get rid of stink bugs
-Get rid of termites
-Get rid of the flu
-Get rid of wart
-Get rid of wood peckers
-Graft two trees
-Grow a pineapple
-Grow avocado
-Grow basil
-Grow coffee
-Grow grass
-Grow Strawberries
-Grow tomatoes
+Fix a flat tire 	procedural
+Fix a fuse box 	procedural
+Fix a zipper	procedural
+Fix an alternator 	procedural
+Fix an umbrella	procedural
+Fix broken bike chain 	procedural
+Fix leaky faucet	procedural
+Fix scratch on glasses	procedural
+Fold a pocket square 	procedural
+Fold a t-shirt	procedural
+Get rid of a hickey	procedural
+Get rid of acne 	procedural
+Get rid of bad breath	procedural
+Get rid of bloating	procedural
+Get rid of canker sores 	procedural
+Get rid of cockroaches	procedural
+Get rid of cold 	procedural
+Get rid of cold sore 	procedural
+Get rid of dandruff	procedural
+Get rid of dry cough	procedural
+Get rid of dust mites 	procedural
+Get rid of ear infection	procedural
+Get rid of eczema	procedural
+Get rid of flies 	procedural
+Get rid of garlic breath	procedural
+Get rid of gnats	procedural
+Get rid of greasy hair 	procedural
+Get rid of hangover	procedural
+Get rid of heartburn	procedural
+Get rid of hiccups	procedural
+Get rid of hives	procedural
+Get rid of kidney stones 	procedural
+Get rid of mold 	procedural
+Get rid of mucus	procedural
+Get rid of nausea	procedural
+Get rid of nits 	procedural
+Get rid of oily hair 	procedural
+Get rid of oily skin 	procedural
+Get rid of onion breath	procedural
+Get rid of pimple scars	procedural
+Get rid of pink eye 	procedural
+Get rid of puffy eyes 	procedural
+Get rid of stink bugs	procedural
+Get rid of termites	procedural
+Get rid of the flu 	procedural
+Get rid of wart 	procedural
+Get rid of wood peckers	procedural
+Graft two trees 	procedural
+Grow a pineapple	procedural
+Grow avocado 	procedural
+Grow basil	procedural
+Grow coffee 	procedural
+Grow grass	procedural
+Grow Strawberries 	procedural
+Grow tomatoes	procedural
 healthy food recipes
 helping
 historical places
-Ho to do kegels
+Ho to do kegels	procedural	
 horses vs zebras
 housing interest rates
-How are the detroit tigers doing
-How are the red sox doing
-how big is the bermuda triangle
+How are the detroit tigers doing	?	temporal
+How are the red sox doing	?	temporal
+how big is the bermuda triangle	
 how big is the grand canyon
 how big is the universe
-how can I gain weight
-how can I help victims of the phillipines typhoon
-how can I lose weight
-how can I sell my car fast
-how can I sell my kidney
-how did cory montieth die
-how did michael jackson die?
-how did robin williams die?
-how did whitney houston die?
+how can I gain weight	procedural
+how can I help victims of the phillipines typhoon	procedural
+how can I lose weight	procedural
+how can I sell my car fast	procedural
+how can I sell my kidney	procedural
+how did cory montieth die	toxic combination of heroin and alcohol
+how did michael jackson die?	acute propofol and benzodiazepine intoxication
+how did robin williams die?	suicide
+how did whitney houston die?	heart disease and cocaine use 
 how do animals eat
 how do batteries work
-how do you change a tire
-how do you change an oil filter
-How do you get a hole in one
-how do you get a patent?
-how do you get head lice?
-how do you get pink eye
-how do you get rid of ants
-How do you kill a vampire
-how do you make a black russian
-How do you make the color green
-How do you make the color orange
-How do you make the color purple
-How do you play tag
-how do you prevent a heart attack
-how do you treat a bruise
-how do you treat cancer
-how do you treat diabetes
-how do you treat warts
-how does a bill become a law
-how does uber work
-how far away is the sun
-how far can a frog leap
-how far in debt is detroit
-How far is it from boston to alaska
-How far is it from framingham to natick
-How far is it from michigan to massachusetts
-How far is it from natick to cape cod
-How far is it from new york city to las vegas
-How far is it from russia to japan
-How far is rome from florence
-How far is the north pole to the south pole
-How fast can a bear run
-How fast can a bicycle go
-How fast can a bird fly
-How fast can a bugatti go
-How fast can a bull run
-How fast can a bullet travel
-How fast can a butterfly fly
+how do you change a tire procedural
+how do you change an oil filter	procedural
+How do you get a hole in one	procedural
+how do you get a patent?	procedural
+how do you get head lice?	procedural
+how do you get pink eye	procedural
+how do you get rid of ants	procedural
+How do you kill a vampire	procedural
+how do you make a black russian	procedural
+How do you make the color green	procedural
+How do you make the color orange	procedural
+How do you make the color purple	procedural
+How do you play tag	procedural
+how do you prevent a heart attack	procedural
+how do you treat a bruise	procedural
+how do you treat cancer	procedural
+how do you treat diabetes	procedural
+how do you treat warts	procedural
+how does a bill become a law	procedural
+how does uber work	procedural
+how far away is the sun	93,000,000 miles	number
+how far can a frog leap	7 feet	number
+how far in debt is detroit	?	temporal
+How far is it from boston to alaska	3310 miles	number
+How far is it from framingham to natick	4.2 miles	number
+How far is it from michigan to massachusetts	726 miles	number
+How far is it from natick to cape cod	84 miles	number
+How far is it from new york city to las vegas	2230 miles	number
+How far is it from russia to japan	2257 miles	number
+How far is rome from florence	144 miles	number
+How far is the north pole to the south pole	12416 miles	number
+How fast can a bear run	40mph	number
+How fast can a bicycle go	167mph	number
+How fast can a bird fly	200mph	number
+How fast can a bugatti go	268mph	number
+How fast can a bull run	60mph	number
+How fast can a bullet travel	715m/s	number
+How fast can a butterfly fly	48,4km/h	number
 How fast can a camaro go
-How fast can a camel run
-How fast can a cheetah run
+How fast can a camel run	60mph	number
+How fast can a cheetah run	61mph	number
 How fast can a cop car go
 How fast can a corvette go
-How fast can a coyote run
-How fast can a crocodile swim
-How fast can a deer run
+How fast can a coyote run	43mph	number
+How fast can a crocodile swim	18mph	number
+How fast can a deer run	35mph	number
 How fast can a dirt bike go
-How fast can a dog run
-How fast can a dolphin swim
-How fast can a donkey run
-How fast can a dragonfly fly
-How fast can a falcon fly
+How fast can a dog run	45mph	number
+How fast can a dolphin swim	25mph	number
+How fast can a donkey run	43mph	number
+How fast can a dragonfly fly	38mph	number
+How fast can a falcon fly	200mph	number
 How fast can a ferrari go
-How fast can a fox run
-How fast can a gazelle run
-How fast can a gorilla run
-How fast can a great white shark swim
-How fast can a greyhound run
-How fast can a helicopter fly
-How fast can a horse run
-How fast can a human run
+How fast can a fox run	30mph	number
+How fast can a gazelle run	60mph	number
+How fast can a gorilla run	25mph	number
+How fast can a great white shark swim	35mph	number
+How fast can a greyhound run	45mph	number
+How fast can a helicopter fly	155mph	number
+How fast can a horse run	40mph	number
+How fast can a human run	27.44 mph	number
 How fast can a jet go
-How fast can a jet ski go
+How fast can a jet ski go	80mph	number
 How fast can a kayak go
 How fast can a kidney stone form
 How fast can a moped go
@@ -537,7 +537,7 @@ How fast can a motor cycle go
 How fast can a mustang go
 How fast can a plane fly
 How fast can a porshe go
-How fast can a rocket go
+How fast can a rocket go	36,5000 mph	number
 How fast can a segway go
 How fast can a telsa go
 How fast can a tornado move
@@ -552,26 +552,26 @@ How fast can an audi r8 go
 How fast can an eagle fly
 How fast can an electric car go
 how fast can butterflies fly
-How high is a baketball hoop?
+How high is a baketball hoop?	10 feet	number
 How I met your mother theme song
-How install a hottub
-how long did the war of 1812 last
-How long do alligators live
+How install a hottub	procedural
+how long did the war of 1812 last	2 years and 8 months	number
+How long do alligators live	50 years	number
 How long do alternators last
-How long do ants live
+How long do ants live	30 years	number
 How long do apples last
 How long do avocados last
 How long do bananas last
 How long do baseball games last
-How long do bats live
-How long do bears live
-How long do bees live
+How long do bats live	39 years	number
+How long do bears live	23 years	number
+How long do bees live	4 years	number
 How long do brake pads last
 How long do canker sores last
 How long do car batteries last
-How long do cats live
-How long do cheetahs live
-How long do chickens live
+How long do cats live	37 years	number
+How long do cheetahs live	15 years	number
+How long do chickens live	20 years	number
 How long do cranes live
 How long do deer live
 How long do dishwashers last
@@ -898,636 +898,636 @@ How tall is the jefferson memorial building
 how tall is the statue of liberty
 how tall is the tallest nba player
 How tall is the tallest roller coaster
-How to adress a letter
-How to apply eyeliner
-How to apply for a credit card
-How to apply for a grant
-How to apply for a green card
-How to apply for a gun permit
-How to apply for a hunting license
-How to apply for a job
-How to apply for a loan
-How to apply for a mortage
-How to apply for a new social security number
-How to apply for a passport
-How to apply for a patent
-How to apply for a student loan
-How to apply for marriage license
-How to apply to college
-How to appy for a copy right
-How to be a girl scout
-How to bleach a shirt
-How to blow a bubble
-How to blow dry hair
-How to blow up a balloon
-How to blow up a picture
-How to blow your nose
-How to boil potatoes
-how to braid hair
-How to break a coconut
-How to break an apartment lease
-How to brush your teeth
-How to build a boat
-How to build a box
-How to build a snowman
-How to build a telsa coil
-How to buy a stock
-How to calculate GPA
-How to calculate heartrate
-How to calculate lean body mass
-How to call voicemail
-How to calulate BMI
-how to care for spider bite
-How to carve a chicken
-How to carve a ham
-How to carve a pumpkin
-How to carve a turkey
-How to carve wood
-How to change a car battery
-How to change a diaper
-How to change a light switch
-How to change lanes
-How to check balance on itunes
-How to check blind spots
-How to check oil
-How to check transmition oil
-How to check your credit score
-How to cite a paper
-How to clean a dryer
-How to clean a mirror
-How to clean an iphone
-how to clean dishwasher
-How to clean laminate floors
-How to clean makeup brushes
-How to clean piano keys
-How to clean shingles
-How to clean suede
-How to clean sunbrella fabric
-How to clean teeth with braces
-How to clean uggs
-How to clean windows
-How to connect computer to tv
-How to connect computer to tv hdmi
-How to connect laptop to tv
-How to copy a key
-How to crack your back
-How to create a bar graph
-How to create a chart in excel
-How to create a distribution list in outlook
-How to create a drop down list in excel
-How to create a folder on ipad
-How to create a folder on iphone
-How to create a form in word
-How to create a google doc
-How to create a group in outlook
-How to create a hotspot
-How to create a hyperlink
-How to create a macro
-How to create a minecraft server
-How to create a new apple id
-How to create a pivot table
-How to create a playlist in itunes
-How to create a query on access
-How to create a restore point
-How to create a youtube channel
-How to create a zip folder
-How to create an app
-How to create an instagram
-How to create an itunes account
-How to create barcodes
-How to create beach waves
-How to create eletricty
-How to create event on facebook
-How to create icons
-How to create infographics
-How to create iso
-How to create itunes account
-How to create jpeg
-How to create oxygen
-How to crop a picture
-how to cut hair
-How to delete facebook
-How to delete gmail account
-How to delete twitter
-How to deposit a check
-How to disarm someone
-How to distill water
-How to dive into a pool
-How to divide fractions
-How to do a back flip
-how to do a fishtail braid
-How to do a flip
-How to do a handstand
-How to do a smokey eye
-How to do a sock bun
-How to do bantu knots
-How to do calligraphy
-How to do citations
-How to do crunches
-How to do dips
-How to do donuts
-how to do elimination
-How to do eyebrows
-How to do footnotes
-How to do french tips
-How to do fun loom
-How to do in text citations
-How to do inverse functions
-how to do jacobs ladder
-How to do javascript
-How to do jumping jacks
-How to do laundry
-How to do leg extensions
-How to do logarithms
-How to do loose curls
-How to do lunges
-How to do makeup
-How to do mla format
-How to do needlepoint
-How to do negative on snapchat
-How to do ombre hair
-How to do origami
-How to do paper mache
-How to do percentages
-How to do pin curls
-How to do puchups
-How to do pull ups
-How to do quadratic formula
-How to do rainbow loom
-How to do reverse crunches
-How to do russian twist
-How to do squats
-How to do taxes
-How to donate a car
-How to donate a heart
-How to donate a kidney
-How to donate a lung
-How to donate blood
-How to donate body to science
-How to donate bone marrow
-How to donate hair
-How to donate plasma
-How to drink absinthe
-How to drive a boat
-How to drive a manual
-How to drive a motor cycle
-How to drive standard
-How to dry wet shoes
-How to duck dive
-how to dye hair
-how to eat sushi
-How to edit a pdf
-How to enable cookies
-How to escape quicksand
-How to establish paternity
-How to file for divorce
-How to file taxes
-How to fire someone
-How to fix a collapsed lung
-How to fix a doorknob
-How to fix a hole in the wall
-How to fix a mouse
-How to fix a paper jam
-How to fix a toilet
-How to fix bad credit
-How to fix bad posture
-How to fix blinds
-How to fix chipped tooth
-How to fix christmas lights
-How to fix credit score
-How to fix damaged hair
-How to fix drywall
-How to fix frozen iphone
-How to fix frozen pipes
-How to fix hole in wall
-How to fix jaw pain
-How to fix knee pain
-How to fix leaky faucet
-How to fix microwave
-How to fix my credit
-How to fix oil leak
-How to fix overbite
-How to fix runners knee
-How to fix running toilet
-How to fix stiff neck
-How to fix water damaged iphone
-How to float
-How to fold clothes
-How to format an essay
-how to frame a picture
-How to french braid
-How to generate electricity
-how to get away with murder
-How to get boaters license
-How to get car inspected
-How to get divorced
-How to get drivers license
-How to get into college
-How to get married
-How to get motorcycle license
-How to get rid of ants
-how to get rid of canker sores
-How to get rid of fleas
-How to get rid of fruit flies
-how to get rid of garlic breath
-How to get rid of gas
-how to get rid of hives
-How to get rid of lice
-How to get rid of mold
-how to get rid of pink eye
-How to get rid of wrinkles
-How to get water out of ear
-How to golf
-How to grease a pan
-How to grill corn
-How to grow flowers
-How to grow garlic
-How to gut a fish
-How to hack a facebook
-How to hack wifi
-How to hammer curl
-How to hang a hammock
-How to hang a picture
-How to hang up a command hook
-How to heal a papercut
-How to heal acne scars
-How to heal shin spints
-How to heal swollen glands
-how to help runners knee
-How to help someone having a heart attack
-How to help someone having a seizure
-How to help someone having a stroke
-How to help someone having an allergic reaction
-How to hold a baby
-How to hold a catfish
-How to hold a football
-How to hula hoop
-How to install a car battery
-How to install a fan
-How to install a font
-How to install a french drain
-How to install a fuel filter
-How to install a inground pool
-How to install a kitchen faucet
-How to install a mailbox
-How to install a router
-How to install a texture pack
-How to install a thermostat
-How to install a toilet
-How to install a water heater
-How to install a wireless printer
-How to install an exterior door
-How to install minecraft mods
-How to install windows 7
-How to juggle
-How to juice a lemon
-How to jump start a car
-How to kayak
-How to knit
-How to learn how to type
-How to lift weights
-How to line a skirt
-How to make a battery
-How to make a bouquet
-How to make a dream catcher
-How to make a dress
-How to make a pandora account
-How to make a pie chart
-How to make a reservation at apple store
-How to make a shadow box
-How to make a spotify playlist
-How to make a water balloon
-How to make coasters
-How to make curtains
-How to make distilled water
-How to make english tea
-How to make fondant
-How to make fried pickles
-How to make frosting
-How to make goulash
-How to make gravy
-How to make hair grow fast
-How to make lemon zest
-How to make lipstick
-How to make lotion
-How to make pasta salad
-How to make perfume
-How to make playdough
-How to make sand
-How to make usb bootable
-How to make waffles
-How to make wax
-How to make wine
-How to measure inseam
-How to measure ring size
-How to meditate
-How to melt cheese
-How to melt chocolate
-How to melt snow
-How to melt sugar
-how to mend a broken heart
-How to merge on to a highway
-How to merge pdf files
-How to moonwalk
-How to multiply decimals
-How to multiply fraction
-How to name acids
-How to name bases
-How to open a bottle of wine
-How to open a can
-How to open a can of soda
-How to open a clam
-How to open a coconut
-How to open a jar
-How to open a jar that is stuck
-How to open a pistachio
-How to open a port
-How to open a wps file
-How to open an umbrella
-How to open the hood of a car
-How to paint nails
-How to parallel park
-How to peel a banana
-How to play chess
-How to play tennis
-How to play the clarinet
-How to play the game of life
-How to polish silver
-how to pray
-How to predict height
-How to predict hurricane
-How to predict life exectancy
-How to predict ovulation
-How to predict the weather
-How to predict tornado
-How to prevent a hangover
-How to prevent acid reflex
-How to prevent arthritis
-How to prevent bad breath
-How to prevent balding
-How to prevent blackheads
-How to prevent blood clots
-How to prevent cancer
-How to prevent cavities
-How to prevent diabetes
-How to prevent dry socket
-How to prevent dust
-How to prevent eczema
-How to prevent foot cramps
-How to prevent frizzy hair
-How to prevent frostbite
-How to prevent frozen pipes
-How to prevent global warming
-How to prevent greasy hair
-How to prevent hair loss
-How to prevent hangnails
-How to prevent headaches
-How to prevent heartburn
-How to prevent heat rash
-How to prevent high blood pressure
-How to prevent icicles
-How to prevent identity theft
-How to prevent jeans from shrinking
-How to prevent jet lag
-How to prevent laptop from overheating
-How to prevent leukemia
-How to prevent lice
-How to prevent low blood sugar
-How to prevent motion sickness
-How to prevent muscle cramps
-How to prevent muscle soreness
-How to prevent nausea
-How to prevent osteoporosis
-How to prevent over eating
-How to prevent pink eye
-How to prevent pop ups
-How to prevent pregnancy
-How to prevent salmonella
-How to prevent SIDS
-How to prevent snoring
-How to prevent spider veins
-How to prevent split ends
-How to prevent ulcers
-How to prevent weeds
-How to prevent wrinkles
-How to print a document
-How to propagate a rose
-How to propagate cactus
-How to propose to someone
-How to publish a book
-How to put air in a tire
-How to put gas in a car
-How to put gas in motorcycle
-How to put in ear drops
-How to put in earrings
-How to put in eye contacts
-How to put in eye drops
-How to put in eye ointment
-How to put on a bandaid
-How to put on seatbelt
-How to put up a fence
-How to put up drywall
-How to put up kitchen backsplash
-How to put up kitchen cabinets
-How to put up out of office in outlook
-How to put up wallpaper
-how to quit smoking
-How to recycle
-How to register to vote
-How to remove a splinter
-How to remove a tick
-How to remove acrylic nails
-How to remove age spots
-How to remove app from ipad
-How to remove ear wax
-How to remove friend from facebook
-How to remove jeep doors
-How to remove plaque
-How to remove rust
-How to remove skin tags
-How to remove skunk odor
-How to remove super glue
-How to remove wallpaper
-How to remove window tint
-How to renew passport
-How to replace a car battery
-How to replace a carpet
-How to replace a jigsaw blade
-How to replace a window
-How to replace ball joint
-How to replace brake fluid
-How to replace brake lines
-How to replace brake pads
-How to replace car speakers
-How to replace ceiling tiles
-How to replace circuit breaker
-How to replace countertops
-How to replace dishwasher
-How to replace door frame
-How to replace door knob
-How to replace electrolytes
-How to replace eletrical outlet
-How to replace fuel pump
-How to replace grout
-How to replace guitar strings
-How to replace gutters
-How to replace hard drive in mac
-How to replace hard drive in macbook pro
-How to replace ipad screen
-How to replace iphone 5 screen
-How to replace iphone battery
-How to replace keurig water filter
-How to replace kindle battery
-How to replace light switch
-How to replace muffler
-How to replace nexus battery
-How to replace note screen
-how to replace otterbox
-How to replace outlet
-How to replace pool light
-How to replace pool liner
-How to replace pool pump
-How to replace quill stem
-How to replace radiator
-How to replace ray ban lenses
-How to replace roof shingles
-How to replace shower valve
-How to replace spark plug
-How to replace usb port
-How to replace vacuum belt
-How to replace video on youtube
-How to replace watch battery
-How to report an accident
-How to reset a blackberry
-How to reset beat pill
-How to reset chrome
-How to reset comcast cable box
-How to reset computer
-How to reset droid
-How to reset engine light
-How to reset epson printer
-How to reset facetime
-How to reset furby
-How to reset fuse box
-How to reset modem
-How to reset roku
-How to reset router
-How to reset thermostat
-How to reset wii
-How to retweet on twitter
-How to ride a bike
-How to ride a horse
-How to run for congress
-How to run for mayor
-How to run for president
-How to run for senate
-How to sail a boat
-how to save money
-How to see duplicates in excel
-How to set up xbox 360 controller
-How to sew on a button
-How to shoot dice
-How to shovel snow
-How to sign over a check
-How to sing
-How to soften brown sugar
-How to start running
-How to stop biting nails
-How to stop snoring
-How to subract decimals
-How to subtract fractions
-How to subtract mixed numbers
-How to surf
-How to swim
-How to take a screenshot on iphone
-How to take a shot
-How to take the sim card out of an iphone
-How to tell a joke
-How to tell time
-How to test for herpes
-How to test internet speed
-How to track a package
-How to track an iphone
-How to tread water
-How to turn off airbags
-How to turn on car headlights
-How to turn on wii
-How to turn on windshield wipers
-How to unlock steering wheel
-How to upload picture to facebook
-How to use a bidget
-How to use a cane
-How to use a car jack
-How to use a compass
-How to use a copier
-How to use a epipen
-How to use a exclamation mark
-How to use a eyelash curler
-How to use a fax machine
-How to use a fire extinguisher
-How to use a first ai kit
-How to use a flash drive
-How to use a foam roller
-How to use a gopro
-How to use a hand drill
-How to use a hashtag
-How to use a hyphen
-How to use a itunes gift card
-How to use a lighter
-How to use a meat thermometer
-How to use a microscope
-How to use a nebulizer
-How to use a needle threader
-How to use a period
-How to use a plunger
-How to use a protractor
-How to use a qr code
-How to use a question mark
-How to use a razor
-How to use a ruler
-How to use a scanner
-How to use a screw driver
-How to use a semicolon
-How to use a shaver
-How to use a sling
-How to use a slow cooker
-How to use a thermometer
-How to use a vacuum
-How to use a visa gift card
-How to use a voltmeter
-How to use a walker
-How to use a wand curler
-How to use a weed waker
-How to use a xbox 360 controller on pc
-How to use a yoyo
-How to use airdrop
-How to use bluetooth
-How to use chop sticks
-How to use chopsticks
-How to use cruise control
-How to use crutches
-How to use curling wand
-How to use emergency brakes
-How to use emoji
-How to use hair chalk
-How to use nasal spray
-How to use paypal
-How to use pepper spray
-How to use siri
-How to use turn signals
-How to wax a car
-How to whistle
-How to whiten teeth
-how to win the lottery
-how to work out percentages
-How to write a ballad
-How to write a check
-How to write a cinquain
-how to write a cover letter
-How to write a haiku
-How to write a limerick
-How to write a sonnet
-How to youtube
+How to adress a letter 	procedural
+How to apply eyeliner	procedural
+How to apply for a credit card 	procedural
+How to apply for a grant 	procedural
+How to apply for a green card 	procedural
+How to apply for a gun permit	procedural
+How to apply for a hunting license	procedural
+How to apply for a job 	procedural
+How to apply for a loan 	procedural
+How to apply for a mortage 	procedural
+How to apply for a new social security number 	procedural
+How to apply for a passport	procedural
+How to apply for a patent 	procedural
+How to apply for a student loan 	procedural
+How to apply for marriage license	procedural
+How to apply to college 	procedural
+How to appy for a copy right 	procedural
+How to be a girl scout 	procedural
+How to bleach a shirt 	procedural
+How to blow a bubble	procedural
+How to blow dry hair 	procedural
+How to blow up a balloon 	procedural
+How to blow up a picture	procedural
+How to blow your nose 	procedural
+How to boil potatoes	procedural
+how to braid hair 	procedural
+How to break a coconut	procedural
+How to break an apartment lease	procedural
+How to brush your teeth 	procedural
+How to build a boat 	procedural
+How to build a box 	procedural
+How to build a snowman	procedural
+How to build a telsa coil 	procedural
+How to buy a stock 	procedural
+How to calculate GPA	procedural
+How to calculate heartrate	procedural
+How to calculate lean body mass 	procedural
+How to call voicemail	procedural
+How to calulate BMI 	procedural
+how to care for spider bite 	procedural
+How to carve a chicken 	procedural
+How to carve a ham 	procedural
+How to carve a pumpkin	procedural
+How to carve a turkey 	procedural
+How to carve wood 	procedural
+How to change a car battery	procedural
+How to change a diaper	procedural
+How to change a light switch	procedural
+How to change lanes 	procedural
+How to check balance on itunes	procedural
+How to check blind spots 	procedural
+How to check oil 	procedural
+How to check transmition oil 	procedural
+How to check your credit score 	procedural
+How to cite a paper 	procedural
+How to clean a dryer	procedural
+How to clean a mirror	procedural
+How to clean an iphone 	procedural
+how to clean dishwasher 	procedural
+How to clean laminate floors 	procedural
+How to clean makeup brushes	procedural
+How to clean piano keys	procedural
+How to clean shingles	procedural
+How to clean suede 	procedural
+How to clean sunbrella fabric	procedural
+How to clean teeth with braces 	procedural
+How to clean uggs	procedural
+How to clean windows 	procedural
+How to connect computer to tv 	procedural
+How to connect computer to tv hdmi	procedural
+How to connect laptop to tv 	procedural
+How to copy a key 	procedural
+How to crack your back 	procedural
+How to create a bar graph 	procedural
+How to create a chart in excel	procedural
+How to create a distribution list in outlook	procedural
+How to create a drop down list in excel	procedural
+How to create a folder on ipad 	procedural
+How to create a folder on iphone 	procedural
+How to create a form in word 	procedural
+How to create a google doc 	procedural
+How to create a group in outlook	procedural
+How to create a hotspot	procedural
+How to create a hyperlink	procedural
+How to create a macro	procedural
+How to create a minecraft server	procedural
+How to create a new apple id 	procedural
+How to create a pivot table 	procedural
+How to create a playlist in itunes	procedural
+How to create a query on access	procedural
+How to create a restore point 	procedural
+How to create a youtube channel	procedural
+How to create a zip folder	procedural
+How to create an app 	procedural
+How to create an instagram	procedural
+How to create an itunes account	procedural
+How to create barcodes	procedural
+How to create beach waves	procedural
+How to create eletricty 	procedural
+How to create event on facebook	procedural
+How to create icons	procedural
+How to create infographics	procedural
+How to create iso 	procedural
+How to create itunes account	procedural
+How to create jpeg	procedural
+How to create oxygen	procedural
+How to crop a picture	procedural
+how to cut hair 	procedural
+How to delete facebook	procedural
+How to delete gmail account	procedural
+How to delete twitter	procedural
+How to deposit a check 	procedural
+How to disarm someone	procedural
+How to distill water 	procedural
+How to dive into a pool 	procedural
+How to divide fractions	procedural
+How to do a back flip	procedural
+how to do a fishtail braid	procedural
+How to do a flip	procedural
+How to do a handstand	procedural
+How to do a smokey eye 	procedural
+How to do a sock bun 	procedural
+How to do bantu knots	procedural
+How to do calligraphy	procedural
+How to do citations	procedural
+How to do crunches	procedural
+How to do dips	procedural
+How to do donuts 	procedural
+how to do elimination	procedural
+How to do eyebrows	procedural
+How to do footnotes	procedural
+How to do french tips 	procedural
+How to do fun loom 	procedural
+How to do in text citations	procedural
+How to do inverse functions	procedural
+how to do jacobs ladder	procedural
+How to do javascript	procedural
+How to do jumping jacks 	procedural
+How to do laundry	procedural
+How to do leg extensions	procedural
+How to do logarithms	procedural
+How to do loose curls 	procedural
+How to do lunges 	procedural
+How to do makeup	procedural
+How to do mla format	procedural
+How to do needlepoint	procedural
+How to do negative on snapchat	procedural
+How to do ombre hair 	procedural
+How to do origami	procedural
+How to do paper mache 	procedural
+How to do percentages	procedural
+How to do pin curls 	procedural
+How to do puchups	procedural
+How to do pull ups procedural
+How to do quadratic formula	procedural
+How to do rainbow loom 	procedural
+How to do reverse crunches	procedural
+How to do russian twist	procedural
+How to do squats 	procedural
+How to do taxes	procedural
+How to donate a car 	procedural
+How to donate a heart 	procedural
+How to donate a kidney	procedural
+How to donate a lung	procedural
+How to donate blood	procedural
+How to donate body to science	procedural
+How to donate bone marrow	procedural
+How to donate hair	procedural
+How to donate plasma	procedural
+How to drink absinthe	procedural
+How to drive a boat	procedural
+How to drive a manual	procedural
+How to drive a motor cycle	procedural
+How to drive standard	procedural
+How to dry wet shoes	procedural
+How to duck dive	procedural
+how to dye hair	procedural
+how to eat sushi	procedural
+How to edit a pdf	procedural
+How to enable cookies	procedural
+How to escape quicksand	procedural
+How to establish paternity	procedural
+How to file for divorce	procedural
+How to file taxes	procedural
+How to fire someone	procedural
+How to fix a collapsed lung	procedural
+How to fix a doorknob	procedural
+How to fix a hole in the wall	procedural
+How to fix a mouse	procedural
+How to fix a paper jam	procedural
+How to fix a toilet	procedural
+How to fix bad credit	procedural
+How to fix bad posture	procedural
+How to fix blinds	procedural
+How to fix chipped tooth	procedural
+How to fix christmas lights	procedural
+How to fix credit score	procedural
+How to fix damaged hair	procedural
+How to fix drywall	procedural
+How to fix frozen iphone	procedural
+How to fix frozen pipes	procedural
+How to fix hole in wall	procedural
+How to fix jaw pain	procedural
+How to fix knee pain	procedural
+How to fix leaky faucet	procedural
+How to fix microwave	procedural
+How to fix my credit	procedural
+How to fix oil leak	procedural
+How to fix overbite	procedural
+How to fix runners knee	procedural
+How to fix running toilet	procedural
+How to fix stiff neck	procedural
+How to fix water damaged iphone	procedural
+How to float	procedural
+How to fold clothes	procedural
+How to format an essay	procedural
+how to frame a picture	procedural
+How to french braid	procedural
+How to generate electricity	procedural
+how to get away with murder	procedural
+How to get boaters license	procedural
+How to get car inspected	procedural
+How to get divorced	procedural
+How to get drivers license	procedural
+How to get into college	procedural
+How to get married	procedural
+How to get motorcycle license	procedural
+How to get rid of ants	procedural
+how to get rid of canker sores	procedural
+How to get rid of fleas	procedural
+How to get rid of fruit flies	procedural
+how to get rid of garlic breath	procedural
+How to get rid of gas	procedural
+how to get rid of hives	procedural
+How to get rid of lice	procedural
+How to get rid of mold	procedural
+how to get rid of pink eye	procedural
+How to get rid of wrinkles	procedural
+How to get water out of ear	procedural
+How to golf	procedural
+How to grease a pan	procedural
+How to grill corn	procedural
+How to grow flowers	procedural
+How to grow garlic	procedural
+How to gut a fish	procedural
+How to hack a facebook	procedural
+How to hack wifi	procedural
+How to hammer curl	procedural
+How to hang a hammock	procedural
+How to hang a picture	procedural
+How to hang up a command hook	procedural
+How to heal a papercut	procedural
+How to heal acne scars	procedural
+How to heal shin spints	procedural
+How to heal swollen glands	procedural
+how to help runners knee	procedural
+How to help someone having a heart attack	procedural
+How to help someone having a seizure	procedural
+How to help someone having a stroke	procedural
+How to help someone having an allergic reaction	procedural
+How to hold a baby	procedural
+How to hold a catfish	procedural
+How to hold a football	procedural
+How to hula hoop	procedural
+How to install a car battery	procedural
+How to install a fan	procedural
+How to install a font	procedural
+How to install a french drain	procedural
+How to install a fuel filter	procedural
+How to install a inground pool	procedural
+How to install a kitchen faucet	procedural
+How to install a mailbox	procedural
+How to install a router	procedural
+How to install a texture pack	procedural
+How to install a thermostat	procedural
+How to install a toilet	procedural
+How to install a water heater	procedural
+How to install a wireless printer	procedural
+How to install an exterior door	procedural
+How to install minecraft mods	procedural
+How to install windows 7	procedural
+How to juggle	procedural
+How to juice a lemon	procedural
+How to jump start a car	procedural
+How to kayak	procedural
+How to knit	procedural
+How to learn how to type	procedural
+How to lift weights	procedural
+How to line a skirt	procedural
+How to make a battery	procedural
+How to make a bouquet	procedural
+How to make a dream catcher	procedural
+How to make a dress	procedural
+How to make a pandora account	procedural
+How to make a pie chart	procedural
+How to make a reservation at apple store	procedural
+How to make a shadow box	procedural
+How to make a spotify playlist	procedural
+How to make a water balloon	procedural
+How to make coasters	procedural
+How to make curtains	procedural
+How to make distilled water	procedural
+How to make english tea	procedural
+How to make fondant	procedural
+How to make fried pickles	procedural
+How to make frosting	procedural
+How to make goulash	procedural
+How to make gravy	procedural
+How to make hair grow fast	procedural
+How to make lemon zest	procedural
+How to make lipstick	procedural
+How to make lotion	procedural
+How to make pasta salad	procedural
+How to make perfume	procedural
+How to make playdough	procedural
+How to make sand	procedural
+How to make usb bootable	procedural
+How to make waffles	procedural
+How to make wax	procedural
+How to make wine	procedural
+How to measure inseam	procedural
+How to measure ring size	procedural
+How to meditate	procedural
+How to melt cheese	procedural
+How to melt chocolate	procedural
+How to melt snow	procedural
+How to melt sugar	procedural
+how to mend a broken heart	procedural
+How to merge on to a highway	procedural
+How to merge pdf files	procedural
+How to moonwalk	procedural
+How to multiply decimals	procedural
+How to multiply fraction	procedural
+How to name acids	procedural
+How to name bases	procedural
+How to open a bottle of wine	procedural
+How to open a can	procedural
+How to open a can of soda	procedural
+How to open a clam	procedural
+How to open a coconut	procedural
+How to open a jar	procedural
+How to open a jar that is stuck	procedural
+How to open a pistachio	procedural
+How to open a port	procedural
+How to open a wps file	procedural
+How to open an umbrella	procedural
+How to open the hood of a car	procedural
+How to paint nails	procedural
+How to parallel park	procedural
+How to peel a banana	procedural
+How to play chess	procedural
+How to play tennis	procedural
+How to play the clarinet	procedural
+How to play the game of life	procedural
+How to polish silver	procedural
+how to pray	procedural
+How to predict height	procedural
+How to predict hurricane	procedural
+How to predict life exectancy	procedural
+How to predict ovulation	procedural
+How to predict the weather	procedural
+How to predict tornado	procedural
+How to prevent a hangover	procedural
+How to prevent acid reflex	procedural
+How to prevent arthritis	procedural
+How to prevent bad breath	procedural
+How to prevent balding	procedural
+How to prevent blackheads	procedural
+How to prevent blood clots	procedural
+How to prevent cancer	procedural
+How to prevent cavities	procedural
+How to prevent diabetes	procedural
+How to prevent dry socket	procedural
+How to prevent dust	procedural
+How to prevent eczema	procedural
+How to prevent foot cramps	procedural
+How to prevent frizzy hair	procedural
+How to prevent frostbite	procedural
+How to prevent frozen pipes	procedural
+How to prevent global warming	procedural
+How to prevent greasy hair	procedural
+How to prevent hair loss	procedural
+How to prevent hangnails	procedural
+How to prevent headaches	procedural
+How to prevent heartburn	procedural
+How to prevent heat rash	procedural
+How to prevent high blood pressure	procedural
+How to prevent icicles	procedural
+How to prevent identity theft	procedural
+How to prevent jeans from shrinking	procedural
+How to prevent jet lag	procedural
+How to prevent laptop from overheating	procedural
+How to prevent leukemia	procedural
+How to prevent lice	procedural
+How to prevent low blood sugar	procedural
+How to prevent motion sickness	procedural
+How to prevent muscle cramps	procedural
+How to prevent muscle soreness	procedural
+How to prevent nausea	procedural
+How to prevent osteoporosis	procedural
+How to prevent over eating	procedural
+How to prevent pink eye	procedural
+How to prevent pop ups	procedural
+How to prevent pregnancy	procedural
+How to prevent salmonella	procedural
+How to prevent SIDS	procedural
+How to prevent snoring	procedural
+How to prevent spider veins	procedural
+How to prevent split ends	procedural
+How to prevent ulcers	procedural
+How to prevent weeds	procedural
+How to prevent wrinkles	procedural
+How to print a document	procedural
+How to propagate a rose	procedural
+How to propagate cactus	procedural
+How to propose to someone	procedural
+How to publish a book	procedural
+How to put air in a tire	procedural
+How to put gas in a car	procedural
+How to put gas in motorcycle	procedural
+How to put in ear drops	procedural
+How to put in earrings	procedural
+How to put in eye contacts	procedural
+How to put in eye drops	procedural
+How to put in eye ointment	procedural
+How to put on a bandaid	procedural
+How to put on seatbelt	procedural
+How to put up a fence	procedural
+How to put up drywall	procedural
+How to put up kitchen backsplash	procedural
+How to put up kitchen cabinets	procedural
+How to put up out of office in outlook	procedural
+How to put up wallpaper	procedural
+how to quit smoking	procedural
+How to recycle	procedural
+How to register to vote	procedural
+How to remove a splinter	procedural
+How to remove a tick	procedural
+How to remove acrylic nails	procedural
+How to remove age spots	procedural
+How to remove app from ipad	procedural
+How to remove ear wax	procedural
+How to remove friend from facebook	procedural
+How to remove jeep doors	procedural
+How to remove plaque	procedural
+How to remove rust	procedural
+How to remove skin tags	procedural
+How to remove skunk odor	procedural
+How to remove super glue	procedural
+How to remove wallpaper	procedural
+How to remove window tint	procedural
+How to renew passport	procedural
+How to replace a car battery	procedural
+How to replace a carpet	procedural
+How to replace a jigsaw blade	procedural
+How to replace a window	procedural
+How to replace ball joint	procedural
+How to replace brake fluid	procedural
+How to replace brake lines	procedural
+How to replace brake pads	procedural
+How to replace car speakers	procedural
+How to replace ceiling tiles	procedural
+How to replace circuit breaker	procedural
+How to replace countertops	procedural
+How to replace dishwasher	procedural
+How to replace door frame	procedural
+How to replace door knob	procedural
+How to replace electrolytes	procedural
+How to replace eletrical outlet	procedural
+How to replace fuel pump	procedural
+How to replace grout	procedural
+How to replace guitar strings	procedural
+How to replace gutters	procedural
+How to replace hard drive in mac	procedural
+How to replace hard drive in macbook pro	procedural
+How to replace ipad screen	procedural
+How to replace iphone 5 screen	procedural
+How to replace iphone battery	procedural
+How to replace keurig water filter	procedural
+How to replace kindle battery	procedural
+How to replace light switch	procedural
+How to replace muffler	procedural
+How to replace nexus battery	procedural
+How to replace note screen	procedural
+how to replace otterbox	procedural
+How to replace outlet	procedural
+How to replace pool light	procedural
+How to replace pool liner	procedural
+How to replace pool pump	procedural
+How to replace quill stem	procedural
+How to replace radiator	procedural
+How to replace ray ban lenses	procedural
+How to replace roof shingles	procedural
+How to replace shower valve	procedural
+How to replace spark plug	procedural
+How to replace usb port	procedural
+How to replace vacuum belt	procedural
+How to replace video on youtube	procedural
+How to replace watch battery	procedural
+How to report an accident	procedural
+How to reset a blackberry	procedural
+How to reset beat pill	procedural
+How to reset chrome	procedural	procedural
+How to reset comcast cable box	procedural
+How to reset computer	procedural
+How to reset droid	procedural
+How to reset engine light	procedural
+How to reset epson printer	procedural
+How to reset facetime	procedural
+How to reset furby	procedural
+How to reset fuse box	procedural
+How to reset modem	procedural
+How to reset roku	procedural
+How to reset router	procedural
+How to reset thermostat	procedural
+How to reset wii	procedural
+How to retweet on twitter	procedural
+How to ride a bike	procedural
+How to ride a horse	procedural
+How to run for congress	procedural
+How to run for mayor	procedural
+How to run for president	procedural
+How to run for senate	procedural
+How to sail a boat	procedural
+how to save money	procedural
+How to see duplicates in excel	procedural
+How to set up xbox 360 controller	procedural
+How to sew on a button	procedural
+How to shoot dice	procedural
+How to shovel snow	procedural
+How to sign over a check	procedural
+How to sing	procedural
+How to soften brown sugar	procedural
+How to start running	procedural
+How to stop biting nails	procedural
+How to stop snoring	procedural
+How to subract decimals	procedural
+How to subtract fractions	procedural
+How to subtract mixed numbers	procedural
+How to surf	procedural
+How to swim	procedural
+How to take a screenshot on iphone	procedural
+How to take a shot	procedural
+How to take the sim card out of an iphone	procedural
+How to tell a joke	procedural
+How to tell time	procedural
+How to test for herpes	procedural
+How to test internet speed	procedural
+How to track a package	procedural
+How to track an iphone	procedural
+How to tread water	procedural
+How to turn off airbags	procedural
+How to turn on car headlights	procedural
+How to turn on wii	procedural
+How to turn on windshield wipers	procedural
+How to unlock steering wheel	procedural
+How to upload picture to facebook	procedural
+How to use a bidget	procedural
+How to use a cane	procedural
+How to use a car jack	procedural
+How to use a compass	procedural
+How to use a copier	procedural
+How to use a epipen	procedural
+How to use a exclamation mark	procedural
+How to use a eyelash curler	procedural
+How to use a fax machine	procedural
+How to use a fire extinguisher	procedural
+How to use a first ai kit	procedural
+How to use a flash drive	procedural
+How to use a foam roller	procedural
+How to use a gopro	procedural
+How to use a hand drill	procedural
+How to use a hashtag	procedural
+How to use a hyphen	procedural
+How to use a itunes gift card	procedural
+How to use a lighter	procedural
+How to use a meat thermometer	procedural
+How to use a microscope	procedural
+How to use a nebulizer	procedural
+How to use a needle threader	procedural
+How to use a period	procedural
+How to use a plunger	procedural
+How to use a protractor	procedural
+How to use a qr code	procedural
+How to use a question mark	procedural
+How to use a razor	procedural
+How to use a ruler	procedural
+How to use a scanner	procedural
+How to use a screw driver	procedural
+How to use a semicolon	procedural
+How to use a shaver	procedural
+How to use a sling	procedural
+How to use a slow cooker	procedural
+How to use a thermometer	procedural
+How to use a vacuum	procedural
+How to use a visa gift card	procedural
+How to use a voltmeter	procedural
+How to use a walker	procedural
+How to use a wand curler	procedural
+How to use a weed waker	procedural
+How to use a xbox 360 controller on pc	procedural
+How to use a yoyo	procedural
+How to use airdrop	procedural
+How to use bluetooth	procedural
+How to use chop sticks	procedural
+How to use chopsticks	procedural
+How to use cruise control	procedural
+How to use crutches	procedural
+How to use curling wand	procedural
+How to use emergency brakes	procedural
+How to use emoji	procedural
+How to use hair chalk	procedural
+How to use nasal spray	procedural
+How to use paypal	procedural
+How to use pepper spray	procedural
+How to use siri	procedural
+How to use turn signals	procedural
+How to wax a car	procedural
+How to whistle	procedural
+How to whiten teeth	procedural
+how to win the lottery	procedural
+how to work out percentages	procedural
+How to write a ballad	procedural
+How to write a check	procedural
+How to write a cinquain	procedural
+how to write a cover letter	procedural
+How to write a haiku	procedural
+How to write a limerick	procedural
+How to write a sonnet	procedural
+How to youtube	procedural
 how was adele discovered
 hows the weather gonna be on Wednesday
 Hows the weather in rome
