@@ -1,41 +1,53 @@
 package org.aksw.mlqa;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.aksw.mlqa.analyzer.IAnalyzer;
 import org.aksw.mlqa.analyzer.QuestionTypeAnalyzer;
-import org.aksw.mlqa.features.IFeature;
 
+import weka.core.Attribute;
+import weka.core.FastVector;
 import weka.core.Instance;
+import weka.core.Instances;
 
 public class Analyzer {
 
 	private ArrayList<IAnalyzer> analyzers;
+	private FastVector fvWekaAttributes = new FastVector();
 
-	public Analyzer() {
+	/**
+	 * 
+	 * @param ClassAttribute
+	 *            classes to be differentiated FastVector fvClassVal = new
+	 *            FastVector(2); fvClassVal.addElement("positive");
+	 *            fvClassVal.addElement("negative");
+	 */
+	public Analyzer(Attribute ClassAttribute) {
 
 		analyzers = new ArrayList<IAnalyzer>();
 		// Add analyzers here
 		analyzers.add(new QuestionTypeAnalyzer());
+
+		// Declare the feature vector, register their attributes
+		for (IAnalyzer analyzer : analyzers) {
+			fvWekaAttributes.addElement(analyzer.getAttribute());
+		}
+		// add class attribute
+		fvWekaAttributes.addElement(ClassAttribute);
 	}
 
 	// produces a feature instance for each question
 	public Instance analyze(String q) {
-		List<IFeature> tmpList = new ArrayList<IFeature>();
 
-		// calculate every feature based on analyzers
-		for (IAnalyzer a : analyzers) {
-			List<IFeature> features = a.analyze(q);
-			if (features != null) {
-				tmpList.addAll(features);
-			}
-		}
-
-		Instance tmpInstance = new Instance(tmpList.size());
+		Instance tmpInstance = new Instance(fvWekaAttributes.size());
 		// the feature adds itself to the instance
-		for (IFeature feature : tmpList) {
-			feature.addToInstance(tmpInstance);
+		for (IAnalyzer analyzer : analyzers) {
+			Attribute attribute = analyzer.getAttribute();
+			if (attribute.isNumeric()) {
+				tmpInstance.setValue(attribute, (double) analyzer.analyze(q));
+			} else if (attribute.isNominal() || attribute.isString()) {
+				tmpInstance.setValue(attribute, (String) analyzer.analyze(q));
+			}
 		}
 
 		return tmpInstance;
@@ -43,14 +55,23 @@ public class Analyzer {
 	}
 
 	public static void main(String[] args) {
+		// Declare the class attribute along with its values
+		FastVector fvClassVal = new FastVector(2);
+		fvClassVal.addElement("positive");
+		fvClassVal.addElement("negative");
+		Attribute ClassAttribute = new Attribute("theClass", fvClassVal);
 
-		Analyzer f = new Analyzer();
+		Analyzer analyzer = new Analyzer(ClassAttribute);
+		// Create an empty training set
+		Instances isTrainingSet = new Instances("training", analyzer.fvWekaAttributes, 10);
+		// Set class index
+		isTrainingSet.setClass(ClassAttribute);
 
 		// input question
 		String q = "What is the capital of Germany?";
 
 		// calculate features
-		Instance tmp = f.analyze(q);
+		Instance tmp = analyzer.analyze(q);
 
 		// output feature vector
 		System.out.println(tmp);

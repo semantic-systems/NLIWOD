@@ -1,8 +1,6 @@
 package org.aksw.mlqa.analyzer;
 
-import java.util.List;
-
-import org.aksw.mlqa.features.IFeature;
+import weka.core.Attribute;
 
 public interface IAnalyzer {
 	/**
@@ -10,5 +8,8 @@ public interface IAnalyzer {
 	 * @param q
 	 * @return
 	 */
-	public List<IFeature> analyze(String q);
+	public Object analyze(String q);
+
+
+	public Attribute getAttribute();
 }

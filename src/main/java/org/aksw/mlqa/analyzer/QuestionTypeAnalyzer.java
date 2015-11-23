@@ -1,20 +1,32 @@
 package org.aksw.mlqa.analyzer;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.aksw.mlqa.features.IFeature;
-import org.aksw.mlqa.features.QuestionTypeFeature;
+import weka.core.Attribute;
+import weka.core.FastVector;
 
 public class QuestionTypeAnalyzer implements IAnalyzer {
 
 	@Override
-	public List<IFeature> analyze(String q) {
-
-		// returns List, Resource, Boolean, Date
-		List<IFeature> tmpFeature = new ArrayList<IFeature>();
-		tmpFeature.add(QuestionTypeFeature.BOOLEAN);
-
-		return tmpFeature;
+	public Object analyze(String q) {
+		// FIXME write analysis step
+		return QuestionTypeFeature.BOOLEAN.name();
 	}
+
+	@Override
+	public Attribute getAttribute() {
+		return QuestionTypeFeature.attribute;
+	}
+
+	// Enumeration values
+	enum QuestionTypeFeature {
+		LIST, NUMBER, BOOLEAN, RESOURCE;
+		private static Attribute attribute = null;
+		static {
+			FastVector attributeValues = new FastVector(QuestionTypeFeature.values().length);
+			for (QuestionTypeFeature qtf : QuestionTypeFeature.values()) {
+				attributeValues.addElement(qtf.name());
+			}
+			attribute = new Attribute("QuestionTypeFeature", attributeValues);
+		};
+	}
+
 }
