@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.aksw</groupId>
-	<artifactId>qa-datasets</artifactId>
+	<groupId>org.aksw.qa</groupId>
+	<artifactId>datasets</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<developers>
 		<developer>
@@ -23,4 +23,19 @@
 			</plugin>
 		</plugins>
 	</build>
+	<packaging>jar</packaging>
+	<!-- Change this to pom if it is a multi-module project -->
+	<!-- <packaging>jar</packaging> -->
+
+	<distributionManagement>
+		<repository>
+			<id>maven.aksw.internal</id>
+			<url>http://maven.aksw.org/archiva/repository/internal</url>
+		</repository>
+		<snapshotRepository>
+			<id>maven.aksw.snapshots</id>
+			<name>AKSW Snapshot Repository</name>
+			<url>http://maven.aksw.org/archiva/repository/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
