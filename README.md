@@ -24,3 +24,4 @@ Add the following repository:
 			<url>http://maven.aksw.org/archiva/repository/snapshots</url>
 </repository>
 ```
+Look for more interesting libraries here: http://maven.aksw.org/archiva/#browse/org.aksw.qa 
