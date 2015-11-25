@@ -14,16 +14,17 @@ public class SPARQLEvaluationTest {
 	@Test
 	public void testTooGenericQuery() {
 		String sparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> " + "PREFIX res: <http://dbpedia.org/resource/> " + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
-				+ "SELECT DISTINCT ?uri WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts .}";
+		        + "SELECT DISTINCT ?uri WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts .}";
 		String targetSPARQLQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> " + "PREFIX res: <http://dbpedia.org/resource/> " + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
-				+ "SELECT DISTINCT ?uri WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts ." + "?uri dbo:director res:Garry_Marshall .}";
+		        + "SELECT DISTINCT ?uri WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts ." + "?uri dbo:director res:Garry_Marshall .}";
 		double precision = SPARQLEvaluation.precision(sparqlQuery, targetSPARQLQuery, endpoint);
 		double recall = SPARQLEvaluation.recall(sparqlQuery, targetSPARQLQuery, endpoint);
 		double fMeasure = SPARQLEvaluation.fMeasure(sparqlQuery, targetSPARQLQuery, endpoint);
 		assertEquals(0.0571, precision, 0.001);
 		assertEquals(1.0, recall, 0.0);
 		assertEquals(0.108, fMeasure, 0.001);
-
+		
+		logger.debug(Thread.currentThread().getStackTrace()[1].getMethodName());
 		logger.debug("P=" + precision);
 		logger.debug("R=" + recall);
 		logger.debug("F=" + fMeasure);
@@ -34,14 +35,23 @@ public class SPARQLEvaluationTest {
 	public void testTooSpecificQuery() {
 		// SELECT COUNT(?x)...
 		String sparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> " + "PREFIX res: <http://dbpedia.org/resource/> " + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
-				+ "SELECT COUNT(DISTINCT ?uri) WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts .}";
+		        + "SELECT COUNT(DISTINCT ?uri) WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts .}";
 		String targetSPARQLQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> " + "PREFIX res: <http://dbpedia.org/resource/> " + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
-				+ "SELECT COUNT(DISTINCT ?uri) WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts ." + "?uri dbo:director res:Garry_Marshall .}";
+		        + "SELECT COUNT(DISTINCT ?uri) WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts ." + "?uri dbo:director res:Garry_Marshall .}";
 		double precision = SPARQLEvaluation.precision(sparqlQuery, targetSPARQLQuery, endpoint);
 		double recall = SPARQLEvaluation.recall(sparqlQuery, targetSPARQLQuery, endpoint);
 		double fMeasure = SPARQLEvaluation.fMeasure(sparqlQuery, targetSPARQLQuery, endpoint);
-		System.out.println("P=" + precision + "\nR=" + recall + "\nF=" + fMeasure);
-		// String sparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> " +
+		
+		logger.debug(Thread.currentThread().getStackTrace()[1].getMethodName());
+		logger.debug("P=" + precision);
+		logger.debug("R=" + recall);
+		logger.debug("F=" + fMeasure); 
+		
+		//TODO also transform to unit test
+		
+		// String sparqlQuery =
+									   // "PREFIX dbo: <http://dbpedia.org/ontology/> "
+									   // +
 		// "PREFIX res: <http://dbpedia.org/resource/> " +
 		// "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
 		// "SELECT DISTINCT ?uri WHERE {	" +
@@ -90,5 +100,4 @@ public class SPARQLEvaluationTest {
 		// fMeasure);
 
 	}
-
 }

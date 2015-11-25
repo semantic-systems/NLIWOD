@@ -15,8 +15,20 @@ import org.apache.jena.query.Syntax;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/**
+ * This class uses the dbpedia.org/sparql endpoint to check two given sparql
+ * queries whether they return the same result and calculate precision, recall
+ * and f-measure out of it
+ * 
+ * @author ricardousbeck
+ *
+ */
 public class SPARQLEvaluation {
+
+	private static Logger logger = LoggerFactory.getLogger(SPARQLEvaluation.class);
 
 	public static double precision(String sparqlQueryString, String targetSPARQLQueryString, String endpoint) {
 		Query sparqlQuery = QueryFactory.create(sparqlQueryString, Syntax.syntaxARQ);
@@ -38,7 +50,7 @@ public class SPARQLEvaluation {
 				precision = 1;
 			}
 		} else {
-			// TODO implement other question type
+			logger.error("Not implemented SPARQL query type.");
 		}
 		return precision;
 	}
@@ -64,7 +76,7 @@ public class SPARQLEvaluation {
 			// if queries are AKS queries return recall=1
 			recall = 1;
 		} else {
-			// TODO implement other question type
+			logger.error("Not implemented SPARQL query type.");
 		}
 		return recall;
 	}
@@ -114,7 +126,7 @@ public class SPARQLEvaluation {
 			RDFNode rdfNode = qs.get(projectionVar);
 			nodes.add(rdfNode);
 		}
-
+		qe.close();
 		return nodes;
 	}
 
@@ -124,6 +136,7 @@ public class SPARQLEvaluation {
 		defaultGraph.add("http://dbpedia.org");
 		qe.setDefaultGraphURIs(defaultGraph);
 		boolean ret = qe.execAsk();
+		qe.close();
 		return ret;
 	}
 
