@@ -82,7 +82,7 @@ public class SPARQLEvaluation {
 	/**
 	 * Returns a set of RDFNode objects by taking the fist projection variable
 	 * of the query.
-	 * 
+	 *
 	 * @param queryString
 	 * @param endpoint
 	 * @return

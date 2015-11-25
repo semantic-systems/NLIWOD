@@ -1,6 +1,7 @@
 package org.aksw.qa.commons.load;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -10,8 +11,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.Question;
+import org.apache.jena.ext.com.google.common.collect.Sets;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -23,29 +24,8 @@ import org.xml.sax.SAXException;
  *
  */
 public class QALD_Loader {
-	// TODO unit test
-	public static void main(String[] args) {
 
-		String file = ClassLoader.getSystemClassLoader().getSystemResourceAsStream("QALD-5/qald-5_test.xml").toString();
-		QALD_Loader ql = new QALD_Loader();
-		List<Question> load = ql.load(file);
-		int hybrid = 0;
-		for (Question q : load) {
-
-			if (q.hybrid) {
-				if (q.answerType.equals("resource")) {
-					if (q.onlydbo) {
-						if (!q.aggregation) {
-							System.out.println(q.id + "\t" + q.languageToQuestion.get("en"));
-						}
-					}
-				}
-			}
-		}
-		System.out.println(hybrid);
-	}
-
-	public static List<Question> load(String file) {
+	public static List<Question> load(InputStream file) {
 
 		List<Question> questions = new ArrayList<Question>();
 
@@ -102,15 +82,15 @@ public class QALD_Loader {
 				if (question.pseudoSparqlQuery != null) {
 					question.outOfScope = question.pseudoSparqlQuery.toUpperCase().contains("OUT OF SCOPE");
 				}
-				// read answers
+				// Read answers
 				NodeList answers = questionNode.getElementsByTagName("answer");
-				HashSet<Entity> set = new HashSet<>();
+				HashSet<String> set = Sets.newHashSet();
 				for (int j = 0; j < answers.getLength(); j++) {
 					String answer = ((Element) answers.item(j)).getTextContent();
-					// TODO fix that for getting an Answer here
-					// set.add(answer.trim());
+					set.add(answer.trim());
 				}
-				// question.goldenAnswers.put("en", set);
+				question.goldenAnswers = set;
+
 				questions.add(question);
 			}
 

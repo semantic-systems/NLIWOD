@@ -19,7 +19,7 @@ public class HybridEvaluation {
 			return 0;
 		}
 		double precision = 0;
-		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers.get("en"));
+		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers);
 		if (question.pseudoSparqlQuery != null) {
 			if (isSelectType(question.pseudoSparqlQuery)) {
 				SetView<RDFNode> intersection = Sets.intersection(goldenRDFNodes, systemAnswer);
@@ -63,7 +63,7 @@ public class HybridEvaluation {
 			return 0;
 		}
 		double recall = 0;
-		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers.get("en"));
+		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers);
 		if (question.pseudoSparqlQuery != null) {
 			if (isSelectType(question.pseudoSparqlQuery)) {
 				// if queries contain aggregation return always 1
