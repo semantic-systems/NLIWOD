@@ -24,7 +24,7 @@ import org.xml.sax.SAXException;
  *
  */
 public class QALD_Loader {
-
+//TODO somehow read all folders in qa-datasets and provide each benchmark in an enumeration
 	public static List<Question> load(InputStream file) {
 
 		List<Question> questions = new ArrayList<Question>();
