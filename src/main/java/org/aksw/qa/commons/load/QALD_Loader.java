@@ -1,9 +1,8 @@
 package org.aksw.qa.commons.load;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -14,7 +13,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.aksw.qa.commons.datastructure.Question;
-import org.apache.jena.ext.com.google.common.collect.Sets;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,45 +26,46 @@ import org.xml.sax.SAXException;
 public class QALD_Loader {
 
 
-	private static List<File> iterateOverFiles(File parent) {
-		List<File> ret = new ArrayList<File>();
-		for (File f : parent.listFiles()) {
-			if (f.isDirectory()) {
-				ret.addAll(iterateOverFiles(f));
-			} else {
 
-				ret.add(f);
-			}
+	
+	private static InputStream getInputStream(Dataset set) throws IOException{
+		//Magical get the path drom qa-datasets
+		URL url = mapDatasetToPath(set);
+		return url.openStream();
+	}
+	
+	private static URL mapDatasetToPath(Dataset set){
+		switch(set){
+		case nlq: 
+			return ClassLoader.getSystemClassLoader().getResource("NLQ-OKBQA/nlq1_vis.json");
+		case QALD5_Test:
+			return ClassLoader.getSystemClassLoader().getResource("QALD-5/qald-5_test.xml");
+		case QALD5_Train:
+			return ClassLoader.getSystemClassLoader().getResource("QALD-5/qald-5_train.xml");
+		case qbench1:
+			return ClassLoader.getSystemClassLoader().getResource("qbench/qbench1.xml");
+		case qbench2:
+			return ClassLoader.getSystemClassLoader().getResource("qbench/qbench2.xml");
+		case stonetemple:
+			return ClassLoader.getSystemClassLoader().getResource("stonetemple/stonetemple");
 		}
+		return null;
+	}
+	
+	public static List<Question> load(Dataset data){
+		InputStream is = null;
+		List<Question> ret = null;
+		try {
+			is = getInputStream(data);
+			ret = load(is);
+			is.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		return ret;
 	}
-
-	public static List<Question> loadAll(String parentFolder)
-			throws IOException {
-		List<Question> ret = new ArrayList<Question>();
-
-		File parent = new File(parentFolder);
-		if (!parent.isDirectory()) {
-			throw new IOException(parent.getName() + " is not a directory");
-		}
-
-		for (File f : iterateOverFiles(parent)) {
-			try {
-				InputStream fis = new FileInputStream(f);
-				System.out.println(f.getName());
-				List<Question> ql = load(fis);
-				for (Question q : ql) {
-					System.out.println(q.languageToQuestion);
-				}
-				ret.addAll(ql);
-				fis.close();
-			} catch (Exception e) {
-				System.out.println(e);
-			}
-		}
-		return ret;
-	}
-
+	
 	public static List<Question> load(InputStream file) {
 
 		List<Question> questions = new ArrayList<Question>();
@@ -138,7 +137,7 @@ public class QALD_Loader {
 				}
 				// Read answers
 				NodeList answers = questionNode.getElementsByTagName("answer");
-				HashSet<String> set = Sets.newHashSet();
+				HashSet<String> set = new HashSet<String>();
 				for (int j = 0; j < answers.getLength(); j++) {
 					String answer = ((Element) answers.item(j))
 							.getTextContent();

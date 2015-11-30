@@ -1,6 +1,5 @@
 package org.aksw.qa.commons.load;
 
-import java.io.InputStream;
 import java.util.List;
 
 import org.aksw.qa.commons.datastructure.Question;
@@ -11,9 +10,7 @@ public class LoadTest {
 
 	@Test
 	public void loadQALD5Test() {
-		ClassLoader.getSystemClassLoader();
-		InputStream file = ClassLoader.getSystemResourceAsStream("QALD-5/qald-5_test.xml");
-		List<Question> load = QALD_Loader.load(file);
+		List<Question> load = QALD_Loader.load(Dataset.QALD5_Test);
 		Assert.assertTrue(load.size() == 59);
 		for (Question q : load) {
 			Assert.assertTrue(q.id > 0);

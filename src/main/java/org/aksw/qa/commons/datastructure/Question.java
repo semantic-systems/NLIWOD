@@ -1,11 +1,10 @@
 package org.aksw.qa.commons.datastructure;
 
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.jena.ext.com.google.common.collect.Maps;
-import org.apache.jena.ext.com.google.common.collect.Sets;
 
 public class Question {
 
@@ -17,9 +16,9 @@ public class Question {
 	public Boolean onlydbo;
 	public Boolean outOfScope;
 	public Boolean hybrid;
-	public Map<String, String> languageToQuestion = Maps.newLinkedHashMap();
-	public Map<String, List<String>> languageToKeywords = Maps.newLinkedHashMap();
-	public Set<String> goldenAnswers = Sets.newHashSet();
+	public Map<String, String> languageToQuestion = new LinkedHashMap<String, String>();
+	public Map<String, List<String>> languageToKeywords = new LinkedHashMap<String, List<String>>();
+	public Set<String> goldenAnswers = new HashSet<String>();
 
 	@Override
 	public String toString() {

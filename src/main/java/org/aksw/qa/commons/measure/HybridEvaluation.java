@@ -4,8 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.aksw.qa.commons.datastructure.Question;
-import org.apache.jena.ext.com.google.common.collect.Sets;
-import org.apache.jena.ext.com.google.common.collect.Sets.SetView;
+import org.aksw.qa.commons.utils.CollectionUtils;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.slf4j.Logger;
@@ -22,7 +21,7 @@ public class HybridEvaluation {
 		Set<RDFNode> goldenRDFNodes = answersToRDFNode(question.goldenAnswers);
 		if (question.pseudoSparqlQuery != null) {
 			if (isSelectType(question.pseudoSparqlQuery)) {
-				SetView<RDFNode> intersection = Sets.intersection(goldenRDFNodes, systemAnswer);
+				Set<RDFNode> intersection = CollectionUtils.intersection(goldenRDFNodes, systemAnswer);
 				if (systemAnswer.size() != 0) {
 					precision = (double) intersection.size() / (double) systemAnswer.size();
 				}
@@ -39,7 +38,7 @@ public class HybridEvaluation {
 			}
 		} else if (question.sparqlQuery != null) {
 			if (isSelectType(question.sparqlQuery)) {
-				SetView<RDFNode> intersection = Sets.intersection(goldenRDFNodes, systemAnswer);
+				Set<RDFNode> intersection = CollectionUtils.intersection(goldenRDFNodes, systemAnswer);
 				if (systemAnswer.size() != 0) {
 					precision = (double) intersection.size() / (double) systemAnswer.size();
 				}
@@ -70,7 +69,7 @@ public class HybridEvaluation {
 				if (question.aggregation) {
 					recall = 1;
 				}
-				SetView<RDFNode> intersection = Sets.intersection(systemAnswer, goldenRDFNodes);
+				Set<RDFNode> intersection = CollectionUtils.intersection(systemAnswer, goldenRDFNodes);
 				if (goldenRDFNodes.size() != 0) {
 					recall = (double) intersection.size() / (double) goldenRDFNodes.size();
 				}
@@ -86,7 +85,7 @@ public class HybridEvaluation {
 				if (question.aggregation) {
 					recall = 1;
 				}
-				SetView<RDFNode> intersection = Sets.intersection(systemAnswer, goldenRDFNodes);
+				Set<RDFNode> intersection = CollectionUtils.intersection(systemAnswer, goldenRDFNodes);
 				if (goldenRDFNodes.size() != 0) {
 					recall = (double) intersection.size() / (double) goldenRDFNodes.size();
 				}

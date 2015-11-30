@@ -5,8 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.jena.ext.com.google.common.collect.Sets;
-import org.apache.jena.ext.com.google.common.collect.Sets.SetView;
+import org.aksw.qa.commons.utils.CollectionUtils;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
@@ -39,7 +38,7 @@ public class SPARQLEvaluation {
 		if (sparqlQuery.isSelectType() && targetSPARQLQuery.isSelectType()) {
 			Set<RDFNode> nodes = executeSelect(sparqlQuery, endpoint);
 			Set<RDFNode> targetNodes = executeSelect(targetSPARQLQuery, endpoint);
-			SetView<RDFNode> intersection = Sets.intersection(nodes, targetNodes);
+			Set<RDFNode> intersection = CollectionUtils.intersection(nodes, targetNodes);
 			if (nodes.size() != 0) {
 				precision = (double) intersection.size() / (double) nodes.size();
 			}
@@ -68,7 +67,7 @@ public class SPARQLEvaluation {
 			}
 			Set<RDFNode> nodes = executeSelect(sparqlQuery, endpoint);
 			Set<RDFNode> targetNodes = executeSelect(targetSPARQLQuery, endpoint);
-			SetView<RDFNode> intersection = Sets.intersection(nodes, targetNodes);
+			Set<RDFNode> intersection = CollectionUtils.intersection(nodes, targetNodes);
 			if (nodes.size() != 0) {
 				recall = (double) intersection.size() / (double) targetNodes.size();
 			}
@@ -132,6 +131,7 @@ public class SPARQLEvaluation {
 
 	public static boolean executeAsk(Query query, String endpoint) {
 		QueryEngineHTTP qe = new QueryEngineHTTP(endpoint, query);
+		
 		List<String> defaultGraph = new ArrayList<String>();
 		defaultGraph.add("http://dbpedia.org");
 		qe.setDefaultGraphURIs(defaultGraph);
