@@ -1,22 +1,18 @@
-package org.aksw.mlqa;
+package org.aksw.mlqa.analyzer;
 
 import java.util.ArrayList;
-
-import org.aksw.mlqa.analyzer.IAnalyzer;
-import org.aksw.mlqa.analyzer.QuestionTypeAnalyzer;
 
 import weka.core.Attribute;
 import weka.core.FastVector;
 import weka.core.Instance;
-import weka.core.Instances;
 
 public class Analyzer {
 
 	private ArrayList<IAnalyzer> analyzers;
-	private FastVector fvWekaAttributes = new FastVector();
+	public FastVector fvWekaAttributes = new FastVector();
 
 	/**
-	 * 
+	 *
 	 * @param ClassAttribute
 	 *            classes to be differentiated FastVector fvClassVal = new
 	 *            FastVector(2); fvClassVal.addElement("positive");
@@ -35,9 +31,10 @@ public class Analyzer {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param q
-	 * @return feature vector leaving out a slot for the class variable, i.e., the QA system that can answer this feature vector
+	 * @return feature vector leaving out a slot for the class variable, i.e.,
+	 *         the QA system that can answer this feature vector
 	 */
 	public Instance analyze(String q) {
 		// +1 to later add class attribute
@@ -56,19 +53,4 @@ public class Analyzer {
 
 	}
 
-	public static void main(String[] args) {
-
-		Analyzer analyzer = new Analyzer();
-		// Create an empty training set
-		Instances isTrainingSet = new Instances("training", analyzer.fvWekaAttributes, 10);
-
-		// input question
-		String q = "What is the capital of Germany?";
-
-		// calculate features
-		Instance tmp = analyzer.analyze(q);
-
-		// output feature vector
-		System.out.println(tmp.toString());
-	}
 }

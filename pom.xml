@@ -6,7 +6,14 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Machine Learning over Question Answering Systems</name>
 	<description>Machine Learning over Question Answering Systems based on the QALD 5 benchmark</description>
-
+	<developers>
+		<developer>
+			<name>Ricardo Usbeck</name>
+			<url>http://aksw.org/RicardoUsbeck</url>
+			<organization>AKSW</organization>
+			<organizationUrl>http://aksw.org</organizationUrl>
+		</developer>
+	</developers>
 	<build>
 		<plugins>
 			<plugin>
@@ -18,6 +25,9 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<!-- <plugin> <artifactId>maven-resources-plugin</artifactId> <version>2.7</version> 
+				<configuration> <resources> <resource> <directory>src/main/resources</directory> 
+				</resource> </resources> <encoding>UTF-8</encoding> </configuration> </plugin> -->
 		</plugins>
 	</build>
 
@@ -26,6 +36,11 @@
 			<groupId>nz.ac.waikato.cms.weka</groupId>
 			<artifactId>weka-stable</artifactId>
 			<version>3.6.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aksw.qa</groupId>
+			<artifactId>commons</artifactId>
+			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
