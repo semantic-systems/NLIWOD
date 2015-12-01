@@ -5,11 +5,13 @@ import java.util.Set;
 
 import org.aksw.qa.commons.datastructure.Question;
 import org.aksw.qa.commons.utils.CollectionUtils;
+import org.apache.jena.ext.com.google.common.collect.Sets;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+//TODO rename class to AnswerBasedEvaluation and the other to SPARQLBasedEvaluation
 public class HybridEvaluation {
 	static Logger log = LoggerFactory.getLogger(HybridEvaluation.class);
 
@@ -100,6 +102,21 @@ public class HybridEvaluation {
 	}
 
 	public static double fMeasure(Set<RDFNode> systemAnswers, Question question) {
+		double precision = precision(systemAnswers, question);
+		double recall = recall(systemAnswers, question);
+		double fMeasure = 0;
+		if (precision + recall > 0) {
+			fMeasure = 2 * precision * recall / (precision + recall);
+		}
+		return fMeasure;
+	}
+
+	// TODO discard this once Jena has been removed from this project
+	public static double fMeasureString(Set<String> systemAnswersString, Question question) {
+		Set<RDFNode> systemAnswers = Sets.newHashSet();
+		for (String answer : systemAnswersString) {
+			systemAnswers.add(new ResourceImpl(answer));
+		}
 		double precision = precision(systemAnswers, question);
 		double recall = recall(systemAnswers, question);
 		double fMeasure = 0;
