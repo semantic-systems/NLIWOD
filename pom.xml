@@ -7,6 +7,7 @@
 	<name>Question Answering (QA) common utilities</name>
 	<description>Question Answering (QA) common utilities to load and store QA datasets and calculate performance measures. It provides also basic structures for building QA systems.</description>
 	<build>
+	
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -33,7 +34,17 @@
 	<packaging>jar</packaging>
 	<!-- Change this to pom if it is a multi-module project -->
 	<!-- <packaging>jar</packaging> -->
-
+<repositories>
+<repository>
+            <id>maven.aksw.internal</id>
+            <name>University Leipzig, AKSW Maven2 Repository</name>
+            <url>http://maven.aksw.org/archiva/repository/internal</url>
+        </repository>
+        <repository>
+            <id>maven.aksw.snapshots</id>
+            <name>University Leipzig, AKSW Maven2 Repository</name>
+            <url>http://maven.aksw.org/archiva/repository/snapshots</url>
+</repository></repositories>
 	<distributionManagement>
 		<repository>
 			<id>maven.aksw.internal</id>
@@ -50,16 +61,9 @@
 		<slf4j.version>1.7.5</slf4j.version>
 		<lucene.version>4.6.0</lucene.version>
 		<junit.version>4.11</junit.version>
-		<jena.version>2.11.1</jena.version>
 	</properties>
 	<dependencies>
 		<!-- jena: RDF API -->
-		<dependency>
-			<groupId>org.apache.jena</groupId>
-			<artifactId>apache-jena-libs</artifactId>
-			<type>pom</type>
-			<version>3.0.0</version>
-		</dependency>
 		<!-- junit: Unit testing Java classes -->
 		<dependency>
 			<groupId>junit</groupId>

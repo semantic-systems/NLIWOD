@@ -1,42 +1,22 @@
 package org.aksw.qa.commons.measure;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import org.apache.jena.query.Query;
-import org.apache.jena.query.QueryFactory;
-import org.apache.jena.query.ResultSet;
-import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
+import org.aksw.qa.commons.utils.SPARQLExecutor;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SPARQLEvaluationTest {
+public class SPARQLBasedEvaluationTest {
 	String endpoint = "http://dbpedia.org/sparql";
-	Logger logger = LoggerFactory.getLogger(SPARQLEvaluationTest.class);
+	Logger logger = LoggerFactory.getLogger(SPARQLBasedEvaluationTest.class);
 
 	@Test
 	public void testEndpointAvailibility() {
-		// Query should be validate for every Endpoint
-		String queryString = "SELECT * WHERE {?s ?p ?o} LIMIT 1";
-		// Validates Query String itself
-		Query query = QueryFactory.create(queryString);
-		QueryEngineHTTP qe = null;
-		try {
-			qe = new QueryEngineHTTP(endpoint, query);
-			ResultSet res = qe.execSelect();
-			// Is ResultSet == null Endpoint is with a high probability not
-			// available
-			assertNotNull(res);
-		} catch (Exception e) {
-			logger.debug("Endpoint is not available due to: ", e);
-			assertNotNull(null);
-		} finally {
-			// close QueryEngine
-			if (qe != null) {
-				qe.close();
-			}
-		}
+		assertTrue(SPARQLExecutor.isEndpointAlive("http://dbpedia.org/sparql"));
+		assertFalse(SPARQLExecutor.isEndpointAlive("http://dbpedia2.org/sparql"));
 	}
 
 	@Test
@@ -53,11 +33,11 @@ public class SPARQLEvaluationTest {
 				+ "?uri rdf:type dbo:Film ."
 				+ "?uri dbo:starring res:Julia_Roberts ."
 				+ "?uri dbo:director res:Garry_Marshall .}";
-		double precision = SPARQLEvaluation.precision(sparqlQuery,
+		double precision = SPARQLBasedEvaluation.precision(sparqlQuery,
 				targetSPARQLQuery, endpoint);
-		double recall = SPARQLEvaluation.recall(sparqlQuery, targetSPARQLQuery,
+		double recall = SPARQLBasedEvaluation.recall(sparqlQuery, targetSPARQLQuery,
 				endpoint);
-		double fMeasure = SPARQLEvaluation.fMeasure(sparqlQuery,
+		double fMeasure = SPARQLBasedEvaluation.fMeasure(sparqlQuery,
 				targetSPARQLQuery, endpoint);
 		assertEquals(0.0571, precision, 0.001);
 		assertEquals(1.0, recall, 0.0);
@@ -86,11 +66,11 @@ public class SPARQLEvaluationTest {
 				+ "?uri rdf:type dbo:Film ."
 				+ "?uri dbo:starring res:Julia_Roberts ."
 				+ "?uri dbo:director res:Garry_Marshall .}";
-		double precision = SPARQLEvaluation.precision(sparqlQuery,
+		double precision = SPARQLBasedEvaluation.precision(sparqlQuery,
 				targetSPARQLQuery, endpoint);
-		double recall = SPARQLEvaluation.recall(sparqlQuery, targetSPARQLQuery,
+		double recall = SPARQLBasedEvaluation.recall(sparqlQuery, targetSPARQLQuery,
 				endpoint);
-		double fMeasure = SPARQLEvaluation.fMeasure(sparqlQuery,
+		double fMeasure = SPARQLBasedEvaluation.fMeasure(sparqlQuery,
 				targetSPARQLQuery, endpoint);
 
 		logger.debug(Thread.currentThread().getStackTrace()[1].getMethodName());

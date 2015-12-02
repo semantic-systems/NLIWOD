@@ -1,10 +1,10 @@
 package org.aksw.qa.commons.datastructure;
 
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.aksw.qa.commons.utils.CollectionUtils;
 
 public class Question {
 
@@ -16,10 +16,10 @@ public class Question {
 	public Boolean onlydbo;
 	public Boolean outOfScope;
 	public Boolean hybrid;
-	public Map<String, String> languageToQuestion = new LinkedHashMap<String, String>();
-	public Map<String, List<String>> languageToKeywords = new LinkedHashMap<String, List<String>>();
-	public Set<String> goldenAnswers = new HashSet<String>();
-
+	public Map<String, String> languageToQuestion = CollectionUtils.newLinkedHashMap();
+	public Map<String, List<String>> languageToKeywords = CollectionUtils.newLinkedHashMap();
+	public Set<String> goldenAnswers = CollectionUtils.newHashSet();
+	
 	@Override
 	public String toString() {
 		return "Question [id=" + id + ", answerType=" + answerType + ", pseudoSparqlQuery=" + pseudoSparqlQuery + ", sparqlQuery=" + sparqlQuery + ", aggregation=" + aggregation + ", onlydbo="
