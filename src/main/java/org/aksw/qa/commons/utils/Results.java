@@ -1,6 +1,6 @@
 package org.aksw.qa.commons.utils;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -8,8 +8,8 @@ import java.util.Set;
 public class Results implements Iterator<List<String>>{
 
 	private int row=0;
-	public List<String> header = new ArrayList<String>();
-	public List<List<String>> table = new ArrayList<List<String>>();
+	public List<String> header = new LinkedList<String>();
+	public List<List<String>> table = new LinkedList<List<String>>();
 	
 	@Override
 	public boolean hasNext() {

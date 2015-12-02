@@ -38,6 +38,20 @@ public class SPARQLExecutorTest {
 	}
 	
 	@Test
+	public void testResultsSet(){
+		Results res = SPARQLExecutor.executeSelect("PREFIX foaf:    <http://xmlns.com/foaf/0.1/> SELECT ?s ?o FROM <http://dbpedia.org> {?s foaf:name ?o} LIMIT 2", "http://dbpedia.org/sparql");
+		String[] expecteds = new String[4];
+		expecteds[0]="http://dbpedia.org/resource/Academy_Award_(radio)";
+		expecteds[1]="\"Academy Award\"@en";
+		expecteds[2]="http://dbpedia.org/resource/Archive_(band)";
+		expecteds[3]="\"Archive\"@en";	
+		Object[] actuals = res.getStringSet().toArray();
+		Arrays.sort(expecteds);
+		Arrays.sort(actuals);
+		assertArrayEquals(expecteds, actuals);
+	}
+	
+	@Test
 	public void testResults(){
 		Results res = SPARQLExecutor.executeSelect("SELECT ?s ?o FROM <http://dbpedia.org> {?s ?p ?o} LIMIT 2", "http://dbpedia.org/sparql");
 		assertTrue(res.header.size()==2);
