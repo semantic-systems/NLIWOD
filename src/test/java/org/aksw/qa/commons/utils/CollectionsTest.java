@@ -10,10 +10,9 @@ import org.junit.Test;
 
 public class CollectionsTest {
 
-	
 	@Test
-	public void testIntersect(){
-		//{a, b, c, d, e, abc, def}
+	public void testIntersect() {
+		// {a, b, c, d, e, abc, def}
 		Set<String> set1 = new HashSet<String>();
 		set1.add("a");
 		set1.add("b");
@@ -22,31 +21,31 @@ public class CollectionsTest {
 		set1.add("e");
 		set1.add("abc");
 		set1.add("def");
-		
-		//{a, d, abc, dfe}
+
+		// {a, d, abc, dfe}
 		Set<String> set2 = new HashSet<String>();
 		set2.add("a");
 		set2.add("d");
 		set2.add("abc");
 		set2.add("dfe");
-		
+
 		Set<String> expected = new HashSet<String>();
 		expected.add("a");
 		expected.add("d");
 		expected.add("abc");
-		
-		//{a, d, abc}
+
+		// {a, d, abc}
 		Set<String> intersect = CollectionUtils.intersection(set1, set2);
-		
-		System.out.println("Set1 : "+set1);
-		System.out.println("Set2 : "+set2);
-		System.out.println("Intersect : "+intersect);
-		
+
+		System.out.println("Set1 : " + set1);
+		System.out.println("Set2 : " + set2);
+		System.out.println("Intersect : " + intersect);
+
 		Object[] actual = intersect.toArray();
 		Object[] expectedA = expected.toArray();
 		Arrays.sort(actual);
 		Arrays.sort(expectedA);
-		
+
 		assertArrayEquals(expectedA, actual);
 	}
 }

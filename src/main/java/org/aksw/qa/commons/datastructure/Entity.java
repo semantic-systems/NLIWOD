@@ -30,9 +30,9 @@ public class Entity implements Serializable, Comparable<Entity> {
 	}
 
 	/*
-	 *
+	 * 
 	 * Currently, two entities are compared by their labels
-	 *
+	 * 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
@@ -50,7 +50,7 @@ public class Entity implements Serializable, Comparable<Entity> {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -72,7 +72,7 @@ public class Entity implements Serializable, Comparable<Entity> {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -85,7 +85,7 @@ public class Entity implements Serializable, Comparable<Entity> {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
