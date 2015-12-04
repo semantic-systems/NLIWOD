@@ -16,7 +16,7 @@ public class ExtractFeature {
 	static Logger log = LoggerFactory.getLogger(ExtractFeature.class);
 
 	public static void main(String[] args) {
-		InputStream file = ClassLoader.getSystemResourceAsStream("QALD-5/qald-5_train.xml");
+		InputStream file = ClassLoader.getSystemResourceAsStream("QALD-5/qald-5_test.xml");
 		List<Question> questions = QALD_Loader.load(file);
 
 		Analyzer analyzer = new Analyzer();
@@ -26,7 +26,6 @@ public class ExtractFeature {
 		for (Question q : questions) {
 			// calculate features
 			Instance tmp = analyzer.analyze(q.languageToQuestion.get("en"));
-
 			// output feature vector
 			log.debug(tmp.toString());
 
