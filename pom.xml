@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>commons</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>Question Answering (QA) common utilities</name>
 	<description>Question Answering (QA) common utilities to load and store QA datasets and calculate performance measures. It provides also basic structures for building QA systems.</description>
 	<build>
@@ -69,12 +69,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.4</version>
-		</dependency>
-		<!-- slf4j: Logging API -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<!-- slf4j: Logging Binding -->
 		<dependency>

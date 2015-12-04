@@ -22,14 +22,13 @@ import org.aksw.qa.commons.load.Dataset;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-
 //so the eval tool works http://greententacle.techfak.uni-bielefeld.de/~cunger/qald/index.php?x=evaltool&q=5 
 public class StoreQALDXML {
-	
+
 	private Dataset dataset;
 	private List<Element> questions;
 	private Document doc;
-	
+
 	public StoreQALDXML(Dataset dataset) throws IOException, ParserConfigurationException {
 		this.dataset = dataset;
 		questions = new ArrayList<Element>();
@@ -38,13 +37,12 @@ public class StoreQALDXML {
 		doc = db.newDocument();
 
 	}
-	
 
 	public static void main(String[] args) throws IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 
 		String dataset = "QALD5_Train";
 		StoreQALDXML qw = new StoreQALDXML(Dataset.valueOf(dataset));
-		
+
 		StringBuilder sb = new StringBuilder();
 		sb.append("PREFIX text:<http://jena.apache.org/text#> \n");
 		sb.append("SELECT DISTINCT ?proj WHERE {\n ");
@@ -62,7 +60,6 @@ public class StoreQALDXML {
 		qw.write(question, query, answerSet, question_id);
 		qw.close();
 	}
-	
 
 	public void close() throws IOException, TransformerFactoryConfigurationError, TransformerException {
 		Element root = doc.createElement("dataset");
@@ -75,7 +72,7 @@ public class StoreQALDXML {
 		Transformer transformer = TransformerFactory.newInstance().newTransformer();
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		DOMSource source = new DOMSource(doc);
-		StreamResult file = new StreamResult(new File("answer_" + dataset+".xml"));
+		StreamResult file = new StreamResult(new File("answer_" + dataset + ".xml"));
 		transformer.transform(source, file);
 
 		System.out.println("\nXML DOM Created Successfully..");
@@ -88,7 +85,7 @@ public class StoreQALDXML {
 			if (questionID != null) {
 				question.setAttribute("id", String.valueOf(questionID));
 			}
-			// TODO adapt to be more flexible
+			// TODO adapt to be more flexible. therefore use the question object to write an XML instead of four parameters
 			question.setAttribute("answertype", "resource");
 			question.setAttribute("aggregation", "false");
 			question.setAttribute("onlydbo", "true");

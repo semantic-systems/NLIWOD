@@ -20,9 +20,11 @@ public class SPARQLBasedEvaluation {
 	private static Logger logger = LoggerFactory.getLogger(SPARQLBasedEvaluation.class);
 
 	public static double precision(String sparqlQueryString, String targetSPARQLQueryString, String endpoint) {
-//		Query sparqlQuery = QueryFactory.create(sparqlQueryString, Syntax.syntaxARQ);
-//		sparqlQuery.setDistinct(true);
-//		Query targetSPARQLQuery = QueryFactory.create(targetSPARQLQueryString, Syntax.syntaxARQ);
+		// Query sparqlQuery = QueryFactory.create(sparqlQueryString,
+		// Syntax.syntaxARQ);
+		// sparqlQuery.setDistinct(true);
+		// Query targetSPARQLQuery =
+		// QueryFactory.create(targetSPARQLQueryString, Syntax.syntaxARQ);
 
 		double precision = 0;
 		if (isSelectType(sparqlQueryString) && isSelectType(targetSPARQLQueryString)) {
@@ -45,14 +47,16 @@ public class SPARQLBasedEvaluation {
 	}
 
 	public static double recall(String sparqlQueryString, String targetSPARQLQueryString, String endpoint) {
-//		Query sparqlQuery = QueryFactory.create(sparqlQueryString, Syntax.syntaxARQ);
-//		sparqlQuery.setDistinct(true);
-//		Query targetSPARQLQuery = QueryFactory.create(targetSPARQLQueryString, Syntax.syntaxARQ);
+		// Query sparqlQuery = QueryFactory.create(sparqlQueryString,
+		// Syntax.syntaxARQ);
+		// sparqlQuery.setDistinct(true);
+		// Query targetSPARQLQuery =
+		// QueryFactory.create(targetSPARQLQueryString, Syntax.syntaxARQ);
 
 		double recall = 0;
 		if (isSelectType(sparqlQueryString) && isSelectType(targetSPARQLQueryString)) {
 			// if queries contain aggregation return always 1
-			if (hasAggregations(sparqlQueryString)&& hasAggregations(targetSPARQLQueryString)) {
+			if (hasAggregations(sparqlQueryString) && hasAggregations(targetSPARQLQueryString)) {
 				return 1;
 			}
 			Set<String> nodes = SPARQLExecutor.executeSelect(sparqlQueryString, endpoint).getStringSet();
@@ -69,8 +73,6 @@ public class SPARQLBasedEvaluation {
 		}
 		return recall;
 	}
-	
-	
 
 	public static double fMeasure(String sparqlQuery, String targetSPARQLQuery, String endpoint) {
 		double precision = precision(sparqlQuery, targetSPARQLQuery, endpoint);
@@ -90,8 +92,8 @@ public class SPARQLBasedEvaluation {
 		return sparqlQuery.contains("\nSELECT\n") || sparqlQuery.contains("SELECT ");
 	}
 
-	private static boolean hasAggregations(String query){
-		if(query.toLowerCase().contains("count") || query.toLowerCase().contains("sum")){
+	private static boolean hasAggregations(String query) {
+		if (query.toLowerCase().contains("count") || query.toLowerCase().contains("sum")) {
 			return true;
 		}
 		return false;

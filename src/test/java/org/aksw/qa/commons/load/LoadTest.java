@@ -9,6 +9,8 @@ import org.junit.Test;
 public class LoadTest {
 
 	@Test
+	// TODO use small snippets of test files under src/test/resources instead of
+	// qa-datasets
 	public void loadQALD5Test() {
 		List<Question> load = QALD_Loader.load(Dataset.QALD5_Test);
 		Assert.assertTrue(load.size() == 59);

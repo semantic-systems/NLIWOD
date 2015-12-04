@@ -19,12 +19,12 @@ public class Question {
 	public Map<String, String> languageToQuestion = CollectionUtils.newLinkedHashMap();
 	public Map<String, List<String>> languageToKeywords = CollectionUtils.newLinkedHashMap();
 	public Set<String> goldenAnswers = CollectionUtils.newHashSet();
-	
+
 	@Override
 	public String toString() {
 		return "Question [id=" + id + ", answerType=" + answerType + ", pseudoSparqlQuery=" + pseudoSparqlQuery + ", sparqlQuery=" + sparqlQuery + ", aggregation=" + aggregation + ", onlydbo="
-				+ onlydbo + ", outOfScope=" + outOfScope + ", hybrid=" + hybrid + ", languageToQuestion=" + languageToQuestion + ", languageToKeywords=" + languageToKeywords + ", goldenAnswers="
-				+ goldenAnswers + "]";
+		        + onlydbo + ", outOfScope=" + outOfScope + ", hybrid=" + hybrid + ", languageToQuestion=" + languageToQuestion + ", languageToKeywords=" + languageToKeywords + ", goldenAnswers="
+		        + goldenAnswers + "]";
 	}
 
 }

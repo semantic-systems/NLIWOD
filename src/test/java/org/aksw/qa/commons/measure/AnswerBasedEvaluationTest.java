@@ -1,6 +1,7 @@
 package org.aksw.qa.commons.measure;
 
 import static org.junit.Assert.assertEquals;
+
 import java.util.Set;
 
 import org.aksw.qa.commons.datastructure.Question;
@@ -13,16 +14,15 @@ public class AnswerBasedEvaluationTest {
 
 	Logger logger = LoggerFactory.getLogger(AnswerBasedEvaluationTest.class);
 
-
 	@Test
 	public void testTooGenericQuery() {
-		
-		Set<String> systemAnswer=tooGenericAnswers();
+
+		Set<String> systemAnswer = tooGenericAnswers();
 		Question question = getQuestion();
 		double precision = AnswerBasedEvaluation.precision(systemAnswer, question);
 		double recall = AnswerBasedEvaluation.recall(systemAnswer, question);
 		double fMeasure = AnswerBasedEvaluation.fMeasure(systemAnswer, question);
-		
+
 		assertEquals(0.444, precision, 0.001);
 		assertEquals(1.0, recall, 0.0);
 		assertEquals(0.615, fMeasure, 0.001);
@@ -36,12 +36,12 @@ public class AnswerBasedEvaluationTest {
 
 	@Test
 	public void testTooSpecificQuery() {
-		Set<String> systemAnswer=tooSpecificAnswers();
+		Set<String> systemAnswer = tooSpecificAnswers();
 		Question question = getQuestion();
 		double precision = AnswerBasedEvaluation.precision(systemAnswer, question);
 		double recall = AnswerBasedEvaluation.recall(systemAnswer, question);
 		double fMeasure = AnswerBasedEvaluation.fMeasure(systemAnswer, question);
-		
+
 		assertEquals(1, precision, 0);
 		assertEquals(0.75, recall, 0.0);
 		assertEquals(0.857, fMeasure, 0.001);
@@ -52,11 +52,12 @@ public class AnswerBasedEvaluationTest {
 		logger.debug("F=" + fMeasure);
 	}
 
-	//TODO Generate AnswerSets and Questions
-	//Question
-	private Set<String> tooGenericAnswers(){
+	// TODO Generate AnswerSets and Questions
+	// Question
+	private Set<String> tooGenericAnswers() {
 		Set<String> ret = CollectionUtils.newHashSet();
-		//Generic SPARQL: "SELECT ?pers {?pers rdf:type <http://dbpedia.org/prop/worker> }"
+		// Generic SPARQL:
+		// "SELECT ?pers {?pers rdf:type <http://dbpedia.org/prop/worker> }"
 		ret.add("http://dbpedia.org/WorkerA");
 		ret.add("http://dbpedia.org/WorkerB");
 		ret.add("http://dbpedia.org/WorkerC");
@@ -68,30 +69,30 @@ public class AnswerBasedEvaluationTest {
 		ret.add("http://dbpedia.org/ManagerC");
 		return ret;
 	}
-	
-	private Set<String> tooSpecificAnswers(){
+
+	private Set<String> tooSpecificAnswers() {
 		Set<String> ret = CollectionUtils.newHashSet();
-		//Generic SPARQL: "SELECT ?pers {?pers rdf:type <http://dbpedia.org/prop/worker> .
-		// ?pers <http://dbpedia.org/prop/division> <http://dbpedia.org/DivisionA> .
+		// Generic SPARQL: "SELECT ?pers {?pers rdf:type
+		// <http://dbpedia.org/prop/worker> .
+		// ?pers <http://dbpedia.org/prop/division>
+		// <http://dbpedia.org/DivisionA> .
 		// ?pers <http://dbpedia.org/prop/job> <http://dbpedia.org/employee>}"
 		ret.add("http://dbpedia.org/WorkerA");
 		ret.add("http://dbpedia.org/WorkerB");
 		ret.add("http://dbpedia.org/WorkerC");
 		return ret;
 	}
-	
-	private Question getQuestion(){
-		Question q =  new Question();
-		q.aggregation=false;
-		q.pseudoSparqlQuery="SELECT ?pers {?pers <http://dbpedia.org/prop/division> <http://dbpedia.org/DivisionA> . "
-				+ " ?pers rdf:type <http://dbpedia.org/prop/worker> }";
-		q.goldenAnswers=getGoldenAnswers();
+
+	private Question getQuestion() {
+		Question q = new Question();
+		q.aggregation = false;
+		q.pseudoSparqlQuery = "SELECT ?pers {?pers <http://dbpedia.org/prop/division> <http://dbpedia.org/DivisionA> . " + " ?pers rdf:type <http://dbpedia.org/prop/worker> }";
+		q.goldenAnswers = getGoldenAnswers();
 		return q;
 	}
 
-	
-	private Set<String> getGoldenAnswers(){
-		//Golden Answer
+	private Set<String> getGoldenAnswers() {
+		// Golden Answer
 		Set<String> ret = CollectionUtils.newHashSet();
 		ret.add("http://dbpedia.org/WorkerA");
 		ret.add("http://dbpedia.org/WorkerB");
@@ -99,5 +100,5 @@ public class AnswerBasedEvaluationTest {
 		ret.add("http://dbpedia.org/ManagerA");
 		return ret;
 	}
-	
+
 }
