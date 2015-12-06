@@ -26,6 +26,12 @@ public class SearchBestQALDResult {
 		File QALD5Logs = new File(classLoader.getResource("QALD-5_logs/").getFile());
 
 		searchBestRun(QALD5Question, QALD5Logs);
+
+		QALD5Question = QALD_Loader.load(Dataset.QALD5_Test);
+
+		QALD5Logs = new File(classLoader.getResource("QALD-5_logs/").getFile());
+
+		searchBestRun(QALD5Question, QALD5Logs);
 	}
 
 	private static List<Run> searchBestRun(List<Question> QALD5Question, File QALD5Logs) throws FileNotFoundException {
