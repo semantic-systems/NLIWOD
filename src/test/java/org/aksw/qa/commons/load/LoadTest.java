@@ -19,9 +19,12 @@ public class LoadTest {
 			Assert.assertNotNull(q.answerType);
 			Assert.assertTrue(q.pseudoSparqlQuery != null || q.sparqlQuery != null);
 			Assert.assertNotNull(q.languageToQuestion);
+			Assert.assertFalse(q.languageToQuestion.values().isEmpty());
 			Assert.assertNotNull(q.languageToKeywords);
 			System.out.println(q);
 			Assert.assertTrue(q.goldenAnswers != null && q.answerType.matches("resource||boolean||number||date||string"));
 		}
 	}
+
+	// TODO write unit test for train
 }
