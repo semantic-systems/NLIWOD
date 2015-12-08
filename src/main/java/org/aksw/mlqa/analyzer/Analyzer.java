@@ -9,6 +9,7 @@ import weka.core.Instance;
 public class Analyzer {
 
 	private ArrayList<IAnalyzer> analyzers;
+	private Attribute fmeasureAtt = new Attribute("fmeasure");
 	public FastVector fvWekaAttributes = new FastVector();
 
 	/**
@@ -28,6 +29,8 @@ public class Analyzer {
 		for (IAnalyzer analyzer : analyzers) {
 			fvWekaAttributes.addElement(analyzer.getAttribute());
 		}
+		// put the fmeasure/class attribute
+		fvWekaAttributes.addElement(fmeasureAtt);
 	}
 
 	/**
@@ -38,7 +41,7 @@ public class Analyzer {
 	 */
 	public Instance analyze(String q) {
 		// +1 to later add class attribute
-		Instance tmpInstance = new Instance(fvWekaAttributes.size() + 1);
+		Instance tmpInstance = new Instance(fvWekaAttributes.size());
 		// the feature adds itself to the instance
 		for (IAnalyzer analyzer : analyzers) {
 			Attribute attribute = analyzer.getAttribute();
@@ -51,6 +54,10 @@ public class Analyzer {
 
 		return tmpInstance;
 
+	}
+
+	public Attribute getClassAttribute() {
+		return fmeasureAtt;
 	}
 
 }

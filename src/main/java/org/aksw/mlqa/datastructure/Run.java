@@ -1,5 +1,7 @@
 package org.aksw.mlqa.datastructure;
 
+import java.util.Map;
+
 public class Run {
 
 	public String getName() {
@@ -29,11 +31,20 @@ public class Run {
 	private String name;
 	private String submission;
 	private Object fmeasure;
+	private Map<String,Double> map;
 
-	public Run(String name, String submissionMax, double fMax) {
+	public Run(String name) {
 		this.name = name;
-		this.submission = submissionMax;
-		this.fmeasure = fMax;
 	}
+
+
+	public Map<String,Double> getMap() {
+	    return map;
+    }
+
+	public void setMap(Map<String,Double> map) {
+		// stores the fmeasures for each question
+	    this.map = map;
+    }
 
 }
