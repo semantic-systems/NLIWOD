@@ -1,0 +1,90 @@
+package org.aksw.mlqa.experiment;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.aksw.mlqa.analyzer.Analyzer;
+import org.aksw.mlqa.datastructure.Run;
+import org.aksw.qa.commons.datastructure.Question;
+import org.aksw.qa.commons.load.Dataset;
+import org.aksw.qa.commons.load.QALD_Loader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import weka.core.Attribute;
+import weka.core.Instance;
+import weka.core.Instances;
+
+public class SimpleClassification {
+	static Logger log = LoggerFactory.getLogger(SimpleClassification.class);
+
+	public static void main(String[] args) throws FileNotFoundException {
+
+		// 1. Learn on the training data for each system a classifier to find
+		// out which system can answer which question
+
+		// 1.1 load the questions and how good each system answers
+		log.debug("Load the questions and how good each system answers");
+		List<Question> trainQuestions = QALD_Loader.load(Dataset.QALD5_Train);
+
+		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+		File QALD5Logs = new File(classLoader.getResource("QALD-5_logs/").getFile());
+
+		List<Run> runs = SearchBestQALDResult.searchBestRun(trainQuestions, QALD5Logs);
+
+		// 1.2 calculate the features per question and system
+		log.debug("Calculate the features per question and system");
+
+		Analyzer analyzer = new Analyzer();
+		// Create an empty training set per system
+		Map<Run, Instances> map = new HashMap<Run, Instances>();
+		for (Run run : runs) {
+			Instances isTrainingSet = new Instances("training_" + run.getName(), analyzer.fvWekaAttributes, trainQuestions.size());
+			// set class attribute
+			isTrainingSet.setClass(analyzer.getClassAttribute());
+			map.put(run, isTrainingSet);
+		}
+
+		log.debug("Start collection of training data for each system");
+
+		for (Run run : runs) {
+			Instances instances = map.get(run);
+			for (Question q : trainQuestions) {
+				// calculate features
+				Instance tmp = analyzer.analyze(q.languageToQuestion.get("en"));
+
+				// get f-measure of the system for this question
+				// check whether the system has that answer anyway
+				Double fmeasure = 0.0;
+				if (run.getMap().containsKey(q.languageToQuestion.get("en"))) {
+					fmeasure = run.getMap().get(q.languageToQuestion.get("en"));
+				}
+
+				// add to instances of the particular system
+				tmp.setValue((Attribute) analyzer.getClassAttribute(), fmeasure);
+				instances.add(tmp);
+			}
+			log.debug(instances.toSummaryString());
+		}
+		//TODO since many systems submit only a subset of questions, take all submitted logs together and optimize best training set for each system by remembering the best f-measure for each question. Hope is, we get less sparse instances
+		
+		// 2.3 use machine learning to train it
+		log.debug("Start machine learning");
+		// TODO iterate the classifiers here?
+
+		// 3. Use the classifier model to decide which system should answer the
+		// current question and measure the performance
+		List<Question> testQuestions = QALD_Loader.load(Dataset.QALD5_Test);
+
+		for (Question q : testQuestions) {
+			// TODO calculate features per question
+
+			// TODO decide which system to use
+
+			// TODO calculate f-measure
+		}
+	}
+}
