@@ -14,6 +14,13 @@
 			<organizationUrl>http://aksw.org</organizationUrl>
 		</developer>
 	</developers>
+	<repositories>
+		<repository>
+			<id>Apache Repo Central</id>
+			<name>Apache Repository</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+		</repository>
+	</repositories>
 	<build>
 		<plugins>
 			<plugin>
@@ -41,6 +48,18 @@
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>commons</artifactId>
 			<version>0.0.4-SNAPSHOT</version>
+		</dependency>
+		<!-- JSON for FOX -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<!-- RDF parsing for FOX -->
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>jena-core</artifactId>
+			<version>3.0.0</version>
 		</dependency>
 	</dependencies>
 </project>
