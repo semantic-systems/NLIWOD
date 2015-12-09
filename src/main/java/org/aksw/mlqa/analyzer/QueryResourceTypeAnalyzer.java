@@ -1,9 +1,11 @@
 package org.aksw.mlqa.analyzer;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.jena.atlas.logging.Log;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,9 +39,13 @@ public class QueryResourceTypeAnalyzer implements IAnalyzer {
 	@Override
 	public Object analyze(String q) {
 		log.debug("String question: " + q);
-
-		Map<String, List<Entity>> entities = fox.getEntities(q);
-		log.debug(entities.toString());
+		Map<String, List<Entity>> entities = null;
+		try {
+			entities = fox.getEntities(q);
+			log.debug(entities.toString());
+		} catch (IOException | ParseException e) {
+			log.error("FOX error");
+		}
 		return "Place";
 
 	}

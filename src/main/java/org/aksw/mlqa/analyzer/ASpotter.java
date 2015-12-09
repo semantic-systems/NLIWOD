@@ -12,19 +12,16 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.parser.ParseException;
+
 public abstract class ASpotter {
 
-	public abstract Map<String, List<Entity>> getEntities(String question);
+	public abstract Map<String, List<Entity>> getEntities(String question) throws MalformedURLException, ProtocolException, IOException, ParseException;
 
-	protected String requestPOST(String input, String requestURL) {
-		try {
-			String output = POST(input, requestURL);
+	protected String requestPOST(String input, String requestURL) throws MalformedURLException, ProtocolException, IOException {
+		String output = POST(input, requestURL);
 
-			return output;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return output;
 	}
 
 	private String POST(String urlParameters, String requestURL) throws MalformedURLException, IOException, ProtocolException {

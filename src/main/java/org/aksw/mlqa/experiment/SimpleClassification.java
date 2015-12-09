@@ -56,6 +56,7 @@ public class SimpleClassification {
 
 		for (Run run : runs) {
 			Instances instances = instancesPerRun.get(run);
+			//TODO fix this, it calculates each feature per question $runs.size() times
 			for (Question q : trainQuestions) {
 				// calculate features
 				Instance tmp = analyzer.analyze(q.languageToQuestion.get("en"));

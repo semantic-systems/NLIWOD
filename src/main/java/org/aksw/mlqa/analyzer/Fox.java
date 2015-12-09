@@ -50,89 +50,101 @@ public class Fox extends ASpotter {
 	 * @see org.aksw.hawk.nlp.NERD_module#getEntities(java.lang.String)
 	 */
 	@Override
-	public Map<String, List<Entity>> getEntities(String question) {
+	public Map<String, List<Entity>> getEntities(String question) throws MalformedURLException, ProtocolException, IOException, ParseException {
 		HashMap<String, List<Entity>> tmp = new HashMap<String, List<Entity>>();
-		try {
-			String foxJSONOutput = doTASK(question);
-			System.out.println(foxJSONOutput);
-			JSONParser parser = new JSONParser();
-			JSONObject jsonArray = (JSONObject) parser.parse(foxJSONOutput);
-			String output = URLDecoder.decode((String) jsonArray.get("output"), "UTF-8");
-			log.debug(output);
-			String baseURI = "http://dbpedia.org";
-			Model model = ModelFactory.createDefaultModel();
-			RDFReader r = model.getReader("N3");
-			r.read(model, new StringReader(output), baseURI);
+		String foxJSONOutput = doTASK(question);
+		log.debug(foxJSONOutput);
+		JSONParser parser = new JSONParser();
+		JSONObject jsonArray = (JSONObject) parser.parse(foxJSONOutput);
+		String output = URLDecoder.decode((String) jsonArray.get("output"), "UTF-8");
+		log.debug(output);
+		String baseURI = "http://dbpedia.org";
+		Model model = ModelFactory.createDefaultModel();
+		RDFReader r = model.getReader("N3");
+		r.read(model, new StringReader(output), baseURI);
 
-			ResIterator iter = model.listSubjects();
-			ArrayList<Entity> tmpList = new ArrayList<>();
-			while (iter.hasNext()) {
-				Resource next = iter.next();
-				StmtIterator statementIter = next.listProperties();
-				Entity ent = new Entity();
-				while (statementIter.hasNext()) {
-					Statement statement = statementIter.next();
-					String predicateURI = statement.getPredicate().getURI();
-					if (predicateURI.equals("http://www.w3.org/2000/10/annotation-ns#body")) {
-						ent.label = statement.getObject().asLiteral().getString();
-					} else if (predicateURI.equals("http://ns.aksw.org/scms/means")) {
-						String uri = statement.getObject().asResource().getURI();
-						String encode = uri.replaceAll(",", "%2C");
-						ResourceImpl e = new ResourceImpl(encode);
-						ent.uris.add(e);
-					} else if (predicateURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) {
-						ent.posTypesAndCategories.add(statement.getObject().asResource());
-					}
+		ResIterator iter = model.listSubjects();
+		ArrayList<Entity> tmpList = new ArrayList<>();
+		while (iter.hasNext()) {
+			Resource next = iter.next();
+			StmtIterator statementIter = next.listProperties();
+			Entity ent = new Entity();
+			while (statementIter.hasNext()) {
+				Statement statement = statementIter.next();
+				String predicateURI = statement.getPredicate().getURI();
+				if (predicateURI.equals("http://www.w3.org/2000/10/annotation-ns#body")) {
+					ent.label = statement.getObject().asLiteral().getString();
+				} else if (predicateURI.equals("http://ns.aksw.org/scms/means")) {
+					String uri = statement.getObject().asResource().getURI();
+					String encode = uri.replaceAll(",", "%2C");
+					ResourceImpl e = new ResourceImpl(encode);
+					ent.uris.add(e);
+				} else if (predicateURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) {
+					ent.posTypesAndCategories.add(statement.getObject().asResource());
 				}
-				tmpList.add(ent);
 			}
-			tmp.put("en", tmpList);
-
-		} catch (IOException | ParseException e) {
-			log.error("Could not call FOX for NER/NED", e);
+			tmpList.add(ent);
 		}
+		tmp.put("en", tmpList);
+
 		return tmp;
 	}
 
-	public static void main(String args[]) {
+	// TODO transform to unit test
+	public static void main(String args[]) throws MalformedURLException, ProtocolException, IOException, ParseException {
 		ASpotter fox = new Fox();
 		Map<String, List<Entity>> tmp = fox.getEntities("Which buildings in art deco style did Shreve, Lamb and Harmon design?");
 		for (String key : tmp.keySet()) {
-			System.out.println(key);
+			log.debug(key);
 			for (Entity entity : tmp.get(key)) {
-				System.out.println("\t" + entity.label + " ->" + entity.type);
+				log.debug("\t" + entity.label + " ->" + entity.type);
 				for (Resource r : entity.posTypesAndCategories) {
-					System.out.println("\t\tpos: " + r);
+					log.debug("\t\tpos: " + r);
 				}
 				for (Resource r : entity.uris) {
-					System.out.println("\t\turi: " + r);
+					log.debug("\t\turi: " + r);
 				}
 			}
 		}
 		tmp = fox.getEntities("Where was President Obama born?");
 		for (String key : tmp.keySet()) {
-			System.out.println(key);
+			log.debug(key);
 			for (Entity entity : tmp.get(key)) {
-				System.out.println("\t" + entity.label + " ->" + entity.type);
+				log.debug("\t" + entity.label + " ->" + entity.type);
 				for (Resource r : entity.posTypesAndCategories) {
-					System.out.println("\t\tpos: " + r);
+					log.debug("\t\tpos: " + r);
 				}
 				for (Resource r : entity.uris) {
-					System.out.println("\t\turi: " + r);
+					log.debug("\t\turi: " + r);
 				}
 			}
 		}
 
-		tmp = fox.getEntities("Give me all cosmonauts.");
+		tmp = fox.getEntities("Give me all taikonauts.");
 		for (String key : tmp.keySet()) {
-			System.out.println(key);
+			log.debug(key);
 			for (Entity entity : tmp.get(key)) {
-				System.out.println("\t" + entity.label + " ->" + entity.type);
+				log.debug("\t" + entity.label + " ->" + entity.type);
 				for (Resource r : entity.posTypesAndCategories) {
-					System.out.println("\t\tpos: " + r);
+					log.debug("\t\tpos: " + r);
 				}
 				for (Resource r : entity.uris) {
-					System.out.println("\t\turi: " + r);
+					log.debug("\t\turi: " + r);
+				}
+			}
+		}
+
+		log.debug("ERROR below");
+		tmp = fox.getEntities("Give me all cosmonauts.");
+		for (String key : tmp.keySet()) {
+			log.debug(key);
+			for (Entity entity : tmp.get(key)) {
+				log.debug("\t" + entity.label + " ->" + entity.type);
+				for (Resource r : entity.posTypesAndCategories) {
+					log.debug("\t\tpos: " + r);
+				}
+				for (Resource r : entity.uris) {
+					log.debug("\t\turi: " + r);
 				}
 			}
 		}
