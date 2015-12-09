@@ -2,6 +2,7 @@ package org.aksw.mlqa.analyzer;
 
 import weka.core.Attribute;
 import weka.core.FastVector;
+import weka.core.Instance;
 
 //TODO write unit test for this analyzer
 public class QuestionTypeAnalyzer implements IAnalyzer {

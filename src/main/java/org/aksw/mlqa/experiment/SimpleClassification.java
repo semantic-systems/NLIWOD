@@ -1,7 +1,6 @@
 package org.aksw.mlqa.experiment;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,14 +13,19 @@ import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import weka.classifiers.Classifier;
+import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.trees.J48;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
+import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.NumericToNominal;
 
 public class SimpleClassification {
 	static Logger log = LoggerFactory.getLogger(SimpleClassification.class);
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws Exception {
 
 		// 1. Learn on the training data for each system a classifier to find
 		// out which system can answer which question
@@ -40,18 +44,18 @@ public class SimpleClassification {
 
 		Analyzer analyzer = new Analyzer();
 		// Create an empty training set per system
-		Map<Run, Instances> map = new HashMap<Run, Instances>();
+		Map<Run, Instances> instancesPerRun = new HashMap<Run, Instances>();
 		for (Run run : runs) {
 			Instances isTrainingSet = new Instances("training_" + run.getName(), analyzer.fvWekaAttributes, trainQuestions.size());
 			// set class attribute
 			isTrainingSet.setClass(analyzer.getClassAttribute());
-			map.put(run, isTrainingSet);
+			instancesPerRun.put(run, isTrainingSet);
 		}
 
 		log.debug("Start collection of training data for each system");
 
 		for (Run run : runs) {
-			Instances instances = map.get(run);
+			Instances instances = instancesPerRun.get(run);
 			for (Question q : trainQuestions) {
 				// calculate features
 				Instance tmp = analyzer.analyze(q.languageToQuestion.get("en"));
@@ -67,22 +71,49 @@ public class SimpleClassification {
 				tmp.setValue((Attribute) analyzer.getClassAttribute(), fmeasure);
 				instances.add(tmp);
 			}
+			// transforms the class attribute (which is a double) into a nominal
+			// attribute
+			NumericToNominal ntn = new NumericToNominal();
+			ntn.setAttributeIndices("last");
+			ntn.setInputFormat(instances);
+			instancesPerRun.put(run, Filter.useFilter(instances, ntn));
+
 			log.debug(instances.toSummaryString());
 		}
-		//TODO since many systems submit only a subset of questions, take all submitted logs together and optimize best training set for each system by remembering the best f-measure for each question. Hope is, we get less sparse instances
-		
+		// TODO since many systems submit only a subset of questions, take all
+		// submitted logs together and optimize best training set for each
+		// system by remembering the best f-measure for each question. Hope is,
+		// we get less sparse instances
+
 		// 2.3 use machine learning to train it
 		log.debug("Start machine learning");
-		// TODO iterate the classifiers here?
+		// iterate the classifiers here
+		Map<Run, Classifier> classifierPerRun = new HashMap<Run, Classifier>();
+		for (Run run : runs) {
+			// TODO add more classifiers (see
+			// https://github.com/AKSW/fox/blob/master/src%2Fmain%2Fjava%2Forg%2Faksw%2Ffox%2Fnerlearner%2FFoxClassifierFactory.java)
+			// Create a naïve bayes classifier
 
+			Classifier cModel = (Classifier) new J48();
+			cModel.buildClassifier(instancesPerRun.get(run));
+
+			classifierPerRun.put(run, cModel);
+		}
 		// 3. Use the classifier model to decide which system should answer the
 		// current question and measure the performance
 		List<Question> testQuestions = QALD_Loader.load(Dataset.QALD5_Test);
 
 		for (Question q : testQuestions) {
-			// TODO calculate features per question
-
-			// TODO decide which system to use
+			// calculate features
+			Instance tmpInstance = analyzer.analyze(q.languageToQuestion.get("en"));
+			// decide which system to use
+			String result = q.id + "\t";
+			for (Run key : classifierPerRun.keySet()) {
+				tmpInstance.setDataset(instancesPerRun.get(key));
+				double[] fDistribution = classifierPerRun.get(key).distributionForInstance(tmpInstance);
+				result += fDistribution[0] + "\t" + fDistribution[1]+ "\t";
+			}
+			log.info(result);
 
 			// TODO calculate f-measure
 		}

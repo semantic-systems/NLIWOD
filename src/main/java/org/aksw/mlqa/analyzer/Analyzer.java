@@ -24,7 +24,7 @@ public class Analyzer {
 		analyzers = new ArrayList<IAnalyzer>();
 		// !!! ADD ANALYZERS HERE !!!
 		analyzers.add(new QuestionTypeAnalyzer());
-
+		analyzers.add(new QueryResourceTypeAnalyzer());
 		// Declare the feature vector, register their attributes
 		for (IAnalyzer analyzer : analyzers) {
 			fvWekaAttributes.addElement(analyzer.getAttribute());

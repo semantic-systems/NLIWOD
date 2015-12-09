@@ -1,6 +1,7 @@
 package org.aksw.mlqa.analyzer;
 
 import weka.core.Attribute;
+import weka.core.Instance;
 
 public interface IAnalyzer {
 	/**
