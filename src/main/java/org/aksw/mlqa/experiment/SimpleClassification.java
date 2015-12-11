@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.StampedLock;
 
 import org.aksw.mlqa.analyzer.Analyzer;
 import org.aksw.mlqa.datastructure.Run;
@@ -15,12 +16,15 @@ import org.slf4j.LoggerFactory;
 
 import weka.classifiers.Classifier;
 import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.functions.LibLINEAR;
+import weka.classifiers.functions.LibSVM;
 import weka.classifiers.trees.J48;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.NumericToNominal;
+import weka.filters.unsupervised.attribute.StringToNominal;
 
 public class SimpleClassification {
 	static Logger log = LoggerFactory.getLogger(SimpleClassification.class);
@@ -56,7 +60,8 @@ public class SimpleClassification {
 
 		for (Run run : runs) {
 			Instances instances = instancesPerRun.get(run);
-			//TODO fix this, it calculates each feature per question $runs.size() times
+			// TODO fix this, it calculates each feature per question
+			// $runs.size() times
 			for (Question q : trainQuestions) {
 				// calculate features
 				Instance tmp = analyzer.analyze(q.languageToQuestion.get("en"));
@@ -67,19 +72,40 @@ public class SimpleClassification {
 				if (run.getMap().containsKey(q.languageToQuestion.get("en"))) {
 					fmeasure = run.getMap().get(q.languageToQuestion.get("en"));
 				}
-
 				// add to instances of the particular system
 				tmp.setValue((Attribute) analyzer.getClassAttribute(), fmeasure);
 				instances.add(tmp);
 			}
 			// transforms the class attribute (which is a double) into a nominal
 			// attribute
-			NumericToNominal ntn = new NumericToNominal();
-			ntn.setAttributeIndices("last");
-			ntn.setInputFormat(instances);
-			instancesPerRun.put(run, Filter.useFilter(instances, ntn));
 
-			log.debug(instances.toSummaryString());
+//			NumericToNominal ntn = new NumericToNominal();
+//			ntn.setAttributeIndices("last");
+//			ntn.setInputFormat(instances);
+//			instances = Filter.useFilter(instances, ntn);
+
+			// // transforms entity types to nominals
+			// StringToNominal stringToNominal;
+			// Instances filteredTrainingSet = instances;
+			//
+			// try {
+			// for (int attIndex = 0; attIndex < instances.numAttributes() - 1;
+			// attIndex++) {
+			// if (instances.attribute(attIndex).isString()) {
+			// stringToNominal = new StringToNominal();
+			// stringToNominal.setInputFormat(filteredTrainingSet);
+			// filteredTrainingSet = Filter.useFilter(filteredTrainingSet,
+			// stringToNominal);
+			// }
+			// }
+			// } catch (Exception ex) {
+			// throw new RuntimeException("String to nominal conversion failed",
+			// ex);
+			// }
+
+			instancesPerRun.put(run, instances);
+			System.out.println(instances.toString());
+			log.info(instances.toSummaryString());
 		}
 		// TODO since many systems submit only a subset of questions, take all
 		// submitted logs together and optimize best training set for each
@@ -98,6 +124,18 @@ public class SimpleClassification {
 			Classifier cModel = (Classifier) new J48();
 			cModel.buildClassifier(instancesPerRun.get(run));
 
+			//TODO  // Test the model
+//			 Evaluation eTest = new Evaluation(isTrainingSet);
+//			 eTest.evaluateModel(cModel, isTestingSet);
+//
+//			The evaluation module can output a bunch of statistics:
+//			 // Print the result à la Weka explorer:
+//			 String strSummary = eTest.toSummaryString();
+//			 System.out.println(strSummary);
+//			 
+//			 // Get the confusion matrix
+//			 double[][] cmMatrix = eTest.confusionMatrix();
+//			 
 			classifierPerRun.put(run, cModel);
 		}
 		// 3. Use the classifier model to decide which system should answer the
@@ -107,12 +145,13 @@ public class SimpleClassification {
 		for (Question q : testQuestions) {
 			// calculate features
 			Instance tmpInstance = analyzer.analyze(q.languageToQuestion.get("en"));
+			System.out.println(tmpInstance.toString());
 			// decide which system to use
 			String result = q.id + "\t";
 			for (Run key : classifierPerRun.keySet()) {
 				tmpInstance.setDataset(instancesPerRun.get(key));
 				double[] fDistribution = classifierPerRun.get(key).distributionForInstance(tmpInstance);
-				result += fDistribution[0] + "\t" + fDistribution[1]+ "\t";
+				result += fDistribution[0] + "\t" + fDistribution[1] + "\t";
 			}
 			log.info(result);
 

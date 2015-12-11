@@ -1,4 +1,4 @@
-package org.aksw.mlqa.analyzer;
+package org.aksw.mlqa.analyzer.querytype;
 
 import java.io.IOException;
 import java.io.StringReader;

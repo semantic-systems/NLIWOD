@@ -1,4 +1,6 @@
-package org.aksw.mlqa.analyzer;
+package org.aksw.mlqa.analyzer.questiontype;
+
+import org.aksw.mlqa.analyzer.IAnalyzer;
 
 import weka.core.Attribute;
 import weka.core.FastVector;

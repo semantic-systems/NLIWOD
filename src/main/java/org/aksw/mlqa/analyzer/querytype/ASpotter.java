@@ -1,4 +1,4 @@
-package org.aksw.mlqa.analyzer;
+package org.aksw.mlqa.analyzer.querytype;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -18,10 +18,23 @@ public abstract class ASpotter {
 
 	public abstract Map<String, List<Entity>> getEntities(String question) throws MalformedURLException, ProtocolException, IOException, ParseException;
 
-	protected String requestPOST(String input, String requestURL) throws MalformedURLException, ProtocolException, IOException {
-		String output = POST(input, requestURL);
+	private boolean useCache = true;
+	private static PersistentCache cache = new PersistentCache();
 
-		return output;
+	protected String requestPOST(String input, String requestURL) throws MalformedURLException, ProtocolException, IOException {
+			if (useCache) {
+				if (cache.containsKey(input)) {
+					return cache.get(input);
+				}
+			}
+
+			String output = POST(input, requestURL);
+			cache.put(input, output);
+			if (useCache) {
+				cache.writeCache();
+			}
+
+			return output;
 	}
 
 	private String POST(String urlParameters, String requestURL) throws MalformedURLException, IOException, ProtocolException {

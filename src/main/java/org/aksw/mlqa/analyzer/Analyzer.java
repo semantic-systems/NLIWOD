@@ -2,6 +2,10 @@ package org.aksw.mlqa.analyzer;
 
 import java.util.ArrayList;
 
+import org.aksw.mlqa.analyzer.querytype.QueryResourceTypeAnalyzer;
+import org.aksw.mlqa.analyzer.questiontype.QuestionTypeAnalyzer;
+import org.aksw.mlqa.analyzer.questionword.QuestionWord;
+
 import weka.core.Attribute;
 import weka.core.FastVector;
 import weka.core.Instance;
@@ -25,6 +29,8 @@ public class Analyzer {
 		// !!! ADD ANALYZERS HERE !!!
 		analyzers.add(new QuestionTypeAnalyzer());
 		analyzers.add(new QueryResourceTypeAnalyzer());
+		analyzers.add(new QuestionWord());
+
 		// Declare the feature vector, register their attributes
 		for (IAnalyzer analyzer : analyzers) {
 			fvWekaAttributes.addElement(analyzer.getAttribute());
