@@ -5,10 +5,16 @@
 * TBSL http://linkedspending.aksw.org/tbsl/
 * SINA http://sina.aksw.org/
 * HAWK http://hawk.aksw.org/
+* 
 
 No demo found sofar for
+* poweraqua
 * ISOFT
 * QAnswer
 * APEQ
 * SemGraphQA
 * Xser
+* Freya
+* questIO
+
+for more see page 7 http://www.semantic-web-journal.net/system/files/swj1205.pdf

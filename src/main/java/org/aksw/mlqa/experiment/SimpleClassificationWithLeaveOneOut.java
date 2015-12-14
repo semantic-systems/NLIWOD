@@ -6,18 +6,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.aksw.mlqa.analyzer.Analyzer;
 import org.aksw.mlqa.datastructure.Run;
 import org.aksw.qa.commons.datastructure.Question;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;
+import org.apache.jena.atlas.lib.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import weka.classifiers.Classifier;
-import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.BayesNet;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.bayes.NaiveBayesMultinomial;
@@ -78,104 +77,164 @@ public class SimpleClassificationWithLeaveOneOut {
 		// out which system can answer which question
 
 		// 1.1 load the questions and how good each system answers
-		log.debug("Load the questions and how good each system answers");
-		List<Question> testQuestions = QALD_Loader.load(Dataset.QALD5_Test);
+		log.info("Load the questions and how good each system answers");
 
 		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-		File QALD5Logs = new File(classLoader.getResource("QALD-5_logs/").getFile());
-
-		List<Run> runs = SearchBestQALDResult.searchBestRun(testQuestions, QALD5Logs);
 
 		// 1.2 calculate the features per question and system
-		log.debug("Calculate the features per question and system");
-		// TODO do the leave one out loop
+		log.info("Calculate the features per question and system");
 		Analyzer analyzer = new Analyzer();
-		// Create an empty training set per system
-		Map<Run, Instances> instancesPerRun = new HashMap<Run, Instances>();
-		for (Run run : runs) {
-			Instances isTrainingSet = new Instances("test_" + run.getName(), analyzer.fvWekaAttributes, testQuestions.size());
-			// set class attribute
-			isTrainingSet.setClass(analyzer.getClassAttribute());
-			instancesPerRun.put(run, isTrainingSet);
-		}
+		Map<Integer, Pair<Classifier, Double>> classifierFmeasurePerQuestion = new HashMap<Integer, Pair<Classifier, Double>>();
+		for (int leaveOut = 0; leaveOut < QALD_Loader.load(Dataset.QALD5_Test).size(); leaveOut++) {
+			List<Question> testQuestions = QALD_Loader.load(Dataset.QALD5_Test);
+			// Create an empty training set per system
+			File QALD5Logs = new File(classLoader.getResource("QALD-5_logs/").getFile());
+			List<Run> runs = SearchBestQALDResult.searchBestRun(testQuestions, QALD5Logs);
 
-		log.debug("Start collection of training data for each system");
+			Map<Run, Instances> instancesPerRun = new HashMap<Run, Instances>();
+			// leave out one question
+			Question leaveOutQuestion = testQuestions.get(leaveOut);
+			testQuestions.remove(leaveOut);
 
-		for (Run run : runs) {
-			Instances instances = instancesPerRun.get(run);
-			// TODO fix this, it calculates each feature per question
-			// $runs.size() times
-			for (Question q : testQuestions) {
-				// calculate features
-				Instance tmp = analyzer.analyze(q.languageToQuestion.get("en"));
-
-				// get f-measure of the system for this question
-				// check whether the system has that answer anyway
-				Double fmeasure = 0.0;
-				if (run.getMap().containsKey(q.languageToQuestion.get("en"))) {
-					fmeasure = run.getMap().get(q.languageToQuestion.get("en"));
-				}
-				// add to instances of the particular system
-				tmp.setValue((Attribute) analyzer.getClassAttribute(), fmeasure);
-				instances.add(tmp);
-			}
-
-			instancesPerRun.put(run, instances);
-			log.info(instances.toSummaryString());
-		}
-
-		// 2.3 use machine learning to train it
-		log.debug("Start machine learning");
-		// CANNOT use the following classifiers GeneralRegression()
-		// HoeffdingTree() InputMappedClassifier() LMTNode() NeuralNetwork()
-		// Regression() RuleNode() RuleSetModel() SGD() SGDText()
-
-		// all classifiers copied from docu
-		// fails capabilities test J48, new LogisticBase(),
-		List<Classifier> classifiers = new ArrayList<Classifier>(Arrays.asList(new AdaBoostM1(), new AdditiveRegression(), new Bagging(), new BayesNet(), new BayesNetGenerator(), new BIFReader(),
-		        new ClassificationViaRegression(), new CostSensitiveClassifier(), new CVParameterSelection(), new DecisionStump(), new DecisionTable(), new EditableBayesNet(),
-		        new FilteredClassifier(), new GaussianProcesses(), new IBk(), new JRip(), new KStar(), new LinearRegression(), new LMT(), new Logistic(), new LogitBoost(), new LWL(), new M5P(),
-		        new M5Rules(), new MultiClassClassifier(), new MultilayerPerceptron(), new MultiScheme(), new NaiveBayes(), new NaiveBayesMultinomial(), new NaiveBayesMultinomialUpdateable(),
-		        new NaiveBayesUpdateable(), new OneR(), new PART(), new RandomCommittee(), new RandomForest(), new RandomSubSpace(), new RandomTree(), new RegressionByDiscretization(), new REPTree(),
-		        new SimpleLinearRegression(), new SimpleLogistic(), new SMO(), new SMOreg(), new Stacking(), new Vote(), new VotedPerceptron(), new ZeroR()));
-
-		for (Classifier cModel : classifiers) {
-			System.out.print(cModel.getClass().getName());
 			for (Run run : runs) {
-				Instances data = instancesPerRun.get(run);
-				if (cModel.getCapabilities().test(data)) {
-					cModel.buildClassifier(data);
-					// Test the model
-					Evaluation eval = new Evaluation(data);
-					Random rand = new Random(1); // using seed = 1
-					int folds = 10;
-					eval.crossValidateModel(cModel, data, folds, rand);
-					System.out.print("\t" + eval.relativeAbsoluteError());
-				}
+				Instances isTrainingSet = new Instances("test_" + run.getName(), analyzer.fvWekaAttributes, testQuestions.size());
+				// set class attribute
+				isTrainingSet.setClass(analyzer.getClassAttribute());
+				instancesPerRun.put(run, isTrainingSet);
 			}
-			System.out.println();
+
+			log.info("Start collection of training data for each system");
+
+			for (Run run : runs) {
+				Instances instances = instancesPerRun.get(run);
+				// TODO fix this, it calculates each feature per question
+				// $runs.size() times
+				for (Question q : testQuestions) {
+					// calculate features
+					Instance tmp = analyzer.analyze(q.languageToQuestion.get("en"));
+
+					// get f-measure of the system for this question
+					// check whether the system has that answer anyway
+					Double fmeasure = 0.0;
+					if (run.getMap().containsKey(q.languageToQuestion.get("en"))) {
+						fmeasure = run.getMap().get(q.languageToQuestion.get("en"));
+					}
+					// add to instances of the particular system
+					tmp.setValue((Attribute) analyzer.getClassAttribute(), fmeasure);
+					instances.add(tmp);
+				}
+
+				instancesPerRun.put(run, instances);
+				log.debug(instances.toSummaryString());
+			}
+
+			// 2.3 use machine learning to train it
+			log.info("Start machine learning");
+			// CANNOT use the following classifiers GeneralRegression()
+			// HoeffdingTree() InputMappedClassifier() LMTNode() NeuralNetwork()
+			// Regression() RuleNode() RuleSetModel() SGD() SGDText()
+
+			// all classifiers copied from docu
+			// fails capabilities test J48, new LogisticBase(),
+
+			Map<Run, List<Classifier>> run_classifiers = new HashMap<Run, List<Classifier>>();
+			for (Run run : runs) {
+				List<Classifier> classifierForEachRun = new ArrayList<Classifier>();
+				List<Classifier> classifiers = new ArrayList<Classifier>(Arrays.asList(new AdaBoostM1(), new AdditiveRegression(), new Bagging(), new BayesNet(), new BayesNetGenerator(),
+				        new BIFReader(), new ClassificationViaRegression(), new CostSensitiveClassifier(), new CVParameterSelection(), new DecisionStump(), new DecisionTable(),
+				        new EditableBayesNet(), new FilteredClassifier(), new GaussianProcesses(), new IBk(), new JRip(), new KStar(), new LinearRegression(), new LMT(), new Logistic(),
+				        new LogitBoost(), new LWL(), new M5P(), new M5Rules(), new MultiClassClassifier(), new MultilayerPerceptron(), new MultiScheme(), new NaiveBayes(),
+				        new NaiveBayesMultinomial(), new NaiveBayesMultinomialUpdateable(), new NaiveBayesUpdateable(), new OneR(), new PART(), new RandomCommittee(), new RandomForest(),
+				        new RandomSubSpace(), new RandomTree(), new RegressionByDiscretization(), new REPTree(), new SimpleLinearRegression(), new SimpleLogistic(), new SMO(), new SMOreg(),
+				        new Stacking(), new Vote(), new VotedPerceptron(), new ZeroR()));
+				for (Classifier cModel : classifiers) {
+					Instances data = instancesPerRun.get(run);
+					if (cModel.getCapabilities().test(data)) {
+						cModel.buildClassifier(data);
+						// // Test the model
+						// Evaluation eval = new Evaluation(data);
+						// Random rand = new Random(1); // using seed = 1
+						// int folds = 10;
+						// eval.crossValidateModel(cModel, data, folds, rand);
+						classifierForEachRun.add(cModel);
+					}
+				}
+				run_classifiers.put(run, classifierForEachRun);
+			}
+
+			// 3. Use the classifier model to decide which system should answer
+			// the current question and measure the performance
+			log.info("Decision stage started");
+			Map<Classifier, List<Pair<Run, Double>>> classificationResult = new HashMap<Classifier, List<Pair<Run, Double>>>();
+			// logs the predicted class per classifier
+			for (Run key_run : run_classifiers.keySet()) {
+				String result = leaveOutQuestion.id + "\t" + key_run.getName() + "\t";
+				for (Classifier classifier : run_classifiers.get(key_run)) {
+					Instance tmpInstance = analyzer.analyze(leaveOutQuestion.languageToQuestion.get("en"));
+					tmpInstance.setDataset(instancesPerRun.get(key_run));
+					double[] fDistribution = classifier.distributionForInstance(tmpInstance);
+					result += fDistribution[0] + "\t";
+					if (classificationResult.containsKey(classifier)) {
+						// add result
+						classificationResult.get(classifier).add(new Pair<Run, Double>(key_run, fDistribution[0]));
+					} else {
+						classificationResult.put(classifier, new ArrayList<Pair<Run, Double>>(Arrays.asList(new Pair<Run, Double>(key_run, fDistribution[0]))));
+					}
+				}
+				log.debug(result);
+			}
+
+			// for each classifier find out which system is responsible and get
+			// f-measure for the responsible system
+			String result = "Result of the run: " + leaveOutQuestion.id + "\t";
+			for (Classifier classifier : classificationResult.keySet()) {
+				List<Pair<Run, Double>> results = classificationResult.get(classifier);
+				double max = Double.MIN_VALUE;
+				Run maxRun = null;
+				for (Pair<Run, Double> pair : results) {
+					if (pair.getRight() > max) {
+						maxRun = pair.getLeft();
+						max = pair.getRight();
+					}
+				}
+				// find the f-measure for this leaveOutQuestiona and this system
+				String leaveOutQuestionString = leaveOutQuestion.languageToQuestion.get("en");
+				if (maxRun != null && maxRun.getMap().containsKey(leaveOutQuestionString)) {
+					double fmeasure = maxRun.getMap().get(leaveOutQuestionString);
+					result += fmeasure + "\t";
+					//FIXME here goes something horribly wrong
+					if (classifierFmeasurePerQuestion.containsKey(leaveOut)) {
+						Pair<Classifier, Double> tmp = classifierFmeasurePerQuestion.get(leaveOut);
+						double fmeasureSofar = tmp.getRight();
+						classifierFmeasurePerQuestion.put(leaveOut, new Pair<Classifier, Double>(classifier, fmeasure + fmeasureSofar));
+					} else {
+						classifierFmeasurePerQuestion.put(leaveOut, new Pair<Classifier, Double>(classifier, fmeasure));
+					}
+				} else {
+					// TODO I do not get why some maxRun are null
+					result += 0.0 + "\t";
+				}
+
+			}
+			System.out.println(result);
 
 		}
-		// 3. Use the classifier model to decide which system should answer the
-		// current question and measure the performance
-		// List<Question> testQuestions = QALD_Loader.load(Dataset.QALD5_Test);
-		//
-		// for (Question q : testQuestions) {
-		// // calculate features
-		// Instance tmpInstance =
-		// analyzer.analyze(q.languageToQuestion.get("en"));
-		// System.out.println(tmpInstance.toString());
-		// // decide which system to use
-		// String result = q.id + "\t";
-		// for (Run key : classifierPerRun.keySet()) {
-		// tmpInstance.setDataset(instancesPerRun.get(key));
-		// double[] fDistribution =
-		// classifierPerRun.get(key).distributionForInstance(tmpInstance);
-		// result += fDistribution[0] + "\t" + fDistribution[1] + "\t";
-		// }
-		// log.info(result);
-		//
-		// // TODO calculate f-measure
-		// }
+		// calculate average f-measure per classifier
+		Map<Classifier, Double> avgFmeasurePerClassifier = new HashMap<Classifier, Double>();
+		for (int question : classifierFmeasurePerQuestion.keySet()) {
+			Classifier c = classifierFmeasurePerQuestion.get(question).getLeft();
+			Double fmeasure = classifierFmeasurePerQuestion.get(question).getRight();
+			if (avgFmeasurePerClassifier.containsKey(c)) {
+				double fmeasureSoFar = avgFmeasurePerClassifier.get(c) + fmeasure;
+				avgFmeasurePerClassifier.put(c, fmeasureSoFar);
+			} else {
+				avgFmeasurePerClassifier.put(c, fmeasure);
+			}
+		}
+		//TODO write the following sysout to file
+		
+		for (Classifier c : avgFmeasurePerClassifier.keySet()) {
+			System.out.println(c.getClass().getSimpleName() + "\t" + (avgFmeasurePerClassifier.get(c) / 59));
+		}
 	}
 }
