@@ -49,6 +49,7 @@ public class SearchBestQALDResult {
 				double averageFMeasure = 0;
 				// find matching questions
 				Map tmpResultMap = new HashMap<String, Double>();
+				int count=0;
 				for (Question goldSystemQuestion : goldStandardQuestions) {
 					for (Question question : questions) {
 						if (goldSystemQuestion.id == question.id) {
@@ -56,17 +57,23 @@ public class SearchBestQALDResult {
 								double fmeasure = AnswerBasedEvaluation.fMeasure(question.goldenAnswers, goldSystemQuestion);
 								averageFMeasure += fmeasure;
 								tmpResultMap.put(goldSystemQuestion.languageToQuestion.get("en"), fmeasure);
+								count++;
 							}
 						}
 					}
 				}
-				averageFMeasure = averageFMeasure / goldStandardQuestions.size();
+				//TODO something is wrong with the fmeasure here, if I print the fmeasure using SimpleQuestionPrinter.java and do the average, the average is different from the one here
+				//TODO the average of this main class is also different
+				averageFMeasure = averageFMeasure /50;
+//				averageFMeasure = averageFMeasure / count;
+//				averageFMeasure = averageFMeasure /goldStandardQuestions.size(); 
 				if (fMax < averageFMeasure) {
 					fMax = averageFMeasure;
 					submissionMax = submission.getName();
 					tmpResultMapMax = tmpResultMap;
 				}
 			}
+		
 			log.info(system.getName() + "\t" + submissionMax + "\t" + fMax);
 			run.setFmeasure(fMax);
 			run.setSubmission(submissionMax);
