@@ -16,7 +16,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.sparql.core.Var;
 import com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP;
 
-
+//TODO replace by qa-commons
 public class EvaluationUtils {
 
 	public static double precision(String sparqlQueryString, String targetSPARQLQueryString, String endpoint) {
@@ -39,7 +39,6 @@ public class EvaluationUtils {
 				precision = 1;
 			}
 		} else {
-			// TODO implement other question type
 		}
 		return precision;
 	}
@@ -65,7 +64,6 @@ public class EvaluationUtils {
 			// if queries are AKS queries return recall=1
 			recall = 1;
 		} else {
-			// TODO implement other question type
 		}
 		return recall;
 	}

@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.controller.Answer;
@@ -15,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /**
  * Ranks based on answer set frequency. The most seen answer set<RDFNode> will be returned
@@ -29,7 +27,7 @@ public class BucketRanker implements Ranking {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<Answer> rank(List<Answer> answers, Question q) {
-		// FIXME bug here!?!?
+		// TODO Christian:  bug here!?!?, write a unit test for bucketbased ranking
 		Map<Answer, Integer> buckets = Maps.newHashMap();
 
 		for (Answer answer : answers) {

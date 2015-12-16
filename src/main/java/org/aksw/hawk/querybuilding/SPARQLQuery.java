@@ -200,7 +200,7 @@ public class SPARQLQuery implements Cloneable, Serializable {
 				}
 				sb.append(fulltext.toString());
 				// return 100 uris from text index
-				// TODO decrease that number by introducing a ranking factor
+				// TODO decrease that number by introducing a ranking factor, e.g., pagerank of the nodes
 				sb.append("' " + 1000 + "). \n");
 			}
 		}

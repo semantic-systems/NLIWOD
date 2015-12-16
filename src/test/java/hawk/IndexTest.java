@@ -58,7 +58,7 @@ public class IndexTest {
 
 	@Test
 	@Ignore
-	// TODO if want to work
+	// FIXME implement yago class detection again
 	public void YagoClassesTest() {
 		log.info("street basketball player \n" + Joiner.on("\n").join(classesindex.search("street basketball player")));
 		Assert.assertTrue(classesindex.search("street basketball player").contains("yago:StreetBasketballPlayers"));

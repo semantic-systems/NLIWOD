@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+//TODO move to qa-commons
 public class Question implements Serializable {
 
 	/**
@@ -45,7 +46,6 @@ public class Question implements Serializable {
 	//for proper handling in webservice
 	public UUID UUID;
 	public boolean finished;
-	//FIXME finalAnswer unused?
 	public List<Answer> finalAnswer;
 	public JSONObject tree_full;
 	public JSONObject tree_pruned;

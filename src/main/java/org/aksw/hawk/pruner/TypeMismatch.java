@@ -145,7 +145,7 @@ public class TypeMismatch implements ISPARQLQueryPruner {
 		return !Sets.intersection(entityTypes, PROPERTY_ENTITY_TYPES).isEmpty();
 	}
 
-	//TODO transform to proper unit test
+	//TODO christian: transform to proper unit test
 //	public static void main(String[] args) {
 //		QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
 //		

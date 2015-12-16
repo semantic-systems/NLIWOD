@@ -17,7 +17,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
-//TODO Talk to Micha about that whole static thing
+//TODO make this class independently of other classes callable
+//TODO write unit test
 public class SentenceToSequence {
 	private static String language = AbstractReader.LANG_EN;
 	static AbstractTokenizer tokenizer = NLPGetter.getTokenizer(language);
@@ -79,8 +80,7 @@ public class SentenceToSequence {
 	private static Map<String, String> generatePOSTags(Question q) {
 		ParseTree parse = new ParseTree();
 		DEPTree tree = parse.process(q);
-		// TODO this is horribly wrong, the same label CAN have different pos
-		// tags
+		// TODO this is horribly wrong, the same label CAN have different pos if the label occurs twice in question
 		Map<String, String> label2pos = Maps.newHashMap();
 		Stack<DEPNode> stack = new Stack<DEPNode>();
 		stack.push(tree.getFirstRoot());

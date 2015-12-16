@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-//TODO refactor class
 public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializable {
 	private static final long serialVersionUID = 3684161169564127853L;
 	public List<MutableTreeNode> children = new ArrayList<>();

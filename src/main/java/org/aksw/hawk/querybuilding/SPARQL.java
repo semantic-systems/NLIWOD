@@ -20,8 +20,6 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class SPARQL {
 	Logger log = LoggerFactory.getLogger(SPARQL.class);
-	// TODO treshold can be increased by introducing prefixes
-	int sizeOfFilterThreshold = 25;
 	public QueryExecutionFactory qef;
 
 	public SPARQL() {
@@ -80,7 +78,7 @@ public class SPARQL {
 		}
 		return set;
 	}
-
+//TODO Christian: transform to unit test
 	public static void main(String args[]) {
 		SPARQL sqb = new SPARQL();
 

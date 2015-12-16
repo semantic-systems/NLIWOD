@@ -57,7 +57,7 @@ public class Pipeline {
 
 		// Noun combiner, decrease #nodes in the DEPTree
 		log.info("Noun phrase combination.");
-		// TODO make this method return the combine sequence and work on this
+		// TODO make this method return the combine sequence and work on this, i.e., q.sequence = 	sentenceToSequence.combineSequences(q);
 		sentenceToSequence.combineSequences(q);
 
 		// Build trees from questions and cache them

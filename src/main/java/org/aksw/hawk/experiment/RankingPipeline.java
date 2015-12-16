@@ -1,10 +1,7 @@
 package org.aksw.hawk.experiment;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -15,13 +12,11 @@ import org.aksw.hawk.controller.EvalObj;
 import org.aksw.hawk.controller.Pipeline;
 import org.aksw.hawk.ranking.BucketRanker;
 import org.aksw.hawk.ranking.FeatureBasedRanker;
-import org.aksw.hawk.ranking.FeatureBasedRanker.Feature;
 import org.aksw.hawk.ranking.OptimalRanker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Sets;
 
 /**
  * F@N + all ranking experiments for ESWC 2015 publication Possibly extendible for testing NER things
@@ -39,11 +34,7 @@ public class RankingPipeline {
 
 		log.info("Loading dataset");
 		String dataset = "resources/qald-5_test_train.xml";
-		// TODO QALDWriter qw = new QALDWriter(dataset);
 		List<Question> questions = QALD_Loader.load(dataset);
-		// TODO Question q = new Question();
-		// q.languageToQuestion.put("en",
-		// "In which city was the assassin of Martin Luther King born?");
 
 		for (Question q : questions) {
 			if (q.hybrid & q.answerType.equals("resource") & q.onlydbo & !q.aggregation) {
@@ -64,7 +55,6 @@ public class RankingPipeline {
 				// List<EvalObj> eval = Measures.measure(rankedAnswer, q, maximumPositionToMeasure);
 				// log.debug(Joiner.on("\n\t").join(eval));
 
-				// TODO transfer to a Trainpipeline
 				// correctQueries.add(answer.get(query).query);
 				// finalAnswer = answer.get(query);
 				// this.ranker.learn(q, correctQueries);

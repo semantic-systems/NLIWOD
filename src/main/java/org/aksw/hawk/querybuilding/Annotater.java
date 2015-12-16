@@ -137,8 +137,9 @@ public class Annotater {
 	}
 
 	private List<String> rank(List<String> search) {
-		// TODO this ranking killed a certain predicate important for some
+		// TODO christian: this ranking killed a certain predicate important for some
 		// queries form training but stabilized ranking :)
+		//write unit test
 		List<String> predicates = Lists.newArrayList();
 		try {
 			int maxNum = 0;
@@ -194,7 +195,7 @@ public class Annotater {
 						} else if (posTag.matches("NN(.)*")) {
 							// DBO look up
 							if (posTag.matches("NNS")) {
-								// TODO improve lemmatization. e.g., birds->bird
+								// TODO improve lemmatization. e.g., birds->bird, by using a new NLP library, write tests for the different libraries
 								if (tmp.lemma != null)
 									label = tmp.lemma;
 							}

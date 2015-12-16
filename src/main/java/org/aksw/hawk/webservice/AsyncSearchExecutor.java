@@ -25,7 +25,7 @@ public class AsyncSearchExecutor {
 		log.info("Run pipeline on " + q.languageToQuestion.get("en"));
 		List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
-		// FIXME improve ranking
+		// FIXME improve ranking, put other ranking method here
 		// bucket-based ranking
 		BucketRanker bucket_ranker = new BucketRanker();
 		log.info("Bucket-based ranking");

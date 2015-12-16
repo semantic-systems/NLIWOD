@@ -43,7 +43,6 @@ public class SingleQuestionPipeline {
 
 		// ##############~~RANKING~~##############
 		log.info("Run ranking");
-		//FIXME optimal ranking can only determined if question matches one of the QALD questions
 		int maximumPositionToMeasure = 10;
 		OptimalRanker optimal_ranker = new OptimalRanker();
 		FeatureBasedRanker feature_ranker = new FeatureBasedRanker();

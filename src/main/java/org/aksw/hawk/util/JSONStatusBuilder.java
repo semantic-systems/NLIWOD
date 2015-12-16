@@ -12,7 +12,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
-
+//TODO remove class when rest interface is not constantly pulling anymore
 public class JSONStatusBuilder {
 
 	@SuppressWarnings("unchecked")

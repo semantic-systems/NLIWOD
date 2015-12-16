@@ -207,7 +207,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 		return Sets.intersection(types1, types2).isEmpty();
 	}
 
-	//TODO transform to proper unit test
+	//TODO christian: transform to proper unit test
 //	public static void main(String[] args) {
 //		QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
 //		DisjointnessBasedQueryFilter filter = new DisjointnessBasedQueryFilter(qef);

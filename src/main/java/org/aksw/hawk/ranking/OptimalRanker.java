@@ -34,6 +34,7 @@ public class OptimalRanker implements Ranking {
 		for (Answer answer : answers) {
 			Set<RDFNode> answerSet = answer.answerSet;
 			//TODO check whether q has a gold standard set
+			//should be checked in qa-commons 
 			double fMeasure = QALD4_EvaluationUtils.fMeasure(answerSet, q);
 
 			if (fMeasure > 0) {

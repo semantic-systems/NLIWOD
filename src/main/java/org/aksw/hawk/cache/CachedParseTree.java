@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.clearnlp.dependency.DEPTree;
 
+//FIXME delete this class as soon as dependency tree is faster by using other nlp library
 public class CachedParseTree {
 	private Logger log = LoggerFactory.getLogger(CachedParseTree.class);
 	private ParseTree parseTree;
@@ -41,7 +42,7 @@ public class CachedParseTree {
 	/**
 	 * stores a dependency tree to a <X>.ser file and writes the file to
 	 * dependency tree mapping to an index file, TextInNodes is not serialized
-	 * in this version TODO
+	 * in this version 
 	 * 
 	 * @param q
 	 *            Question
@@ -64,7 +65,7 @@ public class CachedParseTree {
 	 * @param q
 	 *            Question
 	 * @return filename File with dependency tree in serialized form without
-	 *         TextInNode attribute TODO
+	 *         TextInNode attribute 
 	 */
 	private String isStored(Question q) {
 		String question = q.languageToQuestion.get("en");

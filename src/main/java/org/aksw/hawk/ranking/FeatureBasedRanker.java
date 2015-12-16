@@ -29,7 +29,7 @@ public class FeatureBasedRanker implements Ranking {
 	private Map<String, Double> vec;
 	private Collection<Feature> features;
 
-	// TODO transform this to unit test
+	// TODO Christian: transform this to unit test
 	// public static void main(String args[]) {
 	// List<SPARQLQuery> queries = Lists.newArrayList();
 	//
@@ -56,7 +56,6 @@ public class FeatureBasedRanker implements Ranking {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	// TODO bug: differentiate between fuzzy and exact matches
 	public List<Answer> rank(List<Answer> answers, Question q) {
 		Map<Answer, Double> buckets = Maps.newHashMap();
 
@@ -208,7 +207,7 @@ public class FeatureBasedRanker implements Ranking {
 		// build list of patterns, indicate text position
 		Map<String, Double> map = Maps.newHashMap();
 		String[] split = new String[3];
-		// TODO maybe many bugs down here
+		//  maybe many bugs down here
 		// http://mathinsight.org/media/image/image/three_node_motifs.png
 		// 1) find out the text node
 		String textNode = null;

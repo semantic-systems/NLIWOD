@@ -73,7 +73,6 @@ public class WebController {
 				try {
 					return q.get().getJSONStatus();
 				} catch (InterruptedException | ExecutionException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {

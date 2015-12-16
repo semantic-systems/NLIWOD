@@ -46,7 +46,7 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 	}
 
 	@SuppressWarnings("unchecked")
-	// TODO make this login / JSON more pretty
+	// TODO make this logging / JSON more pretty
 	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queries, Question q) {
 
 		JSONArray document = new JSONArray();

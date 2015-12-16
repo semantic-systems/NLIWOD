@@ -19,7 +19,6 @@ public class Measures {
 	public static List<EvalObj> measure(List<Answer> rankedAnswer, Question q, int maxK) {
 		// calculate precision, recall, f1 measure for each answer
 		List<EvalObj> list = Lists.newArrayList();
-		//FIXME fmeasure does not increase monotonically
 //		omment=Measure @1, fmax=0.8, pmax=0.6666666666666666, rmax=1.0, question=Which recipients of the Victoria Cross died in the Battle of Arnhem?, id=305]
 //				EvalObj [comment=Measure @2, fmax=0.0, pmax=0.0, rmax=0.0, question=Which recipients of the Victoria Cross died in the Battle of Arnhem?, id=305]
 //				EvalObj [comment=Measure @3, fmax=0.0, pmax=0.0, rmax=0.0, question=Which recipients of the Victoria Cross died in the Battle of Arnhem?, id=305]
