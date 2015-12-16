@@ -285,10 +285,16 @@ public class SimpleClassificationWithLeaveOneOut {
                     // find the f-measure for this leaveOutQuestion and this
                     // system
                     String leaveOutQuestionString = leaveOutQuestion.languageToQuestion.get("en");
-                    if (maxRun != null && maxRun.getMap().containsKey(leaveOutQuestionString)) {
-                        double fmeasure = maxRun.getMap().get(leaveOutQuestionString);
-                        result += maxRun.getName() + ": " + fmeasure + "\t";
-                        classifierToFMeasure.put(classifierName, fmeasure);
+                    if (maxRun != null) {
+                        // Make sure that the system answered this query
+                        if (maxRun.getMap().containsKey(leaveOutQuestionString)) {
+                            double fmeasure = maxRun.getMap().get(leaveOutQuestionString);
+                            result += maxRun.getName() + ": " + fmeasure + "\t";
+                            classifierToFMeasure.put(classifierName, fmeasure);
+                        } else {
+                            result += maxRun.getName() + ": 0.0\t";
+                            classifierToFMeasure.put(classifierName, 0.0);
+                        }
                     } else {
                         // TODO I do not get why some maxRun are null
                         result += "null: 0.0\t";
