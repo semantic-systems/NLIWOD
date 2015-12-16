@@ -85,6 +85,9 @@ public class SimpleClassificationWithLeaveOneOut {
         log.info("Calculate the features per question and system");
         Analyzer analyzer = new Analyzer();
         Map<Integer, Pair<String, Double>> classifierFmeasurePerQuestion = new HashMap<Integer, Pair<String, Double>>();
+//        TODO clean  QALD_Loader.load(Dataset.QALD5_Test).size() according to task 1, i.e., 
+//		if (!goldSystemQuestion.outOfScope && !goldSystemQuestion.hybrid && !goldSystemQuestion.goldenAnswers.isEmpty()) {
+
         for (int leaveOut = 0; leaveOut < QALD_Loader.load(Dataset.QALD5_Test).size(); leaveOut++) {
             List<Question> testQuestions = QALD_Loader.load(Dataset.QALD5_Test);
             // Create an empty training set per system

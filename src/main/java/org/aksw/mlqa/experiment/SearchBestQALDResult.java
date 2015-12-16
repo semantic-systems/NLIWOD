@@ -51,10 +51,12 @@ public class SearchBestQALDResult {
 				Map tmpResultMap = new HashMap<String, Double>();
 				for (Question goldSystemQuestion : goldStandardQuestions) {
 					for (Question question : questions) {
-						if (goldSystemQuestion.id == question.id && !goldSystemQuestion.outOfScope && !question.hybrid && !question.goldenAnswers.isEmpty()) {
-							double fmeasure = AnswerBasedEvaluation.fMeasure(question.goldenAnswers, goldSystemQuestion);
-							averageFMeasure += fmeasure;
-							tmpResultMap.put(goldSystemQuestion.languageToQuestion.get("en"), fmeasure);
+						if (goldSystemQuestion.id == question.id) {
+							if (!goldSystemQuestion.outOfScope && !goldSystemQuestion.hybrid && !goldSystemQuestion.goldenAnswers.isEmpty()) {
+								double fmeasure = AnswerBasedEvaluation.fMeasure(question.goldenAnswers, goldSystemQuestion);
+								averageFMeasure += fmeasure;
+								tmpResultMap.put(goldSystemQuestion.languageToQuestion.get("en"), fmeasure);
+							}
 						}
 					}
 				}
