@@ -37,53 +37,7 @@ public class SearchBestQALDResult {
         searchBestRun(QALD5Question, QALD5Logs);
     }
 
-<<<<<<< HEAD
-	static List<Run> searchBestRun(List<Question> goldStandardQuestions, File FolderWithSystemLogs) throws FileNotFoundException {
-		List<Run> runs = new ArrayList<Run>();
-		for (File system : FolderWithSystemLogs.listFiles()) {
-			Run run = new Run(system.getName());
-			double fMax = 0;
-			String submissionMax = null;
-			Map tmpResultMapMax = null;
-			for (File submission : system.listFiles()) {
-				List<Question> questions = QALD_Loader.load(new FileInputStream(submission));
-				double averageFMeasure = 0;
-				// find matching questions
-				Map tmpResultMap = new HashMap<String, Double>();
-				int count=0;
-				for (Question goldSystemQuestion : goldStandardQuestions) {
-					for (Question question : questions) {
-						if (goldSystemQuestion.id == question.id) {
-							if (!goldSystemQuestion.outOfScope && !goldSystemQuestion.hybrid && !goldSystemQuestion.goldenAnswers.isEmpty()) {
-								double fmeasure = AnswerBasedEvaluation.fMeasure(question.goldenAnswers, goldSystemQuestion);
-								averageFMeasure += fmeasure;
-								tmpResultMap.put(goldSystemQuestion.languageToQuestion.get("en"), fmeasure);
-								count++;
-							}
-						}
-					}
-				}
-				//TODO something is wrong with the fmeasure here, if I print the fmeasure using SimpleQuestionPrinter.java and do the average, the average is different from the one here
-				//TODO the average of this main class is also different
-				averageFMeasure = averageFMeasure /50;
-//				averageFMeasure = averageFMeasure / count;
-//				averageFMeasure = averageFMeasure /goldStandardQuestions.size(); 
-				if (fMax < averageFMeasure) {
-					fMax = averageFMeasure;
-					submissionMax = submission.getName();
-					tmpResultMapMax = tmpResultMap;
-				}
-			}
-		
-			log.info(system.getName() + "\t" + submissionMax + "\t" + fMax);
-			run.setFmeasure(fMax);
-			run.setSubmission(submissionMax);
-			run.setMap(tmpResultMapMax);
-			runs.add(run);
-		}
-		return runs;
-	}
-=======
+
     public static List<Question> filterQuestions(List<Question> questions) {
         List<Question> filteredQuestions = new ArrayList<Question>(questions.size());
         for (Question question : questions) {
@@ -135,6 +89,4 @@ public class SearchBestQALDResult {
         }
         return runs;
     }
->>>>>>> 70ef2de7331293bb94f17a1936141ddc02fada28
-
 }
