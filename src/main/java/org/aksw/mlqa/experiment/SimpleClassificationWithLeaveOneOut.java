@@ -93,6 +93,7 @@ public class SimpleClassificationWithLeaveOneOut {
         List<Question> questions = QALD_Loader.load(Dataset.QALD5_Test);
         // Create an empty training set per system
         File QALD5Logs = new File(classLoader.getResource("QALD-5_logs/").getFile());
+        questions = SearchBestQALDResult.filterQuestions(questions);
         List<Run> runs = SearchBestQALDResult.searchBestRun(questions, QALD5Logs);
 
         List<Question> testQuestions = null;
@@ -215,11 +216,11 @@ public class SimpleClassificationWithLeaveOneOut {
                 String leaveOutQuestionString = leaveOutQuestion.languageToQuestion.get("en");
                 if (maxRun != null && maxRun.getMap().containsKey(leaveOutQuestionString)) {
                     double fmeasure = maxRun.getMap().get(leaveOutQuestionString);
-                    result += fmeasure + "\t";
+                    result += maxRun.getName() + ": " + fmeasure + "\t";
                     classifierToFMeasure.put(classifierName, fmeasure);
                 } else {
                     // TODO I do not get why some maxRun are null
-                    result += 0.0 + "\t";
+                    result += "null: 0.0\t";
                     classifierToFMeasure.put(classifierName, 0.0);
                 }
             }
