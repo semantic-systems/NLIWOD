@@ -84,33 +84,32 @@ public class SimpleClassificationWithLeaveOneOut {
         // 1.2 calculate the features per question and system
         log.info("Calculate the features per question and system");
         Analyzer analyzer = new Analyzer();
-        Map<Integer, Pair<String, Double>> classifierFmeasurePerQuestion = new HashMap<Integer, Pair<String, Double>>();
-//        TODO clean  QALD_Loader.load(Dataset.QALD5_Test).size() according to task 1, i.e., 
-//		if (!goldSystemQuestion.outOfScope && !goldSystemQuestion.hybrid && !goldSystemQuestion.goldenAnswers.isEmpty()) {
+        Map<Integer, Map<String, Double>> classifierFmeasurePerQuestion = new HashMap<Integer, Map<String, Double>>();
+        // TODO clean QALD_Loader.load(Dataset.QALD5_Test).size() according to
+        // task 1, i.e.,
+        // if (!goldSystemQuestion.outOfScope && !goldSystemQuestion.hybrid &&
+        // !goldSystemQuestion.goldenAnswers.isEmpty()) {
 
-        for (int leaveOut = 0; leaveOut < QALD_Loader.load(Dataset.QALD5_Test).size(); leaveOut++) {
-            List<Question> testQuestions = QALD_Loader.load(Dataset.QALD5_Test);
-            // Create an empty training set per system
-            File QALD5Logs = new File(classLoader.getResource("QALD-5_logs/").getFile());
-            List<Run> runs = SearchBestQALDResult.searchBestRun(testQuestions, QALD5Logs);
+        List<Question> questions = QALD_Loader.load(Dataset.QALD5_Test);
+        // Create an empty training set per system
+        File QALD5Logs = new File(classLoader.getResource("QALD-5_logs/").getFile());
+        List<Run> runs = SearchBestQALDResult.searchBestRun(questions, QALD5Logs);
+
+        List<Question> testQuestions = null;
+        for (int leaveOut = 0; leaveOut < questions.size(); leaveOut++) {
 
             Map<Run, Instances> instancesPerRun = new HashMap<Run, Instances>();
             // leave out one question
-            Question leaveOutQuestion = testQuestions.get(leaveOut);
+            testQuestions = new ArrayList<Question>(questions);
+            Question leaveOutQuestion = questions.get(leaveOut);
             testQuestions.remove(leaveOut);
-
-            for (Run run : runs) {
-                Instances isTrainingSet = new Instances("test_" + run.getName(), analyzer.fvWekaAttributes,
-                        testQuestions.size());
-                // set class attribute
-                isTrainingSet.setClass(analyzer.getClassAttribute());
-                instancesPerRun.put(run, isTrainingSet);
-            }
 
             log.info("Start collection of training data for each system");
 
             for (Run run : runs) {
-                Instances instances = instancesPerRun.get(run);
+                Instances instances = new Instances("test_" + run.getName(), analyzer.fvWekaAttributes,
+                        testQuestions.size());
+                instances.setClass(analyzer.getClassAttribute());
                 // TODO fix this, it calculates each feature per question
                 // $runs.size() times
                 for (Question q : testQuestions) {
@@ -144,21 +143,23 @@ public class SimpleClassificationWithLeaveOneOut {
             Map<Run, List<Classifier>> run_classifiers = new HashMap<Run, List<Classifier>>();
             for (Run run : runs) {
                 List<Classifier> classifierForEachRun = new ArrayList<Classifier>();
-                List<Classifier> classifiers = new ArrayList<Classifier>(Arrays.asList(new AdaBoostM1(),
-                        new AdditiveRegression(), new Bagging(), new BayesNet(), new BayesNetGenerator(),
-                        new BIFReader(), new ClassificationViaRegression(), new CostSensitiveClassifier(),
-                        new CVParameterSelection(), new DecisionStump(), new DecisionTable(), new EditableBayesNet(),
-                        new FilteredClassifier(), new GaussianProcesses(), new IBk(), new JRip(), new KStar(),
-                        new LinearRegression(), new LMT(), new Logistic(), new LogitBoost(), new LWL(), new M5P(),
-                        new M5Rules(), new MultiClassClassifier(), new MultilayerPerceptron(), new MultiScheme(),
-                        new NaiveBayes(), new NaiveBayesMultinomial(), new NaiveBayesMultinomialUpdateable(),
-                        new NaiveBayesUpdateable(), new OneR(), new PART(), new RandomCommittee(), new RandomForest(),
-                        new RandomSubSpace(), new RandomTree(), new RegressionByDiscretization(), new REPTree(),
-                        new SimpleLinearRegression(), new SimpleLogistic(), new SMO(), new SMOreg(), new Stacking(),
-                        new Vote(), new VotedPerceptron(), new ZeroR()));
+                List<Classifier> classifiers = Arrays.asList(new AdaBoostM1(), new AdditiveRegression(), new Bagging(),
+                        new BayesNet(), new BayesNetGenerator(), new BIFReader(), new ClassificationViaRegression(),
+                        new CostSensitiveClassifier(), new CVParameterSelection(), new DecisionStump(),
+                        new DecisionTable(), new EditableBayesNet(), new FilteredClassifier(), new GaussianProcesses(),
+                        new IBk(), new JRip(), new KStar(), new LinearRegression(), new LMT(), new Logistic(),
+                        new LogitBoost(), new LWL(), new M5P(), new M5Rules(), new MultiClassClassifier(),
+                        new MultilayerPerceptron(), new MultiScheme(), new NaiveBayes(), new NaiveBayesMultinomial(),
+                        new NaiveBayesMultinomialUpdateable(), new NaiveBayesUpdateable(), new OneR(), new PART(),
+                        new RandomCommittee(), new RandomForest(), new RandomSubSpace(), new RandomTree(),
+                        new RegressionByDiscretization(), new REPTree(), new SimpleLinearRegression(),
+                        new SimpleLogistic(), new SMO(), new SMOreg(), new Stacking(), new Vote(),
+                        new VotedPerceptron(), new ZeroR());
                 for (Classifier cModel : classifiers) {
                     Instances data = instancesPerRun.get(run);
                     if (cModel.getCapabilities().test(data)) {
+                        // System.out.println(cModel.getClass().getSimpleName()
+                        // + " added for " + run.getName());
                         cModel.buildClassifier(data);
                         // // Test the model
                         // Evaluation eval = new Evaluation(data);
@@ -199,6 +200,7 @@ public class SimpleClassificationWithLeaveOneOut {
             // for each classifier find out which system is responsible and get
             // f-measure for the responsible system
             String result = "Result of the run: " + leaveOutQuestion.id + "\t";
+            Map<String, Double> classifierToFMeasure = new HashMap<String, Double>();
             for (String classifierName : classificationResult.keySet()) {
                 List<Pair<Run, Double>> results = classificationResult.get(classifierName);
                 double max = Double.MIN_VALUE;
@@ -209,45 +211,46 @@ public class SimpleClassificationWithLeaveOneOut {
                         max = pair.getRight();
                     }
                 }
-                // find the f-measure for this leaveOutQuestiona and this system
+                // find the f-measure for this leaveOutQuestion and this system
                 String leaveOutQuestionString = leaveOutQuestion.languageToQuestion.get("en");
                 if (maxRun != null && maxRun.getMap().containsKey(leaveOutQuestionString)) {
                     double fmeasure = maxRun.getMap().get(leaveOutQuestionString);
                     result += fmeasure + "\t";
-                    // FIXME here goes something horribly wrong
-                    if (classifierFmeasurePerQuestion.containsKey(leaveOut)) {
-                        Pair<String, Double> tmp = classifierFmeasurePerQuestion.get(leaveOut);
-                        double fmeasureSofar = tmp.getRight();
-                        classifierFmeasurePerQuestion.put(leaveOut,
-                                new Pair<String, Double>(classifierName, fmeasure + fmeasureSofar));
-                    } else {
-                        classifierFmeasurePerQuestion.put(leaveOut, new Pair<String, Double>(classifierName, fmeasure));
-                    }
+                    classifierToFMeasure.put(classifierName, fmeasure);
                 } else {
                     // TODO I do not get why some maxRun are null
                     result += 0.0 + "\t";
+                    classifierToFMeasure.put(classifierName, 0.0);
                 }
-
             }
+            classifierFmeasurePerQuestion.put(leaveOut, classifierToFMeasure);
             System.out.println(result);
 
         }
         // calculate average f-measure per classifier
-        Map<String, Double> avgFmeasurePerClassifier = new HashMap<String, Double>();
+        Map<String, Double> classifierToFMeasureSum = new HashMap<String, Double>();
+        Map<String, Double> classifierToFMeasure = null;
         for (int question : classifierFmeasurePerQuestion.keySet()) {
-            String classifierName = classifierFmeasurePerQuestion.get(question).getLeft();
-            Double fmeasure = classifierFmeasurePerQuestion.get(question).getRight();
-            if (avgFmeasurePerClassifier.containsKey(classifierName)) {
-                double fmeasureSoFar = avgFmeasurePerClassifier.get(classifierName) + fmeasure;
-                avgFmeasurePerClassifier.put(classifierName, fmeasureSoFar);
-            } else {
-                avgFmeasurePerClassifier.put(classifierName, fmeasure);
+            classifierToFMeasure = classifierFmeasurePerQuestion.get(question);
+            for (String classifierName : classifierToFMeasure.keySet()) {
+                if (classifierToFMeasureSum.containsKey(classifierName)) {
+                    classifierToFMeasureSum.put(classifierName,
+                            classifierToFMeasureSum.get(classifierName) + classifierToFMeasure.get(classifierName));
+                } else {
+                    classifierToFMeasureSum.put(classifierName, classifierToFMeasure.get(classifierName));
+                }
             }
         }
+        Map<String, Double> avgFmeasurePerClassifier = new HashMap<String, Double>();
+        for (String classifierName : classifierToFMeasureSum.keySet()) {
+            avgFmeasurePerClassifier.put(classifierName,
+                    classifierToFMeasureSum.get(classifierName) / (double) questions.size());
+        }
+
         // TODO write the following sysout to file
 
         for (String classifierName : avgFmeasurePerClassifier.keySet()) {
-            System.out.println(classifierName + "\t" + (avgFmeasurePerClassifier.get(classifierName) / 59));
+            System.out.println(classifierName + "\t" + avgFmeasurePerClassifier.get(classifierName));
         }
     }
 }
