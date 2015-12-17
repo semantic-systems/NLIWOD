@@ -81,7 +81,7 @@ import weka.core.Instances;
 public class ThreadBasedClassificationWithLeaveOneOut implements TaskObserver {
     static Logger log = LoggerFactory.getLogger(ThreadBasedClassificationWithLeaveOneOut.class);
 
-    public static final int NUMBER_OF_WORKERS = 4;
+    public static final int NUMBER_OF_WORKERS = 20;
 
     public static void main(String[] args) throws Exception {
         ThreadBasedClassificationWithLeaveOneOut experiment = new ThreadBasedClassificationWithLeaveOneOut();
@@ -111,7 +111,7 @@ public class ThreadBasedClassificationWithLeaveOneOut implements TaskObserver {
 
         List<Question> questions = QALD_Loader.load(Dataset.QALD5_Test);
         // Create an empty training set per system
-        File QALD5Logs = new File(classLoader.getResource("QALD-5_logs/").getFile());
+        File QALD5Logs = new File("QALD-5_logs");
         questions = SearchBestQALDResult.filterQuestions(questions);
         List<Run> runs = SearchBestQALDResult.searchBestRun(questions, QALD5Logs);
 
@@ -168,11 +168,17 @@ public class ThreadBasedClassificationWithLeaveOneOut implements TaskObserver {
                 }
                 for (String classifierName : classifierNames) {
                     pStream.print('\t');
-                    f1 = avgFmeasurePerClassifier.get(classifierName);
-                    pStream.print(f1);
-                    if (f1 > maxF1) {
-                        maxF1 = f1;
-                        maxCombo = i;
+                    if (avgFmeasurePerClassifier.containsKey(classifierName)) {
+                        f1 = avgFmeasurePerClassifier.get(classifierName);
+                        pStream.print(f1);
+                        if (f1 > maxF1) {
+                            maxF1 = f1;
+                            maxCombo = i;
+                        }
+                    } else {
+                        log.warn("There is no result for a classifier \"" + classifierName + "\" for the run " + i
+                                + ".");
+                        pStream.print("null");
                     }
                 }
                 pStream.println();
