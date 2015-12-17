@@ -30,6 +30,11 @@
 		    <name>University Leipzig, AKSW Maven2 Repository</name>
 		    <url>http://maven.aksw.org/archiva/repository/snapshots</url>
 		</repository>
+		<!-- Let's use a local repository for the local libraries of this project -->
+		<repository>
+			<id>local repository</id>
+			<url>file://${project.basedir}/repository</url>
+		</repository>
 	</repositories>
 	<build>
 		<plugins>
@@ -42,9 +47,16 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			<!-- <plugin> <artifactId>maven-resources-plugin</artifactId> <version>2.7</version> 
-				<configuration> <resources> <resource> <directory>src/main/resources</directory> 
-				</resource> </resources> <encoding>UTF-8</encoding> </configuration> </plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -70,6 +82,12 @@
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-core</artifactId>
 			<version>3.0.0</version>
+		</dependency>
+		<!-- Concurrent lib -->
+		<dependency>
+			<groupId>org.aksw.simba</groupId>
+			<artifactId>topicmodeling.concurrent</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
