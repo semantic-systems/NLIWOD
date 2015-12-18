@@ -13,20 +13,9 @@
 .settings/
 
 # Project-specific Files #
-src/main/resources/general-en/
-src/main/resources/hawk.properties
-
-cache/*
-ranking/*
-
-resources/indexAbstract/
-resources/indexOntology/
-resources/ontologyClasses/
-resources/ontologyProperties/
-log.out
 /target
+src/main/resources/QALD-5_logs.zip
+src/main/resources/QALD-5_logs/
+src/main/resources/qald5train/
+/cache
 
-resources/qald-4_hybrid_train.xml
-results.html
-
-/target/

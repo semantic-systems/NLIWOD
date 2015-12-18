@@ -77,7 +77,7 @@ public class SearchBestQALDResult {
                 averageFMeasure = averageFMeasure / goldStandardQuestions.size();
                 if (fMax < averageFMeasure) {
                     fMax = averageFMeasure;
-                    submissionMax = submission.getName();
+                    submissionMax = submission.getAbsolutePath();
                     tmpResultMapMax = tmpResultMap;
                 }
             }
