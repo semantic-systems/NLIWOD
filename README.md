@@ -1,7 +1,8 @@
+# Machine Learning over Question Answering System
+
 This project aims at combining different QA Systems to improve the overall performance.
 
-Available QA Systems on the Wbe
-===
+## Available QA Systems on the Web
 
 Currently, we work on log files provided from the QALD-5 challenge. In the future, we want to use several web services.
 
@@ -13,7 +14,6 @@ Action items: Implement various wrappers for webservices to train and test on. S
 * TBSL http://linkedspending.aksw.org/tbsl/
 * SINA http://sina.aksw.org/
 * HAWK http://hawk.aksw.org/
-* 
 
 No demo found sofar for
 * poweraqua
@@ -27,18 +27,18 @@ No demo found sofar for
 
 For more systems see page 7 http://www.semantic-web-journal.net/system/files/swj1205.pdf
 
-The Experiment Idea
-===
+##The Experiment Idea
+
 
 Our experiment implementation is based on https://weka.wikispaces.com/Programmatic+Use.
 
-Simple Decision Making
-==
+###Simple Decision Making
+
 For each system, we learn a classifier whether this system can answer the features of the class or not. 
 We choose the one with the highest probability as the system that should answer.
 
-Enhanced solution
-==
+###Enhanced solution
+
 We try to learn how to combine answer sets.
 We use a multilayer perceptron for the following:
 * input: system, confidence (from simple solution), feature of question, F-measure of the system
