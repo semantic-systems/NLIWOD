@@ -20,6 +20,7 @@ to analyze:
 * http://research.microsoft.com/en-us/downloads/88c0021c-328a-4148-a158-a42d7331c6cf/
 * http://projects.semwebcentral.org/ (?)
 * http://research.signalmedia.co/newsir16/signal-dataset.html
+* Kaggle AI challenge or in general multiple choice questions (e.g., QALD entrance exams)
 * needs computation: https://github.com/deepmind/rc-data/
  
 out of scope (?) :
