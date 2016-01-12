@@ -165,8 +165,9 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 					Node predicate = tp.getPredicate();
 					if (predicate.isURI() && !ignoredProperties.contains(predicate.toString())) {
 						Set<Node> domain = getDomain(predicate.getURI());
+						logger.debug("Domain of " + predicate + ": " + subjectTypes);
 						if (conflicts(subjectTypes, domain)) {
-							// logger.debug("Domain of " + predicate + " does not match types " + subjectTypes);
+							logger.debug("Domain of " + predicate + " does not match types " + subjectTypes);
 							return false;
 						}
 					}
@@ -191,8 +192,9 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 					Node predicate = tp.getPredicate();
 					if (predicate.isURI() && !ignoredProperties.contains(predicate.toString())) {
 						Set<Node> range = getRange(predicate.getURI());
+						logger.debug("Range of " + predicate + ": " + objectTypes);
 						if (conflicts(objectTypes, range)) {
-							// logger.debug("Range of " + predicate + " does not match types " + objectTypes);
+							logger.debug("Range of " + predicate + " does not match types " + objectTypes);
 							return false;
 						}
 					}
@@ -206,19 +208,5 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 	private boolean conflicts(Set<Node> types1, Set<Node> types2) {
 		return Sets.intersection(types1, types2).isEmpty();
 	}
-
-	//TODO christian: transform to proper unit test
-//	public static void main(String[] args) {
-//		QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
-//		DisjointnessBasedQueryFilter filter = new DisjointnessBasedQueryFilter(qef);
-//		SPARQLQuery query1 = new SPARQLQuery("?s a <http://dbpedia.org/ontology/Book>.");
-//		query1.addConstraint("?s <http://dbpedia.org/ontology/author> ?o.");
-//
-//		SPARQLQuery query2 = new SPARQLQuery("?s a <http://dbpedia.org/ontology/Book>.");
-//		query2.addConstraint("?s <http://dbpedia.org/ontology/birthDate> ?o.");
-//
-//		Set<SPARQLQuery> filtered = filter.prune(Sets.newHashSet(query1, query2));
-//		System.out.println(filtered);
-//	}
-
+	
 }

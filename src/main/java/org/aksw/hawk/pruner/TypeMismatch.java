@@ -69,6 +69,8 @@ public class TypeMismatch implements ISPARQLQueryPruner {
 	 * 
 	 * @see org.aksw.hawk.filtering.QueryFilter#filter(java.util.Set)
 	 */
+	
+	
 	@Override
 	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, Question q) {
 		mon.reset();
@@ -144,28 +146,5 @@ public class TypeMismatch implements ISPARQLQueryPruner {
 	private boolean isProperty(Set<Resource> entityTypes) {
 		return !Sets.intersection(entityTypes, PROPERTY_ENTITY_TYPES).isEmpty();
 	}
-
-	//TODO christian: transform to proper unit test
-//	public static void main(String[] args) {
-//		QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
-//		
-//		TypeMismatch filter = new TypeMismatch(qef);
-//		
-//		SPARQLQuery query1 = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Book>.");
-//		query1.addConstraint("?proj <http://dbpedia.org/ontology/author> ?o.");
-//
-//		SPARQLQuery query2 = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Book>.");
-//		query2.addConstraint("?proj <http://dbpedia.org/ontology/Currency> ?o.");
-//		
-//		SPARQLQuery query3 = new SPARQLQuery("?s a <http://dbpedia.org/ontology/Book>.");
-//		query3.addConstraint("?s <http://dbpedia.org/ontology/birthDate> ?proj.");
-//		
-//		SPARQLQuery query4 = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Book>.");
-//		query4.addConstraint("?proj <http://www.w3.org/2000/01/rdf-schema#label> ?label.");
-//		query4.addConstraint("?label <http://jena.apache.org/text#query> \"'text'\"");
-//
-//		Set<SPARQLQuery> filtered = filter.prune(Sets.newHashSet(query1, query2, query3, query4));
-//		System.out.println(filtered);
-//	}
 
 }
