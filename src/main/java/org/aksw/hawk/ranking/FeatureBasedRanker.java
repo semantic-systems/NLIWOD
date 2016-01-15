@@ -29,26 +29,7 @@ public class FeatureBasedRanker implements Ranking {
 	private Map<String, Double> vec;
 	private Collection<Feature> features;
 
-	// TODO Christian: transform this to unit test
-	// public static void main(String args[]) {
-	// List<SPARQLQuery> queries = Lists.newArrayList();
-	//
-	// SPARQLQuery query = new SPARQLQuery("?const <http://dbpedia.org/ontology/starring> ?proj.");
-	// query.addFilterOverAbstractsContraint("?proj", "Coquette Productions");
-	// queries.add(query);
-	//
-	// query = new SPARQLQuery("?const ?verb ?proj.");
-	// query.addFilterOverAbstractsContraint("?proj", "Coquette Productions");
-	// query.addConstraint("?proj <http://dbpedia.org/ontology/birthPlace> ?const");
-	// queries.add(query);
-	//
-	// FeatureBasedRanker ranker = new FeatureBasedRanker();
-	// ranker.train();
-	// queries = ranker.rank(queries);
-	// for (SPARQLQuery q : queries) {
-	// log.debug(q.toString());
-	// }
-	// }
+	
 
 	public void learn(Question q, Set<SPARQLQuery> queries) {
 		db.store(q, queries);
@@ -131,11 +112,12 @@ public class FeatureBasedRanker implements Ranking {
 	private Map<String, Double> calculateRanking(SPARQLQuery q) {
 		// a priori assumption
 		Collections.sort(q.constraintTriples);
-
 		// here are the features
 		Map<String, Double> featureValues = Maps.newHashMap();
-
+		System.out.println("evaluating: "+ q.toString());
 		for (Feature feature : features) {
+			System.out.println("feature:");
+			 System.out.println(feature);
 			switch (feature) {
 			case PREDICATES:
 				featureValues.putAll(usedPredicates(q));

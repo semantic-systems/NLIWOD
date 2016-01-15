@@ -19,7 +19,7 @@ public class FeatureBasedRankerDB {
 
 	public Set<SPARQLQuery> readRankings() {
 		Set<SPARQLQuery> set = Sets.newHashSet();
-		for (File f : new File("ranking/").listFiles()) {
+		for (File f : new File("c:/ranking/").listFiles()) {
 			log.debug("Reading file for ranking: " + f);
 			set.add((SPARQLQuery) StorageHelper.readFromFileSavely(f.toString()));
 		}
@@ -44,7 +44,7 @@ public class FeatureBasedRankerDB {
 	}
 
 	private String getFileName(int hash) {
-		String serializedFileName = "ranking/" + hash + ".question";
+		String serializedFileName = "c:/ranking/" + hash + ".question";
 		return serializedFileName;
 	}
 }

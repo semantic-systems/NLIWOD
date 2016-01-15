@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.aksw.hawk.controller.Answer;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -200,7 +202,7 @@ public class SPARQLQuery implements Cloneable, Serializable {
 				}
 				sb.append(fulltext.toString());
 				// return 100 uris from text index
-				// TODO decrease that number by introducing a ranking factor, e.g., pagerank of the nodes
+				// TODO decrease that number by introducing a ranking factor
 				sb.append("' " + 1000 + "). \n");
 			}
 		}
@@ -245,5 +247,19 @@ public class SPARQLQuery implements Cloneable, Serializable {
 		this.limit = cardinality;
 
 	}
+	public Answer toAnswer()
+	{
+		Answer answer=new Answer();
+		try {
+			SPARQLQuery tmpQuery=(SPARQLQuery)this.clone();
+			answer.query=tmpQuery;
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		
+		}
+		return answer;
+	}
+	
 
 }

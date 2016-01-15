@@ -50,5 +50,11 @@ public class Answer implements Comparable<Answer> {
 		return "Answer [answerSet=" + answerSet + ", query=" + query + ", score=" + score + ", question=" + question
 				+ ", question_id=" + question_id + ", queryString=" + queryString + "]";
 	}
+	
+	
+	public SPARQLQuery toSPARQLQuery()
+	{
+		return query;
+	}
 
 }
