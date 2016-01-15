@@ -10,6 +10,7 @@ in production (adding answers):
 * https://www.stonetemple.com/great-knowledge-box-showdown/
 
 to analyze: 
+* https://github.com/ag-sc/QALD , especially if we could use this repo directly
 * https://github.com/brmson/yodaqa/wiki/Benchmarks
 * http://www-nlp.stanford.edu/software/sempre/
 * https://sites.google.com/site/trecliveqa2015/
