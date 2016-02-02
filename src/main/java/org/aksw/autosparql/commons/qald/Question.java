@@ -32,6 +32,8 @@ public class Question implements Serializable {
 	public Boolean outOfScope;
 	public Boolean aggregation;
 	public Boolean hybrid;
+	public Boolean isClassifiedAsASKQuery; // what the program classifies
+	public Boolean loadedAsASKQuery; // what we load from the data file
 	public String answerType;
 	public String sparqlQuery;
 	public String pseudoSparqlQuery;

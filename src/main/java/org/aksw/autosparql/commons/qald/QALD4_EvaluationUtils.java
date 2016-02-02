@@ -110,7 +110,7 @@ public class QALD4_EvaluationUtils {
 		return fMeasure;
 	}
 
-	private static boolean isAskType(String sparqlQuery) {
+	public static boolean isAskType(String sparqlQuery) {
 		return sparqlQuery.contains("\nASK\n") || sparqlQuery.contains("ASK ");
 	}
 

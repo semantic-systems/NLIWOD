@@ -22,6 +22,7 @@ public class SPARQLQuery implements Cloneable, Serializable {
 	public Set<String> filter = Sets.newHashSet();
 	public Map<String, Set<String>> textMapFromVariableToSingleFuzzyToken = Maps.newHashMap();
 	public Map<String, Set<String>> textMapFromVariableToCombinedNNExactMatchToken = Maps.newHashMap();
+	private boolean isASKQuery = false;
 	private int limit = 1;
 
 	public SPARQLQuery(String initialConstraint) {
@@ -32,6 +33,10 @@ public class SPARQLQuery implements Cloneable, Serializable {
 	 * only for clone()
 	 */
 	protected SPARQLQuery() {
+	}
+
+	public void isASKQuery(boolean isASKQuery) {
+		this.isASKQuery = isASKQuery;
 	}
 
 	public void addConstraint(String constraint) {
@@ -99,6 +104,7 @@ public class SPARQLQuery implements Cloneable, Serializable {
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		SPARQLQuery q = new SPARQLQuery();
+		q.isASKQuery(isASKQuery);
 		q.constraintTriples = Lists.newArrayList();
 		for (String constraint : this.constraintTriples) {
 			q.constraintTriples.add(constraint);
@@ -142,7 +148,11 @@ public class SPARQLQuery implements Cloneable, Serializable {
 	private String generateQueryStringWithExactMatch() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("PREFIX text:<http://jena.apache.org/text#> \n");
-		sb.append("SELECT DISTINCT ?proj WHERE {\n ");
+		if (isASKQuery) {
+			sb.append("ASK {\n ");
+		} else {
+			sb.append("SELECT DISTINCT ?proj WHERE {\n ");
+		}
 		for (String variable : textMapFromVariableToCombinedNNExactMatchToken.keySet()) {
 			// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
 			// anti-apartheid activist').
@@ -171,14 +181,20 @@ public class SPARQLQuery implements Cloneable, Serializable {
 			sb.append("FILTER (" + filterString + ").\n ");
 		}
 		sb.append("}\n");
-		sb.append("LIMIT " + limit);
+		if (!isASKQuery) {
+			sb.append("LIMIT " + limit);
+		}
 		return sb.toString();
 	}
 
 	private String generateQueryStringWithFuzzy() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("PREFIX text:<http://jena.apache.org/text#> \n");
-		sb.append("SELECT DISTINCT ?proj WHERE {\n ");
+		if (isASKQuery) {
+			sb.append("ASK {\n ");
+		} else {
+			sb.append("SELECT DISTINCT ?proj WHERE {\n ");
+		}
 		for (String variable : textMapFromVariableToSingleFuzzyToken.keySet()) {
 			// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
 			// anti-apartheid activist').
@@ -213,7 +229,9 @@ public class SPARQLQuery implements Cloneable, Serializable {
 			sb.append("FILTER (" + filterString + ").\n ");
 		}
 		sb.append("}\n");
-		sb.append("LIMIT " + limit);
+		if (!isASKQuery) {
+			sb.append("LIMIT " + limit);
+		}
 		return sb.toString();
 	}
 

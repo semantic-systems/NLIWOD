@@ -37,7 +37,7 @@ public class RankingPipeline {
 		List<Question> questions = QALD_Loader.load(dataset);
 
 		for (Question q : questions) {
-			if (q.hybrid & q.answerType.equals("resource") & q.onlydbo & !q.aggregation) {
+			if ((q.hybrid & q.answerType.equals("resource") & q.onlydbo & !q.aggregation) || q.loadedAsASKQuery) {
 
 				log.info("Run pipeline on " + q.languageToQuestion.get("en"));
 				List<Answer> answers = pipeline.getAnswersToQuestion(q);
