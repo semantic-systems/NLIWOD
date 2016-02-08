@@ -13,6 +13,7 @@ Action items: Implement various wrappers for webservices to train and test on. S
 * QAKIS http://qakis.org/qakis2/
 * TBSL http://linkedspending.aksw.org/tbsl/
 * SINA http://sina.aksw.org/
+* LODQA http://lodqa.org/
 * HAWK http://hawk.aksw.org/
 
 No demo found sofar for
