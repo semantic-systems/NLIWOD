@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
-import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.datastructures.Question;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -8,8 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.aksw.autosparql.commons.qald.Question;
-import org.aksw.hawk.controller.Answer;
+import org.aksw.hawk.datastructures.Answer;
+import org.aksw.hawk.datastructures.Question;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

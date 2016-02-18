@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.aksw.hawk.controller.Answer;
+import org.aksw.hawk.datastructures.Answer;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

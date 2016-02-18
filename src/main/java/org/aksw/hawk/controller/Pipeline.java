@@ -6,8 +6,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.cache.CachedParseTree;
+import org.aksw.hawk.datastructures.Answer;
+import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.nlp.MutableTreePruner;
 import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.hawk.nlp.spotter.Fox;

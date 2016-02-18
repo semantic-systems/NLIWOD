@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
+import org.aksw.hawk.datastructures.Question;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

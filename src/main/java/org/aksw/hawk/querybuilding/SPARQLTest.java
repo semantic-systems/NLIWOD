@@ -3,13 +3,9 @@
  */
 package org.aksw.hawk.querybuilding;
 
-import static org.junit.Assert.*;
-
-import java.util.Set;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
-
-import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /**
  * @author dec

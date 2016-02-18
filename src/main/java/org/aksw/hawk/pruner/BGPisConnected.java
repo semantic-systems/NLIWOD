@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

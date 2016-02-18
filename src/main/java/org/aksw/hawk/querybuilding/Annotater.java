@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
-import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.index.DBOIndex;
 import org.aksw.hawk.index.IndexDBO_classes;
 import org.aksw.hawk.index.IndexDBO_properties;

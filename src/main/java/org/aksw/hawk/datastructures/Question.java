@@ -1,4 +1,4 @@
-package org.aksw.autosparql.commons.qald;
+package org.aksw.hawk.datastructures;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,7 +11,6 @@ import java.util.UUID;
 
 import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.autosparql.commons.qald.uri.GoldEntity;
-import org.aksw.hawk.controller.Answer;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.util.JSONStatusBuilder;
 import org.apache.commons.lang3.StringUtils;

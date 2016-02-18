@@ -3,8 +3,8 @@ package org.aksw.hawk.querybuilding;
 import java.util.List;
 import java.util.Set;
 
-import org.aksw.autosparql.commons.qald.Question;
-import org.aksw.hawk.controller.Answer;
+import org.aksw.hawk.datastructures.Answer;
+import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.pruner.SPARQLQueryPruner;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;

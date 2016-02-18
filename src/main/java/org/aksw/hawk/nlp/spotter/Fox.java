@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
+import org.aksw.hawk.datastructures.Question;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;

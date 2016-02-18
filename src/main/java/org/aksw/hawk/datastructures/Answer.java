@@ -1,4 +1,4 @@
-package org.aksw.hawk.controller;
+package org.aksw.hawk.datastructures;
 
 import java.util.Set;
 
@@ -6,6 +6,7 @@ import org.aksw.hawk.querybuilding.SPARQLQuery;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
+//FIXME mach eine ordentliche toString()
 public class Answer implements Comparable<Answer> {
 
 	@Override
@@ -47,14 +48,13 @@ public class Answer implements Comparable<Answer> {
 
 	@Override
 	public String toString() {
-		return "Answer [answerSet=" + answerSet + ", query=" + query + ", score=" + score + ", question=" + question
-				+ ", question_id=" + question_id + ", queryString=" + queryString + "]";
+		return "Answer [answerSet=" + answerSet + ", score=" + score + ", queryString=" + queryString + "]";
 	}
-	
-	
-	public SPARQLQuery toSPARQLQuery()
-	{
-		return query;
-	}
+
+
+	public SPARQLQuery toSPARQLQuery() {
+	    // TODO Auto-generated method stub
+	    return null;
+    }
 
 }

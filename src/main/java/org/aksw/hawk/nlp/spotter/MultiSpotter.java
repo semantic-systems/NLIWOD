@@ -110,13 +110,13 @@ public class MultiSpotter extends ASpotter{
 		ASpotter tagMe = new TagMe();
 		System.out.println(tagMe.getEntities(question));
 		
-		ASpotter wiki = new WikipediaMiner();
-		System.out.println(wiki.getEntities(question));
+//		ASpotter wiki = new WikipediaMiner();
+//		System.out.println(wiki.getEntities(question));
 		
 		ASpotter spot = new Spotlight();
 		System.out.println(spot.getEntities(question));
 		
-		MultiSpotter multiSpotter = new MultiSpotter(fox, tagMe, wiki,spot);
+		MultiSpotter multiSpotter = new MultiSpotter(fox, tagMe,spot);
 		System.out.println(multiSpotter.getEntities(question));
 	}
 

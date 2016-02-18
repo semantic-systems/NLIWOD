@@ -1,15 +1,15 @@
 package hawk;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
 import java.util.Set;
 
-import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.pruner.TypeMismatch;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
+import org.junit.Test;
 
 import com.google.common.collect.Sets;
 

@@ -3,8 +3,8 @@ package org.aksw.hawk.ranking;
 import java.io.File;
 import java.util.Set;
 
-import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.hawk.cache.StorageHelper;
+import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -2,8 +2,8 @@ package org.aksw.hawk.util;
 
 import java.util.Stack;
 
-import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
+import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.apache.commons.codec.binary.Base64;

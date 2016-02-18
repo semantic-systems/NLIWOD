@@ -15,7 +15,7 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.aksw.hawk.controller.Answer;
+import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

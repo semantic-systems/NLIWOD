@@ -2,7 +2,7 @@ package hawk;
 
 import java.util.Set;
 
-import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.pruner.SPARQLQueryPruner;
 import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQuery;

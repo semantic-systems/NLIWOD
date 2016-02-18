@@ -2,7 +2,7 @@ package org.aksw.hawk.querybuilding;
 
 import java.util.Set;
 
-import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;

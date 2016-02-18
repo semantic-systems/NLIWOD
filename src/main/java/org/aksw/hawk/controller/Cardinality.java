@@ -1,6 +1,6 @@
 package org.aksw.hawk.controller;
 
-import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.nlp.MutableTreeNode;
 
 public class Cardinality {

@@ -2,7 +2,7 @@ package hawk;
 
 import java.util.Set;
 
-import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.pruner.BGPisConnected;
 import org.aksw.hawk.pruner.NumberOfTypesPerVariable;
 import org.aksw.hawk.pruner.PredicatesPerVariableEdge;

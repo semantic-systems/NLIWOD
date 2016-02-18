@@ -6,10 +6,10 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.aksw.autosparql.commons.qald.QALD_Loader;
-import org.aksw.autosparql.commons.qald.Question;
-import org.aksw.hawk.controller.Answer;
 import org.aksw.hawk.controller.EvalObj;
 import org.aksw.hawk.controller.Pipeline;
+import org.aksw.hawk.datastructures.Answer;
+import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.ranking.BucketRanker;
 import org.aksw.hawk.ranking.FeatureBasedRanker;
 import org.aksw.hawk.ranking.OptimalRanker;

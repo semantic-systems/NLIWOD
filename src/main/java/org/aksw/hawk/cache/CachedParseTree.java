@@ -2,7 +2,7 @@ package org.aksw.hawk.cache;
 
 import java.io.File;
 
-import org.aksw.autosparql.commons.qald.Question;
+import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.ParseTree;
 import org.aksw.hawk.nlp.TreeTransformer;

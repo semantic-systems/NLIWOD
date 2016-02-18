@@ -1,5 +1,7 @@
 package org.aksw.hawk.controller;
 
+import org.aksw.hawk.datastructures.Answer;
+
 public class EvalObj {
 	private String comment;
 	private double fmax;

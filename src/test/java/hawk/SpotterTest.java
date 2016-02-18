@@ -9,7 +9,6 @@ import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.nlp.spotter.Spotlight;
-import org.aksw.hawk.nlp.spotter.WikipediaMiner;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +23,7 @@ public class SpotterTest {
 	public void emtpyTest() {
 		Set<RDFNode> systemAnswers = new HashSet<RDFNode>();
 		systemAnswers.add(new ResourceImpl("true"));
-		for (ASpotter m : new ASpotter[] { new Fox(), new Spotlight(), new WikipediaMiner() }) {
+		for (ASpotter m : new ASpotter[] { new Fox(), new Spotlight() }) {
 			log.info(m.toString());
 			Map<String, List<Entity>> ents = m.getEntities("Where did the first man in space die?");
 			if (!ents.isEmpty()) {

@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Stack;
 
-import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
+import org.aksw.hawk.datastructures.Question;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

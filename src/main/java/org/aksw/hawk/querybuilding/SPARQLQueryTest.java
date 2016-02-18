@@ -1,11 +1,6 @@
 package org.aksw.hawk.querybuilding;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
 import java.util.Set;
-
-import com.google.common.collect.Lists;
 
 import org.junit.Test;
 

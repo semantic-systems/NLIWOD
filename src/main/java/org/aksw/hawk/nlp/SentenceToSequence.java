@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import org.aksw.autosparql.commons.qald.Question;
 import org.aksw.autosparql.commons.qald.uri.Entity;
+import org.aksw.hawk.datastructures.Question;
 
 import com.clearnlp.dependency.DEPNode;
 import com.clearnlp.dependency.DEPTree;
