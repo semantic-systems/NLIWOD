@@ -3,6 +3,9 @@ package org.aksw.hawk.querybuilding;
 import java.sql.SQLException;
 import java.util.Set;
 
+import com.hp.hpl.jena.graph.Node;
+import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
+import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheCoreH2;
@@ -68,9 +71,14 @@ public class SPARQL {
 		try {
 			QueryExecution qe = qef.createQueryExecution(query);
 			if (qe != null && query.toString() != null) {
-				ResultSet results = qe.execSelect();
-				while (results.hasNext()) {
-					set.add(results.next().get("proj"));
+				if (QALD4_EvaluationUtils.isAskType(query)) {
+					set.add(new ResourceImpl(String.valueOf(qe.execAsk())));
+				} else {
+					ResultSet results = qe.execSelect();
+					while (results.hasNext())
+					{
+						set.add(results.next().get("proj"));
+					}
 				}
 			}
 		} catch (Exception e) {

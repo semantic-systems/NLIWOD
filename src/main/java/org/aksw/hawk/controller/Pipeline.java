@@ -27,8 +27,11 @@ public class Pipeline {
 	private Annotater annotater;
 	private SPARQLQueryBuilder queryBuilder;
 	private Cardinality cardinality;
+	private QueryTypeClassifier queryTypeClassifier;
 
 	public Pipeline() {
+		queryTypeClassifier = new QueryTypeClassifier();
+
 		nerdModule = new Fox();
 		// controller.nerdModule = new Spotlight();
 		// controller.nerdModule =new TagMe();
@@ -51,6 +54,9 @@ public class Pipeline {
 
 	public List<Answer> getAnswersToQuestion(Question q) {
 		log.info("Question: " + q.languageToQuestion.get("en"));
+
+		log.info("Classify question type.");
+		q.isClassifiedAsASKQuery = queryTypeClassifier.isASKQuery(q.languageToQuestion.get("en"));
 
 		// Disambiguate parts of the query
 		log.info("Named entity recognition.");

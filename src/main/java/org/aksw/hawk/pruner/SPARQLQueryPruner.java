@@ -1,5 +1,6 @@
 package org.aksw.hawk.pruner;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.xml.ws.http.HTTPException;
@@ -49,106 +50,119 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 	// TODO make this logging / JSON more pretty
 	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queries, Question q) {
 
+		Set<SPARQLQuery> returnedQueries = null;
 		JSONArray document = new JSONArray();
 		// Pruning
-		int initialQueriesNumber = queries.size();
 		JSONObject tmp = new JSONObject();
 		tmp.put("label", "Number of Queries before pruning");
-		tmp.put("value", initialQueriesNumber);
+		tmp.put("value", queries.size());
 		document.add(tmp);
 
 		// this pruning should be first since it assures valid queries for the
 		// following steps
-		queries = underdefined.prune(queries, q);
+		returnedQueries = underdefined.prune(queries, q);
 		tmp = new JSONObject();
 		tmp.put("label", "Underdefined pruned");
-		tmp.put("value", (initialQueriesNumber - queries.size()));
+		tmp.put("value", (queries.size() - returnedQueries.size()));
+		tmp.put("removedQueries", queries2json(queriesDiff(queries, returnedQueries)));
 		document.add(tmp);
-		initialQueriesNumber = queries.size();
+		queries = returnedQueries;
 
-		queries = containsProjVariable.prune(queries, q);
+		returnedQueries = containsProjVariable.prune(queries, q);
 		tmp = new JSONObject();
 		tmp.put("label", "SPARQL queries containing no project variable pruned");
-		tmp.put("value", (initialQueriesNumber - queries.size()));
+		tmp.put("value", (queries.size() - returnedQueries.size()));
+		tmp.put("removedQueries", queries2json(queriesDiff(queries, returnedQueries)));
 		document.add(tmp);
-		initialQueriesNumber = queries.size();
+		queries = returnedQueries;
 
-		queries = containsTooManyNodesAsTextLookUp.prune(queries, q);
+		returnedQueries = containsTooManyNodesAsTextLookUp.prune(queries, q);
 		tmp = new JSONObject();
 		tmp.put("label", "SPARQL queries containing too many nodes as text lookup pruned");
-		tmp.put("value", (initialQueriesNumber - queries.size()));
+		tmp.put("value", (queries.size() - returnedQueries.size()));
+		tmp.put("removedQueries", queries2json(queriesDiff(queries, returnedQueries)));
 		document.add(tmp);
-		initialQueriesNumber = queries.size();
+		queries = returnedQueries;
 
-		queries = predicatesPerVariableEdge.prune(queries, q);
+		returnedQueries = predicatesPerVariableEdge.prune(queries, q);
 		tmp = new JSONObject();
 		tmp.put("label", "SPARQL queries with more than one predicate between the same variables pruned");
-		tmp.put("value", (initialQueriesNumber - queries.size()));
+		tmp.put("value", (queries.size() - returnedQueries.size()));
+		tmp.put("removedQueries", queries2json(queriesDiff(queries, returnedQueries)));
 		document.add(tmp);
-		initialQueriesNumber = queries.size();
+		queries = returnedQueries;
 
-		queries = numberOfTypesPerVariable.prune(queries, q);
+		returnedQueries = numberOfTypesPerVariable.prune(queries, q);
 		tmp = new JSONObject();
 		tmp.put("label", "SPARQL queries with more than one type per variable pruned");
-		tmp.put("value", (initialQueriesNumber - queries.size()));
+		tmp.put("value", (queries.size() - returnedQueries.size()));
+		tmp.put("removedQueries", queries2json(queriesDiff(queries, returnedQueries)));
 		document.add(tmp);
-		initialQueriesNumber = queries.size();
+		queries = returnedQueries;
 
-		queries = BGPisConnected.prune(queries, q);
+		returnedQueries = BGPisConnected.prune(queries, q);
 		tmp = new JSONObject();
 		tmp.put("label", "SPARQL queries without connected BGP pruned");
-		tmp.put("value", (initialQueriesNumber - queries.size()));
+		tmp.put("value", (queries.size() - returnedQueries.size()));
+		tmp.put("removedQueries", queries2json(queriesDiff(queries, returnedQueries)));
 		document.add(tmp);
-		initialQueriesNumber = queries.size();
+		queries = returnedQueries;
 
-		queries = cyclicTriple.prune(queries, q);
+		returnedQueries = cyclicTriple.prune(queries, q);
 		tmp = new JSONObject();
 		tmp.put("label", "SPARQL queries containing cycic triple pruned");
-		tmp.put("value", (initialQueriesNumber - queries.size()));
+		tmp.put("value", (queries.size() - returnedQueries.size()));
+		tmp.put("removedQueries", queries2json(queriesDiff(queries, returnedQueries)));
 		document.add(tmp);
-		initialQueriesNumber = queries.size();
+		queries = returnedQueries;
 
-		queries = hasBoundVariables.prune(queries, q);
+		returnedQueries = hasBoundVariables.prune(queries, q);
 		tmp = new JSONObject();
 		tmp.put("label", "SPARQL queries without bound variables pruned");
-		tmp.put("value", (initialQueriesNumber - queries.size()));
+		tmp.put("value", (queries.size() - returnedQueries.size()));
+		tmp.put("removedQueries", queries2json(queriesDiff(queries, returnedQueries)));
 		document.add(tmp);
-		initialQueriesNumber = queries.size();
+		queries = returnedQueries;
 
-		queries = textFilterOverVariables.prune(queries, q);
+		returnedQueries = textFilterOverVariables.prune(queries, q);
 		tmp = new JSONObject();
 		tmp.put("label", "SPARQL queries without text filter over existing variables pruned");
-		tmp.put("value", (initialQueriesNumber - queries.size()));
+		tmp.put("value", (queries.size() - returnedQueries.size()));
+		tmp.put("removedQueries", queries2json(queriesDiff(queries, returnedQueries)));
 		document.add(tmp);
-		initialQueriesNumber = queries.size();
+		queries = returnedQueries;
 
-		queries = unboundTriple.prune(queries, q);
+		returnedQueries = unboundTriple.prune(queries, q);
 		tmp = new JSONObject();
 		tmp.put("label", "SPARQL queries with unbound triples pruned");
-		tmp.put("value", (initialQueriesNumber - queries.size()));
+		tmp.put("value", (queries.size() - returnedQueries.size()));
+		tmp.put("removedQueries", queries2json(queriesDiff(queries, returnedQueries)));
 		document.add(tmp);
-		initialQueriesNumber = queries.size();
+		queries = returnedQueries;
 
-		queries = typemismatch.prune(queries, q);
+		returnedQueries = typemismatch.prune(queries, q);
 		tmp = new JSONObject();
 		tmp.put("label", "SPARQL queries with mismatching types pruned");
-		tmp.put("value", (initialQueriesNumber - queries.size()));
+		tmp.put("value", (queries.size() - returnedQueries.size()));
+		tmp.put("removedQueries", queries2json(queriesDiff(queries, returnedQueries)));
 		document.add(tmp);
-		initialQueriesNumber = queries.size();
+		queries = returnedQueries;
 		try {
-			queries = disjointness.prune(queries, q);
+			returnedQueries = disjointness.prune(queries, q);
 			tmp = new JSONObject();
 			tmp.put("label", "SPARQL queries with disjoint classes pruned");
-			tmp.put("value", (initialQueriesNumber - queries.size()));
+			tmp.put("value", (queries.size() - returnedQueries.size()));
+			tmp.put("removedQueries", queries2json(queriesDiff(queries, returnedQueries)));
 			document.add(tmp);
-			initialQueriesNumber = queries.size();
+			queries = returnedQueries;
 		} catch (HTTPException e) {
 			log.error("Cannot prune based on disjointness due to unavailable endpoint", e);
 		}
 
 		tmp = new JSONObject();
-		tmp.put("label", "Number of Queries after pruning");
+		tmp.put("label", "Number of Queries after really short pruning");
 		tmp.put("value", queries.size());
+		tmp.put("queries", queries2json(queries));
 		document.add(tmp);
 
 		q.pruning_messages = document;
@@ -158,6 +172,24 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 		// ?const <http://dbpedia.org/ontology/deathYear> ?proj.
 		return queries;
 
+	}
+
+	private static Set<SPARQLQuery> queriesDiff(Set<SPARQLQuery> originalQueries, Set<SPARQLQuery> modifiedQueries) {
+		Set<SPARQLQuery> result = new HashSet<>(originalQueries);
+		result.removeAll(modifiedQueries);
+		return result;
+	}
+
+	private static JSONArray queries2json(Set<SPARQLQuery> queries) {
+		JSONArray jsonQueries = new JSONArray();
+
+		for (SPARQLQuery query : queries) {
+			JSONObject jsonQuery = new JSONObject();
+			jsonQuery.put("query", query.toString()); // TODO: how to serialize the query?
+			jsonQueries.add(jsonQuery);
+		}
+
+		return jsonQueries;
 	}
 
 }

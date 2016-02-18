@@ -23,7 +23,7 @@ public class EvaluationUtilTest {
 		systemAnswers.add(new ResourceImpl("true"));
 
 		Question q = new Question();
-		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nASK\nWHERE {	?m1 text:\"exhibits\" res:Rosetta_Stone .		res:Gayer-Anderson_Cat dbo:museum ?x .        ?m2 rdfs:label ?m2 .        FILTER (?m1=?m2)}";
+		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nASK {	?m1 text:\"exhibits\" res:Rosetta_Stone .		res:Gayer-Anderson_Cat dbo:museum ?x .        ?m2 rdfs:label ?m2 .        FILTER (?m1=?m2)}";
 		HashSet<String> set = new HashSet<>();
 		set.add("true");
 		q.goldenAnswers.put("en", set);
@@ -41,7 +41,7 @@ public class EvaluationUtilTest {
 		systemAnswers.add(new ResourceImpl("false"));
 
 		Question q = new Question();
-		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nASK\nWHERE {	?m1 text:\"exhibits\" res:Rosetta_Stone .		res:Gayer-Anderson_Cat dbo:museum ?x .        ?m2 rdfs:label ?m2 .        FILTER (?m1=?m2)}";
+		q.pseudoSparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/>\nASK {	?m1 text:\"exhibits\" res:Rosetta_Stone .		res:Gayer-Anderson_Cat dbo:museum ?x .        ?m2 rdfs:label ?m2 .        FILTER (?m1=?m2)}";
 		HashSet<String> set = new HashSet<>();
 		set.add("true");
 		q.goldenAnswers.put("en", set);
