@@ -35,7 +35,6 @@ public class Pipeline {
 		nerdModule = new Fox();
 		// controller.nerdModule = new Spotlight();
 		// controller.nerdModule =new TagMe();
-		// controller.nerdModule = new WikipediaMiner();
 		// controller.nerdModule = new MultiSpotter(fox, tagMe, wiki, spot);
 
 		cParseTree = new CachedParseTree();

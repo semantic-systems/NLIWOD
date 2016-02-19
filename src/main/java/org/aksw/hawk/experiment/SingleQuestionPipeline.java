@@ -15,6 +15,7 @@ import org.aksw.hawk.ranking.BucketRanker;
 import org.aksw.hawk.ranking.FeatureBasedRanker;
 import org.aksw.hawk.ranking.FeatureBasedRanker.Feature;
 import org.aksw.hawk.ranking.OptimalRanker;
+import org.aksw.hawk.ranking.TierRanker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,30 +46,37 @@ public class SingleQuestionPipeline {
 		log.info("Run ranking");
 		int maximumPositionToMeasure = 10;
 		OptimalRanker optimal_ranker = new OptimalRanker();
-		FeatureBasedRanker feature_ranker = new FeatureBasedRanker();
+		// FeatureBasedRanker feature_ranker = new FeatureBasedRanker();
 		BucketRanker bucket_ranker = new BucketRanker();
-
+		TierRanker tier = new TierRanker();
 		// optimal ranking
 		log.info("Optimal ranking not applicable (right now).");
 		// List<Set<RDFNode>> rankedAnswer = optimal_ranker.rank(answers, q);
-		// List<EvalObj> eval = Measures.measure(rankedAnswer, q, maximumPositionToMeasure);
+		// List<EvalObj> eval = Measures.measure(rankedAnswer, q,
+		// maximumPositionToMeasure);
 		// log.info(Joiner.on("\n\t").join(eval));
 
 		// feature-based ranking
-		log.info("Feature-based ranking begins training.");
-		for (Set<Feature> featureSet : Sets.powerSet(new HashSet<>(Arrays.asList(Feature.values())))) {
-			if (!featureSet.isEmpty()) {
-				log.debug("Feature-based ranking: " + featureSet.toString());
-				feature_ranker.setFeatures(featureSet);
-				feature_ranker.train();
-				List<Answer> rankedAnswer = feature_ranker.rank(answers, q);
-				log.info(Joiner.on("\n\t").join(rankedAnswer));
-			}
-		}
+		// log.info("Feature-based ranking begins training.");
+		// for (Set<Feature> featureSet : Sets.powerSet(new
+		// HashSet<>(Arrays.asList(Feature.values())))) {
+		// if (!featureSet.isEmpty()) {
+		// log.debug("Feature-based ranking: " + featureSet.toString());
+		// feature_ranker.setFeatures(featureSet);
+		// feature_ranker.train();
+		// List<Answer> rankedAnswer = feature_ranker.rank(answers, q);
+		// log.info(Joiner.on("\n\t").join(rankedAnswer));
+		// }
+		// }
 
 		// bucket-based ranking
 		log.info("Bucket-based ranking");
 		List<Answer> rankedAnswer = bucket_ranker.rank(answers, q);
+		log.info(Joiner.on("\n\t").join(rankedAnswer));
+
+		// tier-based ranking
+		log.info("Tier-based ranking");
+		rankedAnswer = tier.rank(answers, q);
 		log.info(Joiner.on("\n\t").join(rankedAnswer));
 
 	}
