@@ -22,6 +22,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 public class TierRankerTest {
+//TODO Christian: couldn't test, couldn't continue past SPARQLQueryBuilder
 	static Logger log = LoggerFactory.getLogger(SingleQuestionPipeline.class);
 	@Test
 	public void test() {
@@ -29,10 +30,10 @@ public class TierRankerTest {
 		Pipeline pipeline = new Pipeline();
 
 		Question q = new Question();
-		q.languageToQuestion.put("en", "In which city in Spain is the royal palace located?");
+		q.languageToQuestion.put("en", "What is the capital of Spain called?");
 		String correctAnswer="[http://dbpedia.org/resource/Madrid]";
-		log.info("Run pipeline on " + q.languageToQuestion.get("en")+ ", expecting Answer:" + correctAnswer);
-		log.info("Run pipeline on " + q.languageToQuestion.get("en"));
+		log.info("Run pipeline on " + q.languageToQuestion.get("en")+ ", expecting answer: " + correctAnswer);
+		//log.info("Run pipeline on " + q.languageToQuestion.get("en"));
 		List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
 		// ##############~~RANKING~~##############

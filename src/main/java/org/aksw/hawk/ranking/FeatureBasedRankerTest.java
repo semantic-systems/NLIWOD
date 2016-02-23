@@ -21,7 +21,8 @@ public class FeatureBasedRankerTest {
 
 	@Test
 	public void test() {
-		// TODO Christian: transform this to unit test
+		// TODO Christian: transform this to unit test (not working yet, ranking not implemented)
+		
 
 		List<SPARQLQuery> queries = Lists.newArrayList();
 		//Which actress starring in the TV series Friends owns the production company Coquette Productions?

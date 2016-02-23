@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Joiner;
 
 public class OptimalRankerTest {
+//TODO Christian: Optimal ranking not implemented correctly yet 
 	static Logger log = LoggerFactory.getLogger(SingleQuestionPipeline.class);
 	@Test
 	public void test() {
