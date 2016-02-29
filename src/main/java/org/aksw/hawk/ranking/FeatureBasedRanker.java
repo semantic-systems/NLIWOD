@@ -86,6 +86,7 @@ public class FeatureBasedRanker implements Ranking {
 			// queries
 			Map<String, Double> tmp = calculateRanking(q);
 			for (String key : tmp.keySet()) {
+				System.out.println(key);
 				if (vec.containsKey(key)) {
 					vec.put(key, tmp.get(key) + vec.get(key));
 				} else {
