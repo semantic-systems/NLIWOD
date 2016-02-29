@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
-import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.hawk.datastructures.Question;
+import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

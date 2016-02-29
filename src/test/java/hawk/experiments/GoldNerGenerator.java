@@ -11,9 +11,9 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.autosparql.commons.qald.TriplePatternExtractor;
 import org.aksw.hawk.datastructures.Question;
+import org.aksw.qa.commons.load.QALD_Loader;
 
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;

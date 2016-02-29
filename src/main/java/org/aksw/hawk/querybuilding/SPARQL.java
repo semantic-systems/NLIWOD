@@ -3,8 +3,6 @@ package org.aksw.hawk.querybuilding;
 import java.sql.SQLException;
 import java.util.Set;
 
-import com.hp.hpl.jena.graph.Node;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
@@ -20,6 +18,7 @@ import com.google.common.collect.Sets;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class SPARQL {
 	Logger log = LoggerFactory.getLogger(SPARQL.class);
