@@ -1,18 +1,19 @@
-package org.aksw.hawk.experiment;
+package org.aksw.autosparql.commons.qald;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Set;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.aksw.hawk.controller.EvalObj;
 import org.aksw.hawk.controller.Pipeline;
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.experiment.Measures;
+import org.aksw.hawk.experiment.TrainingPipeline;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.hawk.ranking.FeatureBasedRanker;
 import org.aksw.hawk.ranking.OptimalRanker;
+import org.aksw.qa.commons.datastructure.Question;
 import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,29 +21,30 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 
-/**
- * F@N + all ranking experiments for ESWC 2015 publication Possibly extendible for testing NER things
- * 
- * @author Lorenz Buehmann
- * @author ricardousbeck
- * 
- */
-public class TrainingPipeline {
+public class QALD6_Pipeline {
 	static Logger log = LoggerFactory.getLogger(TrainingPipeline.class);
 
-	public static void main(String args[]) throws IOException, ParserConfigurationException {
+	public QALD6_Pipeline() {
+
 		log.info("Configuring controller");
 		Pipeline pipeline = new Pipeline();
 
 		log.info("Loading dataset");
-		String dataset = "resources/qald-5_test_train.xml";
-		List<Question> questions = QALD_Loader.load(dataset);
+		URL url = ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-hybrid.json");
+		List<Question> questions = null;
+		try {
+			questions = QALD_Loader.loadJSON(url.openStream());
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
 
 		double average = 0;
 		double count = 0;
 		double countNULLAnswer = 0;
 		for (Question q : questions) {
-			if ((  q.answerType.equals("resource") & q.onlydbo & !q.aggregation) || q.loadedAsASKQuery) {
+			if ((q.answerType.equals("resource") & q.onlydbo & !q.aggregation) || q.loadedAsASKQuery) {
 				log.info("Run pipeline on " + q.languageToQuestion.get("en"));
 				List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
@@ -86,4 +88,10 @@ public class TrainingPipeline {
 		log.info("Average F-measure: " + (average / count));
 
 	}
+
+	public static void main(String args[]) {
+		new QALD6_Pipeline();
+
+	}
+
 }

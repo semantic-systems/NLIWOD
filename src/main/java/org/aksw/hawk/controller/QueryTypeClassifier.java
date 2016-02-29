@@ -3,8 +3,8 @@ package org.aksw.hawk.controller;
 import java.io.File;
 import java.util.List;
 
-import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.hawk.datastructures.Question;
+import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

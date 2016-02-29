@@ -2,13 +2,13 @@ package org.aksw.hawk.controller;
 
 import java.util.List;
 
-import org.aksw.autosparql.commons.qald.QALD_Loader;
 import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.nlp.spotter.Spotlight;
 import org.aksw.hawk.nlp.spotter.TagMe;
+import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

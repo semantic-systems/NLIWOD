@@ -59,9 +59,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-  					<systemProperties>
-    						<JAVA_OPTS>-Xms415m -Xmx16G -XX:MaxPermSize=1G</JAVA_OPTS>
-  					</systemProperties>
+					<systemProperties>
+						<JAVA_OPTS>-Xms415m -Xmx16G -XX:MaxPermSize=1G</JAVA_OPTS>
+					</systemProperties>
 					<mainClass>org.aksw.hawk.webservice.WebApplication</mainClass>
 				</configuration>
 			</plugin>
@@ -231,6 +231,26 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.json</groupId>
+			<artifactId>javax.json-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.json</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aksw.qa</groupId>
+			<artifactId>datasets</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aksw.qa</groupId>
+			<artifactId>commons</artifactId>
+			<version>0.0.4-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

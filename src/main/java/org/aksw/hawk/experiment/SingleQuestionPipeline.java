@@ -1,10 +1,7 @@
 package org.aksw.hawk.experiment;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -12,15 +9,12 @@ import org.aksw.hawk.controller.Pipeline;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.ranking.BucketRanker;
-import org.aksw.hawk.ranking.FeatureBasedRanker;
-import org.aksw.hawk.ranking.FeatureBasedRanker.Feature;
 import org.aksw.hawk.ranking.OptimalRanker;
 import org.aksw.hawk.ranking.TierRanker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Sets;
 
 /**
  * Made for testing a single pipeline
