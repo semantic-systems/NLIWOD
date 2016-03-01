@@ -2,7 +2,7 @@ package org.aksw.hawk.querybuilding;
 
 import java.util.Set;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
@@ -16,13 +16,13 @@ import com.hp.hpl.jena.query.ResultSet;
 public class RecursiveSparqlQueryBuilder {
 	Logger log = LoggerFactory.getLogger(RecursiveSparqlQueryBuilder.class);
 
-	public Set<SPARQLQuery> start(SPARQLQueryBuilder sparqlQueryBuilder, Question q) {
+	public Set<SPARQLQuery> start(SPARQLQueryBuilder sparqlQueryBuilder, HAWKQuestion q) {
 		SPARQLQuery initialQuery = new SPARQLQuery();
-		initialQuery.isASKQuery(q.isClassifiedAsASKQuery);
+		initialQuery.isASKQuery(q.getIsClassifiedAsASKQuery());
 		Set<SPARQLQuery> returnSet = Sets.newHashSet(initialQuery);
 		Set<String> variableSet = Sets.newHashSet("?proj", "?const");
 		try {
-			MutableTreeNode tmp = q.tree.getRoot();
+			MutableTreeNode tmp = q.getTree().getRoot();
 			recursion(returnSet, variableSet, tmp);
 
 		} catch (CloneNotSupportedException e) {

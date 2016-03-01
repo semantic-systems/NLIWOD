@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Stack;
 
-import org.aksw.autosparql.commons.qald.uri.Entity;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.qa.commons.datastructure.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,18 +59,18 @@ public class ParseTree {
 		initialize();
 	}
 
-	public DEPTree process(Question q) {
+	public DEPTree process(HAWKQuestion q) {
 		return process(tokenizer, components, q);
 	}
 
-	private DEPTree process(AbstractTokenizer tokenizer, AbstractComponent[] components, Question q) {
-		String sentence = q.languageToQuestion.get("en");
-		if (!q.languageToNamedEntites.isEmpty()) {
-			sentence = replaceLabelsByIdentifiedURIs(sentence, q.languageToNamedEntites.get("en"));
+	private DEPTree process(AbstractTokenizer tokenizer, AbstractComponent[] components, HAWKQuestion q) {
+		String sentence = q.getLanguageToQuestion().get("en");
+		if (!q.getLanguageToNamedEntites().isEmpty()) {
+			sentence = replaceLabelsByIdentifiedURIs(sentence, q.getLanguageToNamedEntites().get("en"));
 			log.debug(sentence);
 		}
-		if (!q.languageToNounPhrases.isEmpty()) {
-			sentence = replaceLabelsByIdentifiedURIs(sentence, q.languageToNounPhrases.get("en"));
+		if (!q.getLanguageToNounPhrases().isEmpty()) {
+			sentence = replaceLabelsByIdentifiedURIs(sentence, q.getLanguageToNounPhrases().get("en"));
 			log.debug(sentence);
 		}
 		DEPTree tree = NLPGetter.toDEPTree(tokenizer.getTokens(sentence));
@@ -81,7 +81,7 @@ public class ParseTree {
 		log.debug(TreeTraversal.inorderTraversal(tree.getFirstRoot(), 0, null));
 		log.debug(tree.toStringSRL());
 
-		resolveCompoundNouns(tree, q.languageToNounPhrases.get("en"));
+		resolveCompoundNouns(tree, q.getLanguageToNounPhrases().get("en"));
 		log.debug(TreeTraversal.inorderTraversal(tree.getFirstRoot(), 0, null));
 		return tree;
 	}

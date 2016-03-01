@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import org.aksw.autosparql.commons.qald.uri.Entity;
+import org.aksw.qa.commons.datastructure.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

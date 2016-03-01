@@ -6,7 +6,7 @@ import java.util.Set;
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.hawk.controller.EvalObj;
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +16,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 public class Measures {
 	static Logger log = LoggerFactory.getLogger(Measures.class);
 
-	public static List<EvalObj> measure(List<Answer> rankedAnswer, Question q, int maxK) {
+	public static List<EvalObj> measure(List<Answer> rankedAnswer, HAWKQuestion q, int maxK) {
 		// calculate precision, recall, f1 measure for each answer
 		List<EvalObj> list = Lists.newArrayList();
 //		omment=Measure @1, fmax=0.8, pmax=0.6666666666666666, rmax=1.0, question=Which recipients of the Victoria Cross died in the Battle of Arnhem?, id=305]
@@ -36,7 +36,7 @@ public class Measures {
 			double fMeasure = QALD4_EvaluationUtils.fMeasure(answerSet, q);
 
 			log.debug("Measure @" + (list.size() + 1) + "P=" + precision + " R=" + recall + " F=" + fMeasure);
-			list.add(new EvalObj(q.id, q.languageToQuestion.get("en"), fMeasure, precision, recall, "Measure @" + (list.size() + 1), answer));
+			list.add(new EvalObj(q.getId(), q.getLanguageToQuestion().get("en"), fMeasure, precision, recall, "Measure @" + (list.size() + 1), answer));
 
 			// only calculate top k measures
 			if (list.size() > maxK) {

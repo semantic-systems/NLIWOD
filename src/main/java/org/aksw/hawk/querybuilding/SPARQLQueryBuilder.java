@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.pruner.SPARQLQueryPruner;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ public class SPARQLQueryBuilder {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Answer> build(Question q) {
+	public List<Answer> build(HAWKQuestion q) {
 		// FIXME refactor that to pipeline steps
 		List<Answer> answer = Lists.newArrayList();
 		try {
@@ -41,8 +41,8 @@ public class SPARQLQueryBuilder {
 			JSONObject tmp = new JSONObject();
 			tmp.put("label", "Cardinality of question results");
 			tmp.put("value", cardinality);
-			q.pruning_messages.add(tmp);
-			log.debug("Cardinality:" + q.languageToQuestion.get("en").toString() + "-> " + cardinality);
+			q.getPruning_messages().add(tmp);
+			log.debug("Cardinality:" + q.getLanguageToQuestion().get("en").toString() + "-> " + cardinality);
 			int i = 0;
 			for (SPARQLQuery query : queryStrings) {
 				for (String queryString : query.generateQueries()) {
@@ -51,8 +51,8 @@ public class SPARQLQueryBuilder {
 					a.answerSet = sparql.sparql(queryString);
 					a.query = query;
 					a.queryString = queryString;
-					a.question_id = q.id;
-					a.question = q.languageToQuestion.get("en").toString();
+					a.question_id = q.getId();
+					a.question = q.getLanguageToQuestion().get("en").toString();
 					if (!a.answerSet.isEmpty()) {
 						answer.add(a);
 					}
@@ -67,13 +67,13 @@ public class SPARQLQueryBuilder {
 		JSONObject tmp = new JSONObject();
 		tmp.put("label", "Number of sofar executed queries");
 		tmp.put("value", numberOfOverallQueriesExecuted);
-		q.pruning_messages.add(tmp);
+		q.getPruning_messages().add(tmp);
 		log.debug("Number of sofar executed queries: " + numberOfOverallQueriesExecuted);
 		return answer;
 	}
 
-	private int cardinality(Question q, Set<SPARQLQuery> queryStrings) {
-		int cardinality = q.cardinality;
+	private int cardinality(HAWKQuestion q, Set<SPARQLQuery> queryStrings) {
+		int cardinality = q.getCardinality();
 		// find a way to determine the cardinality of the answer
 
 		for (SPARQLQuery s : queryStrings) {

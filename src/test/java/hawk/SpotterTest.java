@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.nlp.spotter.Spotlight;
+import org.aksw.qa.commons.datastructure.Entity;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

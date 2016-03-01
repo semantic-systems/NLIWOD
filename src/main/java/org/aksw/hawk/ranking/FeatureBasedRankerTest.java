@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.hawk.ranking.FeatureBasedRanker.Feature;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class FeatureBasedRankerTest {
 				ranker.setFeatures(featureSet);
 
 				ranker.train();
-				Question quest = new Question();
+				HAWKQuestion quest = new HAWKQuestion();
 				//System.out.println(queries);
 
 

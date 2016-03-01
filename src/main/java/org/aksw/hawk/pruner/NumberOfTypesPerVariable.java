@@ -2,14 +2,14 @@ package org.aksw.hawk.pruner;
 
 import java.util.Set;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 
 import com.google.common.collect.Sets;
 
 public class NumberOfTypesPerVariable implements ISPARQLQueryPruner {
 
-	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, Question q) {
+	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, HAWKQuestion q) {
 		Set<SPARQLQuery> returnSet = Sets.newHashSet();
 		for (SPARQLQuery sparqlQuery : queryStrings) {
 			String[] split = new String[3];

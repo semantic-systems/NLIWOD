@@ -7,7 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.aksw.hawk.controller.Pipeline;
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.ranking.BucketRanker;
 import org.aksw.hawk.ranking.OptimalRanker;
 import org.aksw.hawk.ranking.TierRanker;
@@ -30,10 +30,10 @@ public class SingleQuestionPipeline {
 		log.info("Configuring controller");
 		Pipeline pipeline = new Pipeline();
 
-		Question q = new Question();
-		q.languageToQuestion.put("en", "Which anti-apartheid activist was born in Mvezo?");
+		HAWKQuestion q = new HAWKQuestion();
+		q.getLanguageToQuestion().put("en", "Which anti-apartheid activist was born in Mvezo?");
 
-		log.info("Run pipeline on " + q.languageToQuestion.get("en"));
+		log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
 		List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
 		// ##############~~RANKING~~##############

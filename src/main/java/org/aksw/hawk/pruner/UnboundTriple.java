@@ -2,7 +2,7 @@ package org.aksw.hawk.pruner;
 
 import java.util.Set;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 
 import com.google.common.collect.Sets;
@@ -10,7 +10,7 @@ import com.google.common.collect.Sets;
 public class UnboundTriple implements ISPARQLQueryPruner {
 	private int maximalUnboundTriplePatterns = 1;
 
-	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, Question q) {
+	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, HAWKQuestion q) {
 		Set<SPARQLQuery> returnSet = Sets.newHashSet();
 		// discard queries with more than x unbound triples away
 		for (SPARQLQuery sparqlQuery : queryStrings) {

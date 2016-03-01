@@ -2,7 +2,7 @@ package org.aksw.hawk.cache;
 
 import java.io.File;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.ParseTree;
 import org.aksw.hawk.nlp.TreeTransformer;
@@ -23,7 +23,7 @@ public class CachedParseTree {
 		treeTransform = new TreeTransformer();
 	}
 
-	public MutableTree process(Question q) {
+	public MutableTree process(HAWKQuestion q) {
 		if (isStored(q) != null && useCache) {
 			return StorageHelper.readFromFileSavely(isStored(q));
 		} else {
@@ -33,7 +33,7 @@ public class CachedParseTree {
 			}
 			DEPTree t = parseTree.process(q);
 			MutableTree DEPtoMutableDEP = treeTransform.DEPtoMutableDEP(t);
-			q.tree_full = JSONStatusBuilder.treeToJSON(DEPtoMutableDEP);
+			q.setTree_full(JSONStatusBuilder.treeToJSON(DEPtoMutableDEP));
 			store(q, DEPtoMutableDEP);
 			return DEPtoMutableDEP;
 		}
@@ -49,8 +49,8 @@ public class CachedParseTree {
 	 * @param DEPtoMutableDEP
 	 *            mutable parse tree
 	 */
-	private void store(Question q, MutableTree DEPtoMutableDEP) {
-		String question = q.languageToQuestion.get("en");
+	private void store(HAWKQuestion q, MutableTree DEPtoMutableDEP) {
+		String question = q.getLanguageToQuestion().get("en");
 		int hash = question.hashCode();
 		String serializedFileName = "cache/" + hash + ".tree";
 		// log.error(DEPtoMutableDEP.toString());
@@ -67,8 +67,8 @@ public class CachedParseTree {
 	 * @return filename File with dependency tree in serialized form without
 	 *         TextInNode attribute 
 	 */
-	private String isStored(Question q) {
-		String question = q.languageToQuestion.get("en");
+	private String isStored(HAWKQuestion q) {
+		String question = q.getLanguageToQuestion().get("en");
 		int hash = question.hashCode();
 		String serializedFileName = "cache/" + hash + ".tree";
 

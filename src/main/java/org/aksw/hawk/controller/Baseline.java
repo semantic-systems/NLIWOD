@@ -1,13 +1,14 @@
 package org.aksw.hawk.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.qa.commons.datastructure.IQuestion;
+import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,16 +21,17 @@ public class Baseline {
 	String dataset;
 	QALD_Loader datasetLoader;
 
-	void run() throws IOException {
-		List<Question> questions = datasetLoader.load(dataset);
+	void run(Dataset dataset) throws IOException {
+		List<IQuestion> questions = datasetLoader.load(dataset);
 		double overallf = 0;
 		double overallp = 0;
 		double overallr = 0;
 		double counter = 0;
-		for (Question q : questions) {
-			if (q.answerType.equals("resource")) {
-				if (q.onlydbo) {
-					if (!q.aggregation) {
+		// TODO refactor this with proper check for HAWK abilities
+		for (HAWKQuestion q : questions) {
+			if (q.getAnswerType().equals("resource")) {
+				if (q.getOnlydbo()) {
+					if (!q.getAggregation()) {
 						Map<String, Set<RDFNode>> answer = calculateSPARQLRepresentation(q);
 
 						double fmax = 0;
@@ -60,23 +62,19 @@ public class Baseline {
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
 	}
 
-	public Map<String, Set<RDFNode>> calculateSPARQLRepresentation(Question q) {
+	public Map<String, Set<RDFNode>> calculateSPARQLRepresentation(HAWKQuestion q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		return answer;
 	}
 
 	public static void main(String args[]) throws IOException {
 
-		for (String file : new String[] { "resources/qald-4_hybrid_train.xml" }) { // ,"resources/qald-4_multilingual_train_withanswers.xml"
-			Baseline controller = new Baseline();
+		log.info("Configuring controller");
 
-			log.info("Configuring controller");
+		Baseline controller = new Baseline();
+		Dataset dataset = Dataset.QALD5_Train;
+		log.info("Run controller");
 
-			controller.dataset = new File(file).getAbsolutePath();
-			controller.datasetLoader = new QALD_Loader();
-
-			log.info("Run controller");
-			controller.run();
-		}
+		controller.run(dataset);
 	}
 }

@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Set;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.pruner.disjointness.DisjointnessBasedQueryFilter;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
@@ -33,7 +33,7 @@ public class DisjointnessBasedQueryFilterTest {
 		SPARQLQuery query4 = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Person>.");
 		query4.addConstraint("?proj <http://dbpedia.org/ontology/frequency> ?o.");
 		//Create empty parameter q
-		Question q=new Question();
+		HAWKQuestion q=new HAWKQuestion();
 		Set<SPARQLQuery> filtered = filter.prune(Sets.newHashSet(query1, query2, query3, query4), q);
 		System.out.println(filtered);
 

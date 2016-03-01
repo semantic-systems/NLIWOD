@@ -6,7 +6,7 @@ package org.aksw.hawk.pruner.disjointness;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.pruner.ISPARQLQueryPruner;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
@@ -59,7 +59,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 	 * @see org.aksw.hawk.filtering.QueryFilter#filter(java.util.Set)
 	 */
 	@Override
-	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, Question q) {
+	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, HAWKQuestion q) {
 		MonitorFactory.getTimeMonitor("parse").reset();
 		Set<SPARQLQuery> filteredQueries = Sets.newHashSet();
 

@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.util.JSONStatusBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,18 +16,18 @@ import com.google.common.collect.Queues;
 public class MutableTreePruner {
 	Logger log = LoggerFactory.getLogger(MutableTreePruner.class);
 
-	public MutableTree prune(Question q) {
-		log.debug(q.tree.toString());
+	public MutableTree prune(HAWKQuestion q) {
+		log.debug(q.getTree().toString());
 		removalRules(q);
 		removalBasedOnDependencyLabels(q);
 		/*
 		 * interrogative rules last else each interrogative word has at least two children, which can't be handled yet by the removal
 		 */
 		applyInterrogativeRules(q);
-		sortTree(q.tree);
-		log.debug(q.tree.toString());
-		q.tree_pruned = JSONStatusBuilder.treeToJSON(q.tree);
-		return q.tree;
+		sortTree(q.getTree());
+		log.debug(q.getTree().toString());
+		q.setTree_pruned(JSONStatusBuilder.treeToJSON(q.getTree()));
+		return q.getTree();
 	}
 
 	private void sortTree(MutableTree tree) {
@@ -41,9 +41,9 @@ public class MutableTreePruner {
 
 	}
 
-	private void removalBasedOnDependencyLabels(Question q) {
+	private void removalBasedOnDependencyLabels(HAWKQuestion q) {
 		for (String depLabel : Lists.newArrayList("auxpass", "aux")) {
-			inorderRemovalBasedOnDependencyLabels(q.tree.getRoot(), q.tree, depLabel);
+			inorderRemovalBasedOnDependencyLabels(q.getTree().getRoot(), q.getTree(), depLabel);
 		}
 	}
 
@@ -62,25 +62,25 @@ public class MutableTreePruner {
 		}
 	}
 
-	private void applyInterrogativeRules(Question q) {
-		MutableTreeNode root = q.tree.getRoot();
+	private void applyInterrogativeRules(HAWKQuestion q) {
+		MutableTreeNode root = q.getTree().getRoot();
 		// GIVE ME will be deleted
 		if (root.label.equals("Give")) {
 			for (Iterator<MutableTreeNode> it = root.getChildren().iterator(); it.hasNext();) {
 				MutableTreeNode next = it.next();
 				if (next.label.equals("me")) {
 					it.remove();
-					q.tree.remove(root);
+					q.getTree().remove(root);
 				}
 			}
 		}
 		// LIST will be deleted
 		if (root.label.equals("List")) {
-			q.tree.remove(root);
+			q.getTree().remove(root);
 		}
 		// GIVE will be deleted
 		if (root.label.equals("Give")) {
-			q.tree.remove(root);
+			q.getTree().remove(root);
 		}
 
 	}
@@ -92,15 +92,15 @@ public class MutableTreePruner {
 	 * 
 	 * @param q
 	 */
-	private void removalRules(Question q) {
-		MutableTreeNode root = q.tree.getRoot();
+	private void removalRules(HAWKQuestion q) {
+		MutableTreeNode root = q.getTree().getRoot();
 		for (String posTag : Lists.newArrayList(".", "WDT", "POS", "WP\\$", "PRP\\$", "RB", "PRP", "DT", "IN", "PDT")) {
 			Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();
 			queue.add(root);
 			while (!queue.isEmpty()) {
 				MutableTreeNode tmp = queue.poll();
 				if (tmp.posTag.matches(posTag)) {
-					q.tree.remove(tmp);
+					q.getTree().remove(tmp);
 				}
 				for (MutableTreeNode n : tmp.getChildren()) {
 					queue.add(n);

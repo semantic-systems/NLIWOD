@@ -129,8 +129,6 @@
 		</dependency>
 
 		<!-- Sparql -->
-		<!-- <dependency> <groupId>org.apache.jena</groupId> <artifactId>jena-arq</artifactId> 
-			<version>${jena.version}</version> </dependency> -->
 		<dependency>
 			<groupId>org.aksw.jena-sparql-api</groupId>
 			<artifactId>jena-sparql-api-core</artifactId>
@@ -242,6 +240,7 @@
 			<artifactId>javax.json</artifactId>
 			<version>1.0.4</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>datasets</artifactId>
@@ -250,7 +249,7 @@
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>commons</artifactId>
-			<version>0.0.4-SNAPSHOT</version>
+			<version>0.0.6</version>
 		</dependency>
 	</dependencies>
 </project>

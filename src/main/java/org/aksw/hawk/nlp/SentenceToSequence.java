@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import org.aksw.autosparql.commons.qald.uri.Entity;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.qa.commons.datastructure.Entity;
 
 import com.clearnlp.dependency.DEPNode;
 import com.clearnlp.dependency.DEPTree;
@@ -24,9 +24,9 @@ public class SentenceToSequence {
 	static AbstractTokenizer tokenizer = NLPGetter.getTokenizer(language);
 
 	// combine noun phrases
-	public static void combineSequences(Question q) {
+	public static void combineSequences(HAWKQuestion q) {
 		// run pos-tagging
-		String sentence = q.languageToQuestion.get("en");
+		String sentence = q.getLanguageToQuestion().get("en");
 		List<String> tokens = tokenizer.getTokens(sentence);
 		Map<String, String> label2pos = generatePOSTags(q);
 
@@ -77,7 +77,7 @@ public class SentenceToSequence {
 //		log.debug(q.languageToNounPhrases.get("en"));
 	}
 
-	private static Map<String, String> generatePOSTags(Question q) {
+	private static Map<String, String> generatePOSTags(HAWKQuestion q) {
 		ParseTree parse = new ParseTree();
 		DEPTree tree = parse.process(q);
 		// TODO this is horribly wrong, the same label CAN have different pos if the label occurs twice in question
@@ -94,7 +94,7 @@ public class SentenceToSequence {
 		return label2pos;
 	}
 
-	private static void transformTree(List<String> subsequence, Question q) {
+	private static void transformTree(List<String> subsequence, HAWKQuestion q) {
 		String combinedNN = Joiner.on(" ").join(subsequence);
 		String combinedURI = "http://aksw.org/combinedNN/" + Joiner.on("_").join(subsequence);
 
@@ -102,28 +102,28 @@ public class SentenceToSequence {
 		tmpEntity.label = combinedNN;
 		tmpEntity.uris.add(new ResourceImpl(combinedURI));
 
-		List<Entity> nounphrases = q.languageToNounPhrases.get("en");
+		List<Entity> nounphrases = q.getLanguageToNounPhrases().get("en");
 		if (null == nounphrases) {
 			nounphrases = Lists.newArrayList();
 		}
 		nounphrases.add(tmpEntity);
-		q.languageToNounPhrases.put("en", nounphrases);
+		q.getLanguageToNounPhrases().put("en", nounphrases);
 	}
-
+//TODO Christian: transform to unit test
 	public static void main(String args[]) {
-		Question q = new Question();
-		q.languageToQuestion.put("en", "Who was vice-president under the president who authorized atomic weapons against Japan during World War II?");
+		HAWKQuestion q = new HAWKQuestion();
+		q.getLanguageToQuestion().put("en", "Who was vice-president under the president who authorized atomic weapons against Japan during World War II?");
 		SentenceToSequence.combineSequences(q);
-		System.out.println(q.languageToNounPhrases.get("en"));
+		System.out.println(q.getLanguageToNounPhrases().get("en"));
 
-		q = new Question();
-		q.languageToQuestion.put("en", "Who plays Phileas Fogg in the adaptation of Around the World in 80 Days directed by Buzz Kulik?");
+		q = new HAWKQuestion();
+		q.getLanguageToQuestion().put("en", "Who plays Phileas Fogg in the adaptation of Around the World in 80 Days directed by Buzz Kulik?");
 		SentenceToSequence.combineSequences(q);
-		System.out.println(q.languageToNounPhrases.get("en"));
+		System.out.println(q.getLanguageToNounPhrases().get("en"));
 
-		q = new Question();
-		q.languageToQuestion.put("en", "Which recipients of the Victoria Cross died in the Battle of Arnhem?");
+		q = new HAWKQuestion();
+		q.getLanguageToQuestion().put("en", "Which recipients of the Victoria Cross died in the Battle of Arnhem?");
 		SentenceToSequence.combineSequences(q);
-		System.out.println(q.languageToNounPhrases.get("en"));
+		System.out.println(q.getLanguageToNounPhrases().get("en"));
 	}
 }

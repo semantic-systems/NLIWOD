@@ -8,10 +8,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.aksw.hawk.controller.EvalObj;
 import org.aksw.hawk.controller.Pipeline;
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.ranking.BucketRanker;
 import org.aksw.hawk.ranking.FeatureBasedRanker;
 import org.aksw.hawk.ranking.OptimalRanker;
+import org.aksw.qa.commons.datastructure.IQuestion;
+import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,13 +35,12 @@ public class RankingPipeline {
 		Pipeline pipeline = new Pipeline();
 
 		log.info("Loading dataset");
-		String dataset = "resources/qald-5_test_train.xml";
-		List<Question> questions = QALD_Loader.load(dataset);
+		List<IQuestion> questions = QALD_Loader.load(Dataset.QALD6_Train_Multi);
 
-		for (Question q : questions) {
-			if ((q.hybrid & q.answerType.equals("resource") & q.onlydbo & !q.aggregation) || q.loadedAsASKQuery) {
+		for (HAWKQuestion q : questions) {
+			if ((q.getHybrid() & q.getAnswerType().equals("resource") & q.getOnlydbo() & !q.getAggregation()) || q.getLoadedAsASKQuery()) {
 
-				log.info("Run pipeline on " + q.languageToQuestion.get("en"));
+				log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
 				List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
 				// ##############~~RANKING~~##############

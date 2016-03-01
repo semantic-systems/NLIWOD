@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.Set;
 
 import org.aksw.hawk.cache.StorageHelper;
-import org.aksw.hawk.datastructures.Question;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
+import org.aksw.qa.commons.datastructure.IQuestion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +33,7 @@ public class FeatureBasedRankerDB {
 	 * @param queries
 	 * 
 	 */
-	public void store(Question q, Set<SPARQLQuery> queries) {
+	public void store(IQuestion q, Set<SPARQLQuery> queries) {
 		for (SPARQLQuery query : queries) {
 			int hash = query.hashCode();
 			String serializedFileName = getFileName(hash);

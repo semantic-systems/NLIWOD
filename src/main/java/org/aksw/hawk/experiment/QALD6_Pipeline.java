@@ -1,4 +1,4 @@
-package org.aksw.autosparql.commons.qald;
+package org.aksw.hawk.experiment;
 
 import java.io.IOException;
 import java.net.URL;
@@ -8,12 +8,11 @@ import java.util.Set;
 import org.aksw.hawk.controller.EvalObj;
 import org.aksw.hawk.controller.Pipeline;
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.experiment.Measures;
-import org.aksw.hawk.experiment.TrainingPipeline;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.hawk.ranking.FeatureBasedRanker;
 import org.aksw.hawk.ranking.OptimalRanker;
-import org.aksw.qa.commons.datastructure.Question;
+import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +30,7 @@ public class QALD6_Pipeline {
 
 		log.info("Loading dataset");
 		URL url = ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-hybrid.json");
-		List<Question> questions = null;
+		List<IQuestion> questions = null;
 		try {
 			questions = QALD_Loader.loadJSON(url.openStream());
 
@@ -43,13 +42,14 @@ public class QALD6_Pipeline {
 		double average = 0;
 		double count = 0;
 		double countNULLAnswer = 0;
-		for (Question q : questions) {
-			if ((q.answerType.equals("resource") & q.onlydbo & !q.aggregation) || q.loadedAsASKQuery) {
-				log.info("Run pipeline on " + q.languageToQuestion.get("en"));
+		for (HAWKQuestion q : questions) {
+			//TODO refactor this if clause to something like HAWK.checkSuitability(Question q): boolean
+			if ((q.getAnswerType().equals("resource") & q.getOnlydbo() & !q.getAggregation()) || q.getLoadedAsASKQuery()) {
+				log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
 				List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
 				if (answers.isEmpty()) {
-					log.warn("Question#" + q.id + " returned no answers! (Q: " + q.languageToQuestion.get("en") + ")");
+					log.warn("Question#" + q.getId() + " returned no answers! (Q: " + q.getLanguageToQuestion().get("en") + ")");
 					++countNULLAnswer;
 					continue;
 				}
@@ -88,7 +88,7 @@ public class QALD6_Pipeline {
 		log.info("Average F-measure: " + (average / count));
 
 	}
-
+//TODO When HAWK is fast enough change to unit test
 	public static void main(String args[]) {
 		new QALD6_Pipeline();
 

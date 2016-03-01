@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Set;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.pruner.TypeMismatch;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
@@ -36,7 +36,7 @@ public class TypeMismatchTest {
 		query4.addConstraint("?proj <http://www.w3.org/2000/01/rdf-schema#label> ?label.");
 		query4.addConstraint("?label <http://jena.apache.org/text#query> \"'text'\"");
 		//Fills unused parameter Question q
-		Question q = new Question();	
+		HAWKQuestion q = new HAWKQuestion();	
 		Set<SPARQLQuery> filtered = filter.prune(Sets.newHashSet(query1, query2, query3, query4), q);
 		//Two valid queries remaining?
 		assertEquals(filtered.size(),2); 

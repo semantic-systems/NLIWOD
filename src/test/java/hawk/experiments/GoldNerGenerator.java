@@ -12,11 +12,11 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.aksw.autosparql.commons.qald.TriplePatternExtractor;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.qa.commons.datastructure.IQuestion;
+import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;
 
 import com.google.common.base.Charsets;
-import com.google.common.collect.Lists;
 import com.google.common.io.Files;
 import com.hp.hpl.jena.graph.Triple;
 import com.hp.hpl.jena.query.Query;
@@ -30,54 +30,44 @@ import com.hp.hpl.jena.vocabulary.RDFS;
  *
  */
 public class GoldNerGenerator {
-	
-	static final List<String> datasets = Lists.newArrayList(
-			"resources/qald-4_hybrid_train.xml"
-			, "resources/qald-4_hybrid_test_withanswers.xml"
-			);
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws Exception{
+	public static void main(String[] args) throws Exception {
 		QALD_Loader datasetLoader = new QALD_Loader();
-		for (String dataset : datasets) {
+		for (Dataset dataset : Dataset.values()) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("#id\tquestion\tentities\trewritten question\n");
-			List<Question> questions = datasetLoader.load(dataset);
-			Collections.sort(questions, new Comparator<Question>() {
+			List<IQuestion> questions = datasetLoader.load(dataset);
+			Collections.sort(questions, new Comparator<IQuestion>() {
 
 				@Override
-				public int compare(Question o1, Question o2) {
-					return Integer.compare(o1.id, o2.id);
+				public int compare(IQuestion o1, IQuestion o2) {
+					return Integer.compare(o1.getId(), o2.getId());
+
 				}
 			});
-			for (Question question : questions) {
-				sb.append(question.id).append("\t");//ID
-				
-				sb.append(question.languageToQuestion.get("en")).append("\t");// question
-				
-				sb.append(extractEntities(rewritePseudoQuery(question.pseudoSparqlQuery))).append("\t");// entities
-
-				sb.append(question.languageToQuestion.get("en"));// rewritten question template
+			for (IQuestion question : questions) {
+				sb.append(question.getId()).append("\t");// ID
+				sb.append(question.getLanguageToQuestion().get("en")).append("\t");// question
+				sb.append(extractEntities(rewritePseudoQuery(question.getPseudoSparqlQuery()))).append("\t");// entities
+				sb.append(question.getLanguageToQuestion().get("en"));// rewritten question template
 				sb.append("\n");
 			}
-			File datasetFile = new File(dataset);
-			File targetFile = new File("resources/" + datasetFile.getName().replace("." + Files.getFileExtension(dataset), "") + ".tsv");
+			File targetFile = new File("resources/" + dataset.name() + ".tsv");
 			Files.write(sb, targetFile, Charsets.UTF_8);
 			System.out.println(sb);
 		}
 	}
-	
+
 	private static String rewritePseudoQuery(String query) {
-		query = "PREFIX text:<http://hawk.aksw.org/built-in/> "
-				+ "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
-				+ "PREFIX res:<http://dbpedia.org/resource/> "
-				+ "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> " + query;
+		query = "PREFIX text:<http://hawk.aksw.org/built-in/> " + "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> " + "PREFIX res:<http://dbpedia.org/resource/> "
+		        + "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> " + query;
 		query = query.replaceAll("text:\".*?\"", "?var");
 		return query;
 	}
-	
+
 	private static SortedSet<String> extractEntities(String query) {
 		SortedSet<String> entities = new TreeSet<String>();
 		try {
@@ -85,15 +75,13 @@ public class GoldNerGenerator {
 			TriplePatternExtractor tpExtractor = new TriplePatternExtractor();
 			Set<Triple> triplePatterns = tpExtractor.extractTriplePattern(q);
 			for (Triple tp : triplePatterns) {
-				if(tp.getSubject().isURI()) {
+				if (tp.getSubject().isURI()) {
 					entities.add(tp.getSubject().getURI());
 				}
-				if(tp.getPredicate().isURI() 
-						&& !tp.getPredicate().getNameSpace().equals(RDFS.getURI()) 
-						&& !tp.getPredicate().getNameSpace().equals(RDF.getURI())) {
+				if (tp.getPredicate().isURI() && !tp.getPredicate().getNameSpace().equals(RDFS.getURI()) && !tp.getPredicate().getNameSpace().equals(RDF.getURI())) {
 					entities.add(tp.getPredicate().getURI());
 				}
-				if(tp.getObject().isURI()) {
+				if (tp.getObject().isURI()) {
 					entities.add(tp.getObject().getURI());
 				}
 			}

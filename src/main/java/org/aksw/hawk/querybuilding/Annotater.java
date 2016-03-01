@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.index.DBOIndex;
 import org.aksw.hawk.index.IndexDBO_classes;
 import org.aksw.hawk.index.IndexDBO_properties;
@@ -34,16 +34,16 @@ public class Annotater {
 		this.sparql = sparql;
 	}
 
-	public void annotateTree(Question q) {
-		MutableTree tree = q.tree;
+	public void annotateTree(HAWKQuestion q) {
+		MutableTree tree = q.getTree();
 		annotateProjectionLeftTree(tree);
 		annotateVerbs(tree);
 		annotateNouns(tree);
-		q.tree_final = JSONStatusBuilder.treeToJSON(q.tree);
+		q.setTree_final(JSONStatusBuilder.treeToJSON(q.getTree()));
 	}
 
 	/**
-	 * "Named entities are noun phrases and are usually modelled as resources, thus a lexical entry is built comprising a syntactic noun phrase representation together with a corresponding semantic representation containing a resource slot." citation by Unger et al. tbsl
+	 * "Named entities are noun phrases and are usually modeled as resources, thus a lexical entry is built comprising a syntactic noun phrase representation together with a corresponding semantic representation containing a resource slot." citation by Unger et al. tbsl
 	 */
 	/**
 	 * "Nouns are often referring to classes, while sometimes to properties, thus two lexical entries are built { one containing a semantic representation with a class slot and one containing a semantic representation with a property slot." citation by Unger et al. tbsl

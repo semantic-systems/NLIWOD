@@ -2,7 +2,7 @@ package hawk;
 
 import java.util.Set;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.pruner.SPARQLQueryPruner;
 import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
@@ -85,7 +85,7 @@ public class SpecificQueryTest {
 		queries.add(query);
 		
 		log.debug("Size before pruning: " + queries.size());
-		queries = pruner.prune(queries,new Question());
+		queries = pruner.prune(queries,new HAWKQuestion());
 		log.debug("Size after pruning: " + queries.size());
 		Assert.assertTrue(queries.size() == 5);
 

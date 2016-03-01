@@ -3,14 +3,14 @@ package org.aksw.hawk.pruner;
 import java.util.Map;
 import java.util.Set;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 public class CyclicTriple implements ISPARQLQueryPruner {
-	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, Question q) {
+	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, HAWKQuestion q) {
 		// discard queries containing
 		// ?proj <http://dbpedia.org/ontology/deathPlace> ?const.
 		// ?const <http://dbpedia.org/ontology/deathPlace> ?proj.

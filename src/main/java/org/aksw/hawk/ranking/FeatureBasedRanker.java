@@ -11,8 +11,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
+import org.aksw.qa.commons.datastructure.IQuestion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,13 +32,13 @@ public class FeatureBasedRanker implements Ranking {
 
 	
 
-	public void learn(Question q, Set<SPARQLQuery> queries) {
+	public void learn(IQuestion q, Set<SPARQLQuery> queries) {
 		db.store(q, queries);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public List<Answer> rank(List<Answer> answers, Question q) {
+	public List<Answer> rank(List<Answer> answers, HAWKQuestion q) {
 		Map<Answer, Double> buckets = Maps.newHashMap();
 
 		for (Answer answer : answers) {

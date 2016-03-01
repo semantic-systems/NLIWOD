@@ -1,15 +1,15 @@
 package org.aksw.hawk.controller;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTreeNode;
 
 public class Cardinality {
 
-	public int cardinality(Question q) {
+	public int cardinality(HAWKQuestion q) {
 		// look at the first child of root and determine the quality based on
 		// the POS Tag
 		int cardinality = 12;
-		MutableTreeNode root = q.tree.getRoot();
+		MutableTreeNode root = q.getTree().getRoot();
 		// IN because of "In which..."
 		if (root.posTag.matches("VB(.)*")) {
 			MutableTreeNode firstChild = root.children.get(0);

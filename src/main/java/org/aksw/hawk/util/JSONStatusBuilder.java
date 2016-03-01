@@ -2,10 +2,10 @@ package org.aksw.hawk.util;
 
 import java.util.Stack;
 
-import org.aksw.autosparql.commons.qald.uri.Entity;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
+import org.aksw.qa.commons.datastructure.Entity;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.jena.atlas.json.JsonString;
 import org.json.simple.JSONArray;
@@ -16,14 +16,14 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 public class JSONStatusBuilder {
 
 	@SuppressWarnings("unchecked")
-	public static JSONObject status(Question question) {
+	public static JSONObject status(HAWKQuestion question) {
 		JSONObject document = new JSONObject();
-		document.put("input_question", question.languageToQuestion.get("en"));
+		document.put("input_question", question.getLanguageToQuestion().get("en"));
 
 		// named entities
-		if (!question.languageToNamedEntites.isEmpty()) {
+		if (!question.getLanguageToNamedEntites().isEmpty()) {
 			JSONArray tmp = new JSONArray();
-			for (Entity key : question.languageToNamedEntites.get("en")) {
+			for (Entity key : question.getLanguageToNamedEntites().get("en")) {
 				JSONObject tmpobj = new JSONObject();
 				tmpobj.put("key", key.label);
 				tmpobj.put("value", new JsonString(key.uris.get(0).getURI()));
@@ -32,9 +32,9 @@ public class JSONStatusBuilder {
 			document.put("named_entities", tmp);
 		}
 		// combined nouns
-		if (!question.languageToNounPhrases.isEmpty()) {
+		if (!question.getLanguageToNounPhrases().isEmpty()) {
 			JSONArray tmp = new JSONArray();
-			for (Entity key : question.languageToNounPhrases.get("en")) {
+			for (Entity key : question.getLanguageToNounPhrases().get("en")) {
 				JSONObject tmpobj = new JSONObject();
 				tmpobj.put("key", key.label);
 				tmpobj.put("value", new JsonString(key.uris.get(0).getURI()));
@@ -43,9 +43,9 @@ public class JSONStatusBuilder {
 			document.put("combined_nouns", tmp);
 		}
 		// POS tags
-		if (question.tree != null) {
+		if (question.getTree() != null) {
 			Stack<MutableTreeNode> stack = new Stack<MutableTreeNode>();
-			stack.push(question.tree.getRoot());
+			stack.push(question.getTree().getRoot());
 			JSONArray tmp = new JSONArray();
 			while (!stack.isEmpty()) {
 				MutableTreeNode node = stack.pop();
@@ -61,22 +61,22 @@ public class JSONStatusBuilder {
 		}
 
 		// full tree
-		if (question.tree_full != null) {
-			document.put("tree_full", question.tree_full);
+		if (question.getTree_full() != null) {
+			document.put("tree_full", question.getTree_full());
 		}
 		// pruned tree
-		if (question.tree_pruned != null) {
-			document.put("tree_pruned", question.tree_pruned);
+		if (question.getTree_pruned() != null) {
+			document.put("tree_pruned", question.getTree_pruned());
 		}
 		// final tree
-		if (question.tree_final != null) {
-			document.put("tree_final", question.tree_final);
+		if (question.getTree_final() != null) {
+			document.put("tree_final", question.getTree_final());
 		}
 
 		// annotation
-		if (question.tree != null) {
+		if (question.getTree() != null) {
 			Stack<MutableTreeNode> stack = new Stack<MutableTreeNode>();
-			stack.push(question.tree.getRoot());
+			stack.push(question.getTree().getRoot());
 			JSONArray tmp = new JSONArray();
 			while (!stack.isEmpty()) {
 				MutableTreeNode node = stack.pop();
@@ -97,15 +97,15 @@ public class JSONStatusBuilder {
 		}
 
 		// pruning
-		if (!question.pruning_messages.isEmpty()) {
-			document.put("pruning_messages", question.pruning_messages);
+		if (!question.getPruning_messages().isEmpty()) {
+			document.put("pruning_messages", question.getPruning_messages());
 		}
 		// final sparql
-		if (question.finalAnswer != null && !question.finalAnswer.isEmpty()) {
-			document.put("final_sparql_base64", new String(Base64.encodeBase64(question.finalAnswer.get(0).queryString.getBytes())));
+		if (question.getFinalAnswer() != null && !question.getFinalAnswer().isEmpty()) {
+			document.put("final_sparql_base64", new String(Base64.encodeBase64(question.getFinalAnswer().get(0).queryString.getBytes())));
 			// final answer FIXME schwachsinnige struktur hier
 			JSONArray array = new JSONArray();
-			for (RDFNode answer : question.finalAnswer.get(0).answerSet) {
+			for (RDFNode answer : question.getFinalAnswer().get(0).answerSet) {
 				array.add(AnswerBox.buildAnswerBoxFeatures(answer.asResource().getURI()));
 			}
 			document.put("answer", array);

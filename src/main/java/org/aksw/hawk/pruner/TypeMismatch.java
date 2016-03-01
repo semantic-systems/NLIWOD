@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.pruner.disjointness.QueryUtils;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
@@ -72,7 +72,7 @@ public class TypeMismatch implements ISPARQLQueryPruner {
 	
 	
 	@Override
-	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, Question q) {
+	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, HAWKQuestion q) {
 		mon.reset();
 		Set<SPARQLQuery> filteredQueries = Sets.newHashSet();
 

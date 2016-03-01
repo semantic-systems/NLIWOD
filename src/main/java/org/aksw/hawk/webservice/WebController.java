@@ -7,7 +7,7 @@ import java.util.concurrent.Future;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +29,10 @@ public class WebController {
 	private AsyncSearchExecutor asyncSearchExecutor;
 
 	private Logger log = LoggerFactory.getLogger(WebController.class);
-	private HashMap<UUID, Future<Question>> runningProcesses = Maps.newHashMap();
-	private HashMap<UUID, Question> UuidQuestionMap = Maps.newHashMap();
+	private HashMap<UUID, Future<HAWKQuestion>> runningProcesses = Maps.newHashMap();
+	private HashMap<UUID, HAWKQuestion> UuidQuestionMap = Maps.newHashMap();
 	private SimpleIdGenerator IdGenerator = new SimpleIdGenerator();
-
+//TODO refactor that class to simple 
 	// /search?q=What+is+the+capital+of+Germany+%3F
 	@RequestMapping("/search")
 	public UUID search(@RequestParam(value = "q") String question, HttpServletResponse response) {
@@ -43,19 +43,19 @@ public class WebController {
 		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
 
 		// create a question object
-		Question q = new Question();
-		q.languageToQuestion.put("en", question);
-		q.UUID = IdGenerator.generateId();
+		HAWKQuestion q = new HAWKQuestion();
+		q.getLanguageToQuestion().put("en", question);
+		q.setUUID(IdGenerator.generateId());
 
 		// start the search process
-		Future<Question> report = asyncSearchExecutor.search(q);
+		Future<HAWKQuestion> report = asyncSearchExecutor.search(q);
 
 		// put it to queue to fetch while long lasting processing
-		runningProcesses.put(q.UUID, report);
-		UuidQuestionMap.put(q.UUID, q);
+		runningProcesses.put(q.getUUID(), report);
+		UuidQuestionMap.put(q.getUUID(), q);
 
 		// return the UUID
-		return q.UUID;
+		return q.getUUID();
 	}
 
 	@RequestMapping("/status")
@@ -67,7 +67,7 @@ public class WebController {
 		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
 
 		if (runningProcesses.containsKey(UUID)) {
-			Future<Question> q = runningProcesses.get(UUID);
+			Future<HAWKQuestion> q = runningProcesses.get(UUID);
 			if (q.isDone()) {
 				runningProcesses.remove(UUID);
 				try {

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ public class BucketRanker implements Ranking {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<Answer> rank(List<Answer> answers, Question q) {
+	public List<Answer> rank(List<Answer> answers, HAWKQuestion q) {
 		// TODO Christian:  bug here!?!?, write a unit test for bucketbased ranking
 		Map<Answer, Integer> buckets = Maps.newHashMap();
 

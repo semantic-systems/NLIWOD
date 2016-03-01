@@ -5,7 +5,7 @@ import java.util.concurrent.Future;
 
 import org.aksw.hawk.controller.Pipeline;
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.ranking.BucketRanker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +21,8 @@ public class AsyncSearchExecutor {
 	private Logger log = LoggerFactory.getLogger(AsyncSearchExecutor.class);
 
 	@Async
-	public Future<Question> search(Question q) {
-		log.info("Run pipeline on " + q.languageToQuestion.get("en"));
+	public Future<HAWKQuestion> search(HAWKQuestion q) {
+		log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
 		List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
 		// FIXME improve ranking, put other ranking method here
@@ -31,8 +31,8 @@ public class AsyncSearchExecutor {
 		log.info("Bucket-based ranking");
 		List<Answer> rankedAnswer = bucket_ranker.rank(answers, q);
 		log.info(Joiner.on("\n\t").join(rankedAnswer));
-		q.finalAnswer = rankedAnswer;
+		q.setFinalAnswer(rankedAnswer);
 
-		return new AsyncResult<Question>(q);
+		return new AsyncResult<HAWKQuestion>(q);
 	}
 }

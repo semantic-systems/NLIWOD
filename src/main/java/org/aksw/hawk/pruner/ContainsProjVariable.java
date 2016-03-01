@@ -2,14 +2,14 @@ package org.aksw.hawk.pruner;
 
 import java.util.Set;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 
 import com.google.common.collect.Sets;
 
 public class ContainsProjVariable implements ISPARQLQueryPruner {
 
-	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, Question q) {
+	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, HAWKQuestion q) {
 		Set<SPARQLQuery> returnList = Sets.newHashSet();
 		for (SPARQLQuery query : queryStrings) {
 			String[] split = new String[3];

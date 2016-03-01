@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.aksw.autosparql.commons.qald.uri.Entity;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.qa.commons.datastructure.Entity;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -99,15 +99,15 @@ public class Fox extends ASpotter {
 		}
 		return tmp;
 	}
-
+//TODO CHristian: Transform to unit test
 	public static void main(String args[]) {
-		Question q = new Question();
-		q.languageToQuestion.put("en", "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
+		HAWKQuestion q = new HAWKQuestion();
+		q.getLanguageToQuestion().put("en", "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
 		ASpotter fox = new Fox();
-		q.languageToNamedEntites = fox.getEntities(q.languageToQuestion.get("en"));
-		for (String key : q.languageToNamedEntites.keySet()) {
+		q.setLanguageToNamedEntites(fox.getEntities(q.getLanguageToQuestion().get("en")));
+		for (String key : q.getLanguageToNamedEntites().keySet()) {
 			System.out.println(key);
-			for (Entity entity : q.languageToNamedEntites.get(key)) {
+			for (Entity entity : q.getLanguageToNamedEntites().get(key)) {
 				System.out.println("\t" + entity.label + " ->" + entity.type);
 				for (Resource r : entity.posTypesAndCategories) {
 					System.out.println("\t\tpos: " + r);

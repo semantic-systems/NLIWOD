@@ -1,13 +1,11 @@
 package org.aksw.hawk.ranking;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import org.aksw.hawk.controller.EvalObj;
 import org.aksw.hawk.controller.Pipeline;
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.experiment.Measures;
 import org.aksw.hawk.experiment.SingleQuestionPipeline;
 import org.junit.Test;
@@ -26,10 +24,10 @@ public class OptimalRankerTest {
 
 		Pipeline pipeline = new Pipeline();
 
-		Question q = new Question();
-		q.languageToQuestion.put("en", "Which actress starring in the TV series Friends owns the production company Coquette Productions?");
+		HAWKQuestion q = new HAWKQuestion();
+		q.getLanguageToQuestion().put("en", "Which actress starring in the TV series Friends owns the production company Coquette Productions?");
 
-		log.info("Run pipeline on " + q.languageToQuestion.get("en"));
+		log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
 		List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
 		// ##############~~RANKING~~##############

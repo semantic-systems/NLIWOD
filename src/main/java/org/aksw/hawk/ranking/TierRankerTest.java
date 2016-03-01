@@ -1,25 +1,18 @@
 package org.aksw.hawk.ranking;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.aksw.hawk.controller.Pipeline;
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.experiment.SingleQuestionPipeline;
-import org.aksw.hawk.querybuilding.SPARQLQuery;
-import org.aksw.hawk.ranking.FeatureBasedRanker.Feature;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 public class TierRankerTest {
 //TODO Christian: couldn't test, couldn't continue past SPARQLQueryBuilder
@@ -29,10 +22,10 @@ public class TierRankerTest {
 
 		Pipeline pipeline = new Pipeline();
 
-		Question q = new Question();
-		q.languageToQuestion.put("en", "What is the capital of Spain called?");
+		HAWKQuestion q = new HAWKQuestion();
+		q.getLanguageToQuestion().put("en", "What is the capital of Spain called?");
 		String correctAnswer="[http://dbpedia.org/resource/Madrid]";
-		log.info("Run pipeline on " + q.languageToQuestion.get("en")+ ", expecting answer: " + correctAnswer);
+		log.info("Run pipeline on " + q.getLanguageToQuestion().get("en")+ ", expecting answer: " + correctAnswer);
 		//log.info("Run pipeline on " + q.languageToQuestion.get("en"));
 		List<Answer> answers = pipeline.getAnswersToQuestion(q);
 

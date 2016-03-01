@@ -11,7 +11,7 @@ import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 
 import com.google.common.collect.Maps;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -26,7 +26,7 @@ public class OptimalRanker implements Ranking {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public List<Answer> rank(List<Answer> answers, Question q) {
+	public List<Answer> rank(List<Answer> answers, HAWKQuestion q) {
 		// Compare to set of resources from benchmark
 		// save score for for answerSet with fmeasure > 0
 		Map<Answer, Double> buckets = Maps.newHashMap();

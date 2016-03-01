@@ -5,7 +5,7 @@ import java.util.Set;
 
 import javax.xml.ws.http.HTTPException;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.pruner.disjointness.DisjointnessBasedQueryFilter;
 import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
@@ -48,7 +48,7 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 
 	@SuppressWarnings("unchecked")
 	// TODO make this logging / JSON more pretty
-	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queries, Question q) {
+	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queries, HAWKQuestion q) {
 
 		Set<SPARQLQuery> returnedQueries = null;
 		JSONArray document = new JSONArray();
@@ -165,7 +165,7 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 		tmp.put("queries", queries2json(queries));
 		document.add(tmp);
 
-		q.pruning_messages = document;
+		q.setPruning_messages(document);
 		log.debug(document.toJSONString());
 		// TODO prune things like
 		// ?const <http://dbpedia.org/ontology/deathDate> ?proj.

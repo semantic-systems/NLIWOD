@@ -12,8 +12,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import org.aksw.autosparql.commons.qald.uri.Entity;
 import org.aksw.hawk.cache.PersistentCache;
+import org.aksw.qa.commons.datastructure.Entity;
 
 public abstract class ASpotter {
 

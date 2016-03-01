@@ -9,10 +9,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.aksw.hawk.controller.EvalObj;
 import org.aksw.hawk.controller.Pipeline;
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.hawk.ranking.FeatureBasedRanker;
 import org.aksw.hawk.ranking.OptimalRanker;
+import org.aksw.qa.commons.datastructure.IQuestion;
+import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,19 +37,18 @@ public class TrainingPipeline {
 		Pipeline pipeline = new Pipeline();
 
 		log.info("Loading dataset");
-		String dataset = "resources/qald-5_test_train.xml";
-		List<Question> questions = QALD_Loader.load(dataset);
+		List<IQuestion> questions = QALD_Loader.load(Dataset.QALD6_Train_Multi);
 
 		double average = 0;
 		double count = 0;
 		double countNULLAnswer = 0;
-		for (Question q : questions) {
-			if ((  q.answerType.equals("resource") & q.onlydbo & !q.aggregation) || q.loadedAsASKQuery) {
-				log.info("Run pipeline on " + q.languageToQuestion.get("en"));
+		for (HAWKQuestion q : questions) {
+			if ((  q.getAnswerType().equals("resource") & q.getOnlydbo() & !q.getAggregation()) || q.getLoadedAsASKQuery()) {
+				log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
 				List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
 				if (answers.isEmpty()) {
-					log.warn("Question#" + q.id + " returned no answers! (Q: " + q.languageToQuestion.get("en") + ")");
+					log.warn("Question#" + q.getId() + " returned no answers! (Q: " + q.getLanguageToQuestion().get("en") + ")");
 					++countNULLAnswer;
 					continue;
 				}

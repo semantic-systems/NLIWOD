@@ -2,7 +2,7 @@ package hawk;
 
 import java.util.Set;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.pruner.BGPisConnected;
 import org.aksw.hawk.pruner.NumberOfTypesPerVariable;
 import org.aksw.hawk.pruner.PredicatesPerVariableEdge;
@@ -48,7 +48,7 @@ public class PruneSPARQLQueriesTest {
 		queries.add(query);
 
 		log.debug("Size before pruning: " + queries.size());
-		queries = numberOfTypesPerVariable.prune(queries, new Question());
+		queries = numberOfTypesPerVariable.prune(queries, new HAWKQuestion());
 		log.debug("Size after pruning: " + queries.size());
 		log.debug(Joiner.on("\n").join(queries));
 		Assert.assertTrue(queries.size() == 2);
@@ -88,7 +88,7 @@ public class PruneSPARQLQueriesTest {
 		queries.add(query);
 
 		log.debug("Size before pruning: " + queries.size());
-		queries = predicatesPerVariableEdge.prune(queries, new Question());
+		queries = predicatesPerVariableEdge.prune(queries, new HAWKQuestion());
 		log.debug("Size after pruning: " + queries.size());
 		log.debug(Joiner.on("\n").join(queries));
 		Assert.assertTrue(queries.size() == 3);
@@ -107,7 +107,7 @@ public class PruneSPARQLQueriesTest {
 		queries.add(query);
 
 		log.debug("Size before pruning: " + queries.size());
-		queries = disjoint.prune(queries, new Question());
+		queries = disjoint.prune(queries, new HAWKQuestion());
 		log.debug("Size after pruning: " + queries.size());
 		Assert.assertTrue(queries.size() == 1);
 
@@ -142,7 +142,7 @@ public class PruneSPARQLQueriesTest {
 		queries.add(query);
 
 		log.debug("Size before pruning: " + queries.size());
-		queries = gSCCPruner.prune(queries, new Question());
+		queries = gSCCPruner.prune(queries, new HAWKQuestion());
 		log.debug("Size after pruning: " + queries.size());
 		Assert.assertTrue(queries.size() == 4);
 
@@ -164,7 +164,7 @@ public class PruneSPARQLQueriesTest {
 		queries.add(query);
 
 		log.debug("Size before pruning: " + queries.size());
-		queries = gSCCPruner.prune(queries, new Question());
+		queries = gSCCPruner.prune(queries, new HAWKQuestion());
 		log.debug("Size after pruning: " + queries.size());
 		Assert.assertTrue(queries.size() == 0);
 
@@ -216,7 +216,7 @@ public class PruneSPARQLQueriesTest {
 		log.debug(query.toString());
 
 		log.debug("Size before pruning: " + queries.size());
-		queries = unboundTriple.prune(queries, new Question());
+		queries = unboundTriple.prune(queries, new HAWKQuestion());
 		log.debug("Size after pruning: " + queries.size());
 		Assert.assertTrue(queries.size() == 4);
 	}

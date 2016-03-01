@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.nlp.MutableTreeNodeIterator;
@@ -118,8 +118,8 @@ public class TierRanker implements Ranking {
 	}
 
 	@Override
-	public List<Answer> rank(List<Answer> answers, Question q) {
-		init(q.tree);
+	public List<Answer> rank(List<Answer> answers, HAWKQuestion q) {
+		init(q.getTree());
 		for (Answer answer : answers) {
 			double rank = getScore(QueryFactory.create(answer.queryString));
 			 System.out.println(answer.queryString+" ranked with score: "+rank);

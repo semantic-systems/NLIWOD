@@ -3,7 +3,7 @@ package org.aksw.hawk.pruner;
 import java.util.Map;
 import java.util.Set;
 
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 
 import com.google.common.collect.Maps;
@@ -20,7 +20,7 @@ public class PredicatesPerVariableEdge implements ISPARQLQueryPruner {
 	// ?const <http://dbpedia.org/ontology/date> ?proj.
 	// }
 	// LIMIT 12>
-	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, Question q) {
+	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, HAWKQuestion q) {
 		Set<SPARQLQuery> returnSet = Sets.newHashSet();
 		// discard queries with more than x unbound triples away
 		for (SPARQLQuery sparqlQuery : queryStrings) {

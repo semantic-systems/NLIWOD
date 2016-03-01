@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.aksw.hawk.cache.CachedParseTree;
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.Question;
+import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTreePruner;
 import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.hawk.nlp.spotter.Fox;
@@ -51,15 +51,15 @@ public class Pipeline {
 		queryBuilder = new SPARQLQueryBuilder(sparql);
 	}
 
-	public List<Answer> getAnswersToQuestion(Question q) {
-		log.info("Question: " + q.languageToQuestion.get("en"));
+	public List<Answer> getAnswersToQuestion(HAWKQuestion q) {
+		log.info("Question: " + q.getLanguageToQuestion().get("en"));
 
 		log.info("Classify question type.");
-		q.isClassifiedAsASKQuery = queryTypeClassifier.isASKQuery(q.languageToQuestion.get("en"));
+		q.setIsClassifiedAsASKQuery(queryTypeClassifier.isASKQuery(q.getLanguageToQuestion().get("en")));
 
 		// Disambiguate parts of the query
 		log.info("Named entity recognition.");
-		q.languageToNamedEntites = nerdModule.getEntities(q.languageToQuestion.get("en"));
+		q.setLanguageToNamedEntites(nerdModule.getEntities(q.getLanguageToQuestion().get("en")));
 
 		// Noun combiner, decrease #nodes in the DEPTree
 		log.info("Noun phrase combination.");
@@ -68,15 +68,15 @@ public class Pipeline {
 
 		// Build trees from questions and cache them
 		log.info("Dependency parsing.");
-		q.tree = cParseTree.process(q);
+		q.setTree(cParseTree.process(q));
 
 		// Cardinality identifies the integer i used for LIMIT i
 		log.info("Cardinality calculation.");
-		q.cardinality = cardinality.cardinality(q);
+		q.setCardinality(cardinality.cardinality(q));
 
 		// Apply pruning rules
 		log.info("Pruning tree.");
-		q.tree = pruner.prune(q);
+		q.setTree(pruner.prune(q));
 
 		// Annotate tree
 		log.info("Semantically annotating the tree.");
