@@ -1,0 +1,4988 @@
+{
+  "dataset": {
+    "id": "qald-6-train-datacube"
+  },
+  "questions": [
+    {
+      "id": "1",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much was spent on public works and utilities by the Town of Cary in 2011?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) from <http://linkedspending.aksw.org/town_of_cary_expenditures> { ?obs qb:dataSet ls:town_of_cary_expenditures. ?obs lso:town_of_cary_expenditures-amount ?amount. ?obs lso:town_of_cary_expenditures-Class <https://openspending.org/town_of_cary_expenditures/Class/6>. ?obs lso:refYear ?year. filter(year(?year)=2011). }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "23831652"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which programs were done under the class of public works and utilities in the expenditure of the Town of Cary?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?program from <http://linkedspending.aksw.org/town_of_cary_expenditures> { ?obs qb:dataSet ls:town_of_cary_expenditures. ?obs lso:town_of_cary_expenditures-Program ?program. ?obs lso:town_of_cary_expenditures-Class <https://openspending.org/town_of_cary_expenditures/Class/6>. }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "program"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/52"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/49"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/43"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/44"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/48"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/50"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/52"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/47"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/43"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/50"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/47"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/51"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/42"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/42"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/49"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/41"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/46"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/47"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/48"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/53"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/41"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/45"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/53"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/44"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/53"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/41"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/49"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/50"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/45"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/51"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/48"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/52"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/44"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/46"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/46"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/43"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/51"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/42"
+                }
+              },
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_expenditures/Program/45"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much did the Town of Cary earn in 2009?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) from <http://linkedspending.aksw.org/town_of_cary_revenues> { ?obs qb:dataSet ls:town_of_cary_revenues. ?obs lso:refYear ?year. filter(year(?year)=2009). ?obs lso:town_of_cary_revenues-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "116661346"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which program earned the most for the Town of Cary?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?program from <http://linkedspending.aksw.org/town_of_cary_revenues> { ?obs qb:dataSet ls:town_of_cary_revenues. ?obs lso:town_of_cary_revenues-Program ?program. ?obs lso:town_of_cary_revenues-amount ?amount. } order by desc(sum(xsd:decimal(?amount))) limit 1"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "program"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "program": {
+                  "type": "uri",
+                  "value": "https://openspending.org/town_of_cary_revenues/Program/1"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which department of whiteacre spent the most in 2010?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?dep from <http://linkedspending.aksw.org/city-of-whiteacre-spending> { ?obs qb:dataSet ls:city-of-whiteacre-spending. ?obs lso:city-of-whiteacre-spending-to ?dep. ?obs lso:city-of-whiteacre-spending-amount ?amount. ?obs lso:refYear ?year. filter (year(?year)=2010). } order by desc(sum(xsd:decimal(?amount))) limit 1"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "dep"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "dep": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-whiteacre-spending/to/954008"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much does the general district court of Whiteacre spend for court appointed attorney fees a year?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?year sum(xsd:decimal(?amount)) as ?result from <http://linkedspending.aksw.org/city-of-whiteacre-spending> { ?obs qb:dataSet ls:city-of-whiteacre-spending. ?obs lso:city-of-whiteacre-spending-object <https://openspending.org/city-of-whiteacre-spending/object/3150.0>. ?obs lso:city-of-whiteacre-spending-to <https://openspending.org/city-of-whiteacre-spending/to/210708>. ?obs lso:city-of-whiteacre-spending-amount ?amount. ?obs lso:refYear ?year. } group by ?year order by desc(sum(xsd:decimal(?amount))) limit 1"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "year",
+              "result"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "2010"
+                },
+                "result": {
+                  "type": "literal",
+                  "value": "78478.5"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which agencies in the Maldives have proposed expenditure amounts of more than 1 billion Maldivian rufiyaa in 2015?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?agency from <http://linkedspending.aksw.org/maldives_proposed_expenditure_2015> { ?obs qb:dataSet ls:maldives_proposed_expenditure_2015. ?obs lso:maldives_proposed_expenditure_2015-Agency ?agency. ?obs lso:maldives_proposed_expenditure_2015-amount ?amount. filter(xsd:decimal(?amount)>1000000000). }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "agency"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "agency": {
+                  "type": "uri",
+                  "value": "https://openspending.org/maldives_proposed_expenditure_2015/Agency/ministry-of-education"
+                }
+              },
+              {
+                "agency": {
+                  "type": "uri",
+                  "value": "https://openspending.org/maldives_proposed_expenditure_2015/Agency/ministry-of-health"
+                }
+              },
+              {
+                "agency": {
+                  "type": "uri",
+                  "value": "https://openspending.org/maldives_proposed_expenditure_2015/Agency/ministry-of-home-affairs"
+                }
+              },
+              {
+                "agency": {
+                  "type": "uri",
+                  "value": "https://openspending.org/maldives_proposed_expenditure_2015/Agency/minister-of-housing-and-infrastructure"
+                }
+              },
+              {
+                "agency": {
+                  "type": "uri",
+                  "value": "https://openspending.org/maldives_proposed_expenditure_2015/Agency/expenses-from-foreign-aid-loans"
+                }
+              },
+              {
+                "agency": {
+                  "type": "uri",
+                  "value": "https://openspending.org/maldives_proposed_expenditure_2015/Agency/expenses-for-foreign-aid-for-projects"
+                }
+              },
+              {
+                "agency": {
+                  "type": "uri",
+                  "value": "https://openspending.org/maldives_proposed_expenditure_2015/Agency/ministry-of-finance-and-treasury"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "question": [
+        {
+          "language": "en",
+          "string": "What is the total aid to the Anti Corruption Commission in the Maldives in 2015?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) from <http://linkedspending.aksw.org/maldives_proposed_expenditure_2015> { ?obs qb:dataSet ls:maldives_proposed_expenditure_2015. ?obs lso:maldives_proposed_expenditure_2015-Agency <https://openspending.org/maldives_proposed_expenditure_2015/Agency/anti-corruption-commission>. ?obs lso:maldives_proposed_expenditure_2015-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "32499312"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which Ugandan district had the highest budget in 2014?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?district from <http://linkedspending.aksw.org/ministry_of_health> { ?obs qb:dataSet ls:ministry_of_health. ?obs lso:ministry_of_health-District ?district. ?obs lso:ministry_of_health-amount ?amount. ?obs lso:refYear ?year. filter(year(?year)=2014). } order by desc(sum(xsd:decimal(?amount))) limit 1"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "district"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "district": {
+                  "type": "literal",
+                  "value": "Northern"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the average Uganda health budget over all districts in 2014?"
+        }
+      ],
+      "query": {
+        "sparql": " select avg(?sum) as ?sum { select ?district sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/ministry_of_health> { ?obs qb:dataSet ls:ministry_of_health. ?obs lso:ministry_of_health-District ?district. ?obs lso:ministry_of_health-amount ?amount. ?obs lso:refYear ?year. filter(year(?year)=2014). } }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "5067368434.6"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "question": [
+        {
+          "language": "en",
+          "string": "What is the highest Newcastle city council payment for supplies and services?"
+        }
+      ],
+      "query": {
+        "sparql": " select max(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/newcastle-city-council-payments-over-500> { ?obs qb:dataSet ls:newcastle-city-council-payments-over-500. ?obs lso:newcastle-city-council-payments-over-500-expenditure-category \"Supplies & Services\". ?obs lso:newcastle-city-council-payments-over-500-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "1256152.24"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "question": [
+        {
+          "language": "en",
+          "string": "What's are the 10 highest payments of the Newcastle city council?"
+        }
+      ],
+      "query": {
+        "sparql": " select xsd:decimal(?amount) as ?amount from <http://linkedspending.aksw.org/newcastle-city-council-payments-over-500> { ?obs qb:dataSet ls:newcastle-city-council-payments-over-500. ?obs lso:newcastle-city-council-payments-over-500-amount ?amount. } order by desc(xsd:decimal(?amount)) limit 10"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "amount"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "4766150"
+                }
+              },
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "2000000"
+                }
+              },
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "1907037"
+                }
+              },
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "1907037"
+                }
+              },
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "1602556.49"
+                }
+              },
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "1602556.49"
+                }
+              },
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "1533250"
+                }
+              },
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "1359380"
+                }
+              },
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "1256152.24"
+                }
+              },
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "1247239.17"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much did the Waltham Forest Council spend on Environment and Regeneration?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?amount from <http://linkedspending.aksw.org/uk-local-walthamforest> { ?obs qb:dataSet ls:uk-local-walthamforest. ?obs lso:uk-local-walthamforest-ExpenseArea <https://openspending.org/uk-local-walthamforest/ExpenseArea/environment-regeneration>. ?obs lso:uk-local-walthamforest-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "amount"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "15457732.83"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "question": [
+        {
+          "language": "en",
+          "string": "On the Waltham Forest Council, how much money was given to Synarbor Global Solutions Ltd?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?amount from <http://linkedspending.aksw.org/uk-local-walthamforest> { ?obs qb:dataSet ls:uk-local-walthamforest. ?obs lso:uk-local-walthamforest-to <https://openspending.org/uk-local-walthamforest/to/15519>. ?obs lso:uk-local-walthamforest-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "amount"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "64444.8"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much money give Cheshire West and Chester on Adult Social Care and Health?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?amount from <http://linkedspending.aksw.org/cheshire_west_and_chester_april_2013> { ?obs qb:dataSet ls:cheshire_west_and_chester_april_2013. ?obs lso:cheshire_west_and_chester_april_2013-service-label \"Adult Social Care & Health\". ?obs lso:cheshire_west_and_chester_april_2013-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "amount"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "7296718.26"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "question": [
+        {
+          "language": "en",
+          "string": "What are the top 5 narratives in Cheshire West and Chester?"
+        }
+      ],
+      "query": {
+        "sparql": " select distinct(?narrative) from <http://linkedspending.aksw.org/cheshire_west_and_chester_april_2013> { ?obs qb:dataSet ls:cheshire_west_and_chester_april_2013. ?obs lso:cheshire_west_and_chester_april_2013-narrative ?narrative. ?obs lso:cheshire_west_and_chester_april_2013-amount ?amount. } order by desc(sum(xsd:decimal(?amount))) limit 5"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "narrative"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "narrative": {
+                  "type": "literal",
+                  "value": "Housing Benefits"
+                }
+              },
+              {
+                "narrative": {
+                  "type": "literal",
+                  "value": "Collection Fund"
+                }
+              },
+              {
+                "narrative": {
+                  "type": "literal",
+                  "value": "Corporate Central Billing"
+                }
+              },
+              {
+                "narrative": {
+                  "type": "literal",
+                  "value": "Insurance Costs"
+                }
+              },
+              {
+                "narrative": {
+                  "type": "literal",
+                  "value": "Winsford Academy"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much did the City of Redacre expend from the insurance fund?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?amount from <http://linkedspending.aksw.org/city-of-redacre-spending> { ?obs qb:dataSet ls:city-of-redacre-spending. ?obs lso:city-of-redacre-spending-from <https://openspending.org/city-of-redacre-spending/from/510>. ?obs lso:city-of-redacre-spending-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "amount"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "10640136.66"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much receives each division in the City of Redacre?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?division sum(xsd:decimal(?amount)) as ?amount from <http://linkedspending.aksw.org/city-of-redacre-spending> { ?obs qb:dataSet ls:city-of-redacre-spending. ?obs lso:city-of-redacre-spending-to ?division. ?obs lso:city-of-redacre-spending-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "division",
+              "amount"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/815"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "8193760"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/235"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "10116134.93"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/550"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "41585508.31"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/625"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "25877159.51"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/205"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "10430737.45"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/605"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "70869056.65"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/30"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "8078785.95"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/720"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "139122.95"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/825"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "8276520.94"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/510"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "3765131.17"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/184"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "11164986.12"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/705"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "6144030.44"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/15"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "6750811.95"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/801"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "9480447.45"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/250"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "19289110.06"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/810"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "1782348.08"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/701"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "5624399.65"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/12"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "7017652.94"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/185"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "6034243.93"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/520"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "1632135.55"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/655"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "67039155.07"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/181"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "5163929.05"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/201"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "5881803.21"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/285"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "51890622.79"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/182"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "4329840.58"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/186"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "4345266.77"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/610"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "17811582.5"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/271"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "78812733.02"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/830"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "3145039.27"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/0"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "125683629.51"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/188"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "16231350.97"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/11"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "1525916.3"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/725"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "103720260.42"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/805"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "3159485.64"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/260"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "42767.52"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/615"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "2556571.76"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/710"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "24048223.84"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/236"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "6759708.65"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/501"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "5999381.76"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/203"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "146740.32"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/210"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "339926068.32"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/255"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "36168370.95"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/20"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "75767513.65"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/620"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "912264.71"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/13"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "897505.39"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/280"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "74192074.12"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/189"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "53782416.84"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/281"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "17988063.18"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/272"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "23788146.77"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/601"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "18016632.63"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/270"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "251719902.33"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/183"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "6039353.06"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/820"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "37561957.38"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/238"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "27552323.69"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/505"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "31044114.01"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/650"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "2803001.56"
+                }
+              },
+              {
+                "division": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-redacre-spending/to/715"
+                },
+                "amount": {
+                  "type": "literal",
+                  "value": "183618.54"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "19",
+      "question": [
+        {
+          "language": "en",
+          "string": "What is the total Wandsworth spending from all departments?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?amount from <http://linkedspending.aksw.org/wandsworthspending_2013> { ?obs qb:dataSet ls:wandsworthspending_2013. ?obs lso:wandsworthspending_2013-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "amount"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "366292755.13"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "20",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much money Wandsworth spends on the criminal records bureau?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?amount from <http://linkedspending.aksw.org/wandsworthspending_2013> { ?obs qb:dataSet ls:wandsworthspending_2013. ?obs lso:wandsworthspending_2013-DetailedExpenses \"CRIMINAL RECORDS BUREAU\". ?obs lso:wandsworthspending_2013-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "amount"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "amount": {
+                  "type": "literal",
+                  "value": "84276.5"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "21",
+      "question": [
+        {
+          "language": "en",
+          "string": "Top 10 IW Council Spending expense types?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?et from <http://linkedspending.aksw.org/iw-council-spending-2012-13-test> { ?obs qb:dataSet ls:iw-council-spending-2012-13-test. ?obs lso:iw-council-spending-2012-13-test-expensestype ?et. ?obs lso:iw-council-spending-2012-13-test-amount ?amount. } order by desc(sum(xsd:decimal(?amount))) limit 10"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "et"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "et": {
+                  "type": "uri",
+                  "value": "https://openspending.org/iw-council-spending-2012-13-test/expensestype/cap-contractor-pmts"
+                }
+              },
+              {
+                "et": {
+                  "type": "uri",
+                  "value": "https://openspending.org/iw-council-spending-2012-13-test/expensestype/charges-from-independent-providers"
+                }
+              },
+              {
+                "et": {
+                  "type": "uri",
+                  "value": "https://openspending.org/iw-council-spending-2012-13-test/expensestype/chgs-from-ind-provs"
+                }
+              },
+              {
+                "et": {
+                  "type": "uri",
+                  "value": "https://openspending.org/iw-council-spending-2012-13-test/expensestype/pay-to-pvte-contract"
+                }
+              },
+              {
+                "et": {
+                  "type": "uri",
+                  "value": "https://openspending.org/iw-council-spending-2012-13-test/expensestype/payment-to-private-contractors"
+                }
+              },
+              {
+                "et": {
+                  "type": "uri",
+                  "value": "https://openspending.org/iw-council-spending-2012-13-test/expensestype/payment-to-contractors-capital"
+                }
+              },
+              {
+                "et": {
+                  "type": "uri",
+                  "value": "https://openspending.org/iw-council-spending-2012-13-test/expensestype/concessionary-fares"
+                }
+              },
+              {
+                "et": {
+                  "type": "uri",
+                  "value": "https://openspending.org/iw-council-spending-2012-13-test/expensestype/waste-contractors"
+                }
+              },
+              {
+                "et": {
+                  "type": "uri",
+                  "value": "https://openspending.org/iw-council-spending-2012-13-test/expensestype/transport-of-clients"
+                }
+              },
+              {
+                "et": {
+                  "type": "uri",
+                  "value": "https://openspending.org/iw-council-spending-2012-13-test/expensestype/order-settlement"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "22",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which IW Council service area has the highest spending?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?area from <http://linkedspending.aksw.org/iw-council-spending-2012-13-test> { ?obs qb:dataSet ls:iw-council-spending-2012-13-test. ?obs lso:iw-council-spending-2012-13-test-servicearea ?area. ?obs lso:iw-council-spending-2012-13-test-amount ?amount. } order by desc(sum(xsd:decimal(?amount))) limit 1"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "area"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "area": {
+                  "type": "uri",
+                  "value": "https://openspending.org/iw-council-spending-2012-13-test/servicearea/schools-reorganisatn"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "23",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which departments of the city of Springfield had a higher budget in 2005 then in 2006?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?dep { select ?dep sum(xsd:decimal(?amount5)) as ?sum5 sum(xsd:decimal(?amount6)) as ?sum6 from <http://linkedspending.aksw.org/city-of-springfield-budget> { ?obs qb:dataSet ls:city-of-springfield-budget. ?obs lso:city-of-springfield-budget-to ?dep. { ?obs lso:city-of-springfield-budget-amount ?amount5. ?obs lso:refYear ?year5. filter(year(?year5)=2005). } union { ?obs lso:city-of-springfield-budget-amount ?amount6. ?obs lso:refYear ?year6. filter(year(?year6)=2006). } } } group by ?dep having(?sum5>?sum6)"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "dep"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "dep": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-springfield-budget/to/200-police"
+                }
+              },
+              {
+                "dep": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-springfield-budget/to/130-it"
+                }
+              },
+              {
+                "dep": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-springfield-budget/to/400-building"
+                }
+              },
+              {
+                "dep": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-springfield-budget/to/410-engineering"
+                }
+              },
+              {
+                "dep": {
+                  "type": "uri",
+                  "value": "https://openspending.org/city-of-springfield-budget/to/101-admin"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "24",
+      "question": [
+        {
+          "language": "en",
+          "string": "What is the highest single budget amount in the city of Springfield for public works?"
+        }
+      ],
+      "query": {
+        "sparql": " select max(xsd:decimal(?amount)) from <http://linkedspending.aksw.org/city-of-springfield-budget> { ?obs qb:dataSet ls:city-of-springfield-budget. ?obs lso:city-of-springfield-budget-deptgroup <https://openspending.org/city-of-springfield-budget/deptgroup/public-works>. ?obs lso:city-of-springfield-budget-amount ?amount. }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "629023"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "25",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which proportion went to Fullerton of the amount spent on Californian cities in 2010?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?sum_fullerton/?sum_all { select sum(xsd:decimal(?fullerton)) as ?sum_fullerton sum(xsd:decimal(?all)) as ?sum_all from <http://linkedspending.aksw.org/pscs_ca_cities> { ?obs qb:dataSet ls:pscs_ca_cities. { ?obs lso:pscs_ca_cities-gov-full-name \"Fullerton\". ?obs lso:pscs_ca_cities-amount ?fullerton. } union { ?obs lso:pscs_ca_cities-amount ?all. } } }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "0.004635691512599"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "26",
+      "question": [
+        {
+          "language": "en",
+          "string": "How many categories are there for californian cities?"
+        }
+      ],
+      "query": {
+        "sparql": " select count(distinct(?category)) from <http://linkedspending.aksw.org/pscs_ca_cities> { ?obs qb:dataSet ls:pscs_ca_cities. ?obs lso:pscs_ca_cities-caption ?category. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "566"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "27",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the highest Washington DC employee salary in 2011?"
+        }
+      ],
+      "query": {
+        "sparql": " select max(xsd:decimal(?amount)) from <http://linkedspending.aksw.org/dc-city-salaries> { ?obs qb:dataSet ls:dc-city-salaries. ?obs lso:dc-city-salaries-amount ?amount. ?obs lso:refYear ?year. filter(year(?year)=2011). } "
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "295000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "question": [
+        {
+          "language": "en",
+          "string": "What is the average salary of an Engineering Technician in Washington DC?"
+        }
+      ],
+      "query": {
+        "sparql": " select avg(xsd:decimal(?amount)) from <http://linkedspending.aksw.org/dc-city-salaries> { ?obs qb:dataSet ls:dc-city-salaries. ?obs lso:dc-city-salaries-amount ?amount. ?obs lso:dc-city-salaries-position \"Engineering Technician\". }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "69094.233644859813084"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "29",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the amount recieved by King George's Field from Big Lottery Fund grants?"
+        }
+      ],
+      "query": {
+        "sparql": " select xsd:decimal(?amount) from <http://linkedspending.aksw.org/big-lottery-fund-grants> { ?obs qb:dataSet ls:big-lottery-fund-grants. ?obs lso:big-lottery-fund-grants-amount ?amount. ?obs lso:big-lottery-fund-grants-to <https://openspending.org/big-lottery-fund-grants/to/king-george-s-field>. } "
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "10000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "30",
+      "question": [
+        {
+          "language": "en",
+          "string": "Over which programmes more than 1000000 pound but less than 10000000 pound in grants were given by the Big Lottery Fund?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?programme from <http://linkedspending.aksw.org/big-lottery-fund-grants> { ?obs qb:dataSet ls:big-lottery-fund-grants. ?obs lso:big-lottery-fund-grants-programme-name ?programme. ?obs lso:big-lottery-fund-grants-amount ?amount. } group by ?programme having (sum(xsd:decimal(?amount))>1000000&&sum(xsd:decimal(?amount))<10000000)"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "programme"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "programme": {
+                  "type": "literal",
+                  "value": "Impact of Alcohol"
+                }
+              },
+              {
+                "programme": {
+                  "type": "literal",
+                  "value": "The Silver Dreams Fund"
+                }
+              },
+              {
+                "programme": {
+                  "type": "literal",
+                  "value": "Investing in Communities 2 Stage 1"
+                }
+              },
+              {
+                "programme": {
+                  "type": "literal",
+                  "value": "BIG Innovation"
+                }
+              },
+              {
+                "programme": {
+                  "type": "literal",
+                  "value": "Energy Efficient Venues (Large)"
+                }
+              },
+              {
+                "programme": {
+                  "type": "literal",
+                  "value": "Our Place"
+                }
+              },
+              {
+                "programme": {
+                  "type": "literal",
+                  "value": "Investing in Ideas 2"
+                }
+              },
+              {
+                "programme": {
+                  "type": "literal",
+                  "value": "Awards for All Northern Ireland"
+                }
+              },
+              {
+                "programme": {
+                  "type": "literal",
+                  "value": "Village SOS Active"
+                }
+              },
+              {
+                "programme": {
+                  "type": "literal",
+                  "value": "2014 Communities"
+                }
+              },
+              {
+                "programme": {
+                  "type": "literal",
+                  "value": "Millennium Now"
+                }
+              },
+              {
+                "programme": {
+                  "type": "literal",
+                  "value": "Community Asset Transfer Round 2"
+                }
+              },
+              {
+                "programme": {
+                  "type": "literal",
+                  "value": "Next Steps supporting Social investment in England"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "31",
+      "question": [
+        {
+          "language": "en",
+          "string": "On which service areas of Gloucestershire was spent more than 1000000 pound in total?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?area from <http://linkedspending.aksw.org/uk-local-gloucestershirev1> { ?obs qb:dataSet ls:uk-local-gloucestershirev1. ?obs lso:uk-local-gloucestershirev1-service-area ?area. ?obs lso:uk-local-gloucestershirev1-amount ?amount. } group by ?area having (sum(xsd:decimal(?amount))>1000000)"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "area"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Enabling and Transition"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Environment"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Children & Families Commissioner"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Commissioning Director - Adults"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Balance Sheet"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Communities and Infrastructure"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Balance sheet"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "CACD"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "CYPD"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Community Safety / Fire"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "32",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much money did the Gloucestershire Police Authority receive?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) from <http://linkedspending.aksw.org/uk-local-gloucestershirev1> { ?obs qb:dataSet ls:uk-local-gloucestershirev1. ?obs lso:uk-local-gloucestershirev1-to <https://openspending.org/uk-local-gloucestershirev1/to/gloucestershire-police-authority>. ?obs lso:uk-local-gloucestershirev1-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "704367.42"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "33",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much did the department for education pay for extra education services in Scotland?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) from <http://linkedspending.aksw.org/ukgov-finances-cra> { ?obs qb:dataSet ls:ukgov-finances-cra. ?obs lso:ukgov-finances-cra-region <https://openspending.org/ukgov-finances-cra/region/scotland>. ?obs lso:ukgov-finances-cra-cofog2 <https://openspending.org/ukgov-finances-cra/cofog2/09.6>. ?obs lso:ukgov-finances-cra-from <https://openspending.org/ukgov-finances-cra/from/Dept022>. ?obs lso:ukgov-finances-cra-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "26661.01"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "34",
+      "question": [
+        {
+          "language": "en",
+          "string": "What HTM functions are paid from the department for education the UK?"
+        }
+      ],
+      "query": {
+        "sparql": " select distinct(?function) from <http://linkedspending.aksw.org/ukgov-finances-cra> { ?obs qb:dataSet ls:ukgov-finances-cra. ?obs lso:ukgov-finances-cra-hmt1 ?function. ?obs lso:ukgov-finances-cra-from <https://openspending.org/ukgov-finances-cra/from/Dept047>. }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "function"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "function": {
+                  "type": "uri",
+                  "value": "https://openspending.org/ukgov-finances-cra/hmt1/3-public-order-and-safety"
+                }
+              },
+              {
+                "function": {
+                  "type": "uri",
+                  "value": "https://openspending.org/ukgov-finances-cra/hmt1/1-general-public-services-of-which%3A-public-and-common-services"
+                }
+              },
+              {
+                "function": {
+                  "type": "uri",
+                  "value": "https://openspending.org/ukgov-finances-cra/hmt1/10-social-protection"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "35",
+      "question": [
+        {
+          "language": "en",
+          "string": "What are the activity statuses of basic health care in Urozgan?"
+        }
+      ],
+      "query": {
+        "sparql": " select distinct(?status) from <http://linkedspending.aksw.org/iati_cordaid_af> { ?obs qb:dataSet ls:iati_cordaid_af. ?obs lso:iati_cordaid_af-Unique <https://openspending.org/iati_cordaid_af/Unique/195>. ?obs lso:iati_cordaid_af-Activity_Status ?status. }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "status"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "status": {
+                  "type": "literal",
+                  "value": "Implementation"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "36",
+      "question": [
+        {
+          "language": "en",
+          "string": "What is the total amount of basic nutrition aid by Cordaid in Afghanistan?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) from <http://linkedspending.aksw.org/iati_cordaid_af> { ?obs qb:dataSet ls:iati_cordaid_af. ?obs lso:iati_cordaid_af-Sector <https://openspending.org/iati_cordaid_af/Sector/12240>. ?obs lso:iati_cordaid_af-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "1421532"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "37",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the total Outlook on Technical Services in City of Toronto in 2009?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) from <http://linkedspending.aksw.org/ca-local-toronto> { ?obs qb:dataSet ls:ca-local-toronto. ?obs lso:ca-local-toronto-division \"Technical Services\". ?obs lso:ca-local-toronto-amount ?amount. ?obs lso:refYear ?year. filter(year(?year)=2009). }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "55929294"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "38",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which divisions of the City of Toronto received more than 10000000 canadian dollar in 2010?\n"
+        }
+      ],
+      "query": {
+        "sparql": " select ?division from <http://linkedspending.aksw.org/ca-local-toronto> { ?obs qb:dataSet ls:ca-local-toronto. ?obs lso:ca-local-toronto-division ?division. ?obs lso:ca-local-toronto-amount ?amount. ?obs lso:refYear ?year. filter(year(?year)=2010). } group by ?division having (sum(xsd:decimal(?amount)) > 10000000)"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "division"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "Technical Services"
+                }
+              },
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "Toronto Environment Office"
+                }
+              },
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "Toronto Building"
+                }
+              },
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "theatres-sony centre"
+                }
+              },
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "TTC Wheel-Trans"
+                }
+              },
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "TTC Conventional"
+                }
+              },
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "Toronto Public Library"
+                }
+              },
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "Toronto Police Service"
+                }
+              },
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "Toronto Parking Authority"
+                }
+              },
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "Toronto Zoo"
+                }
+              },
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "Toronto Water"
+                }
+              },
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "Transportation Services"
+                }
+              },
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "Toronto Public Health"
+                }
+              },
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "Toronto Empl.& Soc. Services"
+                }
+              },
+              {
+                "division": {
+                  "type": "literal",
+                  "value": "Toronto Region Conserv. Auth"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "39",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much did the Sightsavers charity in Ireland pay in total?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/ie_charity_exp> { ?obs qb:dataSet ls:ie_charity_exp. ?obs lso:ie_charity_exp-Charity <https://openspending.org/ie_charity_exp/Charity/15437>. ?obs lso:ie_charity_exp-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "5184059"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "40",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much money does the Special Olympics Ireland charity spend on generating funds?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/ie_charity_exp> { ?obs qb:dataSet ls:ie_charity_exp. ?obs lso:ie_charity_exp-Charity <https://openspending.org/ie_charity_exp/Charity/7556>. ?obs lso:ie_charity_exp-Level3 <https://openspending.org/ie_charity_exp/Level3/b1-5100>. ?obs lso:ie_charity_exp-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "967137"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "41",
+      "question": [
+        {
+          "language": "en",
+          "string": "What is the frontex budget for administrative expenditure?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/frontex> { ?obs qb:dataSet ls:frontex. ?obs lso:frontex-Heading <https://openspending.org/frontex/Heading/a-2>. ?obs lso:frontex-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "79229434"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "42",
+      "question": [
+        {
+          "language": "en",
+          "string": "What is the average frontex budget chapter budget?"
+        }
+      ],
+      "query": {
+        "sparql": " select avg(?sum) { select ?chapter sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/frontex> { ?obs qb:dataSet ls:frontex. ?obs lso:frontex-Chapter ?chapter. ?obs lso:frontex-amount ?amount. } }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "28813314.666666666666667"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "43",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the largest amount spent on housing and building in the Dublin City Council Expenditure Budget of 2013?"
+        }
+      ],
+      "query": {
+        "sparql": " select max(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/dcc_exp_budget2013> { ?obs qb:dataSet ls:dcc_exp_budget2013. ?obs lso:dcc_exp_budget2013-Division <https://openspending.org/dcc_exp_budget2013/Division/a>. ?obs lso:dcc_exp_budget2013-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "43349145"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "44",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much was the budget amount of the Dublin City Council in 2013?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/dcc_exp_budget2013> { ?obs qb:dataSet ls:dcc_exp_budget2013. ?obs lso:dcc_exp_budget2013-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "811602391"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "45",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much financial crisis aid did Austria receive in Guaranetees?\n"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/financial_aid> { ?obs qb:dataSet ls:financial_aid. ?obs lso:financial_aid-amount ?amount. ?obs lso:financial_aid-country <https://openspending.org/financial_aid/country/austria>. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "27.11"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "46",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much financial crisis aid did Belgium receive in the year of 2011?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/financial_aid> { ?obs qb:dataSet ls:financial_aid. ?obs lso:financial_aid-amount ?amount. ?obs lso:financial_aid-country <https://openspending.org/financial_aid/country/belgium>. ?obs lso:refYear ?year. filter(year(?year)=2011). }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "72.36"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "47",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much was charity spending was expended for charitable activities in Bangladesh?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/concern2012> { ?obs qb:dataSet ls:concern2012. ?obs lso:concern2012-Level1 <https://openspending.org/concern2012/Level1/expended>. ?obs lso:concern2012-Level3 <https://openspending.org/concern2012/Level3/charitable-activities>. ?obs lso:concern2012-Level4 <https://openspending.org/concern2012/Level4/bangladesh>. ?obs lso:concern2012-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "8604000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "48",
+      "question": [
+        {
+          "language": "en",
+          "string": "What is the total cost of generating funds for public appeals events?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/concern2012> { ?obs qb:dataSet ls:concern2012. ?obs lso:concern2012-Level3 <https://openspending.org/concern2012/Level3/costs-of-generating-funds>. ?obs lso:concern2012-Level4 <https://openspending.org/concern2012/Level4/public-appeals-events>. ?obs lso:concern2012-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "7454000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "49",
+      "question": [
+        {
+          "language": "en",
+          "string": "What is the amount given by the Department of Health to VWR International LLC?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/dc-vendors-contractors> { ?obs qb:dataSet ls:dc-vendors-contractors. ?obs lso:dc-vendors-contractors-from <https://openspending.org/dc-vendors-contractors/from/department-of-health>. ?obs lso:dc-vendors-contractors-to <https://openspending.org/dc-vendors-contractors/to/vwr-international-llc>. ?obs lso:dc-vendors-contractors-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "119244.78"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "50",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much was given in total to the Riverside Publishing vendor for educational purposes."
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/dc-vendors-contractors> { ?obs qb:dataSet ls:dc-vendors-contractors. ?obs lso:dc-vendors-contractors-objecttitle <https://openspending.org/dc-vendors-contractors/objecttitle/educational>. ?obs lso:dc-vendors-contractors-to <https://openspending.org/dc-vendors-contractors/to/the-riverside-publishing>. ?obs lso:dc-vendors-contractors-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "58035.86"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "51",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the highest amount for materials and supplies used in Cameroon in 2008?"
+        }
+      ],
+      "query": {
+        "sparql": " select max(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/cameroon_visualisation> { ?obs qb:dataSet ls:cameroon_visualisation. ?obs lso:cameroon_visualisation-head_account <https://openspending.org/cameroon_visualisation/head_account/610-xxx>. ?obs lso:cameroon_visualisation-amount ?amount. ?obs lso:refYear ?year. filter(year(?year)=2008). }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "7000000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "52",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much is the total expenditure of the Tigerne Council in Cameroon?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/cameroon_visualisation> { ?obs qb:dataSet ls:cameroon_visualisation. ?obs lso:cameroon_visualisation-revenue_expenditure \"EXPENDITURE\". ?obs lso:cameroon_visualisation-council_name <https://openspending.org/cameroon_visualisation/council_name/tignere-council>. ?obs lso:cameroon_visualisation-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "695082664"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "53",
+      "question": [
+        {
+          "language": "en",
+          "string": "When did London get Nominet Trust funding?"
+        }
+      ],
+      "query": {
+        "sparql": " select distinct(?date) from <http://linkedspending.aksw.org/nominettrust_funding> { ?obs qb:dataSet ls:nominettrust_funding. ?obs lso:nominettrust_funding-region <https://openspending.org/nominettrust_funding/region/london>. ?obs lso:refDate ?date. }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "date"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2012-11-20"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2010-02-15"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2012-05-10"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2013-08-05"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2011-08-09"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2009-11-24"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2012-02-13"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2011-05-16"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2010-08-02"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2010-05-17"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2010-11-15"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2013-09-30"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2009-05-21"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2013-12-04"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2011-11-14"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2013-04-19"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2009-02-12"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2011-02-14"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2012-07-30"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2009-08-11"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2013-02-26"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "54",
+      "question": [
+        {
+          "language": "en",
+          "string": "When did the Web in Society programme get Nominet Trust funding?"
+        }
+      ],
+      "query": {
+        "sparql": " select distinct(?date) from <http://linkedspending.aksw.org/nominettrust_funding> { ?obs qb:dataSet ls:nominettrust_funding. ?obs lso:nominettrust_funding-programme <https://openspending.org/nominettrust_funding/programme/web-in-society>. ?obs lso:refDate ?date. }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "date"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2009-11-24"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2012-05-10"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2012-02-13"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2011-05-16"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2010-08-02"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2011-02-14"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2009-05-21"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2011-11-14"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2009-02-12"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2010-02-15"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2011-08-09"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2010-11-15"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2010-05-17"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "55",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much did Armenia spent in 2009 on general public services?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/618ac3ec98384f44a9ef142356ce476d> { ?obs qb:dataSet ls:618ac3ec98384f44a9ef142356ce476d. ?obs lso:618ac3ec98384f44a9ef142356ce476d-cofog1 <https://openspending.org/618ac3ec98384f44a9ef142356ce476d/cofog1/01>. ?obs lso:618ac3ec98384f44a9ef142356ce476d-amount ?amount. ?obs lso:refYear ?year. filter(year(?year)=2009). }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "113006558300"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "question": [
+        {
+          "language": "en",
+          "string": "What are the budgetary classifications of running expenses in Armenia?"
+        }
+      ],
+      "query": {
+        "sparql": " select distinct(?type) from <http://linkedspending.aksw.org/618ac3ec98384f44a9ef142356ce476d> { ?obs qb:dataSet ls:618ac3ec98384f44a9ef142356ce476d. ?obs lso:618ac3ec98384f44a9ef142356ce476d-type ?type. ?obs lso:618ac3ec98384f44a9ef142356ce476d-economiclevel1 \"Running expenses\". }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "type"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "type": {
+                  "type": "literal",
+                  "value": "non-personnel"
+                }
+              },
+              {
+                "type": {
+                  "type": "literal",
+                  "value": "personnel"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "57",
+      "question": [
+        {
+          "language": "en",
+          "string": "In Nigerias proposed budget of 2013, how much is assigned to total overhead costs?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/propbudg13> { ?obs qb:dataSet ls:propbudg13. ?obs lso:propbudg13-to <https://openspending.org/propbudg13/to/total-overhead-cost>. ?obs lso:propbudg13-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "233617763477"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "58",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much did Nigernian Ministry of Petroleum Resources receive from ministries and department agencies?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/propbudg13> { ?obs qb:dataSet ls:propbudg13. ?obs lso:propbudg13-from <https://openspending.org/propbudg13/from/ministries-and-department-agencies>. ?obs lso:propbudg13-recipient <https://openspending.org/propbudg13/recipient/ministry-of-petroleum-resources>. ?obs lso:propbudg13-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "60834291536"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "59",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much did the New York City Council Members give to the Gun Hill Basketball Association?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/nyc-council-member-items> { ?obs qb:dataSet ls:nyc-council-member-items. ?obs lso:nyc-council-member-items-to <https://openspending.org/nyc-council-member-items/to/gun-hill-basketball-association-inc>. ?obs lso:nyc-council-member-items-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "15000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "60",
+      "question": [
+        {
+          "language": "en",
+          "string": "In how many years did Dickens give money to American Performing Arts Collaborative, Inc.?"
+        }
+      ],
+      "query": {
+        "sparql": " select count(distinct(year(?year))) as ?years from <http://linkedspending.aksw.org/nyc-council-member-items> { ?obs qb:dataSet ls:nyc-council-member-items. ?obs lso:nyc-council-member-items-from <https://openspending.org/nyc-council-member-items/from/dickens>. ?obs lso:nyc-council-member-items-to <https://openspending.org/nyc-council-member-items/to/american-performing-arts-collaborative-inc>. ?obs lso:refYear ?year. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "years"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "years": {
+                  "type": "literal",
+                  "value": "1"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "61",
+      "question": [
+        {
+          "language": "en",
+          "string": "How high were the service support costs of the Fingal County Council Expenditure Budget of 2011?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/fingal_exp_budget> { ?obs qb:dataSet ls:fingal_exp_budget. ?obs lso:fingal_exp_budget-ref2-desc \"Service Support Costs\". ?obs lso:fingal_exp_budget-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "208379400"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "62",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the lowest amount for the veterinary service in the Fingal County Council expenditure budget?\n"
+        }
+      ],
+      "query": {
+        "sparql": " select min(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/fingal_exp_budget> { ?obs qb:dataSet ls:fingal_exp_budget. ?obs lso:fingal_exp_budget-Service <https://openspending.org/fingal_exp_budget/Service/g04>. ?obs lso:fingal_exp_budget-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "0"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "63",
+      "question": [
+        {
+          "language": "en",
+          "string": "What is the total investment budget for basic education in Mezam, Cameroon?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/cm-nwr-investments> { ?obs qb:dataSet ls:cm-nwr-investments. ?obs lso:cm-nwr-investments-area <https://openspending.org/cm-nwr-investments/area/mezam>. ?obs lso:cm-nwr-investments-chapter <https://openspending.org/cm-nwr-investments/chapter/15>. ?obs lso:cm-nwr-investments-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "755400000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "64",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which areas in Cameroon had an investment budget of more than 5 billion CFA in 2010?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?area from <http://linkedspending.aksw.org/cm-nwr-investments> { ?obs qb:dataSet ls:cm-nwr-investments. ?obs lso:cm-nwr-investments-area ?area. ?obs lso:cm-nwr-investments-amount ?amount. } group by ?area having (sum(xsd:decimal(?amount))>5000000000)"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "area"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "area": {
+                  "type": "uri",
+                  "value": "https://openspending.org/cm-nwr-investments/area/regional-services"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "65",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much money was given to works and transport in the Ugandan budget?\n"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/ug_budget_subcategories> { ?obs qb:dataSet ls:ug_budget_subcategories. ?obs lso:ug_budget_subcategories-to <https://openspending.org/ug_budget_subcategories/to/works-and-transport>. ?obs lso:ug_budget_subcategories-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "5157.1"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "66",
+      "question": [
+        {
+          "language": "en",
+          "string": "In which years did the Uganda budget contain money for Education?"
+        }
+      ],
+      "query": {
+        "sparql": " select distinct(year(?year)) as ?year from <http://linkedspending.aksw.org/ug_budget_subcategories> { ?obs qb:dataSet ls:ug_budget_subcategories. ?obs lso:ug_budget_subcategories-to <https://openspending.org/ug_budget_subcategories/to/education>. ?obs lso:ug_budget_subcategories-amount ?amount. ?obs lso:refYear ?year. }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "year"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "2000"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "2002"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "2001"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "2003"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "2012"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "1999"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "2010"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "1996"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "1997"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "2005"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "1994"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "2007"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "2013"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "2011"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "1995"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "2009"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "1998"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "2008"
+                }
+              },
+              {
+                "year": {
+                  "type": "literal",
+                  "value": "2004"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "67",
+      "question": [
+        {
+          "language": "en",
+          "string": "How many donor entities provided foreign aid for Typhoon Yolanda?"
+        }
+      ],
+      "query": {
+        "sparql": " select count(distinct(?entity)) from <http://linkedspending.aksw.org/faith> { ?obs qb:dataSet ls:faith. ?obs lso:faith-target <https://openspending.org/faith/target/typhoon-yolanda>. ?obs lso:faith-from ?entity. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "59"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "68",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much foreign aid went over the Red Cross from China?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/faith> { ?obs qb:dataSet ls:faith. ?obs lso:faith-conduit <https://openspending.org/faith/conduit/red-cross>. ?obs lso:faith-from <https://openspending.org/faith/from/china>. ?obs lso:faith-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "100000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "69",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which type of sector is receiving the most Finland foreign aid in India?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?result { ?obs lso:finland-aid-recipient-country <https://openspending.org/finland-aid/recipient-country/in>. ?obs lso:finland-aid-amount ?amount. ?obs lso:finland-aid-sector ?result. } order by desc(sum(xsd:decimal(?amount))) limit 1"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "result"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "result": {
+                  "type": "uri",
+                  "value": "https://openspending.org/finland-aid/sector/16050"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "70",
+      "question": [
+        {
+          "language": "en",
+          "string": "What types of foreign aid from Finland did Belarus receive in 2011?"
+        }
+      ],
+      "query": {
+        "sparql": " select distinct(?result) { ?obs lso:finland-aid-recipient-country <https://openspending.org/finland-aid/recipient-country/by>. ?obs lso:finland-aid-type-of-aid ?result. ?obs lso:refYear ?year. filter(year(?year)=2011). }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "result"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "result": {
+                  "type": "literal",
+                  "value": "C01"
+                }
+              },
+              {
+                "result": {
+                  "type": "literal",
+                  "value": "G01"
+                }
+              },
+              {
+                "result": {
+                  "type": "literal",
+                  "value": "B01"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "71",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the proposed City of Providence budget amount for City Courts by the Muncipal Court?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/pvd2014proposed> { ?obs qb:dataSet ls:pvd2014proposed. ?obs lso:pvd2014proposed-acct-dept \"101-106: Muncipal Court\". ?obs lso:pvd2014proposed-acct-div \"City Courts\". ?obs lso:pvd2014proposed-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "1998521"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "72",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much was the City of Providence budget for educational materials?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/pvd2014proposed> { ?obs qb:dataSet ls:pvd2014proposed. ?obs lso:pvd2014proposed-gl-account \"54625: EDUCATIONAL MATERIALS\". ?obs lso:pvd2014proposed-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "10000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "73",
+      "question": [
+        {
+          "language": "en",
+          "string": "When was upgrading and greening in ward 49 paid?"
+        }
+      ],
+      "query": {
+        "sparql": " select distinct(?date) from <http://linkedspending.aksw.org/pbw-ct> { ?obs qb:dataSet ls:pbw-ct. ?obs lso:pbw-ct-Category <https://openspending.org/pbw-ct/Category/upgrading-and-greening-in-ward-49>. ?obs lso:refDate ?date. }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "date"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2014-06-01"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "74",
+      "question": [
+        {
+          "language": "en",
+          "string": "What are the funding sources for Cape Town Electricity?"
+        }
+      ],
+      "query": {
+        "sparql": " select distinct(?source) from <http://linkedspending.aksw.org/pbw-ct> { ?obs qb:dataSet ls:pbw-ct. ?obs lso:pbw-ct-Department <https://openspending.org/pbw-ct/Department/cape-town-electricity>. ?obs lso:pbw-ct-FundingSource ?source. }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "source"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "source": {
+                  "type": "uri",
+                  "value": "https://openspending.org/pbw-ct/FundingSource/eff"
+                }
+              },
+              {
+                "source": {
+                  "type": "uri",
+                  "value": "https://openspending.org/pbw-ct/FundingSource/cgd"
+                }
+              },
+              {
+                "source": {
+                  "type": "uri",
+                  "value": "https://openspending.org/pbw-ct/FundingSource/crr"
+                }
+              },
+              {
+                "source": {
+                  "type": "uri",
+                  "value": "https://openspending.org/pbw-ct/FundingSource/revenue"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "75",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which investor type using CKAN technology received the most funding?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?type from <http://linkedspending.aksw.org/trends_in_civi_tech_open_gov> { ?obs qb:dataSet ls:trends_in_civi_tech_open_gov. ?obs lso:trends_in_civi_tech_open_gov-tech \"CKAN\". ?obs lso:trends_in_civi_tech_open_gov-amount ?amount. ?obs lso:trends_in_civi_tech_open_gov-investor_type ?type. } order by desc(sum(xsd:decimal(?amount))) limit 1"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "type"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "type": {
+                  "type": "literal",
+                  "value": "Financial"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "76",
+      "question": [
+        {
+          "language": "en",
+          "string": "When did Pew Charitable Trust invest?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?date from <http://linkedspending.aksw.org/trends_in_civi_tech_open_gov> { ?obs qb:dataSet ls:trends_in_civi_tech_open_gov. ?obs lso:trends_in_civi_tech_open_gov-from <https://openspending.org/trends_in_civi_tech_open_gov/from/pew-charitable-trust>. ?obs lso:refDate ?date. }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "date"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2012-01-01"
+                }
+              },
+              {
+                "date": {
+                  "type": "literal",
+                  "value": "2011-01-01"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "77",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much did Armenia spend in 2006 for buildings and edifices?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/e27f4ef7601446798cfa733a06cea8d9> { ?obs qb:dataSet ls:e27f4ef7601446798cfa733a06cea8d9. ?obs lso:e27f4ef7601446798cfa733a06cea8d9-economiclevel3 \"Buildings and edifices\". ?obs lso:e27f4ef7601446798cfa733a06cea8d9-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "74477299640"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "78",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which were the admins for personal and catering materials in Armenia in 2006?"
+        }
+      ],
+      "query": {
+        "sparql": " select distinct(?admin) from <http://linkedspending.aksw.org/e27f4ef7601446798cfa733a06cea8d9> { ?obs qb:dataSet ls:e27f4ef7601446798cfa733a06cea8d9. ?obs lso:e27f4ef7601446798cfa733a06cea8d9-economic <https://openspending.org/e27f4ef7601446798cfa733a06cea8d9/economic/4267>. ?obs lso:e27f4ef7601446798cfa733a06cea8d9-from ?admin. }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "admin"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "admin": {
+                  "type": "uri",
+                  "value": "https://openspending.org/e27f4ef7601446798cfa733a06cea8d9/from/104013"
+                }
+              },
+              {
+                "admin": {
+                  "type": "uri",
+                  "value": "https://openspending.org/e27f4ef7601446798cfa733a06cea8d9/from/105019"
+                }
+              },
+              {
+                "admin": {
+                  "type": "uri",
+                  "value": "https://openspending.org/e27f4ef7601446798cfa733a06cea8d9/from/104003"
+                }
+              },
+              {
+                "admin": {
+                  "type": "uri",
+                  "value": "https://openspending.org/e27f4ef7601446798cfa733a06cea8d9/from/105018"
+                }
+              },
+              {
+                "admin": {
+                  "type": "uri",
+                  "value": "https://openspending.org/e27f4ef7601446798cfa733a06cea8d9/from/104021"
+                }
+              },
+              {
+                "admin": {
+                  "type": "uri",
+                  "value": "https://openspending.org/e27f4ef7601446798cfa733a06cea8d9/from/105014"
+                }
+              },
+              {
+                "admin": {
+                  "type": "uri",
+                  "value": "https://openspending.org/e27f4ef7601446798cfa733a06cea8d9/from/104016"
+                }
+              },
+              {
+                "admin": {
+                  "type": "uri",
+                  "value": "https://openspending.org/e27f4ef7601446798cfa733a06cea8d9/from/104002"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "79",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much was spent on public utilities in Armenia in 2007?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/f0bd947d9854445987d6ece304840a3c> { ?obs qb:dataSet ls:f0bd947d9854445987d6ece304840a3c. ?obs lso:f0bd947d9854445987d6ece304840a3c-economic <https://openspending.org/f0bd947d9854445987d6ece304840a3c/economic/4213>. ?obs lso:f0bd947d9854445987d6ece304840a3c-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "363841000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "80",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the total cost of running expenses for Armenia in 2007?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/f0bd947d9854445987d6ece304840a3c> { ?obs qb:dataSet ls:f0bd947d9854445987d6ece304840a3c. ?obs lso:f0bd947d9854445987d6ece304840a3c-economiclevel1 \"Running expenses\". ?obs lso:f0bd947d9854445987d6ece304840a3c-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "500411548000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "81",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the total Scottish Government expenditure of 2013-01-09?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/scottish-spending-jan13> { ?obs qb:dataSet ls:scottish-spending-jan13. ?obs lso:scottish-spending-jan13-amount ?amount. ?obs lso:refDate ?date. filter(strstarts(str(?date), \"2013-01-09\")). }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "3512450.46"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "82",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the smallest amount expended for Environment and Forestry by the Scottish Government in January of 2013?"
+        }
+      ],
+      "query": {
+        "sparql": " select min(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/scottish-spending-jan13> { ?obs qb:dataSet ls:scottish-spending-jan13. ?obs lso:scottish-spending-jan13-amount ?amount. ?obs lso:scottish-spending-jan13-directorate \"Environment and Forestry\". }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "26460"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "83",
+      "question": [
+        {
+          "language": "en",
+          "string": "In which year did the City of Oakland have the highest total expenditure budget?"
+        }
+      ],
+      "query": {
+        "sparql": " select year(?year) from <http://linkedspending.aksw.org/oakland-adopted-budget-fy-2011-13-expenditures> { ?obs qb:dataSet ls:oakland-adopted-budget-fy-2011-13-expenditures. ?obs lso:oakland-adopted-budget-fy-2011-13-expenditures-amount ?amount. ?obs lso:refYear ?year. } order by desc(sum(xsd:decimal(?amount))) limit 1"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "2011"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "84",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the total City of Oakland budget for the Administrative Unit in 2012?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/oakland-adopted-budget-fy-2011-13-expenditures> { ?obs qb:dataSet ls:oakland-adopted-budget-fy-2011-13-expenditures. ?obs lso:oakland-adopted-budget-fy-2011-13-expenditures-unit \"Administrative Unit\". ?obs lso:oakland-adopted-budget-fy-2011-13-expenditures-amount ?amount. ?obs lso:refYear ?year. filter(year(?year)=2011) }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "1136233"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "85",
+      "question": [
+        {
+          "language": "en",
+          "string": "How high was the recurrent expenditure for the Sierra Leona Government budget in 2013?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/allexp13budg> { ?obs qb:dataSet ls:allexp13budg. ?obs lso:allexp13budg-level0 \"RECURRENT EXPENDITURE\". ?obs lso:allexp13budg-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "2004442.3"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "86",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much was budgeted for general services for the Office of the President of Sierra Leona in 2013?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/allexp13budg> { ?obs qb:dataSet ls:allexp13budg. ?obs lso:allexp13budg-level1 \"GENERAL SERVICES\". ?obs lso:allexp13budg-level2 \"Office of the President\". ?obs lso:allexp13budg-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "13136"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "87",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which clients received lobbying contributions of more than 50000000 $?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?client sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/lobbying_dataset_qy> { ?obs qb:dataSet ls:lobbying_dataset_qy. ?obs lso:lobbying_dataset_qy-client ?client. ?obs lso:lobbying_dataset_qy-amount ?amount. } group by ?client having sum(xsd:decimal(?amount))>50000000"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "client",
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "client": {
+                  "type": "literal",
+                  "value": "Blue Cross/Blue Shield"
+                },
+                "sum": {
+                  "type": "literal",
+                  "value": "56279484"
+                }
+              },
+              {
+                "client": {
+                  "type": "literal",
+                  "value": "General Electric"
+                },
+                "sum": {
+                  "type": "literal",
+                  "value": "57460000"
+                }
+              },
+              {
+                "client": {
+                  "type": "literal",
+                  "value": "National Assn of Realtors"
+                },
+                "sum": {
+                  "type": "literal",
+                  "value": "81502333"
+                }
+              },
+              {
+                "client": {
+                  "type": "literal",
+                  "value": "US Chamber of Commerce"
+                },
+                "sum": {
+                  "type": "literal",
+                  "value": "238680000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "88",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which industry received the most lobbying contributions?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?industry from <http://linkedspending.aksw.org/lobbying_dataset_qy> { ?obs qb:dataSet ls:lobbying_dataset_qy. ?obs lso:lobbying_dataset_qy-industry ?industry. ?obs lso:lobbying_dataset_qy-amount ?amount. } order by desc(sum(xsd:decimal(?amount))) limit 1"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "industry"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "industry": {
+                  "type": "literal",
+                  "value": "Pharmaceuticals/Health Products"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "89",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much did the Manchester City Council give for  Learning Disabilities to SLC Paragon?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/mcc_spend> { ?obs qb:dataSet ls:mcc_spend. ?obs lso:mcc_spend-amount ?amount. ?obs lso:mcc_spend-supplier-name \"SLC Paragon\". }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "536508.51"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "90",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which service areas do the Manchester City Council spendings contain?"
+        }
+      ],
+      "query": {
+        "sparql": " select distinct(?area) from <http://linkedspending.aksw.org/mcc_spend> { ?obs qb:dataSet ls:mcc_spend. ?obs lso:mcc_spend-service-area ?area. }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "area"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Corporate Services"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Adult Social Care"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Regeneration Finance"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Hospitality + Trading Services"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Housing General Fund"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Environment and Operations"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Childrens Services"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Chief Executives"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Libraries and Theatres"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Manchester Leisure"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Housing Revenue Account"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Learning Disabilities PB"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Section 48"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "GMIST (Greater Mcr Integrated)"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Insurance Fund"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Mersey Valley Joint Committee"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Mental Health Pooled Budget"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "General Fund"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Specialist Trading Standards"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "AGMA New Economy"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Investment Core Strategy"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Leasing"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Grtr Manchester County Records"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Collection Fund"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Nuclear Free Zones"
+                }
+              },
+              {
+                "area": {
+                  "type": "literal",
+                  "value": "Highways Services"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "91",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much was Albanias 2013 budget for education?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/alb_planned_budget_2013> { ?obs qb:dataSet ls:alb_planned_budget_2013. ?obs lso:alb_planned_budget_2013-cofog1 <https://openspending.org/alb_planned_budget_2013/cofog1/09>. ?obs lso:alb_planned_budget_2013-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "39093100000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "92",
+      "question": [
+        {
+          "language": "en",
+          "string": "What are the identification numbers of housing and community amenities in Albanias 2013 budget?"
+        }
+      ],
+      "query": {
+        "sparql": " select distinct(?id) from <http://linkedspending.aksw.org/alb_planned_budget_2013> { ?obs qb:dataSet ls:alb_planned_budget_2013. ?obs lso:alb_planned_budget_2013-cofog1 <https://openspending.org/alb_planned_budget_2013/cofog1/06>. ?obs lso:alb_planned_budget_2013-UniqueID ?id. }"
+      },
+      "aggregation": false,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "id"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "id": {
+                  "type": "literal",
+                  "value": "6"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "93",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the total Kenya County Expenditure in Kiambu by the Thika administration?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/ke-county-exp> { ?obs qb:dataSet ls:ke-county-exp. ?obs lso:ke-county-exp-administration <https://openspending.org/ke-county-exp/administration/thika>. ?obs lso:ke-county-exp-county <https://openspending.org/ke-county-exp/county/kiambu>. ?obs lso:ke-county-exp-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "2890096965"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "94",
+      "question": [
+        {
+          "language": "en",
+          "string": "Which Kenya country administration had the highest expenditure budget?"
+        }
+      ],
+      "query": {
+        "sparql": " select ?admin from <http://linkedspending.aksw.org/ke-county-exp> { ?obs qb:dataSet ls:ke-county-exp. ?obs lso:ke-county-exp-administration ?admin. ?obs lso:ke-county-exp-amount ?amount. } order by desc(sum(xsd:decimal(?amount))) limit 1 "
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "admin"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "admin": {
+                  "type": "uri",
+                  "value": "https://openspending.org/ke-county-exp/administration/nairobi-city-council"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "95",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the Albania budget for public order and safety in 2007?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/al_planned_budget_2007to2013> { ?obs qb:dataSet ls:al_planned_budget_2007to2013. ?obs lso:al_planned_budget_2007to2013-cofog1 <https://openspending.org/al_planned_budget_2007to2013/cofog1/public-order-and-safety>. ?obs lso:refYear ?year. filter(year(?year)=2007). ?obs lso:al_planned_budget_2007to2013-amount ?amount. } "
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "16847381000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "96",
+      "question": [
+        {
+          "language": "en",
+          "string": "What was the combined Albania budget for health from 2007 to 2010?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/al_planned_budget_2007to2013> { ?obs qb:dataSet ls:al_planned_budget_2007to2013. ?obs lso:al_planned_budget_2007to2013-cofog1 <https://openspending.org/al_planned_budget_2007to2013/cofog1/health>. ?obs lso:al_planned_budget_2007to2013-amount ?amount. ?obs lso:refYear ?year. filter((year(?year)>=2007)&&year(?year)<=2010) } "
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "127536838000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "97",
+      "question": [
+        {
+          "language": "en",
+          "string": "What is the external debt amount of Kwara?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/external-debts> { ?obs qb:dataSet ls:external-debts. ?obs lso:external-debts-to <https://openspending.org/external-debts/to/kwara>. ?obs lso:external-debts-amount ?amount. } "
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "163020905.38"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "98",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much external debt did rivers have in 2010?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/external-debts> { ?obs qb:dataSet ls:external-debts. ?obs lso:external-debts-to <https://openspending.org/external-debts/to/rivers>. ?obs lso:external-debts-amount ?amount. ?obs lso:refYear ?year. filter(year(?year)=2010) } "
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "35508206.25"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "99",
+      "question": [
+        {
+          "language": "en",
+          "string": "How many admins were responsible for mandatory payments in the Armenian approved budget of 2010?"
+        }
+      ],
+      "query": {
+        "sparql": " select count(distinct(?admin)) from <http://linkedspending.aksw.org/ddc94682cc95482a8deefc60596686fc> { ?obs qb:dataSet ls:ddc94682cc95482a8deefc60596686fc. ?obs lso:ddc94682cc95482a8deefc60596686fc-economic <https://openspending.org/ddc94682cc95482a8deefc60596686fc/economic/4823>. ?obs lso:ddc94682cc95482a8deefc60596686fc-from ?admin. } "
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "callret-0"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "callret-0": {
+                  "type": "literal",
+                  "value": "36"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "100",
+      "question": [
+        {
+          "language": "en",
+          "string": "How much total running expenses under budgetary classification did the Armenian approved budget of 2010 have?"
+        }
+      ],
+      "query": {
+        "sparql": " select sum(xsd:decimal(?amount)) as ?sum from <http://linkedspending.aksw.org/ddc94682cc95482a8deefc60596686fc> { ?obs qb:dataSet ls:ddc94682cc95482a8deefc60596686fc. ?obs lso:ddc94682cc95482a8deefc60596686fc-economiclevel1 \"Running expenses\". ?obs lso:ddc94682cc95482a8deefc60596686fc-type \"personnel\". ?obs lso:ddc94682cc95482a8deefc60596686fc-amount ?amount. }"
+      },
+      "aggregation": true,
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "sum"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "sum": {
+                  "type": "literal",
+                  "value": "68583483000"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
