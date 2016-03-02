@@ -53,7 +53,7 @@ public class QALD_Loader {
 			return ClassLoader.getSystemClassLoader().getResource("QALD-5/qald-5_test.xml");
 		case QALD6_Train_Hybrid:
 			return ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-hybrid.json");
-		case QALD6_Train_Multi:
+		case QALD6_Train_Multilingual:
 			return ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-multilingual.json");
 		case QALD6_Train_Datacube:
 			return ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-datacube.json");
@@ -74,6 +74,7 @@ public class QALD_Loader {
 		try {
 			InputStream is = null;
 			is = getInputStream(data);
+			//TODO decide whether the stream is an XML or a JSON file
 			List<IQuestion> ret = loadXML(is);
 			is.close();
 			return ret;
