@@ -274,12 +274,12 @@ public class QALD_Loader {
 		}
 
 		// TODO: Jonathan: What is going on here?
-		boolean b = true;
+		boolean unanswered = false; //flag for Debug Message
 		for (IQuestion k : output) {
 			if (k.getGoldenAnswers().isEmpty()) {
-				if (b) {
-					System.out.println("Following Questions (id) have no attached answers: ");
-					b = false;
+				if (!unanswered) { 
+					System.out.println("Following Questions (id) have no attached answers:");
+					unanswered = true;
 				}
 				System.out.print(k.getId() + ", ");
 			}

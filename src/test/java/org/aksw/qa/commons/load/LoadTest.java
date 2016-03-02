@@ -28,7 +28,7 @@ public class LoadTest {
 			Assert.assertTrue(q.getGoldenAnswers() != null && q.getAnswerType().matches("resource||boolean||number||date||string"));
 		}
 	}
-	//TODO write tests to load each dataset
+	
 	@Test
 	// TODO use small snippets of test files under src/test/resources instead of
 	// qa-datasets so we can get rid of the dependency
@@ -39,23 +39,25 @@ public class LoadTest {
 		Assert.assertTrue(load.size() == 350);
 		List<Integer>incompletes=Arrays.asList(100, 118, 136, 137, 147, 152, 94, 95, 96, 97, 98, 99, 249, 250, 312, 340, 342);
 		for (IQuestion q : load) {
+			System.out.print("Testing: "+q.getId()+"\t");
 			Assert.assertTrue(q.getId() > 0);
 			Assert.assertNotNull(q.getAnswerType());
-			Assert.assertTrue(q.getGoldenAnswers() != null && q.getAnswerType().matches("resource||boolean||number||date||string||list||uri"));
+			Assert.assertTrue(q.getGoldenAnswers() != null && q.getAnswerType().matches("resource||boolean||number||date||string"));
 			Assert.assertNotNull(q.getLanguageToQuestion());
 			Assert.assertFalse(q.getLanguageToQuestion().values().isEmpty());
 			Assert.assertNotNull(q.getLanguageToKeywords());
+			
 			//skipping Answer on known incompletes:
 			if (!incompletes.contains(q.getId()))
 			{
-				System.out.println("Testing: "+q.getId()+"\t"+q.getLanguageToQuestion().get("en"));
+				
 			
 				Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null);
-				
+				System.out.println(q.getLanguageToQuestion().get("en")+"\t"+"Answer:"+"\t"+q.getSparqlQuery());
 				}
 			else
 			{
-				System.out.println("Skipping known answerless question: "+q.getId()+"\t"+q.getLanguageToQuestion().get("en"));
+				System.out.println(q.getLanguageToQuestion().get("en")+"\t"+"No Answer, known incomplete question.");
 			}
 		}
 	}
