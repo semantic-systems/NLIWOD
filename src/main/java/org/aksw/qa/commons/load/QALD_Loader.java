@@ -81,18 +81,16 @@ public class QALD_Loader {
 			InputStream is = null;
 			is = getInputStream(data);
 			String isURL=getInputStreamURL(data);
+			//decides between xml and json based on URL ending
 			if (isURL.toLowerCase().endsWith("xml")){
 				log.info("Loading XML file ["+isURL+"].");
-				//TODO decide whether the stream is an XML or a JSON file
-				//getInputStream delivers extension - use?
 				List<IQuestion> ret = loadXML(is);
 				is.close();
 				return ret;
 			}
 			if (isURL.toLowerCase().endsWith("json")){
 				log.info("Loading JSON file ["+isURL+"].");
-				//TODO decide whether the stream is an XML or a JSON file
-				//getInputStream delivers extension - use?
+				
 				List<IQuestion> ret = loadJSON(is);
 				is.close(); 
 				return ret;

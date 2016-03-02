@@ -2,6 +2,7 @@ package org.aksw.qa.commons.load;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
@@ -36,16 +37,26 @@ public class LoadTest {
 		//URL url= ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-multilingual.json");
 		List<IQuestion> load = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
 		Assert.assertTrue(load.size() == 350);
+		List<Integer>incompletes=Arrays.asList(100, 118, 136, 137, 147, 152, 94, 95, 96, 97, 98, 99, 249, 250, 312, 340, 342);
 		for (IQuestion q : load) {
 			Assert.assertTrue(q.getId() > 0);
 			Assert.assertNotNull(q.getAnswerType());
+			Assert.assertTrue(q.getGoldenAnswers() != null && q.getAnswerType().matches("resource||boolean||number||date||string||list||uri"));
+			Assert.assertNotNull(q.getLanguageToQuestion());
+			Assert.assertFalse(q.getLanguageToQuestion().values().isEmpty());
+			Assert.assertNotNull(q.getLanguageToKeywords());
+			//skipping Answer on known incompletes:
+			if (!incompletes.contains(q.getId()))
+			{
+				System.out.println("Testing: "+q.getId()+"\t"+q.getLanguageToQuestion().get("en"));
 			
-			//Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null);
-			//Assert.assertNotNull(q.getLanguageToQuestion());
-			//Assert.assertFalse(q.getLanguageToQuestion().values().isEmpty());
-			//Assert.assertNotNull(q.getLanguageToKeywords());
-			System.out.println(q.getId()+"\t"+q.getLanguageToQuestion().get("en"));
-			//Assert.assertTrue(q.getGoldenAnswers() != null && q.getAnswerType().matches("resource||boolean||number||date||string"));
+				Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null);
+				
+				}
+			else
+			{
+				System.out.println("Skipping known answerless question: "+q.getId()+"\t"+q.getLanguageToQuestion().get("en"));
+			}
 		}
 	}
 }

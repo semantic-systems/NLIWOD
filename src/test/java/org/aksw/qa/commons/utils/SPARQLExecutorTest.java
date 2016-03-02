@@ -30,12 +30,11 @@ public class SPARQLExecutorTest {
 		Object[] actual = resources.toArray();
 		Arrays.sort(actual);
 		assertArrayEquals(getGoldenArray1(), actual);
-//TODO Christian der Test schlägt fehl weil die Daten mit den Online Daten nicht übereinstimmen
 		
-//		resources = SPARQLExecutor.executeSelect("SELECT ?o FROM <http://dbpedia.org> {?s <http://dbpedia.org/property/pastMembers> ?o} LIMIT 3 OFFSET 5", "http://dbpedia.org/sparql").getStringSet();
-//		actual = resources.toArray();
-//		Arrays.sort(actual);
-//		assertArrayEquals(getGoldenArray2(), actual);
+		resources = SPARQLExecutor.executeSelect("SELECT ?o FROM <http://dbpedia.org> {?s <http://dbpedia.org/property/pastMembers> ?o} LIMIT 3 OFFSET 100", "http://dbpedia.org/sparql").getStringSet();
+		actual = resources.toArray();
+		Arrays.sort(actual);
+		assertArrayEquals(getGoldenArray2(), actual);
 	}
 
 	@Test
@@ -78,9 +77,9 @@ public class SPARQLExecutorTest {
 
 	private Object[] getGoldenArray2() {
 		String[] ret = new String[3];
-		ret[0] = "\"Taylor Carroll\"@en";
-		ret[1] = "\"Travis Jenkins\"@en";
-		ret[2] = "http://dbpedia.org/resource/Jesse_Wingard";
+		ret[0] = "http://dbpedia.org/resource/Andy_Roberts_(musician)";
+		ret[1] = "http://dbpedia.org/resource/Andy_Shernoff";
+		ret[2] = "http://dbpedia.org/resource/Andy_Williams_(Doves)";
 		Arrays.sort(ret);
 		return ret;
 	}
