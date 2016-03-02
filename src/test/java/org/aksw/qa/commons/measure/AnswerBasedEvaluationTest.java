@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Set;
 
+import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.datastructure.Question;
 import org.aksw.qa.commons.utils.CollectionUtils;
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class AnswerBasedEvaluationTest {
 	public void testTooGenericQuery() {
 
 		Set<String> systemAnswer = tooGenericAnswers();
-		Question question = getQuestion();
+		IQuestion question = getQuestion();
 		double precision = AnswerBasedEvaluation.precision(systemAnswer, question);
 		double recall = AnswerBasedEvaluation.recall(systemAnswer, question);
 		double fMeasure = AnswerBasedEvaluation.fMeasure(systemAnswer, question);
@@ -37,7 +38,7 @@ public class AnswerBasedEvaluationTest {
 	@Test
 	public void testTooSpecificQuery() {
 		Set<String> systemAnswer = tooSpecificAnswers();
-		Question question = getQuestion();
+		IQuestion question = getQuestion();
 		double precision = AnswerBasedEvaluation.precision(systemAnswer, question);
 		double recall = AnswerBasedEvaluation.recall(systemAnswer, question);
 		double fMeasure = AnswerBasedEvaluation.fMeasure(systemAnswer, question);
@@ -83,11 +84,11 @@ public class AnswerBasedEvaluationTest {
 		return ret;
 	}
 
-	private Question getQuestion() {
-		Question q = new Question();
-		q.aggregation = false;
-		q.pseudoSparqlQuery = "SELECT ?pers {?pers <http://dbpedia.org/prop/division> <http://dbpedia.org/DivisionA> . " + " ?pers rdf:type <http://dbpedia.org/prop/worker> }";
-		q.goldenAnswers = getGoldenAnswers();
+	private IQuestion getQuestion() {
+		IQuestion q = new Question();
+		q.setAggregation(false);
+		q.setPseudoSparqlQuery("SELECT ?pers {?pers <http://dbpedia.org/prop/division> <http://dbpedia.org/DivisionA> . " + " ?pers rdf:type <http://dbpedia.org/prop/worker> }");
+		q.setGoldenAnswers(getGoldenAnswers());
 		return q;
 	}
 

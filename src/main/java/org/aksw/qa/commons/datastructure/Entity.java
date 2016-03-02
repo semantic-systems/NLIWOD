@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
+import com.hp.hpl.jena.rdf.model.Resource;
+
 
 /**
  *
@@ -13,10 +14,11 @@ import javax.annotation.Resource;
  */
 public class Entity implements Serializable, Comparable<Entity> {
 
+	//TODO make thos things private
 	private static final long serialVersionUID = 7859357081713774767L;
 	public String label = "";
 	public String type = "";
-
+	public List<Resource> posTypesAndCategories = new ArrayList<Resource>();
 	public List<Resource> uris = new ArrayList<Resource>();
 
 	/**
@@ -27,6 +29,12 @@ public class Entity implements Serializable, Comparable<Entity> {
 	public Entity(String label, String type) {
 		this.label = label;
 		this.type = type;
+	}
+
+	/**
+	* 
+ 	*/
+	public Entity() {
 	}
 
 	/*
@@ -62,6 +70,11 @@ public class Entity implements Serializable, Comparable<Entity> {
 		if (getClass() != obj.getClass())
 			return false;
 		Entity other = (Entity) obj;
+		if (uris.get(0) == null) {
+			if (other.uris.get(0) != null)
+				return false;
+		} else if (!uris.get(0).equals(other.uris.get(0)))
+			return false;
 		if (label == null) {
 			if (other.label != null)
 				return false;
