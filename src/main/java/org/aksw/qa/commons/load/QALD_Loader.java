@@ -43,6 +43,12 @@ public class QALD_Loader {
 		System.out.println(url);
 		return url.openStream();
 	}
+	private static String getInputStreamURL(Dataset set) throws IOException {
+		// Returns Extension for decision on XML/JSON method
+		URL url = mapDatasetToPath(set);
+		
+		return url.toString();
+	}
 
 	private static URL mapDatasetToPath(Dataset set) {
 		System.out.println(set.toString());
@@ -74,10 +80,24 @@ public class QALD_Loader {
 		try {
 			InputStream is = null;
 			is = getInputStream(data);
-			//TODO decide whether the stream is an XML or a JSON file
-			List<IQuestion> ret = loadXML(is);
-			is.close();
-			return ret;
+			String isURL=getInputStreamURL(data);
+			if (isURL.toLowerCase().endsWith("xml")){
+				log.info("Loading XML file ["+isURL+"].");
+				//TODO decide whether the stream is an XML or a JSON file
+				//getInputStream delivers extension - use?
+				List<IQuestion> ret = loadXML(is);
+				is.close();
+				return ret;
+			}
+			if (isURL.toLowerCase().endsWith("json")){
+				log.info("Loading JSON file ["+isURL+"].");
+				//TODO decide whether the stream is an XML or a JSON file
+				//getInputStream delivers extension - use?
+				List<IQuestion> ret = loadJSON(is);
+				is.close(); 
+				return ret;
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
