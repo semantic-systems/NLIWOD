@@ -24,6 +24,7 @@ to analyze:
 * Kaggle AI challenge or in general multiple choice questions (e.g., QALD entrance exams)
 * needs computation: https://github.com/deepmind/rc-data/
 * Federated Queries https://code.google.com/archive/p/fbench/
+* http://talc1.loria.fr/webnlg/stories/deliverables.html
  
 out of scope (?) :
 * http://alt.qcri.org/semeval2015/task3/ SemEval-2015 Task 3: Answer Selection in Community Question Answering 
