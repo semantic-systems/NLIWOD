@@ -37,7 +37,7 @@ public class TrainingPipeline {
 		Pipeline pipeline = new Pipeline();
 
 		log.info("Loading dataset");
-		List<IQuestion> questions = QALD_Loader.load(Dataset.QALD6_Train_Multi);
+		List<IQuestion> questions = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
 
 		double average = 0;
 		double count = 0;

@@ -24,7 +24,7 @@ public class AllSpotterOnQALD4 {
 		QALD_Loader datasetLoader = new QALD_Loader();
 
 		List<IQuestion> questions = datasetLoader.load(Dataset.QALD5_Train);
-		for (HAWKQuestion q : questions) {
+		for (IQuestion q : questions) {
 			log.info(q.getLanguageToQuestion().get("en"));
 			try {
 				for (ASpotter nerdModule : new ASpotter[] { new Spotlight(), new Fox(), new TagMe() }) {

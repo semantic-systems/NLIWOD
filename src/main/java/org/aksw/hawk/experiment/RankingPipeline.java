@@ -35,7 +35,7 @@ public class RankingPipeline {
 		Pipeline pipeline = new Pipeline();
 
 		log.info("Loading dataset");
-		List<IQuestion> questions = QALD_Loader.load(Dataset.QALD6_Train_Multi);
+		List<IQuestion> questions = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
 
 		for (HAWKQuestion q : questions) {
 			if ((q.getHybrid() & q.getAnswerType().equals("resource") & q.getOnlydbo() & !q.getAggregation()) || q.getLoadedAsASKQuery()) {
