@@ -3,6 +3,7 @@ package org.aksw.hawk.datastructures;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.qa.commons.datastructure.IQuestion;
 
 public class HAWKQuestionFactory {
@@ -14,10 +15,14 @@ public class HAWKQuestionFactory {
 		hq.setAnswerType(q.getAnswerType());
 		hq.setPseudoSparqlQuery(q.getPseudoSparqlQuery());
 		hq.setSparqlQuery(q.getSparqlQuery());
-		hq.setAggregation(q.getAggregation());
-		hq.setOnlydbo(q.getOnlydbo());
-		hq.setOutOfScope(q.getOutOfScope());
-		hq.setHybrid(q.getHybrid());
+		hq.setAggregation(Boolean.TRUE.equals(q.getAggregation()));
+		hq.setOnlydbo(Boolean.TRUE.equals(q.getOnlydbo()));
+		hq.setOutOfScope(Boolean.TRUE.equals(q.getOutOfScope()));
+		hq.setHybrid(Boolean.TRUE.equals(q.getHybrid()));
+
+		boolean b = QALD4_EvaluationUtils.isAskType(q.getSparqlQuery());
+		b |= QALD4_EvaluationUtils.isAskType(q.getPseudoSparqlQuery());
+		hq.setLoadedAsASKQuery(b);
 
 		hq.setLanguageToQuestion(q.getLanguageToQuestion());
 		hq.setLanguageToKeywords(q.getLanguageToKeywords());
@@ -32,4 +37,5 @@ public class HAWKQuestionFactory {
 		}
 		return hq;
 	}
+
 }
