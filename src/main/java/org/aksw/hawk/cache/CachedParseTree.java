@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.clearnlp.dependency.DEPTree;
 
-//FIXME delete this class as soon as dependency tree is faster by using other nlp library
+//FIXME interface and test
 public class CachedParseTree {
 	private Logger log = LoggerFactory.getLogger(CachedParseTree.class);
 	private ParseTree parseTree;
