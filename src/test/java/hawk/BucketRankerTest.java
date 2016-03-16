@@ -1,20 +1,10 @@
 package hawk;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
-import org.aksw.hawk.controller.Pipeline;
-import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.experiment.SingleQuestionPipeline;
-import org.aksw.hawk.ranking.BucketRanker;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Joiner;
 
 public class BucketRankerTest {
 
