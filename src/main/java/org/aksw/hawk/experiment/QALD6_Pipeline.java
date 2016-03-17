@@ -45,7 +45,8 @@ public class QALD6_Pipeline {
 		for (HAWKQuestion q : questions) {
 			// TODO refactor this if clause to something like
 			// HAWK.checkSuitability(Question q): boolean
-			if ((q.getAnswerType().equals("resource") & q.getOnlydbo() & !q.getAggregation()) || q.getLoadedAsASKQuery()) {
+			// This ok too?
+			if (q.checkSuitabillity()) {
 				log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
 				List<Answer> answers = pipeline.getAnswersToQuestion(q);
 

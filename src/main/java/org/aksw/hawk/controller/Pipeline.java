@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.aksw.hawk.cache.CachedParseTree;
+import org.aksw.hawk.cache.CachedParseTreeStanford;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTreePruner;
@@ -37,8 +38,8 @@ public class Pipeline {
 		// controller.nerdModule =new TagMe();
 		// controller.nerdModule = new MultiSpotter(fox, tagMe, wiki, spot);
 
-		cParseTree = new CachedParseTree();
-
+		// cParseTree = new CachedParseTreeClearnlp();
+		cParseTree = new CachedParseTreeStanford();
 		cardinality = new Cardinality();
 
 		sentenceToSequence = new SentenceToSequence();
@@ -63,7 +64,8 @@ public class Pipeline {
 
 		// Noun combiner, decrease #nodes in the DEPTree
 		log.info("Noun phrase combination.");
-		// TODO make this method return the combine sequence and work on this, i.e., q.sequence = 	sentenceToSequence.combineSequences(q);
+		// TODO make this method return the combine sequence and work on this,
+		// i.e., q.sequence = sentenceToSequence.combineSequences(q);
 		sentenceToSequence.combineSequences(q);
 
 		// Build trees from questions and cache them
@@ -96,7 +98,8 @@ public class Pipeline {
 			bw.newLine();
 			bw.write(" <tr>     <th>id</th><th>Question</th><th>F-measure</th><th>Precision</th><th>Recall</th><th>Comment</th>  </tr>");
 			for (EvalObj eval : evals) {
-				bw.write(" <tr>    <td>" + eval.getId() + "</td><td>" + eval.getQuestion() + "</td><td>" + eval.getFmax() + "</td><td>" + eval.getPmax() + "</td><td>" + eval.getRmax() + "</td><td>" + eval.getComment() + "</td>  </tr>");
+				bw.write(" <tr>    <td>" + eval.getId() + "</td><td>" + eval.getQuestion() + "</td><td>" + eval.getFmax() + "</td><td>" + eval.getPmax() + "</td><td>" + eval.getRmax() + "</td><td>"
+				        + eval.getComment() + "</td>  </tr>");
 				bw.newLine();
 			}
 			bw.write("</table>");
