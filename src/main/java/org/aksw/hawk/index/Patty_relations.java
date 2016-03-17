@@ -143,6 +143,13 @@ public class Patty_relations {
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage() + " -> " + object, e);
 		}
-		return uris;
+		//filter out distinct singletons from List "uris"
+		ArrayList<String> setUris = new ArrayList<String>();
+		for (String uri : uris) {
+			if (!setUris.contains(uri)) {
+				setUris.add(uri);				
+			}
+		}
+		return setUris;
 	}
 }
