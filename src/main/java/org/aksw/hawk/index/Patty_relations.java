@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.StringField;
@@ -36,7 +37,7 @@ public class Patty_relations {
 	 */
 	
 	private static final Version LUCENE_VERSION = Version.LUCENE_46;
-	private org.slf4j.Logger log = LoggerFactory.getLogger(IndexDBO_classes.class);
+	private org.slf4j.Logger log = LoggerFactory.getLogger(Patty_relations.class);
 	private int numberOfDocsRetrievedFromIndex = 100;
 
 	public String FIELD_NAME_URI = "uri";
@@ -46,7 +47,7 @@ public class Patty_relations {
 	private IndexSearcher isearcher;
 	private DirectoryReader ireader;
 	private IndexWriter iwriter;
-	private SimpleAnalyzer analyzer;
+	private StandardAnalyzer analyzer;
 
 	/*
 	 * Constructor 
@@ -55,7 +56,7 @@ public class Patty_relations {
 	public Patty_relations() {
 		try {
 			File indexDir = new File("resources/puttyRelations");
-			analyzer = new SimpleAnalyzer(LUCENE_VERSION);
+			analyzer = new StandardAnalyzer(LUCENE_VERSION);
 			/*
 			 *  if no index exists, start by creating one:
 			 */
