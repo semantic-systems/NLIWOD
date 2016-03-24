@@ -1,8 +1,8 @@
 #!/bin/bash
 
-wget http://archive.apache.org/dist/jena/binaries/apache-jena-2.12.1.zip
-unzip apache-jena-2.12.1.zip
-rm apache-jena-2.12.1.zip
+wget http://archive.apache.org/dist/jena/binaries/apache-jena-3.0.1.zip
+unzip apache-jena-3.0.1.zip
+rm apache-jena-3.0.1.zip
 
 wget http://archive.apache.org/dist/jena/binaries/jena-fuseki1-1.3.1-distribution.zip
 unzip jena-fuseki1-1.3.1-distribution.zip
@@ -108,3 +108,8 @@ mkdir hawk_data_10-2015_dbpediatbd/
 $APACHE_JENA_BIN/tdbloader2 --loc=hawk_data_10-2015_dbpediatbd dbpedia_2015-10.owl disambiguations_en.ttl instance_types_en.ttl long_abstracts_en.ttl pnd_en.ttl  labels_en.ttl mappingbased_objects_en.ttl mappingbased_literals_en.ttl persondata_en.ttl specific_mappingbased_properties_en.ttl transitive_redirects_en.ttl en_surface_forms.ttl pagerank_en_2015-10.ttl redirect_labels.ttl
 
 java -Xmx16G -cp $JENA_FUSEKI_JAR jena.textindexer --desc=fuseki_hawk_assembler.ttl
+
+
+#Clean up
+
+rm mappingbased_literals_en.ttl redirect_labels.ttl transitive_redirects_en.ttl.sorted join.tsv mappingbased_objects_en.ttl dbpedia_2015-10.owl labels_en.ttl pagerank_en_2015-10.ttl specific_mappingbased_properties_en.ttl disambiguations_en.ttl labels_en.ttl.sorted persondata_en.ttl en_surface_forms.ttl instance_types_en.ttl long_abstracts_en.ttl pnd_en.ttl transitive_redirects_en.ttl
