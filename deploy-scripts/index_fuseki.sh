@@ -9,8 +9,12 @@ unzip jena-fuseki1-1.3.1-distribution.zip
 rm jena-fuseki1-1.3.1-distribution.zip
 
 #Script Setup for Linux-based systems
-APACHE_JENA_BIN=apache-jena-2.12.1/bin
+export JENA_HOME=apache-jena-3.0.1
+export FUSEKI_HOME=jena-fuseki1-1.3.1
+
+APACHE_JENA_BI=apache-jena-3.0.1/bin
 JENA_FUSEKI_JAR=jena-fuseki1-1.3.1/fuseki-server.jar
+
 PATH=$PATH:$APACHE_JENA_BIN
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
@@ -97,11 +101,10 @@ sort labels_en.ttl > labels_en.ttl.sorted
 sort transitive_redirects_en.ttl  > transitive_redirects_en.ttl.sorted
 join -1 1 -2 1 labels_en.ttl.sorted transitive_redirects_en.ttl.sorted  > join.tsv
 
-cat join.tsv | awk '{sub("<http://www.w3.org/2000/01/rdf-schema#label>","",$0);sub("<http://dbpedia.org/ontology/wikiPageRedirects>","",$0); sub(" .  "," ",$0); print $0}'| awk -F">  \"" '{print "\""$2 }'| awk -F"@en <" '{print $2 " <http://www.w3.org/2000/01/rdf-schema#label> " $1}' | awk '{"<"sub(" . "," ",$0);  print $0 " . " }' > redirect_labels.ttl
+cat join.tsv | awk '{sub("<http://www.w3.org/2000/01/rdf-schema#label>","",$0);sub("<http://dbpedia.org/ontology/wikiPageRedirects>","",$0); sub(" .  "," ",$0); print $0}'| awk -F">  \"" '{print "\""$2 }'| awk -F"@en <" '{print $2 " <http://www.w3.org/2000/01/rdf-schema#label> " $1}' | awk '{sub(" . "," ",$0);  print "<"$0 " . " }' > redirect_labels.ttl
 
 mkdir hawk_data_10-2015_dbpediatbd/
 
 $APACHE_JENA_BIN/tdbloader2 --loc=hawk_data_10-2015_dbpediatbd dbpedia_2015-10.owl disambiguations_en.ttl instance_types_en.ttl long_abstracts_en.ttl pnd_en.ttl  labels_en.ttl mappingbased_objects_en.ttl mappingbased_literals_en.ttl persondata_en.ttl specific_mappingbased_properties_en.ttl transitive_redirects_en.ttl en_surface_forms.ttl pagerank_en_2015-10.ttl redirect_labels.ttl
 
 java -Xmx16G -cp $JENA_FUSEKI_JAR jena.textindexer --desc=fuseki_hawk_assembler.ttl
-
