@@ -170,7 +170,7 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 	}
 
 	public boolean checkSuitabillity() {
-		return (this.getAnswerType().equals("resource") & this.getOnlydbo() & !this.getAggregation()) || this.getLoadedAsASKQuery();
+		return (this.getAnswerType().matches("resource||boolean") & this.getOnlydbo() & !this.getAggregation()) ;//|| this.getLoadedAsASKQuery();
 
 	}
 
