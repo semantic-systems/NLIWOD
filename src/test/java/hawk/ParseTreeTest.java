@@ -40,11 +40,7 @@ public class ParseTreeTest {
 		String stanfordTree=new String();
 		String clearNLPTree=new String();
 		Fox nerdModule = new Fox();
-		// controller.nerdModule = new Spotlight();
-		// controller.nerdModule =new TagMe();
-		// controller.nerdModule = new MultiSpotter(fox, tagMe, wiki, spot);
 
-		// cParseTree = new CachedParseTreeClearnlp();
 
 		Cardinality cardinality = new Cardinality();
 
@@ -55,20 +51,15 @@ public class ParseTreeTest {
 		SPARQL sparql = new SPARQL();
 		Annotater annotater = new Annotater(sparql);
 
-
-
 		List<HAWKQuestion> questions = null;
 
 		questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD6_Train_Hybrid));
 
-
-		//List<IQuestion> load = QALD_Loader.load(Dataset.QALD6_Train_Hybrid);
-		//List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(load);
 		QueryTypeClassifier queryTypeClassifier = new QueryTypeClassifier();
 
 		CachedParseTreeStanford cParseTree = new CachedParseTreeStanford();
 		CachedParseTreeClearnlp cParseTree2 = new CachedParseTreeClearnlp();
-		
+
 
 		BufferedWriter bw = new BufferedWriter(new FileWriter("arboretum_stanford.txt", true));
 
@@ -111,25 +102,23 @@ public class ParseTreeTest {
 			catch (IOException ioe) {
 				ioe.printStackTrace();
 			} 
-			// always close the file
+			
 
 		}
 		if (bw != null) try {
 			bw.close();
 		} catch (IOException ioe2) {
-			// just ignore it
+			
 		}
 		BufferedWriter bw2 = new BufferedWriter(new FileWriter("arboretum_clearnlp.txt", true));
 		questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD6_Train_Hybrid));
 		for (HAWKQuestion q:questions){
 			//log.info("Classify question type.");
 			//q.setIsClassifiedAsASKQuery(queryTypeClassifier.isASKQuery(q.getLanguageToQuestion().get("en")));
-
 			// Disambiguate parts of the query
 			//log.info("Named entity recognition.");
 			//q.setLanguageToNamedEntites(nerdModule.getEntities(q.getLanguageToQuestion().get("en")));
 			//sentenceToSequence.combineSequences(q);
-
 			// Build trees from questions and cache them
 			log.info("Dependency parsing.");
 			q.setTree(cParseTree2.process(q));
@@ -168,11 +157,7 @@ public class ParseTreeTest {
 		} catch (IOException ioe2) {
 			// just ignore it
 		}
-		//		for (HAWKQuestion q:questions){
-		//			cParseTree2.process(q);
-		//			clearNLPTree=cParseTree2.toString();			
-		//			
-		//		}
+		
 	}
 
 }
