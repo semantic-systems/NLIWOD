@@ -1,6 +1,8 @@
 package org.aksw.hawk.cache;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTree;
@@ -83,4 +85,17 @@ public class CachedParseTreeClearnlp implements CachedParseTree {
 		}
 	}
 
+	public void test() {
+
+		HAWKQuestion q = new HAWKQuestion();
+		Map<String, String> languageToQuestion = new HashMap<String, String>();
+		languageToQuestion.put("en", "Which anti-apartheid activist was born in Mvezo?");
+		q.setLanguageToQuestion(languageToQuestion);
+		process(q);
+
+	}
+
+	public static void main(String args[]) {
+		new CachedParseTreeClearnlp().test();
+	}
 }
