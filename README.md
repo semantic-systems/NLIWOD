@@ -11,6 +11,7 @@ in production (adding answers):
 
 to analyze: 
 * https://github.com/ag-sc/QALD , especially if we could use this repo directly
+* http://agarciaduran.org/ 30M questions to freebase
 * https://github.com/brmson/yodaqa/wiki/Benchmarks
 * http://www-nlp.stanford.edu/software/sempre/
 * https://sites.google.com/site/trecliveqa2015/
