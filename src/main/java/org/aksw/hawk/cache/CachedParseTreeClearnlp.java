@@ -6,24 +6,21 @@ import java.util.Map;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTree;
+import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.nlp.ParseTree;
-import org.aksw.hawk.nlp.TreeTransformer;
 import org.aksw.hawk.util.JSONStatusBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.clearnlp.dependency.DEPNode;
 import com.clearnlp.dependency.DEPTree;
 
 //FIXME interface and test
 public class CachedParseTreeClearnlp implements CachedParseTree {
 	private Logger log = LoggerFactory.getLogger(CachedParseTreeClearnlp.class);
 	private ParseTree parseTree;
-	private TreeTransformer treeTransform;
 	private boolean useCache = false;
-
-	public CachedParseTreeClearnlp() {
-		treeTransform = new TreeTransformer();
-	}
+	private int i;
 
 	public MutableTree process(HAWKQuestion q) {
 		if (isStored(q) != null && useCache) {
@@ -34,12 +31,12 @@ public class CachedParseTreeClearnlp implements CachedParseTree {
 				parseTree = new ParseTree();
 			}
 			DEPTree t = parseTree.process(q);
-			MutableTree DEPtoMutableDEP = treeTransform.DEPtoMutableDEP(t);
-			System.out.println(DEPtoMutableDEP.toString());
+			MutableTree mutableTree = depToMutableDEP(t);
+			System.out.println(mutableTree.toString());
 
-			q.setTree_full(JSONStatusBuilder.treeToJSON(DEPtoMutableDEP));
-			store(q, DEPtoMutableDEP);
-			return DEPtoMutableDEP;
+			q.setTree_full(JSONStatusBuilder.treeToJSON(mutableTree));
+			store(q, mutableTree);
+			return mutableTree;
 		}
 	}
 
@@ -82,6 +79,30 @@ public class CachedParseTreeClearnlp implements CachedParseTree {
 		} else {
 			log.debug("Question not stored in CachedParseTree");
 			return null;
+		}
+	}
+
+	private MutableTree depToMutableDEP(DEPTree tmp) {
+		MutableTree tree = new MutableTree();
+		i = 0;
+		addNodeRecursivly(tree, tree.head, tmp.getFirstRoot());
+
+		return tree;
+	}
+
+	private void addNodeRecursivly(MutableTree tree, MutableTreeNode parent, DEPNode depNode) {
+
+		MutableTreeNode newParent = null;
+		if (parent == null) {
+			newParent = new MutableTreeNode(depNode.form, depNode.pos, depNode.getLabel(), null, i, depNode.lemma);
+			tree.head = newParent;
+		} else {
+			newParent = new MutableTreeNode(depNode.form, depNode.pos, depNode.getLabel(), parent, i, depNode.lemma);
+			parent.addChild(newParent);
+		}
+		for (DEPNode tmpChilds : depNode.getDependentNodeList()) {
+			i++;
+			addNodeRecursivly(tree, newParent, tmpChilds);
 		}
 	}
 

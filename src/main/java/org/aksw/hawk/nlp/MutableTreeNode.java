@@ -76,4 +76,29 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 			return annotations;
 		}
 	}
+
+	// Maybe use this to check if StanfordGraph is cyclic
+
+	// @Override
+	// public boolean equals(Object obj){
+	//
+	// if(! (obj instanceof MutableTreeNode)){
+	// return false;
+	// }
+	// if (obj == this) {
+	// return true;
+	// }
+	// MutableTreeNode mut= (MutableTreeNode) obj;
+	//
+	// if(label.equals(mut.label)&& posTag.equals(mut.posTag) &&
+	// depLabel.equals(mut.depLabel) && lemma.equals(mut.lemma)){
+	// return true;
+	// }
+	// return false;
+	// }
+	//
+	// @Override
+	// public int hashCode(){
+	// return Objects.hash(this.label,this.posTag,this.depLabel,this.lemma);
+	// }
 }

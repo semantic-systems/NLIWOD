@@ -4,24 +4,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTree;
-import org.aksw.hawk.nlp.TreeTransformer;
+import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
+import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation;
+import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import edu.stanford.nlp.util.CoreMap;
 
 public class CachedParseTreeStanford implements CachedParseTree {
 	public static Logger log = LoggerFactory.getLogger(CachedParseTreeStanford.class);
-
+	private int nodeNumber;
 	private StanfordCoreNLP pipeline;
 
 	public MutableTree process(HAWKQuestion q) {
@@ -46,7 +49,7 @@ public class CachedParseTreeStanford implements CachedParseTree {
 		CoreMap sen = sentences.get(0);
 		SemanticGraph graph = sen.get(CollapsedCCProcessedDependenciesAnnotation.class);
 
-		MutableTree tree = TreeTransformer.semanticGraphToMutableTree(graph);
+		MutableTree tree = semanticGraphToMutableTree(graph);
 		log.debug(tree.toString());
 
 		return tree;
@@ -64,7 +67,6 @@ public class CachedParseTreeStanford implements CachedParseTree {
 	}
 
 	public void test() {
-
 		HAWKQuestion q = new HAWKQuestion();
 		Map<String, String> languageToQuestion = new HashMap<String, String>();
 		languageToQuestion.put("en", "Which anti-apartheid activist was born in Mvezo?");
@@ -74,7 +76,7 @@ public class CachedParseTreeStanford implements CachedParseTree {
 	}
 
 	public static void main(String[] args) {
-		new CachedParseTreeStanford();
+		new CachedParseTreeStanford().test();
 	}
 
 	private String replaceLabelsByIdentifiedURIs(String sentence, List<Entity> list) {
@@ -88,6 +90,40 @@ public class CachedParseTreeStanford implements CachedParseTree {
 			}
 		}
 		return sentence;
+	}
+
+	private MutableTree semanticGraphToMutableTree(SemanticGraph graph) {
+		nodeNumber = 0;
+		MutableTree tree = new MutableTree();
+		MutableTreeNode mutableRoot;
+
+		IndexedWord graphRoot = graph.getFirstRoot();
+
+		mutableRoot = new MutableTreeNode(graphRoot.word(), graphRoot.tag(), "root", null, nodeNumber++, graphRoot.lemma());
+		tree.head = mutableRoot;
+
+		convertGraphStanford(mutableRoot, graphRoot, graph);
+
+		return tree;
+	}
+
+	private void convertGraphStanford(MutableTreeNode parentMutableNode, IndexedWord parentGraphWord, SemanticGraph graph) {
+
+		if (!graph.hasChildren(parentGraphWord)) {
+			return;
+		}
+
+		Set<IndexedWord> childrenWords = graph.getChildren(parentGraphWord);
+
+		for (IndexedWord child : childrenWords) {
+
+			SemanticGraphEdge edge = graph.getEdge(parentGraphWord, child);
+			String depLabel = edge.getRelation().getShortName();
+			MutableTreeNode childMutableNode = new MutableTreeNode(child.word(), child.tag(), depLabel, parentMutableNode, nodeNumber++, child.lemma());
+			parentMutableNode.addChild(childMutableNode);
+			convertGraphStanford(childMutableNode, child, graph);
+		}
+
 	}
 
 }
