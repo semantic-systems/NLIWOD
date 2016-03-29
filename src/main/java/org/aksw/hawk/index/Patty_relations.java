@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.stream.Stream;
 
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
@@ -29,6 +30,7 @@ import org.apache.lucene.util.Version;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 public class Patty_relations {
 	
@@ -125,7 +127,7 @@ public class Patty_relations {
 	 * search method, copied
 	 */
 	
-	public ArrayList<String> search(String object) {
+	public HashSet<String> search(String object) {
 		ArrayList<String> uris = Lists.newArrayList();
 		try {
 			log.debug("\t start asking index...");
@@ -137,20 +139,14 @@ public class Patty_relations {
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
 			for (int i = 0; i < hits.length; i++) {
 				Document hitDoc = isearcher.doc(hits[i].doc);
-				log.debug(object + "->" + hitDoc.get(FIELD_NAME_URI) + ", " + hitDoc.get(FIELD_NAME_OBJECT));
+				//log.debug(object + "->" + hitDoc.get(FIELD_NAME_URI) + ", " + hitDoc.get(FIELD_NAME_OBJECT));
 				uris.add(hitDoc.get(FIELD_NAME_URI));
 			}
 			log.debug("\t finished asking index...");
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage() + " -> " + object, e);
 		}
-		//filter out distinct singletons from List "uris"
-		ArrayList<String> setUris = new ArrayList<String>();
-		for (String uri : uris) {
-			if (!setUris.contains(uri)) {
-				setUris.add(uri);				
-			}
-		}
+		HashSet<String> setUris = Sets.newHashSet(uris);
 		return setUris;
 	}
 }

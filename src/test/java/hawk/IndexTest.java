@@ -4,6 +4,7 @@ import org.aksw.hawk.index.DBOIndex;
 import org.aksw.hawk.index.IndexDBO_classes;
 import org.aksw.hawk.index.IndexDBO_properties;
 import org.aksw.hawk.index.Patty_relations;
+import org.aksw.hawk.index.WikipediaPatternsConfidence_Index;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class IndexTest {
 	DBOIndex dboindex = new DBOIndex();
 	IndexDBO_classes classesindex = new IndexDBO_classes();
 	IndexDBO_properties propertiesindex = new IndexDBO_properties();
-	Patty_relations pattyindex = new Patty_relations();
+	Patty_relations pattyindex = new Patty_relations();	
 
 	@Test
 	public void dbpediaOWLTest() {
@@ -75,6 +76,5 @@ public class IndexTest {
 		Assert.assertTrue(pattyindex.search("resigned").contains("http://dbpedia.org/ontology/president"));
 		log.info("comes \n" + Joiner.on("\n").join(pattyindex.search("comes")));
 		Assert.assertTrue(pattyindex.search("comes").contains("http://dbpedia.org/ontology/birthPlace"));
-
 	}
 }
