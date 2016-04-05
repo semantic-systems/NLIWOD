@@ -37,4 +37,10 @@ public class Results implements Iterator<List<String>> {
 		}
 		return ret;
 	}
+
+	@Override
+    public void remove() {
+	    // TODO Auto-generated method stub
+	    
+    }
 }

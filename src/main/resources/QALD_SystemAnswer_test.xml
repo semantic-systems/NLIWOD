@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dataset id="qald-5_train.xml">
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="301" onlydbo="true">
+		<string lang="en">Who was vice-president under the president who authorized atomic weapons against Japan during World War II?</string>
+		<answers>
+			<answer>http://dbpedia.org/resource/Alben_W._Barkley</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="303" onlydbo="true">
+		<string lang="en">Which anti-apartheid activist was born in Mvezo?</string>
+		<answers>
+			<answer>http://dbpedia.org/resource/Nelson_Mandela</answer>
+			<answer>http://dbpedia.org/resource/List_of_awards_and_honours_bestowed_upon_Nelson_Mandela</answer>
+		</answers>
+	</question>
+</dataset>

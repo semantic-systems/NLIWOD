@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>commons</artifactId>
-	<version>0.0.6</version>
+	<version>0.0.7</version>
 	<name>Question Answering (QA) common utilities</name>
 	<description>Question Answering (QA) common utilities to load and store QA datasets and calculate performance measures. 
 	It provides also basic data structures for building QA systems.</description>
@@ -59,7 +59,7 @@
 		</snapshotRepository>
 	</distributionManagement>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>1.7</java.version>
 		<slf4j.version>1.7.5</slf4j.version>
 		<lucene.version>4.6.0</lucene.version>
 		<junit.version>4.11</junit.version>
@@ -82,7 +82,7 @@
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>datasets</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2</version>
 		</dependency>
 		<!-- Reading JSON files -->
 		<dependency>

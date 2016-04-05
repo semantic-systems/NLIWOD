@@ -52,6 +52,7 @@ public class QALD_Loader {
 
 	private static URL mapDatasetToPath(Dataset set) {
 		System.out.println(set.toString());
+		//FIXME QALD-5 is that multilingual or hybrid? Load both!
 		switch (set) {
 		case nlq:
 			return ClassLoader.getSystemClassLoader().getResource("NLQ-OKBQA/nlq1_vis.json");
