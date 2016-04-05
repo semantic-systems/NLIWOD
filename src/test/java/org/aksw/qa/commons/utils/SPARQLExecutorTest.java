@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SPARQLExecutorTest {
@@ -25,6 +26,8 @@ public class SPARQLExecutorTest {
 	}
 
 	@Test
+	//FIXME diese SPARQL Query kann beliebige S,O paare liefern, daher schlägt der Test fehl
+@Ignore
 	public void testSelect() {
 		Set<String> resources = SPARQLExecutor.executeSelect("SELECT ?s FROM <http://dbpedia.org> {?s ?p ?o} LIMIT 3", "http://dbpedia.org/sparql").getStringSet();
 		Object[] actual = resources.toArray();
@@ -38,6 +41,8 @@ public class SPARQLExecutorTest {
 	}
 
 	@Test
+	@Ignore
+	//FIXME diese SPARQL Query kann beliebige S,O paare liefern, daher schlägt der Test fehl
 	public void testResultsSet() {
 		Results res = SPARQLExecutor.executeSelect("PREFIX foaf:    <http://xmlns.com/foaf/0.1/> SELECT ?s ?o FROM <http://dbpedia.org> {?s foaf:name ?o} LIMIT 2", "http://dbpedia.org/sparql");
 		String[] expecteds = new String[4];
@@ -52,6 +57,8 @@ public class SPARQLExecutorTest {
 	}
 
 	@Test
+	//FIXME diese SPARQL Query kann beliebige S,P,O paare liefern, daher schlägt der Test fehl
+@Ignore
 	public void testResults() {
 		Results res = SPARQLExecutor.executeSelect("SELECT ?s ?o FROM <http://dbpedia.org> {?s ?p ?o} LIMIT 2", "http://dbpedia.org/sparql");
 		assertTrue(res.header.size() == 2);
