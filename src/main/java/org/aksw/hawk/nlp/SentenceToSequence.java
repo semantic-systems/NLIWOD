@@ -6,6 +6,8 @@ import java.util.Stack;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.qa.commons.datastructure.Entity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.clearnlp.dependency.DEPNode;
 import com.clearnlp.dependency.DEPTree;
@@ -22,14 +24,44 @@ import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 public class SentenceToSequence {
 	private static String language = AbstractReader.LANG_EN;
 	static AbstractTokenizer tokenizer = NLPGetter.getTokenizer(language);
+	static Logger log = LoggerFactory.getLogger(SentenceToSequence.class);
 
 	// combine noun phrases
 	public static void combineSequences(HAWKQuestion q) {
 		// run pos-tagging
 		String sentence = q.getLanguageToQuestion().get("en");
+
 		List<String> tokens = tokenizer.getTokens(sentence);
+
+		System.out.println(tokens.toString());
 		Map<String, String> label2pos = generatePOSTags(q);
 
+		runPhraseCombination(q, tokens, label2pos);
+		// log.debug(q.languageToNounPhrases.get("en"));
+	}
+
+	public static Map<String, String> generatePOSTags(HAWKQuestion q) {
+		ParseTree parse = new ParseTree();
+		DEPTree tree = parse.process(q);
+
+		// TODO this is horribly wrong, the same label CAN have different pos if
+		// the label occurs twice in question
+		Map<String, String> label2pos = Maps.newHashMap();
+		Stack<DEPNode> stack = new Stack<DEPNode>();
+		stack.push(tree.getFirstRoot());
+		while (!stack.isEmpty()) {
+			DEPNode tmp = stack.pop();
+			label2pos.put(tmp.form, tmp.pos);
+			for (DEPNode child : tmp.getDependentNodeList()) {
+				stack.push(child);
+			}
+		}
+
+		return label2pos;
+
+	}
+
+	public static void runPhraseCombination(HAWKQuestion q, List<String> tokens, Map<String, String> label2pos) {
 		// run phrase combination
 		List<String> subsequence = Lists.newArrayList();
 		for (int tcounter = 0; tcounter < tokens.size(); tcounter++) {
@@ -60,7 +92,8 @@ public class SentenceToSequence {
 			}
 			// finish via VB* or IN -> null or IN -> DT or WDT (now a that or
 			// which follows)
-			else if (!subsequence.isEmpty() && !lastPos.matches("JJ|HYPH") && (null == pos || pos.matches("VB(.)*|\\.|WDT") || (pos.matches("IN") && nextPos == null) || (pos.matches("IN") && nextPos.matches("DT")))) {
+			else if (!subsequence.isEmpty() && !lastPos.matches("JJ|HYPH")
+			        && (null == pos || pos.matches("VB(.)*|\\.|WDT") || (pos.matches("IN") && nextPos == null) || (pos.matches("IN") && nextPos.matches("DT")))) {
 				// more than one token, so summarizing makes sense
 				if (subsequence.size() > 1) {
 					transformTree(subsequence, q);
@@ -74,24 +107,6 @@ public class SentenceToSequence {
 				subsequence = Lists.newArrayList();
 			}
 		}
-//		log.debug(q.languageToNounPhrases.get("en"));
-	}
-
-	private static Map<String, String> generatePOSTags(HAWKQuestion q) {
-		ParseTree parse = new ParseTree();
-		DEPTree tree = parse.process(q);
-		// TODO this is horribly wrong, the same label CAN have different pos if the label occurs twice in question
-		Map<String, String> label2pos = Maps.newHashMap();
-		Stack<DEPNode> stack = new Stack<DEPNode>();
-		stack.push(tree.getFirstRoot());
-		while (!stack.isEmpty()) {
-			DEPNode tmp = stack.pop();
-			label2pos.put(tmp.form, tmp.pos);
-			for (DEPNode child : tmp.getDependentNodeList()) {
-				stack.push(child);
-			}
-		}
-		return label2pos;
 	}
 
 	private static void transformTree(List<String> subsequence, HAWKQuestion q) {
@@ -109,7 +124,8 @@ public class SentenceToSequence {
 		nounphrases.add(tmpEntity);
 		q.getLanguageToNounPhrases().put("en", nounphrases);
 	}
-//TODO Christian: transform to unit test
+
+	// TODO Christian: transform to unit test
 	public static void main(String args[]) {
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", "Who was vice-president under the president who authorized atomic weapons against Japan during World War II?");
@@ -124,6 +140,7 @@ public class SentenceToSequence {
 		q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", "Which recipients of the Victoria Cross died in the Battle of Arnhem?");
 		SentenceToSequence.combineSequences(q);
+		System.out.println("LANGUAGETONOUNPHRASES");
 		System.out.println(q.getLanguageToNounPhrases().get("en"));
 	}
 }

@@ -16,7 +16,7 @@ import com.clearnlp.dependency.DEPNode;
 import com.clearnlp.dependency.DEPTree;
 
 //FIXME interface and test
-public class CachedParseTreeClearnlp implements CachedParseTree {
+public class CachedParseTreeClearnlp {
 	private Logger log = LoggerFactory.getLogger(CachedParseTreeClearnlp.class);
 	private ParseTree parseTree;
 	private boolean useCache = false;

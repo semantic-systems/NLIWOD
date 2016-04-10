@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.aksw.hawk.controller.Pipeline;
+import org.aksw.hawk.controller.PipelineClearNLP;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.experiment.SingleQuestionPipeline;
