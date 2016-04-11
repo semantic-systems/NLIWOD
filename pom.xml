@@ -97,10 +97,11 @@
 		</dependency>
 		<!-- QA commons is currently based on Jena for handling RDF resources -->
 		<!-- TODO update this to jena 3.0 -->
+		<!--  TODO erst umstellen, wenn Claus das ordentlich dokumentiert hat mit dem Cache -->
 		<dependency>
 			<groupId>org.aksw.jena-sparql-api</groupId>
 			<artifactId>jena-sparql-api-core</artifactId>
-			<version>2.13.0-5</version>
+			<version>2.10.0-22</version>
 		</dependency>
 	</dependencies>
 </project>
