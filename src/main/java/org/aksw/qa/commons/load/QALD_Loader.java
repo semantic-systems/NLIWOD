@@ -43,6 +43,7 @@ public class QALD_Loader {
 		System.out.println(url);
 		return url.openStream();
 	}
+
 	private static String getInputStreamURL(Dataset set) throws IOException {
 		// Returns Extension for decision on XML/JSON method
 		URL url = mapDatasetToPath(set);
@@ -52,7 +53,7 @@ public class QALD_Loader {
 
 	private static URL mapDatasetToPath(Dataset set) {
 		System.out.println(set.toString());
-		//FIXME QALD-5 is that multilingual or hybrid? Load both!
+		// FIXME QALD-5 is that multilingual or hybrid? Load both!
 		switch (set) {
 		case nlq:
 			return ClassLoader.getSystemClassLoader().getResource("NLQ-OKBQA/nlq1_vis.json");
@@ -81,21 +82,21 @@ public class QALD_Loader {
 		try {
 			InputStream is = null;
 			is = getInputStream(data);
-			String isURL=getInputStreamURL(data);
-			if (is.available()>0) //check if stream is not empty
+			String isURL = getInputStreamURL(data);
+			if (is.available() > 0) // check if stream is not empty
 			{
-				//decides between xml and json based on URL ending
-				if  (isURL.toLowerCase().endsWith("xml")){
-					log.info("Loading XML file ["+isURL+"].");
+				// decides between xml and json based on URL ending
+				if (isURL.toLowerCase().endsWith("xml")) {
+					log.info("Loading XML file [" + isURL + "].");
 					List<IQuestion> ret = loadXML(is);
 					is.close();
 					return ret;
 				}
-				if (isURL.toLowerCase().endsWith("json")){
-					log.info("Loading JSON file ["+isURL+"].");
+				if (isURL.toLowerCase().endsWith("json")) {
+					log.info("Loading JSON file [" + isURL + "].");
 
 					List<IQuestion> ret = loadJSON(is);
-					is.close(); 
+					is.close();
 					return ret;
 				}
 			}
@@ -106,7 +107,8 @@ public class QALD_Loader {
 		return null;
 	}
 
-	// TODO separate checking for non-empty input stream in all separate load instances necessary? -Christian
+	// TODO separate checking for non-empty input stream in all separate load
+	// instances necessary? -Christian
 	// oldtodo check that input stream is not empty before parsing(Deez Nuts!)
 	/**
 	 * This methods loads QALD XML files (used in QALD 1 to QALD 5)
@@ -118,7 +120,7 @@ public class QALD_Loader {
 		List<IQuestion> questions = new ArrayList<IQuestion>();
 
 		try {
-			if (file.available()>0) //check if stream is not empty
+			if (file.available() > 0) // check if stream is not empty
 			{
 				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 				DocumentBuilder db = dbf.newDocumentBuilder();
@@ -162,7 +164,8 @@ public class QALD_Loader {
 					}
 
 					// Read SPARQL query
-					// checks also that the text node containing query is not null
+					// checks also that the text node containing query is not
+					// null
 					element = (Element) questionNode.getElementsByTagName("query").item(0);
 					if (element != null && element.hasChildNodes()) {
 						NodeList childNodes = element.getChildNodes();
@@ -202,16 +205,18 @@ public class QALD_Loader {
 
 		return questions;
 	}
+
 	/**
 	 * This method loads QALD JSON files as used in QALD 6
+	 * 
 	 * @param file
 	 * @return
 	 */
 	public static List<IQuestion> loadJSON(InputStream file) {
-		//TODO Catch exceptions
+		// TODO Catch exceptions
 		List<IQuestion> output = new ArrayList<IQuestion>();
-		try{
-			if (file.available()>0) //check if stream is not empty
+		try {
+			if (file.available() > 0) // check if stream is not empty
 			{
 				JsonReader jsonReader = Json.createReader(file);
 				JsonObject mainJsonObject = jsonReader.readObject();
@@ -284,31 +289,34 @@ public class QALD_Loader {
 
 					}// end For questions
 				}
-			}	
-		}
-		catch (DOMException e) {
+			}
+		} catch (DOMException e) {
 			e.printStackTrace();
-		
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	
-	boolean unanswered = false; //flag for Debug Message
-	for (IQuestion k : output) {
-		if (k.getGoldenAnswers().isEmpty()) {
-			if (!unanswered) { 
-				System.out.println("Following Questions (id) have no attached answers:");
-				unanswered = true;
+
+		/**
+		 * Removing Questions with no answers
+		 */
+		boolean printHappend = false;
+		String message = "";
+		List<IQuestion> emptyQuestions = new ArrayList<IQuestion>();
+		for (IQuestion k : output) {
+			if (k.getGoldenAnswers().isEmpty()) {
+				emptyQuestions.add(k);
+				if (!printHappend) {
+					message += "Following Questions (id) have no attached answers: ";
+					printHappend = true;
+				}
+				message += k.getId() + ", ";
 			}
-			System.out.print(k.getId() + ", ");
 		}
+		if (printHappend) {
+			log.debug(message + " and will be removed");
+		}
+		output.removeAll(emptyQuestions);
+		return output;
 	}
-	return output;
 }
-}
-
-
-// TODO: Jonathan: What is going on here?
-
-
-
