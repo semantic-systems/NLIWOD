@@ -43,9 +43,7 @@ public class QALD6_Pipeline {
 		double count = 0;
 		double countNULLAnswer = 0;
 		for (HAWKQuestion q : questions) {
-			// TODO refactor this if clause to something like
-			// HAWK.checkSuitability(Question q): boolean
-			if ((q.getAnswerType().equals("resource") & q.getOnlydbo() & !q.getAggregation()) || q.getLoadedAsASKQuery()) {
+			if (q.checkSuitabillity()) {
 				log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
 				List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
@@ -60,7 +58,7 @@ public class QALD6_Pipeline {
 				log.info("Run ranking");
 				int maximumPositionToMeasure = 10;
 				OptimalRanker optimal_ranker = new OptimalRanker();
-				FeatureBasedRanker feature_ranker = new FeatureBasedRanker();
+//				FeatureBasedRanker feature_ranker = new FeatureBasedRanker();
 
 				// optimal ranking
 				log.info("Optimal ranking");
@@ -81,8 +79,8 @@ public class QALD6_Pipeline {
 				}
 				log.info("Max F-measure: " + fmax);
 				average += fmax;
-				log.info("Feature-based ranking begins training.");
-				feature_ranker.learn(q, queries);
+//				log.info("Feature-based ranking begins training.");
+//				feature_ranker.learn(q, queries);
 			}
 		}
 		log.info("Number of questions with answer: " + count + ", number of questions without answer: " + countNULLAnswer);

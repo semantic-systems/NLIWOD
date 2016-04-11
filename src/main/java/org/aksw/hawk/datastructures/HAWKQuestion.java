@@ -30,7 +30,8 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 	private Map<String, List<Entity>> goldEntites = new HashMap<String, List<Entity>>();
 
 	// for proper handling in webservice
-	//TODO remove this all after new webservice based on JSON RDF is implemented
+	// TODO remove this all after new webservice based on JSON RDF is
+	// implemented
 	private UUID UUID;
 	private boolean finished;
 	private List<Answer> finalAnswer;
@@ -73,99 +74,104 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 	}
 
 	public JSONObject getTree_full() {
-	    return tree_full;
-    }
+		return tree_full;
+	}
 
 	public void setTree_full(JSONObject tree_full) {
-	    this.tree_full = tree_full;
-    }
+		this.tree_full = tree_full;
+	}
 
 	public Boolean getIsClassifiedAsASKQuery() {
-	    return isClassifiedAsASKQuery;
-    }
+		return isClassifiedAsASKQuery;
+	}
 
 	public void setIsClassifiedAsASKQuery(Boolean isClassifiedAsASKQuery) {
-	    this.isClassifiedAsASKQuery = isClassifiedAsASKQuery;
-    }
+		this.isClassifiedAsASKQuery = isClassifiedAsASKQuery;
+	}
 
 	public Boolean getLoadedAsASKQuery() {
-	    return loadedAsASKQuery;
-    }
+		return loadedAsASKQuery;
+	}
 
 	public void setLoadedAsASKQuery(Boolean loadedAsASKQuery) {
-	    this.loadedAsASKQuery = loadedAsASKQuery;
-    }
+		this.loadedAsASKQuery = loadedAsASKQuery;
+	}
 
 	public Map<String, List<Entity>> getLanguageToNamedEntites() {
-	    return languageToNamedEntites;
-    }
+		return languageToNamedEntites;
+	}
 
 	public void setLanguageToNamedEntites(Map<String, List<Entity>> languageToNamedEntites) {
-	    this.languageToNamedEntites = languageToNamedEntites;
-    }
+		this.languageToNamedEntites = languageToNamedEntites;
+	}
 
 	public Map<String, List<Entity>> getLanguageToNounPhrases() {
-	    return languageToNounPhrases;
-    }
+		return languageToNounPhrases;
+	}
 
 	public void setLanguageToNounPhrases(Map<String, List<Entity>> languageToNounPhrases) {
-	    this.languageToNounPhrases = languageToNounPhrases;
-    }
+		this.languageToNounPhrases = languageToNounPhrases;
+	}
 
 	public MutableTree getTree() {
-	    return tree;
-    }
+		return tree;
+	}
 
 	public void setTree(MutableTree tree) {
-	    this.tree = tree;
-    }
+		this.tree = tree;
+	}
 
 	public JSONObject getTree_final() {
-	    return tree_final;
-    }
+		return tree_final;
+	}
 
 	public void setTree_final(JSONObject tree_final) {
-	    this.tree_final = tree_final;
-    }
+		this.tree_final = tree_final;
+	}
 
 	public JSONObject getTree_pruned() {
-	    return tree_pruned;
-    }
+		return tree_pruned;
+	}
 
 	public void setTree_pruned(JSONObject tree_pruned) {
-	    this.tree_pruned = tree_pruned;
-    }
+		this.tree_pruned = tree_pruned;
+	}
 
 	public JSONArray getPruning_messages() {
-	    return pruning_messages;
-    }
+		return pruning_messages;
+	}
 
 	public void setPruning_messages(JSONArray pruning_messages) {
-	    this.pruning_messages = pruning_messages;
-    }
+		this.pruning_messages = pruning_messages;
+	}
 
 	public List<Answer> getFinalAnswer() {
-	    return finalAnswer;
-    }
+		return finalAnswer;
+	}
 
 	public void setFinalAnswer(List<Answer> finalAnswer) {
-	    this.finalAnswer = finalAnswer;
-    }
+		this.finalAnswer = finalAnswer;
+	}
 
 	public UUID getUUID() {
-	    return UUID;
-    }
+		return UUID;
+	}
 
 	public void setUUID(UUID uUID) {
-	    UUID = uUID;
-    }
+		UUID = uUID;
+	}
 
 	public int getCardinality() {
-	    return cardinality;
-    }
+		return cardinality;
+	}
 
 	public void setCardinality(int cardinality) {
-	    this.cardinality = cardinality;
-    }
+		this.cardinality = cardinality;
+	}
+
+	public boolean checkSuitabillity() {
+		return (this.getAnswerType().matches("resource||boolean") & this.getOnlydbo() & !this.getAggregation()) ;//|| this.getLoadedAsASKQuery();
+
+	}
 
 }
