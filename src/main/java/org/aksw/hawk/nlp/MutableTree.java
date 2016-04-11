@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 public class MutableTree implements Serializable {
 	private static final long serialVersionUID = 1286195006804443794L;
 	static Logger log = LoggerFactory.getLogger(MutableTree.class);
-	MutableTreeNode head = null;
+	public MutableTreeNode head = null;
 
 	public MutableTreeNode getRoot() {
 		return head;

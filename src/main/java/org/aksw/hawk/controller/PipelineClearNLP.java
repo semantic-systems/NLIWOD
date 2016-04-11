@@ -1,13 +1,8 @@
 package org.aksw.hawk.controller;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
-import org.aksw.hawk.cache.CachedParseTree;
-import org.aksw.hawk.cache.CachedParseTreeStanford;
+import org.aksw.hawk.cache.CachedParseTreeClearnlp;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTreePruner;
@@ -19,10 +14,10 @@ import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Pipeline {
-	static Logger log = LoggerFactory.getLogger(Pipeline.class);
+public class PipelineClearNLP extends AbstractPipeline {
+	static Logger log = LoggerFactory.getLogger(PipelineClearNLP.class);
 	private Fox nerdModule;
-	private CachedParseTree cParseTree;
+	private CachedParseTreeClearnlp cParseTree;
 	private SentenceToSequence sentenceToSequence;
 	private MutableTreePruner pruner;
 	private Annotater annotater;
@@ -30,7 +25,7 @@ public class Pipeline {
 	private Cardinality cardinality;
 	private QueryTypeClassifier queryTypeClassifier;
 
-	public Pipeline() {
+	public PipelineClearNLP() {
 		queryTypeClassifier = new QueryTypeClassifier();
 
 		nerdModule = new Fox();
@@ -39,7 +34,7 @@ public class Pipeline {
 		// controller.nerdModule = new MultiSpotter(fox, tagMe, wiki, spot);
 
 		// cParseTree = new CachedParseTreeClearnlp();
-		cParseTree = new CachedParseTreeStanford();
+		cParseTree = new CachedParseTreeClearnlp();
 		cardinality = new Cardinality();
 
 		sentenceToSequence = new SentenceToSequence();
@@ -52,6 +47,7 @@ public class Pipeline {
 		queryBuilder = new SPARQLQueryBuilder(sparql);
 	}
 
+	@Override
 	public List<Answer> getAnswersToQuestion(HAWKQuestion q) {
 		log.info("Question: " + q.getLanguageToQuestion().get("en"));
 
@@ -89,25 +85,6 @@ public class Pipeline {
 		List<Answer> answers = queryBuilder.build(q);
 
 		return answers;
-	}
-
-	private void write(Set<EvalObj> evals) {
-		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter("results.html"));
-			bw.write("<script src=\"sorttable.js\"></script><table class=\"sortable\">");
-			bw.newLine();
-			bw.write(" <tr>     <th>id</th><th>Question</th><th>F-measure</th><th>Precision</th><th>Recall</th><th>Comment</th>  </tr>");
-			for (EvalObj eval : evals) {
-				bw.write(" <tr>    <td>" + eval.getId() + "</td><td>" + eval.getQuestion() + "</td><td>" + eval.getFmax() + "</td><td>" + eval.getPmax() + "</td><td>" + eval.getRmax() + "</td><td>"
-				        + eval.getComment() + "</td>  </tr>");
-				bw.newLine();
-			}
-			bw.write("</table>");
-			bw.newLine();
-			bw.close();
-		} catch (IOException e) {
-			log.error(e.getMessage(), e);
-		}
 	}
 
 }

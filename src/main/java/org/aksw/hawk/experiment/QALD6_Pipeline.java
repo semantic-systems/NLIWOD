@@ -1,12 +1,14 @@
 package org.aksw.hawk.experiment;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.Set;
 
+import org.aksw.hawk.controller.AbstractPipeline;
 import org.aksw.hawk.controller.EvalObj;
-import org.aksw.hawk.controller.Pipeline;
+import org.aksw.hawk.controller.PipelineStanford;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
@@ -26,13 +28,19 @@ public class QALD6_Pipeline {
 	public QALD6_Pipeline() {
 
 		log.info("Configuring controller");
-		Pipeline pipeline = new Pipeline();
+		AbstractPipeline pipeline = new PipelineStanford();
 
 		log.info("Loading dataset");
 		URL url = ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-hybrid.json");
+		if (url == null) {
+			log.error("Resource not found -  System exit");
+			System.exit(0);
+		}
 		List<HAWKQuestion> questions = null;
 		try {
-			questions = HAWKQuestionFactory.createInstances(QALD_Loader.loadJSON(url.openStream()));
+			log.debug("URL = " + url.getPath());
+			InputStream stream = url.openStream();
+			questions = HAWKQuestionFactory.createInstances(QALD_Loader.loadJSON(stream));
 
 		} catch (IOException e) {
 			e.printStackTrace();
