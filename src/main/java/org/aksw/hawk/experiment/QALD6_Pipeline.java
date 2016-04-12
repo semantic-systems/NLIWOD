@@ -1,8 +1,5 @@
 package org.aksw.hawk.experiment;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 import java.util.Set;
 
@@ -13,8 +10,8 @@ import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
-import org.aksw.hawk.ranking.FeatureBasedRanker;
 import org.aksw.hawk.ranking.OptimalRanker;
+import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,21 +28,9 @@ public class QALD6_Pipeline {
 		AbstractPipeline pipeline = new PipelineStanford();
 
 		log.info("Loading dataset");
-		URL url = ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-hybrid.json");
-		if (url == null) {
-			log.error("Resource not found -  System exit");
-			System.exit(0);
-		}
 		List<HAWKQuestion> questions = null;
-		try {
-			log.debug("URL = " + url.getPath());
-			InputStream stream = url.openStream();
-			questions = HAWKQuestionFactory.createInstances(QALD_Loader.loadJSON(stream));
 
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
+		questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD6_Train_Multilingual));
 
 		double average = 0;
 		double count = 0;
@@ -66,7 +51,7 @@ public class QALD6_Pipeline {
 				log.info("Run ranking");
 				int maximumPositionToMeasure = 10;
 				OptimalRanker optimal_ranker = new OptimalRanker();
-//				FeatureBasedRanker feature_ranker = new FeatureBasedRanker();
+				// FeatureBasedRanker feature_ranker = new FeatureBasedRanker();
 
 				// optimal ranking
 				log.info("Optimal ranking");
@@ -87,8 +72,8 @@ public class QALD6_Pipeline {
 				}
 				log.info("Max F-measure: " + fmax);
 				average += fmax;
-//				log.info("Feature-based ranking begins training.");
-//				feature_ranker.learn(q, queries);
+				// log.info("Feature-based ranking begins training.");
+				// feature_ranker.learn(q, queries);
 			}
 		}
 		log.info("Number of questions with answer: " + count + ", number of questions without answer: " + countNULLAnswer);

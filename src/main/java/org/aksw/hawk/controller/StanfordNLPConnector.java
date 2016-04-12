@@ -1,6 +1,7 @@
 package org.aksw.hawk.controller;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +34,8 @@ import edu.stanford.nlp.util.CoreMap;
  * List of Annotators to Constructor, {Complete Annotator list at
  * http://stanfordnlp.github.io/CoreNLP/annotators.html} or use empty
  * Constructor with default annotators. Then use runAnnotation() and pass
- * Annotoation-Object to combineSequences(Annotation,HAWKQuestion) to find and
- * registerNounPhrases in given Question or pass Annotation-Object to
+ * returned Annotoation-Object to combineSequences(Annotation,HAWKQuestion) to
+ * find and registerNounPhrases in given Question or pass Annotation-Object to
  * process(Annotation) to get dependency-Graph
  * 
  * 
@@ -44,6 +45,7 @@ public class StanfordNLPConnector {
 
 	private StanfordCoreNLP stanfordPipe;
 	private int nodeNumber;
+	private Set<IndexedWord> visitedNodes;
 	static Logger log = LoggerFactory.getLogger(StanfordNLPConnector.class);
 
 	/**
@@ -153,8 +155,8 @@ public class StanfordNLPConnector {
 	}
 
 	/**
-	 * Runs a NounPhrasCombination on given Annotation and HAWKQuestion Given
-	 * Annotation has to be the processed Annotation if given HAWKQuestion
+	 * Runs a NounPhrasCombination on given Annotation and HAWKQuestion. Given
+	 * Annotation has to be the processed Annotation of given HAWKQuestion
 	 * 
 	 * @param document
 	 *            processed Annotation of HAWKQuestion
@@ -217,6 +219,7 @@ public class StanfordNLPConnector {
 		MutableTree tree = new MutableTree();
 		MutableTreeNode mutableRoot;
 
+		this.visitedNodes = new HashSet<IndexedWord>();
 		IndexedWord graphRoot = graph.getFirstRoot();
 
 		mutableRoot = new MutableTreeNode(graphRoot.word(), graphRoot.tag(), "root", null, nodeNumber++, graphRoot.lemma());
@@ -235,14 +238,17 @@ public class StanfordNLPConnector {
 	 * @param graph
 	 */
 	private void convertGraphStanford(MutableTreeNode parentMutableNode, IndexedWord parentGraphWord, SemanticGraph graph) {
+		visitedNodes.add(parentGraphWord);
 
-		if (!graph.hasChildren(parentGraphWord)) {
+		// if graph is cyclic, it will be catched here
+		Set<IndexedWord> notCyclicChildren = new HashSet<IndexedWord>(graph.getChildren(parentGraphWord));
+		notCyclicChildren.removeAll(visitedNodes);
+
+		if (notCyclicChildren.isEmpty()) {
 			return;
 		}
 
-		Set<IndexedWord> childrenWords = graph.getChildren(parentGraphWord);
-
-		for (IndexedWord child : childrenWords) {
+		for (IndexedWord child : notCyclicChildren) {
 
 			SemanticGraphEdge edge = graph.getEdge(parentGraphWord, child);
 			String depLabel = edge.getRelation().getShortName();
