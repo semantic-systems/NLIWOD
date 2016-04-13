@@ -272,8 +272,5 @@
 			<artifactId>xml-apis</artifactId>
 			<version>1.4.01</version>
 		</dependency>
-			<artifactId>xml-apis</artifactId>
-			<version>1.4.01</version>
-		</dependency>
 	</dependencies>
 </project>

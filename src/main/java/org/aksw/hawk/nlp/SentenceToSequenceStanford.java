@@ -1,19 +1,16 @@
 package org.aksw.hawk.nlp;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.aksw.hawk.controller.StanfordNLPConnector;
+
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.apache.jena.atlas.logging.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.clearnlp.dependency.DEPNode;
-import com.clearnlp.dependency.DEPTree;
 import com.clearnlp.nlp.NLPGetter;
 import com.clearnlp.reader.AbstractReader;
 import com.clearnlp.tokenization.AbstractTokenizer;
@@ -32,14 +29,15 @@ public class SentenceToSequenceStanford {
 	public static void combineSequences(HAWKQuestion q) {
 		// run pos-tagging
 
-		Logger log=LoggerFactory.getLogger(SentenceToSequenceStanford.class);
-		MutableTree tree=q.getTree();
-		
+		Logger log = LoggerFactory.getLogger(SentenceToSequenceStanford.class);
+		MutableTree tree = q.getTree();
+
 		String sentence = q.getLanguageToQuestion().get("en");
 		List<String> tokens = tokenizer.getTokens(sentence);
 		Map<String, String> label2pos = generatePOSTags(q);
 
-		//TODO: Stanford Tree is already POS-tagged and has dependency recognition, not necessary to do it again!
+		// TODO: Stanford Tree is already POS-tagged and has dependency
+		// recognition, not necessary to do it again!
 
 		// run phrase combination
 		List<String> subsequence = Lists.newArrayList();
@@ -71,7 +69,8 @@ public class SentenceToSequenceStanford {
 			}
 			// finish via VB* or IN -> null or IN -> DT or WDT (now a that or
 			// which follows)
-			else if (!subsequence.isEmpty() && !lastPos.matches("JJ|HYPH") && (null == pos || pos.matches("VB(.)*|\\.|WDT") || (pos.matches("IN") && nextPos == null) || (pos.matches("IN") && nextPos.matches("DT")))) {
+			else if (!subsequence.isEmpty() && !lastPos.matches("JJ|HYPH")
+			        && (null == pos || pos.matches("VB(.)*|\\.|WDT") || (pos.matches("IN") && nextPos == null) || (pos.matches("IN") && nextPos.matches("DT")))) {
 				// more than one token, so summarizing makes sense
 				if (subsequence.size() > 1) {
 					transformTree(subsequence, q);
@@ -94,20 +93,21 @@ public class SentenceToSequenceStanford {
 			sentence = replaceLabelsByIdentifiedURIs(sentence, q.getLanguageToNounPhrases().get("en"));
 			log.debug(sentence);
 		}
-		//DEPTree tree=new DEPTree();
-		//tree=NLPGetter.toDEPTree(tokenizer.getTokens(sentence));
-		//Enter changes into tree
-		//q.setTree(MutableTreeFactory.depToMutableDEP(tree));
-		//resolveCompoundNouns(q.getTree(), q.getLanguageToNounPhrases().get("en"));
+		// DEPTree tree=new DEPTree();
+		// tree=NLPGetter.toDEPTree(tokenizer.getTokens(sentence));
+		// Enter changes into tree
+		// q.setTree(MutableTreeFactory.depToMutableDEP(tree));
+		// resolveCompoundNouns(q.getTree(),
+		// q.getLanguageToNounPhrases().get("en"));
 		q.setTree(tree);
 	}
 
 	private static Map<String, String> generatePOSTags(HAWKQuestion q) {
 
-
-		Map<String, String> label2pos= Maps.newHashMap();
-		// TODO this is horribly wrong, the same label CAN have different pos if the label occurs twice in question
-		//Map<String, String> label2pos = Maps.newTreeMap();
+		Map<String, String> label2pos = Maps.newHashMap();
+		// TODO this is horribly wrong, the same label CAN have different pos if
+		// the label occurs twice in question
+		// Map<String, String> label2pos = Maps.newTreeMap();
 		Stack<MutableTreeNode> stack = new Stack<MutableTreeNode>();
 		stack.push(q.getTree().getRoot());
 		while (!stack.isEmpty()) {
@@ -123,7 +123,7 @@ public class SentenceToSequenceStanford {
 	private static void transformTree(List<String> subsequence, HAWKQuestion q) {
 		String combinedNN = Joiner.on(" ").join(subsequence);
 		String combinedURI = "http://aksw.org/combinedNN/" + Joiner.on("_").join(subsequence);
-		MutableTree tree=q.getTree();
+		MutableTree tree = q.getTree();
 		Entity tmpEntity = new Entity();
 		tmpEntity.label = combinedNN;
 		tmpEntity.uris.add(new ResourceImpl(combinedURI));
@@ -141,52 +141,55 @@ public class SentenceToSequenceStanford {
 
 			MutableTreeNode thisNode = stack.pop();
 			String label = thisNode.label;
-			for (String s:subsequence){
+			for (String s : subsequence) {
 				if (label.contains(s)) {
-					//thisNode.label = Joiner.on(" ").join(label.replace("http://aksw.org/combinedNN/", "").split("_"));
-					thisNode.label=combinedNN;
+					// thisNode.label =
+					// Joiner.on(" ").join(label.replace("http://aksw.org/combinedNN/",
+					// "").split("_"));
+					thisNode.label = combinedNN;
 					thisNode.posTag = "CombinedNN";
-					if (!thisNode.equals(tree.getRoot())){
-					if (thisNode.label==thisNode.parent.label)
-					{
-						removables.add(thisNode);
-					}}
-				}}
+					if (!thisNode.equals(tree.getRoot())) {
+						if (thisNode.label == thisNode.parent.label) {
+							removables.add(thisNode);
+						}
+					}
+				}
+			}
 
 			for (MutableTreeNode child : thisNode.getChildren()) {
 				stack.push(child);
 			}
-						
+
 		}
-		for (MutableTreeNode m: removables)
-			{
-			Log.info(SentenceToSequenceStanford.class,"Removing node "+m.nodeNumber+": "+m.toString());
+		for (MutableTreeNode m : removables) {
+			Log.info(SentenceToSequenceStanford.class, "Removing node " + m.nodeNumber + ": " + m.toString());
 			tree.remove(m);
-			//TODO: Fix Node Numbers after removing them.
-			}
+			// TODO: Fix Node Numbers after removing them.
+		}
 		q.setTree(tree);
 	}
 
-
-
-	//	private static  void resolveCompoundNouns(MutableTree tree, List<Entity> list) {
+	// private static void resolveCompoundNouns(MutableTree tree, List<Entity>
+	// list) {
 	//
-	//		Stack<MutableTreeNode> stack = new Stack<MutableTreeNode>();
-	//		stack.push(tree.getRoot());
-	//		while (!stack.isEmpty()) {
+	// Stack<MutableTreeNode> stack = new Stack<MutableTreeNode>();
+	// stack.push(tree.getRoot());
+	// while (!stack.isEmpty()) {
 	//
-	//			MutableTreeNode thisNode = stack.pop();
-	//			String label = thisNode.label;
-	//			if (label.contains("aksw.org")) {
-	//				thisNode.label = Joiner.on(" ").join(label.replace("http://aksw.org/combinedNN/", "").split("_"));
-	//				thisNode.posTag = "CombinedNN";
-	//			}
-	//			for (MutableTreeNode child : thisNode.getChildren()) {
-	//				stack.push(child);
-	//			}
-	//		}
+	// MutableTreeNode thisNode = stack.pop();
+	// String label = thisNode.label;
+	// if (label.contains("aksw.org")) {
+	// thisNode.label =
+	// Joiner.on(" ").join(label.replace("http://aksw.org/combinedNN/",
+	// "").split("_"));
+	// thisNode.posTag = "CombinedNN";
+	// }
+	// for (MutableTreeNode child : thisNode.getChildren()) {
+	// stack.push(child);
+	// }
+	// }
 	//
-	//	}
+	// }
 
 	private static String replaceLabelsByIdentifiedURIs(String sentence, List<Entity> list) {
 		for (Entity entity : list) {
@@ -194,7 +197,7 @@ public class SentenceToSequenceStanford {
 				// " " inserted so punctuation gets separated correctly from
 				// URIs
 				sentence = sentence.replace(entity.label, entity.uris.get(0).getURI() + " ").trim();
-			} 
+			}
 		}
 		return sentence;
 	}
