@@ -4,10 +4,12 @@ import java.sql.SQLException;
 import java.util.Set;
 
 import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
+import org.aksw.jena_sparql_api.cache.extra.CacheBackend;
+//import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheCoreH2;
-import org.aksw.jena_sparql_api.cache.extra.CacheEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheExImpl;
+//import org.aksw.jena_sparql_api.cache.extra.CacheEx;
+//import org.aksw.jena_sparql_api.cache.extra.CacheExImpl;
+import org.aksw.jena_sparql_api.cache.extra.CacheFrontendImpl;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.apache.jena.atlas.json.JsonString;
@@ -40,8 +42,8 @@ public class AnswerBox {
 					* 60l
 					* 60l
 					* 1000l;
-			CacheCoreEx cacheBackend = CacheCoreH2.create("./sparql", timeToLive, true);
-			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
+			CacheBackend cacheBackend = CacheCoreH2.create("./sparql", timeToLive, true);
+			CacheFrontendImpl cacheFrontend = new CacheFrontendImpl(cacheBackend);
 			qef = new QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql");
 			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
 		} catch (ClassNotFoundException | SQLException e) {
