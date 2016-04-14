@@ -44,13 +44,18 @@ public class PosTagTest {
 		StringBuilder outputStr = new StringBuilder();
 		Map<String, String> mismatched = new HashMap<String, String>();
 		Map<String, Integer> mismatchCnt = new HashMap<String, Integer>();
-		Map<String, Integer>posCnt = new HashMap<String, Integer>();
+		Map<String, Integer> totalCnt = new HashMap<String, Integer>();
 		for (HAWKQuestion currentQuestion : questionsStanford) {
 
 			Map<String, String> core = SentenceToSequence.generatePOSTags(currentQuestion);
 			Annotation doc = stanford.runAnnotation(currentQuestion);
 			Map<String, String> stanPos = stanford.generatePOSTags(doc);
-
+			for (Map.Entry<String, String>e:stanPos.entrySet())
+			{	
+				totalCnt.putIfAbsent(e.getValue(), 0);
+			//Generate new map entry for every occurance of [StanfordPos] - [CorePos]
+				totalCnt.put(e.getValue(), totalCnt.get(e.getValue())+1);
+			}
 			if (!core.equals(stanPos)) {
 				outputStr.append("CLEAR |  " + core.toString() + "\n");
 				outputStr.append("STAN  |  " + stanPos.toString() + "\n");
@@ -65,9 +70,7 @@ public class PosTagTest {
 					{
 						mismatched.putIfAbsent(stanVal, coreVal);
 						String mismatchLabel=stanVal+"-"+coreVal;
-						if (mismatchCnt.get(mismatchLabel)==null) {
-							mismatchCnt.putIfAbsent(mismatchLabel, 0);
-						}
+						mismatchCnt.putIfAbsent(mismatchLabel, 0);
 						mismatchCnt.put(mismatchLabel, mismatchCnt.get(mismatchLabel)+1);
 						outputStr.append("Differing POS Tags for node '"+ stanKey + "' (Stanf.|Core):"+stanVal+ " | " + coreVal+"\n\n"+ "");
 					}
@@ -78,12 +81,18 @@ public class PosTagTest {
 
 		}
 		log.debug(outputStr.toString());
-		log.info("Discrepancies between POS-Tags: (Stan | Clear):\n");
+		log.info("Discrepancies between POS-Tags (Stan = Clear):");
 		log.info(mismatched.toString());
-		log.info("Discrepancy count (Stan-Clear):\n");
+		log.info("Discrepancy count (Stan-Clear):");
 		log.info(mismatchCnt.toString());
-		
-		
+		log.info("Discrepancies/Total Occurrances in Stanford:");
+		for (String mismatchedPOS:mismatchCnt.keySet()) 
+		{
+			String stanKey=mismatchedPOS.split("-")[0];
+
+			Integer totalOcc = totalCnt.get(stanKey);
+					log.info("["+mismatchedPOS + "]/["+ stanKey+"]: "+mismatchCnt.get(mismatchedPOS).toString()+ "/"+  totalOcc);
+		}
 		Assert.assertTrue(testPass);
 
 	}
