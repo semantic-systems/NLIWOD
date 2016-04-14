@@ -1,5 +1,11 @@
 package org.aksw.hawk.controller;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -9,13 +15,20 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.qa.commons.datastructure.Entity;
+import org.aksw.qa.commons.datastructure.IQuestion;
+import org.aksw.qa.commons.load.Dataset;
+import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Joiner;
+
+import edu.stanford.nlp.international.Language;
 import edu.stanford.nlp.ling.CoreAnnotations.PartOfSpeechAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TextAnnotation;
@@ -27,6 +40,7 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
+import edu.stanford.nlp.trees.GrammaticalRelation;
 import edu.stanford.nlp.util.CoreMap;
 
 /**
@@ -46,6 +60,7 @@ public class StanfordNLPConnector {
 	private StanfordCoreNLP stanfordPipe;
 	private int nodeNumber;
 	private Set<IndexedWord> visitedNodes;
+	public static StringBuilder out = new StringBuilder();
 	static Logger log = LoggerFactory.getLogger(StanfordNLPConnector.class);
 
 	/**
@@ -69,7 +84,7 @@ public class StanfordNLPConnector {
 	public StanfordNLPConnector() {
 
 		Properties props = new Properties();
-		props.setProperty("annotators", "tokenize, ssplit, pos, lemma,ner, parse, dcoref");
+		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
 		stanfordPipe = new StanfordCoreNLP(props);
 
 	}
@@ -147,7 +162,8 @@ public class StanfordNLPConnector {
 
 		SemanticGraph graph = sen.get(CollapsedCCProcessedDependenciesAnnotation.class);
 
-		MutableTree tree = semanticGraphToMutableTree(graph);
+		MutableTree tree = semanticGraphToMutableTree(graph, null);
+
 		log.debug(tree.toString());
 
 		return tree;
@@ -163,21 +179,25 @@ public class StanfordNLPConnector {
 	 * @param q
 	 *            The Question you want to run NounPhraseCombination on
 	 */
-	public void combineSequences(Annotation document, HAWKQuestion q) {
+	public MutableTree combineSequences(Annotation document, HAWKQuestion q) {
 
 		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
 		CoreMap sen = sentences.get(0);
-		List<String> tokens = new LinkedList<String>();
-		Map<String, String> label2pos = new HashMap<String, String>();
 
-		for (CoreLabel token : sen.get(TokensAnnotation.class)) {
-			String word = token.get(TextAnnotation.class);
-			String pos = token.get(PartOfSpeechAnnotation.class);
-			tokens.add(word);
-			label2pos.put(word, pos);
-		}
+		SemanticGraph graph = sen.get(CollapsedCCProcessedDependenciesAnnotation.class);
 
-		SentenceToSequence.runPhraseCombination(q, tokens, label2pos);
+		MutableTree tree = semanticGraphToMutableTree(graph, q);
+
+		log.debug(tree.toString());
+
+		// used in main
+		// out.append(q.getLanguageToQuestion().get("en") + "\r\n\r\n");
+		// out.append(sen.get(CollapsedCCProcessedDependenciesAnnotation.class).toString(SemanticGraph.OutputFormat.LIST)
+		// + "\r\n\r\n");
+		// out.append(graph.toString() + "\r\n\r\n");
+		// out.append(tree.toString() + "\r\n\r\n");
+		// out.append("\r\n\r\n\r\n\r\n");
+		return tree;
 
 	}
 
@@ -192,6 +212,7 @@ public class StanfordNLPConnector {
 
 		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
 		CoreMap sen = sentences.get(0);
+
 		List<String> tokens = new LinkedList<String>();
 		Map<String, String> label2pos = new HashMap<String, String>();
 
@@ -209,12 +230,15 @@ public class StanfordNLPConnector {
 
 	/**
 	 * Converts a SemanticGraph from StanfordNLP to a Mutable tree recursively
-	 * with DFS. The SemanticGraph CAN be cyclic, this is NOT catched yet.
+	 * with DFS.
 	 * 
 	 * @param graph
 	 * @return
 	 */
-	private MutableTree semanticGraphToMutableTree(SemanticGraph graph) {
+	private MutableTree semanticGraphToMutableTree(SemanticGraph graph, HAWKQuestion q) {
+
+		System.out.println(graph.toString(SemanticGraph.OutputFormat.LIST));
+
 		nodeNumber = 0;
 		MutableTree tree = new MutableTree();
 		MutableTreeNode mutableRoot;
@@ -225,7 +249,7 @@ public class StanfordNLPConnector {
 		mutableRoot = new MutableTreeNode(graphRoot.word(), graphRoot.tag(), "root", null, nodeNumber++, graphRoot.lemma());
 		tree.head = mutableRoot;
 
-		convertGraphStanford(mutableRoot, graphRoot, graph);
+		convertGraphStanford(mutableRoot, graphRoot, graph, q);
 
 		return tree;
 	}
@@ -237,10 +261,15 @@ public class StanfordNLPConnector {
 	 * @param parentGraphWord
 	 * @param graph
 	 */
-	private void convertGraphStanford(MutableTreeNode parentMutableNode, IndexedWord parentGraphWord, SemanticGraph graph) {
+	// TODO find out why dependency graph and therefore CombinedNNs are fucked
+	// up for "Do Prince Harry and Prince William have the same parents?"
+	private void convertGraphStanford(MutableTreeNode parentMutableNode, IndexedWord parentGraphWord, SemanticGraph graph, HAWKQuestion q) {
 		visitedNodes.add(parentGraphWord);
 
-		// if graph is cyclic, it will be catched here
+		/**
+		 * Remove already visited nodes from the list of children. This makes
+		 * the graph for us acyclic and therefore prevents RECURSION OF DEATH!
+		 */
 		Set<IndexedWord> notCyclicChildren = new HashSet<IndexedWord>(graph.getChildren(parentGraphWord));
 		notCyclicChildren.removeAll(visitedNodes);
 
@@ -248,13 +277,94 @@ public class StanfordNLPConnector {
 			return;
 		}
 
+		/**
+		 * Get all children which are in relation "compound" with parent
+		 */
+		if (q != null) {
+			GrammaticalRelation gr = new GrammaticalRelation(Language.UniversalEnglish, "compound", null, null);
+			ArrayList<IndexedWord> compounds = new ArrayList<IndexedWord>();
+			compounds.addAll(graph.getChildrenWithReln(parentGraphWord, gr));
+
+			if (!compounds.isEmpty()) {
+
+				/**
+				 * We Need to order all Parts of the CompoundNon for running
+				 * SentenceToSequence.transformTree. ParentNode is also a part
+				 * of the CompoundNoun
+				 */
+				compounds.add(parentGraphWord);
+				Collections.sort(compounds);
+				ArrayList<String> orderlyWords = new ArrayList<String>();
+				for (IndexedWord compoundChild : compounds) {
+					orderlyWords.add(compoundChild.word());
+				}
+				/**
+				 * This sets the CombinedNN as Entity in Question
+				 */
+				SentenceToSequence.transformTree(orderlyWords, q);
+				/**
+				 * Merge all compound-children with parent
+				 */
+				parentMutableNode.setPosTag("CombinedNN");
+				parentMutableNode.setLabel(Joiner.on(" ").join(orderlyWords));
+				// parentMutableNode.lemma= "#url#";
+
+				/**
+				 * Get the children of eliminated Nodes and add then to children
+				 * of parents e.g. deal with the children of the children of
+				 * Parent
+				 */
+
+				compounds.remove(parentGraphWord);
+				for (IndexedWord compoundChild : compounds) {
+					notCyclicChildren.addAll(graph.getChildList(compoundChild));
+				}
+
+				notCyclicChildren.removeAll(compounds);
+			}// end if CombinedNN
+		}// end if HAWKQuestion !=null
 		for (IndexedWord child : notCyclicChildren) {
 
 			SemanticGraphEdge edge = graph.getEdge(parentGraphWord, child);
 			String depLabel = edge.getRelation().getShortName();
 			MutableTreeNode childMutableNode = new MutableTreeNode(child.word(), child.tag(), depLabel, parentMutableNode, nodeNumber++, child.lemma());
 			parentMutableNode.addChild(childMutableNode);
-			convertGraphStanford(childMutableNode, child, graph);
+			convertGraphStanford(childMutableNode, child, graph, q);
+		}
+
+	}
+
+	public static void main(String[] args) {
+
+		StanfordNLPConnector stanford;
+		List<HAWKQuestion> questionsStanford;
+
+		List<IQuestion> loadedQuestions = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
+		questionsStanford = HAWKQuestionFactory.createInstances(loadedQuestions);
+		stanford = new StanfordNLPConnector();
+
+		for (HAWKQuestion currentQuestion : questionsStanford) {
+
+			Annotation doc = stanford.runAnnotation(currentQuestion);
+			stanford.combineSequences(doc, currentQuestion);
+			// stanford.combineSequences(doc, currentQuestion);
+
+		}
+		try {
+
+			File file = new File("stanford_compound.txt");
+
+			file.createNewFile();
+
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(out.toString());
+			bw.close();
+
+			System.out.println("Done");
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}

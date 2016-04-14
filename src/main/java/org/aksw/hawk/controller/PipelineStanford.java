@@ -56,15 +56,13 @@ public class PipelineStanford extends AbstractPipeline {
 		Annotation currentAnotation = this.stanfordConnector.runAnnotation(q);
 
 		// Noun combiner, decrease #nodes in the DEPTree
-		log.info("Noun phrase combination.");
+		log.info("Noun phrase combination / Dependency Parsing");
 		// TODO make this method return the combine sequence and work on this,
 		// i.e., q.sequence = sentenceToSequence.combineSequences(q);
-		stanfordConnector.combineSequences(currentAnotation, q);
 
-		currentAnotation = stanfordConnector.runAnnotation(q);
-		// Build trees from questions and cache them
-		log.info("Dependency parsing.");
-		q.setTree(stanfordConnector.process(currentAnotation));
+		// @Ricardo this will calculate cardinality of reduced(combinedNN) tree.
+		// is this right?
+		q.setTree(stanfordConnector.combineSequences(currentAnotation, q));
 
 		// Cardinality identifies the integer i used for LIMIT i
 		log.info("Cardinality calculation.");

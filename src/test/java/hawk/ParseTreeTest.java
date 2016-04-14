@@ -51,11 +51,11 @@ public class ParseTreeTest {
 		Treeprinter treeprinter = new Treeprinter();
 		CachedParseTreeClearnlp cParseTree2 = new CachedParseTreeClearnlp();
 
-		String[] BareStanford = new String[questions.size()];
-		String[] BareClearnlp = new String[questions.size()];
-		String[] CombinedStanford = new String[questions.size()];
-		String[] CombinedClearnlp = new String[questions.size()];
-		String[] PrunedStanford = new String[questions.size()];
+		String[] bareStanford = new String[questions.size()];
+		String[] bareClearnlp = new String[questions.size()];
+		String[] combinedStanford = new String[questions.size()];
+		String[] combinedClearnlp = new String[questions.size()];
+		String[] prunedStanford = new String[questions.size()];
 		String[] PrunedClearnlp = new String[questions.size()];
 		int i = 0;
 		StanfordNLPConnector stanfordConnector = new StanfordNLPConnector();
@@ -67,15 +67,14 @@ public class ParseTreeTest {
 			log.info("Named entity recognition.");
 			q.setLanguageToNamedEntites(nerdModule.getEntities(q.getLanguageToQuestion().get("en")));
 			Annotation currentAnotation = stanfordConnector.runAnnotation(q);
+
 			q.setTree(stanfordConnector.process(currentAnotation));
-			BareStanford[i] = treeprinter.printTreeStanford(q);
+			bareStanford[i] = treeprinter.printTreeStanford(q);
 			// log.info("Classify question type.");
 			// q.setIsClassifiedAsASKQuery(queryTypeClassifier.isASKQuery(q.getLanguageToQuestion().get("en")));
-			stanfordConnector.combineSequences(currentAnotation, q);
-			q.setTree(stanfordConnector.process(currentAnotation));
-			currentAnotation = stanfordConnector.runAnnotation(q);
+			q.setTree(stanfordConnector.combineSequences(currentAnotation, q));
 
-			CombinedStanford[i] = treeprinter.printTreeStanford(q);
+			combinedStanford[i] = treeprinter.printTreeStanford(q);
 			// Build trees from questions and cache them
 			log.info("Dependency parsing.");
 			q.setTree(stanfordConnector.process(currentAnotation));
@@ -87,7 +86,7 @@ public class ParseTreeTest {
 			// Apply pruning rules
 			log.info("Pruning tree.");
 			q.setTree(pruner.prune(q));
-			PrunedStanford[i] = treeprinter.printTreeStanford(q);
+			prunedStanford[i] = treeprinter.printTreeStanford(q);
 			// Annotate tree
 			log.info("Semantically annotating the tree.");
 			annotater.annotateTree(q);
@@ -108,9 +107,9 @@ public class ParseTreeTest {
 			// Build trees from questions and cache them
 			log.info("Dependency parsing.");
 			q.setTree(cParseTree2.process(q));
-			BareClearnlp[i] = treeprinter.printTreeClearnlp(q);
+			bareClearnlp[i] = treeprinter.printTreeClearnlp(q);
 			sentenceToSequence.combineSequences(q);
-			CombinedClearnlp[i] = treeprinter.printTreeClearnlp(q);
+			combinedClearnlp[i] = treeprinter.printTreeClearnlp(q);
 			// // Cardinality identifies the integer i used for LIMIT i
 			// //log.info("Cardinality calculation.");
 			// //q.setCardinality(cardinality.cardinality(q));
@@ -131,28 +130,28 @@ public class ParseTreeTest {
 		treeprinter.closeClearnlp();
 
 		for (int j = 0; j < limiter; j++) {
-			BareClearnlp[j] = BareClearnlp[j].replaceAll("[0-9]", "*");
-			BareStanford[j] = BareStanford[j].replaceAll("[0-9]", "*");
-			CombinedClearnlp[j] = CombinedClearnlp[j].replaceAll("[0-9]", "*");
+			bareClearnlp[j] = bareClearnlp[j].replaceAll("[0-9]", "*");
+			bareStanford[j] = bareStanford[j].replaceAll("[0-9]", "*");
+			combinedClearnlp[j] = combinedClearnlp[j].replaceAll("[0-9]", "*");
 			PrunedClearnlp[j] = PrunedClearnlp[j].replaceAll("[0-9]", "*");
-			CombinedStanford[j] = CombinedStanford[j].replaceAll("[0-9]", "*");
-			PrunedStanford[j] = PrunedStanford[j].replaceAll("[0-9]", "*");
+			combinedStanford[j] = combinedStanford[j].replaceAll("[0-9]", "*");
+			prunedStanford[j] = prunedStanford[j].replaceAll("[0-9]", "*");
 			// Removes node numbers, since they often screw up the comparison
 			// between otherwise identical trees
 
-			if (!BareClearnlp[j].equals(BareStanford[j])) {
+			if (!bareClearnlp[j].equals(bareStanford[j])) {
 				log.info("Mismatch: Bare Version Question " + j + ":" + questions.get(j).getLanguageToQuestion().get("en"));
-				log.info(BareStanford[j]);
-				log.info(BareClearnlp[j]);
+				log.info(bareStanford[j]);
+				log.info(bareClearnlp[j]);
 			}
-			if (!CombinedClearnlp[j].equals(CombinedStanford[j])) {
+			if (!combinedClearnlp[j].equals(combinedStanford[j])) {
 				log.info("Mismatch: Combined Version Question " + j + ":" + questions.get(j).getLanguageToQuestion().get("en"));
-				log.info(CombinedStanford[j]);
-				log.info(CombinedClearnlp[j]);
+				log.info(combinedStanford[j]);
+				log.info(combinedClearnlp[j]);
 			}
-			if (!PrunedClearnlp[j].equals(PrunedStanford[j])) {
+			if (!PrunedClearnlp[j].equals(prunedStanford[j])) {
 				log.info("Mismatch: Pruned Version Question " + j + ":" + questions.get(j).getLanguageToQuestion().get("en"));
-				log.info(PrunedStanford[j]);
+				log.info(prunedStanford[j]);
 				log.info(PrunedClearnlp[j]);
 			}
 		}
