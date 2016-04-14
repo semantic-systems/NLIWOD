@@ -2,6 +2,7 @@ package hawk;
 
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 import org.aksw.hawk.controller.StanfordNLPConnector;
 import org.aksw.hawk.datastructures.HAWKQuestion;
@@ -29,6 +30,7 @@ public class PosTagTest {
 	@Before
 	public void load() {
 		log.info("Starting POS-Tag comparison between StanvordNLP and ClearNLP using QALD6 Multilingual dataset");
+
 		List<IQuestion> loadedQuestions = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
 		questionsStanford = HAWKQuestionFactory.createInstances(loadedQuestions);
 		questionsClear = HAWKQuestionFactory.createInstances(loadedQuestions);
@@ -40,6 +42,9 @@ public class PosTagTest {
 
 		boolean testPass = true;
 		StringBuilder outputStr = new StringBuilder();
+		Map<String, String> mismatched = new HashMap<String, String>();
+		Map<String, Integer> mismatchCnt = new HashMap<String, Integer>();
+		Map<String, Integer>posCnt = new HashMap<String, Integer>();
 		for (HAWKQuestion currentQuestion : questionsStanford) {
 
 			Map<String, String> core = SentenceToSequence.generatePOSTags(currentQuestion);
@@ -48,13 +53,38 @@ public class PosTagTest {
 
 			if (!core.equals(stanPos)) {
 				outputStr.append("CLEAR |  " + core.toString() + "\n");
-				outputStr.append("STAN  |  " + stanPos.toString() + "\n\n");
+				outputStr.append("STAN  |  " + stanPos.toString() + "\n");
+				for (Map.Entry<String, String>e:stanPos.entrySet())
+				{
+					String stanKey = e.getKey();
+					String stanVal=e.getValue();
+					String coreVal=core.get(stanKey);
+
+
+					if (!stanVal.equals(coreVal))
+					{
+						mismatched.putIfAbsent(stanVal, coreVal);
+						String mismatchLabel=stanVal+"-"+coreVal;
+						if (mismatchCnt.get(mismatchLabel)==null) {
+							mismatchCnt.putIfAbsent(mismatchLabel, 0);
+						}
+						mismatchCnt.put(mismatchLabel, mismatchCnt.get(mismatchLabel)+1);
+						outputStr.append("Differing POS Tags for node '"+ stanKey + "' (Stanf.|Core):"+stanVal+ " | " + coreVal+"\n\n"+ "");
+					}
+				}
 				testPass = false;
 
 			}
 
 		}
 		log.debug(outputStr.toString());
+		log.info("Discrepancies between POS-Tags: (Stan | Clear):\n");
+		log.info(mismatched.toString());
+		log.info("Discrepancy count (Stan-Clear):\n");
+		log.info(mismatchCnt.toString());
+		
+		
 		Assert.assertTrue(testPass);
+
 	}
 }
