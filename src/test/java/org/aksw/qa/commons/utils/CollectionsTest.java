@@ -7,8 +7,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CollectionsTest {
+	Logger log = LoggerFactory.getLogger(CollectionsTest.class);
 
 	@Test
 	public void testIntersect() {
@@ -37,9 +40,9 @@ public class CollectionsTest {
 		// {a, d, abc}
 		Set<String> intersect = CollectionUtils.intersection(set1, set2);
 
-		System.out.println("Set1 : " + set1);
-		System.out.println("Set2 : " + set2);
-		System.out.println("Intersect : " + intersect);
+		log.debug("Set1 : " + set1);
+		log.debug("Set2 : " + set2);
+		log.debug("Intersect : " + intersect);
 
 		Object[] actual = intersect.toArray();
 		Object[] expectedA = expected.toArray();

@@ -40,7 +40,6 @@ public class QALD_Loader {
 	private static InputStream getInputStream(Dataset set) throws IOException {
 		// Magical get the path from qa-datasets
 		URL url = mapDatasetToPath(set);
-		System.out.println(url);
 		return url.openStream();
 	}
 
@@ -52,27 +51,27 @@ public class QALD_Loader {
 	}
 
 	private static URL mapDatasetToPath(Dataset set) {
-		System.out.println(set.toString());
 		// FIXME QALD-5 is that multilingual or hybrid? Load both!
 		switch (set) {
-		case nlq:
-			return ClassLoader.getSystemClassLoader().getResource("NLQ-OKBQA/nlq1_vis.json");
+	//	case nlq:
+	//		return ClassLoader.getSystemClassLoader().getResource("NLQ-OKBQA/nlq1_vis.json");
 		case QALD5_Test:
 			return ClassLoader.getSystemClassLoader().getResource("QALD-5/qald-5_test.xml");
 		case QALD6_Train_Hybrid:
 			return ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-hybrid.json");
 		case QALD6_Train_Multilingual:
 			return ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-multilingual.json");
-		case QALD6_Train_Datacube:
-			return ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-datacube.json");
+			//FIXME datacube und qbench sollte gleich sein?!Konrad Höffner Fragen
+//		case QALD6_Train_Datacube:
+//			return ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-datacube.json");
 		case QALD5_Train:
 			return ClassLoader.getSystemClassLoader().getResource("QALD-5/qald-5_train.xml");
-		case qbench1:
-			return ClassLoader.getSystemClassLoader().getResource("qbench/qbench1.xml");
-		case qbench2:
-			return ClassLoader.getSystemClassLoader().getResource("qbench/qbench2.xml");
-		case stonetemple:
-			return ClassLoader.getSystemClassLoader().getResource("stonetemple/stonetemple");
+	//	case qbench1:
+	//		return ClassLoader.getSystemClassLoader().getResource("qbench/qbench1.xml");
+	//	case qbench2:
+	//		return ClassLoader.getSystemClassLoader().getResource("qbench/qbench2.xml");
+	//	case stonetemple:
+	//		return ClassLoader.getSystemClassLoader().getResource("stonetemple/stonetemple");
 
 		}
 		return null;

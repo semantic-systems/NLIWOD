@@ -21,12 +21,16 @@ public class LoadTest {
 				log.info("Dataset succesfully loaded:" + d.name());
 				for (IQuestion q : questions) {
 					Assert.assertTrue(q.getId() > 0);
-					Assert.assertNotNull(q.getAnswerType());
+					Assert.assertNotNull(q.toString(),q.getAnswerType());
 					Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null);
 					Assert.assertNotNull(q.getLanguageToQuestion());
 					Assert.assertFalse(q.getLanguageToQuestion().values().isEmpty());
 					Assert.assertNotNull(q.getLanguageToKeywords());
-					Assert.assertTrue(q.getGoldenAnswers() != null && q.getAnswerType().matches("resource||boolean||number||date||string"));
+					Assert.assertTrue(q.toString(), q.getGoldenAnswers() != null);
+					// FIXME sobald wir auf das eigentliche QALD repository
+					// commiten können nimm hier und in QALD 5 den antworttyp
+					// "list" und "uri" raus
+					Assert.assertTrue(q.toString(), q.getAnswerType().matches("resource||uri||list||boolean||number||date||string"));
 				}
 			} catch (Exception e) {
 				log.error("Dataset couldn't be loaded:" + d.name());
@@ -66,9 +70,11 @@ public class LoadTest {
 			// skipping Answer on known incompletes:
 			if (!incompletes.contains(q.getId())) {
 				Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null);
-				log.debug(q.getLanguageToQuestion().get("en") + "\t" + "Answer:" + "\t" + q.getSparqlQuery());
+				// log.debug(q.getLanguageToQuestion().get("en") + "\t" +
+				// "Answer:" + "\t" + q.getSparqlQuery());
 			} else {
-				log.debug(q.getLanguageToQuestion().get("en") + "\t" + "No Answer, known incomplete question.");
+				// log.debug(q.getLanguageToQuestion().get("en") + "\t" +
+				// "No Answer, known incomplete question.");
 			}
 		}
 	}
