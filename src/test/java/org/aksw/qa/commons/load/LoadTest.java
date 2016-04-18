@@ -100,19 +100,17 @@ public class LoadTest {
 
 	boolean execQuery(IQuestion q)
 	{
-		
+
 		Query query = new Query();
 
 		// Execute the query and obtain results
 		QueryExecutionFactoryHttp qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
-		Model model = ModelFactory.createMemModelMaker().createModel("LoadTest");
 		Boolean queryValid;
 
 		try{
 			query = QueryFactory.create(q.getSparqlQuery());
 
 			// Execute the query and obtain results
-			qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
 
 			QueryExecution qe = qef.createQueryExecution(query);
 
@@ -124,7 +122,7 @@ public class LoadTest {
 		}
 		catch(Exception e){
 			if (e.getClass()!=com.hp.hpl.jena.sparql.resultset.ResultSetException.class){
-				
+
 
 				log.info(q.getSparqlQuery());
 				log.info("Jena error: "+e.toString());
