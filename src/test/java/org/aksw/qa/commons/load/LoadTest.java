@@ -4,11 +4,21 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.ResultSetFormatter;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 public class LoadTest {
 	Logger log = LoggerFactory.getLogger(LoadTest.class);
@@ -19,10 +29,15 @@ public class LoadTest {
 			try {
 				List<IQuestion> questions = QALD_Loader.load(d);
 				log.info("Dataset succesfully loaded:" + d.name());
+
+
 				for (IQuestion q : questions) {
 					Assert.assertTrue(q.getId() > 0);
 					Assert.assertNotNull(q.toString(),q.getAnswerType());
 					Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null);
+					if (q.getSparqlQuery()!=null){
+						Assert.assertTrue(execQuery(q));	
+					}
 					Assert.assertNotNull(q.getLanguageToQuestion());
 					Assert.assertFalse(q.getLanguageToQuestion().values().isEmpty());
 					Assert.assertNotNull(q.getLanguageToKeywords());
@@ -32,9 +47,11 @@ public class LoadTest {
 					// "list" und "uri" raus
 					Assert.assertTrue(q.toString(), q.getAnswerType().matches("resource||uri||list||boolean||number||date||string"));
 				}
+
 			} catch (Exception e) {
 				log.error("Dataset couldn't be loaded:" + d.name());
 			}
+
 		}
 	}
 
@@ -77,6 +94,50 @@ public class LoadTest {
 				// "No Answer, known incomplete question.");
 			}
 		}
+
+
+	}
+
+	boolean execQuery(IQuestion q)
+	{
+		
+		Query query = new Query();
+
+		// Execute the query and obtain results
+		QueryExecutionFactoryHttp qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
+		Model model = ModelFactory.createMemModelMaker().createModel("LoadTest");
+		Boolean queryValid;
+
+		try{
+			query = QueryFactory.create(q.getSparqlQuery());
+
+			// Execute the query and obtain results
+			qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
+
+			QueryExecution qe = qef.createQueryExecution(query);
+
+			ResultSet results = qe.execSelect();
+			log.info("Query valid for q"+ q.getId()+ " - "+ q.getLanguageToQuestion());
+			//		log.debug(query.toString());
+			queryValid=true;
+			qe.close();
+		}
+		catch(Exception e){
+			if (e.getClass()!=com.hp.hpl.jena.sparql.resultset.ResultSetException.class){
+				
+
+				log.info(q.getSparqlQuery());
+				log.info("Jena error: "+e.toString());
+				log.info("!!!! Query invalid for q"+ q.getId()+ " - "+ q.getLanguageToQuestion());
+				queryValid=false;
+			}
+
+			else {
+				log.info("Query delivers no results for q"+ q.getId()+ " - "+ q.getLanguageToQuestion());
+				queryValid=true;
+			}
+		}
+		return queryValid;
 	}
 
 }
