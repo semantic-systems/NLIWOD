@@ -24,8 +24,13 @@ public class LoadTest {
 	Logger log = LoggerFactory.getLogger(LoadTest.class);
 
 	@Test
+	/**
+	 * Testing all datasets for loadability and validity of SPARQL-queries 
+	 */
 	public void testAllDatasetsTowardsLoadibility() {
+		Boolean queriesValid=true;
 		for (Dataset d : Dataset.values()) {
+
 			try {
 				List<IQuestion> questions = QALD_Loader.load(d);
 				log.info("Dataset succesfully loaded:" + d.name());
@@ -36,7 +41,7 @@ public class LoadTest {
 					Assert.assertNotNull(q.toString(),q.getAnswerType());
 					Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null);
 					if (q.getSparqlQuery()!=null){
-						Assert.assertTrue(execQuery(q));	
+						queriesValid=(execQueryWithoutResults(q) && queriesValid);	
 					}
 					Assert.assertNotNull(q.getLanguageToQuestion());
 					Assert.assertFalse(q.getLanguageToQuestion().values().isEmpty());
@@ -51,8 +56,8 @@ public class LoadTest {
 			} catch (Exception e) {
 				log.error("Dataset couldn't be loaded:" + d.name());
 			}
-
 		}
+		Assert.assertTrue(queriesValid);
 	}
 
 	@Test
@@ -83,7 +88,6 @@ public class LoadTest {
 			Assert.assertNotNull(q.getLanguageToQuestion());
 			Assert.assertFalse(q.getLanguageToQuestion().values().isEmpty());
 			Assert.assertNotNull(q.getLanguageToKeywords());
-
 			// skipping Answer on known incompletes:
 			if (!incompletes.contains(q.getId())) {
 				Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null);
@@ -98,44 +102,80 @@ public class LoadTest {
 
 	}
 
-	boolean execQuery(IQuestion q)
+	boolean execQuery(IQuestion q, boolean hurry)
 	{
 
 		Query query = new Query();
 
 		// Execute the query and obtain results
 		QueryExecutionFactoryHttp qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
-		Boolean queryValid;
-
+		Boolean queryValid=true;
+		if (hurry)
+		{
+			log.debug("Testing query for parsability: "+q.getId()+": "+q.getLanguageToQuestion().get("en"));
+		}
+		else
+		{
+			log.debug("Testing query for parsability and returned results: "+q.getId()+": "+q.getLanguageToQuestion().get("en"));
+		}
 		try{
 			query = QueryFactory.create(q.getSparqlQuery());
 
 			// Execute the query and obtain results
 
 			QueryExecution qe = qef.createQueryExecution(query);
+			if (!q.getGoldenAnswers().isEmpty()){
+				if (!hurry)
+				{
+					ResultSet results = qe.execSelect();
 
-			ResultSet results = qe.execSelect();
-			log.info("Query valid for q"+ q.getId()+ " - "+ q.getLanguageToQuestion());
-			//		log.debug(query.toString());
-			queryValid=true;
-			qe.close();
+					if  (results.toString().contains(q.getGoldenAnswers().toString())){
+						log.info("Question result doesn't contain golden answer!");
+						log.info("Actual results: "+ results.toString());
+						log.info("Golden answers: "+ q.getGoldenAnswers().toString());
+					}
+				}
+
+				log.debug("Query valid for q"+ q.getId()+ " - "+ q.getLanguageToQuestion().get("en"));
+				//		log.debug(query.toString());
+				queryValid=(queryValid && true);
+				qe.close();
+			}
 		}
 		catch(Exception e){
 			if (e.getClass()!=com.hp.hpl.jena.sparql.resultset.ResultSetException.class){
 
 
-				log.info(q.getSparqlQuery());
+				log.debug(q.getSparqlQuery());
 				log.info("Jena error: "+e.toString());
-				log.info("!!!! Query invalid for q"+ q.getId()+ " - "+ q.getLanguageToQuestion());
+				log.info("!!!! Query invalid for q"+ q.getId()+ " - "+ q.getLanguageToQuestion().get("en"));
 				queryValid=false;
 			}
-
 			else {
-				log.info("Query delivers no results for q"+ q.getId()+ " - "+ q.getLanguageToQuestion());
-				queryValid=true;
+				if (q.getGoldenAnswers().isEmpty()){
+					log.debug("Query delivers no results for q"+ q.getId()+ " (expecting: empty) - "+ q.getLanguageToQuestion().get("en"));
+					queryValid=(queryValid && true);
+				}
+				else {
+					if (q.getGoldenAnswers().contains("true") || q.getGoldenAnswers().contains("false"))
+					{
+						log.debug("Query delivers no results for q"+ q.getId()+ " (expecting: boolean) - "+ q.getLanguageToQuestion().get("en"));
+						queryValid=(queryValid && true);
+					}
+					log.info("Golden answer not returned! Expecting:" + q.getGoldenAnswers().toString());
+					queryValid=false;
+				}
+
 			}
 		}
 		return queryValid;
 	}
-
+	boolean execQuery(IQuestion q)
+	{
+		return execQuery(q, false);
+	}
+	boolean execQueryWithoutResults(IQuestion q)
+	{
+		return execQuery(q, true);
+	}
 }
