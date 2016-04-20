@@ -18,8 +18,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.stanford.nlp.pipeline.Annotation;
-
 public class CombinedNounPhrasesClearStanford {
 
 	StanfordNLPConnector stanford;
@@ -41,8 +39,8 @@ public class CombinedNounPhrasesClearStanford {
 		boolean testPass = true;
 
 		for (HAWKQuestion currentQuestion : questionsStanford) {
-			Annotation doc = stanford.runAnnotation(currentQuestion);
-			stanford.combineSequences(doc, currentQuestion);
+
+			stanford.combineSequences(currentQuestion);
 		}
 		for (HAWKQuestion currentQuestion : questionsClear) {
 			SentenceToSequence.combineSequences(currentQuestion);

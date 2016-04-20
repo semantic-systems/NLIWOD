@@ -19,6 +19,7 @@ import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.nlp.SentenceToSequence;
+import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
@@ -98,7 +99,7 @@ public class StanfordNLPConnector {
 	 * @return
 	 */
 
-	private void replaceWithURI(HAWKQuestion q) {
+	private String replaceNamedEntitysWithURL(HAWKQuestion q) {
 		String sentence = q.getLanguageToQuestion().get("en");
 		if (!q.getLanguageToNamedEntites().isEmpty()) {
 			sentence = replaceLabelsByIdentifiedURIs(sentence, q.getLanguageToNamedEntites().get("en"));
@@ -108,6 +109,8 @@ public class StanfordNLPConnector {
 			sentence = replaceLabelsByIdentifiedURIs(sentence, q.getLanguageToNounPhrases().get("en"));
 			log.debug(sentence);
 		}
+
+		return sentence;
 	}
 
 	/**
@@ -132,14 +135,13 @@ public class StanfordNLPConnector {
 	}
 
 	/**
-	 * Runs StanfordNLP on given Question and returns precessed Annotation
+	 * Runs StanfordNLP on given Question and returns processed Annotation
 	 * 
 	 * @param q
 	 *            The HAWKQuestion to be processed.
 	 * @return processed Question as Annotation
 	 */
 	public Annotation runAnnotation(HAWKQuestion q) {
-		this.replaceWithURI(q);
 		// create an empty Annotation just with the given text
 		Annotation annotationDocument = new Annotation(q.getLanguageToQuestion().get("en"));
 		// run all Annotators on this text
@@ -148,8 +150,22 @@ public class StanfordNLPConnector {
 	}
 
 	/**
-	 * Extracts dependency Graph from processed Annotation. Shoud have same
-	 * return as CachedParseTreeClearnlp.process(HAWKQuestion)
+	 * Runs StanfordNLP on given String and returns processed Annotation
+	 * 
+	 * @param q
+	 *            The HAWKQuestion to be processed.
+	 * @return processed Question as Annotation
+	 */
+	public Annotation runAnnotation(String s) {
+		// create an empty Annotation just with the given text
+		Annotation annotationDocument = new Annotation(s);
+		// run all Annotators on this text
+		this.stanfordPipe.annotate(annotationDocument);
+		return annotationDocument;
+	}
+
+	/**
+	 * Extracts dependency Graph from processed Annotation.
 	 * 
 	 * @param document
 	 *            an Processed Annotation
@@ -171,15 +187,23 @@ public class StanfordNLPConnector {
 	}
 
 	/**
-	 * Runs a NounPhrasCombination on given Annotation and HAWKQuestion. Given
-	 * Annotation has to be the processed Annotation of given HAWKQuestion
+	 * Runs a NounPhrasCombination and dependency parsing on given HAWKQuestion
 	 * 
-	 * @param document
-	 *            processed Annotation of HAWKQuestion
 	 * @param q
 	 *            The Question you want to run NounPhraseCombination on
 	 */
-	public MutableTree combineSequences(Annotation document, HAWKQuestion q) {
+	public MutableTree combineSequences(HAWKQuestion q) {
+		/**
+		 * We aim at having only one node for named entities. (same with
+		 * compoundNouns in recursive function) So we replace named entities
+		 * with their url, wich is one coherent String. -> graph parser will
+		 * give us only one node.
+		 * 
+		 */
+		String sentence = this.replaceNamedEntitysWithURL(q);
+		log.debug(sentence);
+
+		Annotation document = this.runAnnotation(sentence);
 
 		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
 		CoreMap sen = sentences.get(0);
@@ -261,10 +285,16 @@ public class StanfordNLPConnector {
 	 * @param parentGraphWord
 	 * @param graph
 	 */
-	// TODO find out why dependency graph and therefore CombinedNNs are fucked
-	// up for "Do Prince Harry and Prince William have the same parents?"
 	private void convertGraphStanford(MutableTreeNode parentMutableNode, IndexedWord parentGraphWord, SemanticGraph graph, HAWKQuestion q) {
 		visitedNodes.add(parentGraphWord);
+
+		/**
+		 * If the parentNode is a named Entity , set POS tag to "ADD". At this
+		 * point, only named entities are replaced by URLs
+		 */
+		if (parentGraphWord.word().contains("http://dbpedia.org/resource/")) {
+			parentMutableNode.posTag = "ADD";
+		}
 
 		/**
 		 * Remove already visited nodes from the list of children. This makes
@@ -280,15 +310,26 @@ public class StanfordNLPConnector {
 		/**
 		 * Get all children which are in relation "compound" with parent
 		 */
-		if (q != null) {
+		if (q != null && !parentMutableNode.posTag.equals("ADD")) {
 			GrammaticalRelation gr = new GrammaticalRelation(Language.UniversalEnglish, "compound", null, null);
 			ArrayList<IndexedWord> compounds = new ArrayList<IndexedWord>();
 			compounds.addAll(graph.getChildrenWithReln(parentGraphWord, gr));
 
+			/**
+			 * Don't combine with children which are URL from FOX (NER)
+			 * 
+			 */
+			ArrayList<IndexedWord> removeMe = new ArrayList<IndexedWord>();
+			for (IndexedWord child : compounds)
+				if (child.word().contains("http://dbpedia.org/resource/")) {
+					removeMe.add(child);
+				}
+			compounds.removeAll(removeMe);
+
 			if (!compounds.isEmpty()) {
 
 				/**
-				 * We Need to order all Parts of the CompoundNon for running
+				 * We Need to order all Parts of the CompoundNoun for running
 				 * SentenceToSequence.transformTree. ParentNode is also a part
 				 * of the CompoundNoun
 				 */
@@ -307,7 +348,7 @@ public class StanfordNLPConnector {
 				 */
 				parentMutableNode.setPosTag("CombinedNN");
 				parentMutableNode.setLabel(Joiner.on(" ").join(orderlyWords));
-				// parentMutableNode.lemma= "#url#";
+				parentMutableNode.lemma = "#url#";
 
 				/**
 				 * Get the children of eliminated Nodes and add then to children
@@ -338,15 +379,15 @@ public class StanfordNLPConnector {
 
 		StanfordNLPConnector stanford;
 		List<HAWKQuestion> questionsStanford;
-
+		Fox nerdModule = new Fox();
 		List<IQuestion> loadedQuestions = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
 		questionsStanford = HAWKQuestionFactory.createInstances(loadedQuestions);
 		stanford = new StanfordNLPConnector();
 
 		for (HAWKQuestion currentQuestion : questionsStanford) {
-
-			Annotation doc = stanford.runAnnotation(currentQuestion);
-			stanford.combineSequences(doc, currentQuestion);
+			currentQuestion.setLanguageToNamedEntites(nerdModule.getEntities(currentQuestion.getLanguageToQuestion().get("en")));
+			// Annotation doc = stanford.runAnnotation(currentQuestion);
+			stanford.combineSequences(currentQuestion);
 			// stanford.combineSequences(doc, currentQuestion);
 
 		}

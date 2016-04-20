@@ -72,7 +72,7 @@ public class ParseTreeTest {
 			bareStanford[i] = treeprinter.printTreeStanford(q);
 			// log.info("Classify question type.");
 			// q.setIsClassifiedAsASKQuery(queryTypeClassifier.isASKQuery(q.getLanguageToQuestion().get("en")));
-			q.setTree(stanfordConnector.combineSequences(currentAnotation, q));
+			q.setTree(stanfordConnector.combineSequences(q));
 
 			combinedStanford[i] = treeprinter.printTreeStanford(q);
 			// Build trees from questions and cache them

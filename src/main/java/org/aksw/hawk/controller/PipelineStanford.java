@@ -12,8 +12,6 @@ import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.stanford.nlp.pipeline.Annotation;
-
 public class PipelineStanford extends AbstractPipeline {
 	static Logger log = LoggerFactory.getLogger(PipelineStanford.class);
 	private Fox nerdModule;
@@ -53,8 +51,6 @@ public class PipelineStanford extends AbstractPipeline {
 		log.info("Named entity recognition.");
 		q.setLanguageToNamedEntites(nerdModule.getEntities(q.getLanguageToQuestion().get("en")));
 
-		Annotation currentAnotation = this.stanfordConnector.runAnnotation(q);
-
 		// Noun combiner, decrease #nodes in the DEPTree
 		log.info("Noun phrase combination / Dependency Parsing");
 		// TODO make this method return the combine sequence and work on this,
@@ -62,7 +58,7 @@ public class PipelineStanford extends AbstractPipeline {
 
 		// @Ricardo this will calculate cardinality of reduced(combinedNN) tree.
 		// is this right?
-		q.setTree(stanfordConnector.combineSequences(currentAnotation, q));
+		q.setTree(stanfordConnector.combineSequences(q));
 
 		// Cardinality identifies the integer i used for LIMIT i
 		log.info("Cardinality calculation.");
