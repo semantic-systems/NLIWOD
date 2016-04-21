@@ -1,0 +1,76 @@
+package org.aksw.qa.systems;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import org.apache.http.Consts;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Node;
+import org.jsoup.select.Elements;
+import org.jsoup.select.NodeVisitor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Sets;
+
+public class QAKIS extends ASystem {
+	Logger log = LoggerFactory.getLogger(QAKIS.class);
+
+	public HashSet<String> search(String question) {
+		log.debug(this.toString() + ": " + question);
+		try {
+			final HashSet<String> resultSet = new HashSet<String>();
+			String url = "http://qakis.org/qakis/index.xhtml";
+
+			HttpClient client = HttpClientBuilder.create().build();
+			HttpPost httppost = new HttpPost(url);
+			HttpResponse ping = client.execute(httppost);
+
+			Document vsdoc = Jsoup.parse(responseToString(ping));
+			Elements el = vsdoc.select("input");
+			String viewstate = (el.get(el.size() - 1).attr("value"));
+
+			List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+			formparams.add(new BasicNameValuePair("index_form", "index_form"));
+			formparams.add(new BasicNameValuePair("index_form:question", question));
+			formparams.add(new BasicNameValuePair("index_form:eps", ""));
+			formparams.add(new BasicNameValuePair("index_form:submitQuestion", ""));
+			formparams.add(new BasicNameValuePair("javax.faces.ViewState", viewstate));
+
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, Consts.UTF_8);
+			httppost.setEntity(entity);
+			HttpResponse response = client.execute(httppost);
+
+			Document doc = Jsoup.parse(responseToString(response));
+			Elements answer = doc.select("div.global-presentation-details>h3>a");
+			NodeVisitor nv = new NodeVisitor() {
+				public void tail(Node node, int depth) {
+					if (depth == 0)
+						resultSet.add(node.attr("href"));
+				}
+
+				public void head(Node arg0, int arg1) {
+					// do nothing here
+				}
+			};
+			answer.traverse(nv);
+			return resultSet;
+		} catch (ClientProtocolException e) {
+			log.error(e.getLocalizedMessage(), e);
+		} catch (IOException e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+		return Sets.newHashSet();
+	}
+}
