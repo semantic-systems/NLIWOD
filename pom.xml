@@ -33,17 +33,12 @@
                 			<goal>wget</goal>
             			</goals>
             			<configuration>
-                			<url>http://github.com/ag-sc/QALD/zipball/master/</url>
+                			<url>http://github.com/ag-sc/QALD/zipball/master</url>
                 			<unpack>true</unpack>
                 			<outputDirectory>src/main/resources/QALD_fetch</outputDirectory>
             			</configuration>
         			</execution>
 				 </executions>
-			</plugin>
-			<plugin>
-				<groupId>com.googlecode.maven-download-plugin</groupId>
-				<artifactId>download-maven-plugin</artifactId>
-				<version>1.3.0</version>
 			</plugin>
 		</plugins>
 	</build>
@@ -63,7 +58,7 @@
 		</snapshotRepository>
 	</distributionManagement>
 	
-	<pluginRepositories>
+<!--	<pluginRepositories>
 		<pluginRepository>
     		<id>sonatype-public-repository</id>
     		<url>https://oss.sonatype.org/content/groups/public</url>
@@ -74,5 +69,5 @@
         		<enabled>true</enabled>
     		</releases>
 		</pluginRepository>
-	 </pluginRepositories>
+	 </pluginRepositories>-->
 </project>
