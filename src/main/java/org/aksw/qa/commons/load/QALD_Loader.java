@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,35 +44,33 @@ public class QALD_Loader {
 		return url.openStream();
 	}
 
-	private static String getInputStreamURL(Dataset set) throws IOException {
-		// Returns Extension for decision on XML/JSON method
-		URL url = mapDatasetToPath(set);
-
-		return url.toString();
-	}
-
 	private static URL mapDatasetToPath(Dataset set) {
 		// FIXME QALD-5 is that multilingual or hybrid? Load both!
 		switch (set) {
-	//	case nlq:
-	//		return ClassLoader.getSystemClassLoader().getResource("NLQ-OKBQA/nlq1_vis.json");
+		case nlq:
+			return ClassLoader.getSystemClassLoader().getResource("NLQ-OKBQA/nlq1_vis.json");
 		case QALD5_Test:
 			return ClassLoader.getSystemClassLoader().getResource("QALD-5/qald-5_test.xml");
 		case QALD6_Train_Hybrid:
 			return ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-hybrid.json");
 		case QALD6_Train_Multilingual:
 			return ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-multilingual.json");
-			//FIXME datacube und qbench sollte gleich sein?!Konrad Höffner Fragen
-//		case QALD6_Train_Datacube:
-//			return ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-datacube.json");
+			// FIXME datacube und qbench sollte gleich sein?!Konrad Höffner
+			// Fragen
+			// case QALD6_Train_Datacube:
+			// return
+			// ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-datacube.json");
 		case QALD5_Train:
 			return ClassLoader.getSystemClassLoader().getResource("QALD-5/qald-5_train.xml");
-	//	case qbench1:
-	//		return ClassLoader.getSystemClassLoader().getResource("qbench/qbench1.xml");
-	//	case qbench2:
-	//		return ClassLoader.getSystemClassLoader().getResource("qbench/qbench2.xml");
-	//	case stonetemple:
-	//		return ClassLoader.getSystemClassLoader().getResource("stonetemple/stonetemple");
+			// case qbench1:
+			// return
+			// ClassLoader.getSystemClassLoader().getResource("qbench/qbench1.xml");
+			// case qbench2:
+			// return
+			// ClassLoader.getSystemClassLoader().getResource("qbench/qbench2.xml");
+			// case stonetemple:
+			// return
+			// ClassLoader.getSystemClassLoader().getResource("stonetemple/stonetemple");
 
 		}
 		return null;
@@ -81,27 +80,37 @@ public class QALD_Loader {
 		try {
 			InputStream is = null;
 			is = getInputStream(data);
-			String isURL = getInputStreamURL(data);
+			List<IQuestion> out = null;
 			if (is.available() > 0) // check if stream is not empty
 			{
-				// decides between xml and json based on URL ending
-				if (isURL.toLowerCase().endsWith("xml")) {
-					log.info("Loading XML file [" + isURL + "].");
-					List<IQuestion> ret = loadXML(is);
-					is.close();
-					return ret;
+				switch (data) {
+				case QALD5_Test:
+					out = loadXML(is);
+					break;
+				case QALD5_Train:
+					out = loadXML(is);
+					break;
+				case QALD6_Train_Datacube:
+					out = loadJSON(is);
+					break;
+				case QALD6_Train_Hybrid:
+					out = loadJSON(is);
+					break;
+				case QALD6_Train_Multilingual:
+					out = loadJSON(is);
+					break;
+				case nlq:
+					out = loadNLQ(is);
+					break;
+				default:
+					break;
 				}
-				if (isURL.toLowerCase().endsWith("json")) {
-					log.info("Loading JSON file [" + isURL + "].");
-
-					List<IQuestion> ret = loadJSON(is);
-					is.close();
-					return ret;
-				}
+				is.close();
+				return out;
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.info("Couldnt load dataset ", e);
 		}
 		return null;
 	}
@@ -119,77 +128,74 @@ public class QALD_Loader {
 		List<IQuestion> questions = new ArrayList<IQuestion>();
 
 		try {
-			if (file.available() > 0) // check if stream is not empty
-			{
-				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-				DocumentBuilder db = dbf.newDocumentBuilder();
-				Document doc;
-				doc = db.parse(file);
-				doc.getDocumentElement().normalize();
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc;
+			doc = db.parse(file);
+			doc.getDocumentElement().normalize();
 
-				NodeList questionNodes = doc.getElementsByTagName("question");
+			NodeList questionNodes = doc.getElementsByTagName("question");
 
-				for (int i = 0; i < questionNodes.getLength(); i++) {
+			for (int i = 0; i < questionNodes.getLength(); i++) {
 
-					IQuestion question = new Question();
-					Element questionNode = (Element) questionNodes.item(i);
+				IQuestion question = new Question();
+				Element questionNode = (Element) questionNodes.item(i);
 
-					question.setId(Integer.valueOf(questionNode.getAttribute("id")));
-					question.setAnswerType(questionNode.getAttribute("answertype"));
-					question.setAggregation(Boolean.valueOf(questionNode.getAttribute("aggregation")));
-					question.setOnlydbo(Boolean.valueOf(questionNode.getAttribute("onlydbo")));
-					question.setHybrid(Boolean.valueOf(questionNode.getAttribute("hybrid")));
+				question.setId(Integer.valueOf(questionNode.getAttribute("id")));
+				question.setAnswerType(questionNode.getAttribute("answertype"));
+				question.setAggregation(Boolean.valueOf(questionNode.getAttribute("aggregation")));
+				question.setOnlydbo(Boolean.valueOf(questionNode.getAttribute("onlydbo")));
+				question.setHybrid(Boolean.valueOf(questionNode.getAttribute("hybrid")));
 
-					// Read question
-					NodeList nlrs = questionNode.getElementsByTagName("string");
-					for (int j = 0; j < nlrs.getLength(); j++) {
-						String lang = ((Element) nlrs.item(j)).getAttribute("lang");
-						question.getLanguageToQuestion().put(lang, ((Element) nlrs.item(j)).getTextContent().trim());
-					}
-
-					// read keywords
-					NodeList keywords = questionNode.getElementsByTagName("keywords");
-					for (int j = 0; j < keywords.getLength(); j++) {
-						String lang = ((Element) keywords.item(j)).getAttribute("lang");
-						question.getLanguageToKeywords().put(lang, Arrays.asList(((Element) keywords.item(j)).getTextContent().trim().split(", ")));
-					}
-
-					// Read pseudoSPARQL query
-					Element element = (Element) questionNode.getElementsByTagName("pseudoquery").item(0);
-					if (element != null && element.hasChildNodes()) {
-						NodeList childNodes = element.getChildNodes();
-						Node item = childNodes.item(0);
-						question.setPseudoSparqlQuery(item.getNodeValue().trim());
-					}
-
-					// Read SPARQL query
-					// checks also that the text node containing query is not
-					// null
-					element = (Element) questionNode.getElementsByTagName("query").item(0);
-					if (element != null && element.hasChildNodes()) {
-						NodeList childNodes = element.getChildNodes();
-						Node item = childNodes.item(0);
-						question.setSparqlQuery(item.getNodeValue().trim());
-					}
-					// check if OUT OF SCOPE marked
-					if (question.getPseudoSparqlQuery() != null) {
-						question.setOutOfScope(question.getPseudoSparqlQuery().toUpperCase().contains("OUT OF SCOPE"));
-					}
-					// check if OUT OF SCOPE marked
-					if (question.getSparqlQuery() != null) {
-						question.setOutOfScope(question.getSparqlQuery().toUpperCase().contains("OUT OF SCOPE"));
-					}
-					// Read answers
-					NodeList answers = questionNode.getElementsByTagName("answer");
-					HashSet<String> set = new HashSet<String>();
-					for (int j = 0; j < answers.getLength(); j++) {
-						String answer = ((Element) answers.item(j)).getTextContent();
-						set.add(answer.trim());
-					}
-					question.setGoldenAnswers(set);
-
-					questions.add(question);
+				// Read question
+				NodeList nlrs = questionNode.getElementsByTagName("string");
+				for (int j = 0; j < nlrs.getLength(); j++) {
+					String lang = ((Element) nlrs.item(j)).getAttribute("lang");
+					question.getLanguageToQuestion().put(lang, ((Element) nlrs.item(j)).getTextContent().trim());
 				}
+
+				// read keywords
+				NodeList keywords = questionNode.getElementsByTagName("keywords");
+				for (int j = 0; j < keywords.getLength(); j++) {
+					String lang = ((Element) keywords.item(j)).getAttribute("lang");
+					question.getLanguageToKeywords().put(lang, Arrays.asList(((Element) keywords.item(j)).getTextContent().trim().split(", ")));
+				}
+
+				// Read pseudoSPARQL query
+				Element element = (Element) questionNode.getElementsByTagName("pseudoquery").item(0);
+				if (element != null && element.hasChildNodes()) {
+					NodeList childNodes = element.getChildNodes();
+					Node item = childNodes.item(0);
+					question.setPseudoSparqlQuery(item.getNodeValue().trim());
+				}
+
+				// Read SPARQL query
+				// checks also that the text node containing query is not
+				// null
+				element = (Element) questionNode.getElementsByTagName("query").item(0);
+				if (element != null && element.hasChildNodes()) {
+					NodeList childNodes = element.getChildNodes();
+					Node item = childNodes.item(0);
+					question.setSparqlQuery(item.getNodeValue().trim());
+				}
+				// check if OUT OF SCOPE marked
+				if (question.getPseudoSparqlQuery() != null) {
+					question.setOutOfScope(question.getPseudoSparqlQuery().toUpperCase().contains("OUT OF SCOPE"));
+				}
+				// check if OUT OF SCOPE marked
+				if (question.getSparqlQuery() != null) {
+					question.setOutOfScope(question.getSparqlQuery().toUpperCase().contains("OUT OF SCOPE"));
+				}
+				// Read answers
+				NodeList answers = questionNode.getElementsByTagName("answer");
+				HashSet<String> set = new HashSet<String>();
+				for (int j = 0; j < answers.getLength(); j++) {
+					String answer = ((Element) answers.item(j)).getTextContent();
+					set.add(answer.trim());
+				}
+				question.setGoldenAnswers(set);
+
+				questions.add(question);
 			}
 
 		} catch (DOMException e) {
@@ -215,85 +221,81 @@ public class QALD_Loader {
 		// TODO Catch exceptions
 		List<IQuestion> output = new ArrayList<IQuestion>();
 		try {
-			if (file.available() > 0) // check if stream is not empty
-			{
-				JsonReader jsonReader = Json.createReader(file);
-				JsonObject mainJsonObject = jsonReader.readObject();
-				// JsonObject innerObject =jsonObject.getJsonObject("dataset");
-				JsonArray jArray = mainJsonObject.getJsonArray("questions");
+			JsonReader jsonReader = Json.createReader(file);
+			JsonObject mainJsonObject = jsonReader.readObject();
+			// JsonObject innerObject =jsonObject.getJsonObject("dataset");
+			JsonArray jArray = mainJsonObject.getJsonArray("questions");
 
-				String attributes[] = { "id", "aggregation", "answertype", "onlydbo", "hybrid" };
+			String attributes[] = { "id", "aggregation", "answertype", "onlydbo", "hybrid" };
 
-				for (JsonValue questionJsonObj : jArray) {
-					JsonObject listObj = (JsonObject) questionJsonObj;
-					IQuestion q = new Question();
-					for (String attr : attributes) {
-						if (listObj.containsKey(attr)) {
-							String val = listObj.get(attr).toString().replace("\"", "");
-							q.setValue(attr, val);
-						}
+			for (JsonValue questionJsonObj : jArray) {
+				JsonObject listObj = (JsonObject) questionJsonObj;
+				IQuestion q = new Question();
+				for (String attr : attributes) {
+					if (listObj.containsKey(attr)) {
+						String val = listObj.get(attr).toString().replace("\"", "");
+						q.setValue(attr, val);
 					}
-					output.add(q);
-
-					JsonArray questionArray = listObj.getJsonArray("question");
-					for (JsonValue questionVal : questionArray) {
-						JsonObject questionObj = (JsonObject) questionVal;
-						String lang = questionObj.getString("language");
-						q.getLanguageToQuestion().put(lang, questionObj.getString("string").trim());
-						if (questionObj.containsKey("keywords")) {
-							List<String> keywords = Arrays.asList(questionObj.getString("keywords").split(","));
-							q.getLanguageToKeywords().put(lang, keywords);
-						}
-					}
-
-					JsonObject query = (JsonObject) listObj.get("query");
-					if (query.containsKey("sparql")) {
-						String strQuery = query.getString("sparql").trim();
-						q.setSparqlQuery(strQuery);
-					}
-					if (query.containsKey("pseudo")) {
-						String strQuery = query.getString("pseudo").trim();
-						q.setPseudoSparqlQuery(strQuery);
-					}
-
-					JsonArray answerList = listObj.getJsonArray("answers");
-					if (!answerList.isEmpty()) {
-						JsonObject answerListHead = answerList.getJsonObject(0);
-						JsonObject headObject = answerListHead.getJsonObject("head");
-						JsonArray vars = headObject.getJsonArray("vars");
-
-						Set<String> answers = new HashSet<String>();
-						if (!answerList.isEmpty()) {
-							JsonObject answerObject = answerList.getJsonObject(0);
-							if (answerObject.containsKey("boolean")) {
-								answers.add(answerObject.get("boolean").toString());
-							}
-							if (answerObject.containsKey("results")) {
-								JsonObject resultObject = answerObject.getJsonObject("results");
-								JsonArray bindingsList = resultObject.getJsonArray("bindings");
-								for (JsonValue bind : bindingsList) {
-									JsonObject bindObj = (JsonObject) bind;
-									for (JsonValue varName : vars) {
-										String var = varName.toString().replaceAll("\"", "");
-										if (bindObj.containsKey(var)) {
-											JsonObject j = bindObj.getJsonObject(var);
-											answers.add(j.getString("value").trim());
-										}
-									}
-
-								}// end for bindingsList
-							}// end if no result set
-							q.setGoldenAnswers(answers);
-						}// end if Answerlist emptiy
-
-					}// end For questions
 				}
+				output.add(q);
+
+				JsonArray questionArray = listObj.getJsonArray("question");
+				for (JsonValue questionVal : questionArray) {
+					JsonObject questionObj = (JsonObject) questionVal;
+					String lang = questionObj.getString("language");
+					q.getLanguageToQuestion().put(lang, questionObj.getString("string").trim());
+					if (questionObj.containsKey("keywords")) {
+						List<String> keywords = Arrays.asList(questionObj.getString("keywords").split(","));
+						q.getLanguageToKeywords().put(lang, keywords);
+					}
+				}
+
+				JsonObject query = (JsonObject) listObj.get("query");
+				if (query.containsKey("sparql")) {
+					String strQuery = query.getString("sparql").trim();
+					q.setSparqlQuery(strQuery);
+				}
+				if (query.containsKey("pseudo")) {
+					String strQuery = query.getString("pseudo").trim();
+					q.setPseudoSparqlQuery(strQuery);
+				}
+
+				JsonArray answerList = listObj.getJsonArray("answers");
+				if (!answerList.isEmpty()) {
+					JsonObject answerListHead = answerList.getJsonObject(0);
+					JsonObject headObject = answerListHead.getJsonObject("head");
+					JsonArray vars = headObject.getJsonArray("vars");
+
+					Set<String> answers = new HashSet<String>();
+					if (!answerList.isEmpty()) {
+						JsonObject answerObject = answerList.getJsonObject(0);
+						if (answerObject.containsKey("boolean")) {
+							answers.add(answerObject.get("boolean").toString());
+						}
+						if (answerObject.containsKey("results")) {
+							JsonObject resultObject = answerObject.getJsonObject("results");
+							JsonArray bindingsList = resultObject.getJsonArray("bindings");
+							for (JsonValue bind : bindingsList) {
+								JsonObject bindObj = (JsonObject) bind;
+								for (JsonValue varName : vars) {
+									String var = varName.toString().replaceAll("\"", "");
+									if (bindObj.containsKey(var)) {
+										JsonObject j = bindObj.getJsonObject(var);
+										answers.add(j.getString("value").trim());
+									}
+								}
+
+							}// end for bindingsList
+						}// end if no result set
+						q.setGoldenAnswers(answers);
+					}// end if Answerlist emptiy
+
+				}// end For questions
 			}
+
 		} catch (DOMException e) {
 			e.printStackTrace();
 
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 
 		/**
@@ -316,6 +318,60 @@ public class QALD_Loader {
 			log.debug(message + " and will be removed");
 		}
 		output.removeAll(emptyQuestions);
+		return output;
+	}
+
+	public static List<IQuestion> loadNLQ(InputStream file) {
+
+		List<IQuestion> output = new ArrayList<IQuestion>();
+		HashMap<Integer, ArrayList<JsonObject>> idToQuestion = new HashMap<Integer, ArrayList<JsonObject>>();
+		try {
+			if (file.available() > 0) // check if stream is not empty
+			{
+				JsonReader jsonReader = Json.createReader(file);
+				JsonArray mainJsonArray = jsonReader.readArray();
+
+				for (JsonValue currentJsonValue : mainJsonArray) {
+					JsonObject currentObject = (JsonObject) currentJsonValue;
+					try {
+						Integer id = Integer.parseInt(currentObject.getString("id"));
+						if (idToQuestion.containsKey(id)) {
+							idToQuestion.get(id).add(currentObject);
+						} else {
+							ArrayList<JsonObject> jArray = new ArrayList<JsonObject>();
+							jArray.add(currentObject);
+							idToQuestion.put(id, jArray);
+						}
+					} catch (NumberFormatException e) {
+						log.info("Couldnt load question from dataset due to wrong or missing question-id", e);
+					}
+				}
+
+			}
+		} catch (IOException e) {
+			log.error("Could not load Dataset", e);
+		}
+
+		for (Integer i : idToQuestion.keySet()) {
+			Question q = new Question();
+			for (JsonObject currentJsonObject : idToQuestion.get(i)) {
+				q.setValue("id", currentJsonObject.getString("id"));
+				q.setAnswerType(currentJsonObject.getString("type"));
+				String lang = currentJsonObject.getString("lang");
+				String questiion = currentJsonObject.getString("question");
+				String answer = currentJsonObject.getString("answer");
+
+				String sparql = currentJsonObject.getString("sparql");
+
+				q.getLanguageToQuestion().put(lang, questiion);
+				q.setSparqlQuery(lang, sparql);
+				Set<String> answ = new HashSet<String>();
+				answ.add(answer);
+				q.setGoldenAnswers(lang, answ);
+			}
+			output.add(q);
+		}
+
 		return output;
 	}
 }
