@@ -53,10 +53,6 @@ public class QALD_Loader {
 		return null;
 	}
 
-	public QALD_Loader() {
-
-	}
-
 	private static URL mapDatasetToPath(Dataset set) {
 		/**
 		 * find qald directory in datasets, independent from commit hash in
@@ -134,20 +130,20 @@ public class QALD_Loader {
 		case QALD6_Train_Multilingual:
 			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/6/data/qald-6-train-multilingual.json");
 
-		// case qbench1:
-		// return
-		// ClassLoader.getSystemClassLoader().getResource("qbench/qbench1.xml");
-		// case qbench2:
-		// return
-		// ClassLoader.getSystemClassLoader().getResource("qbench/qbench2.xml");
-		// case stonetemple:
-		// return
-		// ClassLoader.getSystemClassLoader().getResource("stonetemple/stonetemple");
-		// FIXME datacube und qbench sollte gleich sein?!Konrad Höffner
-		// Fragen
-		// case QALD6_Train_Datacube:
-		// return
-		// ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-datacube.json");
+			// case qbench1:
+			// return
+			// ClassLoader.getSystemClassLoader().getResource("qbench/qbench1.xml");
+			// case qbench2:
+			// return
+			// ClassLoader.getSystemClassLoader().getResource("qbench/qbench2.xml");
+			// case stonetemple:
+			// return
+			// ClassLoader.getSystemClassLoader().getResource("stonetemple/stonetemple");
+			// FIXME datacube und qbench sollte gleich sein?!Konrad Höffner
+			// Fragen
+			// case QALD6_Train_Datacube:
+			// return
+			// ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-datacube.json");
 
 		default:
 			break;
@@ -475,7 +471,8 @@ public class QALD_Loader {
 			Question q = new Question();
 			for (JsonObject currentJsonObject : idToQuestion.get(i)) {
 				q.setValue("id", currentJsonObject.getString("id"));
-				q.setAnswerType(currentJsonObject.getString("type"));
+//				TODO this answer type needs to be mapped via switch case
+				//q.setAnswerType(currentJsonObject.getString("type"));
 				String lang = currentJsonObject.getString("lang");
 				String questiion = currentJsonObject.getString("question");
 				String answer = currentJsonObject.getString("answer");
