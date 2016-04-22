@@ -1,5 +1,6 @@
 package org.aksw.qa.commons.load;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -38,39 +39,118 @@ import org.xml.sax.SAXException;
 public class QALD_Loader {
 	static Logger log = LoggerFactory.getLogger(QALD_Loader.class);
 
-	private static InputStream getInputStream(Dataset set) throws IOException {
+	private static InputStream getInputStream(Dataset set) {
 		// Magical get the path from qa-datasets
-		URL url = mapDatasetToPath(set);
-		return url.openStream();
+
+		try {
+			URL url = mapDatasetToPath(set);
+			return url.openStream();
+		} catch (IOException e) {
+			log.error("Couldnt open stream to dataset", e);
+		} catch (NullPointerException e) {
+			log.error("No Mapping for this Dataset " + set.toString(), e);
+		}
+		return null;
+	}
+
+	public QALD_Loader() {
+
 	}
 
 	private static URL mapDatasetToPath(Dataset set) {
-		// FIXME QALD-5 is that multilingual or hybrid? Load both!
+		/**
+		 * find qald directory in datasets, independent from commit hash in
+		 * directory name
+		 */
+		File f = new File("src/main/resources/");
+		File g = new File(f.getAbsolutePath().replace("qa-commons", "qa-datasets"));
+		File[] files = g.listFiles();
+		String qaldDirName = "";
+		for (int i = 0; i < files.length; i++) {
+			if (files[i].toString().contains("ag-sc-QALD")) {
+				File qaldDir = files[i];
+				qaldDirName = qaldDir.getAbsolutePath();
+				qaldDirName = qaldDirName.substring(qaldDirName.indexOf("ag-sc-QALD"));
+			}
+		}
+
 		switch (set) {
 		case nlq:
 			return ClassLoader.getSystemClassLoader().getResource("NLQ-OKBQA/nlq1_vis.json");
-		case QALD5_Test:
-			return ClassLoader.getSystemClassLoader().getResource("QALD-5/qald-5_test.xml");
+
+		case QALD1_Test_dbpedia:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/1/data/dbpedia-test.xml");
+		case QALD1_Test_musicbrainz:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/1/data/musicbrainz-test.xml");
+		case QALD1_Train_dbpedia:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/1/data/dbpedia-train.xml");
+		case QALD1_Train_musicbrainz:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/1/data/musicbrainz-train.xml");
+
+		case QALD2_Test_dbpedia:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/2/data/dbpedia-test.xml");
+		case QALD2_Test_musicbrainz:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/2/data/musicbrainz-test.xml");
+		case QALD2_Train_dbpedia:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/2/data/dbpedia-train.xml");
+		case QALD2_Train_musicbrainz:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/2/data/musicbrainz-train.xml");
+
+		case QALD3_Test_dbpedia:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/3/data/dbpedia-test.xml");
+		case QALD3_Test_esdbpedia:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/3/data/esdbpedia-test.xml");
+		case QALD3_Test_musicbrainz:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/3/data/musicbrainz-test.xml");
+		case QALD3_Train_dbpedia:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/3/data/dbpedia-train.xml");
+		case QALD3_Train_esdbpedia:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/3/data/esdbpedia-train.xml");
+		case QALD3_Train_musicbrainz:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/3/data/musicbrainz-train.xml");
+
+		case QALD4_Test_Hybrid:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/4/data/qald-4_hybrid_test_withanswers.xml");
+		case QALD4_Test_Multilingual:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/4/data/qald-4_multilingual_test_withanswers.xml");
+		case QALD4_Test_biomedical:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/4/data/qald-4_biomedical_test.xml");
+		case QALD4_Train_Hybrid:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/4/data/qald-4_hybrid_train.xml");
+		case QALD4_Train_Multilingual:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/4/data/qald-4_multilingual_train_withanswers.xml");
+		case QALD4_Train_biomedical:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/4/data/qald-4_biomedical_train.xml");
+
+		case QALD5_Test_Hybrid:
+		case QALD5_Test_Multilingual:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/5/data/qald-5_test.xml");
+		case QALD5_Train_Hybrid:
+		case QALD5_Train_Multilingual:
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/5/data/qald-5_train.xml");
+
 		case QALD6_Train_Hybrid:
-			return ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-hybrid.json");
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/6/data/qald-6-train-hybrid.json");
 		case QALD6_Train_Multilingual:
-			return ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-multilingual.json");
-			// FIXME datacube und qbench sollte gleich sein?!Konrad Höffner
-			// Fragen
-			// case QALD6_Train_Datacube:
-			// return
-			// ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-datacube.json");
-		case QALD5_Train:
-			return ClassLoader.getSystemClassLoader().getResource("QALD-5/qald-5_train.xml");
-			// case qbench1:
-			// return
-			// ClassLoader.getSystemClassLoader().getResource("qbench/qbench1.xml");
-			// case qbench2:
-			// return
-			// ClassLoader.getSystemClassLoader().getResource("qbench/qbench2.xml");
-			// case stonetemple:
-			// return
-			// ClassLoader.getSystemClassLoader().getResource("stonetemple/stonetemple");
+			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/6/data/qald-6-train-multilingual.json");
+
+		// case qbench1:
+		// return
+		// ClassLoader.getSystemClassLoader().getResource("qbench/qbench1.xml");
+		// case qbench2:
+		// return
+		// ClassLoader.getSystemClassLoader().getResource("qbench/qbench2.xml");
+		// case stonetemple:
+		// return
+		// ClassLoader.getSystemClassLoader().getResource("stonetemple/stonetemple");
+		// FIXME datacube und qbench sollte gleich sein?!Konrad Höffner
+		// Fragen
+		// case QALD6_Train_Datacube:
+		// return
+		// ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-datacube.json");
+
+		default:
+			break;
 
 		}
 		return null;
@@ -83,30 +163,69 @@ public class QALD_Loader {
 			List<IQuestion> out = null;
 			if (is.available() > 0) // check if stream is not empty
 			{
+
+				List<IQuestion> hybrid;
+				List<IQuestion> loadedQ;
 				switch (data) {
-				case QALD5_Test:
+
+				case QALD1_Test_dbpedia:
+				case QALD1_Test_musicbrainz:
+				case QALD1_Train_dbpedia:
+				case QALD1_Train_musicbrainz:
+				case QALD2_Test_dbpedia:
+				case QALD2_Test_musicbrainz:
+				case QALD2_Train_dbpedia:
+				case QALD2_Train_musicbrainz:
+				case QALD3_Test_dbpedia:
+				case QALD3_Test_esdbpedia:
+				case QALD3_Test_musicbrainz:
+				case QALD3_Train_dbpedia:
+				case QALD3_Train_esdbpedia:
+				case QALD3_Train_musicbrainz:
+				case QALD4_Test_Hybrid:
+				case QALD4_Test_Multilingual:
+				case QALD4_Test_biomedical:
+				case QALD4_Train_Hybrid:
+				case QALD4_Train_Multilingual:
+				case QALD4_Train_biomedical:
 					out = loadXML(is);
 					break;
-				case QALD5_Train:
-					out = loadXML(is);
+
+				case QALD5_Test_Hybrid:
+				case QALD5_Train_Hybrid:
+					hybrid = new ArrayList<IQuestion>();
+					loadedQ = loadXML(is);
+					for (IQuestion q : loadedQ) {
+						if (q.getHybrid()) {
+							hybrid.add(q);
+						}
+					}
+					out = hybrid;
 					break;
-				case QALD6_Train_Datacube:
-					out = loadJSON(is);
+
+				case QALD5_Test_Multilingual:
+				case QALD5_Train_Multilingual:
+					hybrid = new ArrayList<IQuestion>();
+					loadedQ = loadXML(is);
+					for (IQuestion q : loadedQ) {
+						if (!q.getHybrid()) {
+							hybrid.add(q);
+						}
+					}
+					out = hybrid;
 					break;
 				case QALD6_Train_Hybrid:
-					out = loadJSON(is);
-					break;
 				case QALD6_Train_Multilingual:
 					out = loadJSON(is);
 					break;
 				case nlq:
 					out = loadNLQ(is);
 					break;
-				default:
-					break;
 				}
 				is.close();
 				return out;
+			} else {
+				throw new IOException("InputStream is null");
 			}
 
 		} catch (IOException e) {
@@ -285,12 +404,12 @@ public class QALD_Loader {
 									}
 								}
 
-							}// end for bindingsList
-						}// end if no result set
+							} // end for bindingsList
+						} // end if no result set
 						q.setGoldenAnswers(answers);
-					}// end if Answerlist emptiy
+					} // end if Answerlist emptiy
 
-				}// end For questions
+				} // end For questions
 			}
 
 		} catch (DOMException e) {
@@ -373,5 +492,18 @@ public class QALD_Loader {
 		}
 
 		return output;
+	}
+
+	public static void main(String[] args) {
+		for (Dataset data : Dataset.values()) {
+			List<IQuestion> questions = load(data);
+			if (questions == null) {
+				System.out.println("Dataset null" + data.toString());
+			} else if (questions.size() == 0) {
+				System.out.println("Dataset Empty" + data.toString());
+			} else {
+				System.out.println("LOADED SUCCESSFULLY " + data.toString());
+			}
+		}
 	}
 }
