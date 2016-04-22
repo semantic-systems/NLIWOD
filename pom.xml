@@ -3,13 +3,44 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>commons</artifactId>
-	<version>0.0.7</version>
+	<version>0.0.9</version>
 	<name>Question Answering (QA) common utilities</name>
 	<description>Question Answering (QA) common utilities to load and store QA datasets and calculate performance measures. 
 	It provides also basic data structures for building QA systems.</description>
 	<build>
-
 		<plugins>
+			<!-- Javadoc plugin for generating documentation -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.1</version>
+				<configuration>
+					<show>private</show>
+					<nohelp>true</nohelp>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Source plugin for creating source file jar -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -82,7 +113,7 @@
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>datasets</artifactId>
-			<version>0.0.2</version>
+			<version>0.0.3</version>
 		</dependency>
 		<!-- Reading JSON files -->
 		<dependency>
@@ -97,7 +128,8 @@
 		</dependency>
 		<!-- QA commons is currently based on Jena for handling RDF resources -->
 		<!-- TODO update this to jena 3.0 -->
-		<!--  TODO erst umstellen, wenn Claus das ordentlich dokumentiert hat mit dem Cache -->
+		<!-- TODO erst umstellen, wenn Claus das ordentlich dokumentiert hat mit 
+			dem Cache -->
 		<dependency>
 			<groupId>org.aksw.jena-sparql-api</groupId>
 			<artifactId>jena-sparql-api-core</artifactId>

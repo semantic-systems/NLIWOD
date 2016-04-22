@@ -1,5 +1,7 @@
 package org.aksw.qa.commons.datastructure;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,16 +13,30 @@ public class Question implements IQuestion {
 	private Integer id;
 	private String answerType;
 	private String pseudoSparqlQuery;
-	private String sparqlQuery;
+	private Map<String, String> sparqlQuery;
 	private Boolean aggregation;
 	private Boolean onlydbo;
 	private Boolean outOfScope;
 	private Boolean hybrid;
-	private Map<String, String> languageToQuestion = CollectionUtils.newLinkedHashMap();
-	private Map<String, List<String>> languageToKeywords = CollectionUtils.newLinkedHashMap();
-	private Set<String> goldenAnswers = CollectionUtils.newHashSet();
+	private Map<String, String> languageToQuestion;
+	private Map<String, List<String>> languageToKeywords;
+	private Map<String, Set<String>> goldenAnswers;
 
-	/* (non-Javadoc)
+	public Question() {
+		HashSet<String> ga = CollectionUtils.newHashSet();
+		goldenAnswers = new HashMap<String, Set<String>>();
+		goldenAnswers.put("en", ga);
+
+		sparqlQuery = new HashMap<String, String>();
+
+		languageToQuestion = CollectionUtils.newLinkedHashMap();
+		languageToKeywords = CollectionUtils.newLinkedHashMap();
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#toString()
 	 */
 	@Override
@@ -30,11 +46,15 @@ public class Question implements IQuestion {
 		        + ", goldenAnswers=" + goldenAnswers + "]";
 	}
 
-	/* (non-Javadoc)
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#setValue(java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.aksw.qa.commons.datastructure.IQuestion#setValue(java.lang.String,
+	 * java.lang.String)
 	 */
 	@Override
-    public void setValue(String valDescriptor, String val) {
+	public void setValue(String valDescriptor, String val) {
 		valDescriptor = valDescriptor.toLowerCase();
 		switch (valDescriptor) {
 		case "id":
@@ -57,180 +77,258 @@ public class Question implements IQuestion {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getId()
 	 */
 	@Override
-    public Integer getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#setId(java.lang.Integer)
 	 */
 	@Override
-    public void setId(Integer id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getAnswerType()
 	 */
 	@Override
-    public String getAnswerType() {
+	public String getAnswerType() {
 		return answerType;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#setAnswerType(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.aksw.qa.commons.datastructure.IQuestion#setAnswerType(java.lang.String
+	 * )
 	 */
 	@Override
-    public void setAnswerType(String answerType) {
+	public void setAnswerType(String answerType) {
 		this.answerType = answerType;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getPseudoSparqlQuery()
 	 */
 	@Override
-    public String getPseudoSparqlQuery() {
+	public String getPseudoSparqlQuery() {
 		return pseudoSparqlQuery;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#setPseudoSparqlQuery(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.aksw.qa.commons.datastructure.IQuestion#setPseudoSparqlQuery(java
+	 * .lang.String)
 	 */
 	@Override
-    public void setPseudoSparqlQuery(String pseudoSparqlQuery) {
+	public void setPseudoSparqlQuery(String pseudoSparqlQuery) {
 		this.pseudoSparqlQuery = pseudoSparqlQuery;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getSparqlQuery()
 	 */
 	@Override
-    public String getSparqlQuery() {
-		return sparqlQuery;
+	public String getSparqlQuery() {
+		return sparqlQuery.get("en");
 	}
 
-	/* (non-Javadoc)
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#setSparqlQuery(java.lang.String)
+	public String getSparqlQuery(String lang) {
+		return sparqlQuery.get(lang);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.aksw.qa.commons.datastructure.IQuestion#setSparqlQuery(java.lang.
+	 * String)
 	 */
 	@Override
-    public void setSparqlQuery(String sparqlQuery) {
-		this.sparqlQuery = sparqlQuery;
+	public void setSparqlQuery(String sparqlQuery) {
+		this.sparqlQuery.put("en", sparqlQuery);
 	}
 
-	/* (non-Javadoc)
+	public void setSparqlQuery(String lang, String sparqlQuery) {
+		this.sparqlQuery.put(lang, sparqlQuery);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getAggregation()
 	 */
 	@Override
-    public Boolean getAggregation() {
+	public Boolean getAggregation() {
 		return aggregation;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#setAggregation(java.lang.Boolean)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.aksw.qa.commons.datastructure.IQuestion#setAggregation(java.lang.
+	 * Boolean)
 	 */
 	@Override
-    public void setAggregation(Boolean aggregation) {
+	public void setAggregation(Boolean aggregation) {
 		this.aggregation = aggregation;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getOnlydbo()
 	 */
 	@Override
-    public Boolean getOnlydbo() {
+	public Boolean getOnlydbo() {
 		return onlydbo;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#setOnlydbo(java.lang.Boolean)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.aksw.qa.commons.datastructure.IQuestion#setOnlydbo(java.lang.Boolean)
 	 */
 	@Override
-    public void setOnlydbo(Boolean onlydbo) {
+	public void setOnlydbo(Boolean onlydbo) {
 		this.onlydbo = onlydbo;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getOutOfScope()
 	 */
 	@Override
-    public Boolean getOutOfScope() {
+	public Boolean getOutOfScope() {
 		return outOfScope;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#setOutOfScope(java.lang.Boolean)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.aksw.qa.commons.datastructure.IQuestion#setOutOfScope(java.lang.Boolean
+	 * )
 	 */
 	@Override
-    public void setOutOfScope(Boolean outOfScope) {
+	public void setOutOfScope(Boolean outOfScope) {
 		this.outOfScope = outOfScope;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getHybrid()
 	 */
 	@Override
-    public Boolean getHybrid() {
+	public Boolean getHybrid() {
 		return hybrid;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#setHybrid(java.lang.Boolean)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.aksw.qa.commons.datastructure.IQuestion#setHybrid(java.lang.Boolean)
 	 */
 	@Override
-    public void setHybrid(Boolean hybrid) {
+	public void setHybrid(Boolean hybrid) {
 		this.hybrid = hybrid;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getLanguageToQuestion()
 	 */
 	@Override
-    public Map<String, String> getLanguageToQuestion() {
+	public Map<String, String> getLanguageToQuestion() {
 		return languageToQuestion;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#setLanguageToQuestion(java.util.Map)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.aksw.qa.commons.datastructure.IQuestion#setLanguageToQuestion(java
+	 * .util.Map)
 	 */
 	@Override
-    public void setLanguageToQuestion(Map<String, String> languageToQuestion) {
+	public void setLanguageToQuestion(Map<String, String> languageToQuestion) {
 		this.languageToQuestion = languageToQuestion;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getLanguageToKeywords()
 	 */
 	@Override
-    public Map<String, List<String>> getLanguageToKeywords() {
+	public Map<String, List<String>> getLanguageToKeywords() {
 		return languageToKeywords;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#setLanguageToKeywords(java.util.Map)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.aksw.qa.commons.datastructure.IQuestion#setLanguageToKeywords(java
+	 * .util.Map)
 	 */
 	@Override
-    public void setLanguageToKeywords(Map<String, List<String>> languageToKeywords) {
+	public void setLanguageToKeywords(Map<String, List<String>> languageToKeywords) {
 		this.languageToKeywords = languageToKeywords;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getGoldenAnswers()
 	 */
 	@Override
-    public Set<String> getGoldenAnswers() {
-		return goldenAnswers;
+	public Set<String> getGoldenAnswers() {
+		return goldenAnswers.get("en");
 	}
 
-	/* (non-Javadoc)
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#setGoldenAnswers(java.util.Set)
+	public Set<String> getGoldenAnswers(String lang) {
+		return goldenAnswers.get(lang);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.aksw.qa.commons.datastructure.IQuestion#setGoldenAnswers(java.util
+	 * .Set)
 	 */
 	@Override
-    public void setGoldenAnswers(Set<String> goldenAnswers) {
-		this.goldenAnswers = goldenAnswers;
+	public void setGoldenAnswers(Set<String> goldenAnswers) {
+		this.goldenAnswers.put("en", goldenAnswers);
+	}
+
+	public void setGoldenAnswers(String lang, Set<String> goldenAnswers) {
+		this.goldenAnswers.put(lang, goldenAnswers);
 	}
 
 }
