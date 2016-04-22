@@ -13,7 +13,7 @@ public abstract class ASystem {
 
     public abstract HashSet<String> search(String question);
 
-    public String responseToString(HttpResponse response) throws IllegalStateException, IOException {
+    protected String responseToString(HttpResponse response) throws IllegalStateException, IOException {
         HttpEntity entity = null;
         BufferedReader br = null;
         try {
