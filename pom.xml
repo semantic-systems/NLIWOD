@@ -166,7 +166,7 @@
         <dependency>
             <groupId>org.aksw.qa</groupId>
             <artifactId>commons</artifactId>
-            <version>0.0.4-SNAPSHOT</version>
+            <version>0.0.7</version>
         </dependency>
         <!-- JSON for FOX -->
         <dependency>
@@ -200,6 +200,11 @@
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.8.3</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.apache.httpcomponents</groupId>
+        	<artifactId>httpclient</artifactId>
+        	<version>4.5.2</version>
         </dependency>
     </dependencies>
 </project>
