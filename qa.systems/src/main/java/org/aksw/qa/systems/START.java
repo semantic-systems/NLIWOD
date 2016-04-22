@@ -16,8 +16,6 @@ import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Sets;
-
 public class START extends ASystem {
 	Logger log = LoggerFactory.getLogger(START.class);
 
@@ -41,6 +39,6 @@ public class START extends ASystem {
 		} catch (URISyntaxException e) {
 			log.error(e.getLocalizedMessage(), e);
 		}
-		return Sets.newHashSet();
+        return new HashSet<String>();
 	}
 }
