@@ -3,29 +3,88 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.aksw</groupId>
 	<artifactId>nliwod</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2016</inceptionYear>
+	<!-- PROPERTIES -->
+	<properties>
+		<java.version>1.8</java.version>
+		<slf4j.version>1.7.10</slf4j.version>
+		<junit.version>4.8.2</junit.version>
+		<qa-commons.version>0.0.7</qa-commons.version>
+		<!-- <lucene.version>4.4.0</lucene.version> -->
+		<!-- <com.carrotsearch.hppc.version>0.6.1</com.carrotsearch.hppc.version> -->
+		<!-- <org.apache.commons.commons-lang3.version>3.3.2</org.apache.commons.commons-lang3.version> -->
+		<!--<org.apache.commons.commons-io.version>2.4</org.apache.commons.commons-io.version> -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
-    <!-- DEVELOPERS -->
+	<!-- DEVELOPERS -->
 	<developers>
 		<developer>
 			<id>r.usbeck</id>
-			<name>${developer.name}</name>
-			<email>${developer.mail}</email>
+			<name>Ricardo Usbeck</name>
+			<email>usbeck@informatik.uni-leipzig.de</email>
 		</developer>
 	</developers>
-
-	<!-- PROPERTIES -->
-	<properties>
-		<developer.name>Ricardo Usbeck</developer.name>
-		<developer.mail>usbeck@informatik.uni-leipzig.de</developer.mail>
-	</properties>
 
 	<!-- MODULES -->
 	<modules>
 		<module>qa.systems</module>
-		<module>nliwod.parent</module>
 	</modules>
-	
+
+	<!-- DISTRIBUTION MANAGEMENT -->
+	<distributionManagement>
+		<repository>
+			<id>maven.aksw.internal</id>
+			<url>http://maven.aksw.org/archiva/repository/internal</url>
+		</repository>
+		<snapshotRepository>
+			<id>maven.aksw.snapshots</id>
+			<name>AKSW Snapshot Repository</name>
+			<url>http://maven.aksw.org/archiva/repository/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<!-- REPOSITORIES -->
+	<repositories>
+		<repository>
+			<id>Apache Repo Central</id>
+			<name>Apache Repository</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+		</repository>
+		<repository>
+			<id>maven.aksw.internal</id>
+			<name>University Leipzig, AKSW Maven2 Repository</name>
+			<url>http://maven.aksw.org/archiva/repository/internal</url>
+		</repository>
+	</repositories>
+
+	<!-- DEPENDENCIES -->
+	<dependencies>
+		<!-- ~~~~~~~~~~~~~~~~~~~ Logging ~~~~~~~~~~~~~~~~~~~~~~ -->
+		<!-- slf4j: Logging API -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- Logging - SLF4J-Log4j Binding -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- ~~~~~~~~~~~~~~~~~~~ End Logging ~~~~~~~~~~~~~~~~~~~~~~ -->
+
+		<!-- ~~~~~~~~~~~~~~~~~~~ Testing ~~~~~~~~~~~~~~~~~~~~~~ -->
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- ~~~~~~~~~~~~~~~~~~~ End Testing ~~~~~~~~~~~~~~~~~~~~~~ -->
+	</dependencies>
 </project>
