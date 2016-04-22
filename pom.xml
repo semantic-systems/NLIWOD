@@ -36,9 +36,9 @@
 							<url>http://github.com/ag-sc/QALD/zipball/master/</url>
 							<unpack>true</unpack>
 							<overwrite>true</overwrite>
-							<skipCache>false</skipCache>
+							<skipCache>true</skipCache>
+							<outputFileName>QALD/</outputFileName>
 							<outputDirectory>src/main/resources/</outputDirectory>
-							<outputFileName>ag-sc-QALD/</outputFileName>
 						</configuration>
 					</execution>
 				</executions>
