@@ -22,8 +22,6 @@ import org.jsoup.select.NodeVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Sets;
-
 public class QAKIS extends ASystem {
 	Logger log = LoggerFactory.getLogger(QAKIS.class);
 
@@ -71,6 +69,6 @@ public class QAKIS extends ASystem {
 		} catch (IOException e) {
 			log.error(e.getLocalizedMessage(), e);
 		}
-		return Sets.newHashSet();
+		return new HashSet<String>();
 	}
 }

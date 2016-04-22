@@ -19,8 +19,6 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Sets;
-
 public class HAWK extends ASystem {
 	Logger log = LoggerFactory.getLogger(HAWK.class);
 
@@ -73,6 +71,6 @@ public class HAWK extends ASystem {
         } catch (InterruptedException e) {
 			log.error(e.getLocalizedMessage(), e);
         }
-		return Sets.newHashSet();
+		return new HashSet<String>();
 	}
 }
