@@ -33,9 +33,11 @@
                 			<goal>wget</goal>
             			</goals>
             			<configuration>
-                			<url>http://github.com/ag-sc/QALD/zipball/master</url>
+                			<url>http://github.com/ag-sc/QALD/zipball/master/</url>
                 			<unpack>true</unpack>
-                			<outputDirectory>src/main/resources/QALD_fetch</outputDirectory>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+                			<outputDirectory>src/main/resources/</outputDirectory>
             			</configuration>
         			</execution>
 				 </executions>
