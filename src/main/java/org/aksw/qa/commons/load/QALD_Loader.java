@@ -1,6 +1,5 @@
 package org.aksw.qa.commons.load;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -54,96 +53,88 @@ public class QALD_Loader {
 	}
 
 	private static URL mapDatasetToPath(Dataset set) {
-		/**
-		 * find qald directory in datasets, independent from commit hash in
-		 * directory name
-		 */
-		File f = new File("src/main/resources/");
-		File g = new File(f.getAbsolutePath().replace("qa-commons", "qa-datasets"));
-		File[] files = g.listFiles();
-		String qaldDirName = "";
-		for (int i = 0; i < files.length; i++) {
-			if (files[i].toString().contains("ag-sc-QALD")) {
-				File qaldDir = files[i];
-				qaldDirName = qaldDir.getAbsolutePath();
-				qaldDirName = qaldDirName.substring(qaldDirName.indexOf("ag-sc-QALD"));
-			}
+		Class<?> loadingAnchor = null;
+		try {
+			loadingAnchor = Class.forName("org.aksw.qa.datasets.ResourceLoadingAnchor");
+		} catch (ClassNotFoundException e) {
+			log.error("Couldn't find the org.aksw.qa.datasets.ResourceLoadingAnchor class necessary to load the datases. Returning null.", e);
+			return null;
 		}
 
 		switch (set) {
 		case nlq:
-			return ClassLoader.getSystemClassLoader().getResource("NLQ-OKBQA/nlq1_vis.json");
+			return loadingAnchor.getResource("NLQ-OKBQA/nlq1_vis.json");
 
 		case QALD1_Test_dbpedia:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/1/data/dbpedia-test.xml");
+			return loadingAnchor.getResource("/QALD-master/1/data/dbpedia-test.xml");
 		case QALD1_Test_musicbrainz:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/1/data/musicbrainz-test.xml");
+			return loadingAnchor.getResource("/QALD-master/1/data/musicbrainz-test.xml");
 		case QALD1_Train_dbpedia:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/1/data/dbpedia-train.xml");
+			return loadingAnchor.getResource("/QALD-master/1/data/dbpedia-train.xml");
 		case QALD1_Train_musicbrainz:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/1/data/musicbrainz-train.xml");
+			return loadingAnchor.getResource("/QALD-master/1/data/musicbrainz-train.xml");
 
 		case QALD2_Test_dbpedia:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/2/data/dbpedia-test.xml");
+			return loadingAnchor.getResource("/QALD-master/2/data/dbpedia-test.xml");
 		case QALD2_Test_musicbrainz:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/2/data/musicbrainz-test.xml");
+			return loadingAnchor.getResource("/QALD-master/2/data/musicbrainz-test.xml");
 		case QALD2_Train_dbpedia:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/2/data/dbpedia-train.xml");
+			return loadingAnchor.getResource("/QALD-master/2/data/dbpedia-train.xml");
 		case QALD2_Train_musicbrainz:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/2/data/musicbrainz-train.xml");
+			return loadingAnchor.getResource("/QALD-master/2/data/musicbrainz-train.xml");
 
 		case QALD3_Test_dbpedia:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/3/data/dbpedia-test.xml");
+			return loadingAnchor.getResource("/QALD-master/3/data/dbpedia-test.xml");
 		case QALD3_Test_esdbpedia:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/3/data/esdbpedia-test.xml");
+			return loadingAnchor.getResource("/QALD-master/3/data/esdbpedia-test.xml");
 		case QALD3_Test_musicbrainz:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/3/data/musicbrainz-test.xml");
+			return loadingAnchor.getResource("/QALD-master/3/data/musicbrainz-test.xml");
 		case QALD3_Train_dbpedia:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/3/data/dbpedia-train.xml");
+			return loadingAnchor.getResource("/QALD-master/3/data/dbpedia-train.xml");
 		case QALD3_Train_esdbpedia:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/3/data/esdbpedia-train.xml");
+			return loadingAnchor.getResource("/QALD-master/3/data/esdbpedia-train.xml");
 		case QALD3_Train_musicbrainz:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/3/data/musicbrainz-train.xml");
+			return loadingAnchor.getResource("/QALD-master/3/data/musicbrainz-train.xml");
 
 		case QALD4_Test_Hybrid:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/4/data/qald-4_hybrid_test_withanswers.xml");
+			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_hybrid_test_withanswers.xml");
 		case QALD4_Test_Multilingual:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/4/data/qald-4_multilingual_test_withanswers.xml");
+			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_multilingual_test_withanswers.xml");
 		case QALD4_Test_biomedical:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/4/data/qald-4_biomedical_test.xml");
+			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_biomedical_test.xml");
 		case QALD4_Train_Hybrid:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/4/data/qald-4_hybrid_train.xml");
+			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_hybrid_train.xml");
 		case QALD4_Train_Multilingual:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/4/data/qald-4_multilingual_train_withanswers.xml");
+			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_multilingual_train_withanswers.xml");
 		case QALD4_Train_biomedical:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/4/data/qald-4_biomedical_train.xml");
+			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_biomedical_train.xml");
 
 		case QALD5_Test_Hybrid:
 		case QALD5_Test_Multilingual:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/5/data/qald-5_test.xml");
+			return loadingAnchor.getResource("/QALD-master/5/data/qald-5_test.xml");
 		case QALD5_Train_Hybrid:
 		case QALD5_Train_Multilingual:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/5/data/qald-5_train.xml");
+			return loadingAnchor.getResource("/QALD-master/5/data/qald-5_train.xml");
 
 		case QALD6_Train_Hybrid:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/6/data/qald-6-train-hybrid.json");
+			return loadingAnchor.getResource("/QALD-master/6/data/qald-6-train-hybrid.json");
 		case QALD6_Train_Multilingual:
-			return ClassLoader.getSystemClassLoader().getResource(qaldDirName + "/6/data/qald-6-train-multilingual.json");
+			return loadingAnchor.getResource("/QALD-master/6/data/qald-6-train-multilingual.json");
 
-			// case qbench1:
-			// return
-			// ClassLoader.getSystemClassLoader().getResource("qbench/qbench1.xml");
-			// case qbench2:
-			// return
-			// ClassLoader.getSystemClassLoader().getResource("qbench/qbench2.xml");
-			// case stonetemple:
-			// return
-			// ClassLoader.getSystemClassLoader().getResource("stonetemple/stonetemple");
-			// FIXME datacube und qbench sollte gleich sein?!Konrad Höffner
-			// Fragen
-			// case QALD6_Train_Datacube:
-			// return
-			// ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-datacube.json");
+		// case qbench1:
+		// return
+		// ClassLoader.getSystemClassLoader().getResource("qbench/qbench1.xml");
+		// case qbench2:
+		// return
+		// ClassLoader.getSystemClassLoader().getResource("qbench/qbench2.xml");
+		// case stonetemple:
+		// return
+		// ClassLoader.getSystemClassLoader().getResource("stonetemple/stonetemple");
+		// FIXME datacube und qbench sollte gleich sein?!Konrad Höffner
+		// Fragen
+		// case QALD6_Train_Datacube:
+		// return
+		// ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-datacube.json");
 
 		default:
 			break;
@@ -156,6 +147,10 @@ public class QALD_Loader {
 		try {
 			InputStream is = null;
 			is = getInputStream(data);
+			if (is == null) {
+				log.error("Couldn't load dataset " + data.name() + ". Returning null.");
+				return null;
+			}
 			List<IQuestion> out = null;
 			if (is.available() > 0) // check if stream is not empty
 			{
@@ -471,8 +466,8 @@ public class QALD_Loader {
 			Question q = new Question();
 			for (JsonObject currentJsonObject : idToQuestion.get(i)) {
 				q.setValue("id", currentJsonObject.getString("id"));
-//				TODO this answer type needs to be mapped via switch case
-				//q.setAnswerType(currentJsonObject.getString("type"));
+				// TODO this answer type needs to be mapped via switch case
+				// q.setAnswerType(currentJsonObject.getString("type"));
 				String lang = currentJsonObject.getString("lang");
 				String questiion = currentJsonObject.getString("question");
 				String answer = currentJsonObject.getString("answer");

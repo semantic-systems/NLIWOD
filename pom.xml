@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>commons</artifactId>
-	<version>0.0.9</version>
+	<version>0.0.10-SNAPSHOT</version>
 	<name>Question Answering (QA) common utilities</name>
 	<description>Question Answering (QA) common utilities to load and store QA datasets and calculate performance measures. 
 	It provides also basic data structures for building QA systems.</description>
@@ -113,7 +113,7 @@
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>datasets</artifactId>
-			<version>0.0.3</version>
+			<version>0.0.4-SNAPSHOT</version>
 		</dependency>
 		<!-- Reading JSON files -->
 		<dependency>
