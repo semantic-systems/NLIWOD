@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>datasets</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<developers>
 		<developer>
 			<name>Ricardo Usbeck</name>
@@ -33,7 +33,7 @@
 							<goal>wget</goal>
 						</goals>
 						<configuration>
-							<url>http://github.com/ag-sc/QALD/zipball/master/</url>
+							<url>https://github.com/ag-sc/QALD/archive/master.zip</url>
 							<unpack>true</unpack>
 							<overwrite>true</overwrite>
 							<skipCache>true</skipCache>

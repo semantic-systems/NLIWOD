@@ -18,3 +18,4 @@ hs_err_pid*
 .settings/
 /target/
 /src/main/resources/ag-sc-QALD*/
+/src/main/resources/QALD-master
