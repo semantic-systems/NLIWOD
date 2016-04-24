@@ -32,7 +32,7 @@ public class SPARQLExecutor {
 		return false;
 
 	}
-
+//TODO change that to use proper JENA library
 	public static Results executeSelect(String query, String endpoint) {
 		BufferedReader reader;
 		try {
