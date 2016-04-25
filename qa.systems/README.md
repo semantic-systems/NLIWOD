@@ -20,7 +20,7 @@ This library is available as snapshot here: http://maven.aksw.org/archiva/#artif
 <dependency>
   <groupId>org.aksw</groupId>
   <artifactId>qa.systems</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
 </dependency>
 ```
 Add the following repository:

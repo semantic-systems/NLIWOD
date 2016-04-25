@@ -3,35 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.aksw</groupId>
-		<artifactId>nliwod.parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../nliwod.parent</relativePath>
+		<artifactId>nliwod</artifactId>
+		<version>0.0.1</version>
+		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>qa.systems</artifactId>
-	<version>0.0.1</version>
-	<distributionManagement>
-		<repository>
-			<id>maven.aksw.internal</id>
-			<url>http://maven.aksw.org/archiva/repository/internal</url>
-		</repository>
-		<snapshotRepository>
-			<id>maven.aksw.snapshots</id>
-			<name>AKSW Snapshot Repository</name>
-			<url>http://maven.aksw.org/archiva/repository/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
-	<repositories>
-		<repository>
-			<id>Apache Repo Central</id>
-			<name>Apache Repository</name>
-			<url>http://repo.maven.apache.org/maven2</url>
-		</repository>
-		<repository>
-			<id>maven.aksw.internal</id>
-			<name>University Leipzig, AKSW Maven2 Repository</name>
-			<url>http://maven.aksw.org/archiva/repository/internal</url>
-		</repository>
-	</repositories>
+	<version>0.0.2</version>
+	
+	<!-- DEPENDENCIES -->
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
