@@ -95,6 +95,7 @@ public class SimpleClassification {
 			// Create a naïve bayes classifier
 
 			Classifier cModel = (Classifier) new MultilayerPerceptron();
+			((MultilayerPerceptron) cModel).setNominalToBinaryFilter(true);
 			cModel.buildClassifier(instancesPerSystem.get(system));
 
 			//TODO  // Test the model

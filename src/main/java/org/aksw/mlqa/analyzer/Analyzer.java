@@ -2,10 +2,12 @@ package org.aksw.mlqa.analyzer;
 
 import java.util.ArrayList;
 
+import org.aksw.mlqa.analyzer.comperative.Comperative;
 import org.aksw.mlqa.analyzer.numberOfToken.NumberOfToken;
 import org.aksw.mlqa.analyzer.querytype.QueryResourceTypeAnalyzer;
 import org.aksw.mlqa.analyzer.questiontype.QuestionTypeAnalyzer;
 import org.aksw.mlqa.analyzer.questionword.QuestionWord;
+import org.aksw.mlqa.analyzer.superlative.Superlative;
 
 import weka.core.Attribute;
 import weka.core.FastVector;
@@ -32,6 +34,8 @@ public class Analyzer {
 		analyzers.add(new QueryResourceTypeAnalyzer());
 		analyzers.add(new QuestionWord());
 		analyzers.add(new NumberOfToken());
+		analyzers.add(new Superlative());
+		analyzers.add(new Comperative());
 
 		// Declare the feature vector, register their attributes
 		for (IAnalyzer analyzer : analyzers) {

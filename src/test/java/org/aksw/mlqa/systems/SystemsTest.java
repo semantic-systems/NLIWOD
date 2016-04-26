@@ -8,7 +8,11 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.aksw.qa.systems.ASystem;
+import org.aksw.qa.systems.HAWK;
+import org.aksw.qa.systems.QAKIS;
+import org.aksw.qa.systems.SINA;
+import org.aksw.qa.systems.YODA;
 import org.apache.jena.ext.com.google.common.collect.Lists;
 
 public class SystemsTest {

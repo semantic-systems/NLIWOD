@@ -1,0 +1,35 @@
+package org.aksw.mlqa.analyzer.superlative;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import weka.core.FastVector;
+import weka.core.Instance;
+import weka.core.Instances;
+
+public class SuperlativeTest {
+
+	@Test
+	public void ThisContainsSuperlative() {
+		Superlative superlative = new Superlative();
+		FastVector fvWekaAttributes = new FastVector();
+		fvWekaAttributes.addElement(superlative.getAttribute());
+		Instances testinstances = new Instances("Test", fvWekaAttributes, 1 );
+		Instance test = new Instance(fvWekaAttributes.size());
+		test.setValue(superlative.getAttribute(), (String) superlative.analyze("This is the best test class!"));		
+		assertTrue(test.stringValue(superlative.getAttribute()).equals("containsSuperlative"));
+	}
+
+	@Test
+	public void ThisContainsNoSuperlative() {
+		Superlative superlative = new Superlative();
+		FastVector fvWekaAttributes = new FastVector();
+		fvWekaAttributes.addElement(superlative.getAttribute());
+		Instances testinstances = new Instances("Test", fvWekaAttributes, 1 );
+		Instance test = new Instance(fvWekaAttributes.size());
+		test.setValue(superlative.getAttribute(), (String) superlative.analyze("This sentence contains no superlative!"));		
+		assertTrue(test.stringValue(superlative.getAttribute()).equals("containsNoSuperlative"));
+	}
+
+}
