@@ -1,0 +1,123 @@
+package org.aksw.mlqa.experiment;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.aksw.mlqa.analyzer.Analyzer;
+import org.aksw.qa.commons.datastructure.IQuestion;
+import org.aksw.qa.commons.load.Dataset;
+import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.systems.ASystem;
+import org.aksw.qa.systems.HAWK;
+import org.aksw.qa.systems.QAKIS;
+import org.aksw.qa.systems.SINA;
+import org.aksw.qa.systems.YODA;
+import org.apache.jena.ext.com.google.common.collect.Lists;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import weka.classifiers.Classifier;
+import weka.classifiers.functions.MultilayerPerceptron;
+import weka.classifiers.trees.J48;
+import weka.core.Attribute;
+import weka.core.FastVector;
+import weka.core.Instance;
+import weka.core.Instances;
+
+public class ArffFileProducerMicha {
+	static Logger log = LoggerFactory.getLogger(ArffFileProducerMicha.class);
+
+	public static void main(String[] args) throws Exception {
+		HAWK hawk = new HAWK();
+		SINA sina = new SINA();
+		QAKIS qakis = new QAKIS();
+		YODA yoda = new YODA();
+		
+		/*
+		 * For multilable classification:
+		 */
+		
+		FastVector fvhawk = new FastVector(2);
+		fvhawk.addElement("1");
+		fvhawk.addElement("0");
+		Attribute hawkatt = new Attribute("hawk", fvhawk);
+		
+		FastVector fvqakis = new FastVector(2);
+		fvhawk.addElement("1");
+		fvhawk.addElement("0");
+		Attribute qakisatt = new Attribute("qakis", fvqakis);
+		
+		FastVector fvyoda = new FastVector(2);
+		fvhawk.addElement("1");
+		fvhawk.addElement("0");
+		Attribute yodaatt = new Attribute("yoda", fvyoda);
+		
+		FastVector fvsina = new FastVector(2);
+		fvsina.addElement("1");
+		fvsina.addElement("0");
+		Attribute sinaatt = new Attribute("sina", fvsina);
+		
+
+		/*
+		 * 
+		 */
+		
+		// 1. Learn on the training data for each system a classifier to find
+		// out which system can answer which question
+
+		// 1.1 load the questions and how good each system answers
+		log.debug("Load the questions and how good each system answers");
+		List<IQuestion> trainQuestions = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
+		List<ASystem> systems = Lists.newArrayList(hawk, sina, qakis, yoda);
+		JSONArray traindata = RunProducer.loadRunData(Dataset.QALD6_Train_Multilingual);
+		
+		// 1.2 calculate the features per question and system
+		log.debug("Calculate the features per question and system");
+		Analyzer analyzer = new Analyzer();
+		FastVector fvfinal = analyzer.fvWekaAttributes;
+		fvfinal.insertElementAt(hawkatt, 0);
+		fvfinal.insertElementAt(yodaatt, 0);
+		fvfinal.insertElementAt(sinaatt, 0);
+		fvfinal.insertElementAt(qakisatt, 0);
+		
+		Instances trainingSet = new Instances("training_classifier" , fvfinal, trainQuestions.size());
+		
+		log.debug("Start collection of training data for each system");
+
+	
+		for (int i = 0; i < traindata.size(); i++) {
+			JSONObject questiondata = (JSONObject) traindata.get(i);
+			JSONObject allsystemsdata = (JSONObject) questiondata.get("answers");
+			String question = (String) questiondata.get("question");
+			Instance tmp = analyzer.analyze(question);
+			tmp.setValue(hawkatt, 0);
+			tmp.setValue(yodaatt, 0);
+			tmp.setValue(sinaatt, 0);
+			tmp.setValue(qakisatt, 0);
+			for(ASystem system: systems){
+				JSONObject systemdata = (JSONObject) allsystemsdata.get(system.name());
+				if(new Double(systemdata.get("fmeasure").toString()) > 0)
+					switch (system.name()){
+					case "hawk": tmp.setValue(hawkatt, 1);
+					case "yoda": tmp.setValue(yodaatt, 1);
+					case "sina": tmp.setValue(sinaatt, 1);
+					case "qakis": tmp.setValue(qakisatt, 1);
+					}
+				}
+			trainingSet.add(tmp);
+			log.debug(tmp.toString());
+			log.debug(trainingSet.attributeStats(1).toString());
+			}
+		
+		try (FileWriter file = new FileWriter("./src/main/resources/Train.arff")) {
+			file.write(trainingSet.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}				
+		}
+	}

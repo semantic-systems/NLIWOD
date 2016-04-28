@@ -3,6 +3,12 @@ package org.aksw.mlqa.analyzer;
 import java.util.ArrayList;
 
 import org.aksw.mlqa.analyzer.comperative.Comperative;
+import org.aksw.mlqa.analyzer.entityType.EntityDate;
+import org.aksw.mlqa.analyzer.entityType.EntityLocation;
+import org.aksw.mlqa.analyzer.entityType.EntityMoney;
+import org.aksw.mlqa.analyzer.entityType.EntityOrganization;
+import org.aksw.mlqa.analyzer.entityType.EntityPercent;
+import org.aksw.mlqa.analyzer.entityType.EntityPerson;
 import org.aksw.mlqa.analyzer.numberOfToken.NumberOfToken;
 import org.aksw.mlqa.analyzer.querytype.QueryResourceTypeAnalyzer;
 import org.aksw.mlqa.analyzer.questiontype.QuestionTypeAnalyzer;
@@ -26,6 +32,7 @@ public class Analyzer {
 	 *            FastVector(2); fvClassVal.addElement("positive");
 	 *            fvClassVal.addElement("negative");
 	 */
+	
 	public Analyzer() {
 
 		analyzers = new ArrayList<IAnalyzer>();
@@ -36,13 +43,19 @@ public class Analyzer {
 		analyzers.add(new NumberOfToken());
 		analyzers.add(new Superlative());
 		analyzers.add(new Comperative());
+		analyzers.add(new EntityPerson());
+		analyzers.add(new EntityMoney());
+		analyzers.add(new EntityLocation());
+		analyzers.add(new EntityPercent());
+		analyzers.add(new EntityOrganization());
+		analyzers.add(new EntityDate());
 
+		
+		
 		// Declare the feature vector, register their attributes
 		for (IAnalyzer analyzer : analyzers) {
 			fvWekaAttributes.addElement(analyzer.getAttribute());
 		}
-		// put the fmeasure/class attribute
-		fvWekaAttributes.addElement(fmeasureAtt);
 	}
 
 	/**

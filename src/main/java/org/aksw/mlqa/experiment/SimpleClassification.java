@@ -1,5 +1,7 @@
 package org.aksw.mlqa.experiment;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,12 +75,17 @@ public class SimpleClassification {
 
 				// add to instances of the particular system
 				tmp.setValue((Attribute) analyzer.getClassAttribute(), new Double(systemdata.get("fmeasure").toString()));
-				instances.add(tmp);
-			}
+				instances.add(tmp);		
+				}
+			log.info(instances.toSummaryString());
+			try (FileWriter file = new FileWriter("./src/main/resources/" + system.name() +  ".arff")) {
+				file.write(instances.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}	
 
 			instancesPerSystem.put(system, instances);
-			System.out.println(instances.toString());
-			log.info(instances.toSummaryString());
+			
 		}
 		// TODO since many systems submit only a subset of questions, take all
 		// submitted logs together and optimize best training set for each
