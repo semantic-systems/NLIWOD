@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 public class YODA extends ASystem {
 	Logger log = LoggerFactory.getLogger(YODA.class);
+	public String name(){return "yoda";};
 
 	public HashSet<String> search(String question) {
 		log.debug(this.toString() + ": " + question);

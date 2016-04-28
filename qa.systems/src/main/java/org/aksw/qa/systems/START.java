@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class START extends ASystem {
 	Logger log = LoggerFactory.getLogger(START.class);
+	public String name(){return "start";};
 
 	public HashSet<String> search(String question) {
 		log.debug(this.toString() + ": " + question);

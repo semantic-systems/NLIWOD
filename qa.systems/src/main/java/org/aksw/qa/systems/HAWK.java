@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 public class HAWK extends ASystem {
 	Logger log = LoggerFactory.getLogger(HAWK.class);
+    public String name(){return "hawk";};
 
 	public HashSet<String> search(String question) {
 		log.debug(this.toString() + ": " + question);

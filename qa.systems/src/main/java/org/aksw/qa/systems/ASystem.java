@@ -12,7 +12,9 @@ import org.apache.http.util.EntityUtils;
 public abstract class ASystem {
 
     public abstract HashSet<String> search(String question);
-
+    
+    public abstract String name();
+    
     public String responseToString(HttpResponse response) throws IllegalStateException, IOException {
         HttpEntity entity = null;
         BufferedReader br = null;

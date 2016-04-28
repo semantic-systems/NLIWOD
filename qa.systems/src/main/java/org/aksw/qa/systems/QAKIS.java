@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 public class QAKIS extends ASystem {
 	Logger log = LoggerFactory.getLogger(QAKIS.class);
+	public String name(){return "qakis";};
 
 	public HashSet<String> search(String question) {
 		log.debug(this.toString() + ": " + question);

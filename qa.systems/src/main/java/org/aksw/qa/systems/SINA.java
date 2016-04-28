@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class SINA extends ASystem {
 	Logger log = LoggerFactory.getLogger(SINA.class);
+	public String name(){return "sina";};
 
 	public HashSet<String> search(String question) {
 		log.debug(this.toString() + ": " + question);
