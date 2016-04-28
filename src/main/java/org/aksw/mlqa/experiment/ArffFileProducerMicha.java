@@ -42,22 +42,22 @@ public class ArffFileProducerMicha {
 		 * For multilable classification:
 		 */
 		
-		FastVector fvhawk = new FastVector(2);
+		FastVector fvhawk = new FastVector();
 		fvhawk.addElement("1");
 		fvhawk.addElement("0");
 		Attribute hawkatt = new Attribute("hawk", fvhawk);
 		
-		FastVector fvqakis = new FastVector(2);
+		FastVector fvqakis = new FastVector();
 		fvhawk.addElement("1");
 		fvhawk.addElement("0");
 		Attribute qakisatt = new Attribute("qakis", fvqakis);
 		
-		FastVector fvyoda = new FastVector(2);
+		FastVector fvyoda = new FastVector();
 		fvhawk.addElement("1");
 		fvhawk.addElement("0");
 		Attribute yodaatt = new Attribute("yoda", fvyoda);
 		
-		FastVector fvsina = new FastVector(2);
+		FastVector fvsina = new FastVector();
 		fvsina.addElement("1");
 		fvsina.addElement("0");
 		Attribute sinaatt = new Attribute("sina", fvsina);
@@ -111,7 +111,6 @@ public class ArffFileProducerMicha {
 				}
 			trainingSet.add(tmp);
 			log.debug(tmp.toString());
-			log.debug(trainingSet.attributeStats(1).toString());
 			}
 		
 		try (FileWriter file = new FileWriter("./src/main/resources/Train.arff")) {
