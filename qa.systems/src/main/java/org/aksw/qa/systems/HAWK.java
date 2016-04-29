@@ -1,76 +1,77 @@
 package org.aksw.qa.systems;
 
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.Base64;
+import java.util.Base64.Decoder;
 import java.util.HashSet;
 
+import org.aksw.qa.commons.datastructure.IQuestion;
+import org.apache.commons.codec.Charsets;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class HAWK extends ASystem {
-	Logger log = LoggerFactory.getLogger(HAWK.class);
+    Logger log = LoggerFactory.getLogger(HAWK.class);
 
-	public HashSet<String> search(String question) {
-		log.debug(this.toString() + ": " + question);
-		try {
+    private Decoder based64Decoder = Base64.getDecoder();
 
-			HashSet<String> result = new HashSet<String>();
+    public String name() {
+        return "hawk";
+    };
 
-			HttpClient client = HttpClientBuilder.create().build();
-			URI iduri = new URIBuilder().setScheme("http").setHost("139.18.2.164:8181").setPath("/search").setParameter("q", question).build();
-			HttpGet httpget = new HttpGet(iduri);
-			HttpResponse idresponse = client.execute(httpget);
-
-			String id = responseToString(idresponse);
-			JSONParser parser = new JSONParser();
-
-			URI quri = new URIBuilder().setScheme("http").setHost("139.18.2.164:8181").setPath("/status").setParameter("UUID", id.substring(1, id.length() - 2)).build();
-
-			Boolean foundAnswer = false;
-			int j = 0;
-			do {
-				Thread.sleep(50);
-				HttpGet questionpost = new HttpGet(quri);
-				HttpResponse questionresponse = client.execute(questionpost);
-				JSONObject responsejson = (JSONObject) parser.parse(responseToString(questionresponse));
-				foundAnswer = responsejson.containsKey("answer");
-				if (!foundAnswer.booleanValue())
-					EntityUtils.consume(questionresponse.getEntity());
-				else {
-					JSONArray answerlist = (JSONArray) responsejson.get("answer");
-					for (int i = 0; i < answerlist.size(); i++) {
-						JSONObject answer = (JSONObject) answerlist.get(i);
-						result.add(answer.get("URI").toString());
-					}
-				}
-				j = j + 1;
-			} while (!foundAnswer.booleanValue() && j < 500);
-			return result;
-		} catch (ClientProtocolException e) {
-			log.error(e.getLocalizedMessage(), e);
-		} catch (IOException e) {
-			log.error(e.getLocalizedMessage(), e);
-		} catch (URISyntaxException e) {
-			log.error(e.getLocalizedMessage(), e);
-        } catch (IllegalStateException e) {
-			log.error(e.getLocalizedMessage(), e);
-        } catch (ParseException e) {
-			log.error(e.getLocalizedMessage(), e);
-        } catch (InterruptedException e) {
-			log.error(e.getLocalizedMessage(), e);
+    public void search(IQuestion question) {
+        String questionString;
+        if (!question.getLanguageToQuestion().containsKey("en")) {
+            return;
         }
-		return new HashSet<String>();
-	}
+        questionString = question.getLanguageToQuestion().get("en");
+        log.debug(this.getClass().getSimpleName() + ": " + questionString);
+        try {
+
+            HttpClient client = HttpClientBuilder.create().build();
+            URI iduri = new URIBuilder().setScheme("http").setHost("139.18.2.164:8181").setPath("/search")
+                    .setParameter("q", questionString).build();
+            HttpGet httpget = new HttpGet(iduri);
+            HttpResponse idresponse = client.execute(httpget);
+
+            String id = responseToString(idresponse);
+            JSONParser parser = new JSONParser();
+
+            URI quri = new URIBuilder().setScheme("http").setHost("139.18.2.164:8181").setPath("/status")
+                    .setParameter("UUID", id.substring(1, id.length() - 2)).build();
+
+            int j = 0;
+            do {
+                Thread.sleep(50);
+                HttpGet questionpost = new HttpGet(quri);
+                HttpResponse questionresponse = client.execute(questionpost);
+                JSONObject responsejson = (JSONObject) parser.parse(responseToString(questionresponse));
+                if (responsejson.containsKey("answer")) {
+                    JSONArray answerlist = (JSONArray) responsejson.get("answer");
+                    HashSet<String> result = new HashSet<String>();
+                    for (int i = 0; i < answerlist.size(); i++) {
+                        JSONObject answer = (JSONObject) answerlist.get(i);
+                        result.add(answer.get("URI").toString());
+                    }
+                    question.setGoldenAnswers(result);
+                    if (responsejson.containsKey("final_sparql_base64")) {
+                        String sparqlQuery = responsejson.get("final_sparql_base64").toString();
+                        sparqlQuery = new String(based64Decoder.decode(sparqlQuery), Charsets.UTF_8);
+                        question.setSparqlQuery(sparqlQuery);
+                    }
+                }
+                j = j + 1;
+            } while (j < 500);
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage(), e);
+        }
+    }
 }

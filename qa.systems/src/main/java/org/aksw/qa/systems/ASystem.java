@@ -3,15 +3,29 @@ package org.aksw.qa.systems;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.aksw.qa.commons.datastructure.IQuestion;
+import org.aksw.qa.commons.datastructure.Question;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 
 public abstract class ASystem {
 
-    public abstract HashSet<String> search(String question);
+    public IQuestion search(String question) {
+        IQuestion iQuestion = new Question();
+        Map<String, String> langToQuestion = new HashMap<String, String>();
+        langToQuestion.put("en", question);
+        iQuestion.setLanguageToQuestion(langToQuestion);
+        search(iQuestion);
+        return iQuestion;
+    }
+
+    public abstract void search(IQuestion question);
+
+    public abstract String name();
 
     protected String responseToString(HttpResponse response) throws IllegalStateException, IOException {
         HttpEntity entity = null;

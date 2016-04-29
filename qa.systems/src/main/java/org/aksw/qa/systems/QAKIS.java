@@ -1,14 +1,13 @@
 package org.aksw.qa.systems;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.aksw.qa.commons.datastructure.IQuestion;
 import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -23,52 +22,63 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class QAKIS extends ASystem {
-	Logger log = LoggerFactory.getLogger(QAKIS.class);
+    Logger log = LoggerFactory.getLogger(QAKIS.class);
 
-	public HashSet<String> search(String question) {
-		log.debug(this.toString() + ": " + question);
-		try {
-			final HashSet<String> resultSet = new HashSet<String>();
-			String url = "http://qakis.org/qakis/index.xhtml";
+    public String name() {
+        return "qakis";
+    };
 
-			HttpClient client = HttpClientBuilder.create().build();
-			HttpPost httppost = new HttpPost(url);
-			HttpResponse ping = client.execute(httppost);
+    public void search(IQuestion question) {
+        String questionString;
+        if (!question.getLanguageToQuestion().containsKey("en")) {
+            return;
+        }
+        questionString = question.getLanguageToQuestion().get("en");
+        log.debug(this.getClass().getSimpleName() + ": " + questionString);
+        try {
+            final HashSet<String> resultSet = new HashSet<String>();
+            String url = "http://qakis.org/qakis/index.xhtml";
 
-			Document vsdoc = Jsoup.parse(responseToString(ping));
-			Elements el = vsdoc.select("input");
-			String viewstate = (el.get(el.size() - 1).attr("value"));
+            HttpClient client = HttpClientBuilder.create().build();
+            HttpPost httppost = new HttpPost(url);
+            HttpResponse ping = client.execute(httppost);
 
-			List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-			formparams.add(new BasicNameValuePair("index_form", "index_form"));
-			formparams.add(new BasicNameValuePair("index_form:question", question));
-			formparams.add(new BasicNameValuePair("index_form:eps", ""));
-			formparams.add(new BasicNameValuePair("index_form:submitQuestion", ""));
-			formparams.add(new BasicNameValuePair("javax.faces.ViewState", viewstate));
+            Document vsdoc = Jsoup.parse(responseToString(ping));
+            Elements el = vsdoc.select("input");
+            String viewstate = (el.get(el.size() - 1).attr("value"));
 
-			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, Consts.UTF_8);
-			httppost.setEntity(entity);
-			HttpResponse response = client.execute(httppost);
+            List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+            formparams.add(new BasicNameValuePair("index_form", "index_form"));
+            formparams.add(new BasicNameValuePair("index_form:question", questionString));
+            formparams.add(new BasicNameValuePair("index_form:eps", ""));
+            formparams.add(new BasicNameValuePair("index_form:submitQuestion", ""));
+            formparams.add(new BasicNameValuePair("javax.faces.ViewState", viewstate));
 
-			Document doc = Jsoup.parse(responseToString(response));
-			Elements answer = doc.select("div.global-presentation-details>h3>a");
-			NodeVisitor nv = new NodeVisitor() {
-				public void tail(Node node, int depth) {
-					if (depth == 0)
-						resultSet.add(node.attr("href"));
-				}
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, Consts.UTF_8);
+            httppost.setEntity(entity);
+            HttpResponse response = client.execute(httppost);
 
-				public void head(Node arg0, int arg1) {
-					// do nothing here
-				}
-			};
-			answer.traverse(nv);
-			return resultSet;
-		} catch (ClientProtocolException e) {
-			log.error(e.getLocalizedMessage(), e);
-		} catch (IOException e) {
-			log.error(e.getLocalizedMessage(), e);
-		}
-		return new HashSet<String>();
-	}
+            Document doc = Jsoup.parse(responseToString(response));
+            Elements answer = doc.select("div.global-presentation-details>h3>a");
+            NodeVisitor nv = new NodeVisitor() {
+                public void tail(Node node, int depth) {
+                    if (depth == 0)
+                        resultSet.add(node.attr("href"));
+                }
+
+                public void head(Node arg0, int arg1) {
+                    // do nothing here
+                }
+            };
+            answer.traverse(nv);
+            question.setGoldenAnswers(resultSet);
+
+            Elements codeElements = doc.select("div#sparqlQuery>div.code_sample>pre");
+            if (codeElements.size() > 0) {
+                question.setSparqlQuery(codeElements.get(0).text());
+            }
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage(), e);
+        }
+    }
 }

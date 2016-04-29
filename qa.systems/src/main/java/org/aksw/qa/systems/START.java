@@ -1,12 +1,9 @@
 package org.aksw.qa.systems;
 
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.HashSet;
 
+import org.aksw.qa.commons.datastructure.IQuestion;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
@@ -18,12 +15,18 @@ import org.slf4j.LoggerFactory;
 
 public class START extends ASystem {
 	Logger log = LoggerFactory.getLogger(START.class);
+	public String name(){return "start";};
 
-	public HashSet<String> search(String question) {
-		log.debug(this.toString() + ": " + question);
+	public void search(IQuestion question) {
+        String questionString;
+        if (!question.getLanguageToQuestion().containsKey("en")) {
+            return;
+        }
+        questionString = question.getLanguageToQuestion().get("en");
+        log.debug(this.getClass().getSimpleName() + ": " + questionString);
 		try {
 			HttpClient client = HttpClientBuilder.create().build();
-			URI uri = new URIBuilder().setScheme("http").setHost("start.csail.mit.edu").setPath("/justanswer.php").setParameter("query", question).build();
+			URI uri = new URIBuilder().setScheme("http").setHost("start.csail.mit.edu").setPath("/justanswer.php").setParameter("query", questionString).build();
 			HttpGet httpget = new HttpGet(uri);
 			HttpResponse response = client.execute(httpget);
 
@@ -32,13 +35,8 @@ public class START extends ASystem {
 
 			// TODO return senseful answer from start
 			// return resultSet;
-		} catch (ClientProtocolException e) {
-			log.error(e.getLocalizedMessage(), e);
-		} catch (IOException e) {
-			log.error(e.getLocalizedMessage(), e);
-		} catch (URISyntaxException e) {
+		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(), e);
 		}
-        return new HashSet<String>();
 	}
 }
