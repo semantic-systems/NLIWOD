@@ -18,7 +18,7 @@ public class ComperativeTest {
 		Instances testinstances = new Instances("Test", fvWekaAttributes, 1 );
 		Instance test = new Instance(fvWekaAttributes.size());
 		test.setValue(superlative.getAttribute(), (String) superlative.analyze("This test class is worse than the other!"));		
-		assertTrue(test.stringValue(superlative.getAttribute()).equals("containsComperative"));
+		assertTrue(test.stringValue(superlative.getAttribute()).equals("Comperative"));
 	}
 
 	@Test
@@ -29,7 +29,7 @@ public class ComperativeTest {
 		Instances testinstances = new Instances("Test", fvWekaAttributes, 1 );
 		Instance test = new Instance(fvWekaAttributes.size());
 		test.setValue(superlative.getAttribute(), (String) superlative.analyze("This sentence contains no comperative!"));		
-		assertTrue(test.stringValue(superlative.getAttribute()).equals("containsNoComperative"));
+		assertTrue(test.stringValue(superlative.getAttribute()).equals("NoComperative"));
 	}
 
 }

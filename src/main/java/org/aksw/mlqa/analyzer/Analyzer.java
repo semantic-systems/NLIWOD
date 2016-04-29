@@ -50,12 +50,12 @@ public class Analyzer {
 		analyzers.add(new EntityOrganization());
 		analyzers.add(new EntityDate());
 
-		
-		
 		// Declare the feature vector, register their attributes
 		for (IAnalyzer analyzer : analyzers) {
 			fvWekaAttributes.addElement(analyzer.getAttribute());
 		}
+		// put the fmeasure/class attribute
+		fvWekaAttributes.addElement(fmeasureAtt);
 	}
 
 	/**

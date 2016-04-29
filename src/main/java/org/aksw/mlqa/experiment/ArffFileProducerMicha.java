@@ -2,10 +2,7 @@ package org.aksw.mlqa.experiment;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.aksw.mlqa.analyzer.Analyzer;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
@@ -21,9 +18,6 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import weka.classifiers.Classifier;
-import weka.classifiers.functions.MultilayerPerceptron;
-import weka.classifiers.trees.J48;
 import weka.core.Attribute;
 import weka.core.FastVector;
 import weka.core.Instance;
@@ -48,13 +42,13 @@ public class ArffFileProducerMicha {
 		Attribute hawkatt = new Attribute("hawk", fvhawk);
 		
 		FastVector fvqakis = new FastVector();
-		fvhawk.addElement("1");
-		fvhawk.addElement("0");
+		fvqakis.addElement("1");
+		fvqakis.addElement("0");
 		Attribute qakisatt = new Attribute("qakis", fvqakis);
 		
 		FastVector fvyoda = new FastVector();
-		fvhawk.addElement("1");
-		fvhawk.addElement("0");
+		fvyoda.addElement("1");
+		fvyoda.addElement("0");
 		Attribute yodaatt = new Attribute("yoda", fvyoda);
 		
 		FastVector fvsina = new FastVector();
@@ -80,13 +74,14 @@ public class ArffFileProducerMicha {
 		log.debug("Calculate the features per question and system");
 		Analyzer analyzer = new Analyzer();
 		FastVector fvfinal = analyzer.fvWekaAttributes;
+		
 		fvfinal.insertElementAt(hawkatt, 0);
 		fvfinal.insertElementAt(yodaatt, 0);
 		fvfinal.insertElementAt(sinaatt, 0);
 		fvfinal.insertElementAt(qakisatt, 0);
 		
-		Instances trainingSet = new Instances("training_classifier" , fvfinal, trainQuestions.size());
 		
+		Instances trainingSet = new Instances("training_classifier: -C 4" , fvfinal, trainQuestions.size());
 		log.debug("Start collection of training data for each system");
 
 	
@@ -95,10 +90,12 @@ public class ArffFileProducerMicha {
 			JSONObject allsystemsdata = (JSONObject) questiondata.get("answers");
 			String question = (String) questiondata.get("question");
 			Instance tmp = analyzer.analyze(question);
+
 			tmp.setValue(hawkatt, 0);
 			tmp.setValue(yodaatt, 0);
 			tmp.setValue(sinaatt, 0);
 			tmp.setValue(qakisatt, 0);
+
 			for(ASystem system: systems){
 				JSONObject systemdata = (JSONObject) allsystemsdata.get(system.name());
 				if(new Double(systemdata.get("fmeasure").toString()) > 0)
@@ -109,10 +106,11 @@ public class ArffFileProducerMicha {
 					case "qakis": tmp.setValue(qakisatt, 1);
 					}
 				}
+
 			trainingSet.add(tmp);
-			log.debug(tmp.toString());
 			}
-		
+		log.debug(trainingSet.toString());
+
 		try (FileWriter file = new FileWriter("./src/main/resources/Train.arff")) {
 			file.write(trainingSet.toString());
 		} catch (IOException e) {
