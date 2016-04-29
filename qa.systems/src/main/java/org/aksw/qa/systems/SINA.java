@@ -38,12 +38,24 @@ public class SINA extends ASystem {
             HttpGet httpget = new HttpGet(uri);
             HttpResponse response = client.execute(httpget);
             JSONParser parser = new JSONParser();
-            JSONArray answerjson = (JSONArray) parser.parse(responseToString(response));
+            String responseString = responseToString(response);
+            JSONArray answerjson = (JSONArray) parser.parse(responseString);
             for (int i = 0; i < answerjson.size(); i++) {
                 JSONObject answer = (JSONObject) answerjson.get(i);
                 resultSet.add((String) answer.get("URI_PARAM"));
             }
             question.setGoldenAnswers(resultSet);
+
+            uri = new URIBuilder().setScheme("http").setHost("sina.aksw.org").setPath("/api/rest/search")
+                    .setParameter("q", questionString).setParameter("content", "sparql").build();
+            httpget = new HttpGet(uri);
+            response = client.execute(httpget);
+            responseString = responseToString(response);
+            answerjson = (JSONArray) parser.parse(responseString);
+            if (answerjson.size() > 0) {
+                JSONObject sparqlQuery = (JSONObject) answerjson.get(0);
+                question.setSparqlQuery((String) sparqlQuery.get("SPARQL_PARAM"));
+            }
         } catch (Exception e) {
             log.error(e.getLocalizedMessage(), e);
         }

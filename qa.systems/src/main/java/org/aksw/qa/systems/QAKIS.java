@@ -15,6 +15,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 import org.jsoup.select.NodeVisitor;
@@ -73,9 +74,14 @@ public class QAKIS extends ASystem {
             answer.traverse(nv);
             question.setGoldenAnswers(resultSet);
 
-            Elements codeElements = doc.select("div#sparqlQuery>div.code_sample>pre");
+            Elements codeElements = doc.select("div#sparqlQuery pre");
             if (codeElements.size() > 0) {
-                question.setSparqlQuery(codeElements.get(0).text());
+                Element sparqlElement = codeElements.get(0);
+                Elements codeChildren = sparqlElement.children();
+                for (Element c : codeChildren) {
+                    c.remove();
+                }
+                question.setSparqlQuery(sparqlElement.text());
             }
         } catch (Exception e) {
             log.error(e.getLocalizedMessage(), e);

@@ -14,8 +14,13 @@ public class SystemsTest {
     @Test
     public void testAllSystems() {
         String questionString = "What is the capital of Germany?";
-        List<ASystem> systems = Arrays.asList((ASystem) new HAWK(), (ASystem) new QAKIS(), (ASystem) new SINA(),
-                (ASystem) new START(), (ASystem) new YODA());
+        List<ASystem> systems = Arrays.asList(
+//                (ASystem) new HAWK(), 
+//                (ASystem) new QAKIS(),
+                (ASystem) new SINA()
+//                (ASystem) new START(), 
+//                (ASystem) new YODA()
+                );
         for (ASystem system : systems) {
             IQuestion question = system.search(questionString);
             log.debug(question.toString());
