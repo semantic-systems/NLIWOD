@@ -25,7 +25,7 @@ public class LoadTest {
 	 * Testing all datasets for loadability and validity of SPARQL-queries
 	 */
 	//FIXME do not ignore that but also
-	@Ignore
+//	@Ignore
 	public void testAllDatasetsTowardsLoadibility() {
 		Boolean queriesValid = true;
 		for (Dataset d : Dataset.values()) {

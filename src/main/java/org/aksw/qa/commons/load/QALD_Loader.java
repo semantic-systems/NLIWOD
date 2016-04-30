@@ -63,7 +63,7 @@ public class QALD_Loader {
 
 		switch (set) {
 		case nlq:
-			return loadingAnchor.getResource("NLQ-OKBQA/nlq1_vis.json");
+			return loadingAnchor.getResource("/NLQ-OKBQA/nlq1_vis.json");
 
 		case QALD1_Test_dbpedia:
 			return loadingAnchor.getResource("/QALD-master/1/data/dbpedia-test.xml");
@@ -297,11 +297,14 @@ public class QALD_Loader {
 					question.setOutOfScope(question.getSparqlQuery().toUpperCase().contains("OUT OF SCOPE"));
 				}
 				// Read answers
-				NodeList answers = questionNode.getElementsByTagName("answer");
+				NodeList answers = questionNode.getElementsByTagName("answers");
 				HashSet<String> set = new HashSet<String>();
 				for (int j = 0; j < answers.getLength(); j++) {
-					String answer = ((Element) answers.item(j)).getTextContent();
-					set.add(answer.trim());
+					NodeList answer = ((Element) answers.item(j)).getElementsByTagName("answer");
+					for (int k = 0; k < answer.getLength(); k++) {
+						String answerString = ((Element) answer.item(k)).getTextContent();
+						set.add(answerString.trim());
+					}
 				}
 				question.setGoldenAnswers(set);
 
