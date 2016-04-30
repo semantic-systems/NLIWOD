@@ -5,15 +5,15 @@
 		"question":"What was the naval warfare commanded by Admiral Yi Sun-sin at Myeongnyang Strait in 1597?",
 		"answer":"Battle of Myeongnyang",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { ?x dbo:commander dbr:Yi_Sun-sin. ?x dbo:place dbr:Myeongnyang_Strait. ?x dbo:date \"1597-10-25\"^^xsd:date. }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix xsd: <http://www.w3.org/2001/XMLSchema#> select distinct ?x where { ?x dbo:commander dbr:Yi_Sun-sin. ?x dbo:place dbr:Myeongnyang_Strait. ?x dbo:date \"1597-10-25\"^^xsd:date. }"
 	},
 	{
 		"id":"2",
 		"lang":"ko",
-		"question":"ÀÌ¼ø½Å Àå±ºÀÌ 1597³â¿¡ ¸í·®ÇØÇù¿¡¼­ ÁöÈÖÇÑ ÇØÀüÀº ¹«¾ùÀÎ°¡?",
-		"answer":"¸í·® ÇØÀü",
+		"question":"ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½å±ºï¿½ï¿½ 1597ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { ?x dbpedia-owl:commander dbpedia-ko:ÀÌ¼ø½Å. ?x prop-ko:Àå¼Ò \"¸í·®ÇØÇù\"@ko. ?x prop-ko:³¯Â¥ 1597. }"
+		"sparql":"select distinct ?x where { ?x dbpedia-owl:commander dbpedia-ko:ï¿½Ì¼ï¿½ï¿½ï¿½. ?x prop-ko:ï¿½ï¿½ï¿½ \"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\"@ko. ?x prop-ko:ï¿½ï¿½Â¥ 1597. }"
 	},
 	{
 		"id":"3",
@@ -21,15 +21,15 @@
 		"question":"When was the year that President Roh Moo-hyun died?",
 		"answer":"2009",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { dbr:Roh_Moo-hyun dbo:deathYear ?x. }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> select distinct ?x where { dbr:Roh_Moo-hyun dbo:deathYear ?x. }"
 	},
 	{
 		"id":"3",
 		"lang":"ko",
-		"question":"³ë¹«Çö ´ëÅë·ÉÀÌ »ç¸ÁÇÑ ³âµµ´Â ¾ðÁ¦ÀÎ°¡?",
-		"answer":"2009³â",
+		"question":"ï¿½ë¹«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½âµµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"2009ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { dbpedia-ko:³ë¹«Çö prop-ko:»ç¸ÁÀÏ ?x. }"
+		"sparql":"select distinct ?x where { dbpedia-ko:ï¿½ë¹«ï¿½ï¿½ prop-ko:ï¿½ï¿½ï¿½ï¿½ï¿½ ?x. }"
 	},
 	{
 		"id":"4",
@@ -37,15 +37,15 @@
 		"question":"Who was the President of South Korea who won the Nobel Peace Prize in 2000?",
 		"answer":"Kim Dae-jung",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x dbp:title dbr:President_of_South_Korea. ?x text:keyword \"2000\". ?x text:keyword \"Nobel Peace Prize\". }"
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbp:title dbr:President_of_South_Korea. ?x text:keyword \"2000\". ?x text:keyword \"Nobel Peace Prize\". }"
 	},
 	{
 		"id":"4",
 		"lang":"ko",
-		"question":"2000³â¿¡ ³ëº§ ÆòÈ­»óÀ» ¼ö»óÇÑ ´ëÇÑ¹Î±¹ÀÇ ´ëÅë·ÉÀº ´©±¸ÀÎ°¡?",
-		"answer":"±è´ëÁß",
+		"question":"2000ï¿½â¿¡ ï¿½ëº§ ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ¹Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x prop-ko:±¹°¡ \"´ëÇÑ¹Î±¹\"@ko. ?x rdf:type dbpedia-owl:President. ?x text:keyworld \"³ëº§ ÆòÈ­»ó\". ?x text:keyworld \"2000³â\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> select distinct ?x where { ?x prop-ko:ï¿½ï¿½ï¿½ï¿½ \"ï¿½ï¿½ï¿½Ñ¹Î±ï¿½\"@ko. ?x rdf:type dbpedia-owl:President. ?x text:keyword \"ï¿½ëº§ ï¿½ï¿½È­ï¿½ï¿½\". ?x text:keyword \"2000ï¿½ï¿½\". }"
 	},
 	{
 		"id":"26",
@@ -53,15 +53,15 @@
 		"question":"Who was the Chinese emperor whose reign was called the \"Prosperity of Zhenguan\"?",
 		"answer":"Emperor Taizong of Tang",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x rdf:type yago:7th-centuryChineseMonarchs. ?x dbp:eraName \"Zhenguan\"@en. }"
+		"sparql":"prefix dbp: <http://dbpedia.org/property/> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix yago: <http://dbpedia.org/class/yago/> select distinct ?x where { ?x rdf:type yago:7th-centuryChineseMonarchs. ?x dbp:eraName \"Zhenguan\"@en. }"
 	},
 	{
 		"id":"26",
 		"lang":"ko",
-		"question":"±×°¡ ´Ù½º¸° ½Ã´ë¸¦ \"Á¤°üÀÇ Ä¡\"¶ó°í ºÒ¸®°Ô ¸¸µç Áß±¹ÀÇ È²Á¦´Â ´©±¸ÀÎ°¡?",
-		"answer":"´ç ÅÂÁ¾",
+		"question":"ï¿½×°ï¿½ ï¿½Ù½ï¿½ï¿½ï¿½ ï¿½Ã´ë¸¦ \"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä¡\"ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß±ï¿½ï¿½ï¿½ È²ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x prop-ko:Á÷Ã¥ dbpedia-ko:Áß±¹ÀÇ_È²Á¦. ?x text:keyworld \"Á¤°üÀÇ Ä¡\". } "
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x prop-ko:ï¿½ï¿½Ã¥ dbpedia-ko:ï¿½ß±ï¿½ï¿½ï¿½_È²ï¿½ï¿½. ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä¡\". } "
 	},
 	{
 		"id":"40",
@@ -69,15 +69,15 @@
 		"question":"What is the South Korean government agency reestablished in 2013 after having closed in 2008 to be in charge of maritime policies?",
 		"answer":"Ministry of Oceans and Fisheries",
 		"type":"1-3",
-		"sparql":"select distinct ?x where { ?x dct:subject dbc:Government_of_South_Korea. ?x text:keyworld \"2013\". ?x text:keyworld \"reestablished\". }"
+		"sparql":"prefix dbc: <http://dbpedia.org/resource/Category> prefix text: <http://okbqa.org/text#> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where { ?x dct:subject dbc:Government_of_South_Korea. ?x text:keyword \"2013\". ?x text:keyword \"reestablished\". }"
 	},
 	{
 		"id":"40",
 		"lang":"ko",
-		"question":"2008³â¿¡ ÆóÁöµÇ¾ú´Ù°¡ 2013³â¿¡ Àç°ÇµÈ ÀÌÈÄ·Î ÇØ¾çÁ¤Ã¥À» °üÀåÇÏ°í ÀÖ´Â ´ëÇÑ¹Î±¹ÀÇ Áß¾ÓÇàÁ¤±â°üÀº ¹«¾ùÀÎ°¡?",
-		"answer":"´ëÇÑ¹Î±¹ ÇØ¾ç¼ö»êºÎ",
+		"question":"2008ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½Ù°ï¿½ 2013ï¿½â¿¡ ï¿½ï¿½Çµï¿½ ï¿½ï¿½ï¿½Ä·ï¿½ ï¿½Ø¾ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Ñ¹Î±ï¿½ï¿½ï¿½ ï¿½ß¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½Ñ¹Î±ï¿½ ï¿½Ø¾ï¿½ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-3",
-		"sparql":"select distinct ?x where { ?x prop-ko:¼³¸³ÀÏ ?o. ?x prop-ko:ÇØ»êÀÏ 2008. ?x text:keyworld \"2013\". ?x text:keyworld \"Àç°Ç\". } "
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x prop-ko:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ?o. ?x prop-ko:ï¿½Ø»ï¿½ï¿½ï¿½ 2008. ?x text:keyword \"2013\". ?x text:keyword \"ï¿½ï¿½ï¿½\". } "
 	},
 	{
 		"id":"45",
@@ -85,15 +85,15 @@
 		"question":"Who was the general officer of the Goryeo Dynasty that had?civil service experience and won the Battle of Guju??",
 		"answer":"Gang Gam-chan",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { dbr:Battle_of_Kuju dbp:commander ?x. ?x rdf:type yago:GoryeoPeople. } "
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix yago: <http://dbpedia.org/class/yago/> select distinct ?x where { dbr:Battle_of_Kuju dbp:commander ?x. ?x rdf:type yago:GoryeoPeople. } "
 	},
 	{
 		"id":"45",
 		"lang":"ko",
-		"question":"±¸ÁÖ ´ëÃ¸¿¡¼­ ½Â¸®ÇÑ °í·Á ½Ã´ëÀÇ ¹®°ü Ãâ½ÅÀÇ Àå±ºÀº ´©±¸ÀÎ°¡?",
-		"answer":"°­°¨Âù",
+		"question":"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ ï¿½Â¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½å±ºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { dbpedia-ko:±¸ÁÖ_´ëÃ¸ dbpedia-owl:commander ?x. ?x dbpedia-owl:country dbpedia-ko:°í·Á. } "
+		"sparql":"select distinct ?x where { dbpedia-ko:ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½Ã¸ dbpedia-owl:commander ?x. ?x dbpedia-owl:country dbpedia-ko:ï¿½ï¿½ï¿½. } "
 	},
 	{
 		"id":"70",
@@ -101,15 +101,15 @@
 		"question":"What is the football club established in 1899 and?belonged to La Liga to which Lionel Messi belongs as well??",
 		"answer":"FC Barcelona",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x dbp:league dbr:La_Liga. ?x dct:subject dbc:1899_establishments_in_Spain. ?x dbp:name dbr:Lionel_Messi. }"
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> prefix dbc: <http://dbpedia.org/resource/Category> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where { ?x dbp:league dbr:La_Liga. ?x dct:subject dbc:1899_establishments_in_Spain. ?x dbp:name dbr:Lionel_Messi. }"
 	},
 	{
 		"id":"70",
 		"lang":"ko",
-		"question":"1899³â¿¡ Ã¢´ÜµÇ¾î?ÇÁ¸®¸Þ¶ó¸®°¡¿¡ ¼Ò¼ÓµÇ¾î ÀÖÀ¸¸ç?¸®¿À³Ú ¸Þ½Ã°¡ ¼Ò¼ÓµÇ¾î ÀÖ±âµµ ÇÑ Ãà±¸´ÜÀº ¹«¾ùÀÎ°¡?",
-		"answer":"FC ¹Ù¸£¼¿·Î³ª",
+		"question":"1899ï¿½â¿¡ Ã¢ï¿½ÜµÇ¾ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½Þ¶ó¸®°ï¿½ï¿½ï¿½ ï¿½Ò¼ÓµÇ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½Ã°ï¿½ ï¿½Ò¼ÓµÇ¾ï¿½ ï¿½Ö±âµµ ï¿½ï¿½ ï¿½à±¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"FC ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½Î³ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x dbpedia-owl:league dbpedia-ko:ÇÁ¸®¸Þ¶ó¸®°¡. ?x prop-ko:ÀÌ¸§ dbpedia-ko:¸®¿À³Ú_¸Þ½Ã. ?x prop-ko:¼³¸³¿¬µµ 1899. } "
+		"sparql":"select distinct ?x where { ?x dbpedia-owl:league dbpedia-ko:ï¿½ï¿½ï¿½ï¿½ï¿½Þ¶ó¸®°ï¿½. ?x prop-ko:ï¿½Ì¸ï¿½ dbpedia-ko:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½Þ½ï¿½. ?x prop-ko:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1899. } "
 	},
 	{
 		"id":"77",
@@ -117,15 +117,15 @@
 		"question":"Who was the author of 'Samguk Sagi'?",
 		"answer":"Kim Bu-sik",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { dbr:Samguk_Sagi dbo:author ?x. }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> select distinct ?x where { dbr:Samguk_Sagi dbo:author ?x. }"
 	},
 	{
 		"id":"77",
 		"lang":"ko",
-		"question":"»ï±¹»ç±â'¸¦ ¾´ ÀÛ°¡´Â ´©±¸ÀÎ°¡?",
-		"answer":"±èºÎ½Ä",
+		"question":"ï¿½ï±¹ï¿½ï¿½ï¿½'ï¿½ï¿½ ï¿½ï¿½ ï¿½Û°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½Î½ï¿½",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:»ï±¹»ç±â. ?x text:keyworld \"ÀÛ°¡\". ?x text:keyworld \"¾´\". } "
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:ï¿½ï±¹ï¿½ï¿½ï¿½. ?x text:keyword \"ï¿½Û°ï¿½\". ?x text:keyword \"ï¿½ï¿½\". } "
 	},
 	{
 		"id":"78",
@@ -133,15 +133,15 @@
 		"question":"Who was the first person to reach the South Pole?",
 		"answer":"Roald Amundsen",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { ?x dbo:knownFor dbr:South_Pole. ?x text:keyworld \"First\". }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbo:knownFor dbr:South_Pole. ?x text:keyword \"First\". }"
 	},
 	{
 		"id":"78",
 		"lang":"ko",
-		"question":"ÃÖÃÊ·Î ³²±ØÁ¡¿¡ µµ´ÞÇÑ »ç¶÷Àº ´©±¸ÀÎ°¡?",
-		"answer":"·Î¾Ë ¾Æ¹®¼¾",
+		"question":"ï¿½ï¿½ï¿½Ê·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½Î¾ï¿½ ï¿½Æ¹ï¿½ï¿½ï¿½",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { ?x rdf:type dbpedia-owl:Person. ?x text:keyworld \"³²±ØÁ¡\". ?x text:keyworld \"ÃÖÃÊ\". } "
+		"sparql":"prefix text: <http://okbqa.org/text#> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> select distinct ?x where { ?x rdf:type dbpedia-owl:Person. ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\". ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½\". } "
 	},
 	{
 		"id":"80",
@@ -149,15 +149,15 @@
 		"question":"Who was the 8th President of South Korea?",
 		"answer":"Kim Dae-jung",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { ?x dbp:title dbr:President_of_South_Korea. ?x text:keyworld \"8th President\". ?x text:keyworld \"South Korea\". }"
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbp:title dbr:President_of_South_Korea. ?x text:keyword \"8th President\". ?x text:keyword \"South Korea\". }"
 	},
 	{
 		"id":"80",
 		"lang":"ko",
-		"question":"´ëÇÑ¹Î±¹ÀÇ Á¦15´ë ´ëÅë·ÉÀº ´©±¸ÀÎ°¡?",
-		"answer":"±è´ëÁß",
+		"question":"ï¿½ï¿½ï¿½Ñ¹Î±ï¿½ï¿½ï¿½ ï¿½ï¿½15ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { ?x prop-ko:ÂªÀº¼³¸í ?o. ?x text:keyworld \"´ëÇÑ¹Î±¹\". ?x text:keyworld \"15´ë\". ?x text:keyworld \"´ëÅë·É\". } "
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x prop-ko:Âªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ?o. ?x text:keyword \"ï¿½ï¿½ï¿½Ñ¹Î±ï¿½\". ?x text:keyword \"15ï¿½ï¿½\". ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½ï¿½\". } "
 	},
 	{
 		"id":"226",
@@ -165,15 +165,15 @@
 		"question":"What was the country that King Dongmyeong founded?",
 		"answer":"Goguryeo",
 		"type":"1-2",
-		"sparql":"select distinct * where { ?x dbp:leader dbr:Dongmyeong_of_Goguryeo . }"
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> select distinct * where { ?x dbp:leader dbr:Dongmyeong_of_Goguryeo . }"
 	},
 	{
 		"id":"226",
 		"lang":"ko",
-		"question":"µ¿¸í¼º¿ÕÀº ¾î´À ±¹°¡ÀÇ Á¶»óÀÎ°¡?",
-		"answer":"°í±¸·Á",
+		"question":"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct * where { dbpedia-ko:µ¿¸í¼º¿Õ prop-ko:Á÷Ã¥ ?x. }"
+		"sparql":"select distinct * where { dbpedia-ko:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ prop-ko:ï¿½ï¿½Ã¥ ?x. }"
 	},
 	{
 		"id":"228",
@@ -181,15 +181,15 @@
 		"question":"Who was the founder of the masculinism organization Man of Korea?",
 		"answer":"Sung Jae-gi",
 		"type":"1-1",
-		"sparql":"select distinct * where { ?x text:keyworld \"Man of Korea\". ?x text:keyworld \"founder\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct * where { ?x text:keyword \"Man of Korea\". ?x text:keyword \"founder\". }"
 	},
 	{
 		"id":"228",
 		"lang":"ko",
-		"question":"³²¼º¿¬´ë¸¦ Ã¢¸³ÇÑ »ç¶÷Àº ´©±¸ÀÎ°¡?",
-		"answer":"¼ºÀç±â",
+		"question":"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¸¦ Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-1",
-		"sparql":"select distinct * where { ?x prop-ko:Á÷Ã¥ dbpedia-ko:³²¼º¿¬´ë . ?x text:keyworld \"Ã¢¸³\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct * where { ?x prop-ko:ï¿½ï¿½Ã¥ dbpedia-ko:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ . ?x text:keyword \"Ã¢ï¿½ï¿½\". }"
 	},
 	{
 		"id":"245",
@@ -197,15 +197,15 @@
 		"question":"Who was the monarch of France called the \"Sun King\"?",
 		"answer":"Louis XIV of France",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x text:keyworld \"Sun King\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"Sun King\". }"
 	},
 	{
 		"id":"245",
 		"lang":"ko",
-		"question":"\"ÅÂ¾ç¿Õ\"ÀÌ¶ó°í ºÒ¸®´Â ÇÁ¶û½ºÀÇ ±ºÁÖ´Â ´©±¸ÀÎ°¡?",
-		"answer":"·çÀÌ 14¼¼",
+		"question":"\"ï¿½Â¾ï¿½ï¿½\"ï¿½Ì¶ï¿½ï¿½ ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ 14ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x text:keyworld \"ÅÂ¾ç¿Õ\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"ï¿½Â¾ï¿½ï¿½\". }"
 	},
 	{
 		"id":"248",
@@ -213,15 +213,15 @@
 		"question":"Who was the winner of the 2009 Nobel Peace Prize?",
 		"answer":"Barack Obama",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x text:keyworld \"Nobel Peace Prize\". ?x text:keyworld \"2009\". } "
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"Nobel Peace Prize\". ?x text:keyword \"2009\". } "
 	},
 	{
 		"id":"248",
 		"lang":"ko",
-		"question":"2009³â¿¡ ³ëº§ ÆòÈ­»óÀ» ¼ö»óÇÑ »ç¶÷Àº ´©±¸ÀÎ°¡?",
-		"answer":"¹ö¶ô ¿À¹Ù¸¶",
+		"question":"2009ï¿½â¿¡ ï¿½ëº§ ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x text:keyworld \"³ëº§ ÆòÈ­»ó\". ?x text:keyworld \"2009\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"ï¿½ëº§ ï¿½ï¿½È­ï¿½ï¿½\". ?x text:keyword \"2009\". }"
 	},
 	{
 		"id":"256",
@@ -229,15 +229,15 @@
 		"question":"What was the hypothesis that an English scientist James Lovelock proposed?",
 		"answer":"Gaia hypothesis",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { dbr:James_Lovelock dbo:knownFor ?x . ?x rdf:type yago:Hypotheses. }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix yago: <http://dbpedia.org/class/yago/> select distinct ?x where { dbr:James_Lovelock dbo:knownFor ?x . ?x rdf:type yago:Hypotheses. }"
 	},
 	{
 		"id":"256",
 		"lang":"ko",
-		"question":"¿µ±¹ÀÇ °úÇÐÀÚ Á¦ÀÓ½º ·¯ºê·ÏÀÌ ÁÖÀåÇÑ ÀÌ·ÐÀº ¹«¾ùÀÎ°¡?",
-		"answer":"°¡ÀÌ¾Æ ÀÌ·Ð",
+		"question":"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½Ì·ï¿½",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { dbpedia-ko:Á¦ÀÓ½º_·¯ºê·Ï dbpedia-owl:wikiPageWikiLink ?x . ?x text:keyworld \"°¡¼³\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { dbpedia-ko:ï¿½ï¿½ï¿½Ó½ï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½ dbpedia-owl:wikiPageWikiLink ?x . ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½\". }"
 	},
 	{
 		"id":"261",
@@ -245,15 +245,15 @@
 		"question":"What is the novel written by the French writer Victor Hugo in 1862 whose main character was named Jean Valjean?",
 		"answer":"Les Mis?rables",
 		"type":"1-1",
-		"sparql":"select distinct * where { ?x dbo:author dbr:Victor_Hugo . ?x dbp:releaseDate \"1862\"^^xsd:integer . }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix xsd: <http://www.w3.org/2001/XMLSchema#> prefix dbp: <http://dbpedia.org/property/> select distinct * where { ?x dbo:author dbr:Victor_Hugo . ?x dbp:releaseDate \"1862\"^^xsd:integer . }"
 	},
 	{
 		"id":"261",
 		"lang":"ko",
-		"question":"ÇÁ¶û½ºÀÇ ÀÛ°¡ ºòÅä¸£ À§°í°¡ 1862³â¿¡ Àå ¹ßÀåÀ» ÁÖÀÎ°øÀ¸·Î ¾´ ¼Ò¼³Àº ¹«¾ùÀÎ°¡?",
-		"answer":"·¹ ¹ÌÁ¦¶óºí",
+		"question":"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û°ï¿½ ï¿½ï¿½ï¿½ä¸£ ï¿½ï¿½ï¿½ï¿½ 1862ï¿½â¿¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ò¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-1",
-		"sparql":"select distinct * where { ?x dbpedia-owl:author dbpedia-ko:ºòÅä¸£_À§°í . ?x prop-ko:¹ßÇàÀÏ \"1862\"^^xsd:integer . }"
+		"sparql":"prefix xsd: <http://www.w3.org/2001/XMLSchema#> select distinct * where { ?x dbpedia-owl:author dbpedia-ko:ï¿½ï¿½ï¿½ä¸£_ï¿½ï¿½ï¿½ï¿½ . ?x prop-ko:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ \"1862\"^^xsd:integer . }"
 	},
 	{
 		"id":"262",
@@ -261,15 +261,15 @@
 		"question":"What is the number of national associations currently qualified for membership by the FIFA?",
 		"answer":"209",
 		"type":"2",
-		"sparql":"select distinct * where { dbr:FIFA dbo:membership ?x . }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> select distinct * where { dbr:FIFA dbo:membership ?x . }"
 	},
 	{
 		"id":"262",
 		"lang":"ko",
-		"question":"±¹Á¦ Ãà±¸ ¿¬¸ÍÀÌ È¸¿øÀ¸·Î ÀÎÁ¤ÇÏ´Â Ãà±¸ ¿¬¸ÍÀº ¸ðµÎ ¸î °³ ÀÎ°¡?",
-		"answer":"210°³",
+		"question":"ï¿½ï¿½ï¿½ï¿½ ï¿½à±¸ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½à±¸ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Î°ï¿½?",
+		"answer":"210ï¿½ï¿½",
 		"type":"2",
-		"sparql":"select distinct * where { dbpedia-ko:±¹Á¦_Ãà±¸_¿¬¸Í prop-ko:È¸¿ø ?x }"
+		"sparql":"select distinct * where { dbpedia-ko:ï¿½ï¿½ï¿½ï¿½_ï¿½à±¸_ï¿½ï¿½ï¿½ï¿½ prop-ko:È¸ï¿½ï¿½ ?x }"
 	},
 	{
 		"id":"265",
@@ -277,15 +277,15 @@
 		"question":"What is the highest mountain in the Alps mountain range?",
 		"answer":"Mont Blanc",
 		"type":"1-1",
-		"sparql":"select distinct * where { dbr:Alps dbp:highest ?x . }"
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> select distinct * where { dbr:Alps dbp:highest ?x . }"
 	},
 	{
 		"id":"265",
 		"lang":"ko",
-		"question":"¾ËÇÁ½º »ê¸ÆÀÇ ÃÖ°íºÀÀº ¹«¾ùÀÎ°¡?",
-		"answer":"¸ùºí¶û »ê",
+		"question":"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { dbpedia-ko:¾ËÇÁ½º_»ê¸Æ prop-ko:ÃÖ°íºÀ ?x }"
+		"sparql":"select distinct ?x where { dbpedia-ko:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ prop-ko:ï¿½Ö°ï¿½ï¿½ ?x }"
 	},
 	{
 		"id":"275",
@@ -293,15 +293,15 @@
 		"question":"What was the first newspaper of Korea?",
 		"answer":"Tongnip Sinmun",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { ?x text:keyworld \"newspaper\". ?x text:keyworld \"Korea\". ?x text:keyworld \"first\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"newspaper\". ?x text:keyword \"Korea\". ?x text:keyword \"first\". }"
 	},
 	{
 		"id":"275",
 		"lang":"ko",
-		"question":"ÇÑ±¹ ÃÖÃÊÀÇ ¹Î°£ ½Å¹®Àº ¹«¾ùÀÎ°¡?",
-		"answer":"µ¶¸³½Å¹®",
+		"question":"ï¿½Ñ±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î°ï¿½ ï¿½Å¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ï¿½Å¹ï¿½",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { ?x text:keyworld \"½Å¹®\". ?x text:keyworld \"ÃÖÃÊ\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"ï¿½Å¹ï¿½\". ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½\". }"
 	},
 	{
 		"id":"277",
@@ -309,15 +309,15 @@
 		"question":"What is the capital city of Ireland?",
 		"answer":"Dublin",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { dbr:Republic_of_Ireland dbo:capital ?x . }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> select distinct ?x where { dbr:Republic_of_Ireland dbo:capital ?x . }"
 	},
 	{
 		"id":"277",
 		"lang":"ko",
-		"question":"¾ÆÀÏ·£µåÀÇ ¼öµµ´Â ¾îµðÀÎ°¡?",
-		"answer":"´õºí¸°",
+		"question":"ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { ?x prop-ko:À§Ä¡Áöµµ \"¾ÆÀÏ·£µå\"@ko. ?x text:keyworld \"¼öµµ\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x prop-ko:ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ \"ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½\"@ko. ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½\". }"
 	},
 	{
 		"id":"295",
@@ -325,15 +325,15 @@
 		"question":"When was the year that Steve Jobs, Steve Wozniak and Ronald Wayne founded Apple Inc.?",
 		"answer":"1976",
 		"type":"1-1",
-		"sparql":"select distinct ?o where { dbr:Apple_Inc. dbo:foundingYear ?o }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> select distinct ?o where { dbr:Apple_Inc dbo:foundingYear ?o }"
 	},
 	{
 		"id":"295",
 		"lang":"ko",
-		"question":"½ºÆ¼ºê Àâ½º¿Í ½ºÆ¼ºê ¿öÁî´Ï¾Ç°ú ·Î³Îµå ¿þÀÎÀÌ ¾ÖÇÃÀ» Ã¢¾÷ÇÑ ³âµµ´Â ¾ðÁ¦ÀÎ°¡?",
-		"answer":"1976³â",
+		"question":"ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½â½ºï¿½ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¾Ç°ï¿½ ï¿½Î³Îµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½âµµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"1976ï¿½ï¿½",
 		"type":"1-1",
-		"sparql":"select distinct ?o where { dbpedia-ko:¾ÖÇÃ_(±â¾÷) prop-ko:Ã¢¸³ ?o }"
+		"sparql":"select distinct ?o where { dbpedia-ko:ï¿½ï¿½ï¿½ï¿½_(ï¿½ï¿½ï¿½) prop-ko:Ã¢ï¿½ï¿½ ?o }"
 	},
 	{
 		"id":"302",
@@ -341,15 +341,15 @@
 		"question":"What is the international financial services company founded in 1914 and now acquired by Bank of America?",
 		"answer":"Merrill Lynch",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x dbo:foundingYear \"1914-01-01\"^^xsd:date. ?x dbo:parentCompany dbr:Bank_of_America. }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix xsd: <http://www.w3.org/2001/XMLSchema#> select distinct ?x where { ?x dbo:foundingYear \"1914-01-01\"^^xsd:date. ?x dbo:parentCompany dbr:Bank_of_America. }"
 	},
 	{
 		"id":"302",
 		"lang":"ko",
-		"question":"1914³â¿¡ ¼³¸³µÇ¾î ÇöÀç´Â ¹ðÅ© ¿Àºê ¾Æ¸Þ¸®Ä«¿¡ ÀÎ¼ö ÇÕº´µÈ ¼¼°è À¯°¡Áõ±Ç È¸»ç´Â ¹«¾ùÀÎ°¡?",
-		"answer":"¸Þ¸±¸°Ä¡",
+		"question":"1914ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ ï¿½Æ¸Þ¸ï¿½Ä«ï¿½ï¿½ ï¿½Î¼ï¿½ ï¿½Õºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½Þ¸ï¿½ï¿½ï¿½Ä¡",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x dcterms:subject dbpedia-ko:ºÐ·ù:1914³â_¼³¸³. ?x text:keyworld \"¹ðÅ© ¿Àºê ¾Æ¸Þ¸®Ä«\". ?x text:keyworld \"ÀÎ¼ö\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dcterms:subject dbpedia-ko:ï¿½Ð·ï¿½:1914ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½. ?x text:keyword \"ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ ï¿½Æ¸Þ¸ï¿½Ä«\". ?x text:keyword \"ï¿½Î¼ï¿½\". }"
 	},
 	{
 		"id":"303",
@@ -357,15 +357,15 @@
 		"question":"What was the U.S. international financial services company founded in 1850 and bankrupted in 2008?",
 		"answer":"Lehman Brothers",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x dbo:product dbr:Financial_services. ?x dbo:extinctionYear \"2008-01-01\"^^xsd:date. ?x dbp:foundation 1850. }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix xsd: <http://www.w3.org/2001/XMLSchema#> prefix dbp: <http://dbpedia.org/property/> select distinct ?x where { ?x dbo:product dbr:Financial_services. ?x dbo:extinctionYear \"2008-01-01\"^^xsd:date. ?x dbp:foundation 1850. }"
 	},
 	{
 		"id":"303",
 		"lang":"ko",
-		"question":"1850³â¿¡ ¼³¸³µÇ¾î 2008³â¿¡ ÆÄ»êÇÑ ¹Ì±¹ÀÇ ±¹Á¦ ±ÝÀ¶ È¸»ç´Â ¹«¾ùÀÎ°¡?",
-		"answer":"¸®¸Õ ºê¶ó´õ½º",
+		"question":"1850ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ 2008ï¿½â¿¡ ï¿½Ä»ï¿½ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x dbpedia-owl:formationYear \"1850-01-01 00:00:00\"^^xsd:date. ?x dbpedia-owl:extinctionYear \"2008-01-01 00:00:00\"^^xsd:date. ?x prop-ko:¼­ºñ½º dbpedia-ko:ÅõÀÚÀºÇà. }"
+		"sparql":"prefix xsd: <http://www.w3.org/2001/XMLSchema#> select distinct ?x where { ?x dbpedia-owl:formationYear \"1850-01-01 00:00:00\"^^xsd:date. ?x dbpedia-owl:extinctionYear \"2008-01-01 00:00:00\"^^xsd:date. ?x prop-ko:ï¿½ï¿½ï¿½ï¿½ dbpedia-ko:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. }"
 	},
 	{
 		"id":"304",
@@ -373,15 +373,15 @@
 		"question":"What is the ancient city of Inca Empire in Peru?",
 		"answer":"Machu Picchu",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { ?x dbp:location dbr:Peru. ?x dct:subject dbc:Inca. ?x text:keyworld \"emperor\". }"
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> prefix dbc: <http://dbpedia.org/resource/Category> prefix text: <http://okbqa.org/text#> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where { ?x dbp:location dbr:Peru. ?x dct:subject dbc:Inca. ?x text:keyword \"emperor\". }"
 	},
 	{
 		"id":"304",
 		"lang":"ko",
-		"question":"Æä·ç¿¡ À§Ä¡ÇÑ À×Ä« ¹®¸íÀÇ °í´ë µµ½Ã´Â ¾îµðÀÎ°¡?",
-		"answer":"¸¶Ãß ÇÈÃß",
+		"question":"ï¿½ï¿½ç¿¡ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½Ä« ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã´ï¿½ ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { ?x prop-ko:¹®¸í dbpedia-ko:À×Ä«_Á¦±¹. ?x text:keyworld \"Æä·ç\". ?x text:keyworld \"À×Ä« ¹®¸í\". ?x text:keyworld \"°í´ë µµ½Ã\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x prop-ko:ï¿½ï¿½ï¿½ï¿½ dbpedia-ko:ï¿½ï¿½Ä«_ï¿½ï¿½ï¿½ï¿½. ?x text:keyword \"ï¿½ï¿½ï¿½\". ?x text:keyword \"ï¿½ï¿½Ä« ï¿½ï¿½ï¿½ï¿½\". ?x text:keyword \"ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\". }"
 	},
 	{
 		"id":"305",
@@ -389,15 +389,15 @@
 		"question":"What is the capital city of the United States?",
 		"answer":"Washington, D.C.",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { dbr:United_States dbo:capital ?x. }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> select distinct ?x where { dbr:United_States dbo:capital ?x. }"
 	},
 	{
 		"id":"305",
 		"lang":"ko",
-		"question":"¹Ì±¹ÀÇ ¼öµµ´Â ¾îµðÀÎ°¡?",
-		"answer":"¿ö½ÌÅÏ D.C.",
+		"question":"ï¿½Ì±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ D.C.",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { ?x prop-ko:À§Ä¡Áöµµ \"¹Ì±¹\"@ko. ?x text:keyworld \"¹Ì±¹ÀÇ ¼öµµ\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x prop-ko:ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ \"ï¿½Ì±ï¿½\"@ko. ?x text:keyword \"ï¿½Ì±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\". }"
 	},
 	{
 		"id":"308",
@@ -405,15 +405,15 @@
 		"question":"What is the essay commonly known as the 'Moriae Encomium' written by a Dutch humanist Desiderius Erasmus in 1509?",
 		"answer":"The Praise of Folly",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { dbr:Moriae_Encomium dbo:wikiPageRedirects ?x. ?x text:keyworld \"Desiderius Erasmus\". ?x text:keyworld \"1509\". }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix text: <http://okbqa.org/text#> select distinct ?x where { dbr:Moriae_Encomium dbo:wikiPageRedirects ?x. ?x text:keyword \"Desiderius Erasmus\". ?x text:keyword \"1509\". }"
 	},
 	{
 		"id":"308",
 		"lang":"ko",
-		"question":"³×´ú¶õµåÀÇ ÀÎ¹®ÇÐÀÚ µ¥½Ãµ¥¸®À§½º ¿¡¶ó½º¹¿½º°¡ 1511³â¿¡ ¾´, \"¸ð¸®¾Æ ¿¹Âù\"ÀÌ¶ó°íµµ ºÒ¸®´Â Ã¥Àº ¹«¾ùÀÎ°¡?",
-		"answer":"¿ì½Å¿¹Âù",
+		"question":"ï¿½×´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ó½º¹ï¿½ï¿½ï¿½ï¿½ï¿½ 1511ï¿½â¿¡ ï¿½ï¿½, \"ï¿½ð¸®¾ï¿½ ï¿½ï¿½ï¿½ï¿½\"ï¿½Ì¶ï¿½ï¿½ ï¿½Ò¸ï¿½ï¿½ï¿½ Ã¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½Å¿ï¿½ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:µ¥½Ãµ¥¸®À§½º_¿¡¶ó½º¹¿½º. ?x text:keyworld \"1511³â\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ó½º¹ï¿½ï¿½ï¿½. ?x text:keyword \"1511ï¿½ï¿½\". }"
 	},
 	{
 		"id":"321",
@@ -421,15 +421,15 @@
 		"question":"What is the court that primarily deals with cases related to domestic relationships and children?",
 		"answer":"Family court",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { dbr:Domestic_Relations_Court dbo:wikiPageRedirects ?x. ?x text:keyworld \"children\". ?x text:keyworld \"domestic relationships\". }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix text: <http://okbqa.org/text#> select distinct ?x where { dbr:Domestic_Relations_Court dbo:wikiPageRedirects ?x. ?x text:keyword \"children\". ?x text:keyword \"domestic relationships\". }"
 	},
 	{
 		"id":"321",
 		"lang":"ko",
-		"question":"°¡Á¤ ¹× ¼Ò³â¿¡ °üÇÑ »ç°ÇÀ» °üÀåÇÏ´Â ¹ý¿øÀº ¹«¾ùÀÎ°¡?",
-		"answer":"°¡Á¤¹ý¿ø",
+		"question":"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ò³â¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-1",
-		"sparql":"select distinct ?x where { ?x dbpedia-owl:abstract ?o. ?x text:keyworld \"°¡Á¤¿¡ °üÇÑ »ç°Ç\". ?x text:keyworld \"¼Ò³â¿¡ °üÇÑ »ç°Ç\". ?x text:keyworld \"¹ý¿ø\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbpedia-owl:abstract ?o. ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½\". ?x text:keyword \"ï¿½Ò³â¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½\". ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½\". }"
 	},
 	{
 		"id":"324",
@@ -437,15 +437,15 @@
 		"question":"What is the Canal that was opened in November 1869?",
 		"answer":"Suez Canal",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x dbp:dateComp \"November 1869\"@en. }"
+		"sparql":"prefix dbp: <http://dbpedia.org/property/> select distinct ?x where { ?x dbp:dateComp \"November 1869\"@en. }"
 	},
 	{
 		"id":"324",
 		"lang":"ko",
-		"question":"1869³â 11¿ù¿¡ °³ÅëµÈ ¿îÇÏ´Â ¾îµðÀÎ°¡?",
-		"answer":"¼ö¿¡Áî ¿îÇÏ",
+		"question":"1869ï¿½ï¿½ 11ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x dbpedia-owl:abstract ?o. ?x text:keyworld \"1869³â 11¿ù\". ?x text:keyworld \"°³Åë\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbpedia-owl:abstract ?o. ?x text:keyword \"1869ï¿½ï¿½ 11ï¿½ï¿½\". ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½\". }"
 	},
 	{
 		"id":"",
@@ -453,15 +453,15 @@
 		"question":"What was the unmanned spacecraft launched by the United States in 1977 to study the outer solar system?",
 		"answer":"Voyager 1",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x dct:subject dbc:1977_in_the_United_States. ?x dbp:year \"1977\"^^xsd:integer. ?x text:keyworld \"solar\". }"
+		"sparql":"prefix xsd: <http://www.w3.org/2001/XMLSchema#> prefix dbp: <http://dbpedia.org/property/> prefix dbc: <http://dbpedia.org/resource/Category> prefix text: <http://okbqa.org/text#> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where { ?x dct:subject dbc:1977_in_the_United_States. ?x dbp:year \"1977\"^^xsd:integer. ?x text:keyword \"solar\". }"
 	},
 	{
 		"id":"",
 		"lang":"ko",
-		"question":"¹Ì±¹ÀÌ 1977³â¿¡ ¹ß»çÇÑ ÅÂ¾ç°è Å½»ç¿ë ¹«ÀÎ ¿ìÁÖ¼±Àº ¹«¾ùÀÎ°¡?",
-		"answer":"º¸ÀÌÀú 1È£",
+		"question":"ï¿½Ì±ï¿½ï¿½ï¿½ 1977ï¿½â¿¡ ï¿½ß»ï¿½ï¿½ï¿½ ï¿½Â¾ï¿½ï¿½ Å½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1È£",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x prop-ko:¹ß»çÀÏ \"1977\"^^xsd:integer. ?x text:keyworld \"ÅÂ¾ç°è\". ?x text:keyworld \"Å½»ç\". }"
+		"sparql":"prefix xsd: <http://www.w3.org/2001/XMLSchema#> prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x prop-ko:ï¿½ß»ï¿½ï¿½ï¿½ \"1977\"^^xsd:integer. ?x text:keyword \"ï¿½Â¾ï¿½ï¿½\". ?x text:keyword \"Å½ï¿½ï¿½\". }"
 	},
 	{
 		"id":"335",
@@ -469,15 +469,15 @@
 		"question":"What is the average interest rate applied in London's financial market daily at 11:30 a.m.?",
 		"answer":"LIBOR (London Interbank Offered Rate)",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x text:keyworld \"published daily at 11:30 am\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"published daily at 11:30 am\". }"
 	},
 	{
 		"id":"335",
 		"lang":"ko",
-		"question":"¸ÅÀÏ ¿ÀÀü 11½Ã 30ºÐ¿¡ ¹ßÇ¥µÇ´Â ·±´ø ÀºÇà°£ ±Ý¸®´Â ¹«¾ùÀÎ°¡?",
-		"answer":"¸®º¸",
+		"question":"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 11ï¿½ï¿½ 30ï¿½Ð¿ï¿½ ï¿½ï¿½Ç¥ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½à°£ ï¿½Ý¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x text:keyworld \"¿ÀÀü 11½Ã 30ºÐ\". ?x text:keyworld \"·±´øÀÇ ÁÖ¿ä ÀºÇà »çÀÌ\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½ 11ï¿½ï¿½ 30ï¿½ï¿½\". ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\". }"
 	},
 	{
 		"id":"336",
@@ -485,15 +485,15 @@
 		"question":"What was the category of the Nobel Prize added in 1969?",
 		"answer":"Nobel Memorial Prize in Economic Sciences",
 		"type":"1-3",
-		"sparql":"select distinct ?x where {  ?x dct:subject dbc:Awards_established_in_1969. ?x dct:subject dbc:Nobel_Prize. }"
+		"sparql":"prefix dbc: <http://dbpedia.org/resource/Category> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where {  ?x dct:subject dbc:Awards_established_in_1969. ?x dct:subject dbc:Nobel_Prize. }"
 	},
 	{
 		"id":"336",
 		"lang":"ko",
-		"question":"1969³â¿¡ Ãß°¡µÈ ³ëº§»ó ºÐ¾ß´Â ¹«¾ùÀÎ°¡?",
-		"answer":"³ëº§ °æÁ¦ÇÐ»ó",
+		"question":"1969ï¿½â¿¡ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ëº§ï¿½ï¿½ ï¿½Ð¾ß´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ëº§ ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½",
 		"type":"1-3",
-		"sparql":"select distinct ?x where { ?x dcterms:subject dbpedia-ko:ºÐ·ù:³ëº§»ó. ?x text:keyworld \"1969³âºÎÅÍ\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dcterms:subject dbpedia-ko:ï¿½Ð·ï¿½:ï¿½ëº§ï¿½ï¿½. ?x text:keyword \"1969ï¿½ï¿½ï¿½ï¿½ï¿½\". }"
 	},
 	{
 		"id":"346",
@@ -501,15 +501,15 @@
 		"question":"What was the fossil discovered in Ethiopia in 1974 and named after the lady in the discoverer's favorite song of the Beatles?",
 		"answer":"Lucy (Australopithecus)",
 		"type":"1-2",
-		"sparql":"select distinct ?x where {   ?x text:keyworld \"1974\". ?x dbp:placeDiscovered dbr:History_of_Ethiopia. }"
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> prefix text: <http://okbqa.org/text#> select distinct ?x where {   ?x text:keyword \"1974\". ?x dbp:placeDiscovered dbr:History_of_Ethiopia. }"
 	},
 	{
 		"id":"346",
 		"lang":"ko",
-		"question":"1974³â¿¡ ¿¡Æ¼¿ÀÇÇ¾Æ¿¡¼­ ¹ß±¼µÇ¾úÀ¸¸ç, ºñÆ²ÁîÀÇ ³ë·¡¿¡ ³ª¿À´Â ¿©¼º°ú ÀÌ¸§ÀÌ °°Àº È­¼®Àº ¹«¾ùÀÎ°¡?",
-		"answer":"·ç½Ã",
+		"question":"1974ï¿½â¿¡ ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½Ç¾Æ¿ï¿½ï¿½ï¿½ ï¿½ß±ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ ï¿½ë·¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where {   ?x prop-ko:¹ß±¼Áö dbpedia-ko:¿¡Æ¼¿ÀÇÇ¾Æ.  ?x text:keyworld \"1974\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where {   ?x prop-ko:ï¿½ß±ï¿½ï¿½ï¿½ dbpedia-ko:ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½Ç¾ï¿½.  ?x text:keyword \"1974\". }"
 	},
 	{
 		"id":"348",
@@ -517,15 +517,15 @@
 		"question":"Who was the German scientist that won the first Nobel Prize in Physics?",
 		"answer":"Wilhelm R?ntgen",
 		"type":"1-2",
-		"sparql":"select distinct ?x where {   ?x dbp:nationality dbr:Germans. ?x rdf:type dbo:Scientist. ?x dct:subject dbc:Nobel_laureates_in_Physics. ?x text:keyworld \"first Nobel Prize\". }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> prefix dbc: <http://dbpedia.org/resource/Category> prefix text: <http://okbqa.org/text#> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where {   ?x dbp:nationality dbr:Germans. ?x rdf:type dbo:Scientist. ?x dct:subject dbc:Nobel_laureates_in_Physics. ?x text:keyword \"first Nobel Prize\". }"
 	},
 	{
 		"id":"348",
 		"lang":"ko",
-		"question":"ÃÖÃÊÀÇ ³ëº§ ¹°¸®ÇÐ»óÀ» ¼ö»óÇÑ µ¶ÀÏÀÇ °úÇÐÀÚ´Â ´©±¸ÀÎ°¡?",
-		"answer":"ºôÇï¸§ ÄÜ¶óÆ® ·ÛÆ®°Õ",
+		"question":"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ëº§ ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¸§ ï¿½Ü¶ï¿½Æ® ï¿½ï¿½Æ®ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where {   ?x dbpedia-owl:nationality dbpedia-ko:µ¶ÀÏ. ?x rdf:type dbpedia-owl:Scientist. ?x prop-ko:¼ö»ó dbpedia-ko:³ëº§_¹°¸®ÇÐ»ó.  ?x text:keyworld \"ÃÖÃÊÀÇ ³ëº§ ¹°¸®ÇÐ»ó\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> select distinct ?x where {   ?x dbpedia-owl:nationality dbpedia-ko:ï¿½ï¿½ï¿½ï¿½. ?x rdf:type dbpedia-owl:Scientist. ?x prop-ko:ï¿½ï¿½ï¿½ï¿½ dbpedia-ko:ï¿½ëº§_ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½.  ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ëº§ ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½\". }"
 	},
 	{
 		"id":"350",
@@ -533,15 +533,15 @@
 		"question":"What is the walled mountain fortress in Gwangjang-dong of Seoul's Gwangjin District?",
 		"answer":"Achasanseong (Acha Mountain Fortress)",
 		"type":"1-2",
-		"sparql":"select distinct ?x where {   ?x dct:subject dbc:Castles_in_South_Korea. ?x dct:subject dbc:Gwangjin_District. }"
+		"sparql":"prefix dbc: <http://dbpedia.org/resource/Category> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where {   ?x dct:subject dbc:Castles_in_South_Korea. ?x dct:subject dbc:Gwangjin_District. }"
 	},
 	{
 		"id":"350",
 		"lang":"ko",
-		"question":"¼­¿ïÆ¯º°½Ã ±¤Áø±¸ ±¤Àåµ¿¿¡ À§Ä¡ÇÑ »ê¼ºÀº ¹«¾ùÀÎ°¡?",
-		"answer":"¾ÆÂ÷»ê¼º",
+		"question":"ï¿½ï¿½ï¿½ï¿½Æ¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½åµ¿ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ê¼ºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ï¿½ê¼º",
 		"type":"1-2",
-		"sparql":"select distinct ?x where {   ?x prop-ko:¼ÒÀçÁö ?y. ?x text:keyworld \"¼­¿ïÆ¯º°½Ã ±¤Áø±¸ ±¤Àåµ¿\". ?x text:keyworld \"»ê¼º\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where {   ?x prop-ko:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ?y. ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½Æ¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½åµ¿\". ?x text:keyword \"ï¿½ê¼º\". }"
 	},
 	{
 		"id":"351",
@@ -549,15 +549,15 @@
 		"question":"What was the anti-art movement taken place across Europe at the end of World War I by Tristan Tzara, Marcel Duchamp and others?",
 		"answer":"Dadaism",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { dbr:Tristan_Tzara dbo:movement ?x. dbr:Marcel_Duchamp dbo:movement ?x. ?x text:keyworld \"anti-war\". }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix text: <http://okbqa.org/text#> select distinct ?x where { dbr:Tristan_Tzara dbo:movement ?x. dbr:Marcel_Duchamp dbo:movement ?x. ?x text:keyword \"anti-war\". }"
 	},
 	{
 		"id":"351",
 		"lang":"ko",
-		"question":"Á¦1Â÷ ¼¼°è ´ëÀü ¸»¿¡ Æ®¸®½ºÅº Â¥¶ó, ¸¶¸£¼¿ µÚ¼§ µî¿¡ ÀÇÇÏ¿© À¯·´¿¡¼­ ¹ß»ýÇÑ ¹Ý¿¹¼úÀû »çÈ¸ ¿îµ¿Àº ¹«¾ùÀÎ°¡?",
-		"answer":"´Ù´ÙÀÌÁò",
+		"question":"ï¿½ï¿½1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½Åº Â¥ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ ï¿½î¿¡ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½ ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ ï¿½îµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½Ù´ï¿½ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where {   ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:¸¶¸£¼¿_µÚ¼§. ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:1Â÷_¼¼°è_´ëÀü. }"
+		"sparql":"select distinct ?x where {   ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½Ú¼ï¿½. ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:1ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½. }"
 	},
 	{
 		"id":"353",
@@ -565,15 +565,15 @@
 		"question":"What is the world's oldest recorded code of laws enacted by the king of Babylonia Hammurabi around 1750s BC?",
 		"answer":"Code of Hammurabi",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x dbp:purpose <http://dbpedia.org/resource/Code_(law)>. ?x text:keyworld \"1750 BC\". }"
+		"sparql":"prefix dbp: <http://dbpedia.org/property/> prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbp:purpose <http://dbpedia.org/resource/Code_(law)>. ?x text:keyword \"1750 BC\". }"
 	},
 	{
 		"id":"353",
 		"lang":"ko",
-		"question":"±â¿øÀü 1750³â °æ¿¡ ¹Ùºô·Î´Ï¾ÆÀÇ ÇÔ¹«¶óºñ ¿ÕÀÌ ¹ÝÆ÷ÇÑ ¼¼°è¿¡¼­ °¡Àå ¿À·¡µÈ ¼º¹®¹ýÀº ¹«¾ùÀÎ°¡?",
-		"answer":"ÇÔ¹«¶óºñ ¹ýÀü",
+		"question":"ï¿½ï¿½ï¿½ï¿½ï¿½ 1750ï¿½ï¿½ ï¿½æ¿¡ ï¿½Ùºï¿½ï¿½Î´Ï¾ï¿½ï¿½ï¿½ ï¿½Ô¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½è¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½Ô¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where {    ?x text:keyworld \"¼¼°è¿¡¼­ °¡Àå ¿À·¡µÈ ¼º¹®¹ý\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where {    ?x text:keyword \"ï¿½ï¿½ï¿½è¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\". }"
 	},
 	{
 		"id":"355",
@@ -581,15 +581,15 @@
 		"question":"What was the book written by Ahn Jeong-bok describing Korean history from Gojoseon to Goryeo?",
 		"answer":"Dongsa Gangmok",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x dct:subject dbc:History_books_about_Korea . ?x text:keyworld \"Gojoseon\". ?x text:keyworld \"Goryeo\". ?x text:keyworld \"Ahn Jeong-bok\". }"
+		"sparql":"prefix dbc: <http://dbpedia.org/resource/Category> prefix text: <http://okbqa.org/text#> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where { ?x dct:subject dbc:History_books_about_Korea . ?x text:keyword \"Gojoseon\". ?x text:keyword \"Goryeo\". ?x text:keyword \"Ahn Jeong-bok\". }"
 	},
 	{
 		"id":"355",
 		"lang":"ko",
-		"question":"¾ÈÁ¤º¹ÀÌ °íÁ¶¼±ºÎÅÍ °í·Á±îÁöÀÇ ÇÑ±¹ÀÇ ¿ª»ç¸¦ ¾´ Ã¥Àº ¹«¾ùÀÎ°¡?",
-		"answer":"µ¿»ç°­¸ñ",
+		"question":"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ç¸¦ ï¿½ï¿½ Ã¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ç°­ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x text:keyworld \"¾ÈÁ¤º¹\". ?x text:keyworld \"°íÁ¶¼±\". ?x text:keyworld \"°í·Á\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\". ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\". ?x text:keyword \"ï¿½ï¿½ï¿½\". }"
 	},
 	{
 		"id":"356",
@@ -597,15 +597,15 @@
 		"question":"What is the most authoritative award for achievements in journalism, literature, and musical composition in the United States?",
 		"answer":"Pulitzer Prize",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x text:keyworld \"journalism\". ?x text:keyworld \"musical composition\". ?x dbp:country \"United States\"@en. }"
+		"sparql":"prefix dbp: <http://dbpedia.org/property/> prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"journalism\". ?x text:keyword \"musical composition\". ?x dbp:country \"United States\"@en. }"
 	},
 	{
 		"id":"356",
 		"lang":"ko",
-		"question":"¹Ì±¹¿¡¼­ °¡Àå ±ÇÀ§ ÀÖ´Â Àú³Î¸®Áò, ¹®ÇÐ, À½¾Ç»óÀº ¹«¾ùÀÎ°¡?",
-		"answer":"Ç½¸®Ã³»ó",
+		"question":"ï¿½Ì±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Î¸ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Ç»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"Ç½ï¿½ï¿½Ã³ï¿½ï¿½",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x text:keyworld \"¹Ì±¹\". ?x text:keyworld \"Àú³Î¸®Áò\". ?x text:keyworld \"¹®ÇÐ\". ?x text:keyworld \"À½¾Ç\". }"
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"ï¿½Ì±ï¿½\". ?x text:keyword \"ï¿½ï¿½ï¿½Î¸ï¿½ï¿½ï¿½\". ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½\". ?x text:keyword \"ï¿½ï¿½ï¿½ï¿½\". }"
 	},
 	{
 		"id":"361",
@@ -613,15 +613,15 @@
 		"question":"Who is the English zoologist that is world-renowned for her 40-year study of chimpanzees in Tanzania?",
 		"answer":"Jane Goodall",
 		"type":"3-1",
-		"sparql":"select distinct ?x where { ?x dbo:knownFor dbr:Chimpanzee. ?x text:keyworld \"Tanzania\". ?x rdf:type dbo:Scientist. }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix text: <http://okbqa.org/text#> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> select distinct ?x where { ?x dbo:knownFor dbr:Chimpanzee. ?x text:keyword \"Tanzania\". ?x rdf:type dbo:Scientist. }"
 	},
 	{
 		"id":"361",
 		"lang":"ko",
-		"question":"ÅºÀÚ´Ï¾Æ¿¡¼­ 40¿©³â°£ Ä§ÆÒÁö¸¦ ¿¬±¸ÇÑ ¿µ±¹ÀÇ µ¿¹°ÇÐÀÚ´Â ´©±¸ÀÎ°¡?",
-		"answer":"Á¦ÀÎ ±¸´Þ",
+		"question":"Åºï¿½Ú´Ï¾Æ¿ï¿½ï¿½ï¿½ 40ï¿½ï¿½ï¿½â°£ Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?",
+		"answer":"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½",
 		"type":"3-1",
-		"sparql":"select distinct ?x where { ?x dbpedia-owl:occupation dbpedia-ko:µ¿¹°ÇÐÀÚ. dbpedia-ko:ÅºÀÚ´Ï¾Æ dbpedia-owl:wikiPageWikiLink ?x. dbpedia-ko:Ä§ÆÒÁö dbpedia-owl:wikiPageWikiLink ?x. }"
+		"sparql":"select distinct ?x where { ?x dbpedia-owl:occupation dbpedia-ko:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. dbpedia-ko:Åºï¿½Ú´Ï¾ï¿½ dbpedia-owl:wikiPageWikiLink ?x. dbpedia-ko:Ä§ï¿½ï¿½ï¿½ï¿½ dbpedia-owl:wikiPageWikiLink ?x. }"
 	},
 	{
 		"id":"365",
@@ -629,6 +629,6 @@
 		"question":"Who was the Russian physiologist that won the Nobel Prize for Physiology or Medicine in 1904?",
 		"answer":"Ivan Pavlov",
 		"type":"1-2",
-		"sparql":"select distinct ?x where { ?x dbo:nationality dbr:Russians. ?x dbo:award dbr:Nobel_Prize_in_Physiology_or_Medicine. ?x dbo:field dbr:Physiology }"
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> select distinct ?x where { ?x dbo:nationality dbr:Russians. ?x dbo:award dbr:Nobel_Prize_in_Physiology_or_Medicine. ?x dbo:field dbr:Physiology }"
 	}
 ]
