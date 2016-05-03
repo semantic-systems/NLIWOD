@@ -42,7 +42,7 @@ public class HAWK extends ASystem {
             HttpGet httpget = new HttpGet(iduri);
             HttpResponse idresponse = client.execute(httpget);
 
-            String id = responseToString(idresponse);
+            String id = responseparser.responseToString(idresponse);
             JSONParser parser = new JSONParser();
 
             URI quri = new URIBuilder().setScheme("http").setHost("139.18.2.164:8181").setPath("/status")
@@ -53,7 +53,7 @@ public class HAWK extends ASystem {
                 Thread.sleep(50);
                 HttpGet questionpost = new HttpGet(quri);
                 HttpResponse questionresponse = client.execute(questionpost);
-                JSONObject responsejson = (JSONObject) parser.parse(responseToString(questionresponse));
+                JSONObject responsejson = (JSONObject) parser.parse(responseparser.responseToString(questionresponse));
                 if (responsejson.containsKey("answer")) {
                     JSONArray answerlist = (JSONArray) responsejson.get("answer");
                     HashSet<String> result = new HashSet<String>();

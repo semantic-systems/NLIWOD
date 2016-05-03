@@ -30,7 +30,7 @@ public class START extends ASystem {
 			HttpGet httpget = new HttpGet(uri);
 			HttpResponse response = client.execute(httpget);
 
-			Document doc = Jsoup.parse(responseToString(response));
+			Document doc = Jsoup.parse(responseparser.responseToString(response));
 			System.out.println(doc.select("span[type=reply]").text());
 
 			// TODO return senseful answer from start

@@ -65,7 +65,7 @@ public class YODA extends ASystem {
             HttpResponse response = client.execute(httppost);
 
             JSONParser parser = new JSONParser();
-            JSONObject idjson = (JSONObject) parser.parse(responseToString(response));
+            JSONObject idjson = (JSONObject) parser.parse(responseparser.responseToString(response));
             String id = idjson.get("id").toString();
 
             HttpGet questionpost = new HttpGet(url + "/" + id);
@@ -74,7 +74,7 @@ public class YODA extends ASystem {
             do {
                 Thread.sleep(50);
                 HttpResponse questionresponse = client.execute(questionpost);
-                JSONObject responsejson = (JSONObject) parser.parse(responseToString(questionresponse));
+                JSONObject responsejson = (JSONObject) parser.parse(responseparser.responseToString(questionresponse));
                 finished = responsejson.get("finished").toString();
                 if (finished.equals("true")) {
                     JSONArray answer = (JSONArray) responsejson.get("answers");

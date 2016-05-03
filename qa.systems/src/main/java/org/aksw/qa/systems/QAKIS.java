@@ -44,7 +44,7 @@ public class QAKIS extends ASystem {
             HttpPost httppost = new HttpPost(url);
             HttpResponse ping = client.execute(httppost);
 
-            Document vsdoc = Jsoup.parse(responseToString(ping));
+            Document vsdoc = Jsoup.parse(responseparser.responseToString(ping));
             Elements el = vsdoc.select("input");
             String viewstate = (el.get(el.size() - 1).attr("value"));
 
@@ -59,7 +59,7 @@ public class QAKIS extends ASystem {
             httppost.setEntity(entity);
             HttpResponse response = client.execute(httppost);
 
-            Document doc = Jsoup.parse(responseToString(response));
+            Document doc = Jsoup.parse(responseparser.responseToString(response));
             Elements answer = doc.select("div.global-presentation-details>h3>a");
             NodeVisitor nv = new NodeVisitor() {
                 public void tail(Node node, int depth) {

@@ -38,7 +38,7 @@ public class SINA extends ASystem {
             HttpGet httpget = new HttpGet(uri);
             HttpResponse response = client.execute(httpget);
             JSONParser parser = new JSONParser();
-            String responseString = responseToString(response);
+            String responseString = responseparser.responseToString(response);
             JSONArray answerjson = (JSONArray) parser.parse(responseString);
             for (int i = 0; i < answerjson.size(); i++) {
                 JSONObject answer = (JSONObject) answerjson.get(i);
@@ -50,7 +50,7 @@ public class SINA extends ASystem {
                     .setParameter("q", questionString).setParameter("content", "sparql").build();
             httpget = new HttpGet(uri);
             response = client.execute(httpget);
-            responseString = responseToString(response);
+            responseString = responseparser.responseToString(response);
             answerjson = (JSONArray) parser.parse(responseString);
             if (answerjson.size() > 0) {
                 JSONObject sparqlQuery = (JSONObject) answerjson.get(0);
