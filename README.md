@@ -26,6 +26,7 @@ to analyze:
 * needs computation: https://github.com/deepmind/rc-data/
 * Federated Queries https://code.google.com/archive/p/fbench/
 * http://talc1.loria.fr/webnlg/stories/deliverables.html
+* http://nlp.stanford.edu/blog/wikitablequestions-a-complex-real-world-question-understanding-dataset/
  
 out of scope (?) :
 * http://alt.qcri.org/semeval2015/task3/ SemEval-2015 Task 3: Answer Selection in Community Question Answering 
