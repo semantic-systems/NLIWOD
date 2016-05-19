@@ -1,11 +1,11 @@
 package hawk;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
 import org.aksw.hawk.cache.CachedParseTreeClearnlp;
+import org.aksw.hawk.cache.Treeprinter;
+//import org.aksw.hawk.cache.CachedParseTree;
 import org.aksw.hawk.controller.Cardinality;
 import org.aksw.hawk.controller.QueryTypeClassifier;
 import org.aksw.hawk.controller.StanfordNLPConnector;
@@ -43,112 +43,118 @@ public class ParseTreeTest {
 		Annotater annotater = new Annotater(sparql);
 
 		List<HAWKQuestion> questions = null;
-
-		questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD6_Train_Hybrid));
+		int limiter = 10;
+		questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD5_Test)).subList(0, limiter);
 
 		QueryTypeClassifier queryTypeClassifier = new QueryTypeClassifier();
 
-		StanfordNLPConnector conn = new StanfordNLPConnector();
-
+		Treeprinter treeprinter = new Treeprinter();
 		CachedParseTreeClearnlp cParseTree2 = new CachedParseTreeClearnlp();
 
-		BufferedWriter bw = new BufferedWriter(new FileWriter("arboretum_stanford.txt", true));
-
+		String[] bareStanford = new String[questions.size()];
+		String[] bareClearnlp = new String[questions.size()];
+		String[] combinedStanford = new String[questions.size()];
+		String[] combinedClearnlp = new String[questions.size()];
+		String[] prunedStanford = new String[questions.size()];
+		String[] PrunedClearnlp = new String[questions.size()];
+		int i = 0;
+		StanfordNLPConnector stanfordConnector = new StanfordNLPConnector();
 		for (HAWKQuestion q : questions) {
-			// log.info("Classify question type.");
-			// q.setIsClassifiedAsASKQuery(queryTypeClassifier.isASKQuery(q.getLanguageToQuestion().get("en")));
+			log.info("Classify question type.");
+			q.setIsClassifiedAsASKQuery(queryTypeClassifier.isASKQuery(q.getLanguageToQuestion().get("en")));
 
 			// Disambiguate parts of the query
-			// log.info("Named entity recognition.");
-			// q.setLanguageToNamedEntites(nerdModule.getEntities(q.getLanguageToQuestion().get("en")));
-			// sentenceToSequence.combineSequences(q);
+			log.info("Named entity recognition.");
+			q.setLanguageToNamedEntites(nerdModule.getEntities(q.getLanguageToQuestion().get("en")));
+			Annotation currentAnotation = stanfordConnector.runAnnotation(q);
 
+			q.setTree(stanfordConnector.process(currentAnotation));
+			bareStanford[i] = treeprinter.printTreeStanford(q);
+			// log.info("Classify question type.");
+			// q.setIsClassifiedAsASKQuery(queryTypeClassifier.isASKQuery(q.getLanguageToQuestion().get("en")));
+			q.setTree(stanfordConnector.combineSequences(q));
+
+			combinedStanford[i] = treeprinter.printTreeStanford(q);
 			// Build trees from questions and cache them
 			log.info("Dependency parsing.");
-			Annotation document = conn.runAnnotation(q);
-			q.setTree(conn.process(document));
+			q.setTree(stanfordConnector.process(currentAnotation));
 
 			// Cardinality identifies the integer i used for LIMIT i
-			// log.info("Cardinality calculation.");
-			// q.setCardinality(cardinality.cardinality(q));
+			log.info("Cardinality calculation.");
+			q.setCardinality(cardinality.cardinality(q));
 
 			// Apply pruning rules
-			// log.info("Pruning tree.");
-			// q.setTree(pruner.prune(q));
-
+			log.info("Pruning tree.");
+			q.setTree(pruner.prune(q));
+			prunedStanford[i] = treeprinter.printTreeStanford(q);
 			// Annotate tree
-			// log.info("Semantically annotating the tree.");
-			// annotater.annotateTree(q);
-
-			// cParseTree.process(q);
-			try {
-
-				bw.write(q.getLanguageToQuestion().toString());
-				bw.newLine();
-				bw.write(q.getTree().toString());
-				bw.newLine();
-				bw.newLine();
-				bw.flush();
-
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
+			log.info("Semantically annotating the tree.");
+			annotater.annotateTree(q);
+			i++;
 
 		}
-		if (bw != null)
-			try {
-				bw.close();
-			} catch (IOException ioe2) {
+		treeprinter.closeStanford();
 
-			}
-		BufferedWriter bw2 = new BufferedWriter(new FileWriter("arboretum_clearnlp.txt", true));
-		questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD6_Train_Hybrid));
+		i = 0;
+		questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD5_Test)).subList(0, limiter);
 		for (HAWKQuestion q : questions) {
 			// log.info("Classify question type.");
 			// q.setIsClassifiedAsASKQuery(queryTypeClassifier.isASKQuery(q.getLanguageToQuestion().get("en")));
 			// Disambiguate parts of the query
 			// log.info("Named entity recognition.");
 			// q.setLanguageToNamedEntites(nerdModule.getEntities(q.getLanguageToQuestion().get("en")));
-			// sentenceToSequence.combineSequences(q);
+
 			// Build trees from questions and cache them
 			log.info("Dependency parsing.");
 			q.setTree(cParseTree2.process(q));
-
-			// Cardinality identifies the integer i used for LIMIT i
-			// log.info("Cardinality calculation.");
-			// q.setCardinality(cardinality.cardinality(q));
-
-			// Apply pruning rules
+			bareClearnlp[i] = treeprinter.printTreeClearnlp(q);
+			sentenceToSequence.combineSequences(q);
+			combinedClearnlp[i] = treeprinter.printTreeClearnlp(q);
+			// // Cardinality identifies the integer i used for LIMIT i
+			// //log.info("Cardinality calculation.");
+			// //q.setCardinality(cardinality.cardinality(q));
+			//
+			// // Apply pruning rules
 			// log.info("Pruning tree.");
-			// q.setTree(pruner.prune(q));
-
-			// Annotate tree
-			// log.info("Semantically annotating the tree.");
-			// annotater.annotateTree(q);
-
-			// cParseTree.process(q);
-			try {
-
-				bw2.write(q.getLanguageToQuestion().toString());
-				bw2.newLine();
-				bw2.write(q.getTree().toString());
-				bw2.newLine();
-				bw2.newLine();
-				bw2.flush();
-
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
-			// always close the file
-
+			q.setTree(pruner.prune(q));
+			PrunedClearnlp[i] = treeprinter.printTreeClearnlp(q);
+			// // Annotate tree
+			// //log.info("Semantically annotating the tree.");
+			// //annotater.annotateTree(q);
+			//
+			// //cParseTree.process(q);
+			//
+			// // always close the file
+			i++;
 		}
-		if (bw2 != null)
-			try {
-				bw2.close();
-			} catch (IOException ioe2) {
-				// just ignore it
-			}
+		treeprinter.closeClearnlp();
 
+		for (int j = 0; j < limiter; j++) {
+			bareClearnlp[j] = bareClearnlp[j].replaceAll("[0-9]", "*");
+			bareStanford[j] = bareStanford[j].replaceAll("[0-9]", "*");
+			combinedClearnlp[j] = combinedClearnlp[j].replaceAll("[0-9]", "*");
+			PrunedClearnlp[j] = PrunedClearnlp[j].replaceAll("[0-9]", "*");
+			combinedStanford[j] = combinedStanford[j].replaceAll("[0-9]", "*");
+			prunedStanford[j] = prunedStanford[j].replaceAll("[0-9]", "*");
+			// Removes node numbers, since they often screw up the comparison
+			// between otherwise identical trees
+
+			if (!bareClearnlp[j].equals(bareStanford[j])) {
+				log.info("Mismatch: Bare Version Question " + j + ":" + questions.get(j).getLanguageToQuestion().get("en"));
+				log.info(bareStanford[j]);
+				log.info(bareClearnlp[j]);
+			}
+			if (!combinedClearnlp[j].equals(combinedStanford[j])) {
+				log.info("Mismatch: Combined Version Question " + j + ":" + questions.get(j).getLanguageToQuestion().get("en"));
+				log.info(combinedStanford[j]);
+				log.info(combinedClearnlp[j]);
+			}
+			if (!PrunedClearnlp[j].equals(prunedStanford[j])) {
+				log.info("Mismatch: Pruned Version Question " + j + ":" + questions.get(j).getLanguageToQuestion().get("en"));
+				log.info(prunedStanford[j]);
+				log.info(PrunedClearnlp[j]);
+			}
+		}
 	}
 
 }

@@ -4,7 +4,6 @@ import org.aksw.hawk.index.DBOIndex;
 import org.aksw.hawk.index.IndexDBO_classes;
 import org.aksw.hawk.index.IndexDBO_properties;
 import org.aksw.hawk.index.Patty_relations;
-import org.aksw.hawk.index.WikipediaPatternsConfidence_Index;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -13,13 +12,12 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 
-
 public class IndexTest {
 	Logger log = LoggerFactory.getLogger(IndexTest.class);
 	DBOIndex dboindex = new DBOIndex();
 	IndexDBO_classes classesindex = new IndexDBO_classes();
 	IndexDBO_properties propertiesindex = new IndexDBO_properties();
-	Patty_relations pattyindex = new Patty_relations();	
+	Patty_relations pattyindex = new Patty_relations();
 
 	@Test
 	public void dbpediaOWLTest() {
@@ -59,7 +57,7 @@ public class IndexTest {
 		log.info("recipient \n" + Joiner.on("\n").join(propertiesindex.search("recipient")));
 		Assert.assertTrue(propertiesindex.search("recipient").contains("http://dbpedia.org/ontology/award"));
 	}
-	
+
 	@Test
 	@Ignore
 	// TODO if want to work
@@ -69,7 +67,7 @@ public class IndexTest {
 		log.info("basketball player \n" + Joiner.on("\n").join(classesindex.search("basketball player")));
 		Assert.assertTrue(classesindex.search("basketball player").contains("yago:StreetBasketballPlayers"));
 	}
-	
+
 	@Test
 	public void pattyrelationstest() {
 		log.info("resigned \n" + Joiner.on("\n").join(pattyindex.search("resigned")));

@@ -14,36 +14,43 @@ import java.util.Map;
 
 import org.aksw.hawk.cache.PersistentCache;
 import org.aksw.qa.commons.datastructure.Entity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class ASpotter {
 
 	public abstract Map<String, List<Entity>> getEntities(String question);
 
+	static Logger log = LoggerFactory.getLogger(ASpotter.class);
 	private boolean useCache = false;
 	private static PersistentCache cache = new PersistentCache();
 
 	protected String requestPOST(String input, String requestURL) {
-		try {
-			if (useCache) {
-				if (cache.containsKey(input)) {
-					return cache.get(input);
-				}
-			}
 
-			String output = POST(input, requestURL);
+		if (useCache) {
+			if (cache.containsKey(input)) {
+				return cache.get(input);
+			}
+		}
+		String output = "";
+		try {
+			output = post(input, requestURL);
 			cache.put(input, output);
 			if (useCache) {
 				cache.writeCache();
 			}
-
-			return output;
+		} catch (MalformedURLException e) {
+			log.debug("Could not call FOX for NER/NED", e);
+		} catch (ProtocolException e) {
+			log.debug("Could not call FOX for NER/NED", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.debug("Could not call FOX for NER/NED", e);
 		}
-		return null;
+
+		return output;
 	}
 
-	private String POST(String urlParameters, String requestURL) throws MalformedURLException, IOException, ProtocolException {
+	private String post(String urlParameters, String requestURL) throws MalformedURLException, IOException, ProtocolException {
 		URL url = new URL(requestURL);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("POST");

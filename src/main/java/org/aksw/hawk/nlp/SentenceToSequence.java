@@ -109,7 +109,7 @@ public class SentenceToSequence {
 		}
 	}
 
-	private static void transformTree(List<String> subsequence, HAWKQuestion q) {
+	public static void transformTree(List<String> subsequence, HAWKQuestion q) {
 		String combinedNN = Joiner.on(" ").join(subsequence);
 		String combinedURI = "http://aksw.org/combinedNN/" + Joiner.on("_").join(subsequence);
 
