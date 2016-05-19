@@ -112,6 +112,9 @@ public class QALD4_EvaluationUtils {
 	}
 
 	public static boolean isAskType(String sparqlQuery) {
+		if (sparqlQuery == null) {
+			return false;
+		}
 		return sparqlQuery.contains("\nASK\n") || sparqlQuery.contains("ASK ");
 	}
 

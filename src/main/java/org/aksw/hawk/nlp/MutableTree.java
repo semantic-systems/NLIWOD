@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 public class MutableTree implements Serializable {
 	private static final long serialVersionUID = 1286195006804443794L;
 	static Logger log = LoggerFactory.getLogger(MutableTree.class);
-	MutableTreeNode head = null;
+	public MutableTreeNode head = null;
 
 	public MutableTreeNode getRoot() {
 		return head;
@@ -31,8 +31,8 @@ public class MutableTree implements Serializable {
 			MutableTreeNode parent = target.parent;
 			List<MutableTreeNode> parentsChildren = parent.children;
 			parentsChildren.addAll(children);
-			for(MutableTreeNode grandchild: children){
-				grandchild.parent=parent;
+			for (MutableTreeNode grandchild : children) {
+				grandchild.parent = parent;
 			}
 			parentsChildren.remove(target);
 			return true;

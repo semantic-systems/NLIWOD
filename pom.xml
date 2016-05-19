@@ -51,7 +51,6 @@
 		<slf4j.version>1.7.5</slf4j.version>
 		<lucene.version>4.6.0</lucene.version>
 		<junit.version>4.11</junit.version>
-		<jena.version>2.11.1</jena.version>
 	</properties>
 	<build>
 		<plugins>
@@ -127,8 +126,10 @@
 			<artifactId>lucene-analyzers-common</artifactId>
 			<version>${lucene.version}</version>
 		</dependency>
-
-		<!-- Sparql -->
+		<!-- QA commons is currently based on Jena for handling RDF resources -->
+		<!-- TODO update this to jena 3.0 -->
+		<!-- TODO erst umstellen, wenn Claus das ordentlich dokumentiert hat mit 
+			dem Cache -->
 		<dependency>
 			<groupId>org.aksw.jena-sparql-api</groupId>
 			<artifactId>jena-sparql-api-core</artifactId>
@@ -240,16 +241,38 @@
 			<artifactId>javax.json</artifactId>
 			<version>1.0.4</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>datasets</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>commons</artifactId>
-			<version>0.0.6</version>
+			<version>0.0.7</version>
 		</dependency>
+		<dependency>
+			<groupId>edu.stanford.nlp</groupId>
+			<artifactId>stanford-corenlp</artifactId>
+			<version>3.6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.stanford.nlp</groupId>
+			<artifactId>stanford-corenlp</artifactId>
+			<version>3.6.0</version>
+			<classifier>models</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>xml-apis</groupId>
+						<artifactId>xml-apis</artifactId>
+		<version>1.4.01</version>
+	</dependency>
+		
 	</dependencies>
 </project>

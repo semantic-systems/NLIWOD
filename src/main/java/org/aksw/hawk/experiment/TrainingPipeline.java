@@ -6,14 +6,15 @@ import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.aksw.hawk.controller.AbstractPipeline;
 import org.aksw.hawk.controller.EvalObj;
-import org.aksw.hawk.controller.Pipeline;
+import org.aksw.hawk.controller.PipelineStanford;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.hawk.ranking.FeatureBasedRanker;
 import org.aksw.hawk.ranking.OptimalRanker;
-import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
@@ -23,7 +24,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 
 /**
- * F@N + all ranking experiments for ESWC 2015 publication Possibly extendible for testing NER things
+ * F@N + all ranking experiments for ESWC 2015 publication Possibly extendible
+ * for testing NER things
  * 
  * @author Lorenz Buehmann
  * @author ricardousbeck
@@ -34,16 +36,16 @@ public class TrainingPipeline {
 
 	public static void main(String args[]) throws IOException, ParserConfigurationException {
 		log.info("Configuring controller");
-		Pipeline pipeline = new Pipeline();
+		AbstractPipeline pipeline = new PipelineStanford();
 
 		log.info("Loading dataset");
-		List<IQuestion> questions = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
+		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD6_Train_Multilingual));
 
 		double average = 0;
 		double count = 0;
 		double countNULLAnswer = 0;
 		for (HAWKQuestion q : questions) {
-			if ((  q.getAnswerType().equals("resource") & q.getOnlydbo() & !q.getAggregation()) || q.getLoadedAsASKQuery()) {
+			if ((q.getAnswerType().equals("resource") & q.getOnlydbo() & !q.getAggregation()) || q.getLoadedAsASKQuery()) {
 				log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
 				List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
