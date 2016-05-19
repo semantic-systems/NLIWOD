@@ -32,7 +32,8 @@ public class WebController {
 	private HashMap<UUID, Future<HAWKQuestion>> runningProcesses = Maps.newHashMap();
 	private HashMap<UUID, HAWKQuestion> UuidQuestionMap = Maps.newHashMap();
 	private SimpleIdGenerator IdGenerator = new SimpleIdGenerator();
-//TODO refactor that class to simple 
+
+	// TODO refactor that class to simple
 	// /search?q=What+is+the+capital+of+Germany+%3F
 	@RequestMapping("/search")
 	public UUID search(@RequestParam(value = "q") String question, HttpServletResponse response) {

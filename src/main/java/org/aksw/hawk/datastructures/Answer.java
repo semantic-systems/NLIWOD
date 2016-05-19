@@ -51,10 +51,9 @@ public class Answer implements Comparable<Answer> {
 		return "Answer [answerSet=" + answerSet + ", score=" + score + ", queryString=" + queryString + "]";
 	}
 
-
 	public SPARQLQuery toSPARQLQuery() {
-	    // TODO Auto-generated method stub
-	    return null;
-    }
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

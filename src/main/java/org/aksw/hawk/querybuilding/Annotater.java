@@ -43,10 +43,12 @@ public class Annotater {
 	}
 
 	/**
-	 * "Named entities are noun phrases and are usually modeled as resources, thus a lexical entry is built comprising a syntactic noun phrase representation together with a corresponding semantic representation containing a resource slot." citation by Unger et al. tbsl
+	 * "Named entities are noun phrases and are usually modeled as resources, thus a lexical entry is built comprising a syntactic noun phrase representation together with a corresponding semantic representation containing a resource slot."
+	 * citation by Unger et al. tbsl
 	 */
 	/**
-	 * "Nouns are often referring to classes, while sometimes to properties, thus two lexical entries are built { one containing a semantic representation with a class slot and one containing a semantic representation with a property slot." citation by Unger et al. tbsl
+	 * "Nouns are often referring to classes, while sometimes to properties, thus two lexical entries are built { one containing a semantic representation with a class slot and one containing a semantic representation with a property slot."
+	 * citation by Unger et al. tbsl
 	 * 
 	 * @param tree
 	 */
@@ -105,8 +107,13 @@ public class Annotater {
 	}
 
 	/**
-	 * "Verbs most often refer to properties, thus a lexical entry with a property slot is built. However, in some cases, the verb does not contribute anything to the query structure (like have in Which cities have more than 2 million inhabitants?), thus an additional entry is built, that does not
-	 * contain a property slot corresponding to the verb but assumes that the property slot is contributed by a noun (inhabitants in this case)." citation by Unger et al. tbsl
+	 * "Verbs most often refer to properties, thus a lexical entry with a
+	 * property slot is built. However, in some cases, the verb does not
+	 * contribute anything to the query structure (like have in Which cities
+	 * have more than 2 million inhabitants?), thus an additional entry is
+	 * built, that does not contain a property slot corresponding to the verb
+	 * but assumes that the property slot is contributed by a noun (inhabitants
+	 * in this case)." citation by Unger et al. tbsl
 	 * 
 	 * @param tree
 	 */
@@ -137,9 +144,10 @@ public class Annotater {
 	}
 
 	private List<String> rank(List<String> search) {
-		// TODO christian: this ranking killed a certain predicate important for some
+		// TODO christian: this ranking killed a certain predicate important for
+		// some
 		// queries form training but stabilized ranking :)
-		//write unit test
+		// write unit test
 		List<String> predicates = Lists.newArrayList();
 		try {
 			int maxNum = 0;
@@ -168,7 +176,8 @@ public class Annotater {
 	}
 
 	/**
-	 * this method annotates the left-most child of the root and uses the inline commented heuristics to annotate the tree
+	 * this method annotates the left-most child of the root and uses the inline
+	 * commented heuristics to annotate the tree
 	 * 
 	 * @param tree
 	 */
@@ -195,7 +204,9 @@ public class Annotater {
 						} else if (posTag.matches("NN(.)*")) {
 							// DBO look up
 							if (posTag.matches("NNS")) {
-								// TODO improve lemmatization. e.g., birds->bird, by using a new NLP library, write tests for the different libraries
+								// TODO improve lemmatization. e.g.,
+								// birds->bird, by using a new NLP library,
+								// write tests for the different libraries
 								if (tmp.lemma != null)
 									label = tmp.lemma;
 							}
@@ -212,7 +223,8 @@ public class Annotater {
 						}
 					} else {
 						/*
-						 * imperative word queries like "List .." or "Give me.." do have parse trees where the root is a NN(.)*
+						 * imperative word queries like "List .." or "Give me.."
+						 * do have parse trees where the root is a NN(.)*
 						 */
 						if (posTag.matches("NN(.)*")) {
 							// TODO ask actress also in dbo owl
@@ -242,7 +254,10 @@ public class Annotater {
 								// full text lookup
 
 								/*
-								 * since a full text lookup takes place we assume hereafter there will be a FILTER clause needed which can only be handled it annotated as CombinedNoun w.r.t. its postag
+								 * since a full text lookup takes place we
+								 * assume hereafter there will be a FILTER
+								 * clause needed which can only be handled it
+								 * annotated as CombinedNoun w.r.t. its postag
 								 */
 								log.debug("Not annotated node: " + tmp);
 							}

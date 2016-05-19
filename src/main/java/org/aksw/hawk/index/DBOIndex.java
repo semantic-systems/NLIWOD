@@ -74,15 +74,16 @@ public class DBOIndex {
 			log.debug("\t start asking index...");
 
 			// remove hyphens assertTrue
-//			if (object.contains("-")) {
-//				object = "\"" + object.replace("-", " ") + "\"";
-//			}
-//			FuzzyQuery q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 0);
-			
+			// if (object.contains("-")) {
+			// object = "\"" + object.replace("-", " ") + "\"";
+			// }
+			// FuzzyQuery q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT,
+			// object), 0);
+
 			QueryParser qp = new QueryParser(LUCENE_VERSION, FIELD_NAME_OBJECT, analyzer);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
 			isearcher.search(qp.createPhraseQuery(FIELD_NAME_OBJECT, object), collector);
-//			isearcher.search(q, collector);
+			// isearcher.search(q, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
 
 			for (int i = 0; i < hits.length; i++) {

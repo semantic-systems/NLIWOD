@@ -9,5 +9,4 @@ public interface Ranking {
 
 	public List<Answer> rank(List<Answer> answers, HAWKQuestion q);
 
-
 }

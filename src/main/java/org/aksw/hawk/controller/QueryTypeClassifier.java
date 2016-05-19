@@ -3,6 +3,7 @@ package org.aksw.hawk.controller;
 import java.util.List;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ public class QueryTypeClassifier {
 		log.info("Run queries through components ...");
 		for (Dataset d : Dataset.values()) {
 			log.debug("Load data file: " + d);
-			List<HAWKQuestion> questions = datasetLoader.load(d);
+			List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(datasetLoader.load(d));
 			int counter = 0;
 			int counterASK = 0;
 			int counterClassifiedWrong = 0;

@@ -35,11 +35,7 @@ public class AnswerBox {
 
 	static {
 		try {
-			long timeToLive = 360l
-					* 24l
-					* 60l
-					* 60l
-					* 1000l;
+			long timeToLive = 360l * 24l * 60l * 60l * 1000l;
 			CacheCoreEx cacheBackend = CacheCoreH2.create("./sparql", timeToLive, true);
 			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
 			qef = new QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql");
@@ -54,21 +50,11 @@ public class AnswerBox {
 		document.put("URI", new JsonString(uri));
 		Set<RDFNode> set = Sets.newHashSet();
 		try {
-			String query = "select ?thumbnail ?abstract ?comment ?label"
-					+ "where {"
-					+ "<"
-					+ uri
-					+ "> <http://dbpedia.org/ontology/thumbnail> ?thumbnail;"
-					+ "<http://dbpedia.org/ontology/abstract> ?abstract;"
-					+ "<http://www.w3.org/2000/01/rdf-schema#label> ?label;"
-					+ "<http://www.w3.org/2000/01/rdf-schema#comment> ?comment."
-					+ "FILTER(langMatches(lang(?abstract), \"EN\") &&"
-					+ "          langMatches(lang(?label), \"EN\") &&"
-					+ "          langMatches(lang(?comment), \"EN\"))"
-					+ "}";
+			String query = "select ?thumbnail ?abstract ?comment ?label" + "where {" + "<" + uri + "> <http://dbpedia.org/ontology/thumbnail> ?thumbnail;"
+			        + "<http://dbpedia.org/ontology/abstract> ?abstract;" + "<http://www.w3.org/2000/01/rdf-schema#label> ?label;" + "<http://www.w3.org/2000/01/rdf-schema#comment> ?comment."
+			        + "FILTER(langMatches(lang(?abstract), \"EN\") &&" + "          langMatches(lang(?label), \"EN\") &&" + "          langMatches(lang(?comment), \"EN\"))" + "}";
 			QueryExecution qe = qef.createQueryExecution(query);
-			if (qe != null
-					&& query.toString() != null) {
+			if (qe != null && query.toString() != null) {
 				ResultSet results = qe.execSelect();
 				while (results.hasNext()) {
 					QuerySolution next = results.next();
@@ -92,8 +78,7 @@ public class AnswerBox {
 				}
 			}
 		} catch (Exception e) {
-			log.error("Cannot ask DBpedia for verbose description of "
-					+ uri, e);
+			log.error("Cannot ask DBpedia for verbose description of " + uri, e);
 		}
 		return document;
 	}

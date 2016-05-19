@@ -61,6 +61,7 @@ public class ParseTree {
 
 	public DEPTree process(HAWKQuestion q) {
 		return process(tokenizer, components, q);
+
 	}
 
 	private DEPTree process(AbstractTokenizer tokenizer, AbstractComponent[] components, HAWKQuestion q) {

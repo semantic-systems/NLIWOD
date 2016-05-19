@@ -29,5 +29,4 @@ public class UnboundTriple implements ISPARQLQueryPruner {
 		return returnSet;
 	}
 
-
 }

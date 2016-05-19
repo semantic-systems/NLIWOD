@@ -9,10 +9,10 @@ import org.aksw.hawk.controller.EvalObj;
 import org.aksw.hawk.controller.Pipeline;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.ranking.BucketRanker;
 import org.aksw.hawk.ranking.FeatureBasedRanker;
 import org.aksw.hawk.ranking.OptimalRanker;
-import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
@@ -21,7 +21,8 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Joiner;
 
 /**
- * F@N + all ranking experiments for ESWC 2015 publication Possibly extendible for testing NER things
+ * F@N + all ranking experiments for ESWC 2015 publication Possibly extendible
+ * for testing NER things
  * 
  * @author Lorenz Buehmann
  * @author ricardousbeck
@@ -35,7 +36,7 @@ public class RankingPipeline {
 		Pipeline pipeline = new Pipeline();
 
 		log.info("Loading dataset");
-		List<IQuestion> questions = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
+		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD6_Train_Multilingual));
 
 		for (HAWKQuestion q : questions) {
 			if ((q.getHybrid() & q.getAnswerType().equals("resource") & q.getOnlydbo() & !q.getAggregation()) || q.getLoadedAsASKQuery()) {
@@ -53,7 +54,8 @@ public class RankingPipeline {
 				// optimal ranking
 				// log.info("Optimal ranking");
 				// List<Answer> rankedAnswer = optimal_ranker.rank(answers, q);
-				// List<EvalObj> eval = Measures.measure(rankedAnswer, q, maximumPositionToMeasure);
+				// List<EvalObj> eval = Measures.measure(rankedAnswer, q,
+				// maximumPositionToMeasure);
 				// log.debug(Joiner.on("\n\t").join(eval));
 
 				// correctQueries.add(answer.get(query).query);
@@ -62,13 +64,15 @@ public class RankingPipeline {
 
 				// feature-based ranking
 				// log.info("Feature-based ranking begins training.");
-				// for (Set<Feature> featureSet : Sets.powerSet(new HashSet<>(Arrays.asList(Feature.values())))) {
+				// for (Set<Feature> featureSet : Sets.powerSet(new
+				// HashSet<>(Arrays.asList(Feature.values())))) {
 				// if (!featureSet.isEmpty()) {
 				// log.debug("Feature-based ranking: " + featureSet.toString());
 				// feature_ranker.setFeatures(featureSet);
 				// feature_ranker.train();
 				// rankedAnswer = feature_ranker.rank(answers, q);
-				// eval = Measures.measure(rankedAnswer, q, maximumPositionToMeasure);
+				// eval = Measures.measure(rankedAnswer, q,
+				// maximumPositionToMeasure);
 				// log.debug(Joiner.on("\n\t").join(eval));
 				// }
 				// }

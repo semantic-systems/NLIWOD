@@ -57,7 +57,7 @@ public class Spotlight extends ASpotter {
 					JSONObject next = (JSONObject) res;
 					Entity ent = new Entity();
 					ent.label = (String) next.get("@surfaceForm");
-					String uri = ((String) next.get("@URI") ).replaceAll(",","%2C");
+					String uri = ((String) next.get("@URI")).replaceAll(",", "%2C");
 					ent.uris.add(new ResourceImpl(uri));
 					for (String type : ((String) next.get("@types")).split(",")) {
 						ent.posTypesAndCategories.add(new ResourceImpl(type));
@@ -74,7 +74,8 @@ public class Spotlight extends ASpotter {
 		}
 		return tmp;
 	}
-//TODO Christian: Unit Test
+
+	// TODO Christian: Unit Test
 	public static void main(String args[]) {
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", "Which buildings in art deco style did Shreve, Lamb and Harmon design?");

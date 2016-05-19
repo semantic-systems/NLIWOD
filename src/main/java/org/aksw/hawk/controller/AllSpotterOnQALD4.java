@@ -3,12 +3,12 @@ package org.aksw.hawk.controller;
 import java.util.List;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.nlp.spotter.ASpotter;
 import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.nlp.spotter.Spotlight;
 import org.aksw.hawk.nlp.spotter.TagMe;
 import org.aksw.qa.commons.datastructure.Entity;
-import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
@@ -23,8 +23,8 @@ public class AllSpotterOnQALD4 {
 
 		QALD_Loader datasetLoader = new QALD_Loader();
 
-		List<IQuestion> questions = datasetLoader.load(Dataset.QALD5_Train);
-		for (IQuestion q : questions) {
+		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(datasetLoader.load(Dataset.QALD5_Train_Hybrid));
+		for (HAWKQuestion q : questions) {
 			log.info(q.getLanguageToQuestion().get("en"));
 			try {
 				for (ASpotter nerdModule : new ASpotter[] { new Spotlight(), new Fox(), new TagMe() }) {

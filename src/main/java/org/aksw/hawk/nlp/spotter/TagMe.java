@@ -69,8 +69,8 @@ public class TagMe extends ASpotter {
 			for (Object res : resources.toArray()) {
 				JSONObject next = (JSONObject) res;
 				Entity ent = new Entity();
-				ent.label=((String) next.get("spot"));
-				ent.uris.add(new ResourceImpl(((String) next.get("title")).replaceAll(",","%2C")));
+				ent.label = ((String) next.get("spot"));
+				ent.uris.add(new ResourceImpl(((String) next.get("title")).replaceAll(",", "%2C")));
 				JSONArray types = (JSONArray) next.get("dbpedia_categories");
 				if (types != null) {
 					for (Object type : types) {

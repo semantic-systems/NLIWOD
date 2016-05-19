@@ -17,6 +17,7 @@ public class FeatureBasedRankerDB {
 	public FeatureBasedRankerDB() {
 	}
 
+	// TODO Christian make it independent of OS
 	public Set<SPARQLQuery> readRankings() {
 		Set<SPARQLQuery> set = Sets.newHashSet();
 		for (File f : new File("c:/ranking/").listFiles()) {
@@ -37,7 +38,7 @@ public class FeatureBasedRankerDB {
 		for (SPARQLQuery query : queries) {
 			int hash = query.hashCode();
 			String serializedFileName = getFileName(hash);
-//			File tmp = new File(serializedFileName);
+			// File tmp = new File(serializedFileName);
 			StorageHelper.storeToFileSavely(query, serializedFileName);
 
 		}

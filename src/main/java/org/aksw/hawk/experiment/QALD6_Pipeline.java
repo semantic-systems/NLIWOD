@@ -9,10 +9,10 @@ import org.aksw.hawk.controller.EvalObj;
 import org.aksw.hawk.controller.Pipeline;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.hawk.ranking.FeatureBasedRanker;
 import org.aksw.hawk.ranking.OptimalRanker;
-import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +30,9 @@ public class QALD6_Pipeline {
 
 		log.info("Loading dataset");
 		URL url = ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-hybrid.json");
-		List<IQuestion> questions = null;
+		List<HAWKQuestion> questions = null;
 		try {
-			questions = QALD_Loader.loadJSON(url.openStream());
+			questions = HAWKQuestionFactory.createInstances(QALD_Loader.loadJSON(url.openStream()));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -43,8 +43,10 @@ public class QALD6_Pipeline {
 		double count = 0;
 		double countNULLAnswer = 0;
 		for (HAWKQuestion q : questions) {
-			//TODO refactor this if clause to something like HAWK.checkSuitability(Question q): boolean
-			if ((q.getAnswerType().equals("resource") & q.getOnlydbo() & !q.getAggregation()) || q.getLoadedAsASKQuery()) {
+			// TODO refactor this if clause to something like
+			// HAWK.checkSuitability(Question q): boolean
+			// This ok too?
+			if (q.checkSuitabillity()) {
 				log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
 				List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
@@ -88,7 +90,8 @@ public class QALD6_Pipeline {
 		log.info("Average F-measure: " + (average / count));
 
 	}
-//TODO When HAWK is fast enough change to unit test
+
+	// TODO When HAWK is fast enough change to unit test
 	public static void main(String args[]) {
 		new QALD6_Pipeline();
 

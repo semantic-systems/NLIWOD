@@ -33,11 +33,13 @@ public class SPARQL {
 			// qef = new
 			// QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql",
 			// "http://dbpedia.org/");
-//			qef = new QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
+			// qef = new
+			// QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
 
 			qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
 
-//			qef = new QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
+			// qef = new
+			// QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
 			// qef = new
 			// QueryExecutionFactoryHttp("http://dbpedia.org/sparql","http://dbpedia.org");
 
@@ -74,8 +76,7 @@ public class SPARQL {
 					set.add(new ResourceImpl(String.valueOf(qe.execAsk())));
 				} else {
 					ResultSet results = qe.execSelect();
-					while (results.hasNext())
-					{
+					while (results.hasNext()) {
 						set.add(results.next().get("proj"));
 					}
 				}
@@ -85,7 +86,8 @@ public class SPARQL {
 		}
 		return set;
 	}
-//TODO Christian: transform to unit test
+
+	// TODO Christian: transform to unit test
 	public static void main(String args[]) {
 		SPARQL sqb = new SPARQL();
 

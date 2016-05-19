@@ -20,25 +20,25 @@ public class DisjointnessBasedQueryFilterTest {
 
 		QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
 		DisjointnessBasedQueryFilter filter = new DisjointnessBasedQueryFilter(qef);
-		//valid query
+		// valid query
 		SPARQLQuery query1 = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Book>.");
 		query1.addConstraint("?s <http://dbpedia.org/ontology/author> ?proj.");
-		//invalid range
+		// invalid range
 		SPARQLQuery query2 = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Book>.");
 		query2.addConstraint("?o <http://dbpedia.org/ontology/frequency> ?proj.");
-		//valid query
+		// valid query
 		SPARQLQuery query3 = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Person>.");
 		query3.addConstraint("?proj <http://dbpedia.org/ontology/birthPlace> ?o.");
-		//invalid domain
+		// invalid domain
 		SPARQLQuery query4 = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Person>.");
 		query4.addConstraint("?proj <http://dbpedia.org/ontology/frequency> ?o.");
-		//Create empty parameter q
-		HAWKQuestion q=new HAWKQuestion();
+		// Create empty parameter q
+		HAWKQuestion q = new HAWKQuestion();
 		Set<SPARQLQuery> filtered = filter.prune(Sets.newHashSet(query1, query2, query3, query4), q);
 		System.out.println(filtered);
 
-		//two valid queries remaining?
-		assertEquals(filtered.size(),2);
+		// two valid queries remaining?
+		assertEquals(filtered.size(), 2);
 
 	}
 
