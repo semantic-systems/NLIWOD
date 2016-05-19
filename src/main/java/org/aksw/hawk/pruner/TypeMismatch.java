@@ -114,17 +114,17 @@ public class TypeMismatch implements ISPARQLQueryPruner {
 				// checks based on predicate
 				Node predicate = tp.getPredicate();
 				if (predicate.isURI() && !predicate.getNameSpace().equals(RDF.getURI()) && // do
-																						   // not
-																						   // process
-																						   // rdf:
+				                                                                           // not
+				                                                                           // process
+				                                                                           // rdf:
 				        !predicate.getNameSpace().equals(RDFS.getURI()) && // do
-																		   // not
-																		   // process
-																		   // rdfs:
+				                                                           // not
+				                                                           // process
+				                                                           // rdfs:
 				        !ignoredProperties.contains(predicate.getURI()) // do
-																		// not
-																		// process
-																		// text:
+				                                                        // not
+				                                                        // process
+				                                                        // text:
 				) {
 
 					// predicate is not of type owl:ObjectProperty or

@@ -76,4 +76,37 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 			return annotations;
 		}
 	}
+
+	public String getDepLabel() {
+		return depLabel;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public String getPosTag() {
+		return posTag;
+	}
+
+	public String getLemma() {
+		return lemma;
+	}
+
+	public void setDepLabel(String depLabel) {
+		this.depLabel = depLabel;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public void setPosTag(String posTag) {
+		this.posTag = posTag;
+	}
+
+	public void setLemma(String lemma) {
+		this.lemma = lemma;
+	}
+
 }

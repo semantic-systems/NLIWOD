@@ -6,8 +6,9 @@ import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.aksw.hawk.controller.AbstractPipeline;
 import org.aksw.hawk.controller.EvalObj;
-import org.aksw.hawk.controller.Pipeline;
+import org.aksw.hawk.controller.PipelineStanford;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
@@ -35,7 +36,7 @@ public class TrainingPipeline {
 
 	public static void main(String args[]) throws IOException, ParserConfigurationException {
 		log.info("Configuring controller");
-		Pipeline pipeline = new Pipeline();
+		AbstractPipeline pipeline = new PipelineStanford();
 
 		log.info("Loading dataset");
 		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD6_Train_Multilingual));

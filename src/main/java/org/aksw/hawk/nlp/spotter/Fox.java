@@ -2,8 +2,7 @@ package org.aksw.hawk.nlp.spotter;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -37,12 +36,17 @@ public class Fox extends ASpotter {
 	private String taskType = "NER";
 	private String inputType = "text";
 
-	private String doTASK(String inputText) throws MalformedURLException, IOException, ProtocolException {
+	private String doTask(String inputText) {
 
 		String urlParameters = "type=" + inputType;
 		urlParameters += "&task=" + taskType;
 		urlParameters += "&output=" + outputFormat;
-		urlParameters += "&input=" + URLEncoder.encode(inputText, "UTF-8");
+		try {
+			urlParameters += "&input=" + URLEncoder.encode(inputText, "UTF-8");
+
+		} catch (UnsupportedEncodingException e) {
+			log.debug("", e);
+		}
 
 		return requestPOST(urlParameters, requestURL);
 	}
@@ -54,50 +58,57 @@ public class Fox extends ASpotter {
 	 */
 	@Override
 	public Map<String, List<Entity>> getEntities(String question) {
-		HashMap<String, List<Entity>> tmp = new HashMap<String, List<Entity>>();
-		try {
-			String foxJSONOutput = doTASK(question);
+		HashMap<String, List<Entity>> mappedEntitysReturn = new HashMap<String, List<Entity>>();
+		String foxJSONOutput = null;
 
-			JSONParser parser = new JSONParser();
-			JSONObject jsonArray = (JSONObject) parser.parse(foxJSONOutput);
-			String output = URLDecoder.decode((String) jsonArray.get("output"), "UTF-8");
+		foxJSONOutput = doTask(question);
+		if (!foxJSONOutput.equals("") && (!(foxJSONOutput == null))) {
 
-			String baseURI = "http://dbpedia.org";
-			Model model = ModelFactory.createDefaultModel();
-			RDFReader r = model.getReader("N3");
-			r.read(model, new StringReader(output), baseURI);
+			try {
 
-			ResIterator iter = model.listSubjects();
-			ArrayList<Entity> tmpList = new ArrayList<>();
-			while (iter.hasNext()) {
-				Resource next = iter.next();
-				StmtIterator statementIter = next.listProperties();
-				Entity ent = new Entity();
-				while (statementIter.hasNext()) {
-					Statement statement = statementIter.next();
-					String predicateURI = statement.getPredicate().getURI();
-					if (predicateURI.equals("http://www.w3.org/2000/10/annotation-ns#body")) {
-						ent.label = statement.getObject().asLiteral().getString();
-					} else if (predicateURI.equals("http://ns.aksw.org/scms/means")) {
-						String uri = statement.getObject().asResource().getURI();
-						String encode = uri.replaceAll(",", "%2C");
-						ResourceImpl e = new ResourceImpl(encode);
-						ent.uris.add(e);
-					} else if (predicateURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) {
-						ent.posTypesAndCategories.add(statement.getObject().asResource());
+				JSONParser parser = new JSONParser();
+				JSONObject jsonArray = (JSONObject) parser.parse(foxJSONOutput);
+				String output = URLDecoder.decode((String) jsonArray.get("output"), "UTF-8");
+
+				String baseURI = "http://dbpedia.org";
+				Model model = ModelFactory.createDefaultModel();
+				RDFReader r = model.getReader("N3");
+				r.read(model, new StringReader(output), baseURI);
+
+				ResIterator iter = model.listSubjects();
+				ArrayList<Entity> tmpList = new ArrayList<>();
+				while (iter.hasNext()) {
+					Resource next = iter.next();
+					StmtIterator statementIter = next.listProperties();
+					Entity ent = new Entity();
+					while (statementIter.hasNext()) {
+						Statement statement = statementIter.next();
+						String predicateURI = statement.getPredicate().getURI();
+						if (predicateURI.equals("http://www.w3.org/2000/10/annotation-ns#body")) {
+							ent.label = statement.getObject().asLiteral().getString();
+						} else if (predicateURI.equals("http://ns.aksw.org/scms/means")) {
+							String uri = statement.getObject().asResource().getURI();
+							String encode = uri.replaceAll(",", "%2C");
+							ResourceImpl e = new ResourceImpl(encode);
+							ent.uris.add(e);
+						} else if (predicateURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) {
+							ent.posTypesAndCategories.add(statement.getObject().asResource());
+						}
 					}
+					tmpList.add(ent);
 				}
-				tmpList.add(ent);
-			}
-			tmp.put("en", tmpList);
+				mappedEntitysReturn.put("en", tmpList);
 
-		} catch (IOException | ParseException e) {
-			log.error("Could not call FOX for NER/NED", e);
+			} catch (IOException | ParseException e) {
+				log.error("Could not parse Server rensponse", e);
+			}
+
 		}
-		if (!tmp.isEmpty()) {
-			log.debug("\t" + Joiner.on("\n").join(tmp.get("en")));
+
+		if (!mappedEntitysReturn.isEmpty()) {
+			log.debug("\t" + Joiner.on("\n").join(mappedEntitysReturn.get("en")));
 		}
-		return tmp;
+		return mappedEntitysReturn;
 	}
 
 	// TODO CHristian: Transform to unit test

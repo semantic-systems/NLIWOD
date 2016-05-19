@@ -186,7 +186,7 @@ public class SPARQLQueryPruner implements ISPARQLQueryPruner {
 		for (SPARQLQuery query : queries) {
 			JSONObject jsonQuery = new JSONObject();
 			jsonQuery.put("query", query.toString()); // TODO: how to serialize
-													  // the query?
+			                                          // the query?
 			jsonQueries.add(jsonQuery);
 		}
 
