@@ -33,59 +33,62 @@ public class SpecificQueryTest {
 		query.addFilterOverAbstractsContraint("?proj", "Coquette Productions");
 		log.debug(query.toString());
 		queries.add(query);
-		
-		
-//		PREFIX text:<http://jena.apache.org/text#> 
-//			SELECT DISTINCT ?proj WHERE {
-//			 ?const text:query (<http://dbpedia.org/ontology/abstract> 'girls~1 AND Xposé~1' 1000). 
-//			?proj  <http://dbpedia.org/ontology/residence> ?const. 
-//			}
-//			LIMIT 12>
+
+		// PREFIX text:<http://jena.apache.org/text#>
+		// SELECT DISTINCT ?proj WHERE {
+		// ?const text:query (<http://dbpedia.org/ontology/abstract> 'girls~1
+		// AND Xposé~1' 1000).
+		// ?proj <http://dbpedia.org/ontology/residence> ?const.
+		// }
+		// LIMIT 12>
 		query = new SPARQLQuery("?proj  <http://dbpedia.org/ontology/residence> ?const.");
 		query.addFilterOverAbstractsContraint("?const", "girls Xposé leader");
 		log.debug(query.toString());
 		queries.add(query);
 
-//		PREFIX text:    <http://jena.apache.org/text#> 
-//			SELECT DISTINCT ?proj WHERE {
-//			 ?proj text:query (<http://dbpedia.org/ontology/abstract> 'Wu~1 AND Clan~1 AND stage~1 AND Tang~1' 1000). 
-//			?const ?proot ?proj. 
-//			?const a <http://dbpedia.org/ontology/Film>. 
-//			}
-//			LIMIT 12
-		
+		// PREFIX text: <http://jena.apache.org/text#>
+		// SELECT DISTINCT ?proj WHERE {
+		// ?proj text:query (<http://dbpedia.org/ontology/abstract> 'Wu~1 AND
+		// Clan~1 AND stage~1 AND Tang~1' 1000).
+		// ?const ?proot ?proj.
+		// ?const a <http://dbpedia.org/ontology/Film>.
+		// }
+		// LIMIT 12
+
 		query = new SPARQLQuery("?const ?proot ?proj.");
 		query.addFilterOverAbstractsContraint("?proj", "Wu Tang Clan");
 		query.addConstraint("?const a <http://dbpedia.org/ontology/Film>.");
 		log.debug(query.toString());
 		queries.add(query);
-		
-//		PREFIX text:<http://jena.apache.org/text#> 
-//			SELECT DISTINCT ?proj WHERE {
-//			 ?const text:query (<http://dbpedia.org/ontology/abstract> '"first man in space"' 1000). 
-//			?const <http://dbpedia.org/ontology/deathPlace> ?proj. 
-//			?proj a <http://dbpedia.org/ontology/Place>. 
-//			}
-//			LIMIT 1
+
+		// PREFIX text:<http://jena.apache.org/text#>
+		// SELECT DISTINCT ?proj WHERE {
+		// ?const text:query (<http://dbpedia.org/ontology/abstract> '"first man
+		// in space"' 1000).
+		// ?const <http://dbpedia.org/ontology/deathPlace> ?proj.
+		// ?proj a <http://dbpedia.org/ontology/Place>.
+		// }
+		// LIMIT 1
 		query = new SPARQLQuery("?const <http://dbpedia.org/ontology/deathPlace> ?proj.");
 		query.addFilterOverAbstractsContraint("?const", "first man in space");
 		log.debug(query.toString());
 		queries.add(query);
 
-//		PREFIX text:    <http://jena.apache.org/text#> 
-//			SELECT DISTINCT ?proj WHERE {
-//			 ?const text:query (<http://dbpedia.org/ontology/abstract> 'assassin~1' 1000). 
-//			?const <http://dbpedia.org/ontology/birthPlace> ?proj. 
-//			}
-//			LIMIT 12
-			
+		// PREFIX text: <http://jena.apache.org/text#>
+		// SELECT DISTINCT ?proj WHERE {
+		// ?const text:query (<http://dbpedia.org/ontology/abstract>
+		// 'assassin~1' 1000).
+		// ?const <http://dbpedia.org/ontology/birthPlace> ?proj.
+		// }
+		// LIMIT 12
+
 		query = new SPARQLQuery("?const <http://dbpedia.org/ontology/birthPlace> ?proj.");
 		query.addFilterOverAbstractsContraint("?const", "assassin");
 		log.debug(query.toString());
 		queries.add(query);
-		
+
 		log.debug("Size before pruning: " + queries.size());
-		queries = pruner.prune(queries,new HAWKQuestion());
+		queries = pruner.prune(queries, new HAWKQuestion());
 		log.debug("Size after pruning: " + queries.size());
 		Assert.assertTrue(queries.size() == 5);
 

@@ -24,6 +24,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
+
 //TODO use qa-commons lib
 public class QALDWriter {
 	private String dataset;
@@ -31,16 +32,17 @@ public class QALDWriter {
 	private Document doc;
 
 	public QALDWriter(String dataset) throws IOException, ParserConfigurationException {
-		//TODO fix this hack by using file instead of string => NO!
-		//fix this by using the qa-commons library from Maven archiva
-		this.dataset = dataset.split("/")[dataset.split("/").length-1];
+		// TODO fix this hack by using file instead of string => NO!
+		// fix this by using the qa-commons library from Maven archiva
+		this.dataset = dataset.split("/")[dataset.split("/").length - 1];
 		questions = Lists.newArrayList();
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		doc = db.newDocument();
 
 	}
-//TODO transform to unit case in qa-commons
+
+	// TODO transform to unit case in qa-commons
 	private static void main(String[] args) throws IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 
 		String dataset = "qald-5_train";

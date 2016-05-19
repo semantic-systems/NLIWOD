@@ -30,8 +30,6 @@ public class FeatureBasedRanker implements Ranking {
 	private Map<String, Double> vec;
 	private Collection<Feature> features;
 
-	
-
 	public void learn(IQuestion q, Set<SPARQLQuery> queries) {
 		db.store(q, queries);
 	}
@@ -116,10 +114,10 @@ public class FeatureBasedRanker implements Ranking {
 		Collections.sort(q.constraintTriples);
 		// here are the features
 		Map<String, Double> featureValues = Maps.newHashMap();
-		System.out.println("evaluating: "+ q.toString());
+		System.out.println("evaluating: " + q.toString());
 		for (Feature feature : features) {
 			System.out.println("feature:");
-			 System.out.println(feature);
+			System.out.println(feature);
 			switch (feature) {
 			case PREDICATES:
 				featureValues.putAll(usedPredicates(q));
@@ -191,7 +189,7 @@ public class FeatureBasedRanker implements Ranking {
 		// build list of patterns, indicate text position
 		Map<String, Double> map = Maps.newHashMap();
 		String[] split = new String[3];
-		//  maybe many bugs down here
+		// maybe many bugs down here
 		// http://mathinsight.org/media/image/image/three_node_motifs.png
 		// 1) find out the text node
 		String textNode = null;

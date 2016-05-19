@@ -21,7 +21,8 @@ public class MutableTreePruner {
 		removalRules(q);
 		removalBasedOnDependencyLabels(q);
 		/*
-		 * interrogative rules last else each interrogative word has at least two children, which can't be handled yet by the removal
+		 * interrogative rules last else each interrogative word has at least
+		 * two children, which can't be handled yet by the removal
 		 */
 		applyInterrogativeRules(q);
 		sortTree(q.getTree());
@@ -86,7 +87,8 @@ public class MutableTreePruner {
 	}
 
 	/**
-	 * removes: * punctuations (.) * wh- words(WDT|WP$) * PRP($) * DT * BY and IN (possessive) pronouns * PDT predeterminer all both
+	 * removes: * punctuations (.) * wh- words(WDT|WP$) * PRP($) * DT * BY and
+	 * IN (possessive) pronouns * PDT predeterminer all both
 	 * 
 	 * Who,Where WP|WRB stays in
 	 * 

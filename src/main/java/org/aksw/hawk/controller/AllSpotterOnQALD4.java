@@ -23,7 +23,7 @@ public class AllSpotterOnQALD4 {
 
 		QALD_Loader datasetLoader = new QALD_Loader();
 
-		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(datasetLoader.load(Dataset.QALD5_Train));
+		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(datasetLoader.load(Dataset.QALD5_Train_Hybrid));
 		for (HAWKQuestion q : questions) {
 			log.info(q.getLanguageToQuestion().get("en"));
 			try {

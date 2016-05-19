@@ -122,7 +122,7 @@ public class TierRanker implements Ranking {
 		init(q.getTree());
 		for (Answer answer : answers) {
 			double rank = getScore(QueryFactory.create(answer.queryString));
-			 System.out.println(answer.queryString+" ranked with score: "+rank);
+			System.out.println(answer.queryString + " ranked with score: " + rank);
 			answer.score = rank;
 		}
 		Collections.sort(answers);

@@ -52,7 +52,9 @@ public class GoldNerGenerator {
 				sb.append(question.getId()).append("\t");// ID
 				sb.append(question.getLanguageToQuestion().get("en")).append("\t");// question
 				sb.append(extractEntities(rewritePseudoQuery(question.getPseudoSparqlQuery()))).append("\t");// entities
-				sb.append(question.getLanguageToQuestion().get("en"));// rewritten question template
+				sb.append(question.getLanguageToQuestion().get("en"));// rewritten
+																	  // question
+																	  // template
 				sb.append("\n");
 			}
 			File targetFile = new File("resources/" + dataset.name() + ".tsv");

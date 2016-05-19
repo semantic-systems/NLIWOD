@@ -9,6 +9,7 @@ import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.hawk.ranking.FeatureBasedRanker.Feature;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,16 +17,17 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-
 public class FeatureBasedRankerTest {
 
 	@Test
+	// TODO Christian: transform this to unit test (not working yet, ranking not
+	// implemented)
+	@Ignore
 	public void test() {
-		// TODO Christian: transform this to unit test (not working yet, ranking not implemented)
-		
 
 		List<SPARQLQuery> queries = Lists.newArrayList();
-		//Which actress starring in the TV series Friends owns the production company Coquette Productions?
+		// Which actress starring in the TV series Friends owns the production
+		// company Coquette Productions?
 		SPARQLQuery query = new SPARQLQuery("?const <http://dbpedia.org/ontology/starring> ?proj.");
 		query.addFilterOverAbstractsContraint("?proj", "Friends");
 		queries.add(query);
@@ -45,20 +47,19 @@ public class FeatureBasedRankerTest {
 
 				ranker.train();
 				HAWKQuestion quest = new HAWKQuestion();
-				//System.out.println(queries);
+				// System.out.println(queries);
 
-
-				List<Answer> answers=Lists.newArrayList();
-				for (SPARQLQuery q: queries){
+				List<Answer> answers = Lists.newArrayList();
+				for (SPARQLQuery q : queries) {
 					answers.add(q.toAnswer());
 				}
 				System.out.println("answers:");
 				System.out.println(answers);
 
-				List<Answer> rankedanswers=ranker.rank(answers, quest);
+				List<Answer> rankedanswers = ranker.rank(answers, quest);
 				System.out.println(rankedanswers);
 				List<SPARQLQuery> returnqueries = Lists.newArrayList();
-				for (Answer ans: rankedanswers){
+				for (Answer ans : rankedanswers) {
 					returnqueries.add(ans.toSPARQLQuery());
 				}
 				for (SPARQLQuery q : returnqueries) {

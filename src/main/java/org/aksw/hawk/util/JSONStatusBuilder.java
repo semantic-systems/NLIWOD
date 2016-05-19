@@ -12,6 +12,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
+
 //TODO remove class when rest interface is not constantly pulling anymore
 public class JSONStatusBuilder {
 
@@ -122,7 +123,8 @@ public class JSONStatusBuilder {
 		return null;
 	}
 
-	//FIXME if tree is final, do not use label but the first semantic annotation
+	// FIXME if tree is final, do not use label but the first semantic
+	// annotation
 	@SuppressWarnings("unchecked")
 	private static JSONObject recursiveNodeLabel(MutableTreeNode node, JSONObject document) {
 		document.put("label", node.label);

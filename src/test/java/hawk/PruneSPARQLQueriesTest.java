@@ -7,9 +7,7 @@ import org.aksw.hawk.pruner.BGPisConnected;
 import org.aksw.hawk.pruner.NumberOfTypesPerVariable;
 import org.aksw.hawk.pruner.PredicatesPerVariableEdge;
 import org.aksw.hawk.pruner.UnboundTriple;
-import org.aksw.hawk.pruner.disjointness.DisjointnessBasedQueryFilter;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
-import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -97,19 +95,23 @@ public class PruneSPARQLQueriesTest {
 
 	@Test
 	public void disjointness() {
-//TODO fix long runtime
-//		DisjointnessBasedQueryFilter disjoint = new DisjointnessBasedQueryFilter(new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql"));
-//		Set<SPARQLQuery> queries = Sets.newHashSet();
-//		SPARQLQuery query = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Bird>.");
-//		query.addFilterOverAbstractsContraint("?proj", "protected");
-//		query.addFilterOverAbstractsContraint("?proj", "National Parks and Wildlife Act");
-//		log.debug(query.toString());
-//		queries.add(query);
-//
-//		log.debug("Size before pruning: " + queries.size());
-//		queries = disjoint.prune(queries, new HAWKQuestion());
-//		log.debug("Size after pruning: " + queries.size());
-//		Assert.assertTrue(queries.size() == 1);
+		// TODO fix long runtime
+		// DisjointnessBasedQueryFilter disjoint = new
+		// DisjointnessBasedQueryFilter(new
+		// QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql"));
+		// Set<SPARQLQuery> queries = Sets.newHashSet();
+		// SPARQLQuery query = new
+		// SPARQLQuery("?proj a <http://dbpedia.org/ontology/Bird>.");
+		// query.addFilterOverAbstractsContraint("?proj", "protected");
+		// query.addFilterOverAbstractsContraint("?proj",
+		// "National Parks and Wildlife Act");
+		// log.debug(query.toString());
+		// queries.add(query);
+		//
+		// log.debug("Size before pruning: " + queries.size());
+		// queries = disjoint.prune(queries, new HAWKQuestion());
+		// log.debug("Size after pruning: " + queries.size());
+		// Assert.assertTrue(queries.size() == 1);
 
 	}
 

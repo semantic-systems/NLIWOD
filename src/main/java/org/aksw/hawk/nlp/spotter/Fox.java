@@ -59,8 +59,8 @@ public class Fox extends ASpotter {
 			String foxJSONOutput = doTASK(question);
 
 			JSONParser parser = new JSONParser();
-            JSONObject jsonArray = (JSONObject) parser.parse(foxJSONOutput);
-            String output = URLDecoder.decode((String) jsonArray.get("output"), "UTF-8");
+			JSONObject jsonArray = (JSONObject) parser.parse(foxJSONOutput);
+			String output = URLDecoder.decode((String) jsonArray.get("output"), "UTF-8");
 
 			String baseURI = "http://dbpedia.org";
 			Model model = ModelFactory.createDefaultModel();
@@ -99,7 +99,8 @@ public class Fox extends ASpotter {
 		}
 		return tmp;
 	}
-//TODO CHristian: Transform to unit test
+
+	// TODO CHristian: Transform to unit test
 	public static void main(String args[]) {
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", "Which buildings in art deco style did Shreve, Lamb and Harmon design?");

@@ -72,7 +72,7 @@ public class Baseline {
 		log.info("Configuring controller");
 
 		Baseline controller = new Baseline();
-		Dataset dataset = Dataset.QALD5_Train;
+		Dataset dataset = Dataset.QALD5_Train_Hybrid;
 		log.info("Run controller");
 
 		controller.run(dataset);

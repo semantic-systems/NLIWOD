@@ -16,7 +16,8 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Maps;
 
 /**
- * Ranks based on answer set frequency. The most seen answer set<RDFNode> will be returned
+ * Ranks based on answer set frequency. The most seen answer set<RDFNode> will
+ * be returned
  * 
  * @author ricardousbeck
  *
@@ -27,7 +28,8 @@ public class BucketRanker implements Ranking {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<Answer> rank(List<Answer> answers, HAWKQuestion q) {
-		// TODO Christian:  bug here!?!?, write a unit test for bucketbased ranking
+		// TODO Christian: bug here!?!?, write a unit test for bucketbased
+		// ranking
 		Map<Answer, Integer> buckets = Maps.newHashMap();
 
 		for (Answer answer : answers) {

@@ -39,7 +39,8 @@ public class RecursiveSparqlQueryBuilder {
 		if (!tmp.getAnnotations().isEmpty()) {
 			for (SPARQLQuery query : returnSet) {
 				for (String anno : tmp.getAnnotations()) {
-					// FIXME anno sometimes "", why is the annotation sometimes empty
+					// FIXME anno sometimes "", why is the annotation sometimes
+					// empty
 					if (tmp.posTag.matches("VB(.)*")) {
 						// FIXME variablen iterieren
 						SPARQLQuery variant1 = ((SPARQLQuery) query.clone());

@@ -34,11 +34,14 @@ import com.jamonapi.MonitorFactory;
  */
 public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 
-	private static final ParameterizedSparqlString domainQueryTemplate = new ParameterizedSparqlString("PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> SELECT ?dom WHERE {?p rdfs:domain ?o . ?o rdfs:subClassOf* ?dom .}");
+	private static final ParameterizedSparqlString domainQueryTemplate = new ParameterizedSparqlString(
+	        "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> SELECT ?dom WHERE {?p rdfs:domain ?o . ?o rdfs:subClassOf* ?dom .}");
 
-	private static final ParameterizedSparqlString rangeQueryTemplate = new ParameterizedSparqlString("PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> SELECT ?ran WHERE {?p rdfs:range ?o . ?o rdfs:subClassOf* ?ran .}");
+	private static final ParameterizedSparqlString rangeQueryTemplate = new ParameterizedSparqlString(
+	        "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> SELECT ?ran WHERE {?p rdfs:range ?o . ?o rdfs:subClassOf* ?ran .}");
 
-	private static final ParameterizedSparqlString superClassesQueryTemplate = new ParameterizedSparqlString("PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> SELECT ?sup WHERE {?sub rdfs:subClassOf+ ?sup .}");
+	private static final ParameterizedSparqlString superClassesQueryTemplate = new ParameterizedSparqlString(
+	        "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> SELECT ?sup WHERE {?sub rdfs:subClassOf+ ?sup .}");
 
 	private static final Logger logger = LoggerFactory.getLogger(DisjointnessBasedQueryFilter.class);
 
@@ -208,5 +211,5 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 	private boolean conflicts(Set<Node> types1, Set<Node> types2) {
 		return Sets.intersection(types1, types2).isEmpty();
 	}
-	
+
 }

@@ -265,19 +265,18 @@ public class SPARQLQuery implements Cloneable, Serializable {
 		this.limit = cardinality;
 
 	}
-	public Answer toAnswer()
-	{
-		Answer answer=new Answer();
+
+	public Answer toAnswer() {
+		Answer answer = new Answer();
 		try {
-			SPARQLQuery tmpQuery=(SPARQLQuery)this.clone();
-			answer.query=tmpQuery;
+			SPARQLQuery tmpQuery = (SPARQLQuery) this.clone();
+			answer.query = tmpQuery;
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		
+
 		}
 		return answer;
 	}
-	
 
 }
