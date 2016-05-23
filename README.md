@@ -13,6 +13,10 @@ to analyze:
 * https://github.com/ag-sc/QALD , especially if we could use this repo directly
 * http://agarciaduran.org/ 30M questions to freebase
 * https://github.com/brmson/yodaqa/wiki/Benchmarks
+ * https://github.com/brmson/dataset-factoid-curated for evolution 
+ * https://github.com/brmson/dataset-factoid-movies for domain-specific
+ * https://github.com/brmson/dataset-factoid-webquestions for a suit
+* GeoQuery, Free917, WebQuestions, SimpleQuestions and QALD
 * http://www-nlp.stanford.edu/software/sempre/
 * https://sites.google.com/site/trecliveqa2015/
 * http://trec.nist.gov/data/qa.html
