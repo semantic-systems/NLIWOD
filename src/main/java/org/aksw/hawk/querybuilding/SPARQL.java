@@ -1,24 +1,20 @@
 package org.aksw.hawk.querybuilding;
 
-import java.sql.SQLException;
 import java.util.Set;
 
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
-import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheCoreH2;
-import org.aksw.jena_sparql_api.cache.extra.CacheEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheExImpl;
+import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
+import org.aksw.jena_sparql_api.cache.h2.CacheUtilsH2;
+import org.aksw.jena_sparql_api.core.FluentQueryExecutionFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class SPARQL {
 	Logger log = LoggerFactory.getLogger(SPARQL.class);
@@ -27,16 +23,19 @@ public class SPARQL {
 	public SPARQL() {
 		try {
 			long timeToLive = 360l * 24l * 60l * 60l * 1000l;
-			CacheCoreEx cacheBackend = CacheCoreH2.create("./sparql", timeToLive, true);
-			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
+			// CacheBackend cacheBackend = CacheCoreH2.create("./sparql",
+			// timeToLive, true);
+			// CacheFrontend cacheFrontend = new
+			// CacheFrontendImpl(cacheBackend);
+			CacheFrontend cacheFrontend = CacheUtilsH2.createCacheFrontend("./sparql", true, timeToLive);
+
 			// AKSW SPARQL API call
 			// qef = new
 			// QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql",
 			// "http://dbpedia.org/");
 			// qef = new
 			// QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
-
-			qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
+			qef = FluentQueryExecutionFactory.http("http://139.18.2.164:3030/ds/sparql").config().withCache(cacheFrontend).end().create();
 
 			// qef = new
 			// QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
@@ -53,11 +52,12 @@ public class SPARQL {
 			// "http://dbpedia.org");
 			// --> No reason to be nice
 			// qef = new QueryExecutionFactoryDelay(qef, 2000);
-			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
+			// qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
 			// qef = new QueryExecutionFactoryDelay(qef, 150);
 			// qef = new QueryExecutionFactoryPaginated(qef, 10000);
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (RuntimeException e) {
 			log.error("Could not create SPARQL interface! ", e);
+			System.exit(0);
 		}
 	}
 
@@ -67,7 +67,7 @@ public class SPARQL {
 	 * @param query
 	 * @return
 	 */
-	public Set<RDFNode> sparql(String query) {
+	public Set<RDFNode> sparql(final String query) {
 		Set<RDFNode> set = Sets.newHashSet();
 		try {
 			QueryExecution qe = qef.createQueryExecution(query);
@@ -88,7 +88,7 @@ public class SPARQL {
 	}
 
 	// TODO Christian: transform to unit test
-	public static void main(String args[]) {
+	public static void main(final String args[]) {
 		SPARQL sqb = new SPARQL();
 
 		SPARQLQuery query = new SPARQLQuery();

@@ -11,23 +11,23 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.pruner.disjointness.QueryUtils;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.apache.jena.graph.Node;
+import org.apache.jena.graph.Triple;
+import org.apache.jena.query.ParameterizedSparqlString;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.sparql.core.Var;
+import org.apache.jena.vocabulary.OWL;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
-import com.hp.hpl.jena.graph.Node;
-import com.hp.hpl.jena.graph.Triple;
-import com.hp.hpl.jena.query.ParameterizedSparqlString;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.sparql.core.Var;
-import com.hp.hpl.jena.vocabulary.OWL;
-import com.hp.hpl.jena.vocabulary.RDF;
-import com.hp.hpl.jena.vocabulary.RDFS;
 import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
 
@@ -56,7 +56,7 @@ public class TypeMismatch implements ISPARQLQueryPruner {
 	// properties that are ignored when checking for disjointness
 	private static final Set<String> ignoredProperties = Sets.newHashSet("http://jena.apache.org/text#query", "http://dbpedia.org/ontology/abstract");
 
-	public TypeMismatch(QueryExecutionFactory qef) {
+	public TypeMismatch(final QueryExecutionFactory qef) {
 		this.qef = qef;
 	}
 
@@ -67,7 +67,7 @@ public class TypeMismatch implements ISPARQLQueryPruner {
 	 */
 
 	@Override
-	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, HAWKQuestion q) {
+	public Set<SPARQLQuery> prune(final Set<SPARQLQuery> queryStrings, final HAWKQuestion q) {
 		mon.reset();
 		Set<SPARQLQuery> filteredQueries = Sets.newHashSet();
 
@@ -79,7 +79,7 @@ public class TypeMismatch implements ISPARQLQueryPruner {
 		return filteredQueries;
 	}
 
-	private Set<Resource> getEntityTypes(String entity) {
+	private Set<Resource> getEntityTypes(final String entity) {
 		Set<Resource> entityTypes = new HashSet<>();
 		typeQueryTemplate.setIri("s", entity);
 
@@ -95,7 +95,7 @@ public class TypeMismatch implements ISPARQLQueryPruner {
 		return entityTypes;
 	}
 
-	private boolean accept(SPARQLQuery sparqlQuery) {
+	private boolean accept(final SPARQLQuery sparqlQuery) {
 		mon.start();
 
 		try {
@@ -148,7 +148,7 @@ public class TypeMismatch implements ISPARQLQueryPruner {
 		return true;
 	}
 
-	private boolean isProperty(Set<Resource> entityTypes) {
+	private boolean isProperty(final Set<Resource> entityTypes) {
 		return !Sets.intersection(entityTypes, PROPERTY_ENTITY_TYPES).isEmpty();
 	}
 

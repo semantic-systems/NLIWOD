@@ -10,12 +10,12 @@ import java.util.Map;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.qa.commons.datastructure.Entity;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class OptimalAnnotator extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(OptimalAnnotator.class);
@@ -36,8 +36,8 @@ public class OptimalAnnotator extends ASpotter {
 	}
 
 	@Override
-	public Map<String, List<Entity>> getEntities(String question) {
-		HashMap<String, List<Entity>> tmp = new HashMap<String, List<Entity>>();
+	public Map<String, List<Entity>> getEntities(final String question) {
+		HashMap<String, List<Entity>> tmp = new HashMap<>();
 		ArrayList<Entity> tmpList = new ArrayList<>();
 
 		Entity ent = new Entity();
@@ -49,7 +49,7 @@ public class OptimalAnnotator extends ASpotter {
 		return tmp;
 	}
 
-	public static void main(String args[]) {
+	public static void main(final String args[]) {
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
 		ASpotter spotter = new OptimalAnnotator();

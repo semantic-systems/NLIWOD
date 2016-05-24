@@ -4,18 +4,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
 import com.google.common.collect.Sets.SetView;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class QALD4_EvaluationUtils {
 	static Logger log = LoggerFactory.getLogger(QALD4_EvaluationUtils.class);
 
-	public static double precision(Set<RDFNode> systemAnswer, HAWKQuestion question) {
+	public static double precision(final Set<RDFNode> systemAnswer, final HAWKQuestion question) {
 		if (systemAnswer == null) {
 			return 0;
 		}
@@ -59,7 +59,7 @@ public class QALD4_EvaluationUtils {
 		return precision;
 	}
 
-	public static double recall(Set<RDFNode> systemAnswer, HAWKQuestion question) {
+	public static double recall(final Set<RDFNode> systemAnswer, final HAWKQuestion question) {
 		if (systemAnswer == null) {
 			return 0;
 		}
@@ -101,7 +101,7 @@ public class QALD4_EvaluationUtils {
 		return recall;
 	}
 
-	public static double fMeasure(Set<RDFNode> systemAnswers, HAWKQuestion question) {
+	public static double fMeasure(final Set<RDFNode> systemAnswers, final HAWKQuestion question) {
 		double precision = precision(systemAnswers, question);
 		double recall = recall(systemAnswers, question);
 		double fMeasure = 0;
@@ -111,19 +111,19 @@ public class QALD4_EvaluationUtils {
 		return fMeasure;
 	}
 
-	public static boolean isAskType(String sparqlQuery) {
+	public static boolean isAskType(final String sparqlQuery) {
 		if (sparqlQuery == null) {
 			return false;
 		}
 		return sparqlQuery.contains("\nASK\n") || sparqlQuery.contains("ASK ");
 	}
 
-	private static boolean isSelectType(String sparqlQuery) {
+	private static boolean isSelectType(final String sparqlQuery) {
 		return sparqlQuery.contains("\nSELECT\n") || sparqlQuery.contains("SELECT ");
 	}
 
-	private static Set<RDFNode> answersToRDFNode(Set<String> answers) {
-		Set<RDFNode> tmp = new HashSet<RDFNode>();
+	private static Set<RDFNode> answersToRDFNode(final Set<String> answers) {
+		Set<RDFNode> tmp = new HashSet<>();
 		for (String s : answers) {
 			tmp.add(new ResourceImpl(s));
 		}

@@ -4,7 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.vocabulary.RDFS;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field.Store;
@@ -25,12 +31,6 @@ import org.apache.lucene.util.Version;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class IndexDBO_properties {
 
@@ -67,7 +67,7 @@ public class IndexDBO_properties {
 		}
 	}
 
-	public ArrayList<String> search(String object) {
+	public ArrayList<String> search(final String object) {
 		ArrayList<String> uris = Lists.newArrayList();
 		try {
 			log.debug("\t start asking index...");
@@ -78,8 +78,8 @@ public class IndexDBO_properties {
 			isearcher.search(q, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
 
-			for (int i = 0; i < hits.length; i++) {
-				Document hitDoc = isearcher.doc(hits[i].doc);
+			for (ScoreDoc hit : hits) {
+				Document hitDoc = isearcher.doc(hit.doc);
 				log.debug(object + "->" + hitDoc.get(FIELD_NAME_SUBJECT) + ", " + hitDoc.get(FIELD_NAME_OBJECT));
 				uris.add(hitDoc.get(FIELD_NAME_SUBJECT));
 			}
@@ -116,7 +116,7 @@ public class IndexDBO_properties {
 		}
 	}
 
-	private void addDocumentToIndex(Resource resource, String predicate, RDFNode next) throws IOException {
+	private void addDocumentToIndex(final Resource resource, final String predicate, final RDFNode next) throws IOException {
 		Document doc = new Document();
 		doc.add(new StringField(FIELD_NAME_SUBJECT, resource.getURI(), Store.YES));
 		doc.add(new StringField(FIELD_NAME_PREDICATE, predicate, Store.YES));

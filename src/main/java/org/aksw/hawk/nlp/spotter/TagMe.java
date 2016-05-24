@@ -13,6 +13,8 @@ import java.util.Properties;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.qa.commons.datastructure.Entity;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,8 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class TagMe extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(TagMe.class);
@@ -45,7 +45,7 @@ public class TagMe extends ASpotter {
 		}
 	}
 
-	private String doTASK(String inputText) throws MalformedURLException, IOException, ProtocolException {
+	private String doTASK(final String inputText) throws MalformedURLException, IOException, ProtocolException {
 
 		String urlParameters = "text=" + URLEncoder.encode(inputText, "UTF-8");
 		urlParameters += "&key=" + key;
@@ -56,8 +56,8 @@ public class TagMe extends ASpotter {
 	}
 
 	@Override
-	public Map<String, List<Entity>> getEntities(String question) {
-		HashMap<String, List<Entity>> tmp = new HashMap<String, List<Entity>>();
+	public Map<String, List<Entity>> getEntities(final String question) {
+		HashMap<String, List<Entity>> tmp = new HashMap<>();
 		try {
 			String foxJSONOutput = doTASK(question);
 			JSONParser parser = new JSONParser();
@@ -101,7 +101,7 @@ public class TagMe extends ASpotter {
 		return tmp;
 	}
 
-	public static void main(String args[]) {
+	public static void main(final String args[]) {
 		HAWKQuestion q = new HAWKQuestion();
 		// q.languageToQuestion.put("en", "Merkel met Obama?");
 		q.getLanguageToQuestion().put("en", "Which buildings in art deco style did Shreve, Lamb and Harmon design?");

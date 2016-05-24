@@ -8,6 +8,7 @@ import java.util.Stack;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.apache.jena.atlas.logging.Log;
+import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +18,6 @@ import com.clearnlp.tokenization.AbstractTokenizer;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 //TODO make this class independently of other classes callable
 //TODO write unit test
@@ -26,7 +26,7 @@ public class SentenceToSequenceStanford {
 	static AbstractTokenizer tokenizer = NLPGetter.getTokenizer(language);
 
 	// combine noun phrases
-	public static void combineSequences(HAWKQuestion q) {
+	public static void combineSequences(final HAWKQuestion q) {
 		// run pos-tagging
 
 		Logger log = LoggerFactory.getLogger(SentenceToSequenceStanford.class);
@@ -102,13 +102,13 @@ public class SentenceToSequenceStanford {
 		q.setTree(tree);
 	}
 
-	private static Map<String, String> generatePOSTags(HAWKQuestion q) {
+	private static Map<String, String> generatePOSTags(final HAWKQuestion q) {
 
 		Map<String, String> label2pos = Maps.newHashMap();
 		// TODO this is horribly wrong, the same label CAN have different pos if
 		// the label occurs twice in question
 		// Map<String, String> label2pos = Maps.newTreeMap();
-		Stack<MutableTreeNode> stack = new Stack<MutableTreeNode>();
+		Stack<MutableTreeNode> stack = new Stack<>();
 		stack.push(q.getTree().getRoot());
 		while (!stack.isEmpty()) {
 			MutableTreeNode tmp = stack.pop();
@@ -120,7 +120,7 @@ public class SentenceToSequenceStanford {
 		return label2pos;
 	}
 
-	private static void transformTree(List<String> subsequence, HAWKQuestion q) {
+	private static void transformTree(final List<String> subsequence, final HAWKQuestion q) {
 		String combinedNN = Joiner.on(" ").join(subsequence);
 		String combinedURI = "http://aksw.org/combinedNN/" + Joiner.on("_").join(subsequence);
 		MutableTree tree = q.getTree();
@@ -134,9 +134,9 @@ public class SentenceToSequenceStanford {
 		}
 		nounphrases.add(tmpEntity);
 
-		Stack<MutableTreeNode> stack = new Stack<MutableTreeNode>();
+		Stack<MutableTreeNode> stack = new Stack<>();
 		stack.push(tree.getRoot());
-		List<MutableTreeNode> removables = new ArrayList<MutableTreeNode>();
+		List<MutableTreeNode> removables = new ArrayList<>();
 		while (!stack.isEmpty()) {
 
 			MutableTreeNode thisNode = stack.pop();
@@ -144,7 +144,8 @@ public class SentenceToSequenceStanford {
 			for (String s : subsequence) {
 				if (label.contains(s)) {
 					// thisNode.label =
-					// Joiner.on(" ").join(label.replace("http://aksw.org/combinedNN/",
+					// Joiner.on("
+					// ").join(label.replace("http://aksw.org/combinedNN/",
 					// "").split("_"));
 					thisNode.label = combinedNN;
 					thisNode.posTag = "CombinedNN";
@@ -191,7 +192,7 @@ public class SentenceToSequenceStanford {
 	//
 	// }
 
-	private static String replaceLabelsByIdentifiedURIs(String sentence, List<Entity> list) {
+	private static String replaceLabelsByIdentifiedURIs(String sentence, final List<Entity> list) {
 		for (Entity entity : list) {
 			if (!entity.label.equals("")) {
 				// " " inserted so punctuation gets separated correctly from

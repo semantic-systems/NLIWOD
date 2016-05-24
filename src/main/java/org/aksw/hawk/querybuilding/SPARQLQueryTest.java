@@ -2,9 +2,8 @@ package org.aksw.hawk.querybuilding;
 
 import java.util.Set;
 
+import org.apache.jena.rdf.model.RDFNode;
 import org.junit.Test;
-
-import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class SPARQLQueryTest {
 
@@ -15,10 +14,12 @@ public class SPARQLQueryTest {
 		query.addConstraint("?proj a <http://dbpedia.org/ontology/Cleric>.");
 		query.addConstraint("?proj ?p ?const.");
 		System.out.println("Test");
-		// query.addFilterOverAbstractsContraint("?proj","http://dbpedia.org/resource/Pope_John_Paul_I, http://dbpedia.org/resource/Pope_John_Paul_II");
+		// query.addFilterOverAbstractsContraint("?proj","http://dbpedia.org/resource/Pope_John_Paul_I,
+		// http://dbpedia.org/resource/Pope_John_Paul_II");
 		query.addFilterOverAbstractsContraint("?proj", "\'http://dbpedia.org/resource/Pope_John_Paul_I\'");
 
-		// query.addFilter("'?proj', ('http://dbpedia.org/resource/Pope_John_Paul_I','http://dbpedia.org/resource/Pope_John_Paul_II')");
+		// query.addFilter("'?proj',
+		// ('http://dbpedia.org/resource/Pope_John_Paul_I','http://dbpedia.org/resource/Pope_John_Paul_II')");
 
 		query.addFilterOverAbstractsContraint("?const", "Wadowice");
 		// TODO Christian: Doesn't accept apostrophes yet. J.Paul II's

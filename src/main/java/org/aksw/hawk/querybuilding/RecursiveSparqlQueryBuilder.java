@@ -6,17 +6,17 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.ResultSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.ResultSet;
 
 public class RecursiveSparqlQueryBuilder {
 	Logger log = LoggerFactory.getLogger(RecursiveSparqlQueryBuilder.class);
 
-	public Set<SPARQLQuery> start(SPARQLQueryBuilder sparqlQueryBuilder, HAWKQuestion q) {
+	public Set<SPARQLQuery> start(final SPARQLQueryBuilder sparqlQueryBuilder, final HAWKQuestion q) {
 		SPARQLQuery initialQuery = new SPARQLQuery();
 		initialQuery.isASKQuery(q.getIsClassifiedAsASKQuery());
 		Set<SPARQLQuery> returnSet = Sets.newHashSet(initialQuery);
@@ -32,7 +32,7 @@ public class RecursiveSparqlQueryBuilder {
 		return returnSet;
 	}
 
-	private void recursion(Set<SPARQLQuery> returnSet, Set<String> variableSet, MutableTreeNode tmp) throws CloneNotSupportedException {
+	private void recursion(final Set<SPARQLQuery> returnSet, final Set<String> variableSet, final MutableTreeNode tmp) throws CloneNotSupportedException {
 		Set<SPARQLQuery> sb = Sets.newHashSet();
 
 		// if no annotations maybe a CombinedNN
@@ -59,7 +59,7 @@ public class RecursiveSparqlQueryBuilder {
 						// nn can be predicats, e.g. currency
 						// commented things
 						// SPARQLQuery variant1 = ((SPARQLQuery) query.clone());
-						// variant1.addConstraint("?proj  <" + anno +
+						// variant1.addConstraint("?proj <" + anno +
 						// "> ?const.");
 
 						SPARQLQuery variant2 = ((SPARQLQuery) query.clone());
@@ -198,7 +198,7 @@ public class RecursiveSparqlQueryBuilder {
 
 	}
 
-	private Set<String> getOrigLabel(String label) {
+	private Set<String> getOrigLabel(final String label) {
 		Set<String> resultset = Sets.newHashSet();
 		String query = "SELECT str(?proj) as ?proj WHERE { <" + label + "> <http://www.w3.org/2000/01/rdf-schema#label> ?proj. FILTER(langMatches( lang(?proj), \"EN\" ))}";
 		try {

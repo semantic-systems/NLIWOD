@@ -17,13 +17,13 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 //TODO use qa-commons lib
 public class QALDWriter {
@@ -31,7 +31,7 @@ public class QALDWriter {
 	private List<Element> questions;
 	private Document doc;
 
-	public QALDWriter(String dataset) throws IOException, ParserConfigurationException {
+	public QALDWriter(final String dataset) throws IOException, ParserConfigurationException {
 		// TODO fix this hack by using file instead of string => NO!
 		// fix this by using the qa-commons library from Maven archiva
 		this.dataset = dataset.split("/")[dataset.split("/").length - 1];
@@ -43,7 +43,7 @@ public class QALDWriter {
 	}
 
 	// TODO transform to unit case in qa-commons
-	private static void main(String[] args) throws IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+	private static void main(final String[] args) throws IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 
 		String dataset = "qald-5_train";
 		QALDWriter qw = new QALDWriter(dataset);
@@ -77,7 +77,7 @@ public class QALDWriter {
 		System.out.println("\nXML DOM Created Successfully..");
 	}
 
-	public void write(Answer a) throws ParserConfigurationException, IOException {
+	public void write(final Answer a) throws ParserConfigurationException, IOException {
 
 		if (a != null) {
 			Element question = doc.createElement("question");

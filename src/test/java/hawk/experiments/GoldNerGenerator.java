@@ -15,15 +15,15 @@ import org.aksw.autosparql.commons.qald.TriplePatternExtractor;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;
+import org.apache.jena.graph.Triple;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.Syntax;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
-import com.hp.hpl.jena.graph.Triple;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.query.Syntax;
-import com.hp.hpl.jena.vocabulary.RDF;
-import com.hp.hpl.jena.vocabulary.RDFS;
 
 /**
  * @author Lorenz Buehmann
@@ -34,7 +34,7 @@ public class GoldNerGenerator {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws Exception {
+	public static void main(final String[] args) throws Exception {
 		QALD_Loader datasetLoader = new QALD_Loader();
 		for (Dataset dataset : Dataset.values()) {
 			StringBuilder sb = new StringBuilder();
@@ -43,7 +43,7 @@ public class GoldNerGenerator {
 			Collections.sort(questions, new Comparator<IQuestion>() {
 
 				@Override
-				public int compare(IQuestion o1, IQuestion o2) {
+				public int compare(final IQuestion o1, final IQuestion o2) {
 					return Integer.compare(o1.getId(), o2.getId());
 
 				}
@@ -70,8 +70,8 @@ public class GoldNerGenerator {
 		return query;
 	}
 
-	private static SortedSet<String> extractEntities(String query) {
-		SortedSet<String> entities = new TreeSet<String>();
+	private static SortedSet<String> extractEntities(final String query) {
+		SortedSet<String> entities = new TreeSet<>();
 		try {
 			Query q = QueryFactory.create(query, Syntax.syntaxARQ);
 			TriplePatternExtractor tpExtractor = new TriplePatternExtractor();

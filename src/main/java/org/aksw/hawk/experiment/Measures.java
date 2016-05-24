@@ -7,16 +7,16 @@ import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.hawk.controller.EvalObj;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.apache.jena.rdf.model.RDFNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class Measures {
 	static Logger log = LoggerFactory.getLogger(Measures.class);
 
-	public static List<EvalObj> measure(List<Answer> rankedAnswer, HAWKQuestion q, int maxK) {
+	public static List<EvalObj> measure(final List<Answer> rankedAnswer, final HAWKQuestion q, final int maxK) {
 		// calculate precision, recall, f1 measure for each answer
 		List<EvalObj> list = Lists.newArrayList();
 		// omment=Measure @1, fmax=0.8, pmax=0.6666666666666666, rmax=1.0,

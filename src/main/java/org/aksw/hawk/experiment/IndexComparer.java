@@ -12,16 +12,16 @@ import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.index.DBOIndex;
 import org.aksw.hawk.index.Patty_relations;
 import org.aksw.qa.commons.load.QALD_Loader;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.sparql.core.TriplePath;
+import org.apache.jena.sparql.syntax.ElementPathBlock;
+import org.apache.jena.sparql.syntax.ElementVisitorBase;
+import org.apache.jena.sparql.syntax.ElementWalker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.sparql.core.TriplePath;
-import com.hp.hpl.jena.sparql.syntax.ElementPathBlock;
-import com.hp.hpl.jena.sparql.syntax.ElementVisitorBase;
-import com.hp.hpl.jena.sparql.syntax.ElementWalker;
 
 /*
  * EXPERIMENTAL! 
@@ -32,9 +32,9 @@ public class IndexComparer {
 	static Patty_relations pattyindex = new Patty_relations();
 	static DBOIndex dboindex = new DBOIndex();
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		List<HAWKQuestion> questions = getQALDQuestions();
-		List<List<HashSet<String>>> questionsWithSetsToCompare = new ArrayList<List<HashSet<String>>>();
+		List<List<HashSet<String>>> questionsWithSetsToCompare = new ArrayList<>();
 		for (HAWKQuestion x : questions) {
 			List<HashSet<String>> setsToCompare = getSets(x);
 			questionsWithSetsToCompare.add(setsToCompare);
@@ -48,13 +48,13 @@ public class IndexComparer {
 			HashSet<String> relevantDocs = x.get(1);
 			// Patty Data
 			HashSet<String> pattyRetrievedDocs = x.get(2);
-			HashSet<String> pattyIntersection = new HashSet<String>(x.get(1));
+			HashSet<String> pattyIntersection = new HashSet<>(x.get(1));
 			pattyIntersection.retainAll(x.get(2));
 			double pattyPrecision = pattyIntersection.size() / (double) pattyRetrievedDocs.size();
 			double pattyRecall = pattyIntersection.size() / (double) relevantDocs.size();
 			// DBO Data
 			HashSet<String> dboRetrievedDocs = x.get(3);
-			HashSet<String> dboIntersection = new HashSet<String>(x.get(1));
+			HashSet<String> dboIntersection = new HashSet<>(x.get(1));
 			pattyIntersection.retainAll(x.get(3));
 			double dboPrecision = dboIntersection.size() / (double) dboRetrievedDocs.size();
 			double dboRecall = dboIntersection.size() / (double) relevantDocs.size();
@@ -87,8 +87,8 @@ public class IndexComparer {
 	/*
 	 * Method to turn a natural-language question to list of uri's.
 	 */
-	private static HashSet<String> getURISet(String question, String index) {
-		HashSet<String> result = new HashSet<String>();
+	private static HashSet<String> getURISet(final String question, final String index) {
+		HashSet<String> result = new HashSet<>();
 		for (String term : question.split(" ")) {
 			if (index.equals("pattyindex")) {
 				result.addAll(pattyindex.search(term));
@@ -104,15 +104,16 @@ public class IndexComparer {
 	 * Method to get necessary SparqlEntities from GoldQueries provided in QALD
 	 * Data.
 	 */
-	private static HashSet<String> getSparql(HAWKQuestion q) {
+	private static HashSet<String> getSparql(final HAWKQuestion q) {
 		String sparqlQuerystring = q.getSparqlQuery();
 		if (sparqlQuerystring == null) {
 			return Sets.newHashSet();
 		} else {
 			Query sparqlQuery = QueryFactory.create(sparqlQuerystring);
-			HashSet<String> predicates = new HashSet<String>();
+			HashSet<String> predicates = new HashSet<>();
 			ElementVisitorBase ELB = new ElementVisitorBase() {
-				public void visit(ElementPathBlock el) {
+				@Override
+				public void visit(final ElementPathBlock el) {
 					Iterator<TriplePath> triples = el.patternElts();
 					while (triples.hasNext()) {
 						String candidate = triples.next().getPredicate().toString();
@@ -131,12 +132,12 @@ public class IndexComparer {
 	 * Method to obtain a tuple of [question, necessary Entities, some Sets of
 	 * obtained Entities]
 	 */
-	private static List<HashSet<String>> getSets(HAWKQuestion q) {
+	private static List<HashSet<String>> getSets(final HAWKQuestion q) {
 		String question = (q.getLanguageToQuestion().get("en").replaceAll("\\p{P}", ""));
 		HashSet<String> uriBucketPatty = getURISet(question, "pattyindex");
 		HashSet<String> uriBucketDBO = getURISet(question, "dboindex");
 		HashSet<String> uriSparql = getSparql(q);
-		List<HashSet<String>> comparison = new ArrayList<HashSet<String>>();
+		List<HashSet<String>> comparison = new ArrayList<>();
 		comparison.add(Sets.newHashSet(question));
 		comparison.add(uriSparql);
 		comparison.add(uriBucketPatty);

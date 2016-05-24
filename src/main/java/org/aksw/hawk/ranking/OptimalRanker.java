@@ -12,9 +12,9 @@ import java.util.Set;
 import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.apache.jena.rdf.model.RDFNode;
 
 import com.google.common.collect.Maps;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /**
  * optimal in a sense of fmeasure
@@ -26,7 +26,7 @@ public class OptimalRanker implements Ranking {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public List<Answer> rank(List<Answer> answers, HAWKQuestion q) {
+	public List<Answer> rank(final List<Answer> answers, final HAWKQuestion q) {
 		// Compare to set of resources from benchmark
 		// save score for for answerSet with fmeasure > 0
 		Map<Answer, Double> buckets = Maps.newHashMap();
@@ -46,7 +46,8 @@ public class OptimalRanker implements Ranking {
 		List tmplist = new LinkedList(buckets.entrySet());
 
 		Collections.sort(tmplist, new Comparator() {
-			public int compare(Object o1, Object o2) {
+			@Override
+			public int compare(final Object o1, final Object o2) {
 				return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
 			}
 		});

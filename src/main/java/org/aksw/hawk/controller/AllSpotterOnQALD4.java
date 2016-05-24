@@ -11,19 +11,16 @@ import org.aksw.hawk.nlp.spotter.TagMe;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;
+import org.apache.jena.query.QueryParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.hp.hpl.jena.query.QueryParseException;
 
 public class AllSpotterOnQALD4 {
 	static Logger log = LoggerFactory.getLogger(AllSpotterOnQALD4.class);
 
-	public static void main(String args[]) {
+	public static void main(final String args[]) {
 
-		QALD_Loader datasetLoader = new QALD_Loader();
-
-		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(datasetLoader.load(Dataset.QALD5_Train_Hybrid));
+		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD5_Train_Hybrid));
 		for (HAWKQuestion q : questions) {
 			log.info(q.getLanguageToQuestion().get("en"));
 			try {

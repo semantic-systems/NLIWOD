@@ -10,19 +10,18 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;
+import org.apache.jena.rdf.model.RDFNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class Baseline {
 	static Logger log = LoggerFactory.getLogger(Baseline.class);
 	String dataset;
-	QALD_Loader datasetLoader;
 
-	void run(Dataset dataset) throws IOException {
-		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(datasetLoader.load(dataset));
+	void run(final Dataset dataset) throws IOException {
+		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(dataset));
 		double overallf = 0;
 		double overallp = 0;
 		double overallr = 0;
@@ -62,12 +61,12 @@ public class Baseline {
 		log.info("Average P=" + overallp / counter + " R=" + overallr / counter + " F=" + overallf / counter + " Counter=" + counter);
 	}
 
-	public Map<String, Set<RDFNode>> calculateSPARQLRepresentation(HAWKQuestion q) {
+	public Map<String, Set<RDFNode>> calculateSPARQLRepresentation(final HAWKQuestion q) {
 		Map<String, Set<RDFNode>> answer = Maps.newHashMap();
 		return answer;
 	}
 
-	public static void main(String args[]) throws IOException {
+	public static void main(final String args[]) throws IOException {
 
 		log.info("Configuring controller");
 

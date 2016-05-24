@@ -12,14 +12,13 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.nlp.MutableTreeNodeIterator;
-
-import com.hp.hpl.jena.graph.Node;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.sparql.core.TriplePath;
-import com.hp.hpl.jena.sparql.syntax.ElementPathBlock;
-import com.hp.hpl.jena.sparql.syntax.ElementVisitorBase;
-import com.hp.hpl.jena.sparql.syntax.ElementWalker;
+import org.apache.jena.graph.Node;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.sparql.core.TriplePath;
+import org.apache.jena.sparql.syntax.ElementPathBlock;
+import org.apache.jena.sparql.syntax.ElementVisitorBase;
+import org.apache.jena.sparql.syntax.ElementWalker;
 
 public class TierRanker implements Ranking {
 
@@ -32,17 +31,17 @@ public class TierRanker implements Ranking {
 
 	// TODO write proper tests
 
-	public TierRanker(MutableTree tree) {
+	public TierRanker(final MutableTree tree) {
 		init(tree);
 	}
 
-	public void init(MutableTree tree) {
+	public void init(final MutableTree tree) {
 		this.tree = tree;
 		it = new MutableTreeNodeIterator(this.tree.getRoot());
 
 	}
 
-	protected double getScore(Query query) {
+	protected double getScore(final Query query) {
 		double ret = 0.0;
 		Set<String> clause = queryToNodeList(query);
 		while (it.hasNext()) {
@@ -55,7 +54,7 @@ public class TierRanker implements Ranking {
 		return ret;
 	}
 
-	protected static double getScoreForNode(MutableTreeNode node, int nodeTier, Set<String> clause) {
+	protected static double getScoreForNode(final MutableTreeNode node, final int nodeTier, final Set<String> clause) {
 		double ret = 0;
 		// String clause =resolvedClause(q);
 
@@ -66,16 +65,17 @@ public class TierRanker implements Ranking {
 		return ret * tier;
 	}
 
-	private static Set<String> queryToNodeList(Query q) {
+	private static Set<String> queryToNodeList(final Query q) {
 		// Remember distinct subjects in this
-		final Set<String> subjects = new HashSet<String>();
+		final Set<String> subjects = new HashSet<>();
 
 		// This will walk through all parts of the query
 		ElementWalker.walk(q.getQueryPattern(),
-		// For each element...
+		        // For each element...
 		        new ElementVisitorBase() {
 			        // ...when it's a block of triples...
-			        public void visit(ElementPathBlock el) {
+			        @Override
+			        public void visit(final ElementPathBlock el) {
 				        // ...go through all the triples...
 				        Iterator<TriplePath> triples = el.patternElts();
 				        while (triples.hasNext()) {
@@ -90,7 +90,7 @@ public class TierRanker implements Ranking {
 		return subjects;
 	}
 
-	private static String getString(Node n) {
+	private static String getString(final Node n) {
 		// String ret= "";
 		if (n.isURI()) {
 			// n.get
@@ -109,7 +109,7 @@ public class TierRanker implements Ranking {
 		// return ret;
 	}
 
-	protected static String resolvedClause(Query q) {
+	protected static String resolvedClause(final Query q) {
 		Map<String, String> map = q.getPrefixMapping().getNsPrefixMap();
 		for (String key : map.keySet()) {
 			q.getPrefixMapping().removeNsPrefix(key);
@@ -118,7 +118,7 @@ public class TierRanker implements Ranking {
 	}
 
 	@Override
-	public List<Answer> rank(List<Answer> answers, HAWKQuestion q) {
+	public List<Answer> rank(final List<Answer> answers, final HAWKQuestion q) {
 		init(q.getTree());
 		for (Answer answer : answers) {
 			double rank = getScore(QueryFactory.create(answer.queryString));
