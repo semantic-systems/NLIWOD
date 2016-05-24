@@ -6,16 +6,14 @@ import java.util.List;
 
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.aksw.qa.commons.datastructure.IQuestion;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.ResultSet;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.query.ResultSet;
 
 public class LoadTest {
 	Logger log = LoggerFactory.getLogger(LoadTest.class);
@@ -24,8 +22,8 @@ public class LoadTest {
 	/**
 	 * Testing all datasets for loadability and validity of SPARQL-queries
 	 */
-	//FIXME do not ignore that but also
-//	@Ignore
+	// FIXME do not ignore that but also
+	// @Ignore
 	public void testAllDatasetsTowardsLoadibility() {
 		Boolean queriesValid = true;
 		for (Dataset d : Dataset.values()) {
@@ -47,25 +45,28 @@ public class LoadTest {
 					Assert.assertNotNull(q.getLanguageToKeywords());
 					Assert.assertTrue(q.toString(), q.getGoldenAnswers() != null);
 					// FIXME sobald wir auf das eigentliche QALD repository
-					// commiten können nimm hier und in QALD 5 den antworttyp "uri" "list" raus
-					// "list" und "uri" sollten vom loader auf URI gemappt werden
+					// commiten können nimm hier und in QALD 5 den antworttyp
+					// "uri" "list" raus
+					// "list" und "uri" sollten vom loader auf URI gemappt
+					// werden
 					// "num" sollte auf number gemappt werden
-//					Assert.assertTrue(q.toString(), q.getAnswerType().matches("resource||uri||list||boolean||number||date||string"));
+					// Assert.assertTrue(q.toString(),
+					// q.getAnswerType().matches("resource||uri||list||boolean||number||date||string"));
 				}
 
 			} catch (Exception e) {
 				log.error("Dataset couldn't be loaded:" + d.name());
 			}
 		}
-		//TODO fix this
-		
-//		Assert.assertTrue(queriesValid);
+		// TODO fix this
+
+		// Assert.assertTrue(queriesValid);
 	}
 
 	@Test
 	public void loadQALD5Test() {
 		List<IQuestion> load = QALD_Loader.load(Dataset.QALD5_Test_Hybrid);
-		log.debug("Size of Dataset: " + load.size() );
+		log.debug("Size of Dataset: " + load.size());
 		Assert.assertTrue(load.size() == 10);
 		for (IQuestion q : load) {
 			Assert.assertTrue(q.getId() > 0);
@@ -104,7 +105,7 @@ public class LoadTest {
 
 	}
 
-	boolean execQuery(IQuestion q, boolean hurry) {
+	boolean execQuery(final IQuestion q, final boolean hurry) {
 
 		Query query = new Query();
 
@@ -121,7 +122,8 @@ public class LoadTest {
 
 			// Execute the query and obtain results
 
-			QueryExecution qe = qef.createQueryExecution(query);
+			QueryExecution qe = qef.createQueryExecution(query.toString());
+
 			if (!q.getGoldenAnswers().isEmpty()) {
 				if (!hurry) {
 					ResultSet results = qe.execSelect();
@@ -139,8 +141,10 @@ public class LoadTest {
 				qe.close();
 			}
 		} catch (Exception e) {
-			//FIXME bereits hier eine Assertion mit Message einbauen sonst sieht man oben nur das das flag false ist aber nicht warum und wieso
-			if (e.getClass() != com.hp.hpl.jena.sparql.resultset.ResultSetException.class) {
+			// FIXME bereits hier eine Assertion mit Message einbauen sonst
+			// sieht man oben nur das das flag false ist aber nicht warum und
+			// wieso
+			if (e.getClass() != org.apache.jena.sparql.resultset.ResultSetException.class) {
 
 				log.debug(q.getSparqlQuery());
 				log.info("Jena error: " + e.toString());
@@ -164,11 +168,11 @@ public class LoadTest {
 		return queryValid;
 	}
 
-	boolean execQuery(IQuestion q) {
+	boolean execQuery(final IQuestion q) {
 		return execQuery(q, false);
 	}
 
-	boolean execQueryWithoutResults(IQuestion q) {
+	boolean execQueryWithoutResults(final IQuestion q) {
 		return execQuery(q, true);
 	}
 }

@@ -38,7 +38,7 @@ import org.xml.sax.SAXException;
 public class QALD_Loader {
 	static Logger log = LoggerFactory.getLogger(QALD_Loader.class);
 
-	private static InputStream getInputStream(Dataset set) {
+	private static InputStream getInputStream(final Dataset set) {
 		// Magical get the path from qa-datasets
 
 		try {
@@ -52,7 +52,7 @@ public class QALD_Loader {
 		return null;
 	}
 
-	private static URL mapDatasetToPath(Dataset set) {
+	private static URL mapDatasetToPath(final Dataset set) {
 		Class<?> loadingAnchor = null;
 		try {
 			loadingAnchor = Class.forName("org.aksw.qa.datasets.ResourceLoadingAnchor");
@@ -143,7 +143,7 @@ public class QALD_Loader {
 		return null;
 	}
 
-	public static List<IQuestion> load(Dataset data) {
+	public static List<IQuestion> load(final Dataset data) {
 		try {
 			InputStream is = null;
 			is = getInputStream(data);
@@ -184,7 +184,7 @@ public class QALD_Loader {
 
 				case QALD5_Test_Hybrid:
 				case QALD5_Train_Hybrid:
-					hybrid = new ArrayList<IQuestion>();
+					hybrid = new ArrayList<>();
 					loadedQ = loadXML(is);
 					for (IQuestion q : loadedQ) {
 						if (q.getHybrid()) {
@@ -196,7 +196,7 @@ public class QALD_Loader {
 
 				case QALD5_Test_Multilingual:
 				case QALD5_Train_Multilingual:
-					hybrid = new ArrayList<IQuestion>();
+					hybrid = new ArrayList<>();
 					loadedQ = loadXML(is);
 					for (IQuestion q : loadedQ) {
 						if (!q.getHybrid()) {
@@ -234,8 +234,8 @@ public class QALD_Loader {
 	 * @param file
 	 * @return
 	 */
-	public static List<IQuestion> loadXML(InputStream file) {
-		List<IQuestion> questions = new ArrayList<IQuestion>();
+	public static List<IQuestion> loadXML(final InputStream file) {
+		List<IQuestion> questions = new ArrayList<>();
 
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -298,7 +298,7 @@ public class QALD_Loader {
 				}
 				// Read answers
 				NodeList answers = questionNode.getElementsByTagName("answers");
-				HashSet<String> set = new HashSet<String>();
+				HashSet<String> set = new HashSet<>();
 				for (int j = 0; j < answers.getLength(); j++) {
 					NodeList answer = ((Element) answers.item(j)).getElementsByTagName("answer");
 					for (int k = 0; k < answer.getLength(); k++) {
@@ -330,9 +330,9 @@ public class QALD_Loader {
 	 * @param file
 	 * @return
 	 */
-	public static List<IQuestion> loadJSON(InputStream file) {
+	public static List<IQuestion> loadJSON(final InputStream file) {
 		// TODO Catch exceptions
-		List<IQuestion> output = new ArrayList<IQuestion>();
+		List<IQuestion> output = new ArrayList<>();
 		try {
 			JsonReader jsonReader = Json.createReader(file);
 			JsonObject mainJsonObject = jsonReader.readObject();
@@ -379,7 +379,7 @@ public class QALD_Loader {
 					JsonObject headObject = answerListHead.getJsonObject("head");
 					JsonArray vars = headObject.getJsonArray("vars");
 
-					Set<String> answers = new HashSet<String>();
+					Set<String> answers = new HashSet<>();
 					if (!answerList.isEmpty()) {
 						JsonObject answerObject = answerList.getJsonObject(0);
 						if (answerObject.containsKey("boolean")) {
@@ -416,7 +416,7 @@ public class QALD_Loader {
 		 */
 		boolean printHappend = false;
 		String message = "";
-		List<IQuestion> emptyQuestions = new ArrayList<IQuestion>();
+		List<IQuestion> emptyQuestions = new ArrayList<>();
 		for (IQuestion k : output) {
 			if (k.getGoldenAnswers().isEmpty()) {
 				emptyQuestions.add(k);
@@ -434,10 +434,10 @@ public class QALD_Loader {
 		return output;
 	}
 
-	public static List<IQuestion> loadNLQ(InputStream file) {
+	public static List<IQuestion> loadNLQ(final InputStream file) {
 
-		List<IQuestion> output = new ArrayList<IQuestion>();
-		HashMap<Integer, ArrayList<JsonObject>> idToQuestion = new HashMap<Integer, ArrayList<JsonObject>>();
+		List<IQuestion> output = new ArrayList<>();
+		HashMap<Integer, ArrayList<JsonObject>> idToQuestion = new HashMap<>();
 		try {
 			if (file.available() > 0) // check if stream is not empty
 			{
@@ -451,7 +451,7 @@ public class QALD_Loader {
 						if (idToQuestion.containsKey(id)) {
 							idToQuestion.get(id).add(currentObject);
 						} else {
-							ArrayList<JsonObject> jArray = new ArrayList<JsonObject>();
+							ArrayList<JsonObject> jArray = new ArrayList<>();
 							jArray.add(currentObject);
 							idToQuestion.put(id, jArray);
 						}
@@ -479,7 +479,7 @@ public class QALD_Loader {
 
 				q.getLanguageToQuestion().put(lang, questiion);
 				q.setSparqlQuery(lang, sparql);
-				Set<String> answ = new HashSet<String>();
+				Set<String> answ = new HashSet<>();
 				answ.add(answer);
 				q.setGoldenAnswers(lang, answ);
 			}
@@ -489,7 +489,7 @@ public class QALD_Loader {
 		return output;
 	}
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		for (Dataset data : Dataset.values()) {
 			List<IQuestion> questions = load(data);
 			if (questions == null) {
