@@ -20,11 +20,11 @@
 			<name>Apache Repository</name>
 			<url>http://repo.maven.apache.org/maven2</url>
 		</repository>
-		<repository>
-			<id>eclipse</id>
-			<name>Eclipse Maven Repository</name>
-			<url>http://maven.eclipse.org/nexus/content/groups/maven-central</url>
-		</repository>
+<!-- 		<repository> -->
+<!-- 			<id>eclipse</id> -->
+<!-- 			<name>Eclipse Maven Repository</name> -->
+<!-- 			<url>http://maven.eclipse.org/nexus/content/groups/maven-central</url> -->
+<!-- 		</repository> -->
 		<repository>
 			<id>maven.aksw.internal</id>
 			<name>University Leipzig, AKSW Maven2 Repository</name>
@@ -72,15 +72,38 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
-			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>exec-maven-plugin</artifactId> 
-				<configuration> <executable>java</executable> <arguments> <argument>-Xms512m</argument> 
-				<argument>-Xmx6G</argument> <argument>-XX:NewRatio=3</argument> <argument>-XX:+PrintGCTimeStamps</argument> 
-				<argument>-XX:+PrintGCDetails</argument> <argument>-Xloggc:gc.log</argument> 
-				<argument>-classpath</argument> <classpath /> <argument>org.aksw.hawk.controller.Pipeline</argument> 
-				</arguments> </configuration> </plugin> <plugin> <artifactId>maven-assembly-plugin</artifactId> 
-				<version>2.4</version> <configuration> <descriptorRefs> <descriptorRef>jar-with-dependencies</descriptorRef> 
-				</descriptorRefs> <archive> <manifest> <mainClass>org.aksw.hawk.controller.PipelineController_QALD4</mainClass> 
-				</manifest> </archive> </configuration> </plugin> -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<configuration>
+					<executable>java</executable>
+					<arguments>
+						<argument>-Xms512m</argument>
+						<argument>-Xmx6G</argument>
+						<argument>-XX:NewRatio=3</argument>
+						<argument>-XX:+PrintGCTimeStamps</argument>
+						<argument>-XX:+PrintGCDetails</argument>
+						<argument>-Xloggc:gc.log</argument>
+						<argument>-classpath</argument>
+						<classpath />
+						<argument>org.aksw.hawk.experiment.QALD6_Pipeline</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+<!-- 			<plugin> -->
+<!-- 				<artifactId>maven-assembly-plugin</artifactId> -->
+<!-- 				<version>2.4</version> -->
+<!-- 				<configuration> -->
+<!-- 					<descriptorRefs> -->
+<!-- 						<descriptorRef>jar-with-dependencies</descriptorRef> -->
+<!-- 					</descriptorRefs> -->
+<!-- 					<archive> -->
+<!-- 						<manifest> -->
+<!-- 							<mainClass>org.aksw.hawk.controller.PipelineController_QALD4</mainClass> -->
+<!-- 						</manifest> -->
+<!-- 					</archive> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
 		</plugins>
 
 
