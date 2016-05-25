@@ -1,0 +1,4 @@
+kilometers	1000	m
+kilometer	1000	m
+centimeter	0.01	m
+cm	0.01	m
