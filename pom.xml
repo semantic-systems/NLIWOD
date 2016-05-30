@@ -20,11 +20,11 @@
 			<name>Apache Repository</name>
 			<url>http://repo.maven.apache.org/maven2</url>
 		</repository>
-<!-- 		<repository> -->
-<!-- 			<id>eclipse</id> -->
-<!-- 			<name>Eclipse Maven Repository</name> -->
-<!-- 			<url>http://maven.eclipse.org/nexus/content/groups/maven-central</url> -->
-<!-- 		</repository> -->
+		<!-- <repository> -->
+		<!-- <id>eclipse</id> -->
+		<!-- <name>Eclipse Maven Repository</name> -->
+		<!-- <url>http://maven.eclipse.org/nexus/content/groups/maven-central</url> -->
+		<!-- </repository> -->
 		<repository>
 			<id>maven.aksw.internal</id>
 			<name>University Leipzig, AKSW Maven2 Repository</name>
@@ -90,20 +90,20 @@
 					</arguments>
 				</configuration>
 			</plugin>
-<!-- 			<plugin> -->
-<!-- 				<artifactId>maven-assembly-plugin</artifactId> -->
-<!-- 				<version>2.4</version> -->
-<!-- 				<configuration> -->
-<!-- 					<descriptorRefs> -->
-<!-- 						<descriptorRef>jar-with-dependencies</descriptorRef> -->
-<!-- 					</descriptorRefs> -->
-<!-- 					<archive> -->
-<!-- 						<manifest> -->
-<!-- 							<mainClass>org.aksw.hawk.controller.PipelineController_QALD4</mainClass> -->
-<!-- 						</manifest> -->
-<!-- 					</archive> -->
-<!-- 				</configuration> -->
-<!-- 			</plugin> -->
+			<!-- <plugin> -->
+			<!-- <artifactId>maven-assembly-plugin</artifactId> -->
+			<!-- <version>2.4</version> -->
+			<!-- <configuration> -->
+			<!-- <descriptorRefs> -->
+			<!-- <descriptorRef>jar-with-dependencies</descriptorRef> -->
+			<!-- </descriptorRefs> -->
+			<!-- <archive> -->
+			<!-- <manifest> -->
+			<!-- <mainClass>org.aksw.hawk.controller.PipelineController_QALD4</mainClass> -->
+			<!-- </manifest> -->
+			<!-- </archive> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
 		</plugins>
 
 
@@ -148,7 +148,12 @@
 			<artifactId>lucene-analyzers-common</artifactId>
 			<version>${lucene.version}</version>
 		</dependency>
-
+		<!-- NIF document creator for testing spotter -->
+		<dependency>
+			<groupId>org.aksw</groupId>
+			<artifactId>gerbil.nif.transfer</artifactId>
+			<version>1.2.0</version>
+		</dependency>
 		<!-- Sparql -->
 		<dependency>
 			<groupId>org.aksw.jena-sparql-api</groupId>
