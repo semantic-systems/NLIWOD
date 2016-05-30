@@ -7,10 +7,10 @@ import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTreePruner;
 import org.aksw.hawk.nlp.SentenceToSequence;
-import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
+import org.aksw.hawk.spotter.Fox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

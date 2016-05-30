@@ -1,4 +1,4 @@
-package org.aksw.hawk.nlp.spotter;
+package org.aksw.hawk.spotter;
 
 import java.io.IOException;
 import java.io.InputStream;

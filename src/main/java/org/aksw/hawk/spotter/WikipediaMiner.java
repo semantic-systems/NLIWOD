@@ -1,4 +1,4 @@
-package org.aksw.hawk.nlp.spotter;
+package org.aksw.hawk.spotter;
 
 // wikipedia miner is discontinued.
 //public class WikipediaMiner extends ASpotter {
