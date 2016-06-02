@@ -7,8 +7,9 @@
 		<version>0.0.1</version>
 		<relativePath>..</relativePath>
 	</parent>
-	<artifactId>qa.systems</artifactId>
-	<version>0.0.2</version>
+	<groupId>org.aksw.qa</groupId>
+	<artifactId>systems</artifactId>
+	<version>0.0.3-SNAPSHOT</version>
 	
 	<!-- DEPENDENCIES -->
 	<dependencies>
