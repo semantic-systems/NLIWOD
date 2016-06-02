@@ -1,0 +1,3589 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix itsrdf: <http://www.w3.org/2005/11/its/rdf#> .
+@prefix nif:   <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://example.org/document243#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Oceanography> .
+
+<http://example.org/document178#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Chemist> .
+
+<http://example.org/document173#char=0,45>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "45"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many children did Benjamin Franklin have?"^^xsd:string ;
+        nif:topic       <http://example.org/document173#annotation0> .
+
+<http://example.org/document24#char=0,50>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "50"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which mountain is the highest after the Annapurna?"^^xsd:string ;
+        nif:topic       <http://example.org/document24#annotation0> .
+
+<http://example.org/document144#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Weser> .
+
+<http://example.org/document143#char=0,46>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "46"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all breeds of the German Shepherd dog."^^xsd:string ;
+        nif:topic       <http://example.org/document143#annotation0> .
+
+<http://example.org/document332#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/FIFA> .
+
+<http://example.org/document267#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/RMS_Titanic> .
+
+<http://example.org/document25#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Garry_Marshall> .
+
+<http://example.org/document233#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Himalayas> .
+
+<http://example.org/document20#char=0,33>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "33"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many employees does IBM have?"^^xsd:string ;
+        nif:topic       <http://example.org/document20#annotation0> .
+
+<http://example.org/document232#char=0,64>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "64"^^xsd:nonNegativeInteger ;
+        nif:isString    "In which countries can you pay using the West African CFA franc?"^^xsd:string ;
+        nif:topic       <http://example.org/document232#annotation0> .
+
+<http://example.org/document300#char=0,42>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "42"^^xsd:nonNegativeInteger ;
+        nif:isString    "In which city does the Chile Route 68 end?"^^xsd:string ;
+        nif:topic       <http://example.org/document300#annotation0> .
+
+<http://example.org/document169#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Nobel_Prize_in_Physics> .
+
+<http://example.org/document168#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Google> .
+
+<http://example.org/document158#char=0,40>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "40"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the time zone of Salt Lake City?"^^xsd:string ;
+        nif:topic       <http://example.org/document158#annotation0> .
+
+<http://example.org/document297#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "Where in France is sparkling wine produced?"^^xsd:string ;
+        nif:topic       <http://example.org/document297#annotation1> , <http://example.org/document297#annotation0> .
+
+<http://example.org/document132#char=0,31>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "31"^^xsd:nonNegativeInteger ;
+        nif:isString    "How often did Jane Fonda marry?"^^xsd:string ;
+        nif:topic       <http://example.org/document132#annotation0> .
+
+<http://example.org/document134#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/T._E._Lawrence> .
+
+<http://example.org/document71#char=0,59>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "59"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all video games published by Mean Hamster Software."^^xsd:string ;
+        nif:topic       <http://example.org/document71#annotation0> .
+
+<http://example.org/document309#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many children does Eddie Murphy have?"^^xsd:string ;
+        nif:topic       <http://example.org/document309#annotation0> .
+
+<http://example.org/document68#char=0,34>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "34"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which actors were born in Germany?"^^xsd:string ;
+        nif:topic       <http://example.org/document68#annotation0> .
+
+<http://example.org/document49#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Advertising> .
+
+<http://example.org/document324#annotation2>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/TUI_Travel> .
+
+<http://example.org/document15#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Goofy> .
+
+<http://example.org/document347#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Queen_Victoria> .
+
+<http://example.org/document280#char=0,51>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "51"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the total population of Melbourne, Florida?"^^xsd:string ;
+        nif:topic       <http://example.org/document280#annotation0> .
+
+<http://example.org/document170#char=0,37>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "37"^^xsd:nonNegativeInteger ;
+        nif:isString    "Is Rita Wilson the wife of Tom Hanks?"^^xsd:string ;
+        nif:topic       <http://example.org/document170#annotation1> , <http://example.org/document170#annotation0> .
+
+<http://example.org/document223#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Abraham_Lincoln> .
+
+<http://example.org/document185#char=0,49>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "49"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many people live in the capital of Australia?"^^xsd:string ;
+        nif:topic       <http://example.org/document185#annotation0> .
+
+<http://example.org/document158#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Salt_Lake_City> .
+
+<http://example.org/document77#char=0,51>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "51"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which music albums contain the song Last Christmas?"^^xsd:string .
+
+<http://example.org/document163#char=0,26>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "26"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all Danish movies."^^xsd:string ;
+        nif:topic       <http://example.org/document163#annotation0> .
+
+<http://example.org/document93#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Natalie_Portman> .
+
+<http://example.org/document21#char=0,29>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "29"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which states border Illinois?"^^xsd:string ;
+        nif:topic       <http://example.org/document21#annotation0> .
+
+<http://example.org/document124#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Elizabeth_II> .
+
+<http://example.org/document39#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Battle_of_Gettysburg> .
+
+<http://example.org/document337#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Italy> .
+
+<http://example.org/document13#char=0,35>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "35"^^xsd:nonNegativeInteger ;
+        nif:isString    "Are tree frogs a type of amphibian?"^^xsd:string ;
+        nif:topic       <http://example.org/document13#annotation1> , <http://example.org/document13#annotation0> .
+
+<http://example.org/document213#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Carrot_cake> .
+
+<http://example.org/document200#char=0,22>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "22"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who produces Orangina?"^^xsd:string ;
+        nif:topic       <http://example.org/document200#annotation0> .
+
+<http://example.org/document148#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Secret_Intelligence_Service> .
+
+<http://example.org/document82#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/GIMP> .
+
+<http://example.org/document303#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Pulitzer_Prize> .
+
+<http://example.org/document109#char=0,52>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "52"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me a list of all bandleaders that play trumpet."^^xsd:string ;
+        nif:topic       <http://example.org/document109#annotation1> , <http://example.org/document109#annotation0> .
+
+<http://example.org/document22#char=0,38>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "38"^^xsd:nonNegativeInteger ;
+        nif:isString    "In which country is the Limerick Lake?"^^xsd:string ;
+        nif:topic       <http://example.org/document22#annotation0> .
+
+<http://example.org/document114#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/The_Prodigy> .
+
+<http://example.org/document290#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Melon_de_Bourgogne> .
+
+<http://example.org/document29#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Douglas_Hofstadter> .
+
+<http://example.org/document1#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Russia> .
+
+<http://example.org/document215#char=0,35>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "35"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who has Tom Cruise been married to?"^^xsd:string ;
+        nif:topic       <http://example.org/document215#annotation0> .
+
+<http://example.org/document228#char=0,56>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "56"^^xsd:nonNegativeInteger ;
+        nif:isString    "What was Brazil's lowest rank in the FIFA World Ranking?"^^xsd:string ;
+        nif:topic       <http://example.org/document228#annotation0> .
+
+<http://example.org/document54#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who was the wife of U.S. president Lincoln?"^^xsd:string ;
+        nif:topic       <http://example.org/document54#annotation0> .
+
+<http://example.org/document327#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Musician> .
+
+<http://example.org/document138#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Maribor> .
+
+<http://example.org/document72#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Estonia> .
+
+<http://example.org/document331#char=0,32>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "32"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the net income of Apple?"^^xsd:string ;
+        nif:topic       <http://example.org/document331#annotation0> .
+
+<http://example.org/document121#char=0,30>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "30"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the capital of Canada?"^^xsd:string ;
+        nif:topic       <http://example.org/document121#annotation0> .
+
+<http://example.org/document229#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Metalcore> .
+
+<http://example.org/document228#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Brazil_national_football_team> .
+
+<http://example.org/document270#char=0,33>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "33"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who played Agent Smith in Matrix?"^^xsd:string ;
+        nif:topic       <http://example.org/document270#annotation0> .
+
+<http://example.org/document217#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the bridge with the longest span?"^^xsd:string .
+
+<http://example.org/document104#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/VU_University_Amsterdam> .
+
+<http://example.org/document19#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Egypt> .
+
+<http://example.org/document155#char=0,45>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "45"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which Greek goddesses dwelt on Mount Olympus?"^^xsd:string ;
+        nif:topic       <http://example.org/document155#annotation0> .
+
+<http://example.org/document181#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Viking_Press> .
+
+<http://example.org/document317#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Spain> .
+
+<http://example.org/document139#char=0,32>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "32"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all companies in Munich."^^xsd:string ;
+        nif:topic       <http://example.org/document139#annotation0> .
+
+<http://example.org/document271#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Peanut_butter> .
+
+<http://example.org/document306#char=0,46>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "46"^^xsd:nonNegativeInteger ;
+        nif:isString    "Did Arnold Schwarzenegger attend a university?"^^xsd:string ;
+        nif:topic       <http://example.org/document306#annotation0> .
+
+<http://example.org/document48#char=0,28>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "28"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the editor of Forbes?"^^xsd:string ;
+        nif:topic       <http://example.org/document48#annotation0> .
+
+<http://example.org/document58#char=0,28>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "28"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who produced the most films?"^^xsd:string .
+
+<http://example.org/document62#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Wikipedia> .
+
+<http://example.org/document218#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Steven_Spielberg> .
+
+<http://example.org/document208#char=0,37>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "37"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which rivers flow into a German lake?"^^xsd:string ;
+        nif:topic       <http://example.org/document208#annotation0> .
+
+<http://example.org/document19#char=0,40>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "40"^^xsd:nonNegativeInteger ;
+        nif:isString    "Is Egypts largest city also its capital?"^^xsd:string ;
+        nif:topic       <http://example.org/document19#annotation0> .
+
+<http://example.org/document87#char=0,44>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "44"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who wrote the book The Pillars of the Earth?"^^xsd:string ;
+        nif:topic       <http://example.org/document87#annotation0> .
+
+<http://example.org/document191#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which U.S. state has the abbreviation MN?"^^xsd:string .
+
+<http://example.org/document29#char=0,40>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "40"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which awards did Douglas Hofstadter win?"^^xsd:string ;
+        nif:topic       <http://example.org/document29#annotation0> .
+
+<http://example.org/document119#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Vienna> .
+
+<http://example.org/document32#char=0,33>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "33"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which countries adopted the Euro?"^^xsd:string ;
+        nif:topic       <http://example.org/document32#annotation0> .
+
+<http://example.org/document295#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Jacques_Chirac> .
+
+<http://example.org/document302#char=0,29>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "29"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all Swedish holidays."^^xsd:string ;
+        nif:topic       <http://example.org/document302#annotation0> .
+
+<http://example.org/document171#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Statue_of_Liberty> .
+
+<http://example.org/document38#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which politicians were married to a German?"^^xsd:string ;
+        nif:topic       <http://example.org/document38#annotation0> .
+
+<http://example.org/document308#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Democratic_Party_(United_States)> .
+
+<http://example.org/document307#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Perl> .
+
+<http://example.org/document261#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Mount_Everest> .
+
+<http://example.org/document193#char=0,33>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "33"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which movies did Kurosawa direct?"^^xsd:string ;
+        nif:topic       <http://example.org/document193#annotation0> .
+
+<http://example.org/document196#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Ramones> .
+
+<http://example.org/document74#char=0,70>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "70"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which capitals in Europe were host cities of the summer olympic games?"^^xsd:string .
+
+<http://example.org/document208#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Germany> .
+
+<http://example.org/document162#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Aristotle> .
+
+<http://example.org/document109#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Trumpet> .
+
+<http://example.org/document282#char=0,38>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "38"^^xsd:nonNegativeInteger ;
+        nif:isString    "In which year was Rachel Stevens born?"^^xsd:string ;
+        nif:topic       <http://example.org/document282#annotation0> .
+
+<http://example.org/document285#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Manhattan_Project> .
+
+<http://example.org/document223#char=0,50>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "50"^^xsd:nonNegativeInteger ;
+        nif:isString    "Does Abraham Lincoln's death place have a website?"^^xsd:string ;
+        nif:topic       <http://example.org/document223#annotation0> .
+
+<http://example.org/document186#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Australia> .
+
+<http://example.org/document174#char=0,29>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "29"^^xsd:nonNegativeInteger ;
+        nif:isString    "When did Michael Jackson die?"^^xsd:string ;
+        nif:topic       <http://example.org/document174#annotation0> .
+
+<http://example.org/document165#char=0,40>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "40"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which instruments does Cat Stevens play?"^^xsd:string ;
+        nif:topic       <http://example.org/document165#annotation0> .
+
+<http://example.org/document181#char=0,54>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "54"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which books by Kerouac were published by Viking Press?"^^xsd:string ;
+        nif:topic       <http://example.org/document181#annotation1> , <http://example.org/document181#annotation0> .
+
+<http://example.org/document319#char=0,30>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "30"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me the currency of China."^^xsd:string ;
+        nif:topic       <http://example.org/document319#annotation0> .
+
+<http://example.org/document287#char=0,33>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "33"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which beer originated in Ireland?"^^xsd:string ;
+        nif:topic       <http://example.org/document287#annotation0> .
+
+<http://example.org/document275#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Count_Dracula> .
+
+<http://example.org/document33#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Berlin> .
+
+<http://example.org/document125#char=0,42>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "42"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which U.S. state has been admitted latest?"^^xsd:string .
+
+<http://example.org/document247#char=0,34>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "34"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all actors called Baldwin."^^xsd:string ;
+        nif:topic       <http://example.org/document247#annotation0> .
+
+<http://example.org/document189#char=0,56>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "56"^^xsd:nonNegativeInteger ;
+        nif:isString    "In which city was the former Dutch queen Juliana buried?"^^xsd:string ;
+        nif:topic       <http://example.org/document189#annotation0> .
+
+<http://example.org/document157#char=0,33>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "33"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all Apollo 14 astronauts."^^xsd:string ;
+        nif:topic       <http://example.org/document157#annotation0> .
+
+<http://example.org/document196#char=0,35>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "35"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all B-sides of the Ramones."^^xsd:string ;
+        nif:topic       <http://example.org/document196#annotation0> .
+
+<http://example.org/document241#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Nobel_Prize_in_Literature> .
+
+<http://example.org/document176#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Margaret_Thatcher> .
+
+<http://example.org/document334#char=0,47>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "47"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which museum in New York has the most visitors?"^^xsd:string ;
+        nif:topic       <http://example.org/document334#annotation0> .
+
+<http://example.org/document327#char=0,36>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "36"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which musician wrote the most books?"^^xsd:string ;
+        nif:topic       <http://example.org/document327#annotation0> .
+
+<http://example.org/document120#char=0,27>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "27"^^xsd:nonNegativeInteger ;
+        nif:isString    "How tall is Michael Jordan?"^^xsd:string ;
+        nif:topic       <http://example.org/document120#annotation0> .
+
+<http://example.org/document142#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Amanda_Palmer> .
+
+<http://example.org/document301#char=0,27>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "27"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all ESA astronauts."^^xsd:string ;
+        nif:topic       <http://example.org/document301#annotation0> .
+
+<http://example.org/document298#char=0,28>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "28"^^xsd:nonNegativeInteger ;
+        nif:isString    "Where did Hillel Slovak die?"^^xsd:string ;
+        nif:topic       <http://example.org/document298#annotation0> .
+
+<http://example.org/document57#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/The_Sopranos> .
+
+<http://example.org/document146#char=0,50>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "50"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which professional surfers were born in Australia?"^^xsd:string ;
+        nif:topic       <http://example.org/document146#annotation1> , <http://example.org/document146#annotation0> .
+
+<http://example.org/document9#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Mount_McKinley> .
+
+<http://example.org/document195#char=0,52>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "52"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who wrote the lyrics for the Polish national anthem?"^^xsd:string ;
+        nif:topic       <http://example.org/document195#annotation0> .
+
+<http://example.org/document220#char=0,42>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "42"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which actor was casted in the most movies?"^^xsd:string .
+
+<http://example.org/document273#char=0,30>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "30"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which bridges cross the Seine?"^^xsd:string ;
+        nif:topic       <http://example.org/document273#annotation0> .
+
+<http://example.org/document265#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Leonard_Bernstein> .
+
+<http://example.org/document113#char=0,49>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "49"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the youngest player in the Premier League?"^^xsd:string ;
+        nif:topic       <http://example.org/document113#annotation0> .
+
+<http://example.org/document23#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/John_Cleese> .
+
+<http://example.org/document265#char=0,54>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "54"^^xsd:nonNegativeInteger ;
+        nif:isString    "List all the musicals with music by Leonard Bernstein."^^xsd:string ;
+        nif:topic       <http://example.org/document265#annotation0> .
+
+<http://example.org/document231#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Canada> .
+
+<http://example.org/document166#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Benjamin_Franklin> .
+
+<http://example.org/document197#char=0,44>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "44"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who painted The Storm on the Sea of Galilee?"^^xsd:string ;
+        nif:topic       <http://example.org/document197#annotation0> .
+
+<http://example.org/document55#char=0,47>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "47"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who developed the video game World of Warcraft?"^^xsd:string ;
+        nif:topic       <http://example.org/document55#annotation0> .
+
+<http://example.org/document203#char=0,32>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "32"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which poet wrote the most books?"^^xsd:string ;
+        nif:topic       <http://example.org/document203#annotation0> .
+
+<http://example.org/document321#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Darth_Vader> .
+
+<http://example.org/document133#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Australia> .
+
+<http://example.org/document132#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Jane_Fonda> .
+
+<http://example.org/document47#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Ural_Mountains> .
+
+<http://example.org/document244#char=0,26>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "26"^^xsd:nonNegativeInteger ;
+        nif:isString    "How deep is Lake Chiemsee?"^^xsd:string ;
+        nif:topic       <http://example.org/document244#annotation0> .
+
+<http://example.org/document13#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Hylidae> .
+
+<http://example.org/document160#char=0,39>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "39"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me a list of all lakes in Denmark."^^xsd:string ;
+        nif:topic       <http://example.org/document160#annotation0> .
+
+<http://example.org/document251#char=0,51>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "51"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which companies have more than 1 million employees?"^^xsd:string .
+
+<http://example.org/document345#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Slovenia> .
+
+<http://example.org/document221#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Johann_Sebastian_Bach> .
+
+<http://example.org/document156#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Hells_Angels> .
+
+<http://example.org/document90#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Jack_Wolfskin> .
+
+<http://example.org/document311#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Death_of_John_Lennon> .
+
+<http://example.org/document246#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Baikonur_Cosmodrome> .
+
+<http://example.org/document317#char=0,63>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "63"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is starring in Spanish movies produced by Benicio del Toro?"^^xsd:string ;
+        nif:topic       <http://example.org/document317#annotation1> , <http://example.org/document317#annotation0> .
+
+<http://example.org/document214#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the most frequent cause of death?"^^xsd:string .
+
+<http://example.org/document123#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Prince_Harry> .
+
+<http://example.org/document122#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Wyoming> .
+
+<http://example.org/document44#char=0,33>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "33"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who designed the Brooklyn Bridge?"^^xsd:string ;
+        nif:topic       <http://example.org/document44#annotation0> .
+
+<http://example.org/document221#char=0,20>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "20"^^xsd:nonNegativeInteger ;
+        nif:isString    "Where was Bach born?"^^xsd:string ;
+        nif:topic       <http://example.org/document221#annotation0> .
+
+<http://example.org/document234#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who was the first to climb Mount Everest?"^^xsd:string ;
+        nif:topic       <http://example.org/document234#annotation0> .
+
+<http://example.org/document37#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Latvia> .
+
+<http://example.org/document159#char=0,52>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "52"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which U.S. states are in the same time zone as Utah?"^^xsd:string ;
+        nif:topic       <http://example.org/document159#annotation0> .
+
+<http://example.org/document72#char=0,38>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "38"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which languages are spoken in Estonia?"^^xsd:string ;
+        nif:topic       <http://example.org/document72#annotation0> .
+
+<http://example.org/document140#char=0,22>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "22"^^xsd:nonNegativeInteger ;
+        nif:isString    "List all games by GMT."^^xsd:string ;
+        nif:topic       <http://example.org/document140#annotation0> .
+
+<http://example.org/document336#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Dessert> .
+
+<http://example.org/document335#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Lake_Baikal> .
+
+<http://example.org/document207#char=0,31>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "31"^^xsd:nonNegativeInteger ;
+        nif:isString    "Does the Isar flow into a lake?"^^xsd:string ;
+        nif:topic       <http://example.org/document207#annotation0> .
+
+<http://example.org/document146#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Australia> .
+
+<http://example.org/document80#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Grunge> .
+
+<http://example.org/document301#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/European_Space_Agency> .
+
+<http://example.org/document236#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Pope_John_Paul_II> .
+
+<http://example.org/document294#char=0,38>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "38"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all types of eating disorders."^^xsd:string .
+
+<http://example.org/document23#char=0,51>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "51"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which television shows were created by John Cleese?"^^xsd:string ;
+        nif:topic       <http://example.org/document23#annotation0> .
+
+<http://example.org/document225#char=0,69>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "69"^^xsd:nonNegativeInteger ;
+        nif:isString    "What are the top-10 action role-playing video games according to IGN?"^^xsd:string ;
+        nif:topic       <http://example.org/document225#annotation0> .
+
+<http://example.org/document248#char=0,25>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "25"^^xsd:nonNegativeInteger ;
+        nif:isString    "What does ICRO stand for?"^^xsd:string .
+
+<http://example.org/document27#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Andrew_Jackson> .
+
+<http://example.org/document202#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Colombia> .
+
+<http://example.org/document274#char=0,52>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "52"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the mayor of the capital of French Polynesia?"^^xsd:string ;
+        nif:topic       <http://example.org/document274#annotation0> .
+
+<http://example.org/document308#char=0,27>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "27"^^xsd:nonNegativeInteger ;
+        nif:isString    "Is Barack Obama a democrat?"^^xsd:string ;
+        nif:topic       <http://example.org/document308#annotation1> , <http://example.org/document308#annotation0> .
+
+<http://example.org/document291#char=0,31>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "31"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who was influenced by Socrates?"^^xsd:string ;
+        nif:topic       <http://example.org/document291#annotation0> .
+
+<http://example.org/document67#char=0,66>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "66"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me the websites of companies with more than 500000 employees."^^xsd:string .
+
+<http://example.org/document325#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Star_Alliance> .
+
+<http://example.org/document28#char=0,32>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "32"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all communist countries."^^xsd:string ;
+        nif:topic       <http://example.org/document28#annotation0> .
+
+<http://example.org/document63#char=0,48>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "48"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all actors starring in Last Action Hero."^^xsd:string ;
+        nif:topic       <http://example.org/document63#annotation0> .
+
+<http://example.org/document57#char=0,80>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "80"^^xsd:nonNegativeInteger ;
+        nif:isString    "List all episodes of the first season of the HBO television series The Sopranos."^^xsd:string ;
+        nif:topic       <http://example.org/document57#annotation0> .
+
+<http://example.org/document70#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Hal_Roach> .
+
+<http://example.org/document226#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Berlin> .
+
+<http://example.org/document76#char=0,37>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "37"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many films did Hal Roach produce?"^^xsd:string ;
+        nif:topic       <http://example.org/document76#annotation0> .
+
+<http://example.org/document102#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/John_F._Kennedy> .
+
+<http://example.org/document253#char=0,24>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "24"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who was called Rodzilla?"^^xsd:string .
+
+<http://example.org/document237#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "What was the last movie with Alec Guinness?"^^xsd:string ;
+        nif:topic       <http://example.org/document237#annotation0> .
+
+<http://example.org/document350#char=0,37>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "37"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the tallest basketball player?"^^xsd:string .
+
+<http://example.org/document127#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Butch_Otter> .
+
+<http://example.org/document349#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Japan> .
+
+<http://example.org/document129#char=0,66>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "66"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all actors starring in movies directed by William Shatner."^^xsd:string ;
+        nif:topic       <http://example.org/document129#annotation0> .
+
+<http://example.org/document40#char=0,42>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "42"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the highest mountain in Australia?"^^xsd:string ;
+        nif:topic       <http://example.org/document40#annotation0> .
+
+<http://example.org/document168#char=0,36>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "36"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many employees does Google have?"^^xsd:string ;
+        nif:topic       <http://example.org/document168#annotation0> .
+
+<http://example.org/document60#char=0,42>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "42"^^xsd:nonNegativeInteger ;
+        nif:isString    "Is there a video game called Battle Chess?"^^xsd:string .
+
+<http://example.org/document36#char=0,52>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "52"^^xsd:nonNegativeInteger ;
+        nif:isString    "Through which countries does the Yenisei river flow?"^^xsd:string ;
+        nif:topic       <http://example.org/document36#annotation0> .
+
+<http://example.org/document315#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Ivy_League> .
+
+<http://example.org/document175#char=0,61>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "61"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which Chess players died in the same place they were born in?"^^xsd:string .
+
+<http://example.org/document59#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all people with first name Jimmy."^^xsd:string .
+
+<http://example.org/document1#char=0,23>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "23"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all cosmonauts."^^xsd:string ;
+        nif:topic       <http://example.org/document1#annotation1> , <http://example.org/document1#annotation0> .
+
+<http://example.org/document216#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Atlanta_Falcons> .
+
+<http://example.org/document170#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Tom_Hanks> .
+
+<http://example.org/document85#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Julia_Roberts> .
+
+<http://example.org/document117#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Germany> .
+
+<http://example.org/document218#char=0,85>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "85"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all films produced by Steven Spielberg with a budget of at least $80 million."^^xsd:string ;
+        nif:topic       <http://example.org/document218#annotation0> .
+
+<http://example.org/document293#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Lovesick> .
+
+<http://example.org/document3#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Robert_F._Kennedy> .
+
+<http://example.org/document5#char=0,39>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "39"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many countries are there in Europe?"^^xsd:string .
+
+<http://example.org/document194#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Pilsner_Urquell> .
+
+<http://example.org/document206#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Olof_Palme> .
+
+<http://example.org/document69#char=0,39>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "39"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which caves have more than 3 entrances?"^^xsd:string .
+
+<http://example.org/document160#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Denmark> .
+
+<http://example.org/document288#char=0,49>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "49"^^xsd:nonNegativeInteger ;
+        nif:isString    "What are the specialities of the UNC Health Care?"^^xsd:string ;
+        nif:topic       <http://example.org/document288#annotation0> .
+
+<http://example.org/document51#char=0,52>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "52"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all libraries established earlier than 1400."^^xsd:string .
+
+<http://example.org/document107#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Alberta> .
+
+<http://example.org/document284#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Politician> .
+
+<http://example.org/document283#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/John_F._Kennedy> .
+
+<http://example.org/document41#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Spain> .
+
+<http://example.org/document82#char=0,46>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "46"^^xsd:nonNegativeInteger ;
+        nif:isString    "In which programming language is GIMP written?"^^xsd:string ;
+        nif:topic       <http://example.org/document82#annotation0> .
+
+<http://example.org/document326#char=0,42>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "42"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all spacecrafts that flew to Mars."^^xsd:string ;
+        nif:topic       <http://example.org/document326#annotation0> .
+
+<http://example.org/document320#char=0,65>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "65"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which movies starring Mickey Rourke were directed by Guy Ritchie?"^^xsd:string ;
+        nif:topic       <http://example.org/document320#annotation1> , <http://example.org/document320#annotation0> .
+
+<http://example.org/document184#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Batman> .
+
+<http://example.org/document242#char=0,55>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "55"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the official color of the University of Oxford?"^^xsd:string ;
+        nif:topic       <http://example.org/document242#annotation0> .
+
+<http://example.org/document7#char=0,46>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "46"^^xsd:nonNegativeInteger ;
+        nif:isString    "Was the wife of president Lincoln called Mary?"^^xsd:string ;
+        nif:topic       <http://example.org/document7#annotation0> .
+
+<http://example.org/document150#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Cuban_Missile_Crisis> .
+
+<http://example.org/document25#char=0,69>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "69"^^xsd:nonNegativeInteger ;
+        nif:isString    "In which films directed by Garry Marshall was Julia Roberts starring?"^^xsd:string ;
+        nif:topic       <http://example.org/document25#annotation1> , <http://example.org/document25#annotation0> .
+
+<http://example.org/document145#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which countries are connected by the Rhine?"^^xsd:string ;
+        nif:topic       <http://example.org/document145#annotation0> .
+
+<http://example.org/document66#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Velvet_Goldmine> .
+
+<http://example.org/document65#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Medicine> .
+
+<http://example.org/document273#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Seine> .
+
+<http://example.org/document31#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Czech_Republic> .
+
+<http://example.org/document286#char=0,38>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "38"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the highest volcano in Africa?"^^xsd:string .
+
+<http://example.org/document298#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Hillel_Slovak> .
+
+<http://example.org/document315#char=0,60>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "60"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many scientists graduated from an Ivy League university?"^^xsd:string ;
+        nif:topic       <http://example.org/document315#annotation0> .
+
+<http://example.org/document174#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Michael_Jackson> .
+
+<http://example.org/document8#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Social_Democratic_Party_of_Germany> .
+
+<http://example.org/document89#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Premier_League> .
+
+<http://example.org/document337#char=0,38>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "38"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the highest mountain in Italy?"^^xsd:string ;
+        nif:topic       <http://example.org/document337#annotation0> .
+
+<http://example.org/document264#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Che_Guevara> .
+
+<http://example.org/document266#char=0,39>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "39"^^xsd:nonNegativeInteger ;
+        nif:isString    "Show me all the breweries in Australia."^^xsd:string ;
+        nif:topic       <http://example.org/document266#annotation0> .
+
+<http://example.org/document183#char=0,30>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "30"^^xsd:nonNegativeInteger ;
+        nif:isString    "How high is the Mount Everest?"^^xsd:string ;
+        nif:topic       <http://example.org/document183#annotation0> .
+
+<http://example.org/document34#char=0,54>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "54"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which countries have more than two official languages?"^^xsd:string .
+
+<http://example.org/document140#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/GMT_Games> .
+
+<http://example.org/document269#char=0,28>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "28"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many airlines are there?"^^xsd:string .
+
+<http://example.org/document55#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/World_of_Warcraft> .
+
+<http://example.org/document149#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which weapons did Heckler & Koch develop?"^^xsd:string ;
+        nif:topic       <http://example.org/document149#annotation0> .
+
+<http://example.org/document239#char=0,29>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "29"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which actor played Chewbacca?"^^xsd:string ;
+        nif:topic       <http://example.org/document239#annotation0> .
+
+<http://example.org/document198#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Miffy> .
+
+<http://example.org/document21#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Illinois> .
+
+<http://example.org/document75#char=0,48>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "48"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who was the 16th president of the United States?"^^xsd:string .
+
+<http://example.org/document14#char=0,23>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "23"^^xsd:nonNegativeInteger ;
+        nif:isString    "How tall is Amazon Eve?"^^xsd:string ;
+        nif:topic       <http://example.org/document14#annotation0> .
+
+<http://example.org/document288#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/UNC_Health_Care> .
+
+<http://example.org/document164#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/NASA> .
+
+<http://example.org/document320#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Guy_Ritchie> .
+
+<http://example.org/document85#char=0,62>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "62"^^xsd:nonNegativeInteger ;
+        nif:isString    "In which films did Julia Roberts as well as Richard Gere play?"^^xsd:string ;
+        nif:topic       <http://example.org/document85#annotation1> , <http://example.org/document85#annotation0> .
+
+<http://example.org/document79#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/California> .
+
+<http://example.org/document194#char=0,71>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "71"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the founding year of the brewery that produces Pilsner Urquell?"^^xsd:string ;
+        nif:topic       <http://example.org/document194#annotation0> .
+
+<http://example.org/document171#char=0,37>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "37"^^xsd:nonNegativeInteger ;
+        nif:isString    "When was the Statue of Liberty built?"^^xsd:string ;
+        nif:topic       <http://example.org/document171#annotation0> .
+
+<http://example.org/document254#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Muhammad_Ali> .
+
+<http://example.org/document130#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Angela_Merkel> .
+
+<http://example.org/document135#char=0,24>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "24"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who developed Minecraft?"^^xsd:string ;
+        nif:topic       <http://example.org/document135#annotation0> .
+
+<http://example.org/document42#char=0,42>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "42"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the official language of Suriname?"^^xsd:string ;
+        nif:topic       <http://example.org/document42#annotation0> .
+
+<http://example.org/document45#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Telecommunication> .
+
+<http://example.org/document235#char=0,71>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "71"^^xsd:nonNegativeInteger ;
+        nif:isString    "To which artistic movement did the painter of The Three Dancers belong?"^^xsd:string ;
+        nif:topic       <http://example.org/document235#annotation0> .
+
+<http://example.org/document15#char=0,18>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "18"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who created Goofy?"^^xsd:string ;
+        nif:topic       <http://example.org/document15#annotation0> .
+
+<http://example.org/document205#char=0,26>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "26"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all Dutch parties."^^xsd:string ;
+        nif:topic       <http://example.org/document205#annotation0> .
+
+<http://example.org/document345#char=0,40>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "40"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many ethnic groups live in Slovenia?"^^xsd:string ;
+        nif:topic       <http://example.org/document345#annotation0> .
+
+<http://example.org/document222#char=0,51>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "51"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which of Tim Burton's films had the highest budget?"^^xsd:string ;
+        nif:topic       <http://example.org/document222#annotation0> .
+
+<http://example.org/document343#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Colombo_Lighthouse> .
+
+<http://example.org/document190#char=0,54>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "54"^^xsd:nonNegativeInteger ;
+        nif:isString    "Where is the residence of the prime minister of Spain?"^^xsd:string ;
+        nif:topic       <http://example.org/document190#annotation0> .
+
+<http://example.org/document278#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Vatican_Television_Center> .
+
+<http://example.org/document35#char=0,32>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "32"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the owner of Rolls-Royce?"^^xsd:string ;
+        nif:topic       <http://example.org/document35#annotation0> .
+
+<http://example.org/document144#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which cities does the Weser flow through?"^^xsd:string ;
+        nif:topic       <http://example.org/document144#annotation0> .
+
+<http://example.org/document154#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/San_Francisco> .
+
+<http://example.org/document8#char=0,68>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "68"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which states of Germany are governed by the Social Democratic Party?"^^xsd:string ;
+        nif:topic       <http://example.org/document8#annotation0> .
+
+<http://example.org/document293#char=0,44>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "44"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me English actors starring in Lovesick."^^xsd:string ;
+        nif:topic       <http://example.org/document293#annotation1> , <http://example.org/document293#annotation0> .
+
+<http://example.org/document111#char=0,53>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "53"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the Formula 1 race driver with the most races?"^^xsd:string .
+
+<http://example.org/document260#char=0,56>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "56"^^xsd:nonNegativeInteger ;
+        nif:isString    "Show a list of soccer clubs that play in the Bundesliga."^^xsd:string ;
+        nif:topic       <http://example.org/document260#annotation0> .
+
+<http://example.org/document244#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Chiemsee> .
+
+<http://example.org/document179#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Marc_Chagall> .
+
+<http://example.org/document120#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Michael_Jordan> .
+
+<http://example.org/document35#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Rolls-Royce_Motors> .
+
+<http://example.org/document101#char=0,54>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "54"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which German cities have more than 250000 inhabitants?"^^xsd:string ;
+        nif:topic       <http://example.org/document101#annotation0> .
+
+<http://example.org/document89#char=0,47>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "47"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all soccer clubs in the Premier League."^^xsd:string ;
+        nif:topic       <http://example.org/document89#annotation0> .
+
+<http://example.org/document295#char=0,36>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "36"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who was married to president Chirac?"^^xsd:string ;
+        nif:topic       <http://example.org/document295#annotation0> .
+
+<http://example.org/document145#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Rhine> .
+
+<http://example.org/document201#char=0,23>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "23"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all taikonauts."^^xsd:string ;
+        nif:topic       <http://example.org/document201#annotation0> .
+
+<http://example.org/document333#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Ming_dynasty> .
+
+<http://example.org/document268#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Pulp_Fiction> .
+
+<http://example.org/document50#char=0,31>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "31"^^xsd:nonNegativeInteger ;
+        nif:isString    "What did Bruce Carver die from?"^^xsd:string ;
+        nif:topic       <http://example.org/document50#annotation0> .
+
+<http://example.org/document316#char=0,37>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "37"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which types of grapes grow in Oregon?"^^xsd:string ;
+        nif:topic       <http://example.org/document316#annotation0> .
+
+<http://example.org/document272#char=0,30>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "30"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which book has the most pages?"^^xsd:string .
+
+<http://example.org/document234#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Mount_Everest> .
+
+<http://example.org/document169#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Nikola_Tesla> .
+
+<http://example.org/document110#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/New_York_City_Fire_Department> .
+
+<http://example.org/document200#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Orangina> .
+
+<http://example.org/document135#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Minecraft> .
+
+<http://example.org/document9#char=0,46>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "46"^^xsd:nonNegativeInteger ;
+        nif:isString    "In which U.S. state is Mount McKinley located?"^^xsd:string ;
+        nif:topic       <http://example.org/document9#annotation0> .
+
+<http://example.org/document101#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Germany> .
+
+<http://example.org/document122#char=0,31>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "31"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the governor of Wyoming?"^^xsd:string ;
+        nif:topic       <http://example.org/document122#annotation0> .
+
+<http://example.org/document324#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Dublin_Airport> .
+
+<http://example.org/document323#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Google> .
+
+<http://example.org/document258#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Neil_Patrick_Harris> .
+
+<http://example.org/document328#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "Show me everyone who was born on Halloween."^^xsd:string ;
+        nif:topic       <http://example.org/document328#annotation0> .
+
+<http://example.org/document348#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Chicago_Bulls> .
+
+<http://example.org/document131#char=0,34>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "34"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all Methodist politicians."^^xsd:string ;
+        nif:topic       <http://example.org/document131#annotation0> .
+
+<http://example.org/document159#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Utah> .
+
+<http://example.org/document93#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/United_States> .
+
+<http://example.org/document216#char=0,49>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "49"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the tallest player of the Atlanta Falcons?"^^xsd:string ;
+        nif:topic       <http://example.org/document216#annotation0> .
+
+<http://example.org/document304#char=0,40>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "40"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which animals are critically endangered?"^^xsd:string .
+
+<http://example.org/document339#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Greece> .
+
+<http://example.org/document182#char=0,42>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "42"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me a list of all American inventions."^^xsd:string .
+
+<http://example.org/document138#char=0,39>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "39"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many inhabitants does Maribor have?"^^xsd:string ;
+        nif:topic       <http://example.org/document138#annotation0> .
+
+<http://example.org/document88#char=0,45>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "45"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many films did Leonardo DiCaprio star in?"^^xsd:string ;
+        nif:topic       <http://example.org/document88#annotation0> .
+
+<http://example.org/document338#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Eiffel_Tower> .
+
+<http://example.org/document278#char=0,53>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "53"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who was the pope that founded the Vatican Television?"^^xsd:string ;
+        nif:topic       <http://example.org/document278#annotation0> .
+
+<http://example.org/document149#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Heckler_&_Koch> .
+
+<http://example.org/document3#char=0,49>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "49"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the daughter of Robert Kennedy married to?"^^xsd:string ;
+        nif:topic       <http://example.org/document3#annotation0> .
+
+<http://example.org/document83#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Natalie_Portman> .
+
+<http://example.org/document255#char=0,33>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "33"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many museums does Paris have?"^^xsd:string ;
+        nif:topic       <http://example.org/document255#annotation0> .
+
+<http://example.org/document116#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Game_of_Thrones> .
+
+<http://example.org/document6#char=0,38>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "38"^^xsd:nonNegativeInteger ;
+        nif:isString    "In which city did John F. Kennedy die?"^^xsd:string ;
+        nif:topic       <http://example.org/document6#annotation0> .
+
+<http://example.org/document291#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Socrates> .
+
+<http://example.org/document1#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Soviet_Union> .
+
+<http://example.org/document180#char=0,62>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "62"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all books by William Goldman with more than 300 pages."^^xsd:string ;
+        nif:topic       <http://example.org/document180#annotation0> .
+
+<http://example.org/document192#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Bruce_Springsteen> .
+
+<http://example.org/document341#char=0,30>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "30"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the mayor of Rotterdam?"^^xsd:string ;
+        nif:topic       <http://example.org/document341#annotation0> .
+
+<http://example.org/document329#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Switzerland> .
+
+<http://example.org/document328#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Halloween> .
+
+<http://example.org/document139#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Munich> .
+
+<http://example.org/document73#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Aldi> .
+
+<http://example.org/document2#char=0,67>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "67"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me the birthdays of all actors of the television show Charmed."^^xsd:string ;
+        nif:topic       <http://example.org/document2#annotation0> .
+
+<http://example.org/document229#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Australia> .
+
+<http://example.org/document106#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Sweden> .
+
+<http://example.org/document281#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Yeti_Airlines> .
+
+<http://example.org/document330#char=0,34>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "34"^^xsd:nonNegativeInteger ;
+        nif:isString    "In which country is Mecca located?"^^xsd:string ;
+        nif:topic       <http://example.org/document330#annotation0> .
+
+<http://example.org/document285#char=0,77>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "77"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which scientist is known for the Manhattan Project and the Nobel Peace Prize?"^^xsd:string ;
+        nif:topic       <http://example.org/document285#annotation1> , <http://example.org/document285#annotation0> .
+
+<http://example.org/document119#char=0,63>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "63"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all people that were born in Vienna and died in Berlin."^^xsd:string ;
+        nif:topic       <http://example.org/document119#annotation1> , <http://example.org/document119#annotation0> .
+
+<http://example.org/document226#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all actors who were born in Berlin."^^xsd:string ;
+        nif:topic       <http://example.org/document226#annotation0> .
+
+<http://example.org/document318#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Real_Madrid_C.F.> .
+
+<http://example.org/document219#char=0,19>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "19"^^xsd:nonNegativeInteger ;
+        nif:isString    "Is Cola a beverage?"^^xsd:string ;
+        nif:topic       <http://example.org/document219#annotation0> .
+
+<http://example.org/document335#char=0,47>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "47"^^xsd:nonNegativeInteger ;
+        nif:isString    "Is Lake Baikal bigger than the Great Bear Lake?"^^xsd:string ;
+        nif:topic       <http://example.org/document335#annotation1> , <http://example.org/document335#annotation0> .
+
+<http://example.org/document129#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/William_Shatner> .
+
+<http://example.org/document63#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Last_Action_Hero> .
+
+<http://example.org/document322#char=0,59>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "59"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many companies were founded by the founder of Facebook?"^^xsd:string ;
+        nif:topic       <http://example.org/document322#annotation0> .
+
+<http://example.org/document219#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Cola> .
+
+<http://example.org/document347#char=0,39>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "39"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who were the parents of Queen Victoria?"^^xsd:string ;
+        nif:topic       <http://example.org/document347#annotation0> .
+
+<http://example.org/document338#char=0,50>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "50"^^xsd:nonNegativeInteger ;
+        nif:isString    "Where did the architect of the Eiffel Tower study?"^^xsd:string ;
+        nif:topic       <http://example.org/document338#annotation0> .
+
+<http://example.org/document176#char=0,39>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "39"^^xsd:nonNegativeInteger ;
+        nif:isString    "List the children of Margaret Thatcher."^^xsd:string ;
+        nif:topic       <http://example.org/document176#annotation0> .
+
+<http://example.org/document151#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all islands that belong to Japan."^^xsd:string ;
+        nif:topic       <http://example.org/document151#annotation0> .
+
+<http://example.org/document297#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Sparkling_wine> .
+
+<http://example.org/document296#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Washington_(state)> .
+
+<http://example.org/document6#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/John_F._Kennedy> .
+
+<http://example.org/document107#char=0,38>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "38"^^xsd:nonNegativeInteger ;
+        nif:isString    "When was Alberta admitted as province?"^^xsd:string ;
+        nif:topic       <http://example.org/document107#annotation0> .
+
+<http://example.org/document18#char=0,42>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "42"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which museum exhibits The Scream by Munch?"^^xsd:string ;
+        nif:topic       <http://example.org/document18#annotation0> .
+
+<http://example.org/document172#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Fort_Knox> .
+
+<http://example.org/document289#char=0,29>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "29"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the owner of Facebook?"^^xsd:string ;
+        nif:topic       <http://example.org/document289#annotation0> .
+
+<http://example.org/document290#char=0,44>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "44"^^xsd:nonNegativeInteger ;
+        nif:isString    "From which region is the Melon de Bourgogne?"^^xsd:string ;
+        nif:topic       <http://example.org/document290#annotation0> .
+
+<http://example.org/document87#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/The_Pillars_of_the_Earth> .
+
+<http://example.org/document308#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Barack_Obama> .
+
+<http://example.org/document262#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Penguin_Books> .
+
+<http://example.org/document197#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/The_Storm_on_the_Sea_of_Galilee> .
+
+<http://example.org/document134#char=0,63>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "63"^^xsd:nonNegativeInteger ;
+        nif:isString    "In which military conflicts did Lawrence of Arabia participate?"^^xsd:string ;
+        nif:topic       <http://example.org/document134#annotation0> .
+
+<http://example.org/document27#char=0,45>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "45"^^xsd:nonNegativeInteger ;
+        nif:isString    "Was U.S. president Jackson involved in a war?"^^xsd:string ;
+        nif:topic       <http://example.org/document27#annotation0> .
+
+<http://example.org/document53#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Chancellor_of_Germany> .
+
+<http://example.org/document114#char=0,31>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "31"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all members of Prodigy."^^xsd:string ;
+        nif:topic       <http://example.org/document114#annotation0> .
+
+<http://example.org/document227#char=0,53>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "53"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all actors who were born in Paris after 1950."^^xsd:string ;
+        nif:topic       <http://example.org/document227#annotation0> .
+
+<http://example.org/document209#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Jupiter> .
+
+<http://example.org/document78#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Danielle_Steel> .
+
+<http://example.org/document92#char=0,29>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "29"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the highest mountain?"^^xsd:string .
+
+<http://example.org/document10#char=0,39>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "39"^^xsd:nonNegativeInteger ;
+        nif:isString    "In which country does the Ganges start?"^^xsd:string ;
+        nif:topic       <http://example.org/document10#annotation0> .
+
+<http://example.org/document243#char=0,35>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "35"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all Swedish oceanographers."^^xsd:string ;
+        nif:topic       <http://example.org/document243#annotation1> , <http://example.org/document243#annotation0> .
+
+<http://example.org/document252#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Moscow> .
+
+<http://example.org/document167#char=0,49>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "49"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who are the parents of the wife of Juan Carlos I?"^^xsd:string ;
+        nif:topic       <http://example.org/document167#annotation0> .
+
+<http://example.org/document187#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Harold_and_Maude> .
+
+<http://example.org/document206#char=0,25>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "25"^^xsd:nonNegativeInteger ;
+        nif:isString    "When was Olof Palme shot?"^^xsd:string ;
+        nif:topic       <http://example.org/document206#annotation0> .
+
+<http://example.org/document81#char=0,46>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "46"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which country has the most official languages?"^^xsd:string .
+
+<http://example.org/document212#char=0,39>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "39"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many pages does War and Peace have?"^^xsd:string ;
+        nif:topic       <http://example.org/document212#annotation0> .
+
+<http://example.org/document43#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Tel_Aviv> .
+
+<http://example.org/document313#char=0,51>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "51"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which frequent flyer program has the most airlines?"^^xsd:string .
+
+<http://example.org/document153#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Lisbon> .
+
+<http://example.org/document84#char=0,35>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "35"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all movies with Tom Cruise."^^xsd:string ;
+        nif:topic       <http://example.org/document84#annotation0> .
+
+<http://example.org/document68#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Germany> .
+
+<http://example.org/document341#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Rotterdam> .
+
+<http://example.org/document277#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/English_Gothic_architecture> .
+
+<http://example.org/document276#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Palace_of_Westminster> .
+
+<http://example.org/document243#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Sweden> .
+
+<http://example.org/document242#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/University_of_Oxford> .
+
+<http://example.org/document178#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Margaret_Thatcher> .
+
+<http://example.org/document90#char=0,31>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "31"^^xsd:nonNegativeInteger ;
+        nif:isString    "When was Jack Wolfskin founded?"^^xsd:string ;
+        nif:topic       <http://example.org/document90#annotation0> .
+
+<http://example.org/document179#char=0,23>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "23"^^xsd:nonNegativeInteger ;
+        nif:isString    "Was Marc Chagall a jew?"^^xsd:string ;
+        nif:topic       <http://example.org/document179#annotation0> .
+
+<http://example.org/document188#char=0,58>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "58"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which films starring Clint Eastwood did he direct himself?"^^xsd:string ;
+        nif:topic       <http://example.org/document188#annotation0> .
+
+<http://example.org/document256#char=0,36>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "36"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which city has the most inhabitants?"^^xsd:string .
+
+<http://example.org/document156#char=0,35>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "35"^^xsd:nonNegativeInteger ;
+        nif:isString    "When were the Hells Angels founded?"^^xsd:string ;
+        nif:topic       <http://example.org/document156#annotation0> .
+
+<http://example.org/document143#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/German_Shepherd> .
+
+<http://example.org/document133#char=0,47>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "47"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all Australian nonprofit organizations."^^xsd:string ;
+        nif:topic       <http://example.org/document133#annotation1> , <http://example.org/document133#annotation0> .
+
+<http://example.org/document46#char=0,29>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "29"^^xsd:nonNegativeInteger ;
+        nif:isString    "Is Frank Herbert still alive?"^^xsd:string ;
+        nif:topic       <http://example.org/document46#annotation0> .
+
+<http://example.org/document331#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Apple_Inc.> .
+
+<http://example.org/document266#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Australia> .
+
+<http://example.org/document130#char=0,40>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "40"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the birth name of Angela Merkel?"^^xsd:string ;
+        nif:topic       <http://example.org/document130#annotation0> .
+
+<http://example.org/document25#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Julia_Roberts> .
+
+<http://example.org/document24#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Annapurna> .
+
+<http://example.org/document56#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the official website of Tom Cruise?"^^xsd:string ;
+        nif:topic       <http://example.org/document56#annotation0> .
+
+<http://example.org/document232#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/West_African_CFA_franc> .
+
+<http://example.org/document167#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Juan_Carlos_I_of_Spain> .
+
+<http://example.org/document322#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Facebook> .
+
+<http://example.org/document106#char=0,51>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "51"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all professional skateboarders from Sweden."^^xsd:string ;
+        nif:topic       <http://example.org/document106#annotation1> , <http://example.org/document106#annotation0> .
+
+<http://example.org/document284#char=0,56>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "56"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many politicians graduated from Columbia University?"^^xsd:string ;
+        nif:topic       <http://example.org/document284#annotation1> , <http://example.org/document284#annotation0> .
+
+<http://example.org/document133#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Nonprofit_organization> .
+
+<http://example.org/document277#char=0,45>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "45"^^xsd:nonNegativeInteger ;
+        nif:isString    "Show me all English Gothic buildings in Kent."^^xsd:string ;
+        nif:topic       <http://example.org/document277#annotation1> , <http://example.org/document277#annotation0> .
+
+<http://example.org/document245#char=0,22>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "22"^^xsd:nonNegativeInteger ;
+        nif:isString    "Is James Bond married?"^^xsd:string ;
+        nif:topic       <http://example.org/document245#annotation0> .
+
+<http://example.org/document48#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Forbes> .
+
+<http://example.org/document187#char=0,44>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "44"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who composed the music for Harold and Maude?"^^xsd:string ;
+        nif:topic       <http://example.org/document187#annotation0> .
+
+<http://example.org/document91#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which organizations were founded in 1930?"^^xsd:string .
+
+<http://example.org/document283#char=0,27>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "27"^^xsd:nonNegativeInteger ;
+        nif:isString    "Where was JFK assassinated?"^^xsd:string ;
+        nif:topic       <http://example.org/document283#annotation0> .
+
+<http://example.org/document14#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Amazon_Eve> .
+
+<http://example.org/document314#char=0,59>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "59"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which artists were born on the same date as Rachel Stevens?"^^xsd:string ;
+        nif:topic       <http://example.org/document314#annotation0> .
+
+<http://example.org/document211#char=0,37>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "37"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all animals that are extinct."^^xsd:string .
+
+<http://example.org/document346#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/King_of_Rome> .
+
+<http://example.org/document117#char=0,46>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "46"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all cars that are produced in Germany."^^xsd:string ;
+        nif:topic       <http://example.org/document117#annotation0> .
+
+<http://example.org/document222#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Tim_Burton> .
+
+<http://example.org/document47#char=0,39>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "39"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the highest place of the Urals?"^^xsd:string ;
+        nif:topic       <http://example.org/document47#annotation0> .
+
+<http://example.org/document157#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Apollo_14> .
+
+<http://example.org/document166#char=0,48>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "48"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which ships were called after Benjamin Franklin?"^^xsd:string ;
+        nif:topic       <http://example.org/document166#annotation0> .
+
+<http://example.org/document31#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the currency of the Czech Republic?"^^xsd:string ;
+        nif:topic       <http://example.org/document31#annotation0> .
+
+<http://example.org/document276#char=0,49>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "49"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the location of the Houses of Parliament?"^^xsd:string ;
+        nif:topic       <http://example.org/document276#annotation0> .
+
+<http://example.org/document247#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Actor> .
+
+<http://example.org/document123#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Prince_William,_Duke_of_Cambridge> .
+
+<http://example.org/document38#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Germany> .
+
+<http://example.org/document229#char=0,39>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "39"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all Australian metalcore bands."^^xsd:string ;
+        nif:topic       <http://example.org/document229#annotation1> , <http://example.org/document229#annotation0> .
+
+<http://example.org/document103#char=0,29>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "29"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the mayor of Tel Aviv?"^^xsd:string ;
+        nif:topic       <http://example.org/document103#annotation0> .
+
+<http://example.org/document204#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many programming languages are there?"^^xsd:string .
+
+<http://example.org/document336#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Fish> .
+
+<http://example.org/document212#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/War_and_Peace> .
+
+<http://example.org/document148#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/United_Kingdom> .
+
+<http://example.org/document213#char=0,44>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "44"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which ingredients do I need for carrot cake?"^^xsd:string ;
+        nif:topic       <http://example.org/document213#annotation0> .
+
+<http://example.org/document302#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Sweden> .
+
+<http://example.org/document237#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Alec_Guinness> .
+
+<http://example.org/document113#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Premier_League> .
+
+<http://example.org/document161#char=0,48>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "48"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many missions does the Soyuz programme have?"^^xsd:string ;
+        nif:topic       <http://example.org/document161#annotation0> .
+
+<http://example.org/document28#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Communism> .
+
+<http://example.org/document203#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Poet> .
+
+<http://example.org/document190#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Prime_Minister_of_Spain> .
+
+<http://example.org/document199#char=0,49>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "49"^^xsd:nonNegativeInteger ;
+        nif:isString    "For which label did Elvis record his first album?"^^xsd:string ;
+        nif:topic       <http://example.org/document199#annotation0> .
+
+<http://example.org/document93#char=0,46>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "46"^^xsd:nonNegativeInteger ;
+        nif:isString    "Was Natalie Portman born in the United States?"^^xsd:string ;
+        nif:topic       <http://example.org/document93#annotation1> , <http://example.org/document93#annotation0> .
+
+<http://example.org/document325#char=0,51>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "51"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many airlines are members of the Star Alliance?"^^xsd:string ;
+        nif:topic       <http://example.org/document325#annotation0> .
+
+<http://example.org/document326#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Mars> .
+
+<http://example.org/document280#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Melbourne,_Florida> .
+
+<http://example.org/document71#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Mean_Hamster_Software> .
+
+<http://example.org/document227#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Paris> .
+
+<http://example.org/document103#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Tel_Aviv> .
+
+<http://example.org/document17#char=0,67>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "67"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all cities in New Jersey with more than 100000 inhabitants."^^xsd:string ;
+        nif:topic       <http://example.org/document17#annotation0> .
+
+<http://example.org/document18#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/The_Scream> .
+
+<http://example.org/document70#char=0,40>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "40"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all films produced by Hal Roach."^^xsd:string ;
+        nif:topic       <http://example.org/document70#annotation0> .
+
+<http://example.org/document128#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Francis_Ford_Coppola> .
+
+<http://example.org/document181#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Jack_Kerouac> .
+
+<http://example.org/document180#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/William_Goldman> .
+
+<http://example.org/document317#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Benicio_del_Toro> .
+
+<http://example.org/document316#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Oregon_wine> .
+
+<http://example.org/document270#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Agent_Smith> .
+
+<http://example.org/document258#char=0,50>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "50"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all the TV shows with Neil Patrick Harris."^^xsd:string ;
+        nif:topic       <http://example.org/document258#annotation0> .
+
+<http://example.org/document61#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Nanga_Parbat> .
+
+<http://example.org/document238#char=0,37>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "37"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many James Bond movies are there?"^^xsd:string .
+
+<http://example.org/document4#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which river does the Brooklyn Bridge cross?"^^xsd:string ;
+        nif:topic       <http://example.org/document4#annotation0> .
+
+<http://example.org/document332#char=0,42>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "42"^^xsd:nonNegativeInteger ;
+        nif:isString    "What does the abbreviation FIFA stand for?"^^xsd:string ;
+        nif:topic       <http://example.org/document332#annotation0> .
+
+<http://example.org/document86#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Female> .
+
+<http://example.org/document119#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Berlin> .
+
+<http://example.org/document202#char=0,42>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "42"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many languages are spoken in Colombia?"^^xsd:string ;
+        nif:topic       <http://example.org/document202#annotation0> .
+
+<http://example.org/document102#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who was John F. Kennedy's vice president?"^^xsd:string ;
+        nif:topic       <http://example.org/document102#annotation0> .
+
+<http://example.org/document4#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Brooklyn_Bridge> .
+
+<http://example.org/document306#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Arnold_Schwarzenegger> .
+
+<http://example.org/document260#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Bundesliga> .
+
+<http://example.org/document195#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Poland> .
+
+<http://example.org/document299#char=0,45>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "45"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the timezone in San Pedro de Atacama?"^^xsd:string ;
+        nif:topic       <http://example.org/document299#annotation0> .
+
+<http://example.org/document153#char=0,35>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "35"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the ruling party in Lisbon?"^^xsd:string ;
+        nif:topic       <http://example.org/document153#annotation0> .
+
+<http://example.org/document292#char=0,38>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "38"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who was president of Pakistan in 1978?"^^xsd:string ;
+        nif:topic       <http://example.org/document292#annotation0> .
+
+<http://example.org/document161#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Soyuz_programme> .
+
+<http://example.org/document207#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Isar> .
+
+<http://example.org/document162#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Socrates> .
+
+<http://example.org/document233#char=0,69>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "69"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me the capitals of all countries that the Himalayas run through."^^xsd:string ;
+        nif:topic       <http://example.org/document233#annotation0> .
+
+<http://example.org/document76#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Hal_Roach> .
+
+<http://example.org/document43#char=0,29>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "29"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the mayor of Tel Aviv?"^^xsd:string ;
+        nif:topic       <http://example.org/document43#annotation0> .
+
+<http://example.org/document343#char=0,38>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "38"^^xsd:nonNegativeInteger ;
+        nif:isString    "How high is the lighthouse in Colombo?"^^xsd:string ;
+        nif:topic       <http://example.org/document343#annotation0> .
+
+<http://example.org/document263#char=0,50>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "50"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which programming languages influenced Javascript?"^^xsd:string ;
+        nif:topic       <http://example.org/document263#annotation0> .
+
+<http://example.org/document109#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Bandleader> .
+
+<http://example.org/document108#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Himalayas> .
+
+<http://example.org/document285#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Nobel_Peace_Prize> .
+
+<http://example.org/document284#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Columbia_University> .
+
+<http://example.org/document42#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Suriname> .
+
+<http://example.org/document86#char=0,31>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "31"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all female given names."^^xsd:string ;
+        nif:topic       <http://example.org/document86#annotation0> .
+
+<http://example.org/document53#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all federal chancellors of Germany."^^xsd:string ;
+        nif:topic       <http://example.org/document53#annotation0> .
+
+<http://example.org/document116#char=0,58>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "58"^^xsd:nonNegativeInteger ;
+        nif:isString    "Does Breaking Bad have more episodes than Game of Thrones?"^^xsd:string ;
+        nif:topic       <http://example.org/document116#annotation1> , <http://example.org/document116#annotation0> .
+
+<http://example.org/document336#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "Desserts from which country contain fish?"^^xsd:string ;
+        nif:topic       <http://example.org/document336#annotation1> , <http://example.org/document336#annotation0> .
+
+<http://example.org/document110#char=0,62>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "62"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the total amount of men and women serving in the FDNY?"^^xsd:string ;
+        nif:topic       <http://example.org/document110#annotation0> .
+
+<http://example.org/document185#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Australia> .
+
+<http://example.org/document148#char=0,49>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "49"^^xsd:nonNegativeInteger ;
+        nif:isString    "In which UK city are the headquarters of the MI6?"^^xsd:string ;
+        nif:topic       <http://example.org/document148#annotation1> , <http://example.org/document148#annotation0> .
+
+<http://example.org/document268#char=0,31>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "31"^^xsd:nonNegativeInteger ;
+        nif:isString    "How much did Pulp Fiction cost?"^^xsd:string ;
+        nif:topic       <http://example.org/document268#annotation0> .
+
+<http://example.org/document151#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Japan> .
+
+<http://example.org/document61#char=0,49>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "49"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which mountains are higher than the Nanga Parbat?"^^xsd:string ;
+        nif:topic       <http://example.org/document61#annotation0> .
+
+<http://example.org/document66#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Christian_Bale> .
+
+<http://example.org/document274#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/French_Polynesia> .
+
+<http://example.org/document32#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Euro> .
+
+<http://example.org/document231#char=0,58>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "58"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many inhabitants does the largest city in Canada have?"^^xsd:string ;
+        nif:topic       <http://example.org/document231#annotation0> .
+
+<http://example.org/document318#char=0,34>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "34"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the manager of Real Madrid?"^^xsd:string ;
+        nif:topic       <http://example.org/document318#annotation0> .
+
+<http://example.org/document299#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/San_Pedro_de_Atacama> .
+
+<http://example.org/document240#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Elvis_Presley> .
+
+<http://example.org/document37#char=0,28>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "28"^^xsd:nonNegativeInteger ;
+        nif:isString    "When did Latvia join the EU?"^^xsd:string ;
+        nif:topic       <http://example.org/document37#annotation0> .
+
+<http://example.org/document330#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Mecca> .
+
+<http://example.org/document324#char=0,62>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "62"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which subsidiary of TUI Travel serves both Glasgow and Dublin?"^^xsd:string ;
+        nif:topic       <http://example.org/document324#annotation2> , <http://example.org/document324#annotation1> , <http://example.org/document324#annotation0> .
+
+<http://example.org/document141#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Intel> .
+
+<http://example.org/document259#char=0,27>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "27"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who wrote The Hunger Games?"^^xsd:string ;
+        nif:topic       <http://example.org/document259#annotation0> .
+
+<http://example.org/document56#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Tom_Cruise> .
+
+<http://example.org/document104#char=0,61>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "61"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many students does the Free University in Amsterdam have?"^^xsd:string ;
+        nif:topic       <http://example.org/document104#annotation0> .
+
+<http://example.org/document240#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me the grandchildren of Elvis Presley."^^xsd:string ;
+        nif:topic       <http://example.org/document240#annotation0> .
+
+<http://example.org/document22#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Limerick_Lake> .
+
+<http://example.org/document199#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Elvis_Presley> .
+
+<http://example.org/document307#char=0,52>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "52"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which programming languages were influenced by Perl?"^^xsd:string ;
+        nif:topic       <http://example.org/document307#annotation0> .
+
+<http://example.org/document162#char=0,33>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "33"^^xsd:nonNegativeInteger ;
+        nif:isString    "Did Socrates influence Aristotle?"^^xsd:string ;
+        nif:topic       <http://example.org/document162#annotation1> , <http://example.org/document162#annotation0> .
+
+<http://example.org/document39#char=0,34>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "34"^^xsd:nonNegativeInteger ;
+        nif:isString    "When was the Battle of Gettysburg?"^^xsd:string ;
+        nif:topic       <http://example.org/document39#annotation0> .
+
+<http://example.org/document289#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Facebook> .
+
+<http://example.org/document329#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all Swiss non-profit organizations."^^xsd:string ;
+        nif:topic       <http://example.org/document329#annotation1> , <http://example.org/document329#annotation0> .
+
+<http://example.org/document230#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Halloween> .
+
+<http://example.org/document165#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Cat_Stevens> .
+
+<http://example.org/document349#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which volcanos in Japan erupted since 2000?"^^xsd:string ;
+        nif:topic       <http://example.org/document349#annotation0> .
+
+<http://example.org/document320#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Mickey_Rourke> .
+
+<http://example.org/document255#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Paris> .
+
+<http://example.org/document131#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Methodism> .
+
+<http://example.org/document45#char=0,62>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "62"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which telecommunications organizations are located in Belgium?"^^xsd:string ;
+        nif:topic       <http://example.org/document45#annotation1> , <http://example.org/document45#annotation0> .
+
+<http://example.org/document46#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Frank_Herbert> .
+
+<http://example.org/document13#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Amphibian> .
+
+<http://example.org/document12#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Proinsulin> .
+
+<http://example.org/document189#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Juliana_of_the_Netherlands> .
+
+<http://example.org/document344#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Taiko> .
+
+<http://example.org/document305#char=0,40>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "40"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which soccer players were born on Malta?"^^xsd:string ;
+        nif:topic       <http://example.org/document305#annotation0> .
+
+<http://example.org/document279#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/SkyTeam> .
+
+<http://example.org/document127#char=0,48>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "48"^^xsd:nonNegativeInteger ;
+        nif:isString    "Butch Otter is the governor of which U.S. state?"^^xsd:string ;
+        nif:topic       <http://example.org/document127#annotation0> .
+
+<http://example.org/document155#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Mount_Olympus> .
+
+<http://example.org/document254#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "Show me the book that Muhammad Ali wrote."^^xsd:string ;
+        nif:topic       <http://example.org/document254#annotation0> .
+
+<http://example.org/document154#char=0,40>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "40"^^xsd:nonNegativeInteger ;
+        nif:isString    "What are the nicknames of San Francisco?"^^xsd:string ;
+        nif:topic       <http://example.org/document154#annotation0> .
+
+<http://example.org/document310#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Meryl_Streep> .
+
+<http://example.org/document245#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/James_Bond> .
+
+<http://example.org/document169#char=0,39>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "39"^^xsd:nonNegativeInteger ;
+        nif:isString    "Did Tesla win a nobel prize in physics?"^^xsd:string ;
+        nif:topic       <http://example.org/document169#annotation1> , <http://example.org/document169#annotation0> .
+
+<http://example.org/document121#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Canada> .
+
+<http://example.org/document124#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who was the father of Queen Elizabeth II?"^^xsd:string ;
+        nif:topic       <http://example.org/document124#annotation0> .
+
+<http://example.org/document36#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Yenisei_River> .
+
+<http://example.org/document79#char=0,46>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "46"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which airports are located in California, USA?"^^xsd:string ;
+        nif:topic       <http://example.org/document79#annotation0> .
+
+<http://example.org/document311#char=0,23>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "23"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who killed John Lennon?"^^xsd:string ;
+        nif:topic       <http://example.org/document311#annotation0> .
+
+<http://example.org/document236#char=0,34>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "34"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which pope succeeded John Paul II?"^^xsd:string ;
+        nif:topic       <http://example.org/document236#annotation0> .
+
+<http://example.org/document335#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Great_Bear_Lake> .
+
+<http://example.org/document334#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/New_York_City> .
+
+<http://example.org/document26#char=0,59>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "59"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which bridges are of the same type as the Manhattan Bridge?"^^xsd:string ;
+        nif:topic       <http://example.org/document26#annotation0> .
+
+<http://example.org/document146#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Surfing> .
+
+<http://example.org/document80#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Canada> .
+
+<http://example.org/document300#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Chile_Route_68> .
+
+<http://example.org/document235#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/The_Three_Dancers> .
+
+<http://example.org/document310#char=0,40>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "40"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the oldest child of Meryl Streep?"^^xsd:string ;
+        nif:topic       <http://example.org/document310#annotation0> .
+
+<http://example.org/document26#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Manhattan_Bridge> .
+
+<http://example.org/document141#char=0,18>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "18"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who founded Intel?"^^xsd:string ;
+        nif:topic       <http://example.org/document141#annotation0> .
+
+<http://example.org/document62#char=0,22>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "22"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who created Wikipedia?"^^xsd:string ;
+        nif:topic       <http://example.org/document62#annotation0> .
+
+<http://example.org/document201#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/China> .
+
+<http://example.org/document324#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Glasgow_Airport> .
+
+<http://example.org/document261#char=0,33>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "33"^^xsd:nonNegativeInteger ;
+        nif:isString    "What country is Mount Everest in?"^^xsd:string ;
+        nif:topic       <http://example.org/document261#annotation0> .
+
+<http://example.org/document150#char=0,67>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "67"^^xsd:nonNegativeInteger ;
+        nif:isString    "Was the Cuban Missile Crisis earlier than the Bay of Pigs Invasion?"^^xsd:string ;
+        nif:topic       <http://example.org/document150#annotation1> , <http://example.org/document150#annotation0> .
+
+<http://example.org/document259#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/The_Hunger_Games> .
+
+<http://example.org/document17#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/New_Jersey> .
+
+<http://example.org/document12#char=0,24>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "24"^^xsd:nonNegativeInteger ;
+        nif:isString    "Is proinsulin a protein?"^^xsd:string ;
+        nif:topic       <http://example.org/document12#annotation0> .
+
+<http://example.org/document225#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Category:Action_role-playing_video_games> .
+
+<http://example.org/document323#char=0,59>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "59"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many companies were founded in the same year as Google?"^^xsd:string ;
+        nif:topic       <http://example.org/document323#annotation0> .
+
+<http://example.org/document123#char=0,57>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "57"^^xsd:nonNegativeInteger ;
+        nif:isString    "Do Prince Harry and Prince William have the same parents?"^^xsd:string ;
+        nif:topic       <http://example.org/document123#annotation1> , <http://example.org/document123#annotation0> .
+
+<http://example.org/document80#char=0,42>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "42"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all Canadian Grunge record labels."^^xsd:string ;
+        nif:topic       <http://example.org/document80#annotation1> , <http://example.org/document80#annotation0> .
+
+<http://example.org/document192#char=0,72>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "72"^^xsd:nonNegativeInteger ;
+        nif:isString    "Show me all songs from Bruce Springsteen released between 1980 and 1990."^^xsd:string ;
+        nif:topic       <http://example.org/document192#annotation0> .
+
+<http://example.org/document126#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Turkmenistan> .
+
+<http://example.org/document126#char=0,46>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "46"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many languages are spoken in Turkmenistan?"^^xsd:string ;
+        nif:topic       <http://example.org/document126#annotation0> .
+
+<http://example.org/document73#char=0,31>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "31"^^xsd:nonNegativeInteger ;
+        nif:isString    "How many Aldi stores are there?"^^xsd:string ;
+        nif:topic       <http://example.org/document73#annotation0> .
+
+<http://example.org/document172#char=0,27>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "27"^^xsd:nonNegativeInteger ;
+        nif:isString    "Where is Fort Knox located?"^^xsd:string ;
+        nif:topic       <http://example.org/document172#annotation0> .
+
+<http://example.org/document11#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which countries have more than ten caves?"^^xsd:string .
+
+<http://example.org/document339#char=0,37>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "37"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which Greek parties are pro-European?"^^xsd:string ;
+        nif:topic       <http://example.org/document339#annotation1> , <http://example.org/document339#annotation0> .
+
+<http://example.org/document314#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Rachel_Stevens> .
+
+<http://example.org/document33#char=0,32>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "32"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the area code of Berlin?"^^xsd:string ;
+        nif:topic       <http://example.org/document33#annotation0> .
+
+<http://example.org/document198#char=0,50>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "50"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which country does the creator of Miffy come from?"^^xsd:string ;
+        nif:topic       <http://example.org/document198#annotation0> .
+
+<http://example.org/document78#char=0,44>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "44"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all books written by Danielle Steel."^^xsd:string ;
+        nif:topic       <http://example.org/document78#annotation0> .
+
+<http://example.org/document209#char=0,37>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "37"^^xsd:nonNegativeInteger ;
+        nif:isString    "How heavy is Jupiter's lightest moon?"^^xsd:string ;
+        nif:topic       <http://example.org/document209#annotation0> .
+
+<http://example.org/document339#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Pro-Europeanism> .
+
+<http://example.org/document170#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Rita_Wilson> .
+
+<http://example.org/document215#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Tom_Cruise> .
+
+<http://example.org/document275#char=0,31>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "31"^^xsd:nonNegativeInteger ;
+        nif:isString    "When did Dracula's creator die?"^^xsd:string ;
+        nif:topic       <http://example.org/document275#annotation0> .
+
+<http://example.org/document184#char=0,19>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "19"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who created Batman?"^^xsd:string ;
+        nif:topic       <http://example.org/document184#annotation0> .
+
+<http://example.org/document52#char=0,35>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "35"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which presidents were born in 1945?"^^xsd:string .
+
+<http://example.org/document303#char=0,42>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "42"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the youngest Pulitzer Prize winner?"^^xsd:string ;
+        nif:topic       <http://example.org/document303#annotation0> .
+
+<http://example.org/document85#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Richard_Gere> .
+
+<http://example.org/document252#char=0,43>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "43"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give all swimmers that were born in Moscow."^^xsd:string ;
+        nif:topic       <http://example.org/document252#annotation0> .
+
+<http://example.org/document84#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Tom_Cruise> .
+
+<http://example.org/document128#char=0,52>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "52"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all movies directed by Francis Ford Coppola."^^xsd:string ;
+        nif:topic       <http://example.org/document128#annotation0> .
+
+<http://example.org/document305#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Malta> .
+
+<http://example.org/document116#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Breaking_Bad> .
+
+<http://example.org/document293#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/England> .
+
+<http://example.org/document65#char=0,70>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "70"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which companies work in the aerospace industry as well as in medicine?"^^xsd:string ;
+        nif:topic       <http://example.org/document65#annotation1> , <http://example.org/document65#annotation0> .
+
+<http://example.org/document292#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/President_of_Pakistan> .
+
+<http://example.org/document50#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Bruce_Carver> .
+
+<http://example.org/document2#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Charmed> .
+
+<http://example.org/document296#char=0,58>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "58"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the largest metropolitan area in Washington state?"^^xsd:string ;
+        nif:topic       <http://example.org/document296#annotation0> .
+
+<http://example.org/document64#char=0,73>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "73"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which software has been developed by organizations founded in California?"^^xsd:string ;
+        nif:topic       <http://example.org/document64#annotation0> .
+
+<http://example.org/document279#char=0,47>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "47"^^xsd:nonNegativeInteger ;
+        nif:isString    "What airlines are part of the SkyTeam alliance?"^^xsd:string ;
+        nif:topic       <http://example.org/document279#annotation0> .
+
+<http://example.org/document239#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Chewbacca> .
+
+<http://example.org/document193#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Akira_Kurosawa> .
+
+<http://example.org/document329#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Nonprofit_organization> .
+
+<http://example.org/document205#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Netherlands> .
+
+<http://example.org/document230#char=0,18>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "18"^^xsd:nonNegativeInteger ;
+        nif:isString    "When is Halloween?"^^xsd:string ;
+        nif:topic       <http://example.org/document230#annotation0> .
+
+<http://example.org/document83#char=0,44>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "44"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who produced films starring Natalie Portman?"^^xsd:string ;
+        nif:topic       <http://example.org/document83#annotation0> .
+
+<http://example.org/document106#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Skateboarding> .
+
+<http://example.org/document282#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Rachel_Stevens> .
+
+<http://example.org/document346#char=0,29>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "29"^^xsd:nonNegativeInteger ;
+        nif:isString    "List the seven kings of Rome."^^xsd:string ;
+        nif:topic       <http://example.org/document346#annotation0> .
+
+<http://example.org/document40#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Australia> .
+
+<http://example.org/document183#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Mount_Everest> .
+
+<http://example.org/document246#char=0,42>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "42"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which rockets were launched from Baikonur?"^^xsd:string ;
+        nif:topic       <http://example.org/document246#annotation0> .
+
+<http://example.org/document210#char=0,33>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "33"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the youngest Darts player?"^^xsd:string .
+
+<http://example.org/document319#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/China> .
+
+<http://example.org/document178#char=0,32>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "32"^^xsd:nonNegativeInteger ;
+        nif:isString    "Was Margaret Thatcher a chemist?"^^xsd:string ;
+        nif:topic       <http://example.org/document178#annotation1> , <http://example.org/document178#annotation0> .
+
+<http://example.org/document150#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Bay_of_Pigs_Invasion> .
+
+<http://example.org/document241#char=0,59>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "59"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all writers that won the Nobel Prize in literature."^^xsd:string ;
+        nif:topic       <http://example.org/document241#annotation0> .
+
+<http://example.org/document65#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Aerospace> .
+
+<http://example.org/document64#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/California> .
+
+<http://example.org/document344#char=0,49>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "49"^^xsd:nonNegativeInteger ;
+        nif:isString    "Are Taiko a kind of Japanese musical instruments?"^^xsd:string ;
+        nif:topic       <http://example.org/document344#annotation0> .
+
+<http://example.org/document105#char=0,45>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "45"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the second highest mountain on Earth?"^^xsd:string .
+
+<http://example.org/document281#char=0,40>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "40"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which airports does Yeti Airlines serve?"^^xsd:string ;
+        nif:topic       <http://example.org/document281#annotation0> .
+
+<http://example.org/document112#char=0,70>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "70"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all world heritage sites designated within the past two years."^^xsd:string .
+
+<http://example.org/document257#char=0,37>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "37"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which city has the least inhabitants?"^^xsd:string .
+
+<http://example.org/document186#char=0,38>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "38"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the largest city in Australia?"^^xsd:string ;
+        nif:topic       <http://example.org/document186#annotation0> .
+
+<http://example.org/document297#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/France> .
+
+<http://example.org/document224#char=0,49>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "49"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who are the four youngest MVP basketball players?"^^xsd:string .
+
+<http://example.org/document321#char=0,29>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "29"^^xsd:nonNegativeInteger ;
+        nif:isString    "Is Darth Vader Luke’s father?"^^xsd:string ;
+        nif:topic       <http://example.org/document321#annotation0> .
+
+<http://example.org/document173#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Benjamin_Franklin> .
+
+<http://example.org/document7#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Abraham_Lincoln> .
+
+<http://example.org/document88#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Leonardo_DiCaprio> .
+
+<http://example.org/document309#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Eddie_Murphy> .
+
+<http://example.org/document263#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/JavaScript> .
+
+<http://example.org/document264#char=0,30>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "30"^^xsd:nonNegativeInteger ;
+        nif:isString    "Did Che Guevara have children?"^^xsd:string ;
+        nif:topic       <http://example.org/document264#annotation0> .
+
+<http://example.org/document41#char=0,34>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "34"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all soccer clubs in Spain."^^xsd:string ;
+        nif:topic       <http://example.org/document41#annotation0> .
+
+<http://example.org/document66#char=0,46>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "46"^^xsd:nonNegativeInteger ;
+        nif:isString    "Is Christian Bale starring in Velvet Goldmine?"^^xsd:string ;
+        nif:topic       <http://example.org/document66#annotation1> , <http://example.org/document66#annotation0> .
+
+<http://example.org/document54#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Abraham_Lincoln> .
+
+<http://example.org/document20#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/IBM> .
+
+<http://example.org/document333#char=0,35>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "35"^^xsd:nonNegativeInteger ;
+        nif:isString    "When did the Ming dynasty dissolve?"^^xsd:string ;
+        nif:topic       <http://example.org/document333#annotation0> .
+
+<http://example.org/document262#char=0,36>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "36"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the founder of Penguin Books?"^^xsd:string ;
+        nif:topic       <http://example.org/document262#annotation0> .
+
+<http://example.org/document287#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Beer> .
+
+<http://example.org/document16#char=0,48>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "48"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me the capitals of all countries in Africa."^^xsd:string .
+
+<http://example.org/document163#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Denmark> .
+
+<http://example.org/document271#char=0,39>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "39"^^xsd:nonNegativeInteger ;
+        nif:isString    "How much carbs does peanut butter have?"^^xsd:string ;
+        nif:topic       <http://example.org/document271#annotation0> .
+
+<http://example.org/document142#char=0,36>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "36"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the husband of Amanda Palmer?"^^xsd:string ;
+        nif:topic       <http://example.org/document142#annotation0> .
+
+<http://example.org/document49#char=0,50>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "50"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all companies in the advertising industry."^^xsd:string ;
+        nif:topic       <http://example.org/document49#annotation0> .
+
+<http://example.org/document188#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Clint_Eastwood> .
+
+<http://example.org/document30#char=0,52>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "52"^^xsd:nonNegativeInteger ;
+        nif:isString    "Which U.S. state has the highest population density?"^^xsd:string .
+
+<http://example.org/document348#char=0,48>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "48"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who is the heaviest player of the Chicago Bulls?"^^xsd:string ;
+        nif:topic       <http://example.org/document348#annotation0> .
+
+<http://example.org/document45#annotation1>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Belgium> .
+
+<http://example.org/document44#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Brooklyn_Bridge> .
+
+<http://example.org/document164#char=0,41>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "41"^^xsd:nonNegativeInteger ;
+        nif:isString    "Give me all launch pads operated by NASA."^^xsd:string ;
+        nif:topic       <http://example.org/document164#annotation0> .
+
+<http://example.org/document115#char=0,26>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "26"^^xsd:nonNegativeInteger ;
+        nif:isString    "What is the longest river?"^^xsd:string .
+
+<http://example.org/document10#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Ganges> .
+
+<http://example.org/document267#char=0,31>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "31"^^xsd:nonNegativeInteger ;
+        nif:isString    "When was the Titanic completed?"^^xsd:string ;
+        nif:topic       <http://example.org/document267#annotation0> .
+
+<http://example.org/document177#char=0,30>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "30"^^xsd:nonNegativeInteger ;
+        nif:isString    "Who was called Frank The Tank?"^^xsd:string .
+
+<http://example.org/document108#char=0,61>
+        a               nif:RFC5147String , nif:String , nif:Context ;
+        nif:beginIndex  "0"^^xsd:nonNegativeInteger ;
+        nif:endIndex    "61"^^xsd:nonNegativeInteger ;
+        nif:isString    "To which countries does the Himalayan mountain system extend?"^^xsd:string ;
+        nif:topic       <http://example.org/document108#annotation0> .
+
+<http://example.org/document277#annotation0>
+        a                  nif:Annotation ;
+        itsrdf:taIdentRef  <http://dbpedia.org/resource/Kent> .

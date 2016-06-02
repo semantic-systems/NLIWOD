@@ -1,4 +1,4 @@
-package org.aksw.hawk.nlp.spotter;
+package org.aksw.hawk.spotter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -94,9 +94,6 @@ public class TagMe extends ASpotter {
 
 		} catch (ParseException | IOException e) {
 			log.error("Could not call TagMe for NER/NED", e);
-		}
-		if (!tmp.isEmpty()) {
-			log.debug("\t" + Joiner.on("\n").join(tmp.get("en")));
 		}
 		return tmp;
 	}

@@ -19,7 +19,7 @@ import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.nlp.SentenceToSequence;
-import org.aksw.hawk.nlp.spotter.Fox;
+import org.aksw.hawk.spotter.Fox;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;

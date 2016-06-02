@@ -1,4 +1,4 @@
-package org.aksw.hawk.nlp.spotter;
+package org.aksw.hawk.spotter;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -68,9 +68,6 @@ public class Spotlight extends ASpotter {
 			}
 		} catch (IOException | ParseException e) {
 			log.error("Could not call Spotlight for NER/NED", e);
-		}
-		if (!tmp.isEmpty()) {
-			log.debug("\t" + Joiner.on("\n").join(tmp.get("en")));
 		}
 		return tmp;
 	}
