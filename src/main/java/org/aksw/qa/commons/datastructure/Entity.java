@@ -4,8 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hp.hpl.jena.rdf.model.Resource;
-
+import org.apache.jena.rdf.model.Resource;
 
 /**
  *
@@ -14,26 +13,26 @@ import com.hp.hpl.jena.rdf.model.Resource;
  */
 public class Entity implements Serializable, Comparable<Entity> {
 
-	//TODO make thos things private
+	// TODO make thos things private
 	private static final long serialVersionUID = 7859357081713774767L;
 	public String label = "";
 	public String type = "";
-	public List<Resource> posTypesAndCategories = new ArrayList<Resource>();
-	public List<Resource> uris = new ArrayList<Resource>();
+	public List<Resource> posTypesAndCategories = new ArrayList<>();
+	public List<Resource> uris = new ArrayList<>();
 
 	/**
 	 *
 	 * @param label
 	 * @param type
 	 */
-	public Entity(String label, String type) {
+	public Entity(final String label, final String type) {
 		this.label = label;
 		this.type = type;
 	}
 
 	/**
 	* 
- 	*/
+	*/
 	public Entity() {
 	}
 
@@ -44,7 +43,7 @@ public class Entity implements Serializable, Comparable<Entity> {
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
-	public int compareTo(Entity o) {
+	public int compareTo(final Entity o) {
 		int thisLength = label.length();
 		int otherLength = o.label.length();
 		if (thisLength < otherLength) {
@@ -62,7 +61,7 @@ public class Entity implements Serializable, Comparable<Entity> {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
