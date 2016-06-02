@@ -11,6 +11,8 @@ import java.util.Map;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.qa.commons.datastructure.Entity;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,8 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class Spotlight extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(Spotlight.class);
@@ -32,7 +32,7 @@ public class Spotlight extends ASpotter {
 	public Spotlight() {
 	}
 
-	private String doTASK(String inputText) throws MalformedURLException, IOException, ProtocolException {
+	private String doTASK(final String inputText) throws MalformedURLException, IOException, ProtocolException {
 
 		String urlParameters = "text=" + URLEncoder.encode(inputText, "UTF-8");
 		urlParameters += "&confidence=" + confidence;
@@ -42,8 +42,8 @@ public class Spotlight extends ASpotter {
 	}
 
 	@Override
-	public Map<String, List<Entity>> getEntities(String question) {
-		HashMap<String, List<Entity>> tmp = new HashMap<String, List<Entity>>();
+	public Map<String, List<Entity>> getEntities(final String question) {
+		HashMap<String, List<Entity>> tmp = new HashMap<>();
 		try {
 			String foxJSONOutput = doTASK(question);
 
@@ -73,7 +73,7 @@ public class Spotlight extends ASpotter {
 	}
 
 	// TODO Christian: Unit Test
-	public static void main(String args[]) {
+	public static void main(final String args[]) {
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
 		ASpotter fox = new Spotlight();

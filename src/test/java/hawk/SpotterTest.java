@@ -9,19 +9,18 @@ import org.aksw.hawk.spotter.ASpotter;
 import org.aksw.hawk.spotter.Fox;
 import org.aksw.hawk.spotter.Spotlight;
 import org.aksw.qa.commons.datastructure.Entity;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class SpotterTest {
 	Logger log = LoggerFactory.getLogger(SpotterTest.class);
 
 	@Test
 	public void emtpyTest() {
-		Set<RDFNode> systemAnswers = new HashSet<RDFNode>();
+		Set<RDFNode> systemAnswers = new HashSet<>();
 		systemAnswers.add(new ResourceImpl("true"));
 		for (ASpotter m : new ASpotter[] { new Fox(), new Spotlight() }) {
 			log.info(m.toString());

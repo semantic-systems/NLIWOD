@@ -4,23 +4,22 @@ import java.sql.SQLException;
 import java.util.Set;
 
 import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
-//import org.aksw.jena_sparql_api.cache.extra.CacheCoreEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheCoreH2;
-import org.aksw.jena_sparql_api.cache.extra.CacheEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheExImpl;
+import org.aksw.jena_sparql_api.cache.extra.CacheBackend;
+import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
+import org.aksw.jena_sparql_api.cache.extra.CacheFrontendImpl;
+import org.aksw.jena_sparql_api.cache.h2.CacheCoreH2;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.apache.jena.atlas.json.JsonString;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.RDFNode;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /**
  * Creates thumbnail, abstract, comment, label per URI
@@ -37,8 +36,11 @@ public class AnswerBox {
 	static {
 		try {
 			long timeToLive = 360l * 24l * 60l * 60l * 1000l;
-			CacheCoreEx cacheBackend = CacheCoreH2.create("./sparql", timeToLive, true);
-			CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
+			CacheBackend cacheBackend = CacheCoreH2.create("./sparql", timeToLive, true);
+			CacheFrontend cacheFrontend = new CacheFrontendImpl(cacheBackend);
+			// CacheCoreEx cacheBackend = CacheCoreH2.create("./sparql",
+			// timeToLive, true);
+			// CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
 			qef = new QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql");
 			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
 		} catch (ClassNotFoundException | SQLException e) {
@@ -46,7 +48,7 @@ public class AnswerBox {
 		}
 	}
 
-	public static JSONObject buildAnswerBoxFeatures(String uri) {
+	public static JSONObject buildAnswerBoxFeatures(final String uri) {
 		JSONObject document = new JSONObject();
 		document.put("URI", new JsonString(uri));
 		Set<RDFNode> set = Sets.newHashSet();

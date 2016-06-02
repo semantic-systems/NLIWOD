@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.aksw</groupId>
 	<artifactId>hawk</artifactId>
-	<version>0.2.0</version>
+	<version>0.2.1</version>
 	<packaging>jar</packaging>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -153,12 +153,27 @@
 			<groupId>org.aksw</groupId>
 			<artifactId>gerbil.nif.transfer</artifactId>
 			<version>1.2.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jena-core</artifactId>
+					<groupId>org.apache.jena</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jena-arq</artifactId>
+					<groupId>org.apache.jena</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- Sparql -->
 		<dependency>
-			<groupId>org.aksw.jena-sparql-api</groupId>
-			<artifactId>jena-sparql-api-core</artifactId>
-			<version>2.10.0-22</version>
+    		<groupId>org.aksw.jena-sparql-api</groupId>
+    		<artifactId>jena-sparql-api-core</artifactId>
+    		<version>3.0.1-1</version>
+		</dependency>
+		<dependency>
+  		  <groupId>org.aksw.jena-sparql-api</groupId>
+    		<artifactId>jena-sparql-api-cache-h2</artifactId>
+   		 <version>3.0.1-1</version>
 		</dependency>
 		<!-- Predicate-Argument Trees -->
 		<dependency>
@@ -274,7 +289,7 @@
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>commons</artifactId>
-			<version>0.0.10-SNAPSHOT</version>
+			<version>0.0.11-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>edu.stanford.nlp</groupId>
@@ -298,11 +313,6 @@
 			<groupId>xml-apis</groupId>
 			<artifactId>xml-apis</artifactId>
 			<version>1.4.01</version>
-		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>1.4.191</version>
 		</dependency>
 	</dependencies>
 </project>

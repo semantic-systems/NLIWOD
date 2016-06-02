@@ -6,6 +6,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.vocabulary.RDFS;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field.Store;
@@ -24,14 +32,6 @@ import org.apache.lucene.util.Version;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.NodeIterator;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class DBOIndex {
 
@@ -68,7 +68,7 @@ public class DBOIndex {
 		}
 	}
 
-	public ArrayList<String> search(String object) {
+	public ArrayList<String> search(final String object) {
 		ArrayList<String> uris = Lists.newArrayList();
 		try {
 			log.debug("\t start asking index...");
@@ -86,8 +86,8 @@ public class DBOIndex {
 			// isearcher.search(q, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
 
-			for (int i = 0; i < hits.length; i++) {
-				Document hitDoc = isearcher.doc(hits[i].doc);
+			for (ScoreDoc hit : hits) {
+				Document hitDoc = isearcher.doc(hit.doc);
 				uris.add(hitDoc.get(FIELD_NAME_SUBJECT));
 			}
 			log.debug("\t finished asking index...");
@@ -137,7 +137,7 @@ public class DBOIndex {
 		}
 	}
 
-	private void addDocumentToIndex(Resource resource, String predicate, String object) throws IOException {
+	private void addDocumentToIndex(final Resource resource, final String predicate, final String object) throws IOException {
 		Document doc = new Document();
 		doc.add(new StringField(FIELD_NAME_SUBJECT, resource.getURI(), Store.YES));
 		doc.add(new StringField(FIELD_NAME_PREDICATE, predicate, Store.YES));

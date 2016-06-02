@@ -8,16 +8,15 @@ import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.jena.atlas.json.JsonString;
+import org.apache.jena.rdf.model.RDFNode;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import com.hp.hpl.jena.rdf.model.RDFNode;
 
 //TODO remove class when rest interface is not constantly pulling anymore
 public class JSONStatusBuilder {
 
 	@SuppressWarnings("unchecked")
-	public static JSONObject status(HAWKQuestion question) {
+	public static JSONObject status(final HAWKQuestion question) {
 		JSONObject document = new JSONObject();
 		document.put("input_question", question.getLanguageToQuestion().get("en"));
 
@@ -45,7 +44,7 @@ public class JSONStatusBuilder {
 		}
 		// POS tags
 		if (question.getTree() != null) {
-			Stack<MutableTreeNode> stack = new Stack<MutableTreeNode>();
+			Stack<MutableTreeNode> stack = new Stack<>();
 			stack.push(question.getTree().getRoot());
 			JSONArray tmp = new JSONArray();
 			while (!stack.isEmpty()) {
@@ -76,7 +75,7 @@ public class JSONStatusBuilder {
 
 		// annotation
 		if (question.getTree() != null) {
-			Stack<MutableTreeNode> stack = new Stack<MutableTreeNode>();
+			Stack<MutableTreeNode> stack = new Stack<>();
 			stack.push(question.getTree().getRoot());
 			JSONArray tmp = new JSONArray();
 			while (!stack.isEmpty()) {
@@ -115,7 +114,7 @@ public class JSONStatusBuilder {
 		return document;
 	}
 
-	public static JSONObject treeToJSON(MutableTree tree) {
+	public static JSONObject treeToJSON(final MutableTree tree) {
 		if (tree != null) {
 			JSONObject document = recursiveNodeLabel(tree.getRoot(), new JSONObject());
 			return document;
@@ -126,7 +125,7 @@ public class JSONStatusBuilder {
 	// FIXME if tree is final, do not use label but the first semantic
 	// annotation
 	@SuppressWarnings("unchecked")
-	private static JSONObject recursiveNodeLabel(MutableTreeNode node, JSONObject document) {
+	private static JSONObject recursiveNodeLabel(final MutableTreeNode node, final JSONObject document) {
 		document.put("label", node.label);
 		if (!node.children.isEmpty()) {
 			JSONArray tmp = new JSONArray();

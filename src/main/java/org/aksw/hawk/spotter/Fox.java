@@ -12,6 +12,14 @@ import java.util.Map;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.qa.commons.datastructure.Entity;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFReader;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -19,14 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.RDFReader;
-import com.hp.hpl.jena.rdf.model.ResIterator;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class Fox extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(Fox.class);
@@ -36,7 +36,7 @@ public class Fox extends ASpotter {
 	private String taskType = "NER";
 	private String inputType = "text";
 
-	private String doTask(String inputText) {
+	private String doTask(final String inputText) {
 
 		String urlParameters = "type=" + inputType;
 		urlParameters += "&task=" + taskType;
@@ -57,8 +57,8 @@ public class Fox extends ASpotter {
 	 * @see org.aksw.hawk.nlp.NERD_module#getEntities(java.lang.String)
 	 */
 	@Override
-	public Map<String, List<Entity>> getEntities(String question) {
-		HashMap<String, List<Entity>> mappedEntitysReturn = new HashMap<String, List<Entity>>();
+	public Map<String, List<Entity>> getEntities(final String question) {
+		HashMap<String, List<Entity>> mappedEntitysReturn = new HashMap<>();
 		String foxJSONOutput = null;
 
 		foxJSONOutput = doTask(question);
@@ -112,7 +112,7 @@ public class Fox extends ASpotter {
 	}
 
 	// TODO CHristian: Transform to unit test
-	public static void main(String args[]) {
+	public static void main(final String args[]) {
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
 		ASpotter fox = new Fox();

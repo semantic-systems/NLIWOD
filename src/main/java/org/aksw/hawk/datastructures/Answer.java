@@ -3,8 +3,7 @@ package org.aksw.hawk.datastructures;
 import java.util.Set;
 
 import org.aksw.hawk.querybuilding.SPARQLQuery;
-
-import com.hp.hpl.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.RDFNode;
 
 //FIXME mach eine ordentliche toString()
 public class Answer implements Comparable<Answer> {
@@ -18,7 +17,7 @@ public class Answer implements Comparable<Answer> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -42,7 +41,7 @@ public class Answer implements Comparable<Answer> {
 	public String queryString;
 
 	@Override
-	public int compareTo(Answer a) {
+	public int compareTo(final Answer a) {
 		return Double.compare(this.score, a.score);
 	}
 

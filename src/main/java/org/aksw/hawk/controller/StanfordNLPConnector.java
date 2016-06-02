@@ -68,8 +68,7 @@ public class StanfordNLPConnector {
 	 * Initializes the StanfordNLP with given Annotators.Complete Annotator list
 	 * at http://stanfordnlp.github.io/CoreNLP/annotators.html}
 	 * 
-	 * @param annotators
-	 *            Annotators to run
+	 * @param annotators Annotators to run
 	 */
 	public StanfordNLPConnector(String annotators) {
 		Properties props = new Properties();
@@ -79,8 +78,8 @@ public class StanfordNLPConnector {
 	}
 
 	/**
-	 * Initializes CoreNLP with default Annotators.
-	 * "tokenize, ssplit, pos, lemma,ner, parse, dcoref"
+	 * Initializes CoreNLP with default Annotators. "tokenize, ssplit, pos,
+	 * lemma,ner, parse, dcoref"
 	 */
 	public StanfordNLPConnector() {
 
@@ -126,6 +125,7 @@ public class StanfordNLPConnector {
 			if (!entity.label.equals("")) {
 				// " " inserted so punctuation gets separated correctly from
 				// URIs
+
 				sentence = sentence.replace(entity.label, entity.uris.get(0).getURI() + " ").trim();
 			} else {
 				log.error("Entity has no label in sentence: " + sentence);
@@ -137,8 +137,7 @@ public class StanfordNLPConnector {
 	/**
 	 * Runs StanfordNLP on given Question and returns processed Annotation
 	 * 
-	 * @param q
-	 *            The HAWKQuestion to be processed.
+	 * @param q The HAWKQuestion to be processed.
 	 * @return processed Question as Annotation
 	 */
 	public Annotation runAnnotation(HAWKQuestion q) {
@@ -152,8 +151,7 @@ public class StanfordNLPConnector {
 	/**
 	 * Runs StanfordNLP on given String and returns processed Annotation
 	 * 
-	 * @param q
-	 *            The HAWKQuestion to be processed.
+	 * @param q The HAWKQuestion to be processed.
 	 * @return processed Question as Annotation
 	 */
 	public Annotation runAnnotation(String s) {
@@ -167,8 +165,7 @@ public class StanfordNLPConnector {
 	/**
 	 * Extracts dependency Graph from processed Annotation.
 	 * 
-	 * @param document
-	 *            an Processed Annotation
+	 * @param document an Processed Annotation
 	 * @return Dependency Graph as MutableTree
 	 */
 	public MutableTree process(Annotation document) {
@@ -189,8 +186,7 @@ public class StanfordNLPConnector {
 	/**
 	 * Runs a NounPhrasCombination and dependency parsing on given HAWKQuestion
 	 * 
-	 * @param q
-	 *            The Question you want to run NounPhraseCombination on
+	 * @param q The Question you want to run NounPhraseCombination on
 	 */
 	public MutableTree combineSequences(HAWKQuestion q) {
 		/**
@@ -362,8 +358,8 @@ public class StanfordNLPConnector {
 				}
 
 				notCyclicChildren.removeAll(compounds);
-			}// end if CombinedNN
-		}// end if HAWKQuestion !=null
+			} // end if CombinedNN
+		} // end if HAWKQuestion !=null
 		for (IndexedWord child : notCyclicChildren) {
 
 			SemanticGraphEdge edge = graph.getEdge(parentGraphWord, child);

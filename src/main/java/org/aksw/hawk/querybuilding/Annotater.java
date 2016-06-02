@@ -12,14 +12,14 @@ import org.aksw.hawk.index.IndexDBO_properties;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.util.JSONStatusBuilder;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.ResultSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.ResultSet;
 
 public class Annotater {
 	Logger log = LoggerFactory.getLogger(Annotater.class);
@@ -30,11 +30,11 @@ public class Annotater {
 	Set<String> blacklist = Sets.newHashSet("people");
 	private SPARQL sparql;
 
-	public Annotater(SPARQL sparql) {
+	public Annotater(final SPARQL sparql) {
 		this.sparql = sparql;
 	}
 
-	public void annotateTree(HAWKQuestion q) {
+	public void annotateTree(final HAWKQuestion q) {
 		MutableTree tree = q.getTree();
 		annotateProjectionLeftTree(tree);
 		annotateVerbs(tree);
@@ -43,16 +43,20 @@ public class Annotater {
 	}
 
 	/**
-	 * "Named entities are noun phrases and are usually modeled as resources, thus a lexical entry is built comprising a syntactic noun phrase representation together with a corresponding semantic representation containing a resource slot."
-	 * citation by Unger et al. tbsl
+	 * "Named entities are noun phrases and are usually modeled as resources,
+	 * thus a lexical entry is built comprising a syntactic noun phrase
+	 * representation together with a corresponding semantic representation
+	 * containing a resource slot." citation by Unger et al. tbsl
 	 */
 	/**
-	 * "Nouns are often referring to classes, while sometimes to properties, thus two lexical entries are built { one containing a semantic representation with a class slot and one containing a semantic representation with a property slot."
-	 * citation by Unger et al. tbsl
+	 * "Nouns are often referring to classes, while sometimes to properties,
+	 * thus two lexical entries are built { one containing a semantic
+	 * representation with a class slot and one containing a semantic
+	 * representation with a property slot." citation by Unger et al. tbsl
 	 * 
 	 * @param tree
 	 */
-	private void annotateNouns(MutableTree tree) {
+	private void annotateNouns(final MutableTree tree) {
 		Stack<MutableTreeNode> stack = new Stack<>();
 		stack.push(tree.getRoot());
 		while (!stack.isEmpty()) {
@@ -117,7 +121,7 @@ public class Annotater {
 	 * 
 	 * @param tree
 	 */
-	private void annotateVerbs(MutableTree tree) {
+	private void annotateVerbs(final MutableTree tree) {
 		Stack<MutableTreeNode> stack = new Stack<>();
 		stack.push(tree.getRoot());
 		while (!stack.isEmpty()) {
@@ -143,7 +147,7 @@ public class Annotater {
 		}
 	}
 
-	private List<String> rank(List<String> search) {
+	private List<String> rank(final List<String> search) {
 		// TODO christian: this ranking killed a certain predicate important for
 		// some
 		// queries form training but stabilized ranking :)
@@ -181,7 +185,7 @@ public class Annotater {
 	 * 
 	 * @param tree
 	 */
-	private void annotateProjectionLeftTree(MutableTree tree) {
+	private void annotateProjectionLeftTree(final MutableTree tree) {
 		Stack<MutableTreeNode> stack = new Stack<>();
 		if (tree.getRoot() != null && tree.getRoot().getChildren() != null && !tree.getRoot().getChildren().isEmpty()) {
 			stack.push(tree.getRoot().getChildren().get(0));

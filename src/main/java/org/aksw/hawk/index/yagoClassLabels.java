@@ -6,13 +6,12 @@ import java.io.IOException;
 
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
-
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.ResultSet;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.ResultSet;
 
 public class yagoClassLabels {
 
-	public static void main(String args[]) throws IOException {
+	public static void main(final String args[]) throws IOException {
 		String endpoint = "http://lod.openlinksw.com/sparql";
 
 		QueryExecutionFactory qef = new QueryExecutionFactoryHttp(endpoint);

@@ -10,21 +10,21 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.pruner.ISPARQLQueryPruner;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.apache.jena.graph.Node;
+import org.apache.jena.graph.Triple;
+import org.apache.jena.query.ParameterizedSparqlString;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.sparql.core.Var;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import com.hp.hpl.jena.graph.Node;
-import com.hp.hpl.jena.graph.Triple;
-import com.hp.hpl.jena.query.ParameterizedSparqlString;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.sparql.core.Var;
 import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
 
@@ -52,7 +52,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 	// properties that are ignored when checking for disjointness
 	private static final Set<String> ignoredProperties = Sets.newHashSet("http://jena.apache.org/text#query", "http://dbpedia.org/ontology/abstract");
 
-	public DisjointnessBasedQueryFilter(QueryExecutionFactory qef) {
+	public DisjointnessBasedQueryFilter(final QueryExecutionFactory qef) {
 		this.qef = qef;
 	}
 
@@ -62,7 +62,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 	 * @see org.aksw.hawk.filtering.QueryFilter#filter(java.util.Set)
 	 */
 	@Override
-	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, HAWKQuestion q) {
+	public Set<SPARQLQuery> prune(final Set<SPARQLQuery> queryStrings, final HAWKQuestion q) {
 		MonitorFactory.getTimeMonitor("parse").reset();
 		Set<SPARQLQuery> filteredQueries = Sets.newHashSet();
 
@@ -75,8 +75,8 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 		return filteredQueries;
 	}
 
-	private Set<Node> getDomain(String predicate) {
-		Set<Node> domains = new HashSet<Node>();
+	private Set<Node> getDomain(final String predicate) {
+		Set<Node> domains = new HashSet<>();
 
 		domainQueryTemplate.setIri("p", predicate);
 
@@ -92,8 +92,8 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 		return domains;
 	}
 
-	private Set<Node> getRange(String predicate) {
-		Set<Node> range = new HashSet<Node>();
+	private Set<Node> getRange(final String predicate) {
+		Set<Node> range = new HashSet<>();
 
 		rangeQueryTemplate.setIri("p", predicate);
 
@@ -109,8 +109,8 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 		return range;
 	}
 
-	private Set<Node> getSuperClasses(String cls) {
-		Set<Node> superClasses = new HashSet<Node>();
+	private Set<Node> getSuperClasses(final String cls) {
+		Set<Node> superClasses = new HashSet<>();
 
 		superClassesQueryTemplate.setIri("sub", cls);
 
@@ -126,7 +126,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 		return superClasses;
 	}
 
-	private boolean accept(SPARQLQuery sparqlQuery) {
+	private boolean accept(final SPARQLQuery sparqlQuery) {
 		// build Query object
 		Monitor mon = MonitorFactory.getTimeMonitor("parse");
 		mon.start();
@@ -208,7 +208,7 @@ public class DisjointnessBasedQueryFilter implements ISPARQLQueryPruner {
 		return true;
 	}
 
-	private boolean conflicts(Set<Node> types1, Set<Node> types2) {
+	private boolean conflicts(final Set<Node> types1, final Set<Node> types2) {
 		return Sets.intersection(types1, types2).isEmpty();
 	}
 

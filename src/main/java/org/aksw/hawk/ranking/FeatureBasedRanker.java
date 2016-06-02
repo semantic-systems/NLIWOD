@@ -14,15 +14,19 @@ import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.qa.commons.datastructure.IQuestion;
+import org.apache.jena.rdf.model.RDFNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class FeatureBasedRanker implements Ranking {
 	public enum Feature {
-		PREDICATES, PATTERN, NR_OF_CONSTRAINTS, NR_OF_TYPES, NR_OF_TERMS
+		PREDICATES,
+		PATTERN,
+		NR_OF_CONSTRAINTS,
+		NR_OF_TYPES,
+		NR_OF_TERMS
 	}
 
 	private static Logger log = LoggerFactory.getLogger(FeatureBasedRanker.class);
@@ -30,13 +34,13 @@ public class FeatureBasedRanker implements Ranking {
 	private Map<String, Double> vec;
 	private Collection<Feature> features;
 
-	public void learn(IQuestion q, Set<SPARQLQuery> queries) {
+	public void learn(final IQuestion q, final Set<SPARQLQuery> queries) {
 		db.store(q, queries);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public List<Answer> rank(List<Answer> answers, HAWKQuestion q) {
+	public List<Answer> rank(final List<Answer> answers, final HAWKQuestion q) {
 		Map<Answer, Double> buckets = Maps.newHashMap();
 
 		for (Answer answer : answers) {
@@ -50,7 +54,8 @@ public class FeatureBasedRanker implements Ranking {
 		List tmplist = new LinkedList(buckets.entrySet());
 
 		Collections.sort(tmplist, new Comparator() {
-			public int compare(Object o1, Object o2) {
+			@Override
+			public int compare(final Object o1, final Object o2) {
 				return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
 			}
 		});
@@ -65,10 +70,9 @@ public class FeatureBasedRanker implements Ranking {
 	}
 
 	/**
-	 * @param features
-	 *            the features to set
+	 * @param features the features to set
 	 */
-	public void setFeatures(Collection<Feature> features) {
+	public void setFeatures(final Collection<Feature> features) {
 		this.features = features;
 	}
 
@@ -101,7 +105,7 @@ public class FeatureBasedRanker implements Ranking {
 
 	}
 
-	private void addOneToMapAtKey(Map<String, Double> map, String key) {
+	private void addOneToMapAtKey(final Map<String, Double> map, final String key) {
 		if (map.containsKey(key)) {
 			map.put(key, map.get(key) + 1.0);
 		} else {
@@ -109,7 +113,7 @@ public class FeatureBasedRanker implements Ranking {
 		}
 	}
 
-	private Map<String, Double> calculateRanking(SPARQLQuery q) {
+	private Map<String, Double> calculateRanking(final SPARQLQuery q) {
 		// a priori assumption
 		Collections.sort(q.constraintTriples);
 		// here are the features
@@ -142,7 +146,7 @@ public class FeatureBasedRanker implements Ranking {
 		return featureValues;
 	}
 
-	private double cosinus(Map<String, Double> calculateRanking, Map<String, Double> goldVector) {
+	private double cosinus(final Map<String, Double> calculateRanking, final Map<String, Double> goldVector) {
 		double dotProduct = 0;
 		for (String key : goldVector.keySet()) {
 			if (calculateRanking.containsKey(key)) {
@@ -161,11 +165,11 @@ public class FeatureBasedRanker implements Ranking {
 		return dotProduct / (magnitude_A * magnitude_B);
 	}
 
-	private double numberOfConstraints(SPARQLQuery query) {
+	private double numberOfConstraints(final SPARQLQuery query) {
 		return query.constraintTriples.size();
 	}
 
-	private Double numberOfTermsInTextQuery(SPARQLQuery q) {
+	private Double numberOfTermsInTextQuery(final SPARQLQuery q) {
 		// assuming there is only one variable left to search the text
 		for (String key : q.textMapFromVariableToSingleFuzzyToken.keySet()) {
 			return (double) q.textMapFromVariableToSingleFuzzyToken.get(key).size();
@@ -173,7 +177,7 @@ public class FeatureBasedRanker implements Ranking {
 		return 0.0;
 	}
 
-	private Double numberOfTypes(SPARQLQuery q) {
+	private Double numberOfTypes(final SPARQLQuery q) {
 		String[] split = new String[3];
 		double numberOfTypes = 0;
 		for (String triple : q.constraintTriples) {
@@ -185,7 +189,7 @@ public class FeatureBasedRanker implements Ranking {
 		return numberOfTypes;
 	}
 
-	private Map<String, Double> usedPattern(SPARQLQuery q) {
+	private Map<String, Double> usedPattern(final SPARQLQuery q) {
 		// build list of patterns, indicate text position
 		Map<String, Double> map = Maps.newHashMap();
 		String[] split = new String[3];
@@ -237,7 +241,7 @@ public class FeatureBasedRanker implements Ranking {
 		return map;
 	}
 
-	private Map<String, Double> usedPredicates(SPARQLQuery q) {
+	private Map<String, Double> usedPredicates(final SPARQLQuery q) {
 		// build list of all predicates from gold queries
 		Map<String, Double> map = Maps.newHashMap();
 		String[] split = new String[3];

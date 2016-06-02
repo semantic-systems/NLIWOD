@@ -5,21 +5,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.Syntax;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.sparql.core.Var;
+import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
+
 import com.google.common.collect.Sets;
 import com.google.common.collect.Sets.SetView;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.query.Syntax;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.sparql.core.Var;
-import com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP;
 
 //TODO replace by qa-commons
 public class EvaluationUtils {
 
-	public static double precision(String sparqlQueryString, String targetSPARQLQueryString, String endpoint) {
+	public static double precision(final String sparqlQueryString, final String targetSPARQLQueryString, final String endpoint) {
 		Query sparqlQuery = QueryFactory.create(sparqlQueryString, Syntax.syntaxARQ);
 		sparqlQuery.setDistinct(true);
 		Query targetSPARQLQuery = QueryFactory.create(targetSPARQLQueryString, Syntax.syntaxARQ);
@@ -43,7 +44,7 @@ public class EvaluationUtils {
 		return precision;
 	}
 
-	public static double recall(String sparqlQueryString, String targetSPARQLQueryString, String endpoint) {
+	public static double recall(final String sparqlQueryString, final String targetSPARQLQueryString, final String endpoint) {
 		Query sparqlQuery = QueryFactory.create(sparqlQueryString, Syntax.syntaxARQ);
 		sparqlQuery.setDistinct(true);
 		Query targetSPARQLQuery = QueryFactory.create(targetSPARQLQueryString, Syntax.syntaxARQ);
@@ -68,7 +69,7 @@ public class EvaluationUtils {
 		return recall;
 	}
 
-	public static double fMeasure(String sparqlQuery, String targetSPARQLQuery, String endpoint) {
+	public static double fMeasure(final String sparqlQuery, final String targetSPARQLQuery, final String endpoint) {
 		double precision = precision(sparqlQuery, targetSPARQLQuery, endpoint);
 		double recall = recall(sparqlQuery, targetSPARQLQuery, endpoint);
 		double fMeasure = 0;
@@ -86,14 +87,14 @@ public class EvaluationUtils {
 	 * @param endpoint
 	 * @return
 	 */
-	public static Set<RDFNode> executeSelect(Query query, String endpoint) {
+	public static Set<RDFNode> executeSelect(final Query query, final String endpoint) {
 		if (query.isQueryResultStar()) {
 			// don't know how to handle this in general
 			return null;
 		}
 		ResultSet rs;
 		QueryEngineHTTP qe = new QueryEngineHTTP(endpoint, query);
-		List<String> defaultGraph = new ArrayList<String>();
+		List<String> defaultGraph = new ArrayList<>();
 		defaultGraph.add("http://dbpedia.org");
 		qe.setDefaultGraphURIs(defaultGraph);
 		rs = qe.execSelect();
@@ -106,7 +107,7 @@ public class EvaluationUtils {
 		} else {// if there is a aggregation, e.g. 'SELECT COUNT(?uri)...'
 			projectionVar = rs.getResultVars().get(0);
 		}
-		Set<RDFNode> nodes = new HashSet<RDFNode>();
+		Set<RDFNode> nodes = new HashSet<>();
 		QuerySolution qs;
 		while (rs.hasNext()) {
 			qs = rs.next();
@@ -117,16 +118,16 @@ public class EvaluationUtils {
 		return nodes;
 	}
 
-	public static boolean executeAsk(Query query, String endpoint) {
+	public static boolean executeAsk(final Query query, final String endpoint) {
 		QueryEngineHTTP qe = new QueryEngineHTTP(endpoint, query);
-		List<String> defaultGraph = new ArrayList<String>();
+		List<String> defaultGraph = new ArrayList<>();
 		defaultGraph.add("http://dbpedia.org");
 		qe.setDefaultGraphURIs(defaultGraph);
 		boolean ret = qe.execAsk();
 		return ret;
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(final String[] args) throws Exception {
 		String sparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> " + "PREFIX res: <http://dbpedia.org/resource/> " + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
 		        + "SELECT DISTINCT ?uri WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts .}";
 		String targetSPARQLQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> " + "PREFIX res: <http://dbpedia.org/resource/> " + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "

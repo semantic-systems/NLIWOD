@@ -6,6 +6,7 @@ import java.util.Stack;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.qa.commons.datastructure.Entity;
+import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +18,6 @@ import com.clearnlp.tokenization.AbstractTokenizer;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 //TODO make this class independently of other classes callable
 //TODO write unit test
@@ -27,7 +27,7 @@ public class SentenceToSequence {
 	static Logger log = LoggerFactory.getLogger(SentenceToSequence.class);
 
 	// combine noun phrases
-	public static void combineSequences(HAWKQuestion q) {
+	public static void combineSequences(final HAWKQuestion q) {
 		// run pos-tagging
 		String sentence = q.getLanguageToQuestion().get("en");
 
@@ -40,14 +40,14 @@ public class SentenceToSequence {
 		// log.debug(q.languageToNounPhrases.get("en"));
 	}
 
-	public static Map<String, String> generatePOSTags(HAWKQuestion q) {
+	public static Map<String, String> generatePOSTags(final HAWKQuestion q) {
 		ParseTree parse = new ParseTree();
 		DEPTree tree = parse.process(q);
 
 		// TODO this is horribly wrong, the same label CAN have different pos if
 		// the label occurs twice in question
 		Map<String, String> label2pos = Maps.newHashMap();
-		Stack<DEPNode> stack = new Stack<DEPNode>();
+		Stack<DEPNode> stack = new Stack<>();
 		stack.push(tree.getFirstRoot());
 		while (!stack.isEmpty()) {
 			DEPNode tmp = stack.pop();
@@ -61,7 +61,7 @@ public class SentenceToSequence {
 
 	}
 
-	public static void runPhraseCombination(HAWKQuestion q, List<String> tokens, Map<String, String> label2pos) {
+	public static void runPhraseCombination(final HAWKQuestion q, final List<String> tokens, final Map<String, String> label2pos) {
 		// run phrase combination
 		List<String> subsequence = Lists.newArrayList();
 		for (int tcounter = 0; tcounter < tokens.size(); tcounter++) {
@@ -110,7 +110,7 @@ public class SentenceToSequence {
 		// log.debug(q.languageToNounPhrases.get("en"));
 	}
 
-	public static void transformTree(List<String> subsequence, HAWKQuestion q) {
+	public static void transformTree(final List<String> subsequence, final HAWKQuestion q) {
 		String combinedNN = Joiner.on(" ").join(subsequence);
 		String combinedURI = "http://aksw.org/combinedNN/" + Joiner.on("_").join(subsequence);
 
@@ -127,7 +127,7 @@ public class SentenceToSequence {
 	}
 
 	// TODO Christian: transform to unit test
-	public static void main(String args[]) {
+	public static void main(final String args[]) {
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", "Who was vice-president under the president who authorized atomic weapons against Japan during World War II?");
 		SentenceToSequence.combineSequences(q);
