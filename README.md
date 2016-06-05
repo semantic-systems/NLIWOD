@@ -15,9 +15,10 @@ Action items: Implement various wrappers for webservices to train and test on. S
 * SINA http://sina.aksw.org/
 * LODQA http://lodqa.org/
 * HAWK http://hawk.aksw.org/
+* poweraqua http://poweraqua.open.ac.uk:8080/poweraqua
+* gAnswer http://59.108.48.18:8080/gAnswer/ganswer.jsp
 
 No demo found sofar for
-* poweraqua
 * ISOFT
 * QAnswer
 * APEQ
@@ -28,7 +29,6 @@ No demo found sofar for
 * DEANNA
 * Intui3
 * RTV
-* gAnswer
 * CASIA
 * MHE
 * SemSeK
