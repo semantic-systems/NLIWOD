@@ -25,6 +25,14 @@ No demo found sofar for
 * Xser
 * Freya
 * questIO
+* DEANNA
+* Intui3
+* RTV
+* gAnswer
+* CASIA
+* MHE
+* SemSeK
+
 
 For more systems see page 7 http://www.semantic-web-journal.net/system/files/swj1205.pdf
 
