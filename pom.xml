@@ -160,19 +160,13 @@
 
         <dependency>
             <groupId>nz.ac.waikato.cms.weka</groupId>
-            <artifactId>weka-stable</artifactId>
-            <version>3.6.6</version>
+            <artifactId>weka-dev</artifactId>
+            <version>3.7.12</version>
         </dependency>
         <dependency>
             <groupId>org.aksw.qa</groupId>
             <artifactId>commons</artifactId>
             <version>0.0.7</version>
-        </dependency>
-        <!-- JSON for FOX -->
-        <dependency>
- <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>1.1</version>
         </dependency>
         <!-- RDF parsing for FOX -->
         <dependency>
@@ -215,6 +209,11 @@
         	<groupId>org.aksw.jena-sparql-api</groupId>
         	<artifactId>jena-sparql-api-core</artifactId>
         	<version>2.10.0-22</version>
+        </dependency>
+        <dependency>
+        	<groupId>net.sf.meka</groupId>
+        	<artifactId>meka</artifactId>
+        	<version>1.9.0</version>
         </dependency>
     </dependencies>
 </project>

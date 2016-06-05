@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.aksw.qa.systems.ASystem;
@@ -17,6 +18,7 @@ import org.aksw.qa.systems.HAWK;
 import org.aksw.qa.systems.QAKIS;
 import org.aksw.qa.systems.SINA;
 import org.aksw.qa.systems.YODA;
+import org.aksw.qa.util.ResponseToStringParser;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -36,7 +38,6 @@ import org.slf4j.LoggerFactory;
 
 public class RunProducer {
 	static Logger log = LoggerFactory.getLogger(RunProducer.class);
-
 	public static void main(String[] args) throws Exception {
 		getAnswers(Dataset.QALD6_Train_Multilingual);
 	}
@@ -86,11 +87,11 @@ public class RunProducer {
 			questiondata.put("id", question.getId());
 			questiondata.put("question", question.getLanguageToQuestion().get("en"));
 			questiondata.put("answertype", question.getAnswerType());
-			HashSet<String> goldAnswers = (HashSet<String>) question.getGoldenAnswers();
+			Set<String> goldAnswers = question.getGoldenAnswers();
 			//we have to use Lists to get a valid json array
 			questiondata.put("goldanswers", goldAnswers.stream().collect(Collectors.toList()));
 			for(ASystem system: systems){
-				HashSet<String> foundAnswers = system.search(question.getLanguageToQuestion().get("en"));
+				Set<String> foundAnswers = system.search(question.getLanguageToQuestion().get("en")).getGoldenAnswers();
 				JSONObject s = new JSONObject();
 				//yodas answers have to be converted to resources if the answertype is "resource"
 				if(system.name().equals("yoda") && question.getAnswerType().equals("resource"))
@@ -134,17 +135,17 @@ public class RunProducer {
 	 * a ~ retrieved answers b ~ gold answers
 	 */
 	
-	public static float fmeasure(HashSet<String> a, HashSet<String> b){
+	public static float fmeasure(Set<String> foundAnswers, Set<String> goldAnswers){
 		float precision;
 		float recall;
 		float fmeasure;
-		HashSet<String> intersection = new HashSet<String>(a);
-		intersection.retainAll(b);
-		if(a.size()>0)
-			precision = intersection.size() / (float) a.size();
+		HashSet<String> intersection = new HashSet<String>(foundAnswers);
+		intersection.retainAll(goldAnswers);
+		if(foundAnswers.size()>0)
+			precision = intersection.size() / (float) foundAnswers.size();
 		else
 			precision = 0;
-		recall = intersection.size() / (float) b.size();
+		recall = intersection.size() / (float) goldAnswers.size();
 		if(recall > 0 && precision >0)
 			fmeasure = 2*(precision*recall) / (float) (precision + recall);
 		else
@@ -157,8 +158,7 @@ public class RunProducer {
 	
 	public static String stringToResource(String answer){
 		try {
-			//hawk is needed for responseToString
-			HAWK hawk = new HAWK();
+			ResponseToStringParser parser = new ResponseToStringParser();
 			HttpClient client = HttpClientBuilder.create().build();
 			URI uri = new URIBuilder().setScheme("http").setHost("dbpedia.org").setPath("/sparql")
 					.setParameter("default-graph-uri", "http://dbpedia.org")
@@ -172,7 +172,7 @@ public class RunProducer {
 			HttpGet httpget = new HttpGet(uri);
 			HttpResponse response = client.execute(httpget);
 			Document doc;
-			doc = Jsoup.parse(hawk.responseToString(response));
+			doc = Jsoup.parse(parser.responseToString(response));
 		return doc.select("a").attr("href");
 		} catch (IllegalStateException | IOException | URISyntaxException e) {
 			e.printStackTrace();

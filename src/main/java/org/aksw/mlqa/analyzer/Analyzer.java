@@ -16,14 +16,14 @@ import org.aksw.mlqa.analyzer.questionword.QuestionWord;
 import org.aksw.mlqa.analyzer.superlative.Superlative;
 
 import weka.core.Attribute;
-import weka.core.FastVector;
+import weka.core.DenseInstance;
 import weka.core.Instance;
 
 public class Analyzer {
 
 	private ArrayList<IAnalyzer> analyzers;
 	private Attribute fmeasureAtt = new Attribute("fmeasure");
-	public FastVector fvWekaAttributes = new FastVector();
+	public ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 
 	/**
 	 *
@@ -52,10 +52,10 @@ public class Analyzer {
 
 		// Declare the feature vector, register their attributes
 		for (IAnalyzer analyzer : analyzers) {
-			fvWekaAttributes.addElement(analyzer.getAttribute());
+			fvWekaAttributes.add(analyzer.getAttribute());
 		}
 		// put the fmeasure/class attribute
-		fvWekaAttributes.addElement(fmeasureAtt);
+		fvWekaAttributes.add(fmeasureAtt);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class Analyzer {
 	 */
 	public Instance analyze(String q) {
 		// +1 to later add class attribute
-		Instance tmpInstance = new Instance(fvWekaAttributes.size());
+		Instance tmpInstance = new DenseInstance(fvWekaAttributes.size());
 		// the feature adds itself to the instance
 		for (IAnalyzer analyzer : analyzers) {
 			Attribute attribute = analyzer.getAttribute();

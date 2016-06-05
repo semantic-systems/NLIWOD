@@ -2,6 +2,7 @@ package org.aksw.mlqa.experiment;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import org.aksw.mlqa.analyzer.Analyzer;
 import org.aksw.qa.commons.datastructure.IQuestion;
@@ -36,24 +37,24 @@ public class ArffFileFromRun {
 		 * For multilable classification:
 		 */
 		
-		FastVector fvhawk = new FastVector();
-		fvhawk.addElement("1");
-		fvhawk.addElement("0");
+		ArrayList<String> fvhawk = new ArrayList<String>();
+		fvhawk.add("1");
+		fvhawk.add("0");
 		Attribute hawkatt = new Attribute("hawk", fvhawk);
 		
-		FastVector fvqakis = new FastVector();
-		fvqakis.addElement("1");
-		fvqakis.addElement("0");
+		ArrayList<String> fvqakis = new ArrayList<String>();
+		fvqakis.add("1");
+		fvqakis.add("0");
 		Attribute qakisatt = new Attribute("qakis", fvqakis);
 		
-		FastVector fvyoda = new FastVector();
-		fvyoda.addElement("1");
-		fvyoda.addElement("0");
+		ArrayList<String> fvyoda = new ArrayList<String>();
+		fvyoda.add("1");
+		fvyoda.add("0");
 		Attribute yodaatt = new Attribute("yoda", fvyoda);
 		
-		FastVector fvsina = new FastVector();
-		fvsina.addElement("1");
-		fvsina.addElement("0");
+		ArrayList<String> fvsina = new ArrayList<String>();
+		fvsina.add("1");
+		fvsina.add("0");
 		Attribute sinaatt = new Attribute("sina", fvsina);
 		
 
@@ -73,12 +74,12 @@ public class ArffFileFromRun {
 		// 1.2 calculate the features per question and system
 		log.debug("Calculate the features per question and system");
 		Analyzer analyzer = new Analyzer();
-		FastVector fvfinal = analyzer.fvWekaAttributes;
+		ArrayList<Attribute> fvfinal = analyzer.fvWekaAttributes;
 		
-		fvfinal.insertElementAt(hawkatt, 0);
-		fvfinal.insertElementAt(yodaatt, 0);
-		fvfinal.insertElementAt(sinaatt, 0);
-		fvfinal.insertElementAt(qakisatt, 0);
+		fvfinal.add(0, hawkatt);
+		fvfinal.add(0, yodaatt);
+		fvfinal.add(0, sinaatt);
+		fvfinal.add(0,qakisatt);
 		
 		
 		Instances trainingSet = new Instances("training_classifier: -C 4" , fvfinal, trainQuestions.size());

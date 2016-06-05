@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.aksw.mlqa.analyzer.Analyzer;
@@ -16,6 +17,7 @@ import weka.core.FastVector;
 import weka.core.Instance;
 import weka.core.Instances;
 
+@SuppressWarnings("deprecation")
 public class ArffFileFromCorrectedTSV {
 	static Logger log = LoggerFactory.getLogger(ArffFileFromCorrectedTSV.class);
 	
@@ -24,24 +26,25 @@ public class ArffFileFromCorrectedTSV {
 		 * The .tsv should have the form : "question	f(HAWK)	f(YODA)	f(QAKIS)"
 		 */
 	
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws Exception {		
 		/*
 		 * For multilable classification:
 		 */
 		
-		FastVector fvhawk = new FastVector();
-		fvhawk.addElement("1");
+		FastVector<String> fvhawk = new FastVector<String>();
 		fvhawk.addElement("0");
+		fvhawk.addElement("1");
 		Attribute hawkatt = new Attribute("hawk", fvhawk);
 		
-		FastVector fvqakis = new FastVector();
-		fvqakis.addElement("1");
+		FastVector<String> fvqakis = new FastVector<String>();
 		fvqakis.addElement("0");
+		fvqakis.addElement("1");
 		Attribute qakisatt = new Attribute("qakis", fvqakis);
 		
-		FastVector fvyoda = new FastVector();
-		fvyoda.addElement("1");
+		FastVector<String> fvyoda = new FastVector<String>();
 		fvyoda.addElement("0");
+		fvyoda.addElement("1");
 		Attribute yodaatt = new Attribute("yoda", fvyoda);
 		
 		/*
@@ -66,12 +69,14 @@ public class ArffFileFromCorrectedTSV {
 		// 1.2 calculate the features per question and system
 		log.debug("Calculate the features per question and system");
 		Analyzer analyzer = new Analyzer();
-		FastVector fvfinal = analyzer.fvWekaAttributes;
+		@SuppressWarnings("unchecked")
+		ArrayList<Attribute> fvfinal = analyzer.fvWekaAttributes;
 		
-		fvfinal.insertElementAt(hawkatt, 0);
-		fvfinal.insertElementAt(yodaatt, 0);
-		//fvfinal.insertElementAt(sinaatt, 0);
-		fvfinal.insertElementAt(qakisatt, 0);
+		fvfinal.add(0, hawkatt);
+		fvfinal.add(0, yodaatt);
+		//fvfinal.add(0, sinaatt);
+		fvfinal.add(0,qakisatt);
+		
 		
 		
 		Instances trainingSet = new Instances("training_classifier: -C 3" , fvfinal, tsvlines.size());
