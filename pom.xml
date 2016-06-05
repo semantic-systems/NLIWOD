@@ -201,9 +201,9 @@
         	<version>4.5.2</version>
         </dependency>
         <dependency>
-        	<groupId>org.aksw</groupId>
-        	<artifactId>qa.systems</artifactId>
-        	<version>0.0.2</version>
+        	<groupId>org.aksw.qa</groupId>
+        	<artifactId>systems</artifactId>
+        	<version>0.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
         	<groupId>org.aksw.jena-sparql-api</groupId>
