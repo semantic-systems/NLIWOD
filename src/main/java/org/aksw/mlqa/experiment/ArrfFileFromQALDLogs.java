@@ -71,6 +71,7 @@ public class ArrfFileFromQALDLogs {
 		try (FileWriter file = new FileWriter("./src/main/resources/Qald6Logs.arff")) {
 			file.write(trainingSet.toString());
 		} catch (IOException e) {
+			log.debug("writing failed.");
 			e.printStackTrace();
 		}				
 	};
