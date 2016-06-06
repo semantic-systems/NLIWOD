@@ -36,6 +36,7 @@ public class QALD6_Pipeline {
 		double count = 0;
 		double countNULLAnswer = 0;
 		for (HAWKQuestion q : questions) {
+			System.gc();
 			if (q.checkSuitabillity()) {
 				log.info("Run pipeline on "+count+":" + q.getLanguageToQuestion().get("en"));
 				List<Answer> answers = pipeline.getAnswersToQuestion(q);
@@ -76,6 +77,7 @@ public class QALD6_Pipeline {
 				// feature_ranker.learn(q, queries);
 			}
 		}
+		
 		log.info("Number of questions with answer: " + count + ", number of questions without answer: " + countNULLAnswer);
 		log.info("Average F-measure: " + (average / count));
 

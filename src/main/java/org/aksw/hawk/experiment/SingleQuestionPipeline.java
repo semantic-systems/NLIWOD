@@ -32,7 +32,8 @@ public class SingleQuestionPipeline {
 		AbstractPipeline pipeline = new PipelineStanford();
 
 		HAWKQuestion q = new HAWKQuestion();
-		q.getLanguageToQuestion().put("en", "Which anti-apartheid activist was born in Mvezo?");
+//		q.getLanguageToQuestion().put("en", "Which anti-apartheid activist was born in Mvezo?");
+		q.getLanguageToQuestion().put("en", "Who is the president of the United States?");
 
 		log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
 		List<Answer> answers = pipeline.getAnswersToQuestion(q);

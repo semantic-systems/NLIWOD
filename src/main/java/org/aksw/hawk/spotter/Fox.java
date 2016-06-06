@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 
+//FIXME deprecated until offset is set
+@Deprecated 
 public class Fox extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(Fox.class);
 

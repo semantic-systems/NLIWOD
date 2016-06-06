@@ -26,7 +26,7 @@ public class Spotlight extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(Spotlight.class);
 
 	private String requestURL = "http://spotlight.sztaki.hu:2222/rest/annotate";
-	private String confidence = "0.2";
+	private String confidence = "0.3";
 	private String support = "20";
 
 	public Spotlight() {
@@ -56,6 +56,9 @@ public class Spotlight extends ASpotter {
 				for (Object res : resources.toArray()) {
 					JSONObject next = (JSONObject) res;
 					Entity ent = new Entity();
+					// FIXME implement offset also for other spotters, write a
+					// test that each spotter returns an offset
+					ent.setOffset(Integer.valueOf((String) next.get("@offset")));
 					ent.label = (String) next.get("@surfaceForm");
 					String uri = ((String) next.get("@URI")).replaceAll(",", "%2C");
 					ent.uris.add(new ResourceImpl(uri));
@@ -75,8 +78,12 @@ public class Spotlight extends ASpotter {
 	// TODO Christian: Unit Test
 	public static void main(final String args[]) {
 		HAWKQuestion q = new HAWKQuestion();
-		q.getLanguageToQuestion().put("en", "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
+		// q.getLanguageToQuestion().put("en",
+		// "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
+		q.getLanguageToQuestion().put("en", "Which anti-apartheid activist was born in Mvezo?");
+
 		ASpotter fox = new Spotlight();
+
 		q.setLanguageToNamedEntites(fox.getEntities(q.getLanguageToQuestion().get("en")));
 		for (String key : q.getLanguageToNamedEntites().keySet()) {
 			System.out.println(key);
