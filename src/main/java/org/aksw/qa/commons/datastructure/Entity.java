@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.apache.jena.rdf.model.Resource;
 
+import com.google.common.base.Joiner;
+
 /**
  *
  * @author ricardousbeck
@@ -13,12 +15,13 @@ import org.apache.jena.rdf.model.Resource;
  */
 public class Entity implements Serializable, Comparable<Entity> {
 
-	// TODO make thos things private
+	// TODO make those things private
 	private static final long serialVersionUID = 7859357081713774767L;
 	public String label = "";
 	public String type = "";
 	public List<Resource> posTypesAndCategories = new ArrayList<>();
 	public List<Resource> uris = new ArrayList<>();
+	private int offset;
 
 	/**
 	 *
@@ -102,7 +105,15 @@ public class Entity implements Serializable, Comparable<Entity> {
 	 */
 	@Override
 	public String toString() {
-		return label + "(" + type + ")";
+		return label + "(uri: "+ Joiner.on(", ").join(uris) + "; type: "+ type + ")";
 	}
+
+	public int getOffset() {
+	    return offset;
+    }
+
+	public void setOffset(int offset) {
+	    this.offset = offset;
+    }
 
 }
