@@ -1,4 +1,4 @@
-package org.aksw.hawk.nlp.spotter;
+package org.aksw.hawk.spotter;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 
+//FIXME deprecated until offset is set
+@Deprecated 
 public class Fox extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(Fox.class);
 

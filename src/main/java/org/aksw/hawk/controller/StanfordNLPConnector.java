@@ -2,6 +2,7 @@ package org.aksw.hawk.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -11,10 +12,18 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.nlp.SentenceToSequence;
+import org.aksw.hawk.spotter.Spotlight;
 import org.aksw.qa.commons.datastructure.Entity;
+import org.aksw.qa.commons.datastructure.IQuestion;
+import org.aksw.qa.commons.load.Dataset;
+import org.aksw.qa.commons.load.QALD_Loader;
+import org.apache.jena.ext.com.google.common.collect.Lists;
+import org.apache.jena.rdf.model.impl.ResourceImpl;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,6 +100,9 @@ public class StanfordNLPConnector {
 	 * @return
 	 */
 
+	// TODO @ christian einen test schreiben mit der frage : Who was vice
+	// president under the president who approved the use of atomic weapons
+	// against Japan during World War II?
 	private String replaceNamedEntitysWithURL(final HAWKQuestion q) {
 		String sentence = q.getLanguageToQuestion().get("en");
 		if (!q.getLanguageToNamedEntites().isEmpty()) {
@@ -105,7 +117,10 @@ public class StanfordNLPConnector {
 		return sentence;
 	}
 
+	// TODO replace this code change also in clearnlp by introducing one util
+	// class
 	/**
+	 *
 	 * Copy Paste from hawk.nlp.ParseTree to make this class independent from
 	 * Code which uses ClearNLP
 	 * 
@@ -113,18 +128,34 @@ public class StanfordNLPConnector {
 	 * @param list
 	 * @return
 	 */
-	private String replaceLabelsByIdentifiedURIs(String sentence, final List<Entity> list) {
-		for (Entity entity : list) {
-			if (!entity.label.equals("")) {
-				// " " inserted so punctuation gets separated correctly from
-				// URIs
 
-				sentence = sentence.replace(entity.label, entity.uris.get(0).getURI() + " ").trim();
-			} else {
-				log.error("Entity has no label in sentence: " + sentence);
+	private String replaceLabelsByIdentifiedURIs(final String sentence, final List<Entity> list) {
+		/*
+		 * reverse list of entities to start replacing from the end of the
+		 * string so that replacing from the end won't mess up the order
+		 */
+		List<String> textParts = new ArrayList<>();
+
+		list.sort(Comparator.comparing(Entity::getOffset).reversed());
+		int startFormerLabel = sentence.length();
+		for (Entity currentNE : list) {
+			// proof if this label undercuts the last one.
+			int currentNEStartPos = currentNE.getOffset();
+			int currentNEEndPos = currentNEStartPos + currentNE.label.length();
+			if (startFormerLabel >= currentNEEndPos) {
+				textParts.add(sentence.substring(currentNEEndPos, startFormerLabel));
+				textParts.add(currentNE.uris.get(0).getURI());
+				startFormerLabel = currentNEStartPos;
 			}
 		}
-		return sentence;
+		if (startFormerLabel > 0) {
+			textParts.add(sentence.substring(0, startFormerLabel));
+		}
+		StringBuilder textWithMarkups = new StringBuilder();
+		for (int i = textParts.size() - 1; i >= 0; --i) {
+			textWithMarkups.append(textParts.get(i));
+		}
+		return textWithMarkups.toString();
 	}
 
 	/**
@@ -190,7 +221,7 @@ public class StanfordNLPConnector {
 		 * 
 		 */
 		String sentence = this.replaceNamedEntitysWithURL(q);
-		log.debug(sentence);
+		log.info(sentence);
 
 		Annotation document = this.runAnnotation(sentence);
 
@@ -251,6 +282,7 @@ public class StanfordNLPConnector {
 	 */
 	private MutableTree semanticGraphToMutableTree(final SemanticGraph graph, final HAWKQuestion q) {
 		log.debug("use following tree for more than compound noun combination??");
+
 		log.debug(graph.toString(SemanticGraph.OutputFormat.LIST));
 
 		nodeNumber = 0;
@@ -365,59 +397,38 @@ public class StanfordNLPConnector {
 
 	}
 
+	// TODO transform to unit tests (should be three or more)
 	public static void main(final String[] args) {
-		HAWKQuestion q = new HAWKQuestion();
-		q.getLanguageToQuestion().put("en", "One million and twenty four Eiffel Towers");
-		StanfordNLPConnector stanford = new StanfordNLPConnector();
-		stanford.combineSequences(q);
+		StanfordNLPConnector connector = new StanfordNLPConnector();
+		String sentence = "Who was vice president under the president who approved the use of atomic weapons against Japan during World War II?";
+		List<Entity> list = Lists.newArrayList();
+		Entity e = new Entity("vice president", "");
+		e.uris.add(new ResourceImpl("http://dbpedia.org/resource/Vice_president"));
+		e.setOffset(8);
+		list.add(e);
+		e = new Entity("president", "");
+		e.uris.add(new ResourceImpl("http://dbpedia.org/resource/President"));
+		e.setOffset(33);
+		list.add(e);
+		String string = connector.replaceLabelsByIdentifiedURIs(sentence, list);
+		log.debug(string);
+		Assert.assertEquals(string,
+		        "Who was http://dbpedia.org/resource/Vice_president under the http://dbpedia.org/resource/President who approved the use of atomic weapons against Japan during World War II?");
 
-		long startTime = System.currentTimeMillis();
-		stanford.combineSequences(q);
-		long estimatedTime = System.currentTimeMillis() - startTime;
-		System.out.println("execution speed: " + estimatedTime);
+		/// ---------------
+		List<HAWKQuestion> questionsStanford;
+		Spotlight nerdModule = new Spotlight();
+		List<IQuestion> loadedQuestions = QALD_Loader.load(Dataset.QALD6_Train_Hybrid);
+		questionsStanford = HAWKQuestionFactory.createInstances(loadedQuestions);
 
-		q = new HAWKQuestion();
-		q.getLanguageToQuestion().put("en", "twenty four thousand and nineteen hundred seventy four");
-		stanford.combineSequences(q);
-		startTime = System.currentTimeMillis();
-		stanford.combineSequences(q);
-		estimatedTime = System.currentTimeMillis() - startTime;
-		System.out.println("execution speed: " + estimatedTime);
+		for (HAWKQuestion currentQuestion : questionsStanford) {
+			log.info(currentQuestion.getLanguageToQuestion().get("en"));
+			currentQuestion.setLanguageToNamedEntites(nerdModule.getEntities(currentQuestion.getLanguageToQuestion().get("en")));
+			// Annotation doc = stanford.runAnnotation(currentQuestion);
+			connector.combineSequences(currentQuestion);
+			// stanford.combineSequences(doc, currentQuestion);
+
+		}
 
 	}
-
-	// StanfordNLPConnector stanford;
-	// List<HAWKQuestion> questionsStanford;
-	// Fox nerdModule = new Fox();
-	// List<IQuestion> loadedQuestions =
-	// QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
-	// questionsStanford = HAWKQuestionFactory.createInstances(loadedQuestions);
-	// stanford = new StanfordNLPConnector();
-	//
-	// for (HAWKQuestion currentQuestion : questionsStanford) {
-	// currentQuestion.setLanguageToNamedEntites(nerdModule.getEntities(currentQuestion.getLanguageToQuestion().get("en")));
-	// // Annotation doc = stanford.runAnnotation(currentQuestion);
-	// stanford.combineSequences(currentQuestion);
-	// // stanford.combineSequences(doc, currentQuestion);
-	//
-	// }
-	// try {
-	//
-	// File file = new File("stanford_compound.txt");
-	//
-	// file.createNewFile();
-	//
-	// FileWriter fw = new FileWriter(file.getAbsoluteFile());
-	// BufferedWriter bw = new BufferedWriter(fw);
-	// bw.write(out.toString());
-	// bw.close();
-	//
-	// System.out.println("Done");
-	//
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-	//
-	// }
-
 }

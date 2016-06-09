@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.aksw.hawk.nlp.spotter.ASpotter;
-import org.aksw.hawk.nlp.spotter.Fox;
-import org.aksw.hawk.nlp.spotter.Spotlight;
+import org.aksw.hawk.spotter.ASpotter;
+import org.aksw.hawk.spotter.Fox;
+import org.aksw.hawk.spotter.Spotlight;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.impl.ResourceImpl;

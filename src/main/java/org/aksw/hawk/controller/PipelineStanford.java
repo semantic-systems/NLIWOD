@@ -5,16 +5,17 @@ import java.util.List;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTreePruner;
-import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
+import org.aksw.hawk.spotter.ASpotter;
+import org.aksw.hawk.spotter.Spotlight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PipelineStanford extends AbstractPipeline {
 	static Logger log = LoggerFactory.getLogger(PipelineStanford.class);
-	private Fox nerdModule;
+	private ASpotter nerdModule;
 	private MutableTreePruner pruner;
 	private Annotater annotater;
 	private SPARQLQueryBuilder queryBuilder;
@@ -25,7 +26,7 @@ public class PipelineStanford extends AbstractPipeline {
 	public PipelineStanford() {
 		queryTypeClassifier = new QueryTypeClassifier();
 
-		nerdModule = new Fox();
+		nerdModule = new Spotlight();
 		// controller.nerdModule = new Spotlight();
 		// controller.nerdModule =new TagMe();
 		// controller.nerdModule = new MultiSpotter(fox, tagMe, wiki, spot);
@@ -53,7 +54,7 @@ public class PipelineStanford extends AbstractPipeline {
 
 		// Noun combiner, decrease #nodes in the DEPTree
 		log.info("Noun phrase combination / Dependency Parsing");
-		// TODO make this method return the combine sequence and work on this,
+		// TODO make tlhis method return the combine sequence and work on this,
 		// i.e., q.sequence = sentenceToSequence.combineSequences(q);
 
 		// @Ricardo this will calculate cardinality of reduced(combinedNN) tree.

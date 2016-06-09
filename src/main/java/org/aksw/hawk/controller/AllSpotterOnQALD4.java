@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
-import org.aksw.hawk.nlp.spotter.ASpotter;
-import org.aksw.hawk.nlp.spotter.Fox;
-import org.aksw.hawk.nlp.spotter.Spotlight;
-import org.aksw.hawk.nlp.spotter.TagMe;
+import org.aksw.hawk.spotter.ASpotter;
+import org.aksw.hawk.spotter.Fox;
+import org.aksw.hawk.spotter.Spotlight;
+import org.aksw.hawk.spotter.TagMe;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;

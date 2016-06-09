@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.aksw.hawk.nlp.spotter;
+package org.aksw.hawk.spotter;
 
 import java.util.Arrays;
 import java.util.List;
