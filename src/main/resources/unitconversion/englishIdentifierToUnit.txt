@@ -1,4 +1,49 @@
-kilometers	1000	m
-kilometer	1000	m
-centimeter	0.01	m
-cm	0.01	m
+// If there are only two values, it will be recognized as a natural language numeral and its factor.
+// If there are three values, it will be recognized as a unit 
+// (unit string  to search for, multiplication factor to base unit, base unit as string)
+one	1
+two	2
+three	3
+four	4
+five	5
+six	6
+seven	7
+eight	8
+nine	9
+ten	10
+eleven	11
+twelve	12
+thirteen	13
+fourteen	14
+fifteen	15
+sixteen	16
+seventeen	17
+eighteen	18
+nineteen	19
+twenty	20
+thirty	30
+forty	40
+fifty	50
+sixty	60
+seventy	70
+eighty	80
+ninety	90
+hundred	100
+thousand	1000
+million	1000000
+billion	1000000000
+trillion	1000000000000
+quadrillion	1000000000000000
+quintrillion	1000000000000000000
+sextillion	1000000000000000000000
+inches	0.0254	m
+inch	0.0254	m
+miles	1609.34	m
+mile	1609.34	m
+foot	0.3048	m
+pound	0.453592	kg
+pounds	0.453592	kg
+ton	1000	kg
+tons	1000	kg
+gram	0.001	kg
+grams	0.001	kg

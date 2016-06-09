@@ -1,9 +1,5 @@
 package org.aksw.hawk.controller;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,15 +11,10 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.nlp.SentenceToSequence;
-import org.aksw.hawk.nlp.spotter.Fox;
 import org.aksw.qa.commons.datastructure.Entity;
-import org.aksw.qa.commons.datastructure.IQuestion;
-import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,10 +75,11 @@ public class StanfordNLPConnector {
 	public StanfordNLPConnector() {
 
 		Properties props = new Properties();
-		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse,mention, coref");
+		// props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner,
+		// parse,mention, dcoref");
+		props.setProperty("annotators", "tokenize, ssplit,pos,lemma, ner,parse");
 
 		stanfordPipe = new StanfordCoreNLP(props);
-
 	}
 
 	/**
@@ -203,9 +195,8 @@ public class StanfordNLPConnector {
 		Annotation document = this.runAnnotation(sentence);
 
 		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
-		CoreMap sen = sentences.get(0);
 
-		System.out.println("coref chains");
+		CoreMap sen = sentences.get(0);
 
 		SemanticGraph graph = sen.get(CollapsedCCProcessedDependenciesAnnotation.class);
 
@@ -259,8 +250,8 @@ public class StanfordNLPConnector {
 	 * @return
 	 */
 	private MutableTree semanticGraphToMutableTree(final SemanticGraph graph, final HAWKQuestion q) {
-
-		System.out.println(graph.toString(SemanticGraph.OutputFormat.LIST));
+		log.debug("use following tree for more than compound noun combination??");
+		log.debug(graph.toString(SemanticGraph.OutputFormat.LIST));
 
 		nodeNumber = 0;
 		MutableTree tree = new MutableTree();
@@ -297,7 +288,7 @@ public class StanfordNLPConnector {
 
 		/**
 		 * Remove already visited nodes from the list of children. This makes
-		 * the graph for us acyclic and therefore prevents RECURSION OF DEATH!
+		 * the graph for us acyclic and therefore prevents endless recursion.
 		 */
 		Set<IndexedWord> notCyclicChildren = new HashSet<>(graph.getChildren(parentGraphWord));
 		notCyclicChildren.removeAll(visitedNodes);
@@ -352,7 +343,7 @@ public class StanfordNLPConnector {
 				/**
 				 * Get the children of eliminated Nodes and add then to children
 				 * of parents e.g. deal with the children of the children of
-				 * Parent
+				 * Pare
 				 */
 
 				compounds.remove(parentGraphWord);
@@ -375,38 +366,58 @@ public class StanfordNLPConnector {
 	}
 
 	public static void main(final String[] args) {
+		HAWKQuestion q = new HAWKQuestion();
+		q.getLanguageToQuestion().put("en", "One million and twenty four Eiffel Towers");
+		StanfordNLPConnector stanford = new StanfordNLPConnector();
+		stanford.combineSequences(q);
 
-		StanfordNLPConnector stanford;
-		List<HAWKQuestion> questionsStanford;
-		Fox nerdModule = new Fox();
-		List<IQuestion> loadedQuestions = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
-		questionsStanford = HAWKQuestionFactory.createInstances(loadedQuestions);
-		stanford = new StanfordNLPConnector();
+		long startTime = System.currentTimeMillis();
+		stanford.combineSequences(q);
+		long estimatedTime = System.currentTimeMillis() - startTime;
+		System.out.println("execution speed: " + estimatedTime);
 
-		for (HAWKQuestion currentQuestion : questionsStanford) {
-			currentQuestion.setLanguageToNamedEntites(nerdModule.getEntities(currentQuestion.getLanguageToQuestion().get("en")));
-			// Annotation doc = stanford.runAnnotation(currentQuestion);
-			stanford.combineSequences(currentQuestion);
-			// stanford.combineSequences(doc, currentQuestion);
-
-		}
-		try {
-
-			File file = new File("stanford_compound.txt");
-
-			file.createNewFile();
-
-			FileWriter fw = new FileWriter(file.getAbsoluteFile());
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(out.toString());
-			bw.close();
-
-			System.out.println("Done");
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		q = new HAWKQuestion();
+		q.getLanguageToQuestion().put("en", "twenty four thousand and nineteen hundred seventy four");
+		stanford.combineSequences(q);
+		startTime = System.currentTimeMillis();
+		stanford.combineSequences(q);
+		estimatedTime = System.currentTimeMillis() - startTime;
+		System.out.println("execution speed: " + estimatedTime);
 
 	}
+
+	// StanfordNLPConnector stanford;
+	// List<HAWKQuestion> questionsStanford;
+	// Fox nerdModule = new Fox();
+	// List<IQuestion> loadedQuestions =
+	// QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
+	// questionsStanford = HAWKQuestionFactory.createInstances(loadedQuestions);
+	// stanford = new StanfordNLPConnector();
+	//
+	// for (HAWKQuestion currentQuestion : questionsStanford) {
+	// currentQuestion.setLanguageToNamedEntites(nerdModule.getEntities(currentQuestion.getLanguageToQuestion().get("en")));
+	// // Annotation doc = stanford.runAnnotation(currentQuestion);
+	// stanford.combineSequences(currentQuestion);
+	// // stanford.combineSequences(doc, currentQuestion);
+	//
+	// }
+	// try {
+	//
+	// File file = new File("stanford_compound.txt");
+	//
+	// file.createNewFile();
+	//
+	// FileWriter fw = new FileWriter(file.getAbsoluteFile());
+	// BufferedWriter bw = new BufferedWriter(fw);
+	// bw.write(out.toString());
+	// bw.close();
+	//
+	// System.out.println("Done");
+	//
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	//
+	// }
 
 }
