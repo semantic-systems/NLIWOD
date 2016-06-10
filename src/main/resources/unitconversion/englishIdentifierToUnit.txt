@@ -36,14 +36,19 @@ trillion	1000000000000
 quadrillion	1000000000000000
 quintrillion	1000000000000000000
 sextillion	1000000000000000000000
-inches	0.0254	m
+http://dbpedia.org/resource/Inch	0.0254	http://dbpedia.org/resource/Metre
+http://dbpedia.org/resource/Mile	1609.344	http://dbpedia.org/resource/Metre
+foot	0.3048	http://dbpedia.org/resource/Metre
+http://dbpedia.org/resource/Pound_(mass)	0.453592	http://dbpedia.org/page/Kilogram
+http://dbpedia.org/page/Tonne	1000	http://dbpedia.org/page/Kilogram
+http://dbpedia.org/page/Gram	0.001	http://dbpedia.org/page/Kilogram
 inch	0.0254	m
-miles	1609.34	m
-mile	1609.34	m
-foot	0.3048	m
+inches	0.0254	m
 pound	0.453592	kg
 pounds	0.453592	kg
 ton	1000	kg
 tons	1000	kg
 gram	0.001	kg
 grams	0.001	kg
+mile	1609.344	m
+miles	1609.344	m

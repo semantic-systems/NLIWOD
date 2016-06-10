@@ -5,6 +5,7 @@ import java.util.List;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTreePruner;
+import org.aksw.hawk.number.UnitController;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
@@ -22,6 +23,7 @@ public class PipelineStanford extends AbstractPipeline {
 	private Cardinality cardinality;
 	private QueryTypeClassifier queryTypeClassifier;
 	private StanfordNLPConnector stanfordConnector;
+	private UnitController numberToDigit;
 
 	public PipelineStanford() {
 		queryTypeClassifier = new QueryTypeClassifier();
@@ -32,6 +34,8 @@ public class PipelineStanford extends AbstractPipeline {
 		// controller.nerdModule = new MultiSpotter(fox, tagMe, wiki, spot);
 
 		this.stanfordConnector = new StanfordNLPConnector();
+		this.numberToDigit = new UnitController();
+		numberToDigit.instantiateEnglish(stanfordConnector);
 		cardinality = new Cardinality();
 
 		pruner = new MutableTreePruner();
@@ -42,7 +46,8 @@ public class PipelineStanford extends AbstractPipeline {
 		queryBuilder = new SPARQLQueryBuilder(sparql);
 	}
 
-	public List<Answer> getAnswersToQuestion(HAWKQuestion q) {
+	@Override
+	public List<Answer> getAnswersToQuestion(final HAWKQuestion q) {
 		log.info("Question: " + q.getLanguageToQuestion().get("en"));
 
 		log.info("Classify question type.");
@@ -51,7 +56,6 @@ public class PipelineStanford extends AbstractPipeline {
 		// Disambiguate parts of the query
 		log.info("Named entity recognition.");
 		q.setLanguageToNamedEntites(nerdModule.getEntities(q.getLanguageToQuestion().get("en")));
-
 		// Noun combiner, decrease #nodes in the DEPTree
 		log.info("Noun phrase combination / Dependency Parsing");
 		// TODO make tlhis method return the combine sequence and work on this,
@@ -59,8 +63,7 @@ public class PipelineStanford extends AbstractPipeline {
 
 		// @Ricardo this will calculate cardinality of reduced(combinedNN) tree.
 		// is this right?
-		q.setTree(stanfordConnector.combineSequences(q));
-
+		q.setTree(stanfordConnector.combineSequences(q, this.numberToDigit));
 		// Cardinality identifies the integer i used for LIMIT i
 		log.info("Cardinality calculation.");
 		q.setCardinality(cardinality.cardinality(q));
@@ -80,7 +83,7 @@ public class PipelineStanford extends AbstractPipeline {
 		return answers;
 	}
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		PipelineStanford p = new PipelineStanford();
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", "Which anti-apartheid activist was born in Mvezo?");

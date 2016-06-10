@@ -16,6 +16,7 @@ import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.nlp.SentenceToSequence;
+import org.aksw.hawk.number.UnitController;
 import org.aksw.hawk.spotter.Spotlight;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.IQuestion;
@@ -79,13 +80,11 @@ public class StanfordNLPConnector {
 
 	/**
 	 * Initializes CoreNLP with default Annotators. "tokenize, ssplit, pos,
-	 * lemma,ner, parse, dcoref"
+	 * lemma,ner, parse,"
 	 */
 	public StanfordNLPConnector() {
 
 		Properties props = new Properties();
-		// props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner,
-		// parse,mention, dcoref");
 		props.setProperty("annotators", "tokenize, ssplit,pos,lemma, ner,parse");
 
 		stanfordPipe = new StanfordCoreNLP(props);
@@ -213,17 +212,30 @@ public class StanfordNLPConnector {
 	 * @param q The Question you want to run NounPhraseCombination on
 	 */
 	public MutableTree combineSequences(final HAWKQuestion q) {
+		return this.combineSequences(q, null);
+	}
+
+	/**
+	 * Runs a NounPhrasCombination and dependency parsing on given HAWKQuestion
+	 * 
+	 * @param q The Question you want to run NounPhraseCombination on
+	 */
+	public MutableTree combineSequences(final HAWKQuestion q, final UnitController numberToDigit) {
 		/**
 		 * We aim at having only one node for named entities. (same with
 		 * compoundNouns in recursive function) So we replace named entities
-		 * with their url, wich is one coherent String. -> graph parser will
+		 * with their url, which is one coherent String. -> graph parser will
 		 * give us only one node.
 		 * 
 		 */
 		String sentence = this.replaceNamedEntitysWithURL(q);
 		log.info(sentence);
+		if (numberToDigit != null) {
+			sentence = numberToDigit.normalizeNumbers("en", sentence);
+			log.info(sentence);
+		}
 
-		Annotation document = this.runAnnotation(sentence);
+		Annotation document = this.runAnnotation(preprocessStringForStanford(sentence));
 
 		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
 
@@ -235,13 +247,6 @@ public class StanfordNLPConnector {
 
 		log.debug(tree.toString());
 
-		// used in main
-		// out.append(q.getLanguageToQuestion().get("en") + "\r\n\r\n");
-		// out.append(sen.get(CollapsedCCProcessedDependenciesAnnotation.class).toString(SemanticGraph.OutputFormat.LIST)
-		// + "\r\n\r\n");
-		// out.append(graph.toString() + "\r\n\r\n");
-		// out.append(tree.toString() + "\r\n\r\n");
-		// out.append("\r\n\r\n\r\n\r\n");
 		return tree;
 
 	}
@@ -282,9 +287,7 @@ public class StanfordNLPConnector {
 	 */
 	private MutableTree semanticGraphToMutableTree(final SemanticGraph graph, final HAWKQuestion q) {
 		log.debug("use following tree for more than compound noun combination??");
-
 		log.debug(graph.toString(SemanticGraph.OutputFormat.LIST));
-
 		nodeNumber = 0;
 		MutableTree tree = new MutableTree();
 		MutableTreeNode mutableRoot;
@@ -292,12 +295,40 @@ public class StanfordNLPConnector {
 		this.visitedNodes = new HashSet<>();
 		IndexedWord graphRoot = graph.getFirstRoot();
 
-		mutableRoot = new MutableTreeNode(graphRoot.word(), graphRoot.tag(), "root", null, nodeNumber++, graphRoot.lemma());
+		mutableRoot = new MutableTreeNode(postprocessStringForStanford(graphRoot), graphRoot.tag(), "root", null, nodeNumber++, graphRoot.lemma());
 		tree.head = mutableRoot;
 
 		convertGraphStanford(mutableRoot, graphRoot, graph, q);
 
 		return tree;
+	}
+
+	/**
+	 * Stanford splits by sentences with "(" and ")" in them. But they occur on
+	 * a regular basis through replacing names with url, because different
+	 * meanings of a named entity are specified in brackets:
+	 * 
+	 * <pre>
+	 * http://dbpedia.org/page/Pound_(mass)
+	 * http://dbpedia.org/page/Pound_(band)
+	 * </pre>
+	 * 
+	 * So we replace round brackets with "////"
+	 * 
+	 * @see #postprocessStringForStanford(IndexedWord)
+	 */
+	public String preprocessStringForStanford(final String input) {
+		return input.replaceAll("[()]", "////");
+	}
+
+	/**
+	 * Deals with the problem of Stanford splitting by "(" and ")" in a previous
+	 * step, we replace this by "////" This method regexes it back to normal.
+	 * 
+	 * @see #preprocessStringForStanford(String)
+	 */
+	public String postprocessStringForStanford(final IndexedWord node) {
+		return node.word().replaceAll("(////)(.+)(////)", "($2)");
 	}
 
 	/**
@@ -309,7 +340,10 @@ public class StanfordNLPConnector {
 	 */
 	private void convertGraphStanford(final MutableTreeNode parentMutableNode, final IndexedWord parentGraphWord, final SemanticGraph graph, final HAWKQuestion q) {
 		visitedNodes.add(parentGraphWord);
-
+		/**
+		 * 
+		 */
+		parentGraphWord.setWord(postprocessStringForStanford(parentGraphWord));
 		/**
 		 * If the parentNode is a named Entity , set POS tag to "ADD". At this
 		 * point, only named entities are replaced by URLs

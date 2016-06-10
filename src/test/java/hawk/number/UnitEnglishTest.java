@@ -52,7 +52,7 @@ public class UnitEnglishTest {
 	// public void parseSomeRandomTest() {
 	// HashMap<String, String> sToS = new HashMap<>();
 	// sToS.put("50 miles", "80467.2 m");
-	// sToS.put("one mile", "1609.34 m");
+	// sToS.put("one mile", "1609.344 m");
 	// sToS.put("three hundred thousand and sixty four", "300064");
 	// sToS.put("€60 thousand and $45", "€ 60000 and $ 45");
 	// sToS.put("$80 million", "$ 80000000");

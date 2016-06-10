@@ -7,7 +7,7 @@ interface IUnitLanguage {
 	 * 
 	 * <pre>
 	 * "$80 million" -> "$ 80000000"
-	 * "10 miles" -> "1609.34 m"
+	 * "10 miles" -> "1609.344 m"
 	 * </pre>
 	 * 
 	 * @param q any string which may or may not contain numerals or units to

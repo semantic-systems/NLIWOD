@@ -35,13 +35,13 @@ import edu.stanford.nlp.util.CoreMap;
  * "Give me two hundred birds" -> "Give me 200 birds" 
  * "$80 thousand and three hundred four" -> "$ 80304" 
  * "Show the first ten screws with a length of two inches" -> "Show the first 10 screws with a length of 0.0508 m"
- * "10 miles" -> "1609.34 m"
+ * "10 miles" -> "1609.344 m"
  * 
  * "one" can be a numeral, but it does not have to be. To handle those cases, 
  * The Stanford pipeline will be started on sentences containing "one". It will only be converted to a number, 
  * if its not in a relation "nmod" with any other word. With this, we can handle sentences like:
  * 
- * "The  color  is  different  from  the  old one."
+ * "The color is different from the old one."
  * 
  *  This sentence will be the same after parsing.
  * 
@@ -110,8 +110,6 @@ public class UnitEnglish implements IUnitLanguage {
 					} else {
 						outArray.addAll(parseForNumber);
 						outArray.add(token.word());
-						// stOut += Joiner.on(" ").join(parseForNumber) + " " +
-						// token.word() + " ";
 					}
 					lastWasNumber = false;
 
@@ -120,12 +118,10 @@ public class UnitEnglish implements IUnitLanguage {
 			}
 			if (lastWasNumber && numberContainsNmod) {
 				outArray.addAll(parseForNumber);
-				// stOut += Joiner.on(" ").join(parseForNumber);
 			}
 			if (lastWasNumber && !numberContainsNmod) {
 				outArray.add(replaceNumerals(Joiner.on(" ").join(parseForNumber)));
-				// stOut += replaceNumerals(Joiner.on("
-				// ").join(parseForNumber));
+
 			}
 			return Joiner.on(" ").join(outArray).replaceAll("(\\s+)(\\p{Punct})(\\s*)$", "$2");
 
@@ -166,13 +162,13 @@ public class UnitEnglish implements IUnitLanguage {
 		/**
 		 * Inserting whitespace before punctuation.
 		 */
-		String abc = replaceThis.replaceAll("(\\w)(\\p{Punct})(\\s*)$", "$1 $2");
+		String withWhitespace = this.insertWhitespacebeforePunctuation(replaceThis);
 		/**
 		 * Inserting whitespace between currency denominator and value ("$80" ->
 		 * "$ 80")
 		 */
-		abc = abc.replaceAll("([\\S&&\\D])(\\d+)", "$1 $2");
-		ArrayList<String> split = new ArrayList<>(Arrays.asList(abc.split(" ")));
+		withWhitespace = withWhitespace.replaceAll("(\\p{Sc})(\\d+)", "$1 $2");
+		ArrayList<String> split = new ArrayList<>(Arrays.asList(withWhitespace.split(" ")));
 
 		ArrayList<String> cleaned = split;
 		// Removed, its more likely to be a named entity than a numeral.
@@ -262,8 +258,8 @@ public class UnitEnglish implements IUnitLanguage {
 			return out;
 		}
 		log.debug("converting base units for: " + str);
-		String abc = str.replaceAll("(\\w)(\\p{Punct})(\\s*)$", "$1 $2");
-		ArrayList<String> split = new ArrayList<>(Arrays.asList(abc.split(" ")));
+		String withWhitespace = this.insertWhitespacebeforePunctuation(str);
+		ArrayList<String> split = new ArrayList<>(Arrays.asList(withWhitespace.split(" ")));
 		Double lastIt = null;
 		for (String it : split) {
 
@@ -290,6 +286,10 @@ public class UnitEnglish implements IUnitLanguage {
 
 		return out.replaceAll("(\\s+)(\\p{Punct})(\\s*)$", "$2");
 
+	}
+
+	private String insertWhitespacebeforePunctuation(final String input) {
+		return input.replaceAll("(\\w)([\\.?!])(\\s*)$", "$1 $2");
 	}
 
 	/**
@@ -355,7 +355,6 @@ public class UnitEnglish implements IUnitLanguage {
 		String q = "€60 thousand and $45";
 		log.debug("Start conversion");
 		System.out.println(ue.convert(q));
-		log.debug("program stop");
 		/*-
 		HashMap<String, String> sentenceToSentence = new HashMap<>();
 		sentenceToSentence.put("Which countries have more than ten volcanoes?", "Which countries have more than 10 volcanoes?");
