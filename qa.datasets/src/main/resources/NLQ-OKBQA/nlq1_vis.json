@@ -1,0 +1,634 @@
+[
+	{
+		"id":"2",
+		"lang":"en",
+		"question":"What was the naval warfare commanded by Admiral Yi Sun-sin at Myeongnyang Strait in 1597?",
+		"answer":"Battle of Myeongnyang",
+		"type":"1-1",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix xsd: <http://www.w3.org/2001/XMLSchema#> select distinct ?x where { ?x dbo:commander dbr:Yi_Sun-sin. ?x dbo:place dbr:Myeongnyang_Strait. ?x dbo:date \"1597-10-25\"^^xsd:date. }"
+	},
+	{
+		"id":"2",
+		"lang":"ko",
+		"question":"�̼��� �屺�� 1597�⿡ ���������� ������ ������ �����ΰ�?",
+		"answer":"�� ����",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { ?x dbpedia-owl:commander dbpedia-ko:�̼���. ?x prop-ko:��� \"������\"@ko. ?x prop-ko:��¥ 1597. }"
+	},
+	{
+		"id":"3",
+		"lang":"en",
+		"question":"When was the year that President Roh Moo-hyun died?",
+		"answer":"2009",
+		"type":"1-2",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> select distinct ?x where { dbr:Roh_Moo-hyun dbo:deathYear ?x. }"
+	},
+	{
+		"id":"3",
+		"lang":"ko",
+		"question":"�빫�� ������� ����� �⵵�� �����ΰ�?",
+		"answer":"2009��",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { dbpedia-ko:�빫�� prop-ko:����� ?x. }"
+	},
+	{
+		"id":"4",
+		"lang":"en",
+		"question":"Who was the President of South Korea who won the Nobel Peace Prize in 2000?",
+		"answer":"Kim Dae-jung",
+		"type":"1-2",
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbp:title dbr:President_of_South_Korea. ?x text:keyword \"2000\". ?x text:keyword \"Nobel Peace Prize\". }"
+	},
+	{
+		"id":"4",
+		"lang":"ko",
+		"question":"2000�⿡ �뺧 ��ȭ���� ������ ���ѹα��� ������� �����ΰ�?",
+		"answer":"�����",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> select distinct ?x where { ?x prop-ko:���� \"���ѹα�\"@ko. ?x rdf:type dbpedia-owl:President. ?x text:keyword \"�뺧 ��ȭ��\". ?x text:keyword \"2000��\". }"
+	},
+	{
+		"id":"26",
+		"lang":"en",
+		"question":"Who was the Chinese emperor whose reign was called the \"Prosperity of Zhenguan\"?",
+		"answer":"Emperor Taizong of Tang",
+		"type":"1-2",
+		"sparql":"prefix dbp: <http://dbpedia.org/property/> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix yago: <http://dbpedia.org/class/yago/> select distinct ?x where { ?x rdf:type yago:7th-centuryChineseMonarchs. ?x dbp:eraName \"Zhenguan\"@en. }"
+	},
+	{
+		"id":"26",
+		"lang":"ko",
+		"question":"�װ� �ٽ��� �ô븦 \"������ ġ\"��� �Ҹ��� ���� �߱��� Ȳ���� �����ΰ�?",
+		"answer":"�� ����",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x prop-ko:��å dbpedia-ko:�߱���_Ȳ��. ?x text:keyword \"������ ġ\". } "
+	},
+	{
+		"id":"40",
+		"lang":"en",
+		"question":"What is the South Korean government agency reestablished in 2013 after having closed in 2008 to be in charge of maritime policies?",
+		"answer":"Ministry of Oceans and Fisheries",
+		"type":"1-3",
+		"sparql":"prefix dbc: <http://dbpedia.org/resource/Category> prefix text: <http://okbqa.org/text#> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where { ?x dct:subject dbc:Government_of_South_Korea. ?x text:keyword \"2013\". ?x text:keyword \"reestablished\". }"
+	},
+	{
+		"id":"40",
+		"lang":"ko",
+		"question":"2008�⿡ �����Ǿ��ٰ� 2013�⿡ ��ǵ� ���ķ� �ؾ���å�� �����ϰ� �ִ� ���ѹα��� �߾���������� �����ΰ�?",
+		"answer":"���ѹα� �ؾ�����",
+		"type":"1-3",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x prop-ko:������ ?o. ?x prop-ko:�ػ��� 2008. ?x text:keyword \"2013\". ?x text:keyword \"���\". } "
+	},
+	{
+		"id":"45",
+		"lang":"en",
+		"question":"Who was the general officer of the Goryeo Dynasty that had?civil service experience and won the Battle of Guju??",
+		"answer":"Gang Gam-chan",
+		"type":"1-2",
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix yago: <http://dbpedia.org/class/yago/> select distinct ?x where { dbr:Battle_of_Kuju dbp:commander ?x. ?x rdf:type yago:GoryeoPeople. } "
+	},
+	{
+		"id":"45",
+		"lang":"ko",
+		"question":"���� ��ø���� �¸��� ��� �ô��� ���� ����� �屺�� �����ΰ�?",
+		"answer":"������",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { dbpedia-ko:����_��ø dbpedia-owl:commander ?x. ?x dbpedia-owl:country dbpedia-ko:���. } "
+	},
+	{
+		"id":"70",
+		"lang":"en",
+		"question":"What is the football club established in 1899 and?belonged to La Liga to which Lionel Messi belongs as well??",
+		"answer":"FC Barcelona",
+		"type":"1-2",
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> prefix dbc: <http://dbpedia.org/resource/Category> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where { ?x dbp:league dbr:La_Liga. ?x dct:subject dbc:1899_establishments_in_Spain. ?x dbp:name dbr:Lionel_Messi. }"
+	},
+	{
+		"id":"70",
+		"lang":"ko",
+		"question":"1899�⿡ â�ܵǾ�?�����޶󸮰��� �ҼӵǾ� ������?������ �޽ð� �ҼӵǾ� �ֱ⵵ �� �౸���� �����ΰ�?",
+		"answer":"FC �ٸ����γ�",
+		"type":"1-2",
+		"sparql":"select distinct ?x where { ?x dbpedia-owl:league dbpedia-ko:�����޶󸮰�. ?x prop-ko:�̸� dbpedia-ko:������_�޽�. ?x prop-ko:�������� 1899. } "
+	},
+	{
+		"id":"77",
+		"lang":"en",
+		"question":"Who was the author of 'Samguk Sagi'?",
+		"answer":"Kim Bu-sik",
+		"type":"1-1",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> select distinct ?x where { dbr:Samguk_Sagi dbo:author ?x. }"
+	},
+	{
+		"id":"77",
+		"lang":"ko",
+		"question":"�ﱹ���'�� �� �۰��� �����ΰ�?",
+		"answer":"��ν�",
+		"type":"1-1",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:�ﱹ���. ?x text:keyword \"�۰�\". ?x text:keyword \"��\". } "
+	},
+	{
+		"id":"78",
+		"lang":"en",
+		"question":"Who was the first person to reach the South Pole?",
+		"answer":"Roald Amundsen",
+		"type":"1-1",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbo:knownFor dbr:South_Pole. ?x text:keyword \"First\". }"
+	},
+	{
+		"id":"78",
+		"lang":"ko",
+		"question":"���ʷ� �������� ������ ����� �����ΰ�?",
+		"answer":"�ξ� �ƹ���",
+		"type":"1-1",
+		"sparql":"prefix text: <http://okbqa.org/text#> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> select distinct ?x where { ?x rdf:type dbpedia-owl:Person. ?x text:keyword \"������\". ?x text:keyword \"����\". } "
+	},
+	{
+		"id":"80",
+		"lang":"en",
+		"question":"Who was the 8th President of South Korea?",
+		"answer":"Kim Dae-jung",
+		"type":"1-1",
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbp:title dbr:President_of_South_Korea. ?x text:keyword \"8th President\". ?x text:keyword \"South Korea\". }"
+	},
+	{
+		"id":"80",
+		"lang":"ko",
+		"question":"���ѹα��� ��15�� ������� �����ΰ�?",
+		"answer":"�����",
+		"type":"1-1",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x prop-ko:ª������ ?o. ?x text:keyword \"���ѹα�\". ?x text:keyword \"15��\". ?x text:keyword \"�����\". } "
+	},
+	{
+		"id":"226",
+		"lang":"en",
+		"question":"What was the country that King Dongmyeong founded?",
+		"answer":"Goguryeo",
+		"type":"1-2",
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> select distinct * where { ?x dbp:leader dbr:Dongmyeong_of_Goguryeo . }"
+	},
+	{
+		"id":"226",
+		"lang":"ko",
+		"question":"�������� ��� ������ �����ΰ�?",
+		"answer":"����",
+		"type":"1-2",
+		"sparql":"select distinct * where { dbpedia-ko:������ prop-ko:��å ?x. }"
+	},
+	{
+		"id":"228",
+		"lang":"en",
+		"question":"Who was the founder of the masculinism organization Man of Korea?",
+		"answer":"Sung Jae-gi",
+		"type":"1-1",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct * where { ?x text:keyword \"Man of Korea\". ?x text:keyword \"founder\". }"
+	},
+	{
+		"id":"228",
+		"lang":"ko",
+		"question":"�������븦 â���� ����� �����ΰ�?",
+		"answer":"�����",
+		"type":"1-1",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct * where { ?x prop-ko:��å dbpedia-ko:�������� . ?x text:keyword \"â��\". }"
+	},
+	{
+		"id":"245",
+		"lang":"en",
+		"question":"Who was the monarch of France called the \"Sun King\"?",
+		"answer":"Louis XIV of France",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"Sun King\". }"
+	},
+	{
+		"id":"245",
+		"lang":"ko",
+		"question":"\"�¾��\"�̶�� �Ҹ��� �������� ���ִ� �����ΰ�?",
+		"answer":"���� 14��",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"�¾��\". }"
+	},
+	{
+		"id":"248",
+		"lang":"en",
+		"question":"Who was the winner of the 2009 Nobel Peace Prize?",
+		"answer":"Barack Obama",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"Nobel Peace Prize\". ?x text:keyword \"2009\". } "
+	},
+	{
+		"id":"248",
+		"lang":"ko",
+		"question":"2009�⿡ �뺧 ��ȭ���� ������ ����� �����ΰ�?",
+		"answer":"���� ���ٸ�",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"�뺧 ��ȭ��\". ?x text:keyword \"2009\". }"
+	},
+	{
+		"id":"256",
+		"lang":"en",
+		"question":"What was the hypothesis that an English scientist James Lovelock proposed?",
+		"answer":"Gaia hypothesis",
+		"type":"1-1",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix yago: <http://dbpedia.org/class/yago/> select distinct ?x where { dbr:James_Lovelock dbo:knownFor ?x . ?x rdf:type yago:Hypotheses. }"
+	},
+	{
+		"id":"256",
+		"lang":"ko",
+		"question":"������ ������ ���ӽ� ������� ������ �̷��� �����ΰ�?",
+		"answer":"���̾� �̷�",
+		"type":"1-1",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { dbpedia-ko:���ӽ�_����� dbpedia-owl:wikiPageWikiLink ?x . ?x text:keyword \"����\". }"
+	},
+	{
+		"id":"261",
+		"lang":"en",
+		"question":"What is the novel written by the French writer Victor Hugo in 1862 whose main character was named Jean Valjean?",
+		"answer":"Les Mis?rables",
+		"type":"1-1",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix xsd: <http://www.w3.org/2001/XMLSchema#> prefix dbp: <http://dbpedia.org/property/> select distinct * where { ?x dbo:author dbr:Victor_Hugo . ?x dbp:releaseDate \"1862\"^^xsd:integer . }"
+	},
+	{
+		"id":"261",
+		"lang":"ko",
+		"question":"�������� �۰� ���丣 ���� 1862�⿡ �� ������ ���ΰ����� �� �Ҽ��� �����ΰ�?",
+		"answer":"�� �������",
+		"type":"1-1",
+		"sparql":"prefix xsd: <http://www.w3.org/2001/XMLSchema#> select distinct * where { ?x dbpedia-owl:author dbpedia-ko:���丣_���� . ?x prop-ko:������ \"1862\"^^xsd:integer . }"
+	},
+	{
+		"id":"262",
+		"lang":"en",
+		"question":"What is the number of national associations currently qualified for membership by the FIFA?",
+		"answer":"209",
+		"type":"2",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> select distinct * where { dbr:FIFA dbo:membership ?x . }"
+	},
+	{
+		"id":"262",
+		"lang":"ko",
+		"question":"���� �౸ ������ ȸ������ �����ϴ� �౸ ������ ��� �� �� �ΰ�?",
+		"answer":"210��",
+		"type":"2",
+		"sparql":"select distinct * where { dbpedia-ko:����_�౸_���� prop-ko:ȸ�� ?x }"
+	},
+	{
+		"id":"265",
+		"lang":"en",
+		"question":"What is the highest mountain in the Alps mountain range?",
+		"answer":"Mont Blanc",
+		"type":"1-1",
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> select distinct * where { dbr:Alps dbp:highest ?x . }"
+	},
+	{
+		"id":"265",
+		"lang":"ko",
+		"question":"������ ����� �ְ���� �����ΰ�?",
+		"answer":"����� ��",
+		"type":"1-1",
+		"sparql":"select distinct ?x where { dbpedia-ko:������_��� prop-ko:�ְ�� ?x }"
+	},
+	{
+		"id":"275",
+		"lang":"en",
+		"question":"What was the first newspaper of Korea?",
+		"answer":"Tongnip Sinmun",
+		"type":"1-1",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"newspaper\". ?x text:keyword \"Korea\". ?x text:keyword \"first\". }"
+	},
+	{
+		"id":"275",
+		"lang":"ko",
+		"question":"�ѱ� ������ �ΰ� �Ź��� �����ΰ�?",
+		"answer":"�����Ź�",
+		"type":"1-1",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"�Ź�\". ?x text:keyword \"����\". }"
+	},
+	{
+		"id":"277",
+		"lang":"en",
+		"question":"What is the capital city of Ireland?",
+		"answer":"Dublin",
+		"type":"1-1",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> select distinct ?x where { dbr:Republic_of_Ireland dbo:capital ?x . }"
+	},
+	{
+		"id":"277",
+		"lang":"ko",
+		"question":"���Ϸ����� ������ ����ΰ�?",
+		"answer":"����",
+		"type":"1-1",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x prop-ko:��ġ���� \"���Ϸ���\"@ko. ?x text:keyword \"����\". }"
+	},
+	{
+		"id":"295",
+		"lang":"en",
+		"question":"When was the year that Steve Jobs, Steve Wozniak and Ronald Wayne founded Apple Inc.?",
+		"answer":"1976",
+		"type":"1-1",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> select distinct ?o where { dbr:Apple_Inc dbo:foundingYear ?o }"
+	},
+	{
+		"id":"295",
+		"lang":"ko",
+		"question":"��Ƽ�� �⽺�� ��Ƽ�� ����Ͼǰ� �γε� ������ ������ â���� �⵵�� �����ΰ�?",
+		"answer":"1976��",
+		"type":"1-1",
+		"sparql":"select distinct ?o where { dbpedia-ko:����_(���) prop-ko:â�� ?o }"
+	},
+	{
+		"id":"302",
+		"lang":"en",
+		"question":"What is the international financial services company founded in 1914 and now acquired by Bank of America?",
+		"answer":"Merrill Lynch",
+		"type":"1-2",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix xsd: <http://www.w3.org/2001/XMLSchema#> select distinct ?x where { ?x dbo:foundingYear \"1914-01-01\"^^xsd:date. ?x dbo:parentCompany dbr:Bank_of_America. }"
+	},
+	{
+		"id":"302",
+		"lang":"ko",
+		"question":"1914�⿡ �����Ǿ� ����� ��ũ ���� �Ƹ޸�ī�� �μ� �պ��� ���� �������� ȸ��� �����ΰ�?",
+		"answer":"�޸���ġ",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dcterms:subject dbpedia-ko:�з�:1914��_����. ?x text:keyword \"��ũ ���� �Ƹ޸�ī\". ?x text:keyword \"�μ�\". }"
+	},
+	{
+		"id":"303",
+		"lang":"en",
+		"question":"What was the U.S. international financial services company founded in 1850 and bankrupted in 2008?",
+		"answer":"Lehman Brothers",
+		"type":"1-2",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix xsd: <http://www.w3.org/2001/XMLSchema#> prefix dbp: <http://dbpedia.org/property/> select distinct ?x where { ?x dbo:product dbr:Financial_services. ?x dbo:extinctionYear \"2008-01-01\"^^xsd:date. ?x dbp:foundation 1850. }"
+	},
+	{
+		"id":"303",
+		"lang":"ko",
+		"question":"1850�⿡ �����Ǿ� 2008�⿡ �Ļ��� �̱��� ���� ���� ȸ��� �����ΰ�?",
+		"answer":"���� ������",
+		"type":"1-2",
+		"sparql":"prefix xsd: <http://www.w3.org/2001/XMLSchema#> select distinct ?x where { ?x dbpedia-owl:formationYear \"1850-01-01 00:00:00\"^^xsd:date. ?x dbpedia-owl:extinctionYear \"2008-01-01 00:00:00\"^^xsd:date. ?x prop-ko:���� dbpedia-ko:��������. }"
+	},
+	{
+		"id":"304",
+		"lang":"en",
+		"question":"What is the ancient city of Inca Empire in Peru?",
+		"answer":"Machu Picchu",
+		"type":"1-1",
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> prefix dbc: <http://dbpedia.org/resource/Category> prefix text: <http://okbqa.org/text#> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where { ?x dbp:location dbr:Peru. ?x dct:subject dbc:Inca. ?x text:keyword \"emperor\". }"
+	},
+	{
+		"id":"304",
+		"lang":"ko",
+		"question":"��翡 ��ġ�� ��ī ������ ��� ���ô� ����ΰ�?",
+		"answer":"���� ����",
+		"type":"1-1",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x prop-ko:���� dbpedia-ko:��ī_����. ?x text:keyword \"���\". ?x text:keyword \"��ī ����\". ?x text:keyword \"��� ����\". }"
+	},
+	{
+		"id":"305",
+		"lang":"en",
+		"question":"What is the capital city of the United States?",
+		"answer":"Washington, D.C.",
+		"type":"1-1",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> select distinct ?x where { dbr:United_States dbo:capital ?x. }"
+	},
+	{
+		"id":"305",
+		"lang":"ko",
+		"question":"�̱��� ������ ����ΰ�?",
+		"answer":"������ D.C.",
+		"type":"1-1",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x prop-ko:��ġ���� \"�̱�\"@ko. ?x text:keyword \"�̱��� ����\". }"
+	},
+	{
+		"id":"308",
+		"lang":"en",
+		"question":"What is the essay commonly known as the 'Moriae Encomium' written by a Dutch humanist Desiderius Erasmus in 1509?",
+		"answer":"The Praise of Folly",
+		"type":"1-2",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix text: <http://okbqa.org/text#> select distinct ?x where { dbr:Moriae_Encomium dbo:wikiPageRedirects ?x. ?x text:keyword \"Desiderius Erasmus\". ?x text:keyword \"1509\". }"
+	},
+	{
+		"id":"308",
+		"lang":"ko",
+		"question":"�״������� �ι����� ���õ������� ���󽺹����� 1511�⿡ ��, \"�𸮾� ����\"�̶�� �Ҹ��� å�� �����ΰ�?",
+		"answer":"��ſ���",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:���õ�������_���󽺹���. ?x text:keyword \"1511��\". }"
+	},
+	{
+		"id":"321",
+		"lang":"en",
+		"question":"What is the court that primarily deals with cases related to domestic relationships and children?",
+		"answer":"Family court",
+		"type":"1-1",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix text: <http://okbqa.org/text#> select distinct ?x where { dbr:Domestic_Relations_Court dbo:wikiPageRedirects ?x. ?x text:keyword \"children\". ?x text:keyword \"domestic relationships\". }"
+	},
+	{
+		"id":"321",
+		"lang":"ko",
+		"question":"���� �� �ҳ⿡ ���� ����� �����ϴ� ������ �����ΰ�?",
+		"answer":"��������",
+		"type":"1-1",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbpedia-owl:abstract ?o. ?x text:keyword \"������ ���� ���\". ?x text:keyword \"�ҳ⿡ ���� ���\". ?x text:keyword \"����\". }"
+	},
+	{
+		"id":"324",
+		"lang":"en",
+		"question":"What is the Canal that was opened in November 1869?",
+		"answer":"Suez Canal",
+		"type":"1-2",
+		"sparql":"prefix dbp: <http://dbpedia.org/property/> select distinct ?x where { ?x dbp:dateComp \"November 1869\"@en. }"
+	},
+	{
+		"id":"324",
+		"lang":"ko",
+		"question":"1869�� 11���� ����� ���ϴ� ����ΰ�?",
+		"answer":"������ ����",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbpedia-owl:abstract ?o. ?x text:keyword \"1869�� 11��\". ?x text:keyword \"����\". }"
+	},
+	{
+		"id":"",
+		"lang":"en",
+		"question":"What was the unmanned spacecraft launched by the United States in 1977 to study the outer solar system?",
+		"answer":"Voyager 1",
+		"type":"1-2",
+		"sparql":"prefix xsd: <http://www.w3.org/2001/XMLSchema#> prefix dbp: <http://dbpedia.org/property/> prefix dbc: <http://dbpedia.org/resource/Category> prefix text: <http://okbqa.org/text#> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where { ?x dct:subject dbc:1977_in_the_United_States. ?x dbp:year \"1977\"^^xsd:integer. ?x text:keyword \"solar\". }"
+	},
+	{
+		"id":"",
+		"lang":"ko",
+		"question":"�̱��� 1977�⿡ �߻��� �¾�� Ž��� ���� ���ּ��� �����ΰ�?",
+		"answer":"������ 1ȣ",
+		"type":"1-2",
+		"sparql":"prefix xsd: <http://www.w3.org/2001/XMLSchema#> prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x prop-ko:�߻��� \"1977\"^^xsd:integer. ?x text:keyword \"�¾��\". ?x text:keyword \"Ž��\". }"
+	},
+	{
+		"id":"335",
+		"lang":"en",
+		"question":"What is the average interest rate applied in London's financial market daily at 11:30 a.m.?",
+		"answer":"LIBOR (London Interbank Offered Rate)",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"published daily at 11:30 am\". }"
+	},
+	{
+		"id":"335",
+		"lang":"ko",
+		"question":"���� ���� 11�� 30�п� ��ǥ�Ǵ� ���� ���ణ �ݸ��� �����ΰ�?",
+		"answer":"����",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"���� 11�� 30��\". ?x text:keyword \"������ �ֿ� ���� ����\". }"
+	},
+	{
+		"id":"336",
+		"lang":"en",
+		"question":"What was the category of the Nobel Prize added in 1969?",
+		"answer":"Nobel Memorial Prize in Economic Sciences",
+		"type":"1-3",
+		"sparql":"prefix dbc: <http://dbpedia.org/resource/Category> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where {  ?x dct:subject dbc:Awards_established_in_1969. ?x dct:subject dbc:Nobel_Prize. }"
+	},
+	{
+		"id":"336",
+		"lang":"ko",
+		"question":"1969�⿡ �߰��� �뺧�� �оߴ� �����ΰ�?",
+		"answer":"�뺧 �����л�",
+		"type":"1-3",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dcterms:subject dbpedia-ko:�з�:�뺧��. ?x text:keyword \"1969�����\". }"
+	},
+	{
+		"id":"346",
+		"lang":"en",
+		"question":"What was the fossil discovered in Ethiopia in 1974 and named after the lady in the discoverer's favorite song of the Beatles?",
+		"answer":"Lucy (Australopithecus)",
+		"type":"1-2",
+		"sparql":"prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> prefix text: <http://okbqa.org/text#> select distinct ?x where {   ?x text:keyword \"1974\". ?x dbp:placeDiscovered dbr:History_of_Ethiopia. }"
+	},
+	{
+		"id":"346",
+		"lang":"ko",
+		"question":"1974�⿡ ��Ƽ���Ǿƿ��� �߱��Ǿ�����, ��Ʋ���� �뷡�� ������ ������ �̸��� ���� ȭ���� �����ΰ�?",
+		"answer":"���",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where {   ?x prop-ko:�߱��� dbpedia-ko:��Ƽ���Ǿ�.  ?x text:keyword \"1974\". }"
+	},
+	{
+		"id":"348",
+		"lang":"en",
+		"question":"Who was the German scientist that won the first Nobel Prize in Physics?",
+		"answer":"Wilhelm R?ntgen",
+		"type":"1-2",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix dbp: <http://dbpedia.org/property/> prefix dbc: <http://dbpedia.org/resource/Category> prefix text: <http://okbqa.org/text#> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where {   ?x dbp:nationality dbr:Germans. ?x rdf:type dbo:Scientist. ?x dct:subject dbc:Nobel_laureates_in_Physics. ?x text:keyword \"first Nobel Prize\". }"
+	},
+	{
+		"id":"348",
+		"lang":"ko",
+		"question":"������ �뺧 �����л��� ������ ������ �����ڴ� �����ΰ�?",
+		"answer":"���︧ �ܶ�Ʈ ��Ʈ��",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> select distinct ?x where {   ?x dbpedia-owl:nationality dbpedia-ko:����. ?x rdf:type dbpedia-owl:Scientist. ?x prop-ko:���� dbpedia-ko:�뺧_�����л�.  ?x text:keyword \"������ �뺧 �����л�\". }"
+	},
+	{
+		"id":"350",
+		"lang":"en",
+		"question":"What is the walled mountain fortress in Gwangjang-dong of Seoul's Gwangjin District?",
+		"answer":"Achasanseong (Acha Mountain Fortress)",
+		"type":"1-2",
+		"sparql":"prefix dbc: <http://dbpedia.org/resource/Category> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where {   ?x dct:subject dbc:Castles_in_South_Korea. ?x dct:subject dbc:Gwangjin_District. }"
+	},
+	{
+		"id":"350",
+		"lang":"ko",
+		"question":"����Ư���� ������ ���嵿�� ��ġ�� �꼺�� �����ΰ�?",
+		"answer":"�����꼺",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where {   ?x prop-ko:������ ?y. ?x text:keyword \"����Ư���� ������ ���嵿\". ?x text:keyword \"�꼺\". }"
+	},
+	{
+		"id":"351",
+		"lang":"en",
+		"question":"What was the anti-art movement taken place across Europe at the end of World War I by Tristan Tzara, Marcel Duchamp and others?",
+		"answer":"Dadaism",
+		"type":"1-2",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix text: <http://okbqa.org/text#> select distinct ?x where { dbr:Tristan_Tzara dbo:movement ?x. dbr:Marcel_Duchamp dbo:movement ?x. ?x text:keyword \"anti-war\". }"
+	},
+	{
+		"id":"351",
+		"lang":"ko",
+		"question":"��1�� ���� ���� ���� Ʈ����ź ¥��, ������ �ڼ� � ���Ͽ� �������� �߻��� �ݿ����� ��ȸ ��� �����ΰ�?",
+		"answer":"�ٴ�����",
+		"type":"1-2",
+		"sparql":"select distinct ?x where {   ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:������_�ڼ�. ?x dbpedia-owl:wikiPageWikiLink dbpedia-ko:1��_����_����. }"
+	},
+	{
+		"id":"353",
+		"lang":"en",
+		"question":"What is the world's oldest recorded code of laws enacted by the king of Babylonia Hammurabi around 1750s BC?",
+		"answer":"Code of Hammurabi",
+		"type":"1-2",
+		"sparql":"prefix dbp: <http://dbpedia.org/property/> prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x dbp:purpose <http://dbpedia.org/resource/Code_(law)>. ?x text:keyword \"1750 BC\". }"
+	},
+	{
+		"id":"353",
+		"lang":"ko",
+		"question":"����� 1750�� �濡 �ٺ��δϾ��� �Թ���� ���� ������ ���迡�� ���� ������ �������� �����ΰ�?",
+		"answer":"�Թ���� ����",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where {    ?x text:keyword \"���迡�� ���� ������ ������\". }"
+	},
+	{
+		"id":"355",
+		"lang":"en",
+		"question":"What was the book written by Ahn Jeong-bok describing Korean history from Gojoseon to Goryeo?",
+		"answer":"Dongsa Gangmok",
+		"type":"1-2",
+		"sparql":"prefix dbc: <http://dbpedia.org/resource/Category> prefix text: <http://okbqa.org/text#> prefix dct: <http://purl.org/dc/terms/> select distinct ?x where { ?x dct:subject dbc:History_books_about_Korea . ?x text:keyword \"Gojoseon\". ?x text:keyword \"Goryeo\". ?x text:keyword \"Ahn Jeong-bok\". }"
+	},
+	{
+		"id":"355",
+		"lang":"ko",
+		"question":"�������� ���������� ��������� �ѱ��� ���縦 �� å�� �����ΰ�?",
+		"answer":"���簭��",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"������\". ?x text:keyword \"������\". ?x text:keyword \"���\". }"
+	},
+	{
+		"id":"356",
+		"lang":"en",
+		"question":"What is the most authoritative award for achievements in journalism, literature, and musical composition in the United States?",
+		"answer":"Pulitzer Prize",
+		"type":"1-2",
+		"sparql":"prefix dbp: <http://dbpedia.org/property/> prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"journalism\". ?x text:keyword \"musical composition\". ?x dbp:country \"United States\"@en. }"
+	},
+	{
+		"id":"356",
+		"lang":"ko",
+		"question":"�̱����� ���� ���� �ִ� ���θ���, ����, ���ǻ��� �����ΰ�?",
+		"answer":"ǽ��ó��",
+		"type":"1-2",
+		"sparql":"prefix text: <http://okbqa.org/text#> select distinct ?x where { ?x text:keyword \"�̱�\". ?x text:keyword \"���θ���\". ?x text:keyword \"����\". ?x text:keyword \"����\". }"
+	},
+	{
+		"id":"361",
+		"lang":"en",
+		"question":"Who is the English zoologist that is world-renowned for her 40-year study of chimpanzees in Tanzania?",
+		"answer":"Jane Goodall",
+		"type":"3-1",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> prefix text: <http://okbqa.org/text#> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> select distinct ?x where { ?x dbo:knownFor dbr:Chimpanzee. ?x text:keyword \"Tanzania\". ?x rdf:type dbo:Scientist. }"
+	},
+	{
+		"id":"361",
+		"lang":"ko",
+		"question":"ź�ڴϾƿ��� 40���Ⱓ ħ������ ������ ������ �������ڴ� �����ΰ�?",
+		"answer":"���� ����",
+		"type":"3-1",
+		"sparql":"select distinct ?x where { ?x dbpedia-owl:occupation dbpedia-ko:��������. dbpedia-ko:ź�ڴϾ� dbpedia-owl:wikiPageWikiLink ?x. dbpedia-ko:ħ���� dbpedia-owl:wikiPageWikiLink ?x. }"
+	},
+	{
+		"id":"365",
+		"lang":"en",
+		"question":"Who was the Russian physiologist that won the Nobel Prize for Physiology or Medicine in 1904?",
+		"answer":"Ivan Pavlov",
+		"type":"1-2",
+		"sparql":"prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> select distinct ?x where { ?x dbo:nationality dbr:Russians. ?x dbo:award dbr:Nobel_Prize_in_Physiology_or_Medicine. ?x dbo:field dbr:Physiology }"
+	}
+]

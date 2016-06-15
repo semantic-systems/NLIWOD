@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # NLIWOD
 Collection of tools, utilities, datasets and approaches towards realizing natural language interfaces for the Web of Data. 
 
@@ -17,3 +18,4 @@ If you are interested in standardization efforts join or W3C Commmunity Group ht
 
 ## For developers
 To deploy a new version increase the according versions in the pom.xml and execute ```mvn clean deploy``` after setting your ~.m2/settings.xml in accordance to https://wiki.aksw.org/private/infrastructure/aksw-responsibilities/maven .
+

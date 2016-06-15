@@ -67,6 +67,7 @@
 	</build>
 	<!-- MODULES -->
 	<modules>
+		<module>qa.datasets</module>
 		<module>qa.systems</module>
 	</modules>
 

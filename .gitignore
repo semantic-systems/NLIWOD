@@ -1,8 +1,4 @@
-*.class
 log.out
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
 
 # Package Files #
 *.jar
@@ -18,3 +14,10 @@ hs_err_pid*
 .project
 target
 .settings
+
+
+.classpath
+.project
+.settings/
+/target/
+qa.datasets/src/main/resources/QALD-master
