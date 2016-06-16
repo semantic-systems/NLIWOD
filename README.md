@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-# NLIWOD
+# NLIWOD - Natural Language Interfaces for the Web of Data
 Collection of tools, utilities, datasets and approaches towards realizing natural language interfaces for the Web of Data. 
 
 This repository will soon include the following repositories as submodules:
