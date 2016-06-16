@@ -1,4 +1,3 @@
-=======
 #Question answering datasets
 
 This collection includes the following datasets or respectivly looks at the following datasets to be included:
@@ -66,4 +65,3 @@ Add the following repository:
 ```
 
 Look for more interesting libraries here: http://maven.aksw.org/archiva/#browse/org.aksw.qa 
->>>>>>> qa.datasets/master
