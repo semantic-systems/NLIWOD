@@ -10,6 +10,7 @@ target
 target/
 
 # Project-based exclusions
+**/.clover/
 log.out
 qa.datasets/src/main/resources/QALD
 qa.datasets/src/main/resources/QALD-master

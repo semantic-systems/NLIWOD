@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>commons</artifactId>
-	<version>0.0.12-SNAPSHOT</version>
+	<version>${qa-commons.version}</version>
 	<name>Question Answering (QA) common utilities</name>
 	<description>Question Answering (QA) common utilities to load and store QA datasets and calculate performance measures. 
 	It provides also basic data structures for building QA systems.</description>
@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>datasets</artifactId>
-			<version>0.0.4-SNAPSHOT</version>
+			<version>${qa-datasets.version}</version>
 		</dependency>
 		<!-- Reading JSON files -->
 		<dependency>
@@ -30,12 +30,6 @@
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.json</artifactId>
 			<version>1.0.4</version>
-		</dependency>
-		<!-- QA commons is currently based on Jena for handling RDF resources -->
-		<dependency>
-    		<groupId>org.aksw.jena-sparql-api</groupId>
-    		<artifactId>jena-sparql-api-core</artifactId>
-    		<version>3.0.1-1</version>
 		</dependency>
 	</dependencies>
 </project>

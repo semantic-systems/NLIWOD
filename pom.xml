@@ -12,6 +12,9 @@
 		<java.version>1.8</java.version>
 		<slf4j.version>1.7.10</slf4j.version>
 		<junit.version>4.8.2</junit.version>
+		<qa-commons.version>0.0.12-SNAPSHOT</qa-commons.version>
+		<qa-datasets.version>0.0.4</qa-datasets.version>
+		<qa-systems.version>0.0.3-SNAPSHOT</qa-systems.version>
 		<!-- <lucene.version>4.4.0</lucene.version> -->
 		<!-- <com.carrotsearch.hppc.version>0.6.1</com.carrotsearch.hppc.version> -->
 		<!-- <org.apache.commons.commons-lang3.version>3.3.2</org.apache.commons.commons-lang3.version> -->
@@ -80,7 +83,6 @@
 		<module>qa.systems</module>
 		<module>qa.commons</module>
 	</modules>
-
 	<!-- DISTRIBUTION MANAGEMENT -->
 	<distributionManagement>
 		<repository>
@@ -93,7 +95,6 @@
 			<url>http://maven.aksw.org/archiva/repository/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
-
 	<!-- REPOSITORIES -->
 	<repositories>
 		<repository>
@@ -133,5 +134,11 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- ~~~~~~~~~~~~~~~~~~~ End Testing ~~~~~~~~~~~~~~~~~~~~~~ -->
+		<!-- QA commons is currently based on Jena for handling RDF resources -->
+		<dependency>
+			<groupId>org.aksw.jena-sparql-api</groupId>
+			<artifactId>jena-sparql-api-core</artifactId>
+			<version>3.0.1-1</version>
+		</dependency>
 	</dependencies>
 </project>
