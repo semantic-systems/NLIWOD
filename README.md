@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # NLIWOD
 Collection of tools, utilities, datasets and approaches towards realizing natural language interfaces for the Web of Data. 
 
