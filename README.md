@@ -28,16 +28,7 @@ To deploy a new version increase the according versions in the pom.xml and execu
 This library is available as snapshot here: http://maven.aksw.org/archiva/#artifact~snapshots/org.aksw.qa/datasets
 
 Add the following repository to your project:
-```
-<repository>
-			<id>maven.aksw.internal</id>
-			<name>University Leipzig, AKSW Maven2 Repository</name>
-			<url>http://maven.aksw.org/archiva/repository/internal</url>
-		</repository>
-		<repository>
-			<id>maven.aksw.snapshots</id>
-			<name>University Leipzig, AKSW Maven2 Repository</name>
-			<url>http://maven.aksw.org/archiva/repository/snapshots</url>
-</repository>
-```
+
 Artificats are described in the sub-modules.
+
+Look for more interesting libraries here: http://maven.aksw.org/archiva/#browse/org.aksw.qa 

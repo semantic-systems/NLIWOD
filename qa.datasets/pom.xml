@@ -9,9 +9,32 @@
 	</parent>
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>datasets</artifactId>
+	<name>Question Answering (QA) datasets collection</name>
 	<version>0.0.4</version>
 	<build>
 		<plugins>
+			<plugin>
+			 	<artifactId>maven-clean-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>auto-clean</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+    				<configuration>
+      					<filesets>	
+						<fileset>
+							<directory>qa.datasets/src/main/resources/QALD</directory>
+						</fileset>
+						<fileset>
+							<directory>qa.datasets/src/main/resources/QALD-master</directory>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>com.googlecode.maven-download-plugin</groupId>
 				<artifactId>download-maven-plugin</artifactId>

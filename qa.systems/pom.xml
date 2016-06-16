@@ -10,7 +10,7 @@
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>systems</artifactId>
 	<version>0.0.3-SNAPSHOT</version>
-	
+	<name>Question Answering (QA) systems wrapper based on Java</name>
 	<!-- DEPENDENCIES -->
 	<dependencies>
 		<dependency>
