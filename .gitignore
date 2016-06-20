@@ -14,3 +14,7 @@ target/
 log.out
 qa.datasets/src/main/resources/QALD
 qa.datasets/src/main/resources/QALD-master
+qa.ml/src/main/resources/QALD-5_logs.zip
+qa.ml/src/main/resources/QALD-5_logs/
+qa.ml/src/main/resources/qald5train/
+qa.ml/cache
