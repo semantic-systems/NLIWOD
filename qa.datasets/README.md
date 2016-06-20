@@ -10,7 +10,7 @@ in production (adding answers):
 * https://www.stonetemple.com/great-knowledge-box-showdown/
 
 to analyze: 
-* https://github.com/ag-sc/QALD , especially if we could use this repo directly
+* https://stanford-qa.com/ 100k+ questions with leaderboard
 * http://agarciaduran.org/ 30M questions to freebase
 * https://github.com/brmson/yodaqa/wiki/Benchmarks
  * https://github.com/brmson/dataset-factoid-curated for evolution 
