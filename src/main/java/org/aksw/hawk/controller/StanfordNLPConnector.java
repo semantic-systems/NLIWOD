@@ -1,9 +1,5 @@
 package org.aksw.hawk.controller;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,6 +16,7 @@ import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.nlp.SentenceToSequence;
+import org.aksw.hawk.number.UnitController;
 import org.aksw.hawk.spotter.Spotlight;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.IQuestion;
@@ -72,10 +69,9 @@ public class StanfordNLPConnector {
 	 * Initializes the StanfordNLP with given Annotators.Complete Annotator list
 	 * at http://stanfordnlp.github.io/CoreNLP/annotators.html}
 	 * 
-	 * @param annotators
-	 *            Annotators to run
+	 * @param annotators Annotators to run
 	 */
-	public StanfordNLPConnector(String annotators) {
+	public StanfordNLPConnector(final String annotators) {
 		Properties props = new Properties();
 		props.setProperty("annotators", annotators);
 		stanfordPipe = new StanfordCoreNLP(props);
@@ -84,14 +80,14 @@ public class StanfordNLPConnector {
 
 	/**
 	 * Initializes CoreNLP with default Annotators. "tokenize, ssplit, pos,
-	 * lemma,ner, parse, dcoref"
+	 * lemma,ner, parse,"
 	 */
 	public StanfordNLPConnector() {
 
 		Properties props = new Properties();
-		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
-		stanfordPipe = new StanfordCoreNLP(props);
+		props.setProperty("annotators", "tokenize, ssplit,pos,lemma, ner,parse");
 
+		stanfordPipe = new StanfordCoreNLP(props);
 	}
 
 	/**
@@ -102,10 +98,11 @@ public class StanfordNLPConnector {
 	 * @param list
 	 * @return
 	 */
+
 	// TODO @ christian einen test schreiben mit der frage : Who was vice
 	// president under the president who approved the use of atomic weapons
 	// against Japan during World War II?
-	private String replaceNamedEntitysWithURL(HAWKQuestion q) {
+	private String replaceNamedEntitysWithURL(final HAWKQuestion q) {
 		String sentence = q.getLanguageToQuestion().get("en");
 		if (!q.getLanguageToNamedEntites().isEmpty()) {
 			sentence = replaceLabelsByIdentifiedURIs(sentence, q.getLanguageToNamedEntites().get("en"));
@@ -130,12 +127,13 @@ public class StanfordNLPConnector {
 	 * @param list
 	 * @return
 	 */
-	private String replaceLabelsByIdentifiedURIs(String sentence, List<Entity> list) {
+
+	private String replaceLabelsByIdentifiedURIs(final String sentence, final List<Entity> list) {
 		/*
 		 * reverse list of entities to start replacing from the end of the
 		 * string so that replacing from the end won't mess up the order
 		 */
-		List<String> textParts = new ArrayList<String>();
+		List<String> textParts = new ArrayList<>();
 
 		list.sort(Comparator.comparing(Entity::getOffset).reversed());
 		int startFormerLabel = sentence.length();
@@ -162,11 +160,10 @@ public class StanfordNLPConnector {
 	/**
 	 * Runs StanfordNLP on given Question and returns processed Annotation
 	 * 
-	 * @param q
-	 *            The HAWKQuestion to be processed.
+	 * @param q The HAWKQuestion to be processed.
 	 * @return processed Question as Annotation
 	 */
-	public Annotation runAnnotation(HAWKQuestion q) {
+	public Annotation runAnnotation(final HAWKQuestion q) {
 		// create an empty Annotation just with the given text
 		Annotation annotationDocument = new Annotation(q.getLanguageToQuestion().get("en"));
 		// run all Annotators on this text
@@ -177,11 +174,10 @@ public class StanfordNLPConnector {
 	/**
 	 * Runs StanfordNLP on given String and returns processed Annotation
 	 * 
-	 * @param q
-	 *            The HAWKQuestion to be processed.
+	 * @param q The HAWKQuestion to be processed.
 	 * @return processed Question as Annotation
 	 */
-	public Annotation runAnnotation(String s) {
+	public Annotation runAnnotation(final String s) {
 		// create an empty Annotation just with the given text
 		Annotation annotationDocument = new Annotation(s);
 		// run all Annotators on this text
@@ -192,11 +188,10 @@ public class StanfordNLPConnector {
 	/**
 	 * Extracts dependency Graph from processed Annotation.
 	 * 
-	 * @param document
-	 *            an Processed Annotation
+	 * @param document an Processed Annotation
 	 * @return Dependency Graph as MutableTree
 	 */
-	public MutableTree process(Annotation document) {
+	public MutableTree process(final Annotation document) {
 
 		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
 		CoreMap sen = sentences.get(0);
@@ -214,23 +209,36 @@ public class StanfordNLPConnector {
 	/**
 	 * Runs a NounPhrasCombination and dependency parsing on given HAWKQuestion
 	 * 
-	 * @param q
-	 *            The Question you want to run NounPhraseCombination on
+	 * @param q The Question you want to run NounPhraseCombination on
 	 */
-	public MutableTree combineSequences(HAWKQuestion q) {
+	public MutableTree combineSequences(final HAWKQuestion q) {
+		return this.combineSequences(q, null);
+	}
+
+	/**
+	 * Runs a NounPhrasCombination and dependency parsing on given HAWKQuestion
+	 * 
+	 * @param q The Question you want to run NounPhraseCombination on
+	 */
+	public MutableTree combineSequences(final HAWKQuestion q, final UnitController numberToDigit) {
 		/**
 		 * We aim at having only one node for named entities. (same with
 		 * compoundNouns in recursive function) So we replace named entities
-		 * with their url, wich is one coherent String. -> graph parser will
+		 * with their url, which is one coherent String. -> graph parser will
 		 * give us only one node.
 		 * 
 		 */
 		String sentence = this.replaceNamedEntitysWithURL(q);
 		log.info(sentence);
+		if (numberToDigit != null) {
+			sentence = numberToDigit.normalizeNumbers("en", sentence);
+			log.info(sentence);
+		}
 
-		Annotation document = this.runAnnotation(sentence);
+		Annotation document = this.runAnnotation(preprocessStringForStanford(sentence));
 
 		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
+
 		CoreMap sen = sentences.get(0);
 
 		SemanticGraph graph = sen.get(CollapsedCCProcessedDependenciesAnnotation.class);
@@ -239,13 +247,6 @@ public class StanfordNLPConnector {
 
 		log.debug(tree.toString());
 
-		// used in main
-		// out.append(q.getLanguageToQuestion().get("en") + "\r\n\r\n");
-		// out.append(sen.get(CollapsedCCProcessedDependenciesAnnotation.class).toString(SemanticGraph.OutputFormat.LIST)
-		// + "\r\n\r\n");
-		// out.append(graph.toString() + "\r\n\r\n");
-		// out.append(tree.toString() + "\r\n\r\n");
-		// out.append("\r\n\r\n\r\n\r\n");
 		return tree;
 
 	}
@@ -257,13 +258,13 @@ public class StanfordNLPConnector {
 	 * @param document
 	 * @return
 	 */
-	public Map<String, String> generatePOSTags(Annotation document) {
+	public Map<String, String> generatePOSTags(final Annotation document) {
 
 		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
 		CoreMap sen = sentences.get(0);
 
-		List<String> tokens = new LinkedList<String>();
-		Map<String, String> label2pos = new HashMap<String, String>();
+		List<String> tokens = new LinkedList<>();
+		Map<String, String> label2pos = new HashMap<>();
 
 		for (CoreLabel token : sen.get(TokensAnnotation.class)) {
 			String word = token.get(TextAnnotation.class);
@@ -284,23 +285,50 @@ public class StanfordNLPConnector {
 	 * @param graph
 	 * @return
 	 */
-	private MutableTree semanticGraphToMutableTree(SemanticGraph graph, HAWKQuestion q) {
-
+	private MutableTree semanticGraphToMutableTree(final SemanticGraph graph, final HAWKQuestion q) {
+		log.debug("use following tree for more than compound noun combination??");
 		log.debug(graph.toString(SemanticGraph.OutputFormat.LIST));
-
 		nodeNumber = 0;
 		MutableTree tree = new MutableTree();
 		MutableTreeNode mutableRoot;
 
-		this.visitedNodes = new HashSet<IndexedWord>();
+		this.visitedNodes = new HashSet<>();
 		IndexedWord graphRoot = graph.getFirstRoot();
 
-		mutableRoot = new MutableTreeNode(graphRoot.word(), graphRoot.tag(), "root", null, nodeNumber++, graphRoot.lemma());
+		mutableRoot = new MutableTreeNode(postprocessStringForStanford(graphRoot), graphRoot.tag(), "root", null, nodeNumber++, graphRoot.lemma());
 		tree.head = mutableRoot;
 
 		convertGraphStanford(mutableRoot, graphRoot, graph, q);
 
 		return tree;
+	}
+
+	/**
+	 * Stanford splits by sentences with "(" and ")" in them. But they occur on
+	 * a regular basis through replacing names with url, because different
+	 * meanings of a named entity are specified in brackets:
+	 * 
+	 * <pre>
+	 * http://dbpedia.org/page/Pound_(mass)
+	 * http://dbpedia.org/page/Pound_(band)
+	 * </pre>
+	 * 
+	 * So we replace round brackets with "////"
+	 * 
+	 * @see #postprocessStringForStanford(IndexedWord)
+	 */
+	public String preprocessStringForStanford(final String input) {
+		return input.replaceAll("[()]", "////");
+	}
+
+	/**
+	 * Deals with the problem of Stanford splitting by "(" and ")" in a previous
+	 * step, we replace this by "////" This method regexes it back to normal.
+	 * 
+	 * @see #preprocessStringForStanford(String)
+	 */
+	public String postprocessStringForStanford(final IndexedWord node) {
+		return node.word().replaceAll("(////)(.+)(////)", "($2)");
 	}
 
 	/**
@@ -310,9 +338,12 @@ public class StanfordNLPConnector {
 	 * @param parentGraphWord
 	 * @param graph
 	 */
-	private void convertGraphStanford(MutableTreeNode parentMutableNode, IndexedWord parentGraphWord, SemanticGraph graph, HAWKQuestion q) {
+	private void convertGraphStanford(final MutableTreeNode parentMutableNode, final IndexedWord parentGraphWord, final SemanticGraph graph, final HAWKQuestion q) {
 		visitedNodes.add(parentGraphWord);
-
+		/**
+		 * 
+		 */
+		parentGraphWord.setWord(postprocessStringForStanford(parentGraphWord));
 		/**
 		 * If the parentNode is a named Entity , set POS tag to "ADD". At this
 		 * point, only named entities are replaced by URLs
@@ -323,9 +354,9 @@ public class StanfordNLPConnector {
 
 		/**
 		 * Remove already visited nodes from the list of children. This makes
-		 * the graph for us acyclic and therefore prevents RECURSION OF DEATH!
+		 * the graph for us acyclic and therefore prevents endless recursion.
 		 */
-		Set<IndexedWord> notCyclicChildren = new HashSet<IndexedWord>(graph.getChildren(parentGraphWord));
+		Set<IndexedWord> notCyclicChildren = new HashSet<>(graph.getChildren(parentGraphWord));
 		notCyclicChildren.removeAll(visitedNodes);
 
 		if (notCyclicChildren.isEmpty()) {
@@ -337,14 +368,14 @@ public class StanfordNLPConnector {
 		 */
 		if (q != null && !parentMutableNode.posTag.equals("ADD")) {
 			GrammaticalRelation gr = new GrammaticalRelation(Language.UniversalEnglish, "compound", null, null);
-			ArrayList<IndexedWord> compounds = new ArrayList<IndexedWord>();
+			ArrayList<IndexedWord> compounds = new ArrayList<>();
 			compounds.addAll(graph.getChildrenWithReln(parentGraphWord, gr));
 
 			/**
 			 * Don't combine with children which are URL from FOX (NER)
 			 * 
 			 */
-			ArrayList<IndexedWord> removeMe = new ArrayList<IndexedWord>();
+			ArrayList<IndexedWord> removeMe = new ArrayList<>();
 			for (IndexedWord child : compounds)
 				if (child.word().contains("http://dbpedia.org/resource/")) {
 					removeMe.add(child);
@@ -360,7 +391,7 @@ public class StanfordNLPConnector {
 				 */
 				compounds.add(parentGraphWord);
 				Collections.sort(compounds);
-				ArrayList<String> orderlyWords = new ArrayList<String>();
+				ArrayList<String> orderlyWords = new ArrayList<>();
 				for (IndexedWord compoundChild : compounds) {
 					orderlyWords.add(compoundChild.word());
 				}
@@ -378,7 +409,7 @@ public class StanfordNLPConnector {
 				/**
 				 * Get the children of eliminated Nodes and add then to children
 				 * of parents e.g. deal with the children of the children of
-				 * Parent
+				 * Pare
 				 */
 
 				compounds.remove(parentGraphWord);
@@ -401,7 +432,7 @@ public class StanfordNLPConnector {
 	}
 
 	// TODO transform to unit tests (should be three or more)
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		StanfordNLPConnector connector = new StanfordNLPConnector();
 		String sentence = "Who was vice president under the president who approved the use of atomic weapons against Japan during World War II?";
 		List<Entity> list = Lists.newArrayList();
@@ -418,7 +449,7 @@ public class StanfordNLPConnector {
 		Assert.assertEquals(string,
 		        "Who was http://dbpedia.org/resource/Vice_president under the http://dbpedia.org/resource/President who approved the use of atomic weapons against Japan during World War II?");
 
-		///---------------
+		/// ---------------
 		List<HAWKQuestion> questionsStanford;
 		Spotlight nerdModule = new Spotlight();
 		List<IQuestion> loadedQuestions = QALD_Loader.load(Dataset.QALD6_Train_Hybrid);
@@ -432,7 +463,6 @@ public class StanfordNLPConnector {
 			// stanford.combineSequences(doc, currentQuestion);
 
 		}
-
 
 	}
 }
