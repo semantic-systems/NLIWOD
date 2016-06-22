@@ -1,0 +1,133 @@
+{
+    "annotation": [
+        {
+            "annotations": [
+                "http://dbpedia.org/ontology/capital",
+                "http://dbpedia.org/ontology/Capital",
+                "http://dbpedia.org/ontology/capitalCountry",
+                "http://dbpedia.org/ontology/capitalCoordinates",
+                "http://dbpedia.org/ontology/capitalRegion",
+                "http://dbpedia.org/ontology/capitalPosition",
+                "http://dbpedia.org/ontology/capitalPlace",
+                "http://dbpedia.org/ontology/capitalDistrict",
+                "http://dbpedia.org/ontology/capitalMountain",
+                "http://dbpedia.org/ontology/capitalElevation",
+                "http://dbpedia.org/ontology/distanceToCapital",
+                "http://dbpedia.org/ontology/CapitalOfRegion",
+                "http://dbpedia.org/ontology/perCapitaIncomeRank",
+                "http://dbpedia.org/ontology/numberOfCapitalDeputies"
+            ],
+            "label": "capital"
+        }
+    ],
+    "tree_full": {
+        "children": [],
+        "label": "is"
+    },
+    "answer": {
+        "value": [
+            {
+                "thumbnail": "http://commons.wikimedia.org/wiki/Special:FilePath/Bust_Hadrian_Musei_Capitolini_MC817.jpg?width=300",
+                "comment": "Hadrian (Latin: Publius Aelius Hadrianus Augustus 24 January, 76 AD – 10 July, 138 AD) was Roman Emperor from 117 to 138. In Latin, the full imperial title of Hadrian was also rendered as Tito Ael[io] Hadriano, just as it appears in ancient epigraphic records. He re-built the Pantheon and constructed the Temple of Venus and Roma. He is also known for building Hadrian's Wall, which marked the northern limit of Roman Britain.",
+                "abstract": "Hadrian (Latin: Publius Aelius Hadrianus Augustus 24 January, 76 AD – 10 July, 138 AD) was Roman Emperor from 117 to 138. In Latin, the full imperial title of Hadrian was also rendered as Tito Ael[io] Hadriano, just as it appears in ancient epigraphic records. He re-built the Pantheon and constructed the Temple of Venus and Roma. He is also known for building Hadrian's Wall, which marked the northern limit of Roman Britain. Hadrian was regarded by some as a humanist and was philhellene in most of his tastes. He is regarded as one of the Five Good Emperors. Hadrian was born Publius Aelius Hadrianus to an ethnically Italian family, either in Italica near Santiponce (in modern-day Spain). His predecessor Trajan was a maternal cousin of Hadrian's father. Trajan never officially designated an heir, but according to his wife Pompeia Plotina, Trajan named Hadrian emperor immediately before his death. Trajan's wife and his friend Licinius Sura were well-disposed towards Hadrian, and he may well have owed his succession to them.During his reign, Hadrian traveled to nearly every province of the Empire. An ardent admirer of Greece, he sought to make Athens the cultural capital of the Empire and ordered the construction of many opulent temples in the city. He used his relationship with his Greek favorite Antinous to underline his philhellenism and led to the creation of one of the most popular cults of ancient times. He spent extensive amounts of his time with the military; he usually wore military attire and even dined and slept amongst the soldiers. He ordered military training and drilling to be more rigorous and even made use of false reports of attack to keep the army alert.Upon his accession to the throne, Hadrian withdrew from Trajan's conquests in Mesopotamia and Armenia, and even considered abandoning Dacia. Late in his reign he suppressed the Bar Kokhba revolt in Judaea, renaming the province Syria Palaestina. In 136 an ailing Hadrian adopted Lucius Aelius as his heir, but the latter died suddenly two years later. In 138, Hadrian resolved to adopt Antoninus Pius if he would in turn adopt Marcus Aurelius and Aelius' son Lucius Verus as his own eventual successors. Antoninus agreed, and soon afterward Hadrian died at Baiae.",
+                "URI": "http://dbpedia.org/resource/Hadrian"
+            }
+        ]
+    },
+    "POS_tags": [
+        {
+            "POS": "VBZ",
+            "key": "is"
+        },
+        {
+            "POS": "NN",
+            "key": "capital"
+        },
+        {
+            "POS": "ADD",
+            "key": "http://dbpedia.org/resource/Spain"
+        },
+        {
+            "POS": "WP",
+            "key": "What"
+        }
+    ],
+    "final_sparql_base64": "UFJFRklYIHRleHQ6PGh0dHA6Ly9qZW5hLmFwYWNoZS5vcmcvdGV4dCM+IApTRUxFQ1QgRElTVElOQ1QgP3Byb2ogV0hFUkUgewogP3Byb2ogP3BicmlkZ2UgPGh0dHA6Ly9kYnBlZGlhLm9yZy9yZXNvdXJjZS9TcGFpbj4uIAp9CkxJTUlUIDE=",
+    "input_question": "What is the capital of Spain ?",
+    "tree_pruned": {
+        "children": [],
+        "label": "is"
+    },
+    "pruning_messages": [
+        {
+            "label": "Number of Queries before pruning",
+            "value": 840
+        },
+        {
+            "label": "Underdefined pruned",
+            "value": 336
+        },
+        {
+            "label": "SPARQL queries containing no project variable pruned",
+            "value": 140
+        },
+        {
+            "label": "SPARQL queries containing too many nodes as text lookup pruned",
+            "value": 70
+        },
+        {
+            "label": "SPARQL queries with more than one predicate between the same variables pruned",
+            "value": 0
+        },
+        {
+            "label": "SPARQL queries with more than one type per variable pruned",
+            "value": 0
+        },
+        {
+            "label": "SPARQL queries without connected BGP pruned",
+            "value": 112
+        },
+        {
+            "label": "SPARQL queries containing cycic triple pruned",
+            "value": 0
+        },
+        {
+            "label": "SPARQL queries without bound variables pruned",
+            "value": 0
+        },
+        {
+            "label": "SPARQL queries without text filter over existing variables pruned",
+            "value": 28
+        },
+        {
+            "label": "SPARQL queries with unbound triples pruned",
+            "value": 0
+        },
+        {
+            "label": "SPARQL queries with mismatching types pruned",
+            "value": 56
+        },
+        {
+            "label": "SPARQL queries with disjoint classes pruned",
+            "value": 0
+        },
+        {
+            "label": "Number of Queries after pruning",
+            "value": 98
+        },
+        {
+            "label": "Cardinality of question results",
+            "value": 1
+        },
+        {
+            "label": "Number of sofar executed queries",
+            "value": 196
+        }
+    ],
+    "named_entities": [
+        {
+            "value": "http://dbpedia.org/resource/Spain",
+            "key": "Spain"
+        }
+    ]
+}

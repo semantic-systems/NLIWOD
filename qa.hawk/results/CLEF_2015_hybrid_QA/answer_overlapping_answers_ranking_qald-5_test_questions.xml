@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dataset id="qald-5_test_questions.xml">
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="52" onlydbo="true">
+		<string lang="en">Which Secretary of State was significantly
+			involved in the United States' dominance of the Caribbean?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Secretary
+			of State"' 1000).
+			?proj ?pbridge &lt;http://dbpedia.org/resource/United_States&gt;.
+			}
+			LIMIT 12
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Thomas_McHugh_(politician)
+			</answer>
+			<answer>http://dbpedia.org/resource/John_Donald_(Wisconsin_politician)
+			</answer>
+			<answer>http://dbpedia.org/resource/Tyras_S._Athey</answer>
+			<answer>http://dbpedia.org/resource/Philander_C._Knox</answer>
+			<answer>http://dbpedia.org/resource/Robert_C._Zimmerman</answer>
+			<answer>http://dbpedia.org/resource/Peter_Doyle_(politician)</answer>
+			<answer>http://dbpedia.org/resource/Shirley_Chilton</answer>
+			<answer>http://dbpedia.org/resource/Llywelyn_Breese</answer>
+			<answer>http://dbpedia.org/resource/Theodore_Dammann</answer>
+			<answer>http://dbpedia.org/resource/Henry_L._Stimson</answer>
+			<answer>http://dbpedia.org/resource/Alexander_T._Gray</answer>
+			<answer>http://dbpedia.org/resource/Hillary_Rodham_Clinton</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="56" onlydbo="true">
+		<string lang="en">Which German mathematicians were members of the
+			von Braun rocket group?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"rocket
+			group"' 1000).
+			?const &lt;http://dbpedia.org/ontology/populationPlace&gt; ?proj.
+			}
+			LIMIT 12
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/San_José_del_Guaviare</answer>
+			<answer>http://dbpedia.org/resource/Tel_Aviv</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="59" onlydbo="true">
+		<string lang="en">Which movie by the Coen brothers stars John
+			Turturro in the role of a New York City playwright?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"New York
+			City" AND "Coen brothers stars"' 1000).
+			?proj a &lt;http://dbpedia.org/ontology/Film&gt;.
+			}
+			LIMIT 1
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Barton_Fink</answer>
+		</answers>
+	</question>
+</dataset>

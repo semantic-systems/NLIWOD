@@ -39,7 +39,7 @@ public final class Loader {
 	 * @param o The object you want to write.
 	 * @param f The File (-location) to save it in.
 	 * @param overwrite Set this true to overwrite existing file.
-	 * @throws AttemptedOverwriteException
+	 * 
 	 */
 	public static void writeJson(final Object o, final File f, final boolean overwrite) throws IOException {
 		if (f.exists() && !overwrite) {

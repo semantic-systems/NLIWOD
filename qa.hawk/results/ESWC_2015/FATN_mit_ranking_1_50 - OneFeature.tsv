@@ -1,0 +1,41 @@
+	Feature	F-measure	Nr. of result sets		
+20:48:08,197 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[PREDICATES]	0.1554621849	1	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+20:48:34,824 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[PREDICATES]	0.2221288515	2	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+20:49:31,423 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[PREDICATES]	0.3278172808	3	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+20:49:57,558 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[PREDICATES]	0.3866408102	4	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+20:50:24,118 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[PREDICATES]	0.3866408102	5	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+20:50:50,443 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[PREDICATES]	0.3866408102	6	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+20:51:16,656 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[PREDICATES]	0.4454643396	7	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+20:51:42,976 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[PREDICATES]	0.4748761043	8	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+20:52:09,687 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[PREDICATES]	0.4805322129	9	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+20:52:36,455 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[PREDICATES]	0.4805322129	10	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	3.746735617
+21:00:58,636 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TYPES]	0.175070028	1	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:01:25,470 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TYPES]	0.280952381	2	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:01:52,025 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TYPES]	0.2984055161	3	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:02:17,790 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TYPES]	0.3866408102	4	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:02:43,583 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TYPES]	0.3866408102	5	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:03:09,685 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TYPES]	0.3866408102	6	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:03:35,394 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TYPES]	0.4454643396	7	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:04:01,074 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TYPES]	0.4748761043	8	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:04:26,773 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TYPES]	0.4805322129	9	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:04:53,054 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TYPES]	0.4805322129	10	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	3.795755225
+21:25:25,104 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TERMS]	0.175070028	1	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:25:51,159 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TERMS]	0.280952381	2	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:26:17,167 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TERMS]	0.3278172808	3	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:26:43,628 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TERMS]	0.3866408102	4	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:27:09,913 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TERMS]	0.3866408102	5	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:27:36,065 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TERMS]	0.3866408102	6	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:28:02,190 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TERMS]	0.4454643396	7	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:28:28,677 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TERMS]	0.4748761043	8	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:28:54,702 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TERMS]	0.4805322129	9	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+21:29:20,716 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_TERMS]	0.4805322129	10	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	3.82516699
+22:29:04,221 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_CONSTRAINTS]	0.1056884292	1	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+22:29:37,986 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_CONSTRAINTS]	0.1056884292	2	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+22:30:11,796 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_CONSTRAINTS]	0.1435035553	3	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+22:30:48,911 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_CONSTRAINTS]	0.2130222718	4	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+22:31:22,911 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_CONSTRAINTS]	0.2219349278	5	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+22:32:10,021 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_CONSTRAINTS]	0.2807584572	6	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+22:32:43,483 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_CONSTRAINTS]	0.4454643396	7	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+22:33:18,337 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_CONSTRAINTS]	0.5140917906	8	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+22:33:52,310 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_CONSTRAINTS]	0.5140917906	9	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	
+22:34:25,945 INFO [org.aksw.hawk.controller.Pipeline.run] 144 - <F@n	[NR_OF_CONSTRAINTS]	0.5140917906	10	/Users/ricardousbeck/Dropbox/Dissertation/git-workspace/hawk/resources/qald-4_hybrid_train.xml>	3.058335782

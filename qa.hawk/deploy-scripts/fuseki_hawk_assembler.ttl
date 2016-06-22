@@ -1,0 +1,88 @@
+## Example of a TDB dataset and text index published using Fuseki
+
+@prefix :        <#> .
+@prefix fuseki:  <http://jena.apache.org/fuseki#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .
+@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix text:    <http://jena.apache.org/text#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+
+
+[] rdf:type fuseki:Server ;
+   fuseki:services (
+     :service_text_tdb
+   ) .
+
+# TDB
+[] ja:loadClass "org.apache.jena.tdb.TDB" .
+tdb:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
+tdb:GraphTDB    rdfs:subClassOf  ja:Model .
+
+# Text
+[] ja:loadClass "org.apache.jena.query.text.TextQuery" .
+text:TextDataset      rdfs:subClassOf   ja:RDFDataset .
+text:TextIndexLucene  rdfs:subClassOf   text:TextIndex .
+
+## ---------------------------------------------------------------
+:text_dataset rdf:type     text:TextDataset ;
+    text:dataset   :dataset ;
+    text:index     :indexLucene ;
+    .
+
+:dataset rdf:type      tdb:DatasetTDB ;
+    tdb:location "hawk_data_10-2015_dbpediatbd" ;
+    .
+
+:indexLucene a text:TextIndexLucene ;
+    text:directory <file:hawk_data_10-2015_dbpedialucene> ;
+    ##text:directory "mem" ;
+    text:entityMap :entMap ;
+    .
+
+:entMap a text:EntityMap ;
+    text:entityField      "uri" ;
+    text:defaultField     "text" ; ## Must be defined in the text:map
+    text:map (
+         # DBpedia abstracts
+         [ text:field "text" ; 
+           text:predicate <http://dbpedia.org/ontology/abstract> ;
+           text:analyzer [
+               a text:SimpleAnalyzer 
+           ] 
+         ]
+         # RDF label abstracts
+         [ text:field "text" ; 
+           text:predicate <http://www.w3.org/2000/01/rdf-schema#label>  ;
+           text:analyzer [
+               a text:SimpleAnalyzer 
+           ] 
+         ]
+ 	# SKOS alternativ labels from surface forms and redirects
+         [ text:field "text" ; 
+           text:predicate <http://www.w3.org/2004/02/skos/core#altLabel>  ;
+           text:analyzer [
+               a text:SimpleAnalyzer 
+           ] 
+         ]
+         # dc term labels
+         [ text:field "text" ; 
+           text:predicate <http://purl.org/dc/elements/1.1/description>  ;
+           text:analyzer [
+               a text:SimpleAnalyzer 
+           ] 
+         ]
+         ) .
+
+:service_text_tdb rdf:type fuseki:Service ;
+    rdfs:label                      "TDB/text service" ;
+    fuseki:name                     "ds" ;
+    fuseki:serviceQuery             "query" ;
+    fuseki:serviceQuery             "sparql" ;
+    fuseki:serviceUpdate            "update" ;
+    fuseki:serviceUpload            "upload" ;
+    fuseki:serviceReadGraphStore    "get" ;
+    fuseki:serviceReadWriteGraphStore    "data" ;
+    fuseki:dataset                  :text_dataset ;
+    .

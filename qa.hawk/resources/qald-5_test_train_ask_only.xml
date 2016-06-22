@@ -1,0 +1,771 @@
+<?xml version="1.0" ?>
+<dataset id="qald-5_test">
+<question aggregation="false" answertype="boolean" id="6" hybrid="false" onlydbo="true">
+<string lang="en"><![CDATA[Did Arnold Schwarzenegger attend a university?]]></string>
+<string lang="de"><![CDATA[Hat Arnold Schwarzenegger eine Universität besucht?]]></string>
+<string lang="es"><![CDATA[¿Fue Arnold Schwarzenegger a la universidad?]]></string>
+<string lang="it"><![CDATA[Arnold Schwarzenegger ha frequentato l'Università?]]></string>
+<string lang="fr"><![CDATA[]]></string>
+<string lang="nl"><![CDATA[Had Arnold Schwarzenegger aan een universiteit gestudeerd?]]></string>
+<string lang="ro"><![CDATA[Arnold Schwarzenegger a frecventat o universitate?]]></string>
+<keywords lang="en"><![CDATA[Arnold Schwarzenegger, attend, university]]></keywords>
+<keywords lang="de"><![CDATA[Arnold Schwarzenegger, Universität, besucht]]></keywords>
+<keywords lang="es"><![CDATA[Arnold Schwarzenegger, universidad]]></keywords>
+<keywords lang="it"><![CDATA[Arnold Schwarzenegger, frequentare, Università]]></keywords>
+<keywords lang="fr"><![CDATA[]]></keywords>
+<keywords lang="nl"><![CDATA[Arnold Schwarzenegger, universiteit, gestudeerd]]></keywords>
+<keywords lang="ro"><![CDATA[Arnold Schwarzenegger, frecventa, universitate]]></keywords>
+<query><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+ASK
+WHERE {
+        res:Arnold_Schwarzenegger dbo:almaMater ?x .
+        ?x rdf:type dbo:University .
+}
+]]></query>
+<answers>
+<answer>true</answer>
+</answers>
+</question>
+
+<question aggregation="false" answertype="boolean" id="8" hybrid="false" onlydbo="true">
+<string lang="en"><![CDATA[Is Barack Obama a democrat?]]></string>
+<string lang="de"><![CDATA[Ist Barack Obama ein Demokrat?]]></string>
+<string lang="es"><![CDATA[¿Es Barack Obama demócrata?]]></string>
+<string lang="it"><![CDATA[Barack Obama è un democratico?]]></string>
+<string lang="fr"><![CDATA[]]></string>
+<string lang="nl"><![CDATA[Is Barack Obama een democraat?]]></string>
+<string lang="ro"><![CDATA[Barack Obama este un democrat?]]></string>
+<keywords lang="en"><![CDATA[Barack Obama, democrat]]></keywords>
+<keywords lang="de"><![CDATA[Barack Obama, Demokrat]]></keywords>
+<keywords lang="es"><![CDATA[Barack Obama, demócrata]]></keywords>
+<keywords lang="it"><![CDATA[Barack Obama, democratico]]></keywords>
+<keywords lang="fr"><![CDATA[]]></keywords>
+<keywords lang="nl"><![CDATA[Barack Obama, democraat]]></keywords>
+<keywords lang="ro"><![CDATA[Barack Obama, democrat]]></keywords>
+<query><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+ASK
+WHERE { 
+        res:Barack_Obama dbo:party <http://dbpedia.org/resource/Democratic_Party_(United_States)> . 
+}
+]]></query>
+<answers>
+<answer>true</answer>
+</answers>
+</question>
+
+<question aggregation="false" answertype="boolean" id="35" hybrid="false" onlydbo="true">
+<string lang="en"><![CDATA[Is Lake Baikal bigger than the Great Bear Lake?]]></string>
+<string lang="de"><![CDATA[Ist der Baikalsee größer als der Große Bärensee?]]></string>
+<string lang="es"><![CDATA[¿Es el lago Baikal mayor que el lago Great Bear?]]></string>
+<string lang="it"><![CDATA[Il lago Baikal è più grande le lago Great Bear?]]></string>
+<string lang="fr"><![CDATA[]]></string>
+<string lang="nl"><![CDATA[Is het Baikalmeer groter dan het Groot Berenmeer?]]></string>
+<string lang="ro"><![CDATA[Lacul Baikal este mai mare decât lacul Great Bear?]]></string>
+<keywords lang="en"><![CDATA[Lake Baikal, bigger than, Great Bear Lake]]></keywords>
+<keywords lang="de"><![CDATA[Baikalsee, größer als, Großer Bärensee]]></keywords>
+<keywords lang="es"><![CDATA[lago Baikal mayor que lago Great Bear?]]></keywords>
+<keywords lang="it"><![CDATA[lago Baikal, più grande, lago Great Bear]]></keywords>
+<keywords lang="fr"><![CDATA[]]></keywords>
+<keywords lang="nl"><![CDATA[Baikalmeer, groter, Groot Berenmeer]]></keywords>
+<keywords lang="ro"><![CDATA[lacul Baikal, mai mare decât, lacul Great Bear]]></keywords>
+<query><![CDATA[
+PREFIX res: <http://dbpedia.org/resource/>
+PREFIX dbo: <http://dbpedia.org/ontology/> 
+ASK
+WHERE {  
+        res:Lake_Baikal dbo:areaTotal ?a1 . 
+        res:Great_Bear_Lake dbo:areaTotal ?a2 .
+        FILTER (?a1 > ?a2)
+}
+]]></query>
+<answers>
+<answer>true</answer>
+</answers>
+</question>
+
+<question aggregation="false" answertype="boolean" id="44" hybrid="false" onlydbo="false">
+<string lang="en"><![CDATA[Are Taiko a kind of Japanese musical instruments?]]></string>
+<string lang="de"><![CDATA[Sind Taiko eine Art japanische Musikinstrumente?]]></string>
+<string lang="es"><![CDATA[¿Es el Taiko un tipo de instrumento musical?]]></string>
+<string lang="it"><![CDATA[I Taiko sono una serie di strumenti musicali giapponesi?]]></string>
+<string lang="fr"><![CDATA[]]></string>
+<string lang="nl"><![CDATA[Zijn Taiko een soort Japanse musiekinstrumenten?]]></string>
+<string lang="ro"><![CDATA[Sunt Taiko un fel de instrumente muzicale japoneze?]]></string>
+<keywords lang="en"><![CDATA[Taiko, kind of, Japanese musical instrument]]></keywords>
+<keywords lang="de"><![CDATA[Taiko, Art, japanisches Musikinstrument]]></keywords>
+<keywords lang="es"><![CDATA[Taiko, tipo de instrumento musical]]></keywords>
+<keywords lang="it"><![CDATA[Taiko, strumenti musicali, giapponesi]]></keywords>
+<keywords lang="fr"><![CDATA[]]></keywords>
+<keywords lang="nl"><![CDATA[Taiko, soort, Japanse musiekinstrumenten]]></keywords>
+<keywords lang="ro"><![CDATA[Taiko, un fel de, instrumente muzicale japoneze]]></keywords>
+<query><![CDATA[
+PREFIX yago: <http://dbpedia.org/class/yago/> 	
+PREFIX res: <http://dbpedia.org/resource/>
+ASK
+WHERE { 
+        res:Taiko rdf:type yago:JapaneseMusicalInstruments .
+}
+]]></query>
+<answers>
+<answer>true</answer>
+</answers>
+</question>
+
+<question answertype="resource" id="55" aggregation="false" hybrid="true" onlydbo="true">
+<string lang="en"><![CDATA[In which city where Charlie Chaplin's half brothers born?]]></string>
+<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+ASK 
+WHERE {
+        res:Charlie_Chaplin dbo:relative ?x . 
+        ?x text:"half brother of" ?res:Charlie_Chaplin . 
+        ?x dbo:birthPlace ?y . 
+        ?y text:"is a" text:"city" .
+}
+]]></pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/London</answer>
+</answers>
+</question>
+
+<question answertype="boolean" id="58" aggregation="true" hybrid="true" onlydbo="true">
+<string lang="en"><![CDATA[Are there man-made lakes in Australia that are deeper than 100 meters?]]></string>
+<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+ASK
+WHERE {
+        ?uri rdf:type dbo:Lake . 
+        ?uri dbo:country res:Australia . 
+        ?uri text:"is" text:"man-made" . 
+        ?uri dbo:depth ?num . 
+        FILTER(?num > 100.0)
+}
+]]></pseudoquery>
+<answers>
+<answer>true</answer>
+</answers>
+</question>
+
+<question id="116" onlydbo="true" answertype="boolean" aggregation="true" hybrid="false">
+<string lang="en"><![CDATA[Does Breaking Bad have more episodes than Game of Thrones?]]></string>
+<string lang="de"><![CDATA[Hat Breaking Bad mehr Episoden als Game of Thrones?]]></string>
+<string lang="es"><![CDATA[¿Tiene Breaking Bad más episodios que Game of Thrones?]]></string>
+<string lang="it"><![CDATA[Breaking Bad ha più episodi di Game of Thrones?]]></string>
+<string lang="fr"><![CDATA[A Breaking Bad plus d'épisodes que Game of Thrones?]]></string>
+<string lang="nl"><![CDATA[Heeft Breaking Bad meer afleveringen dan Game of Thrones?]]></string>
+<string lang="ro"><![CDATA[Are Breaking Bad mai multe episoade decât Game of Thrones?]]></string>
+<keywords lang="en"><![CDATA[Breaking Bad, episodes, more than, Game of Thrones]]></keywords>
+<keywords lang="de"><![CDATA[Breaking Bad, Episoden, mehr als, Game of Thrones]]></keywords>
+<keywords lang="es"><![CDATA[Breaking Bad, episodios, más que, Game of Thrones]]></keywords>
+<keywords lang="it"><![CDATA[Breaking Bad, eposido, più di, Game of Thrones]]></keywords>
+<keywords lang="fr"><![CDATA[Breaking Bad, épisodes plus que, Game of Thrones]]></keywords>
+<keywords lang="nl"><![CDATA[Breaking Bad, afleveringen, meer dan, Game of Thrones]]></keywords>
+<keywords lang="ro"><![CDATA[Breaking Bad, episoade, mai multe decât, Game of Thrones]]></keywords>
+<query><![CDATA[ 
+PREFIX dbo: <http://dbpedia.org/ontology/> 
+PREFIX res: <http://dbpedia.org/resource/> 
+ASK 
+WHERE { 
+        res:Breaking_Bad dbo:numberOfEpisodes ?x . 
+        res:Game_of_Thrones dbo:numberOfEpisodes ?y . 
+        FILTER (?x > ?y) 
+} 
+]]>
+</query>
+<answers><answer>true</answer></answers></question>
+
+<question id="12" onlydbo="true" answertype="boolean" aggregation="false" hybrid="false">
+<string lang="en"><![CDATA[Is proinsulin a protein?]]></string>
+<string lang="de"><![CDATA[Ist Proinsulin ein Protein?]]></string>
+<string lang="es"><![CDATA[¿La proinsulina es una proteina?]]></string>
+<string lang="it"><![CDATA[La proinsulina è una proteina?]]></string>
+<string lang="fr"><![CDATA[La pro-insuline est-elle une protéine?]]></string>
+<string lang="nl"><![CDATA[Is proinsuline een proteïne?]]></string>
+<string lang="ro"><![CDATA[Este proinsulina o proteină?]]></string>
+<keywords lang="en"><![CDATA[proinsulin, protein]]></keywords>
+<keywords lang="de"><![CDATA[Proinsulin, Protein]]></keywords>
+<keywords lang="es"><![CDATA[proinsulina, protein]]></keywords>
+<keywords lang="it"><![CDATA[proinsulina, proteina]]></keywords>
+<keywords lang="fr"><![CDATA[pro-insuline, protéine]]></keywords>
+<keywords lang="nl"><![CDATA[proinsuline, proteïne]]></keywords>
+<keywords lang="ro"><![CDATA[proinsulină, proteină]]></keywords>
+<query><![CDATA[ 
+PREFIX dbo: <http://dbpedia.org/ontology/> 
+PREFIX res: <http://dbpedia.org/resource/> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+ASK 
+WHERE { 
+        res:Proinsulin rdf:type dbo:Protein . 
+} 
+]]>
+</query>
+<answers><answer>true</answer></answers></question>
+
+<question id="123" onlydbo="false" answertype="boolean" aggregation="true" hybrid="false">
+<string lang="en"><![CDATA[Do Prince Harry and Prince William have the same parents?]]></string>
+<string lang="de"><![CDATA[Haben Prinz Harry und Prinz William dieselben Eltern?]]></string>
+<string lang="es"><![CDATA[¿Tienen el príncipe Harry y el prínciple William la misma madre?]]></string>
+<string lang="it"><![CDATA[Il principe Harry e il principe William hanno gli stessi genitoris?]]></string>
+<string lang="fr"><![CDATA[Ont les princes Harry et William la même mère?]]></string>
+<string lang="nl"><![CDATA[Hebben prins Harry en prins William dezelfde ouders?]]></string>
+<string lang="ro"><![CDATA[Prințul Harry și Prințul William au aceiași părinți?]]></string>
+<keywords lang="en"><![CDATA[Prince Harry, Prince William, same, parents]]></keywords>
+<keywords lang="de"><![CDATA[Prinz Harry, Prinz William, selbe Eltern]]></keywords>
+<keywords lang="es"><![CDATA[príncipe Harry, príncipe William, la misma madre]]></keywords>
+<keywords lang="it"><![CDATA[principe Harry, principe William, stessi genitori]]></keywords>
+<keywords lang="fr"><![CDATA[prince Harry, Prince William, même mère]]></keywords>
+<keywords lang="nl"><![CDATA[prins Harry, prins William, dezelfde, ouders]]></keywords>
+<keywords lang="ro"><![CDATA[Prințul Harry, Prințul William, aceiași, părinți]]></keywords>
+<query><![CDATA[ 
+PREFIX dbo: <http://dbpedia.org/ontology/> 
+ASK
+WHERE { 
+        <http://dbpedia.org/resource/Prince_William,_Duke_of_Cambridge> dbo:parent ?x . 
+        <http://dbpedia.org/resource/Prince_Harry> dbo:parent ?x .
+} 
+]]>
+</query>
+<answers><answer>true</answer></answers></question>
+
+<question id="13" onlydbo="true" answertype="resource" aggregation="false" hybrid="false">
+<string lang="en"><![CDATA[Are tree frogs a type of amphibian?]]></string>
+<string lang="de"><![CDATA[Sind Laubfrösche Amphibien?]]></string>
+<string lang="es"><![CDATA[¿Son las ranas verdes un tipo de anfibio?]]></string>
+<string lang="it"><![CDATA[Le rane verdi sono un tipo di anfibio?]]></string>
+<string lang="fr"><![CDATA[Sont les grenouilles arboricoles un type d'amphibiens?]]></string>
+<string lang="nl"><![CDATA[Zijn boomkikkers een soort amfibie?]]></string>
+<string lang="ro"><![CDATA[Sunt broaștele de copac un tip de amfibieni?]]></string>
+<keywords lang="en"><![CDATA[tree frog, amphibian]]></keywords>
+<keywords lang="de"><![CDATA[Laubfrosch, Amphibie]]></keywords>
+<keywords lang="es"><![CDATA[rana verde, anfibio]]></keywords>
+<keywords lang="it"><![CDATA[rana verde, anfibio]]></keywords>
+<keywords lang="fr"><![CDATA[grenouilles arboricoles, amphibien]]></keywords>
+<keywords lang="nl"><![CDATA[boomkikker, amfibie]]></keywords>
+<keywords lang="ro"><![CDATA[broască de copac, amfibian]]></keywords>
+<query><![CDATA[ 
+PREFIX dbo: <http://dbpedia.org/ontology/> 
+PREFIX res: <http://dbpedia.org/resource/> 
+ASK 
+WHERE { 
+        res:Hylidae dbo:class res:Amphibian . 
+} 
+]]>
+</query>
+<answers><answer>true</answer></answers></question>
+
+<question id="150" onlydbo="true" answertype="boolean" aggregation="true" hybrid="false">
+<string lang="en"><![CDATA[Was the Cuban Missile Crisis earlier than the Bay of Pigs Invasion?]]></string>
+<string lang="de"><![CDATA[War die Kubakrise vor der Schweinebuchtinvasion?]]></string>
+<string lang="es"><![CDATA[¿Fué la crisis de cuba antes de la invasión de bahía de cochinos?]]></string>
+<string lang="it"><![CDATA[La crisi dei missili di Cuba avvenne prima dello sbarco nella Baia dei Porci?]]></string>
+<string lang="fr"><![CDATA[La crise des missiles de Cuba a-t-elle eu lieu avant the débarquement de la baie des Cochons?]]></string>
+<string lang="nl"><![CDATA[Was de Cubacrisis eerder dan de invasie in de Varkensbaai?]]></string>
+<string lang="ro"><![CDATA[A avut loc mai devreme Criza rachetelor din Cuba decât Invazia din Golful Porcilor?]]></string>
+<keywords lang="en"><![CDATA[Cuban Missile Crisis, earlier, Bay of Pigs Invasion]]></keywords>
+<keywords lang="de"><![CDATA[Kubakrise, vor, Schweinebuchtinvasion]]></keywords>
+<keywords lang="es"><![CDATA[crísis de cuba, anterior a la invasión de bahía de cochinos?]]></keywords>
+<keywords lang="it"><![CDATA[Crisi dei missili di Cuba, precedente, sbarco nella Baia dei Porci]]></keywords>
+<keywords lang="fr"><![CDATA[Débarquement de la baie des Cochons, crise des missiles de Cuba]]></keywords>
+<keywords lang="nl"><![CDATA[Cubacrisis, eerder dan, invasie in de Varkensbaai]]></keywords>
+<keywords lang="ro"><![CDATA[Criza rachetelor din Cuba, mai devreme, Invazia din Golful Porcilor]]></keywords>
+<query><![CDATA[ 
+PREFIX dbo: <http://dbpedia.org/ontology/> 
+PREFIX res: <http://dbpedia.org/resource/> 
+ASK 
+WHERE { 
+        res:Cuban_missile_crisis dbo:date ?x . 
+        res:Bay_of_Pigs_Invasion dbo:date ?y . 
+        FILTER (?x < ?y) 
+} 
+]]>
+</query>
+<answers><answer>false</answer></answers></question>
+
+<question id="162" onlydbo="true" answertype="boolean" aggregation="false" hybrid="false">
+<string lang="en"><![CDATA[Did Socrates influence Aristotle?]]></string>
+<string lang="de"><![CDATA[Hat Sokrates Aristoteles beeinflusst?]]></string>
+<string lang="es"><![CDATA[¿Tuvo Sócrates influencia sobre Aristóteles?]]></string>
+<string lang="it"><![CDATA[Socrate ha influenzato Aristotele?]]></string>
+<string lang="fr"><![CDATA[Socrate a-t-il influencé Aristote?]]></string>
+<string lang="nl"><![CDATA[Beïnvloedde Socrates Aristoteles?]]></string>
+<string lang="ro"><![CDATA[L-a influențat Socrate pe Aristotel?]]></string>
+<keywords lang="en"><![CDATA[Socrates, influence, Aristotle]]></keywords>
+<keywords lang="de"><![CDATA[Sokrates, beeinflussen, Aristoteles]]></keywords>
+<keywords lang="es"><![CDATA[Sócrates, influencia, Aristóteles]]></keywords>
+<keywords lang="it"><![CDATA[Socrate, influenzare, Aristotele]]></keywords>
+<keywords lang="fr"><![CDATA[Socrate, influencer, Aristote]]></keywords>
+<keywords lang="nl"><![CDATA[beïnvloeden, Socrates, Aristoteles]]></keywords>
+<keywords lang="ro"><![CDATA[Socrate, influență, Aristotel]]></keywords>
+<query><![CDATA[ 
+PREFIX dbo: <http://dbpedia.org/ontology/> 
+PREFIX res: <http://dbpedia.org/resource/> 
+ASK 
+WHERE { 
+        res:Socrates dbo:influenced res:Aristotle . 
+} 
+]]>
+</query>
+<answers><answer>true</answer></answers></question>
+
+<question id="169" onlydbo="true" answertype="boolean" aggregation="false" hybrid="false">
+<string lang="en"><![CDATA[Did Tesla win a nobel prize in physics?]]></string>
+<string lang="de"><![CDATA[Hat Tesla den Nobelpreis für Physik gewonnen?]]></string>
+<string lang="es"><![CDATA[¿Obtuvo Tesla el premio nobel de física?]]></string>
+<string lang="it"><![CDATA[Tesla ha vinto un premio Nobel per la fisica?]]></string>
+<string lang="fr"><![CDATA[Tesla a-t-il recu le prix Nobel?]]></string>
+<string lang="nl"><![CDATA[Heeft Tesla ooit de Nobelprijs voor de Natuurkunde gewonnen?]]></string>
+<string lang="ro"><![CDATA[A câștigat Tesla un premiu Nobel pentru fizică?]]></string>
+<keywords lang="en"><![CDATA[Tesla, nobel prize, physics]]></keywords>
+<keywords lang="de"><![CDATA[Tesla, Nobelpreis, Physik]]></keywords>
+<keywords lang="es"><![CDATA[Tesla, premio nobel, física]]></keywords>
+<keywords lang="it"><![CDATA[Tesla, premio nobel, fisica]]></keywords>
+<keywords lang="fr"><![CDATA[Tesla, recu, prix Nobel]]></keywords>
+<keywords lang="nl"><![CDATA[Nobelprijs voor de Natuurkunde, Tesla]]></keywords>
+<keywords lang="ro"><![CDATA[Tesla, premiu Nobel, fizică]]></keywords>
+<query><![CDATA[ 
+PREFIX dbo: <http://dbpedia.org/ontology/> 
+PREFIX res: <http://dbpedia.org/resource/> 
+ASK 
+WHERE { 
+        res:Nikola_Tesla dbo:award res:Nobel_Prize_in_Physics . 
+} 
+]]>
+</query>
+<answers><answer>false</answer></answers></question>
+
+<question id="170" onlydbo="true" answertype="boolean" aggregation="false" hybrid="false">
+<string lang="en"><![CDATA[Is Rita Wilson the wife of Tom Hanks?]]></string>
+<string lang="de"><![CDATA[Ist Rita Wilson die Frau von Tom Hanks?]]></string>
+<string lang="es"><![CDATA[¿Es Rita Wilson la esposa de Tom Hanks?]]></string>
+<string lang="it"><![CDATA[Rita Wilson è la moglie di Tom Hanks?]]></string>
+<string lang="fr"><![CDATA[Rita Wilson est-elle l'épouse de Tom Hanks?]]></string>
+<string lang="nl"><![CDATA[Is Rita Wilson de vrouw van Tom Hanks?]]></string>
+<string lang="ro"><![CDATA[Este Rita Wilson soția lui Tom Hanks?]]></string>
+<keywords lang="en"><![CDATA[Rita Wilson, wife, Tom Hanks]]></keywords>
+<keywords lang="de"><![CDATA[Rita Wilson, Frau, Tom Hanks]]></keywords>
+<keywords lang="es"><![CDATA[Rita Wilson, esposa, Tom Hanks]]></keywords>
+<keywords lang="it"><![CDATA[Rita Wilson, moglie, Tom Hanks]]></keywords>
+<keywords lang="fr"><![CDATA[Rita Wilson, épouse, Tom Hanks]]></keywords>
+<keywords lang="nl"><![CDATA[Rita Wilson, vrouw, Tom Hanks]]></keywords>
+<keywords lang="ro"><![CDATA[Rita Wilson, soție, Tom Hanks]]></keywords>
+<query><![CDATA[ 
+PREFIX dbo: <http://dbpedia.org/ontology/> 
+PREFIX res: <http://dbpedia.org/resource/> 
+ASK 
+WHERE { 
+        res:Tom_Hanks dbo:spouse res:Rita_Wilson . 
+} 
+]]>
+</query>
+<answers><answer>true</answer></answers></question>
+
+<question id="178" onlydbo="true" answertype="boolean" aggregation="false" hybrid="false">
+<string lang="en"><![CDATA[Was Margaret Thatcher a chemist?]]></string>
+<string lang="de"><![CDATA[War Margaret Thatcher Chemikerin?]]></string>
+<string lang="es"><![CDATA[¿Fue Margaret Thatcher química?]]></string>
+<string lang="it"><![CDATA[Margaret Thatcher era un chimico?]]></string>
+<string lang="fr"><![CDATA[Margaret Thatcher était-elle une chimiste?]]></string>
+<string lang="nl"><![CDATA[Was Margaret Thatcher een chemicus?]]></string>
+<string lang="ro"><![CDATA[A fost Margaret Thatcher un chimist?]]></string>
+<keywords lang="en"><![CDATA[Margaret Thatcher, chemist]]></keywords>
+<keywords lang="de"><![CDATA[Margaret Thatcher, Chemikerin]]></keywords>
+<keywords lang="es"><![CDATA[Margret Thatcher, química]]></keywords>
+<keywords lang="it"><![CDATA[Margaret Thatcher, chimico]]></keywords>
+<keywords lang="fr"><![CDATA[Margaret Thatcher, chimiste]]></keywords>
+<keywords lang="nl"><![CDATA[Margaret Thatcher, chemicus]]></keywords>
+<keywords lang="ro"><![CDATA[Margaret Thatcher, chimist]]></keywords>
+<query><![CDATA[ 
+PREFIX res: <http://dbpedia.org/resource/> 
+PREFIX dbo: <http://dbpedia.org/ontology/> 
+ASK 
+WHERE { 
+        res:Margaret_Thatcher dbo:profession res:Chemist . 
+} 
+]]>
+</query>
+<answers><answer>true</answer></answers></question>
+
+
+<question aggregation="false" hybrid="false" answertype="boolean" id="179" onlydbo="false">
+<string lang="en"><![CDATA[Was Marc Chagall a jew?]]></string>
+<string lang="de"><![CDATA[War Marc Chagall ein Jude?]]></string>
+<string lang="es"><![CDATA[¿Fué Marc Chagall judío?]]></string>
+<string lang="it"><![CDATA[Marc Chagall era ebreo?]]></string>
+<string lang="fr"><![CDATA[Etait Marc Chagall juif?]]></string>
+<string lang="nl"><![CDATA[Was Marc Chagall joods?]]></string>
+<string lang="ro"><![CDATA[A fost Marc Chagall un evreu?]]></string>
+<keywords lang="en"><![CDATA[Marc Chagall, jew]]></keywords>
+<keywords lang="de"><![CDATA[Marc Chagall, Jude]]></keywords>
+<keywords lang="es"><![CDATA[Marc Chagall, judío]]></keywords>
+<keywords lang="it"><![CDATA[Marc Chagall, ebreo]]></keywords>
+<keywords lang="fr"><![CDATA[Marc Chagall, juif]]></keywords>
+<keywords lang="nl"><![CDATA[Marc Chagall, joods]]></keywords>
+<keywords lang="ro"><![CDATA[Marc Chagall, evreu]]></keywords>
+<query><![CDATA[
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX res: <http://dbpedia.org/resource/>
+ASK 
+WHERE {
+       res:Marc_Chagall dbp:ethnicity 'Jewish'@en .
+}
+]]></query>
+<answers><answer>true</answer></answers></question>
+
+<question aggregation="true" hybrid="false" answertype="boolean" id="19" onlydbo="true">
+<string lang="en"><![CDATA[Is Egypts largest city also its capital?]]></string>
+<string lang="de"><![CDATA[Ist Ägyptens größte Stadt auch seine Hauptstadt?]]></string>
+<string lang="es"><![CDATA[¿Es la cuidad más grande de Egipto también capital?]]></string>
+<string lang="it"><![CDATA[La città più grande dell'Egitto è anche la sua capitale?]]></string>
+<string lang="fr"><![CDATA[La ville la plus grande de l'Egypte est-elle sa capitale?]]></string>
+<string lang="nl"><![CDATA[Is de grootste stad van Egypte ook de hoofdstad?]]></string>
+<string lang="ro"><![CDATA[Orașul cel mai mare din EGipt este și capital sa?]]></string>
+<keywords lang="en"><![CDATA[largest city, Egypt, capital]]></keywords>
+<keywords lang="de"><![CDATA[größte Stadt, Ägypten, Hauptstadt]]></keywords>
+<keywords lang="es"><![CDATA[cuidad más grande, Egipto, capital]]></keywords>
+<keywords lang="it"><![CDATA[città più grande, Egitto, capitale]]></keywords>
+<keywords lang="fr"><![CDATA[ville plus grande, Egypte, capitale]]></keywords>
+<keywords lang="nl"><![CDATA[grootste stad, Egypte, hoofdstad]]></keywords>
+<keywords lang="ro"><![CDATA[cel mai mare oraș, Egipt, capitală]]></keywords>
+<query><![CDATA[
+PREFIX res: <http://dbpedia.org/resource/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+ASK 
+WHERE {
+        res:Egypt dbo:largestCity ?large .
+        res:Egypt dbo:capital ?capital .
+        FILTER (?large = ?capital)
+}
+]]></query>
+<answers><answer>true</answer></answers></question>
+
+<question aggregation="false" hybrid="false" answertype="boolean" id="27" onlydbo="true">
+<string lang="en"><![CDATA[Was U.S. president Jackson involved in a war?]]></string>
+<string lang="de"><![CDATA[War US-Präsident Jackson in einen Krieg verwickelt?]]></string>
+<string lang="es"><![CDATA[¿Estuvo el el presidente de los estados unidos Jackson involucrado en una guerra?]]></string>
+<string lang="it"><![CDATA[Il presidente degli Stati Uniti Jackson è stato coinvolto in una guerra?]]></string>
+<string lang="fr"><![CDATA[Le président Jackson a-t-il participé à une guerre?]]></string>
+<string lang="nl"><![CDATA[Was president Jackson van de Verenigde Staten betrokken bij een oorlog?]]></string>
+<string lang="ro"><![CDATA[A fost președintele american Jackson implicat într-un război?]]></string>
+<keywords lang="en"><![CDATA[U.S. president, Jackson, war]]></keywords>
+<keywords lang="de"><![CDATA[US-Präsident, Jackson, Krieg]]></keywords>
+<keywords lang="es"><![CDATA[presidente de los estados unidos, Jackson, guerra]]></keywords>
+<keywords lang="it"><![CDATA[presidente degli Stati Uniti, Jackson, guerra]]></keywords>
+<keywords lang="fr"><![CDATA[président Jackson, guerre, participé]]></keywords>
+<keywords lang="nl"><![CDATA[president van de Verenigde Staten, Jackson, oorlog, betrokken bij]]></keywords>
+<keywords lang="ro"><![CDATA[președinte american, Jackson, război]]></keywords>
+<query><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+ASK 
+WHERE {
+        res:Andrew_Jackson dbo:battle ?battle .    
+}
+]]></query>
+<answers><answer>true</answer></answers></question>
+
+<question aggregation="true" hybrid="false" answertype="boolean" id="46" onlydbo="true">
+<string lang="en"><![CDATA[Is Frank Herbert still alive?]]></string>
+<string lang="de"><![CDATA[Lebt Frank Herbert noch?]]></string>
+<string lang="es"><![CDATA[¿Todavía vive Frank Herbert?]]></string>
+<string lang="it"><![CDATA[Frank Herbert è ancora vivo?]]></string>
+<string lang="fr"><![CDATA[Frank Herbert est-il encore en vie?]]></string>
+<string lang="nl"><![CDATA[Leeft Frank Herbert nog?]]></string>
+<string lang="ro"><![CDATA[Este Frank Herbert încă în viață?]]></string>
+<keywords lang="en"><![CDATA[Frank Herbert, alive]]></keywords>
+<keywords lang="de"><![CDATA[Frank Herbert, leben]]></keywords>
+<keywords lang="es"><![CDATA[Frank Herbert, vive]]></keywords>
+<keywords lang="it"><![CDATA[Frank Herbert, vivente]]></keywords>
+<keywords lang="fr"><![CDATA[Frank Herbert, en vie]]></keywords>
+<keywords lang="nl"><![CDATA[Frank Herbert, leeft]]></keywords>
+<keywords lang="ro"><![CDATA[Frak Herbert, în viață]]></keywords>
+<query><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+ASK 
+WHERE {
+        OPTIONAL { res:Frank_Herbert dbo:deathDate ?date . }
+        FILTER (!BOUND(?date))
+}
+]]></query>
+<answers><answer>false</answer></answers></question>
+
+<question aggregation="false" hybrid="false" answertype="boolean" id="60" onlydbo="true">
+<string lang="en"><![CDATA[Is there a video game called Battle Chess?]]></string>
+<string lang="de"><![CDATA[Gibt es ein Videospiel, das Battle Chess heißt?]]></string>
+<string lang="es"><![CDATA[¿Hay algún videojuego que se llame Battle Chess?]]></string>
+<string lang="it"><![CDATA[Esiste un videogioco che si chiama Battle Chess?]]></string>
+<string lang="fr"><![CDATA[Existe-t-il un jeu vidéo appelé Battle Chess?]]></string>
+<string lang="nl"><![CDATA[Bestaat er een videospel met de naam Battle Chess?]]></string>
+<string lang="ro"><![CDATA[Există un joc video numit Battle Chess?]]></string>
+<keywords lang="en"><![CDATA[video game, Battle Chess]]></keywords>
+<keywords lang="de"><![CDATA[Videospiel, Battle Chess]]></keywords>
+<keywords lang="es"><![CDATA[videojuego, Battle Chess]]></keywords>
+<keywords lang="it"><![CDATA[videogioco, Battle Chess]]></keywords>
+<keywords lang="fr"><![CDATA[jeu vidéo, Battle Chess]]></keywords>
+<keywords lang="nl"><![CDATA[videospel, Battle Chess]]></keywords>
+<keywords lang="ro"><![CDATA[joc video, Battle Chess]]></keywords>
+<query><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+ASK 
+WHERE {
+        ?uri rdf:type dbo:VideoGame .
+        ?uri rdfs:label 'Battle Chess'@en .
+}
+]]></query>
+<answers><answer>true</answer></answers></question>
+
+<question aggregation="false" hybrid="false" answertype="boolean" id="66" onlydbo="true">
+<string lang="en"><![CDATA[Is Christian Bale starring in Velvet Goldmine?]]></string>
+<string lang="de"><![CDATA[Spielt Christian Bale in Velvet Goldmine mit?]]></string>
+<string lang="es"><![CDATA[¿Actúa Christian Bale en Velvet Goldmine?]]></string>
+<string lang="it"><![CDATA[Christian Bale ha recitato in Velvet Goldmine?]]></string>
+<string lang="fr"><![CDATA[Christian Bale joue-t-il dans Velvet Goldmine?]]></string>
+<string lang="nl"><![CDATA[Speelt Christian Bale in Velvet Goldmine?]]></string>
+<string lang="ro"><![CDATA[Joacă Christian Bale un rol principal în Velvet Goldmine?]]></string>
+<keywords lang="en"><![CDATA[Christian Bale, starring, Velvet Goldmine]]></keywords>
+<keywords lang="de"><![CDATA[Christian Bale, mitspielen, Velvet Goldmine]]></keywords>
+<keywords lang="es"><![CDATA[Christian Bale, actúa, Velvet Goldmine]]></keywords>
+<keywords lang="it"><![CDATA[Christian Bale, recitare, Velvet Goldmine]]></keywords>
+<keywords lang="fr"><![CDATA[Christian Bale, joue, Velvet Goldmine]]></keywords>
+<keywords lang="nl"><![CDATA[Christian Bale, speelt in, Velvet Goldmine]]></keywords>
+<keywords lang="ro"><![CDATA[Christian Bale, rol principal, Velevet Goldmine]]></keywords>
+<query><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+ASK
+WHERE {
+        res:Velvet_Goldmine dbo:starring res:Christian_Bale .
+}
+]]></query>
+<answers><answer>true</answer></answers></question>
+
+<question aggregation="false" hybrid="false" answertype="boolean" id="7" onlydbo="true">
+<string lang="en"><![CDATA[Was the wife of president Lincoln called Mary?]]></string>
+<string lang="de"><![CDATA[Hieß die Frau von Präsident Lincoln Mary?]]></string>
+<string lang="es"><![CDATA[¿La mujer del presidente Lincoln se llama Mary?]]></string>
+<string lang="it"><![CDATA[La moglie del presidente Lincoln si chiamava Mary?]]></string>
+<string lang="fr"><![CDATA[Est-ce que l'épouse du président Lincoln s'appelait Mary?]]></string>
+<string lang="nl"><![CDATA[Heette de echtgenote van president Lincoln Mary?]]></string>
+<string lang="ro"><![CDATA[Este soția președintelui Lincoln numită Mary?]]></string>
+<keywords lang="en"><![CDATA[Lincoln, president, wife, called, Mary]]></keywords>
+<keywords lang="de"><![CDATA[Lincoln, Präsident, Frau, heißen, Mary]]></keywords>
+<keywords lang="es"><![CDATA[mujer, presidente, Lincoln, se lamma, Mary]]></keywords>
+<keywords lang="it"><![CDATA[moglie, presidente, Lincoln, si chiama, Mary]]></keywords>
+<keywords lang="fr"><![CDATA[épouse, Lincoln, Mary, appelle]]></keywords>
+<keywords lang="nl"><![CDATA[echtgenote, Lincoln, Mary]]></keywords>
+<keywords lang="ro"><![CDATA[Lincoln, președinte, soție, numită, Mary]]></keywords>
+<query><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+ASK 
+WHERE {
+        res:Abraham_Lincoln dbo:spouse ?spouse .
+        ?spouse rdfs:label ?name .
+        FILTER(regex(?name,'Mary')) 
+}
+]]></query>
+<answers><answer>true</answer></answers></question>
+
+<question aggregation="false" hybrid="false" answertype="boolean" id="93" onlydbo="true">
+<string lang="en"><![CDATA[Was Natalie Portman born in the United States?]]></string>
+<string lang="de"><![CDATA[Wurde Natalie Portman in den Vereinigten Staaten geboren?]]></string>
+<string lang="es"><![CDATA[¿Nació Natalie Portman en los estados unidos de américa?]]></string>
+<string lang="it"><![CDATA[Natalie Portman è nata negli Stati Uniti?]]></string>
+<string lang="fr"><![CDATA[Natalie Portman est-elle née aux Etats-Unis?]]></string>
+<string lang="nl"><![CDATA[Werd Natalie Portman geboren in de Verenigde Staten?]]></string>
+<string lang="ro"><![CDATA[A fost Natalie Portman născută în Statele Unite?]]></string>
+<keywords lang="en"><![CDATA[Natalie Portman, born, United States]]></keywords>
+<keywords lang="de"><![CDATA[Natalie Portman, geboren, Vereinigte Staaten]]></keywords>
+<keywords lang="es"><![CDATA[Natalie Portman]]></keywords>
+<keywords lang="it"><![CDATA[Natalie Portman, nata, Stati Uniti]]></keywords>
+<keywords lang="fr"><![CDATA[Natalie Portman, née, Etats-Unis]]></keywords>
+<keywords lang="nl"><![CDATA[Natalie Portman, geboren, Verenigde Staten]]></keywords>
+<keywords lang="ro"><![CDATA[Natalie Portman, născută, Statele Unite]]></keywords>
+<query><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+ASK 
+WHERE { 
+        { res:Natalie_Portman dbo:birthPlace res:United_States . }
+        UNION
+        { res:Natalie_Portman dbo:birthPlace ?city .
+          ?city dbo:country res:United_States . }
+}
+]]></query>
+<answers><answer>false</answer></answers></question>
+
+<question aggregation="false" hybrid="false" answertype="boolean" id="223" onlydbo="true">
+<string lang="en"><![CDATA[Does Abraham Lincoln's death place have a website?]]></string>
+<string lang="de"><![CDATA[Hat Abraham Lincolns Sterbeort eine Webseite?]]></string>
+<string lang="es"><![CDATA[¿Tiene el lugar de nacimiento de Abraham Lincol una página web?]]></string>
+<string lang="it"><![CDATA[Il luogo di morte di Abraham Lincoln ha un sito web?]]></string>
+<string lang="fr"><![CDATA[A le lieu de décès d'Abraham Lincoln une page Web?]]></string>
+<string lang="nl"><![CDATA[Heeft de stad waarin Abraham Lincoln is overleden een website?]]></string>
+<string lang="ro"><![CDATA[Locul morții lui Abraham Lincoln are un website?]]></string>
+<keywords lang="en"><![CDATA[Abraham Lincoln, death place, website]]></keywords>
+<keywords lang="de"><![CDATA[Abraham Lincoln, Sterbeort, Webseite]]></keywords>
+<keywords lang="es"><![CDATA[Abraham Lincoln, lugar de nacimiento, página web]]></keywords>
+<keywords lang="it"><![CDATA[Abraham Lincoln, luogo di morte, website]]></keywords>
+<keywords lang="fr"><![CDATA[Abraham Lincoln, lieu de décès, page Web]]></keywords>
+<keywords lang="nl"><![CDATA[Abraham Lincoln, stad, gestorven, website]]></keywords>
+<keywords lang="ro"><![CDATA[locul morții, Abraham Lincoln, website]]></keywords>
+<query><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX res: <http://dbpedia.org/resource/>
+ASK
+WHERE {
+        res:Abraham_Lincoln dbo:deathPlace ?p .
+        ?p dbp:website ?w .
+
+}
+]]></query>
+<answers><answer>true</answer></answers></question>
+
+<question aggregation="false" hybrid="false" answertype="boolean" id="207" onlydbo="true">
+<string lang="en"><![CDATA[Does the Isar flow into a lake?]]></string>
+<string lang="de"><![CDATA[Fließt die Isar in einen See?]]></string>
+<string lang="es"><![CDATA[¿Desemboca el Isar en un lago?]]></string>
+<string lang="it"><![CDATA[L'Isar sfocia in un lago?]]></string>
+<string lang="fr"><![CDATA[L'Isar se déverse-t-il dans un lac?]]></string>
+<string lang="nl"><![CDATA[Mondt de Isar uit in een meer?]]></string>
+<string lang="ro"><![CDATA[Isarul se varsă într-un lac?]]></string>
+<keywords lang="en"><![CDATA[Isar, flow, lake]]></keywords>
+<keywords lang="de"><![CDATA[Isar, fließt, See]]></keywords>
+<keywords lang="es"><![CDATA[Isar, desemboca, lago]]></keywords>
+<keywords lang="it"><![CDATA[Isar, sfociare, lago]]></keywords>
+<keywords lang="fr"><![CDATA[Isar, deverse, lac]]></keywords>
+<keywords lang="nl"><![CDATA[Isar, uitmonden, meer]]></keywords>
+<keywords lang="ro"><![CDATA[Isar, varsă, lac]]></keywords>
+<query><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+ASK
+WHERE {
+        ?x dbo:inflow res:Isar .
+        ?x rdf:type dbo:Lake . 
+}
+]]></query>
+<answers><answer>true</answer></answers></question>
+
+<question aggregation="false" hybrid="false" answertype="boolean" id="219" onlydbo="true">
+<string lang="en"><![CDATA[Is Cola a beverage?]]></string>
+<string lang="de"><![CDATA[Ist Cola ein Getränk?]]></string>
+<string lang="es"><![CDATA[¿La Coca Cola es una bebida?]]></string>
+<string lang="it"><![CDATA[La Cola è una bevanda?]]></string>
+<string lang="fr"><![CDATA[Le Coca est-il une boisson?]]></string>
+<string lang="nl"><![CDATA[Is cola een drank?]]></string>
+<string lang="ro"><![CDATA[Cola este o băutură?]]></string>
+<keywords lang="en"><![CDATA[Cola, beverage]]></keywords>
+<keywords lang="de"><![CDATA[Cola, Getränk]]></keywords>
+<keywords lang="es"><![CDATA[Coca Cola, bebida]]></keywords>
+<keywords lang="it"><![CDATA[Cola, bevanda]]></keywords>
+<keywords lang="fr"><![CDATA[Coca, boisson]]></keywords>
+<keywords lang="nl"><![CDATA[Cola, drank]]></keywords>
+<keywords lang="ro"><![CDATA[Cola, băutură]]></keywords>
+<query><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+ASK 
+WHERE {
+        res:Cola rdf:type dbo:Beverage .
+}
+]]></query>
+<answers><answer>true</answer></answers></question>
+
+<question aggregation="false" hybrid="false" answertype="resource" id="245" onlydbo="true">
+<string lang="en"><![CDATA[Is James Bond married?]]></string>
+<string lang="de"><![CDATA[Ist James Bond verheiratet?]]></string>
+<string lang="es"><![CDATA[¿Está James Bond casado?]]></string>
+<string lang="it"><![CDATA[James è Bond sposato?]]></string>
+<string lang="fr"><![CDATA[James Bond est-il marié?]]></string>
+<string lang="nl"><![CDATA[Is James Bond getrouwd?]]></string>
+<string lang="ro"><![CDATA[James Bond este căsătorit?]]></string>
+<keywords lang="en"><![CDATA[James Bond, married]]></keywords>
+<keywords lang="de"><![CDATA[James Bond, verheiratet]]></keywords>
+<keywords lang="es"><![CDATA[James Bond, casado]]></keywords>
+<keywords lang="it"><![CDATA[James Bond, sposato]]></keywords>
+<keywords lang="fr"><![CDATA[James Bond, marié]]></keywords>
+<keywords lang="nl"><![CDATA[James Bond, getrouwd]]></keywords>
+<keywords lang="ro"><![CDATA[James Bond, căsătorit]]></keywords>
+<query><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+ASK 
+WHERE {
+        res:James_Bond dbo:spouse ?uri . 
+}
+]]></query>
+<answers><answer>false</answer></answers></question>
+
+<question aggregation="false" hybrid="false" answertype="boolean" id="264" onlydbo="true">
+<string lang="en"><![CDATA[Did Che Guevara have children?]]></string>
+<string lang="de"><![CDATA[Hatte Che Guevara Kinder?]]></string>
+<string lang="es"><![CDATA[¿Tuvo hijos el Che Guevara?]]></string>
+<string lang="it"><![CDATA[Che Guevara aveva dei figli?]]></string>
+<string lang="fr"><![CDATA[Est-ce que Che Guevara a eu des enfants?]]></string>
+<string lang="nl"><![CDATA[Had Che Guevara kinderen?]]></string>
+<string lang="ro"><![CDATA[Che Guevara a avut copii?]]></string>
+<keywords lang="en"><![CDATA[children, Che Guevara]]></keywords>
+<keywords lang="de"><![CDATA[Kinder, Che Guevara]]></keywords>
+<keywords lang="es"><![CDATA[hijos, Che Guevara]]></keywords>
+<keywords lang="it"><![CDATA[figli, Che Guevara]]></keywords>
+<keywords lang="fr"><![CDATA[enfants, Che Guevara]]></keywords>
+<keywords lang="nl"><![CDATA[kinderen, Che Guevara]]></keywords>
+<keywords lang="ro"><![CDATA[copii, Che Guevara]]></keywords>
+<query><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+ASK
+WHERE { 
+        res:Che_Guevara dbo:child ?uri . 
+}
+]]></query>
+<answers><answer>true</answer></answers></question>
+
+<question id="321" answertype="resource" aggregation="true" onlydbo="true" hybrid="true">
+<string lang="en"><![CDATA[Are the Rosetta Stone and the Gayer-Andersen cat exhibited in the same museum?]]></string>
+<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+ASK
+WHERE {
+        ?m1 text:"exhibits" res:Rosetta_Stone . 
+        res:Gayer-Anderson_cat dbo:museum ?x .
+        ?m2 rdfs:label ?m2 .
+        FILTER (?m1=?m2)
+}
+]]></pseudoquery>
+<answers>
+<answer>true</answer>
+</answers>
+</question>
+
+<question id="329" answertype="boolean" aggregation="false" onlydbo="true" hybrid="true">
+<string lang="en"><![CDATA[Did Napoleon's first wife die in France?]]></string>
+<pseudoquery><![CDATA[
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+ASK
+WHERE {
+        ?x text:"first wife of" text:"Napoleon" .
+        ?x dbo:deathPlace res:France .
+}
+]]></pseudoquery>
+<answers>
+<answer>true</answer>
+</answers>
+</question>
+</dataset>

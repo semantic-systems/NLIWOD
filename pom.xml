@@ -7,6 +7,12 @@
 	<packaging>pom</packaging>
 	<inceptionYear>2016</inceptionYear>
 	<name>Natural Language Interfaces for the Web of Data collection</name>
+	<!-- PARENT Project for HAWK -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.2.4.RELEASE</version>
+	</parent>
 	<!-- PROPERTIES -->
 	<properties>
 		<java.version>1.8</java.version>
@@ -16,6 +22,10 @@
 		<qa-datasets.version>0.0.4</qa-datasets.version>
 		<qa-systems.version>0.0.3-SNAPSHOT</qa-systems.version>
 		<qa-ml.version>0.0.1-SNAPSHOT</qa-ml.version>
+		<qa-hawk.version>0.0.2</qa-hawk.version>
+		<qa-watodo.version>0.0.1-SNAPSHOT</qa-watodo.version>
+
+
 		<!-- <lucene.version>4.4.0</lucene.version> -->
 		<!-- <com.carrotsearch.hppc.version>0.6.1</com.carrotsearch.hppc.version> -->
 		<!-- <org.apache.commons.commons-lang3.version>3.3.2</org.apache.commons.commons-lang3.version> -->
@@ -41,6 +51,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.10.4</version>
 				<configuration>
+                			<additionalparam>-Xdoclint:none</additionalparam>
 					<show>private</show>
 					<nohelp>true</nohelp>
 				</configuration>
@@ -84,6 +95,7 @@
 		<module>qa.systems</module>
 		<module>qa.commons</module>
 		<module>qa.ml</module>
+		<module>qa.hawk</module>
 	</modules>
 	<!-- DISTRIBUTION MANAGEMENT -->
 	<distributionManagement>
@@ -109,6 +121,10 @@
 			<name>University Leipzig, AKSW Maven2 Repository</name>
 			<url>http://maven.aksw.org/archiva/repository/internal</url>
 		</repository>
+		<repository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</repository>
 	</repositories>
 
 	<!-- DEPENDENCIES -->
@@ -133,13 +149,17 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<!-- ~~~~~~~~~~~~~~~~~~~ End Testing ~~~~~~~~~~~~~~~~~~~~~~ -->
 		<!-- QA commons is currently based on Jena for handling RDF resources -->
 		<dependency>
 			<groupId>org.aksw.jena-sparql-api</groupId>
 			<artifactId>jena-sparql-api-core</artifactId>
+			<version>3.0.1-1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aksw.jena-sparql-api</groupId>
+			<artifactId>jena-sparql-api-cache-h2</artifactId>
 			<version>3.0.1-1</version>
 		</dependency>
 	</dependencies>

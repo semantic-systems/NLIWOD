@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dataset id="qald-5_test_questions.xml">
+<question aggregation="false" answertype="resouce" hybrid="true" id="52" onlydbo="true">
+<string lang="en">Which Secretary of State was significantly involved in the United States' dominance of the Caribbean?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"dominance"' 1000). 
+?proj ?pbridge &lt;http://dbpedia.org/resource/United_States&gt;. 
+}
+LIMIT 12</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Oyèrónkẹ́_Oyěwùmí</answer>
+<answer>http://dbpedia.org/resource/Leonidas_C._Houk</answer>
+<answer>http://dbpedia.org/resource/Eric_Stanton</answer>
+<answer>http://dbpedia.org/resource/Harbin_Clinic</answer>
+<answer>http://dbpedia.org/resource/U.S._Navy_Cyber_Forces</answer>
+<answer>http://dbpedia.org/resource/Russell_&amp;_Company</answer>
+<answer>http://dbpedia.org/resource/American_Association_(19th_century)</answer>
+<answer>http://dbpedia.org/resource/VAQ-138</answer>
+<answer>http://dbpedia.org/resource/Day_of_Empire</answer>
+<answer>http://dbpedia.org/resource/Chuck_McKinley</answer>
+<answer>http://dbpedia.org/resource/Eastern_League_of_Professional_Football</answer>
+<answer>http://dbpedia.org/resource/John_Simpson_(journalist/consumer_advocate)</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="56" onlydbo="true">
+<string lang="en">Which German mathematicians were members of the von Braun rocket group?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"von" AND "rocket group"' 1000). 
+?const &lt;http://dbpedia.org/ontology/populationPlace&gt; ?proj. 
+}
+LIMIT 12</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Tel_Aviv</answer>
+</answers>
+</question>
+<question aggregation="false" answertype="resouce" hybrid="true" id="59" onlydbo="true">
+<string lang="en">Which movie by the Coen brothers stars John Turturro in the role of a New York City playwright?</string>
+<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt; 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"New York City" AND "Coen brothers stars"' 1000). 
+?proj a &lt;http://dbpedia.org/ontology/Film&gt;. 
+}
+LIMIT 1</pseudoquery>
+<answers>
+<answer>http://dbpedia.org/resource/Barton_Fink</answer>
+</answers>
+</question>
+</dataset>

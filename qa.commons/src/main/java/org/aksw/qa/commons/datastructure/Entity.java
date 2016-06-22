@@ -23,19 +23,11 @@ public class Entity implements Serializable, Comparable<Entity> {
 	public List<Resource> uris = new ArrayList<>();
 	private int offset;
 
-	/**
-	 *
-	 * @param label
-	 * @param type
-	 */
 	public Entity(final String label, final String type) {
 		this.label = label;
 		this.type = type;
 	}
 
-	/**
-	* 
-	*/
 	public Entity() {
 	}
 

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dataset id="qald-5_train.xml">
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="301" onlydbo="true">
+		<string lang="en">Who was vice-president under the president who
+			authorized atomic weapons against Japan during World War II?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt;
+			'"president" AND "atomic weapons"' 1000).
+			?const &lt;http://dbpedia.org/ontology/vicePresident&gt; ?proj.
+			}
+			LIMIT 1
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Alben_W._Barkley</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="303" onlydbo="true">
+		<string lang="en">Which anti-apartheid activist was born in Mvezo?
+		</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Mvezo"'
+			1000).
+			?proj &lt;http://dbpedia.org/ontology/birthPlace&gt; ?const.
+			}
+			LIMIT 12
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Nelson_Mandela</answer>
+			<answer>http://dbpedia.org/resource/List_of_awards_and_honours_bestowed_upon_Nelson_Mandela
+			</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="305" onlydbo="true">
+		<string lang="en">Which recipients of the Victoria Cross died in the
+			Battle of Arnhem?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Battle of
+			Arnhem"' 1000).
+			?proj &lt;http://dbpedia.org/ontology/deathPlace&gt; ?const.
+			?proj ?pbridge &lt;http://dbpedia.org/resource/Victoria_Cross&gt;.
+			}
+			LIMIT 12
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Lionel_Queripel</answer>
+			<answer>http://dbpedia.org/resource/John_Baskeyfield</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="306" onlydbo="true">
+		<string lang="en">Where did the first man in space die?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"first man
+			in space"' 1000).
+			?const &lt;http://dbpedia.org/ontology/deathPlace&gt; ?proj.
+			}
+			LIMIT 1
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Kirzhach</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="308" onlydbo="true">
+		<string lang="en">Which members of the Wu-Tang Clan took their stage
+			name from a movie?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Wu-Tang
+			Clan" AND "movie"' 1000).
+			?const &lt;http://dbpedia.org/ontology/bandMember&gt; ?proj.
+			}
+			LIMIT 12
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Method_Man</answer>
+			<answer>http://dbpedia.org/resource/Redman_(rapper)</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="309" onlydbo="true">
+		<string lang="en">Which writers had influenced the philosopher that
+			refused a Nobel Prize?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt;
+			'"philosopher" AND "Nobel Prize"' 1000).
+			?const &lt;http://dbpedia.org/ontology/influencedBy&gt; ?proj.
+			?proj a &lt;http://dbpedia.org/ontology/Writer&gt;.
+			}
+			LIMIT 12
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Gustave_Flaubert</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="314" onlydbo="true">
+		<string lang="en">Which horses did The Long Fellow ride?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Long
+			Fellow"' 1000).
+			?const &lt;http://dbpedia.org/ontology/raceHorse&gt; ?proj.
+			}
+			LIMIT 12
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Crepello</answer>
+			<answer>http://dbpedia.org/resource/St._Paddy</answer>
+			<answer>http://dbpedia.org/resource/Nijinsky_(horse)</answer>
+			<answer>http://dbpedia.org/resource/Royal_Academy_(horse)</answer>
+			<answer>http://dbpedia.org/resource/Never_Say_Die_(horse)</answer>
+			<answer>http://dbpedia.org/resource/Empery</answer>
+			<answer>http://dbpedia.org/resource/Teenoso</answer>
+			<answer>http://dbpedia.org/resource/The_Minstrel</answer>
+			<answer>http://dbpedia.org/resource/Petite_Etoile</answer>
+			<answer>http://dbpedia.org/resource/Roberto_(horse)</answer>
+			<answer>http://dbpedia.org/resource/Sir_Ivor</answer>
+			<answer>http://dbpedia.org/resource/Alleged_(horse)</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="315" onlydbo="true">
+		<string lang="en">Of the people that died of radiation in Los
+			Alamos, whose death was an accident?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"accident"
+			AND "Los Álamos"' 1000).
+			?proj &lt;http://dbpedia.org/ontology/deathPlace&gt; ?const.
+			}
+			LIMIT 1
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Louis_Slotin</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="317" onlydbo="true">
+		<string lang="en">Which buildings in art deco style did Shreve, Lamb
+			and Harmon design?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Lamb
+			and"' 1000).
+			?proj &lt;http://dbpedia.org/ontology/architect&gt; ?const.
+			}
+			LIMIT 12
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/245_Park_Avenue</answer>
+			<answer>http://dbpedia.org/resource/Textron_Tower</answer>
+			<answer>http://dbpedia.org/resource/Astral_Apartments</answer>
+			<answer>http://dbpedia.org/resource/500_Fifth_Avenue</answer>
+			<answer>http://dbpedia.org/resource/26_Broadway</answer>
+			<answer>http://dbpedia.org/resource/Deutsche_Bank_Building</answer>
+			<answer>http://dbpedia.org/resource/Empire_State_Building</answer>
+			<answer>http://dbpedia.org/resource/Claremont_Opera_House</answer>
+			<answer>http://dbpedia.org/resource/Sagamore_Hill_(house)</answer>
+			<answer>http://dbpedia.org/resource/Hill_Building</answer>
+			<answer>http://dbpedia.org/resource/1740_Broadway</answer>
+			<answer>http://dbpedia.org/resource/Joel_W._Solomon_Federal_Building_and_United_States_Courthouse
+			</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="318" onlydbo="true">
+		<string lang="en">Which birds are protected under the National Parks
+			and Wildlife Act?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"National
+			Parks and Wildlife Act"' 1000).
+			?proj a &lt;http://dbpedia.org/ontology/Bird&gt;.
+			}
+			LIMIT 12
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Black-faced_Cuckooshrike</answer>
+			<answer>http://dbpedia.org/resource/Yellow_Thornbill</answer>
+			<answer>http://dbpedia.org/resource/Bar-shouldered_Dove</answer>
+			<answer>http://dbpedia.org/resource/Chestnut_Teal</answer>
+			<answer>http://dbpedia.org/resource/Australian_Shelduck</answer>
+			<answer>http://dbpedia.org/resource/Australasian_Shoveler</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="319" onlydbo="true">
+		<string lang="en">Which country did the first known photographer of
+			snowflakes come from?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"first
+			known photographer of snowflakes"' 1000).
+			?const &lt;http://dbpedia.org/ontology/birthPlace&gt; ?proj.
+			?proj a &lt;http://dbpedia.org/ontology/Country&gt;.
+			}
+			LIMIT 12
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/United_States</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="320" onlydbo="true">
+		<string lang="en">List all the battles commanded by the lover of
+			Cleopatra.</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt;
+			'"Cleopatra"' 1000).
+			?proj &lt;http://dbpedia.org/ontology/commander&gt; ?const.
+			}
+			LIMIT 12
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Battle_of_Alexandria_(30_BC)
+			</answer>
+			<answer>http://dbpedia.org/resource/Battle_of_Naulochus</answer>
+			<answer>http://dbpedia.org/resource/Final_War_of_the_Roman_Republic
+			</answer>
+			<answer>http://dbpedia.org/resource/Battle_of_Actium</answer>
+			<answer>http://dbpedia.org/resource/Gallic_Wars</answer>
+			<answer>http://dbpedia.org/resource/Siege_of_Alexandria_(47_BC)
+			</answer>
+			<answer>http://dbpedia.org/resource/Battle_of_Pharsalus</answer>
+			<answer>http://dbpedia.org/resource/Sicilian_revolt</answer>
+			<answer>http://dbpedia.org/resource/Battle_of_Philippi</answer>
+			<answer>http://dbpedia.org/resource/Caesar's_Civil_War</answer>
+			<answer>http://dbpedia.org/resource/Battle_of_the_Nile_(47_BC)
+			</answer>
+			<answer>http://dbpedia.org/resource/Roman–Persian_Wars</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="322" onlydbo="true">
+		<string lang="en">Which actress starring in the TV series Friends
+			owns the production company Coquette Productions?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"Coquette
+			Productions" AND "production company"' 1000).
+			?const &lt;http://dbpedia.org/ontology/starring&gt; ?proj.
+			}
+			LIMIT 1
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Courteney_Cox</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="323" onlydbo="true">
+		<string lang="en">Gaborone is the capital of which country member of
+			the African Union?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?proj text:query (&lt;http://dbpedia.org/ontology/abstract&gt; '"capital
+			of" AND "African Union"' 1000).
+			?proj ?pbridge &lt;http://dbpedia.org/resource/Gaborone&gt;.
+			}
+			LIMIT 1
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Botswana</answer>
+		</answers>
+	</question>
+	<question aggregation="false" answertype="resouce" hybrid="true"
+		id="334" onlydbo="true">
+		<string lang="en">Who plays Phileas Fogg in the adaptation of Around
+			the World in 80 Days directed by Buzz Kulik?</string>
+		<pseudoquery>PREFIX text:&lt;http://jena.apache.org/text#&gt;
+			SELECT DISTINCT ?proj WHERE {
+			?const text:query (&lt;http://dbpedia.org/ontology/abstract&gt;
+			'"adaptation of" AND "Phileas Fogg"' 1000).
+			?const &lt;http://dbpedia.org/ontology/starring&gt; ?proj.
+			?proj a &lt;http://dbpedia.org/ontology/Agent&gt;.
+			}
+			LIMIT 1
+		</pseudoquery>
+		<answers>
+			<answer>http://dbpedia.org/resource/Pierce_Brosnan</answer>
+		</answers>
+	</question>
+</dataset>

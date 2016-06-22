@@ -32,9 +32,11 @@ import org.xml.sax.SAXException;
 
 /**
  * 
+ * Loads both QALD XML and JSON
  * @author ricardousbeck tortugaattack
  *
  */
+//FIXME numberformatexception is thrown when loading NLQ
 public class QALD_Loader {
 	static Logger log = LoggerFactory.getLogger(QALD_Loader.class);
 
@@ -231,8 +233,6 @@ public class QALD_Loader {
 	/**
 	 * This methods loads QALD XML files (used in QALD 1 to QALD 5)
 	 * 
-	 * @param file
-	 * @return
 	 */
 	public static List<IQuestion> loadXML(final InputStream file) {
 		List<IQuestion> questions = new ArrayList<>();
@@ -327,8 +327,6 @@ public class QALD_Loader {
 	/**
 	 * This method loads QALD JSON files as used in QALD 6
 	 * 
-	 * @param file
-	 * @return
 	 */
 	public static List<IQuestion> loadJSON(final InputStream file) {
 		// TODO Catch exceptions

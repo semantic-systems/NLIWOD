@@ -18,3 +18,14 @@ qa.ml/src/main/resources/QALD-5_logs.zip
 qa.ml/src/main/resources/QALD-5_logs/
 qa.ml/src/main/resources/qald5train/
 qa.ml/cache
+qa.hawk/src/main/resources/general-en/
+qa.hawk/src/main/resources/hawk.properties
+qa.hawk/*.txt
+qa.hawk/cache/*
+qa.hawk/ranking/*
+qa.hawk/resources/indexAbstract/
+qa.hawk/resources/indexOntology/
+qa.hawk/resources/ontologyClasses/
+qa.hawk/resources/ontologyProperties/
+qa.hawk/resources/qald-4_hybrid_train.xml
+qa.hawk/results.html

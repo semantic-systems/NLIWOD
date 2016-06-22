@@ -29,6 +29,6 @@ This library is available as snapshot here: http://maven.aksw.org/archiva/#artif
 
 Add the following repository to your project:
 
-Artificats are described in the sub-modules.
+Artifacts are described in the sub-modules.
 
 Look for more interesting libraries here: http://maven.aksw.org/archiva/#browse/org.aksw.qa 

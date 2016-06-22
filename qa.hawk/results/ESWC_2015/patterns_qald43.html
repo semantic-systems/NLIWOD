@@ -1,0 +1,542 @@
+18:52:20,008 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"Coquette Productions" AND "production company"' 1000). 
+?const <http://dbpedia.org/ontology/guest> ?proj. 
+}
+LIMIT 1>
+18:52:20,008 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:20,009 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"Coquette Productions"' 1000). 
+?const <http://dbpedia.org/ontology/starring> ?proj. 
+}
+LIMIT 1>
+18:52:20,009 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:20,009 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'Coquette~1 AND company~1 AND Productions~1 AND production~1' 1000). 
+?const <http://dbpedia.org/ontology/guest> ?proj. 
+}
+LIMIT 1>
+18:52:20,009 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:20,009 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"Coquette Productions"' 1000). 
+?const <http://dbpedia.org/ontology/guest> ?proj. 
+}
+LIMIT 1>
+18:52:20,010 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:20,010 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"Coquette Productions" AND "production company"' 1000). 
+?const <http://dbpedia.org/ontology/starring> ?proj. 
+}
+LIMIT 1>
+18:52:20,010 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:20,010 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'Coquette~1 AND Productions~1' 1000). 
+?const <http://dbpedia.org/ontology/starring> ?proj. 
+}
+LIMIT 1>
+18:52:20,010 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:20,012 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'Coquette~1 AND company~1 AND Productions~1 AND production~1' 1000). 
+?const <http://dbpedia.org/ontology/starring> ?proj. 
+}
+LIMIT 1>
+18:52:20,012 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:20,012 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'Coquette~1 AND Productions~1' 1000). 
+?const <http://dbpedia.org/ontology/guest> ?proj. 
+}
+LIMIT 1>
+18:52:20,012 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:20,020 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+18:52:20,020 INFO [org.aksw.hawk.controller.Pipeline.calculateSPARQLRepresentation] 138 - <Give me the currencies of all G8 countries.>
+--
+18:52:20,634 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"Long Fellow"' 1000). 
+?const <http://dbpedia.org/ontology/raceHorse> ?proj. 
+?proj a <http://dbpedia.org/ontology/RaceHorse>. 
+}
+LIMIT 12>
+18:52:20,634 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:20,635 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'Long~1 AND Fellow~1' 1000). 
+?const <http://dbpedia.org/ontology/raceHorse> ?proj. 
+?proj a <http://dbpedia.org/ontology/RaceHorse>. 
+}
+LIMIT 12>
+18:52:20,635 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:20,635 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'Long~1 AND Fellow~1' 1000). 
+?const <http://dbpedia.org/ontology/raceHorse> ?proj. 
+}
+LIMIT 12>
+18:52:20,635 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:20,635 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"Long Fellow"' 1000). 
+?const <http://dbpedia.org/ontology/raceHorse> ?proj. 
+}
+LIMIT 12>
+18:52:20,636 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:20,638 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+18:52:20,638 INFO [org.aksw.hawk.controller.Pipeline.calculateSPARQLRepresentation] 138 - <Which buildings owned by the crown overlook the North Sea?>
+--
+18:52:31,415 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"crown"' 1000). 
+?proj <http://dbpedia.org/ontology/owner> ?const. 
+}
+LIMIT 12>
+18:52:31,415 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=0.08333333333333333 R=1.0 F=0.15384615384615385>
+18:52:31,415 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'crown~1' 1000). 
+?proj <http://dbpedia.org/ontology/owner> ?const. 
+}
+LIMIT 12>
+18:52:31,415 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=0.14285714285714285 R=1.0 F=0.25>
+18:52:31,416 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+18:52:31,416 INFO [org.aksw.hawk.controller.Pipeline.calculateSPARQLRepresentation] 138 - <Where did the first man in space die?>
+--
+18:52:31,767 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"first man in space"' 1000). 
+?const <http://dbpedia.org/ontology/deathPlace> ?proj. 
+}
+LIMIT 1>
+18:52:31,767 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:31,767 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'space~1 AND first~1 AND man~1' 1000). 
+?const <http://dbpedia.org/ontology/deathPlace> ?proj. 
+}
+LIMIT 1>
+18:52:31,767 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:31,769 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+18:52:31,769 INFO [org.aksw.hawk.controller.Pipeline.calculateSPARQLRepresentation] 138 - <Which writers had influenced the philosopher that refused a Nobel Prize?>
+--
+18:52:32,986 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'philosopher~1 AND refused~1' 1000). 
+?const <http://dbpedia.org/ontology/influencedBy> ?proj. 
+?proj a <http://dbpedia.org/ontology/Writer>. 
+}
+LIMIT 12>
+18:52:32,986 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=0.5555555555555556 R=1.0 F=0.7142857142857143>
+18:52:32,986 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'Prize~1 AND refused~1 AND Nobel~1' 1000). 
+?const <http://dbpedia.org/ontology/influencedBy> ?proj. 
+?proj a <http://dbpedia.org/ontology/Writer>. 
+?const a <http://dbpedia.org/ontology/Philosopher>. 
+}
+LIMIT 12>
+18:52:32,986 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=0.8333333333333334 R=1.0 F=0.9090909090909091>
+--
+18:52:32,988 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"refused" AND "Nobel Prize"' 1000). 
+?const <http://dbpedia.org/ontology/influencedBy> ?proj. 
+?proj a <http://dbpedia.org/ontology/Writer>. 
+?const a <http://dbpedia.org/ontology/Philosopher>. 
+}
+LIMIT 12>
+18:52:32,989 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+--
+18:52:33,903 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"Victoria Cross" AND "Battle of Arnhem"' 1000). 
+?proj <http://dbpedia.org/ontology/deathDate> ?const. 
+}
+LIMIT 12>
+18:52:33,903 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:33,903 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'Arnhem~1 AND Battle~1' 1000). 
+?proj <http://dbpedia.org/ontology/deathDate> ?const. 
+?proj ?pbridge <http://dbpedia.org/resource/Victoria_Cross>. 
+}
+LIMIT 12>
+18:52:33,903 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:33,903 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"Battle of Arnhem"' 1000). 
+?proj <http://dbpedia.org/ontology/deathDate> ?const. 
+?proj ?pbridge <http://dbpedia.org/resource/Victoria_Cross>. 
+}
+LIMIT 12>
+18:52:33,903 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:33,905 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+--
+18:52:34,188 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"anti-apartheid activist"' 1000). 
+?proj <http://dbpedia.org/ontology/almaMater> ?const. 
+?proj ?pbridge <http://dbpedia.org/resource/University_of_South_Africa>. 
+}
+LIMIT 1>
+18:52:34,188 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:34,189 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'apartheid~1 AND anti~1 AND activist~1' 1000). 
+?proj ?pbridge <http://dbpedia.org/resource/University_of_South_Africa>. 
+}
+LIMIT 1>
+18:52:34,189 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:34,189 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'apartheid~1 AND anti~1 AND activist~1' 1000). 
+?proj <http://dbpedia.org/ontology/almaMater> ?const. 
+?proj ?pbridge <http://dbpedia.org/resource/University_of_South_Africa>. 
+}
+LIMIT 1>
+18:52:34,189 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:34,189 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"anti-apartheid activist"' 1000). 
+?proj ?pbridge <http://dbpedia.org/resource/University_of_South_Africa>. 
+}
+LIMIT 1>
+18:52:34,189 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:34,191 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+18:52:34,191 INFO [org.aksw.hawk.controller.Pipeline.calculateSPARQLRepresentation] 138 - <In which city was the assassin of Martin Luther King born?>
+--
+18:52:35,508 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"assassin"' 1000). 
+?const <http://dbpedia.org/ontology/birthPlace> ?proj. 
+}
+LIMIT 1>
+18:52:35,508 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:35,510 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+18:52:35,510 INFO [org.aksw.hawk.controller.Pipeline.calculateSPARQLRepresentation] 138 - <List all the battles fought by the lover of Cleopatra.>
+--
+18:52:36,420 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'lover~1 AND Cleopatra~1' 1000). 
+?proj a <http://dbpedia.org/ontology/MilitaryConflict>. 
+?const <http://dbpedia.org/ontology/battle> ?proj. 
+}
+LIMIT 12>
+18:52:36,420 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:36,420 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"lover" AND "Cleopatra"' 1000). 
+?const <http://dbpedia.org/ontology/battle> ?proj. 
+}
+LIMIT 12>
+18:52:36,421 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:36,421 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"lover" AND "Cleopatra"' 1000). 
+?proj a <http://dbpedia.org/ontology/MilitaryConflict>. 
+?const <http://dbpedia.org/ontology/battle> ?proj. 
+}
+LIMIT 12>
+18:52:36,421 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:36,421 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'Cleopatra~1' 1000). 
+?const <http://dbpedia.org/ontology/battle> ?proj. 
+}
+LIMIT 12>
+18:52:36,422 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:36,422 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"Cleopatra"' 1000). 
+?const <http://dbpedia.org/ontology/battle> ?proj. 
+}
+LIMIT 12>
+18:52:36,422 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:36,422 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'lover~1 AND Cleopatra~1' 1000). 
+?const <http://dbpedia.org/ontology/battle> ?proj. 
+}
+LIMIT 12>
+18:52:36,422 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:36,422 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'Cleopatra~1' 1000). 
+?proj a <http://dbpedia.org/ontology/MilitaryConflict>. 
+?const <http://dbpedia.org/ontology/battle> ?proj. 
+}
+LIMIT 12>
+18:52:36,422 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:36,423 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"Cleopatra"' 1000). 
+?proj a <http://dbpedia.org/ontology/MilitaryConflict>. 
+?const <http://dbpedia.org/ontology/battle> ?proj. 
+}
+LIMIT 12>
+18:52:36,423 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:36,427 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+--
+18:52:49,068 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"radiation" AND "accident"' 1000). 
+?proj <http://dbpedia.org/ontology/deathPlace> ?const. 
+}
+LIMIT 1>
+18:52:49,068 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=0.5 F=0.6666666666666666>
+18:52:49,068 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'accident~1' 1000). 
+?proj <http://dbpedia.org/ontology/deathPlace> ?const. 
+}
+LIMIT 1>
+18:52:49,069 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=0.5 F=0.6666666666666666>
+18:52:49,069 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'radiation~1 AND accident~1' 1000). 
+?proj <http://dbpedia.org/ontology/deathYear> ?const. 
+}
+LIMIT 1>
+18:52:49,069 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=0.5 F=0.6666666666666666>
+18:52:49,069 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"accident"' 1000). 
+?proj <http://dbpedia.org/ontology/deathYear> ?const. 
+}
+LIMIT 1>
+18:52:49,069 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=0.5 F=0.6666666666666666>
+18:52:49,070 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'radiation~1 AND accident~1' 1000). 
+?proj <http://dbpedia.org/ontology/deathDate> ?const. 
+}
+LIMIT 1>
+18:52:49,070 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=0.5 F=0.6666666666666666>
+18:52:49,070 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'accident~1' 1000). 
+?proj <http://dbpedia.org/ontology/deathYear> ?const. 
+}
+LIMIT 1>
+18:52:49,070 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=0.5 F=0.6666666666666666>
+18:52:49,070 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"radiation" AND "accident"' 1000). 
+?proj <http://dbpedia.org/ontology/deathDate> ?const. 
+}
+LIMIT 1>
+18:52:49,071 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=0.5 F=0.6666666666666666>
+18:52:49,071 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"accident"' 1000). 
+?proj <http://dbpedia.org/ontology/deathDate> ?const. 
+}
+LIMIT 1>
+18:52:49,071 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=0.5 F=0.6666666666666666>
+18:52:49,071 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'radiation~1 AND accident~1' 1000). 
+?proj <http://dbpedia.org/ontology/deathPlace> ?const. 
+}
+LIMIT 1>
+18:52:49,071 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=0.5 F=0.6666666666666666>
+18:52:49,071 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"accident"' 1000). 
+?proj <http://dbpedia.org/ontology/deathPlace> ?const. 
+}
+LIMIT 1>
+18:52:49,072 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=0.5 F=0.6666666666666666>
+18:52:49,072 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'accident~1' 1000). 
+?proj <http://dbpedia.org/ontology/deathDate> ?const. 
+}
+LIMIT 1>
+18:52:49,072 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=0.5 F=0.6666666666666666>
+18:52:49,073 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"radiation" AND "accident"' 1000). 
+?proj <http://dbpedia.org/ontology/deathYear> ?const. 
+}
+LIMIT 1>
+18:52:49,073 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=0.5 F=0.6666666666666666>
+18:52:49,080 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+18:52:49,080 INFO [org.aksw.hawk.controller.Pipeline.calculateSPARQLRepresentation] 138 - <Which buildings in art deco style did Shreve, Lamb and Harmon design?>
+--
+18:52:50,081 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"Lamb and"' 1000). 
+?proj <http://dbpedia.org/ontology/architect> ?const. 
+}
+LIMIT 12>
+18:52:50,081 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=0.3333333333333333 R=1.0 F=0.5>
+18:52:50,083 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+18:52:50,083 INFO [org.aksw.hawk.controller.Pipeline.calculateSPARQLRepresentation] 138 - <Which birds are protected under the National Parks and Wildlife Act?>
+--
+18:52:50,192 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'Act~1 AND Wildlife~1 AND Parks~1 AND National~1' 1000). 
+?proj a <http://dbpedia.org/ontology/Bird>. 
+}
+LIMIT 12>
+18:52:50,192 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:50,192 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"protected" AND "National Parks and Wildlife Act"' 1000). 
+?proj a <http://dbpedia.org/ontology/Bird>. 
+}
+LIMIT 12>
+18:52:50,192 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:50,192 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"National Parks and Wildlife Act"' 1000). 
+?proj a <http://dbpedia.org/ontology/Bird>. 
+}
+LIMIT 12>
+18:52:50,192 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:50,192 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'protected~1 AND Act~1 AND Wildlife~1 AND Parks~1 AND National~1' 1000). 
+?proj a <http://dbpedia.org/ontology/Bird>. 
+}
+LIMIT 12>
+18:52:50,192 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:50,194 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+18:52:50,194 INFO [org.aksw.hawk.controller.Pipeline.calculateSPARQLRepresentation] 138 - <Which country did the first known photographer of snowflakes come from?>
+--
+18:52:50,550 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'country~1' 1000). 
+?const <http://dbpedia.org/ontology/stateOfOrigin> ?proj. 
+}
+LIMIT 12>
+18:52:50,550 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=0.5 R=1.0 F=0.6666666666666666>
+18:52:50,550 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"country"' 1000). 
+?const <http://dbpedia.org/ontology/stateOfOrigin> ?proj. 
+}
+LIMIT 12>
+18:52:50,550 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=0.5 R=1.0 F=0.6666666666666666>
+18:52:50,551 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'photographer~1 AND snowflakes~1 AND known~1 AND first~1' 1000). 
+?const <http://dbpedia.org/ontology/birthPlace> ?proj. 
+?proj a <http://dbpedia.org/ontology/Country>. 
+}
+LIMIT 12>
+18:52:50,551 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:50,552 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+--
+18:52:52,653 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'member~1 AND African~1 AND Union~1 AND country~1' 1000). 
+?proj ?pbridge <http://dbpedia.org/resource/Dakar>. 
+}
+LIMIT 1>
+18:52:52,653 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:52,653 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"African Union"' 1000). 
+?proj ?pbridge <http://dbpedia.org/resource/Dakar>. 
+}
+LIMIT 1>
+18:52:52,653 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:52,653 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"is" AND "African Union"' 1000). 
+?proj ?pbridge <http://dbpedia.org/resource/Dakar>. 
+}
+LIMIT 1>
+18:52:52,653 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:52:52,655 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+18:52:52,655 INFO [org.aksw.hawk.controller.Pipeline.calculateSPARQLRepresentation] 138 - <Which members of the Wu-Tang Clan took their stage name from a movie?>
+--
+18:53:39,360 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> 'Wu~1 AND Clan~1 AND stage~1 AND Tang~1' 1000). 
+?const <http://dbpedia.org/ontology/bandMember> ?proj. 
+}
+LIMIT 12>
+18:53:39,360 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=0.08333333333333333 R=0.5 F=0.14285714285714285>
+18:53:39,361 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'Wu~1 AND Clan~1 AND Tang~1' 1000). 
+?const <http://dbpedia.org/ontology/bandMember> ?proj. 
+}
+LIMIT 12>
+18:53:39,361 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=0.16666666666666666 R=1.0 F=0.2857142857142857>
+18:53:39,362 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"Wu-Tang Clan"' 1000). 
+?const <http://dbpedia.org/ontology/bandMember> ?proj. 
+}
+LIMIT 12>
+18:53:39,362 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=0.16666666666666666 R=1.0 F=0.2857142857142857>
+18:53:39,362 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?proj text:query (<http://dbpedia.org/ontology/abstract> '"Wu-Tang Clan" AND "stage name"' 1000). 
+?const <http://dbpedia.org/ontology/bandMember> ?proj. 
+}
+LIMIT 12>
+18:53:39,362 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=0.18181818181818182 R=1.0 F=0.3076923076923077>
+18:53:39,364 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+18:53:39,364 INFO [org.aksw.hawk.controller.Pipeline.calculateSPARQLRepresentation] 138 - <Who composed the music for the film that depicts the early life of Jane Austin?>
+--
+18:54:20,732 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"Xposé"' 1000). 
+?const <http://dbpedia.org/ontology/residence> ?proj. 
+}
+LIMIT 1>
+18:54:20,732 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:54:20,732 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'Xposé~1 AND leader~1' 1000). 
+?const <http://dbpedia.org/ontology/residence> ?proj. 
+}
+LIMIT 1>
+18:54:20,732 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:54:20,733 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'Xposé~1' 1000). 
+?const <http://dbpedia.org/ontology/residence> ?proj. 
+}
+LIMIT 1>
+18:54:20,733 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:54:20,733 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> 'girls~1 AND Xposé~1' 1000). 
+?const <http://dbpedia.org/ontology/residence> ?proj. 
+}
+LIMIT 1>
+18:54:20,733 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:54:20,733 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"Xposé" AND "leader"' 1000). 
+?const <http://dbpedia.org/ontology/residence> ?proj. 
+}
+LIMIT 1>
+18:54:20,733 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:54:20,733 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"girls" AND "leader"' 1000). 
+?const <http://dbpedia.org/ontology/residence> ?proj. 
+}
+LIMIT 1>
+18:54:20,733 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:54:20,733 INFO [org.aksw.hawk.controller.Pipeline.run] 97 - <PREFIX text:<http://jena.apache.org/text#> 
+SELECT DISTINCT ?proj WHERE {
+ ?const text:query (<http://dbpedia.org/ontology/abstract> '"girls" AND "Xposé"' 1000). 
+?const <http://dbpedia.org/ontology/residence> ?proj. 
+}
+LIMIT 1>
+18:54:20,733 INFO [org.aksw.hawk.controller.Pipeline.run] 98 - <	P=1.0 R=1.0 F=1.0>
+18:54:20,735 INFO [org.aksw.hawk.controller.Pipeline.run] 118 - <########################################################>
+18:54:20,735 INFO [org.aksw.hawk.controller.Pipeline.calculateSPARQLRepresentation] 138 - <Which city does the first person to climb all 14 eight-thousanders come from?>
