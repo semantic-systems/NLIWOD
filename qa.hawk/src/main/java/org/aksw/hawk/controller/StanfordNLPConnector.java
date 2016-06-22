@@ -201,7 +201,7 @@ public class StanfordNLPConnector {
 	}
 
 	/**
-	 * Runs a NounPhrasCombination and dependency parsing on given HAWKQuestion
+	 * Runs a NounPhraseCombination and dependency parsing on given HAWKQuestion
 	 * 
 	 * @param q The Question you want to run NounPhraseCombination on
 	 */

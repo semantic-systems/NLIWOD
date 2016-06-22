@@ -5,6 +5,7 @@ Hybrid Question Answering (hawk) -- is going to drive forth the OKBQA vision of 
 
 Performance benchmarks can be done on the QALD-5 hybrid benchmark (test+train)
 
+The old repository can be found at https://github.com/aksw/hawk
 
 Restful Service
 ===

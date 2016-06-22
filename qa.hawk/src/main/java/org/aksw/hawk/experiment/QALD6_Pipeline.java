@@ -35,6 +35,8 @@ public class QALD6_Pipeline {
 		double average = 0;
 		double count = 0;
 		double countNULLAnswer = 0;
+		questions.sort((HAWKQuestion o1, HAWKQuestion o2)->o1.getLanguageToQuestion().get("en").length()-o2.getLanguageToQuestion().get("en").length());
+
 		for (HAWKQuestion q : questions) {
 			System.gc();
 			if (q.checkSuitabillity()) {

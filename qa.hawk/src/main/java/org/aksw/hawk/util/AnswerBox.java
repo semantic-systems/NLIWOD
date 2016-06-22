@@ -41,7 +41,7 @@ public class AnswerBox {
 			// CacheCoreEx cacheBackend = CacheCoreH2.create("./sparql",
 			// timeToLive, true);
 			// CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
-			qef = new QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql");
+			qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
 			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error("Could not create SPARQL interface! ", e);

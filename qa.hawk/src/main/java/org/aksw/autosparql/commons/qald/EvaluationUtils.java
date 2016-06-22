@@ -129,7 +129,7 @@ public class EvaluationUtils {
 		        + "SELECT DISTINCT ?uri WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts .}";
 		String targetSPARQLQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> " + "PREFIX res: <http://dbpedia.org/resource/> " + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
 		        + "SELECT DISTINCT ?uri WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts ." + "?uri dbo:director res:Garry_Marshall .}";
-		String endpoint = "http://dbpedia.org/sparql";
+		String endpoint = "http://139.18.2.164:3030/ds/sparql";
 		double precision = EvaluationUtils.precision(sparqlQuery, targetSPARQLQuery, endpoint);
 		double recall = EvaluationUtils.recall(sparqlQuery, targetSPARQLQuery, endpoint);
 		double fMeasure = EvaluationUtils.fMeasure(sparqlQuery, targetSPARQLQuery, endpoint);
