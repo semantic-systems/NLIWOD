@@ -9,16 +9,18 @@ import org.aksw.hawk.pruner.disjointness.DisjointnessBasedQueryFilter;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.collect.Sets;
 
 public class DisjointnessBasedQueryFilterTest {
 
-	@Test
-	public void test() {
 
-		QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
+	@Test
+		public void test() {
+
+		QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql", "http://dbpedia.org");
 		DisjointnessBasedQueryFilter filter = new DisjointnessBasedQueryFilter(qef);
 		// valid query
 		SPARQLQuery query1 = new SPARQLQuery("?proj a <http://dbpedia.org/ontology/Book>.");

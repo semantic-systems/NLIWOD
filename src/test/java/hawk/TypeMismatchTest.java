@@ -9,6 +9,7 @@ import org.aksw.hawk.pruner.TypeMismatch;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.collect.Sets;
@@ -18,7 +19,7 @@ public class TypeMismatchTest {
 	@Test
 	public void test() {
 
-		QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
+		QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql", "http://dbpedia.org");
 
 		TypeMismatch filter = new TypeMismatch(qef);
 		// Matching Query

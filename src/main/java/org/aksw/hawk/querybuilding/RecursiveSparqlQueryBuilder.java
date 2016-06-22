@@ -197,12 +197,12 @@ public class RecursiveSparqlQueryBuilder {
 		}
 
 	}
-
+//TODO refactor to use SPAQRL.java instead of creating a stand-alone execution factory
 	private Set<String> getOrigLabel(final String label) {
 		Set<String> resultset = Sets.newHashSet();
 		String query = "SELECT str(?proj) as ?proj WHERE { <" + label + "> <http://www.w3.org/2000/01/rdf-schema#label> ?proj. FILTER(langMatches( lang(?proj), \"EN\" ))}";
 		try {
-			QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql");
+			QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
 			QueryExecution qe = qef.createQueryExecution(query);
 			if (qe != null) {
 				log.debug(query.toString());

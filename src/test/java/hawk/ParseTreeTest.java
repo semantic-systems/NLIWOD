@@ -18,6 +18,7 @@ import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.spotter.Fox;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.QALD_Loader;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,10 @@ import edu.stanford.nlp.pipeline.Annotation;
 
 public class ParseTreeTest {
 
+
+	//TODO remove ignore once dbpedia is up again 
 	@Test
+	
 	public void testProcess() throws IOException {
 		Logger log = LoggerFactory.getLogger(ParseTreeTest.class);
 		String stanfordTree = new String();

@@ -8,6 +8,7 @@ import org.aksw.hawk.controller.PipelineClearNLP;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.experiment.SingleQuestionPipeline;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ public class TierRankerTest {
 	static Logger log = LoggerFactory.getLogger(SingleQuestionPipeline.class);
 
 	@Test
+	@Ignore
 	public void test() {
 
 		PipelineClearNLP pipeline = new PipelineClearNLP();

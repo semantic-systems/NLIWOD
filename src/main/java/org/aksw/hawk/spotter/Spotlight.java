@@ -26,7 +26,7 @@ public class Spotlight extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(Spotlight.class);
 
 	private String requestURL = "http://spotlight.sztaki.hu:2222/rest/annotate";
-	private String confidence = "0.3";
+	private String confidence = "0.65";
 	private String support = "20";
 
 	public Spotlight() {
@@ -80,22 +80,44 @@ public class Spotlight extends ASpotter {
 		HAWKQuestion q = new HAWKQuestion();
 		// q.getLanguageToQuestion().put("en",
 		// "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
-		q.getLanguageToQuestion().put("en", "Which anti-apartheid activist was born in Mvezo?");
+		// q.getLanguageToQuestion().put("en",
+		// "Which anti-apartheid activist was born in Mvezo?");
+		q.getLanguageToQuestion().put("en", " Who was vice president under the president who approved the use of atomic weapons against Japan during World War II?");
+		ASpotter spotter = new Spotlight();
 
-		ASpotter fox = new Spotlight();
 
-		q.setLanguageToNamedEntites(fox.getEntities(q.getLanguageToQuestion().get("en")));
-		for (String key : q.getLanguageToNamedEntites().keySet()) {
-			System.out.println(key);
-			for (Entity entity : q.getLanguageToNamedEntites().get(key)) {
-				System.out.println("\t" + entity.label + " ->" + entity.type);
-				for (Resource r : entity.posTypesAndCategories) {
-					System.out.println("\t\tpos: " + r);
-				}
-				for (Resource r : entity.uris) {
-					System.out.println("\t\turi: " + r);
+		for (double i = 0; i <= 1.0; i += 0.05) {
+			((Spotlight) spotter).setConfidence(i);
+			System.out.println("Confidence: " + ((Spotlight) spotter).getConfidence());
+			q.setLanguageToNamedEntites(spotter.getEntities(q.getLanguageToQuestion().get("en")));
+			for (String key : q.getLanguageToNamedEntites().keySet()) {
+				System.out.println(key);
+				for (Entity entity : q.getLanguageToNamedEntites().get(key)) {
+					System.out.println("\t" + entity.label + " ->" + entity.type);
+					for (Resource r : entity.posTypesAndCategories) {
+						System.out.println("\t\tpos: " + r);
+					}
+					for (Resource r : entity.uris) {
+						System.out.println("\t\turi: " + r);
+					}
 				}
 			}
 		}
+	}
+
+	public String getConfidence() {
+		return confidence;
+	}
+
+	public void setConfidence(double i) {
+		this.confidence = String.valueOf(i);
+	}
+
+	public String getSupport() {
+		return support;
+	}
+
+	public void setSupport(String support) {
+		this.support = support;
 	}
 }

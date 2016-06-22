@@ -3,6 +3,7 @@ package org.aksw.hawk.querybuilding;
 import java.util.Set;
 
 import org.apache.jena.rdf.model.RDFNode;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SPARQLQueryTest {
