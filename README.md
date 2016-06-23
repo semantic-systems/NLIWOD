@@ -32,3 +32,4 @@ Add the following repository to your project:
 Artifacts are described in the sub-modules.
 
 Look for more interesting libraries here: http://maven.aksw.org/archiva/#browse/org.aksw.qa 
+
