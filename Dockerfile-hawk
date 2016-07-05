@@ -1,0 +1,10 @@
+FROM maven
+
+RUN mkdir -p /usr/src/app
+ADD . /usr/src/app
+
+WORKDIR /usr/src/app/qa.hawk
+RUN mvn clean package -U -DskipTests
+
+EXPOSE 8181
+CMD ["java", "-jar", "./target/hawk-0.0.2.jar"]
