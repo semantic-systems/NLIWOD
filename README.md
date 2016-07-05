@@ -33,3 +33,17 @@ Artifacts are described in the sub-modules.
 
 Look for more interesting libraries here: http://maven.aksw.org/archiva/#browse/org.aksw.qa 
 
+## Docker
+> work in progress
+### hawk
+    docker build -t hawk -f Dockerfile-hawk .
+    docker run -t hawk
+
+### hawk-fuseki
+run `cd qa.hawk/deploy-scripts && ./index_fuseki.sh` to create index
+
+    docker build -t hawk-fuseki -f Dockerfile-fuseki .
+    docker run --name hawk-fuseki -v /path/to/deploy-scripts/:/staging hawk-fuseki
+
+
+
