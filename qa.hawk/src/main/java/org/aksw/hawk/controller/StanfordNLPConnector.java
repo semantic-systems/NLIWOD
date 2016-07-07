@@ -200,6 +200,8 @@ public class StanfordNLPConnector {
 
 	}
 
+	//TODO refactor the combine sequences methods since both public does not make sense
+	//TODO refactor the combination of sequences out of this class
 	/**
 	 * Runs a NounPhraseCombination and dependency parsing on given HAWKQuestion
 	 * 
