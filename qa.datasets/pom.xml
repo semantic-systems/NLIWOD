@@ -19,7 +19,7 @@
 				<executions>
 					<execution>
 						<id>auto-clean</id>
-						<phase>initialize</phase>
+						<phase>clean</phase>
 						<goals>
 							<goal>clean</goal>
 						</goals>
@@ -27,6 +27,9 @@
 				</executions>
 				<configuration>
 					<filesets>
+						<fileset>
+							<directory>qa.datasets/src/main/resources/stanfordqa-dev.json</directory>
+						</fileset>
 						<fileset>
 							<directory>qa.datasets/src/main/resources/QALD</directory>
 						</fileset>
@@ -43,7 +46,7 @@
 				<executions>
 					<execution>
 						<id>resources-QALD</id>
-						<phase>clean</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>wget</goal>
 						</goals>
@@ -56,12 +59,27 @@
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>
 					</execution>
+					<execution>
+						<id>resources-stanfordqa</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://stanford-qa.com/dev-v1.0.json</url>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+							<outputFileName>stanfordqa-dev.json</outputFileName>
+							<outputDirectory>src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
