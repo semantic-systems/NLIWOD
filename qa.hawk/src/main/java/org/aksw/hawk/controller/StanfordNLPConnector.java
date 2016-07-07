@@ -21,7 +21,7 @@ import org.aksw.hawk.spotter.Spotlight;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.apache.jena.ext.com.google.common.collect.Lists;
 import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.junit.Assert;
@@ -441,7 +441,7 @@ public class StanfordNLPConnector {
 		/// ---------------
 		List<HAWKQuestion> questionsStanford;
 		Spotlight nerdModule = new Spotlight();
-		List<IQuestion> loadedQuestions = QALD_Loader.load(Dataset.QALD6_Train_Hybrid);
+		List<IQuestion> loadedQuestions = LoaderController.load(Dataset.QALD6_Train_Hybrid);
 		questionsStanford = HAWKQuestionFactory.createInstances(loadedQuestions);
 
 		for (HAWKQuestion currentQuestion : questionsStanford) {

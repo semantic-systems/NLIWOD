@@ -21,6 +21,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.datastructure.Question;
+import org.aksw.qa.commons.load.stanford.StanfordLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMException;
@@ -33,12 +34,14 @@ import org.xml.sax.SAXException;
 /**
  * 
  * Loads both QALD XML and JSON
- * @author ricardousbeck tortugaattack
+ * @author ricardousbeck tortugaattack jonathanhuthmann
  *
  */
 //FIXME numberformatexception is thrown when loading NLQ
-public class QALD_Loader {
-	static Logger log = LoggerFactory.getLogger(QALD_Loader.class);
+
+//TODO refactor that class to account for multiple dataset types. make qaldxml, qaldjson independent of this class so it becomes easiert to load a new class
+public class LoaderController {
+	static Logger log = LoggerFactory.getLogger(LoaderController.class);
 
 	private static InputStream getInputStream(final Dataset set) {
 		// Magical get the path from qa-datasets
@@ -122,7 +125,8 @@ public class QALD_Loader {
 			return loadingAnchor.getResource("/QALD-master/6/data/qald-6-train-hybrid.json");
 		case QALD6_Train_Multilingual:
 			return loadingAnchor.getResource("/QALD-master/6/data/qald-6-train-multilingual.json");
-
+		case Stanford_dev:
+			return loadingAnchor.getResource("/stanfordqa-dev.json");
 		// case qbench1:
 		// return
 		// ClassLoader.getSystemClassLoader().getResource("qbench/qbench1.xml");
@@ -214,6 +218,9 @@ public class QALD_Loader {
 				case nlq:
 					out = loadNLQ(is);
 					break;
+				case Stanford_dev:
+					out = StanfordLoader.load(is);
+					break;
 				}
 				is.close();
 				return out;
@@ -251,7 +258,7 @@ public class QALD_Loader {
 				IQuestion question = new Question();
 				Element questionNode = (Element) questionNodes.item(i);
 
-				question.setId(Integer.valueOf(questionNode.getAttribute("id")));
+				question.setId(questionNode.getAttribute("id"));
 				question.setAnswerType(questionNode.getAttribute("answertype"));
 				question.setAggregation(Boolean.valueOf(questionNode.getAttribute("aggregation")));
 				question.setOnlydbo(Boolean.valueOf(questionNode.getAttribute("onlydbo")));
@@ -487,6 +494,7 @@ public class QALD_Loader {
 		return output;
 	}
 
+	//TODO transform to unit test
 	public static void main(final String[] args) {
 		for (Dataset data : Dataset.values()) {
 			List<IQuestion> questions = load(data);

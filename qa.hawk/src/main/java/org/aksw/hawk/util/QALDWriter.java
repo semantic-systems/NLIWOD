@@ -55,7 +55,7 @@ public class QALDWriter {
 		a.answerSet.add(new ResourceImpl("http://dbpedia.org/resource/2"));
 		a.query = query;
 		a.question = "Where was the assassin of Martin Luther King born?";
-		a.question_id = 1;
+		a.question_id = "1";
 		qw.write(a);
 		qw.close();
 	}

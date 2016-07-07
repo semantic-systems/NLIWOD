@@ -18,8 +18,8 @@
 		<java.version>1.8</java.version>
 		<slf4j.version>1.7.13</slf4j.version>
 		<junit.version>4.12</junit.version>
-		<qa-commons.version>0.0.12-SNAPSHOT</qa-commons.version>
-		<qa-datasets.version>0.0.4</qa-datasets.version>
+		<qa-commons.version>0.1.0-SNAPSHOT</qa-commons.version>
+		<qa-datasets.version>0.1.0-SNAPSHOT</qa-datasets.version>
 		<qa-systems.version>0.0.3-SNAPSHOT</qa-systems.version>
 		<qa-ml.version>0.0.1-SNAPSHOT</qa-ml.version>
 		<qa-hawk.version>0.0.2</qa-hawk.version>

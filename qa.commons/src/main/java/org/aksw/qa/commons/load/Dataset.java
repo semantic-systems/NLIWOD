@@ -32,4 +32,5 @@ public enum Dataset {
 	QALD5_Train_Multilingual,
 	QALD6_Train_Hybrid,
 	QALD6_Train_Multilingual,
+	Stanford_dev
 }

@@ -17,13 +17,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Basic json load and store class using jackson.
  */
-public final class Loader {
-	private static final Logger LOGGER = LogManager.getLogger(Loader.class);
+//TODO rename class and packages
+public final class ExtendedQALDJSONLoader {
+	private static final Logger LOGGER = LogManager.getLogger(ExtendedQALDJSONLoader.class);
 
 	/**
 	 * Make this class non instatiable.
 	 */
-	private Loader() {
+	private ExtendedQALDJSONLoader() {
 
 	}
 
@@ -86,7 +87,7 @@ public final class Loader {
 
 		return object;
 	}
-
+//TODO transform to unit test
 	public static void main(final String[] args) throws Exception {
 		HashMap<String, EJBinding> hash = new HashMap<>();
 		hash.put("myVar", new EJBinding().setType("myType").setValue("myValue"));

@@ -77,25 +77,6 @@ public class Question implements IQuestion {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#getId()
-	 */
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#setId(java.lang.Integer)
-	 */
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -330,5 +311,17 @@ public class Question implements IQuestion {
 	public void setGoldenAnswers(String lang, Set<String> goldenAnswers) {
 		this.goldenAnswers.put(lang, goldenAnswers);
 	}
+
+	@Override
+    public String getId() {
+	    // TODO Auto-generated method stub
+	    return null;
+    }
+
+	@Override
+    public void setId(String id) {
+	    // TODO Auto-generated method stub
+	    
+    }
 
 }

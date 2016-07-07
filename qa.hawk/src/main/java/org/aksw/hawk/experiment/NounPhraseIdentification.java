@@ -11,7 +11,7 @@ import org.aksw.hawk.spotter.Spotlight;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +34,7 @@ public class NounPhraseIdentification {
 
 		// /---------------
 		Spotlight nerdModule = new Spotlight();
-		List<IQuestion> loadedQuestions = QALD_Loader.load(Dataset.QALD6_Train_Hybrid);
+		List<IQuestion> loadedQuestions = LoaderController.load(Dataset.QALD6_Train_Hybrid);
 		List<HAWKQuestion> questionsStanford = HAWKQuestionFactory.createInstances(loadedQuestions);
 		
 		StanfordNLPConnector connector = new StanfordNLPConnector();

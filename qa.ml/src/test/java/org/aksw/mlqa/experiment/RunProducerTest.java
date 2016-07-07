@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.Test;
@@ -16,7 +16,7 @@ public class RunProducerTest {
 	@Test
 	public void test() {
 		JSONArray arr = RunProducer.loadRunData(Dataset.QALD6_Train_Multilingual);
-		List<IQuestion> trainQuestions = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
+		List<IQuestion> trainQuestions = LoaderController.load(Dataset.QALD6_Train_Multilingual);
 
 		JSONObject obj = (JSONObject) arr.get(1);
 		JSONObject allsystemdata = (JSONObject) obj.get("answers");
