@@ -1,0 +1,15 @@
+FROM java:8
+
+RUN mkdir /fuseki
+WORKDIR /fuseki/
+
+RUN wget http://archive.apache.org/dist/jena/binaries/jena-fuseki1-1.3.1-distribution.zip
+RUN unzip jena-fuseki1-1.3.1-distribution.zip
+RUN rm jena-fuseki1-1.3.1-distribution.zip
+
+ENV FUSEKI_HOME=jena-fuseki1-1.3.1
+
+VOLUME /staging
+WORKDIR /staging
+EXPOSE 3030
+CMD ["java", "-Xmx32G", "-jar", "/fuseki/jena-fuseki1-1.3.1/fuseki-server.jar", "--conf=fuseki_hawk_assembler.ttl", "--timeout=10000"]
