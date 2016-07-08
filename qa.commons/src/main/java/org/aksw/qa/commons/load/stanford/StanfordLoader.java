@@ -24,8 +24,7 @@ public class StanfordLoader {
 	 * @param is
 	 *            an InputStream containing the dataset
 	 * @return a list of Questions with id, question string and a set of answer
-	 *         strings (NOTE! Each question has normally exactly one answer, but
-	 *         if crowd-workers disagreed they can have multiple answers)
+	 *         strings 
 	 * 
 	 */
 	//TODO Jonathan System.out weg und logging einbauen
@@ -59,14 +58,14 @@ public class StanfordLoader {
 					answers.forEach(y -> {
 						JsonNumber answerStart = ((JsonObject) y).getJsonNumber("answer_start");
 						JsonString text = ((JsonObject) y).getJsonString("text");
-						if (text == null)
-							System.out.println("NULL");
+						if (text == null){//TODO proper logging
+							System.out.println("NULL");}
 						goldenAnswers.add(text != null ? text.getString().trim() : null);
 					});
-					if (goldenAnswers.size() > 1) {
-						goldenAnswers.forEach(System.out::print);
-						System.out.println();
-					}
+//					TODO log.debu instead of system.out
+//					if (goldenAnswers.size() > 1) {
+//						goldenAnswers.forEach(System.out::print);
+//					}
 					q.setGoldenAnswers(goldenAnswers);
 				});
 				output.add(q);

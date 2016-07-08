@@ -18,7 +18,7 @@ public class PersistentCache {
 	public static String cacheLocation;
 	public HashMap<String, String> cache;
 	int i = 0;
-
+//TODO delete that class when the spotters are moved
 	public PersistentCache() {
 		cacheLocation = new File("cache/spotterCache").getAbsolutePath();
 		log.debug("cacheLocation: " + cacheLocation);
