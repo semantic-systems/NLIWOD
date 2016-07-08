@@ -30,6 +30,9 @@
 						<fileset>
 							<directory>qa.datasets/src/main/resources/stanfordqa-dev.json</directory>
 						</fileset>
+							<fileset>
+							<directory>qa.datasets/src/main/resources/stanfordqa-train.json</directory>
+						</fileset>
 						<fileset>
 							<directory>qa.datasets/src/main/resources/QALD</directory>
 						</fileset>
@@ -53,23 +56,37 @@
 						<configuration>
 							<url>https://github.com/ag-sc/QALD/archive/master.zip</url>
 							<unpack>true</unpack>
-							<overwrite>true</overwrite>
+							<overwrite>false</overwrite>
 							<skipCache>true</skipCache>
-							<outputFileName>QALD/</outputFileName>
+							<outputFileName>QALD</outputFileName>
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>
 					</execution>
 					<execution>
-						<id>resources-stanfordqa</id>
-						<phase>clean</phase>
+						<id>resources-stanfordqa-dev</id>
+						<phase>package</phase>
 						<goals>
 							<goal>wget</goal>
 						</goals>
 						<configuration>
 							<url>https://stanford-qa.com/dev-v1.0.json</url>
-							<overwrite>true</overwrite>
-							<skipCache>true</skipCache>
+							<overwrite>false</overwrite>
+							<skipCache>false</skipCache>
 							<outputFileName>stanfordqa-dev.json</outputFileName>
+							<outputDirectory>src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>resources-stanfordqa-train</id>
+						<phase>package</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://stanford-qa.com/train-v1.0.json</url>
+							<overwrite>false</overwrite>
+							<skipCache>false</skipCache>
+							<outputFileName>stanfordqa-train.json</outputFileName>
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>
 					</execution>

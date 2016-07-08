@@ -24,26 +24,23 @@ public class StanfordLoader {
 	 * @param is
 	 *            an InputStream containing the dataset
 	 * @return a list of Questions with id, question string and a set of answer
-	 *         strings 
+	 *         strings
 	 * 
 	 */
-	//TODO Jonathan System.out weg und logging einbauen
+	// TODO Jonathan System.out weg und logging einbauen
 	public static List<IQuestion> load(InputStream is) {
 		List<IQuestion> output = new ArrayList<>();
 		JsonReader jsonReader = Json.createReader(is);
 		JsonObject mainJsonObject = jsonReader.readObject();
 		JsonArray dataArray = mainJsonObject.getJsonArray("data");
-		System.out.println("Number of Paragraphs (WikiArticles) " + dataArray.size());
+		System.out.println("Number of WikiArticles " + dataArray.size());
 		dataArray.forEach(article -> {
 			JsonArray contexts = ((JsonObject) article).getJsonArray("paragraphs");
-			System.out.println("Number of Contexts (Paragraphs in WikiArticle) " + contexts.size());
-
 			contexts.forEach(paragraph -> {
 				JsonObject jsonObject = (JsonObject) paragraph;
 				JsonArray qas = jsonObject.getJsonArray("qas");
-				IQuestion q = new Question();
-
 				qas.forEach(x -> {
+					IQuestion q = new Question();
 					JsonString question = ((JsonObject) x).getJsonString("question");
 					// FIXME Micha, geht das hier nicht schöner mit Java 8?
 					HashMap<String, String> map = new HashMap<String, String>();
@@ -58,18 +55,20 @@ public class StanfordLoader {
 					answers.forEach(y -> {
 						JsonNumber answerStart = ((JsonObject) y).getJsonNumber("answer_start");
 						JsonString text = ((JsonObject) y).getJsonString("text");
-						if (text == null){//TODO proper logging
-							System.out.println("NULL");}
+						if (text == null) {// TODO proper logging
+							System.out.println("NULL");
+						}
 						goldenAnswers.add(text != null ? text.getString().trim() : null);
 					});
-//					TODO log.debu instead of system.out
-//					if (goldenAnswers.size() > 1) {
-//						goldenAnswers.forEach(System.out::print);
-//					}
+					// TODO log.debu instead of system.out
+					// if (goldenAnswers.size() > 1) {
+					// goldenAnswers.forEach(System.out::print);
+					// }
 					q.setGoldenAnswers(goldenAnswers);
+					output.add(q);
 				});
-				output.add(q);
 			});
+
 		});
 		System.out.println("Number of Questions: " + output.size());
 

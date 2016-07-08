@@ -125,8 +125,11 @@ public class LoaderController {
 			return loadingAnchor.getResource("/QALD-master/6/data/qald-6-train-hybrid.json");
 		case QALD6_Train_Multilingual:
 			return loadingAnchor.getResource("/QALD-master/6/data/qald-6-train-multilingual.json");
+		
 		case Stanford_dev:
 			return loadingAnchor.getResource("/stanfordqa-dev.json");
+		case Stanford_train:
+			return loadingAnchor.getResource("/stanfordqa-train.json");
 		// case qbench1:
 		// return
 		// ClassLoader.getSystemClassLoader().getResource("qbench/qbench1.xml");
@@ -219,6 +222,7 @@ public class LoaderController {
 					out = loadNLQ(is);
 					break;
 				case Stanford_dev:
+				case Stanford_train:
 					out = StanfordLoader.load(is);
 					break;
 				}

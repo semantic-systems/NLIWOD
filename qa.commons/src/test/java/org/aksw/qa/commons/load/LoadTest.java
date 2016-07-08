@@ -36,7 +36,7 @@ public class LoadTest {
 				for (IQuestion q : questions) {
 					// TODO enable that once the answer type of NLQ is fixed
 					// Assert.assertNotNull(q.toString(), q.getAnswerType());
-					Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null || d.equals(Dataset.Stanford_dev));
+					Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null || d.equals(Dataset.Stanford_dev)|| d.equals(Dataset.Stanford_train));
 					if (q.getSparqlQuery() != null) {
 						queriesValid = (execQueryWithoutResults(q) && queriesValid);
 					}
@@ -64,7 +64,7 @@ public class LoadTest {
 	}
 
 	@Test
-	public void loadStanfordTest() {
+	public void loadStanfordDevTest() {
 		List<IQuestion> load = LoaderController.load(Dataset.Stanford_dev);
 		log.debug("Size of Dataset: " + load.size());
 		Assert.assertTrue(load.size() == 2067);
