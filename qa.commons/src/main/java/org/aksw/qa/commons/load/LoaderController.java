@@ -62,7 +62,7 @@ public class LoaderController {
 		try {
 			loadingAnchor = Class.forName("org.aksw.qa.datasets.ResourceLoadingAnchor");
 		} catch (ClassNotFoundException e) {
-			log.error("Couldn't find the org.aksw.qa.datasets.ResourceLoadingAnchor class necessary to load the datases. Returning null.", e);
+			log.error("Couldn't find the org.aksw.qa.datasets.ResourceLoadingAnchor class necessary to load the datasets. Returning null.", e);
 			return null;
 		}
 
