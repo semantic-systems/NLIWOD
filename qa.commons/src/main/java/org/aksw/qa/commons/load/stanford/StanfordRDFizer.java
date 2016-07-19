@@ -7,8 +7,10 @@ import java.util.*;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.aksw.jena_sparql_api.core.FluentQueryExecutionFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
+import org.aksw.jena_sparql_api.http.QueryExecutionHttpWrapper;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
@@ -16,6 +18,8 @@ import org.aksw.qa.commons.load.LoaderController;
 import org.apache.jena.query.Query;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.riot.WebContent;
+import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.iterator.Filter;
 import org.apache.jena.vocabulary.RDFS;
@@ -34,6 +38,7 @@ import org.dllearner.algorithms.qtl.util.filters.ObjectDropStatementFilter;
 import org.dllearner.algorithms.qtl.util.filters.PredicateDropStatementFilter;
 import org.dllearner.kb.sparql.ConciseBoundedDescriptionGenerator;
 import org.dllearner.kb.sparql.ConciseBoundedDescriptionGeneratorImpl;
+import org.dllearner.kb.sparql.SymmetricConciseBoundedDescriptionGeneratorImpl;
 import org.json.simple.parser.ParseException;
 
 //TODO actually refactor this class to an own submodule
@@ -70,9 +75,16 @@ public class StanfordRDFizer {
 
 	public static void main(String[] args) throws IOException {
 		// DBpedia as SPARQL endpoint
-		QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", Lists.newArrayList("http://dbpedia.org"));
+		QueryExecutionFactory qef  = FluentQueryExecutionFactory
+				.http("http://dbpedia.org/sparql", Lists.newArrayList("http://dbpedia.org"))
+				.config().withPostProcessor(qe -> ((QueryEngineHTTP) ((QueryExecutionHttpWrapper) qe).getDecoratee())
+						.setModelContentType(WebContent.contentTypeRDFXML))
+				.end()
+				.create();
 		// CBD generator
 		ConciseBoundedDescriptionGenerator cbdGen = new ConciseBoundedDescriptionGeneratorImpl(qef);
+		cbdGen = new SymmetricConciseBoundedDescriptionGeneratorImpl(qef);
+		cbdGen.setRecursionDepth(1);
 		// query tree factory
 		QueryTreeFactory qtf = new QueryTreeFactoryBase();
 		// filters
@@ -152,19 +164,20 @@ public class StanfordRDFizer {
 						});
 
 					}
+					System.out.println("\n");
 
 					// 4) for queries with a resource as answer run QTL
-					int minNrOfExamples = 1;
+					int minNrOfExamples = 2;
 					if(disambiguatedAnswers.size() >= minNrOfExamples) {
 						List<RDFResourceTree> trees = new ArrayList<>(disambiguatedAnswers.size());
 						for (String uri : disambiguatedAnswers) {
 							// generate CBD
 							Model cbd = cbdGen.getConciseBoundedDescription(uri);
-							System.out.println(cbd.size());
+							System.out.println("|cbd(" + uri + ")|=" + cbd.size() + " triples");
 							// generate query tree
 							RDFResourceTree tree = qtf.getQueryTree(uri, cbd);
 							trees.add(tree);
-							System.out.println(tree.getStringRepresentation(true));
+//							System.out.println(tree.getStringRepresentation(true));
 						}
 
 						// compute LGG
