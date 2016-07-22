@@ -12,7 +12,7 @@ import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.hawk.ranking.OptimalRanker;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public class QALD6_Pipeline {
 		log.info("Loading dataset");
 		List<HAWKQuestion> questions = null;
 
-		questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD6_Train_Hybrid));
+		questions = HAWKQuestionFactory.createInstances(LoaderController.load(Dataset.QALD6_Train_Hybrid));
 
 		double average = 0;
 		double count = 0;

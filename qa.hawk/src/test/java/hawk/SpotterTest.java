@@ -14,7 +14,7 @@ import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+//TODO move to qa.nerd
 public class SpotterTest {
 	Logger log = LoggerFactory.getLogger(SpotterTest.class);
 

@@ -10,9 +10,9 @@ public interface IQuestion {
 
 	public abstract void setValue(String valDescriptor, String val);
 
-	public abstract Integer getId();
+	public abstract String getId();
 
-	public abstract void setId(Integer id);
+	public abstract void setId(String id);
 
 	public abstract String getAnswerType();
 

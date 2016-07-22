@@ -9,7 +9,7 @@ import java.util.Map;
 import org.aksw.mlqa.analyzer.Analyzer;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.aksw.qa.systems.ASystem;
 import org.aksw.qa.systems.HAWK;
 import org.aksw.qa.systems.QAKIS;
@@ -41,7 +41,7 @@ public class SimpleClassification {
 
 		// 1.1 load the questions and how good each system answers
 		log.debug("Load the questions and how good each system answers");
-		List<IQuestion> trainQuestions = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
+		List<IQuestion> trainQuestions = LoaderController.load(Dataset.QALD6_Train_Multilingual);
 		List<ASystem> systems = Lists.newArrayList(hawk, sina, qakis, yoda);
 		JSONArray traindata = RunProducer.loadRunData(Dataset.QALD6_Train_Multilingual);
 		
@@ -122,7 +122,7 @@ public class SimpleClassification {
 		log.info("Machine learning done... commence to testing!");
 		// 3. Use the classifier model to decide which system should answer the
 		// current question and measure the performance
-		List<IQuestion> testQuestions = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
+		List<IQuestion> testQuestions = LoaderController.load(Dataset.QALD6_Train_Multilingual);
 
 		for (IQuestion q : testQuestions) {
 			// calculate features

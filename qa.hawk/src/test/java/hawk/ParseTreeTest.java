@@ -17,7 +17,7 @@ import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.spotter.Fox;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -50,7 +50,7 @@ public class ParseTreeTest {
 
 		List<HAWKQuestion> questions = null;
 		int limiter = 10;
-		questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD5_Train_Hybrid)).subList(0, limiter);
+		questions = HAWKQuestionFactory.createInstances(LoaderController.load(Dataset.QALD5_Train_Hybrid)).subList(0, limiter);
 
 		QueryTypeClassifier queryTypeClassifier = new QueryTypeClassifier();
 
@@ -102,7 +102,7 @@ public class ParseTreeTest {
 		treeprinter.closeStanford();
 
 		i = 0;
-		questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD5_Train_Hybrid)).subList(0, limiter);
+		questions = HAWKQuestionFactory.createInstances(LoaderController.load(Dataset.QALD5_Train_Hybrid)).subList(0, limiter);
 		for (HAWKQuestion q : questions) {
 			// log.info("Classify question type.");
 			// q.setIsClassifiedAsASKQuery(queryTypeClassifier.isASKQuery(q.getLanguageToQuestion().get("en")));

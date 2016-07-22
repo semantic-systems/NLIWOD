@@ -14,7 +14,7 @@ import java.util.TreeSet;
 import org.aksw.autosparql.commons.qald.TriplePatternExtractor;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
@@ -35,7 +35,7 @@ public class GoldNerGenerator {
 	 * @param args
 	 */
 	public static void main(final String[] args) throws Exception {
-		QALD_Loader datasetLoader = new QALD_Loader();
+		LoaderController datasetLoader = new LoaderController();
 		for (Dataset dataset : Dataset.values()) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("#id\tquestion\tentities\trewritten question\n");
@@ -44,7 +44,7 @@ public class GoldNerGenerator {
 
 				@Override
 				public int compare(final IQuestion o1, final IQuestion o2) {
-					return Integer.compare(o1.getId(), o2.getId());
+		            return o1.getId().compareToIgnoreCase(o2.getId()); 
 
 				}
 			});

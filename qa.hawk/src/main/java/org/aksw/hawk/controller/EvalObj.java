@@ -8,10 +8,10 @@ public class EvalObj {
 	private double pmax;
 	private double rmax;
 	private String question;
-	private int id;
+	private String id;
 	private Answer answer;
 
-	public EvalObj(int id, String question, double fmax, double pmax, double rmax, String comment, Answer answer) {
+	public EvalObj(String id, String question, double fmax, double pmax, double rmax, String comment, Answer answer) {
 		this.id = id;
 		this.question = question;
 		this.fmax = fmax;
@@ -30,7 +30,7 @@ public class EvalObj {
 		return "EvalObj [comment=" + comment + ", fmax=" + fmax + ", pmax=" + pmax + ", rmax=" + rmax + ", question=" + question + ", id=" + id + "]";
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 

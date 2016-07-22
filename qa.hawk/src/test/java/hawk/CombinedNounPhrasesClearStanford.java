@@ -11,7 +11,7 @@ import org.aksw.hawk.nlp.SentenceToSequence;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -29,7 +29,7 @@ public class CombinedNounPhrasesClearStanford {
 	@Before
 	public void load() {
 		log.info("Starting Noun Phrase Comparison between StanvordNLP and ClearNLP using QALD6 Multilingual dataset");
-		List<IQuestion> loadedQuestions = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
+		List<IQuestion> loadedQuestions = LoaderController.load(Dataset.QALD6_Train_Multilingual);
 		questionsStanford = HAWKQuestionFactory.createInstances(loadedQuestions);
 		questionsClear = HAWKQuestionFactory.createInstances(loadedQuestions);
 		stanford = new StanfordNLPConnector();

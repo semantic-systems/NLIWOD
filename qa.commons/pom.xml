@@ -31,5 +31,21 @@
 			<artifactId>javax.json</artifactId>
 			<version>1.0.4</version>
 		</dependency>
+		<!--JSON simple for AGDISTIS, refactor to only one json lib -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+		</dependency>
+		<!-- DL-Learner used for LGG -->
+		<dependency>
+			<groupId>org.dllearner</groupId>
+			<artifactId>components-core</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.jamonapi/jamon -->
+		<dependency>
+			<groupId>com.jamonapi</groupId>
+			<artifactId>jamon</artifactId>
+			<version>2.81</version>
+		</dependency>
 	</dependencies>
 </project>

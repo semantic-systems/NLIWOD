@@ -19,7 +19,7 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public class NamedEntityLinking {
 
 	public static void main(String args[]) throws IOException {
 
-		QALD_Loader datasetLoader = new QALD_Loader();
+		LoaderController datasetLoader = new LoaderController();
 
 		Dataset dataset = Dataset.QALD6_Train_Multilingual;
 		List<IQuestion> IQuestions = datasetLoader.load(dataset);

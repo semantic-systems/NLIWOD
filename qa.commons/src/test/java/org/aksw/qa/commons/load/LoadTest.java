@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+//FIXME In general, replace all System.out calls with proper log.debug calls 
 public class LoadTest {
 	Logger log = LoggerFactory.getLogger(LoadTest.class);
 
@@ -29,14 +30,13 @@ public class LoadTest {
 		for (Dataset d : Dataset.values()) {
 			log.info("Try to load:" + d.name());
 			try {
-				List<IQuestion> questions = QALD_Loader.load(d);
+				List<IQuestion> questions = LoaderController.load(d);
 				log.info("Dataset succesfully loaded:" + d.name());
 
 				for (IQuestion q : questions) {
-					Assert.assertTrue(q.getId() > 0);
 					// TODO enable that once the answer type of NLQ is fixed
 					// Assert.assertNotNull(q.toString(), q.getAnswerType());
-					Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null);
+					Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null || d.equals(Dataset.Stanford_dev)|| d.equals(Dataset.Stanford_train));
 					if (q.getSparqlQuery() != null) {
 						queriesValid = (execQueryWithoutResults(q) && queriesValid);
 					}
@@ -64,12 +64,23 @@ public class LoadTest {
 	}
 
 	@Test
+	public void loadStanfordDevTest() {
+		List<IQuestion> load = LoaderController.load(Dataset.Stanford_dev);
+		log.debug("Size of Dataset: " + load.size());
+		Assert.assertTrue(load.size() == 2067);
+		for (IQuestion q : load) {
+			Assert.assertNotNull(q.getLanguageToQuestion());
+			Assert.assertFalse(q.getLanguageToQuestion().values().isEmpty());
+			Assert.assertTrue(q.getGoldenAnswers() != null&&q.getGoldenAnswers().size()>0);
+		}
+	}
+
+	@Test
 	public void loadQALD5Test() {
-		List<IQuestion> load = QALD_Loader.load(Dataset.QALD5_Test_Hybrid);
+		List<IQuestion> load = LoaderController.load(Dataset.QALD5_Test_Hybrid);
 		log.debug("Size of Dataset: " + load.size());
 		Assert.assertTrue(load.size() == 10);
 		for (IQuestion q : load) {
-			Assert.assertTrue(q.getId() > 0);
 			Assert.assertNotNull(q.getAnswerType());
 			Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null);
 			Assert.assertNotNull(q.getLanguageToQuestion());
@@ -78,15 +89,14 @@ public class LoadTest {
 			Assert.assertTrue(q.getGoldenAnswers() != null && q.getAnswerType().matches("resource||boolean||number||date||string"));
 		}
 	}
-
+	
 	@Test
 	public void loadQALD6Test_Multilingual() throws IOException {
-		List<IQuestion> load = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
+		List<IQuestion> load = LoaderController.load(Dataset.QALD6_Train_Multilingual);
 		List<Integer> incompletes = Arrays.asList(100, 118, 136, 137, 147, 152, 94, 95, 96, 97, 98, 99, 249, 250, 312, 340, 342);
 		log.debug("Number of Loaded Questions:" + load.size());
 		Assert.assertTrue(load.size() == 350 - incompletes.size());
 		for (IQuestion q : load) {
-			Assert.assertTrue(q.getId() > 0);
 			Assert.assertNotNull(q.getAnswerType());
 			Assert.assertTrue(q.getGoldenAnswers() != null && q.getAnswerType().matches("resource||boolean||number||date||string"));
 			Assert.assertNotNull(q.getLanguageToQuestion());

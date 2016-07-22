@@ -9,7 +9,7 @@ import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.apache.jena.rdf.model.RDFNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ public class Baseline {
 	String dataset;
 
 	void run(final Dataset dataset) throws IOException {
-		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(dataset));
+		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(LoaderController.load(dataset));
 		double overallf = 0;
 		double overallp = 0;
 		double overallr = 0;

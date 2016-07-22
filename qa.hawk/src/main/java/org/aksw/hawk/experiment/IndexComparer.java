@@ -11,7 +11,7 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.index.DBOIndex;
 import org.aksw.hawk.index.Patty_relations;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.sparql.core.TriplePath;
@@ -76,7 +76,7 @@ public class IndexComparer {
 		System.out.println(url);
 		List<HAWKQuestion> questions = null;
 		try {
-			questions = HAWKQuestionFactory.createInstances(QALD_Loader.loadJSON(url.openStream()));
+			questions = HAWKQuestionFactory.createInstances(LoaderController.loadJSON(url.openStream()));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
