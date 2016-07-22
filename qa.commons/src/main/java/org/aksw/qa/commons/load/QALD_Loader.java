@@ -2,7 +2,9 @@ package org.aksw.qa.commons.load;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.RoundingMode;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,12 +33,15 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- * 
+ *
  * Loads both QALD XML and JSON
+ *
  * @author ricardousbeck tortugaattack
  *
  */
-//FIXME numberformatexception is thrown when loading NLQ
+// FIXME numberformatexception is thrown when loading NLQ
+// this is not critical: thrown because the Data is not clean: questions without
+// id. changed logger level to debug
 public class QALD_Loader {
 	static Logger log = LoggerFactory.getLogger(QALD_Loader.class);
 
@@ -54,7 +59,7 @@ public class QALD_Loader {
 		return null;
 	}
 
-	private static URL mapDatasetToPath(final Dataset set) {
+	private static Class<?> getLoadingAnchor() {
 		Class<?> loadingAnchor = null;
 		try {
 			loadingAnchor = Class.forName("org.aksw.qa.datasets.ResourceLoadingAnchor");
@@ -62,6 +67,11 @@ public class QALD_Loader {
 			log.error("Couldn't find the org.aksw.qa.datasets.ResourceLoadingAnchor class necessary to load the datases. Returning null.", e);
 			return null;
 		}
+		return loadingAnchor;
+	}
+
+	private static URL mapDatasetToPath(final Dataset set) {
+		Class<?> loadingAnchor = getLoadingAnchor();
 
 		switch (set) {
 		case nlq:
@@ -81,35 +91,40 @@ public class QALD_Loader {
 		case QALD2_Test_musicbrainz:
 			return loadingAnchor.getResource("/QALD-master/2/data/musicbrainz-test.xml");
 		case QALD2_Train_dbpedia:
-			return loadingAnchor.getResource("/QALD-master/2/data/dbpedia-train.xml");
+			return loadingAnchor.getResource("/QALD-master/2/data/dbpedia-train-answers.xml");
 		case QALD2_Train_musicbrainz:
-			return loadingAnchor.getResource("/QALD-master/2/data/musicbrainz-train.xml");
+			return loadingAnchor.getResource("/QALD-master/2/data/musicbrainz-train-answers.xml");
+		case QALD2_Participants_Challenge:
+			return loadingAnchor.getResource("/QALD-master/2/data/participants-challenge-answers.xml");
 
 		case QALD3_Test_dbpedia:
-			return loadingAnchor.getResource("/QALD-master/3/data/dbpedia-test.xml");
+			return loadingAnchor.getResource("/QALD-master/3/data/dbpedia-test-answers.xml");
 		case QALD3_Test_esdbpedia:
-			return loadingAnchor.getResource("/QALD-master/3/data/esdbpedia-test.xml");
+			return loadingAnchor.getResource("/QALD-master/3/data/esdbpedia-test-answers.xml");
+		// case QALD3_Test_esdbpedia_sparql:
+		// return
+		// loadingAnchor.getResource("/QALD-master/3/data/esdbpedia-test.xml");
 		case QALD3_Test_musicbrainz:
-			return loadingAnchor.getResource("/QALD-master/3/data/musicbrainz-test.xml");
+			return loadingAnchor.getResource("/QALD-master/3/data/musicbrainz-test-answers.xml");
 		case QALD3_Train_dbpedia:
-			return loadingAnchor.getResource("/QALD-master/3/data/dbpedia-train.xml");
+			return loadingAnchor.getResource("/QALD-master/3/data/dbpedia-train-answers.xml");
 		case QALD3_Train_esdbpedia:
-			return loadingAnchor.getResource("/QALD-master/3/data/esdbpedia-train.xml");
+			return loadingAnchor.getResource("/QALD-master/3/data/esdbpedia-train-answers.xml");
 		case QALD3_Train_musicbrainz:
-			return loadingAnchor.getResource("/QALD-master/3/data/musicbrainz-train.xml");
+			return loadingAnchor.getResource("/QALD-master/3/data/musicbrainz-train-answers.xml");
 
 		case QALD4_Test_Hybrid:
 			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_hybrid_test_withanswers.xml");
 		case QALD4_Test_Multilingual:
 			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_multilingual_test_withanswers.xml");
 		case QALD4_Test_biomedical:
-			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_biomedical_test.xml");
+			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_biomedical_test_withanswers.xml");
 		case QALD4_Train_Hybrid:
 			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_hybrid_train.xml");
 		case QALD4_Train_Multilingual:
 			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_multilingual_train_withanswers.xml");
 		case QALD4_Train_biomedical:
-			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_biomedical_train.xml");
+			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_biomedical_train_withanswers.xml");
 
 		case QALD5_Test_Hybrid:
 		case QALD5_Test_Multilingual:
@@ -122,6 +137,10 @@ public class QALD_Loader {
 			return loadingAnchor.getResource("/QALD-master/6/data/qald-6-train-hybrid.json");
 		case QALD6_Train_Multilingual:
 			return loadingAnchor.getResource("/QALD-master/6/data/qald-6-train-multilingual.json");
+		case QALD6_Test_Hybrid:
+			return loadingAnchor.getResource("/QALD-master/6/data/qald-6-test-hybrid.json");
+		case QALD6_Test_Multilingual:
+			return loadingAnchor.getResource("/QALD-master/6/data/qald-6-test-multilingual.json");
 
 		// case qbench1:
 		// return
@@ -169,8 +188,8 @@ public class QALD_Loader {
 				case QALD2_Test_musicbrainz:
 				case QALD2_Train_dbpedia:
 				case QALD2_Train_musicbrainz:
+				case QALD2_Participants_Challenge:
 				case QALD3_Test_dbpedia:
-				case QALD3_Test_esdbpedia:
 				case QALD3_Test_musicbrainz:
 				case QALD3_Train_dbpedia:
 				case QALD3_Train_esdbpedia:
@@ -182,6 +201,13 @@ public class QALD_Loader {
 				case QALD4_Train_Multilingual:
 				case QALD4_Train_biomedical:
 					out = loadXML(is);
+					break;
+				// this is necessary because sparql and answers are spread over
+				// two files.
+				// case QALD3_Test_esdbpedia_sparql:
+				case QALD3_Test_esdbpedia:
+					is.close();
+					out = qald3_test_esdbpedia_loader();
 					break;
 
 				case QALD5_Test_Hybrid:
@@ -207,12 +233,16 @@ public class QALD_Loader {
 					}
 					out = hybrid;
 					break;
+				case QALD6_Test_Hybrid:
+				case QALD6_Test_Multilingual:
 				case QALD6_Train_Hybrid:
 				case QALD6_Train_Multilingual:
 					out = loadJSON(is);
 					break;
 				case nlq:
 					out = loadNLQ(is);
+					break;
+				default:
 					break;
 				}
 				is.close();
@@ -227,12 +257,45 @@ public class QALD_Loader {
 		return null;
 	}
 
+	private static List<IQuestion> qald3_test_esdbpedia_loader() {
+		List<IQuestion> answerList = null;
+		try {
+			InputStream sparqlIs = null;
+			InputStream answeris = null;
+			sparqlIs = getLoadingAnchor().getResourceAsStream("/QALD-master/3/data/esdbpedia-test.xml");
+			answeris = getInputStream(Dataset.QALD3_Test_esdbpedia);
+			if (sparqlIs == null) {
+				log.error("Couldn't load dataset " + "/QALD-master/3/data/esdbpedia-test.xml" + " and  " + Dataset.QALD3_Test_esdbpedia.toString() + ". Returning null.");
+				return null;
+			}
+			if ((sparqlIs.available() > 0) && (answeris.available() > 0)) {
+				answerList = loadXML(answeris);
+			}
+			List<IQuestion> sparqlList = loadXML(sparqlIs);
+			for (IQuestion q : answerList) {
+				for (IQuestion sparqlQ : sparqlList) {
+					if (q.getId().equals(sparqlQ.getId())) {
+						q.setSparqlQuery(sparqlQ.getSparqlQuery());
+					}
+				}
+			}
+
+		} catch (IOException e) {
+			log.info("Couldnt load datasets ", e);
+			{
+
+			}
+		}
+		return answerList;
+
+	}
+
 	// TODO separate checking for non-empty input stream in all separate load
 	// instances necessary? -Christian
 	// oldtodo check that input stream is not empty before parsing(Deez Nuts!)
 	/**
 	 * This methods loads QALD XML files (used in QALD 1 to QALD 5)
-	 * 
+	 *
 	 */
 	public static List<IQuestion> loadXML(final InputStream file) {
 		List<IQuestion> questions = new ArrayList<>();
@@ -273,7 +336,7 @@ public class QALD_Loader {
 
 				// Read pseudoSPARQL query
 				Element element = (Element) questionNode.getElementsByTagName("pseudoquery").item(0);
-				if (element != null && element.hasChildNodes()) {
+				if ((element != null) && element.hasChildNodes()) {
 					NodeList childNodes = element.getChildNodes();
 					Node item = childNodes.item(0);
 					question.setPseudoSparqlQuery(item.getNodeValue().trim());
@@ -283,7 +346,8 @@ public class QALD_Loader {
 				// checks also that the text node containing query is not
 				// null
 				element = (Element) questionNode.getElementsByTagName("query").item(0);
-				if (element != null && element.hasChildNodes()) {
+				if ((element != null) && element.hasChildNodes()) {
+
 					NodeList childNodes = element.getChildNodes();
 					Node item = childNodes.item(0);
 					question.setSparqlQuery(item.getNodeValue().trim());
@@ -326,7 +390,7 @@ public class QALD_Loader {
 
 	/**
 	 * This method loads QALD JSON files as used in QALD 6
-	 * 
+	 *
 	 */
 	public static List<IQuestion> loadJSON(final InputStream file) {
 		// TODO Catch exceptions
@@ -366,6 +430,7 @@ public class QALD_Loader {
 					String strQuery = query.getString("sparql").trim();
 					q.setSparqlQuery(strQuery);
 				}
+
 				if (query.containsKey("pseudo")) {
 					String strQuery = query.getString("pseudo").trim();
 					q.setPseudoSparqlQuery(strQuery);
@@ -410,25 +475,25 @@ public class QALD_Loader {
 		}
 
 		/**
-		 * Removing Questions with no answers
+		 * Removing Questions with no answers //
 		 */
-		boolean printHappend = false;
-		String message = "";
-		List<IQuestion> emptyQuestions = new ArrayList<>();
-		for (IQuestion k : output) {
-			if (k.getGoldenAnswers().isEmpty()) {
-				emptyQuestions.add(k);
-				if (!printHappend) {
-					message += "Following Questions (id) have no attached answers: ";
-					printHappend = true;
-				}
-				message += k.getId() + ", ";
-			}
-		}
-		if (printHappend) {
-			log.debug(message + " and will be removed");
-		}
-		output.removeAll(emptyQuestions);
+		// boolean printHappend = false;
+		// String message = "";
+		// List<IQuestion> emptyQuestions = new ArrayList<>();
+		// for (IQuestion k : output) {
+		// if (k.getGoldenAnswers().isEmpty()) {
+		// emptyQuestions.add(k);
+		// if (!printHappend) {
+		// message += "Following Questions (id) have no attached answers: ";
+		// printHappend = true;
+		// }
+		// message += k.getId() + ", ";
+		// }
+		// }
+		// if (printHappend) {
+		// log.debug(message + " and will be removed");
+		// }
+		// output.removeAll(emptyQuestions);
 		return output;
 	}
 
@@ -454,7 +519,7 @@ public class QALD_Loader {
 							idToQuestion.put(id, jArray);
 						}
 					} catch (NumberFormatException e) {
-						log.info("Couldnt load question from dataset due to wrong or missing question-id", e);
+						log.debug("Couldnt load question from dataset due to wrong or missing question-id", e);
 					}
 				}
 
@@ -488,15 +553,61 @@ public class QALD_Loader {
 	}
 
 	public static void main(final String[] args) {
+		ArrayList<String> output = new ArrayList<>();
+		ArrayList<String> output2 = new ArrayList<>();
 		for (Dataset data : Dataset.values()) {
+			// if (!data.equals(Dataset.QALD3_Test_esdbpedia)) {
+			// continue;
+			// }
+
 			List<IQuestion> questions = load(data);
 			if (questions == null) {
 				System.out.println("Dataset null" + data.toString());
 			} else if (questions.size() == 0) {
 				System.out.println("Dataset Empty" + data.toString());
 			} else {
-				System.out.println("LOADED SUCCESSFULLY " + data.toString());
+				Set<IQuestion> noanswers = new HashSet<>();
+				Set<IQuestion> nosparql = new HashSet<>();
+				for (IQuestion q : questions) {
+
+					if (((q.getSparqlQuery() == null) || (q.getSparqlQuery().isEmpty())) && ((q.getPseudoSparqlQuery() == null) || q.getPseudoSparqlQuery().isEmpty())) {
+						nosparql.add(q);
+					}
+					if (((q.getGoldenAnswers() == null) || q.getGoldenAnswers().isEmpty())) {
+
+						noanswers.add(q);
+					}
+
+				}
+				DecimalFormat df = new DecimalFormat("###.##");
+				df.setRoundingMode(RoundingMode.CEILING);
+				if (!noanswers.isEmpty()) {
+					output.add(((df.format(((double) noanswers.size() / questions.size()) * 100)) + "%") + " Missing answes on  : " + data.toString() + ", " + noanswers.size() + " Question(s).");
+				}
+
+				if (!nosparql.isEmpty()) {
+					output2.add(
+					        (df.format((((double) nosparql.size() / questions.size()) * 100)) + "%") + " Neither Sparql nor Pseudo  : " + data.toString() + ", " + nosparql.size() + " Question(s).");
+				}
+
+				System.out.println("Loaded successfully: " + data.toString());
 			}
 		}
+		/*
+		 * QUALD2__test_dbpedia has no answers in File (only sparql)
+		 * QUALD2_test_musicbrainz has no answers in File (only sparql)
+		 *
+		 *
+		 *
+		 */
+		System.out.println("\n\n");
+		for (String s : output) {
+			System.out.println(s);
+		}
+		System.out.println("\n\n");
+		for (String s : output2) {
+			System.out.println(s);
+		}
 	}
+
 }
