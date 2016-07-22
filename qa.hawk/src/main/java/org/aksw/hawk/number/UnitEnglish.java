@@ -1,6 +1,7 @@
 package org.aksw.hawk.number;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -330,7 +331,13 @@ public class UnitEnglish implements IUnitLanguage {
 	private void loadResource() {
 		log.debug("Loading number conversion rules for english");
 		final ClassLoader classLoader = getClass().getClassLoader();
-		final File file = new File(classLoader.getResource("unitconversion/englishIdentifierToUnit.txt").getFile());
+		 File file=null;
+		try{
+			file = new File(classLoader.getResource("unitconversion/englishIdentifierToUnit.txt").toURI().getPath());
+		}catch(URISyntaxException e){
+			log.debug("Invalid Path",e);
+		}
+	
 		List<List<String>> data = UnitController.loadTabSplit(file);
 		if (data == null || data.isEmpty()) {
 			return;
@@ -351,7 +358,7 @@ public class UnitEnglish implements IUnitLanguage {
 
 	public static void main(final String[] args) {
 		UnitEnglish ue = new UnitEnglish(null);
-		String q = "€60 thousand and $45";
+		String q = "$80 thousand and three hundred four";
 		log.debug("Start conversion");
 		System.out.println(ue.convert(q));
 		/*-
