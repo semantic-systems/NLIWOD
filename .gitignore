@@ -8,6 +8,7 @@ hs_err_pid*
 target
 .settings
 target/
+bin/
 
 # Project-based exclusions
 **/.clover/
