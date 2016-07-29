@@ -7,7 +7,8 @@ import org.aksw.hawk.controller.StanfordNLPConnector;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.experiment.SingleQuestionPipeline;
-import org.aksw.hawk.nlp.SentenceToSequence;
+import org.aksw.hawk.nouncombination.NounCombinationChain;
+import org.aksw.hawk.nouncombination.NounCombiners;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
@@ -37,16 +38,21 @@ public class CombinedNounPhrasesClearStanford {
 
 	@Test
 	@Ignore
-	//FIXME test does not pass. why?
+	// FIXME test does not pass. why?
 	public void test() {
 		boolean testPass = true;
 
 		for (HAWKQuestion currentQuestion : questionsStanford) {
 
-			stanford.combineSequences(currentQuestion);
+			stanford.parseTree(currentQuestion, null);
+			NounCombinationChain nnChain = new NounCombinationChain(NounCombiners.StanfordDependecy);
+			nnChain.runChain(currentQuestion);
+
 		}
 		for (HAWKQuestion currentQuestion : questionsClear) {
-			SentenceToSequence.combineSequences(currentQuestion);
+			stanford.parseTree(currentQuestion, null);
+			NounCombinationChain nnChain2 = new NounCombinationChain(NounCombiners.HawkRules);
+			nnChain2.runChain(currentQuestion);
 		}
 		for (int i = 0; i < questionsStanford.size(); i++) {
 			Map<String, List<Entity>> stanfordMap = questionsStanford.get(i).getLanguageToNounPhrases();
@@ -54,13 +60,13 @@ public class CombinedNounPhrasesClearStanford {
 			/**
 			 * Check if every recognized noun phrase from ClearNLP is also
 			 * recognized by StanfordNLP
-			 * 
+			 *
 			 */
 
 			List<Entity> stanfordList = stanfordMap.get("en");
 			List<Entity> clearList = clearMap.get("en");
 
-			if (!(stanfordList == null || clearList == null)) {
+			if (!((stanfordList == null) || (clearList == null))) {
 
 				if (!stanfordList.containsAll(clearList)) {
 					log.debug("DOESNT CONTAIN ALL KEYS");

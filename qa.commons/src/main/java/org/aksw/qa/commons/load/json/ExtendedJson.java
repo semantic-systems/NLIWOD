@@ -1,5 +1,6 @@
-package org.aksw.qa.commons.load.extended;
+package org.aksw.qa.commons.load.json;
 
+import java.util.Objects;
 import java.util.Vector;
 
 public class ExtendedJson {
@@ -8,7 +9,6 @@ public class ExtendedJson {
 	private Vector<EJQuestionEntry> questions;
 
 	public ExtendedJson() {
-		this.dataset = new EJDataset();
 		this.questions = new Vector<>();
 	}
 
@@ -33,5 +33,10 @@ public class ExtendedJson {
 	public ExtendedJson addQuestions(final EJQuestionEntry questions) {
 		this.questions.add(questions);
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		return "Dataset: " + Objects.toString(dataset) + "\nQuestions: " + Objects.toString(questions);
 	}
 }

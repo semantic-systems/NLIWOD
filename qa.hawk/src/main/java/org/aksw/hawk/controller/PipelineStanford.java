@@ -63,7 +63,7 @@ public class PipelineStanford extends AbstractPipeline {
 
 		// @Ricardo this will calculate cardinality of reduced(combinedNN) tree.
 		// is this right?
-		q.setTree(stanfordConnector.combineSequences(q, this.numberToDigit));
+		q.setTree(stanfordConnector.parseTree(q, this.numberToDigit));
 		// Cardinality identifies the integer i used for LIMIT i
 		log.info("Cardinality calculation.");
 		q.setCardinality(cardinality.cardinality(q));

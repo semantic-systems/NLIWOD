@@ -1,7 +1,5 @@
 package org.aksw.hawk.experiment;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -11,6 +9,7 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.index.DBOIndex;
 import org.aksw.hawk.index.Patty_relations;
+import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
@@ -24,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Sets;
 
 /*
- * EXPERIMENTAL! 
+ * EXPERIMENTAL!
  */
 public class IndexComparer {
 
@@ -72,15 +71,10 @@ public class IndexComparer {
 	 */
 	private static List<HAWKQuestion> getQALDQuestions() {
 		log.info("Loading dataset");
-		URL url = ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-multilingual.json");
-		System.out.println(url);
 		List<HAWKQuestion> questions = null;
-		try {
-			questions = HAWKQuestionFactory.createInstances(LoaderController.loadJSON(url.openStream()));
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
+
+		questions = HAWKQuestionFactory.createInstances(LoaderController.load(Dataset.QALD6_Train_Multilingual));
+
 		return questions;
 	}
 

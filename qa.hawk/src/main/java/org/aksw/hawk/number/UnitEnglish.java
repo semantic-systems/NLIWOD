@@ -30,22 +30,22 @@ import edu.stanford.nlp.util.CoreMap;
  * This class converts natural word numbers to digit numbers and, if a unit is
  * given, converts this unit to a base unit specified in a resource. The input
  * can be any string and can have multiple occurrences of numbers and units.
- * 
+ *
  * <pre>
- * Examples: 
- * "Give me two hundred birds" -> "Give me 200 birds" 
- * "$80 thousand and three hundred four" -> "$ 80304" 
+ * Examples:
+ * "Give me two hundred birds" -> "Give me 200 birds"
+ * "$80 thousand and three hundred four" -> "$ 80304"
  * "Show the first ten screws with a length of two inches" -> "Show the first 10 screws with a length of 0.0508 m"
  * "10 miles" -> "1609.344 m"
- * 
- * "one" can be a numeral, but it does not have to be. To handle those cases, 
- * The Stanford pipeline will be started on sentences containing "one". It will only be converted to a number, 
+ *
+ * "one" can be a numeral, but it does not have to be. To handle those cases,
+ * The Stanford pipeline will be started on sentences containing "one". It will only be converted to a number,
  * if its not in a relation "nmod" with any other word. With this, we can handle sentences like:
- * 
+ *
  * "The color is different from the old one."
- * 
+ *
  *  This sentence will be the same after parsing.
- * 
+ *
  * </pre>
  *
  */
@@ -57,7 +57,7 @@ public class UnitEnglish implements IUnitLanguage {
 
 	/**
 	 * Stanford is needed to handle sentences containing "one"
-	 * 
+	 *
 	 */
 	public UnitEnglish(final StanfordNLPConnector stanford) {
 		this.stanford = stanford;
@@ -69,7 +69,7 @@ public class UnitEnglish implements IUnitLanguage {
 	@Override
 	public String convert(final String q) {
 		String out = "";
-		if (q == null || q.isEmpty()) {
+		if ((q == null) || q.isEmpty()) {
 			return out;
 		}
 		/**
@@ -86,7 +86,6 @@ public class UnitEnglish implements IUnitLanguage {
 			ArrayList<String> outArray = new ArrayList<>();
 			boolean lastWasNumber = false;
 			boolean numberContainsNmod = false;
-			String stOut = "";
 			for (CoreLabel token : sentenc.get(TokensAnnotation.class)) {
 				String ner = token.get(NamedEntityTagAnnotation.class);
 				if (ner.toLowerCase().matches("number|duration|currency")) {
@@ -139,20 +138,20 @@ public class UnitEnglish implements IUnitLanguage {
 	/**
 	 * Converts occurring natural language numerals to digits in any given
 	 * String.
-	 * 
+	 *
 	 * For examples: {@link UnitEnglish}
-	 * 
+	 *
 	 * This only works when natural language numerals are stored in
 	 * identifierToMultiplier. Call {@link UnitEnglish#loadTabSplit(File)}
 	 * beforehand, to load data. To add numerals which should be recognized,
 	 * edit resource file.
-	 * 
+	 *
 	 * @param replaceThis String which may or may not contain something to
 	 *            convert.
 	 * @return InputString, but with replaced natural language numerals.
 	 */
 	private String replaceNumerals(final String replaceThis) {
-		if (replaceThis == null || replaceThis.isEmpty()) {
+		if ((replaceThis == null) || replaceThis.isEmpty()) {
 			return "";
 		}
 		log.debug("Replacing numerals on :" + replaceThis);
@@ -183,14 +182,14 @@ public class UnitEnglish implements IUnitLanguage {
 			/**
 			 * Not in a number and no number read-> normal word
 			 */
-			if (parsedNumber == null && !lastWasNumber) {
+			if ((parsedNumber == null) && !lastWasNumber) {
 				out += it + " ";
 				continue;
 			}
 			/**
 			 * End of a number reached
 			 */
-			if (parsedNumber == null && lastWasNumber) {
+			if ((parsedNumber == null) && lastWasNumber) {
 
 				/**
 				 * Ignore "and" in cases "hundred and five"
@@ -233,7 +232,7 @@ public class UnitEnglish implements IUnitLanguage {
 				 * If this number is also last string in list, append already
 				 * generated value to output.
 				 */
-				if (i == cleaned.size() - 1) {
+				if (i == (cleaned.size() - 1)) {
 					out = prettyAppendDouble(out, val);
 				}
 
@@ -248,13 +247,13 @@ public class UnitEnglish implements IUnitLanguage {
 	 * Converts occurring units to their base unit. Iterates over given string.
 	 * if a unit is found, and the word left from unit is a number, conversion
 	 * takes place.
-	 * 
+	 *
 	 * @param str Any string which may or may not contain a unit
 	 * @return Input string but with unit converted to base unit.
 	 */
 	private String convertToBaseUnit(final String str) {
 		String out = "";
-		if (str == null || str.isEmpty()) {
+		if ((str == null) || str.isEmpty()) {
 			return out;
 		}
 		log.debug("converting base units for: " + str);
@@ -265,7 +264,7 @@ public class UnitEnglish implements IUnitLanguage {
 
 			if (lastIt != null) {
 				if (identifierToUnit.containsKey(it)) {
-					out += lastIt * identifierToUnit.get(it).getLeft() + " " + identifierToUnit.get(it).getRight() + " ";
+					out += (lastIt * identifierToUnit.get(it).getLeft()) + " " + identifierToUnit.get(it).getRight() + " ";
 				} else {
 					out = prettyAppendDouble(out, lastIt) + it + " ";
 				}
@@ -296,7 +295,7 @@ public class UnitEnglish implements IUnitLanguage {
 	 * Appends a String representation of a Double to input string. If its
 	 * parseable to an integer, decimals will not be printed. All zeros will be
 	 * printed. Scientific representation will not be used.
-	 * 
+	 *
 	 * @param out String to append to.
 	 * @param val Val to append.
 	 * @return String with appended Double val.
@@ -312,7 +311,7 @@ public class UnitEnglish implements IUnitLanguage {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param s String to be parsed to Double. Also accepts all numeral words
 	 *            defined in English file
 	 * @return If String is parsable to Double, this will be returned. otherwise
@@ -331,15 +330,15 @@ public class UnitEnglish implements IUnitLanguage {
 	private void loadResource() {
 		log.debug("Loading number conversion rules for english");
 		final ClassLoader classLoader = getClass().getClassLoader();
-		 File file=null;
-		try{
+		File file = null;
+		try {
 			file = new File(classLoader.getResource("unitconversion/englishIdentifierToUnit.txt").toURI().getPath());
-		}catch(URISyntaxException e){
-			log.debug("Invalid Path",e);
+		} catch (URISyntaxException e) {
+			log.debug("Invalid Path", e);
 		}
-	
+
 		List<List<String>> data = UnitController.loadTabSplit(file);
-		if (data == null || data.isEmpty()) {
+		if ((data == null) || data.isEmpty()) {
 			return;
 		}
 		for (List<String> line : data) {
@@ -374,7 +373,7 @@ public class UnitEnglish implements IUnitLanguage {
 		sentenceToSentence.put("Give me all films produced by Steven Spielberg with a budget of at least $80 million.",
 		       "Give me all films produced by Steven Spielberg with a budget of at least $ 80000000.");
 		sentenceToSentence.put("List the seven kings of Rome.", "List the 7 kings of Rome.");
-		
+
 		for (String q : sentenceToSentence.keySet()) {
 		System.out.println(ue.convert(q));
 		}

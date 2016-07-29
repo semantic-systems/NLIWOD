@@ -1,5 +1,6 @@
 package org.aksw.qa.commons.load;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.RoundingMode;
@@ -23,6 +24,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.datastructure.Question;
+import org.aksw.qa.commons.load.json.EJQuestionFactory;
+import org.aksw.qa.commons.load.json.ExtendedQALDJSONLoader;
+import org.aksw.qa.commons.load.json.QaldJson;
 import org.aksw.qa.commons.load.stanford.StanfordLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +67,7 @@ public class LoaderController {
 		return null;
 	}
 
-	private static Class<?> getLoadingAnchor() {
+	public static Class<?> getLoadingAnchor() {
 		Class<?> loadingAnchor = null;
 		try {
 			loadingAnchor = Class.forName("org.aksw.qa.datasets.ResourceLoadingAnchor");
@@ -74,7 +78,7 @@ public class LoaderController {
 		return loadingAnchor;
 	}
 
-	private static URL mapDatasetToPath(final Dataset set) {
+	public static URL mapDatasetToPath(final Dataset set) {
 		Class<?> loadingAnchor = getLoadingAnchor();
 
 		switch (set) {
@@ -244,7 +248,9 @@ public class LoaderController {
 				case QALD6_Test_Multilingual:
 				case QALD6_Train_Hybrid:
 				case QALD6_Train_Multilingual:
-					out = loadJSON(is);
+
+					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(new File(mapDatasetToPath(data).getPath().replaceAll("%20", " ")), QaldJson.class);
+					out = EJQuestionFactory.getQuestionsFromQaldJson(json);
 					break;
 				case nlq:
 					out = loadNLQ(is);
@@ -396,115 +402,6 @@ public class LoaderController {
 		return questions;
 	}
 
-	/**
-	 * This method loads QALD JSON files as used in QALD 6
-	 *
-	 */
-	public static List<IQuestion> loadJSON(final InputStream file) {
-		// TODO Catch exceptions
-		List<IQuestion> output = new ArrayList<>();
-		try {
-			JsonReader jsonReader = Json.createReader(file);
-			JsonObject mainJsonObject = jsonReader.readObject();
-			// JsonObject innerObject =jsonObject.getJsonObject("dataset");
-			JsonArray jArray = mainJsonObject.getJsonArray("questions");
-
-			String attributes[] = { "id", "aggregation", "answertype", "onlydbo", "hybrid" };
-
-			for (JsonValue questionJsonObj : jArray) {
-				JsonObject listObj = (JsonObject) questionJsonObj;
-				IQuestion q = new Question();
-				for (String attr : attributes) {
-					if (listObj.containsKey(attr)) {
-						String val = listObj.get(attr).toString().replace("\"", "");
-						q.setValue(attr, val);
-					}
-				}
-				output.add(q);
-
-				JsonArray questionArray = listObj.getJsonArray("question");
-				for (JsonValue questionVal : questionArray) {
-					JsonObject questionObj = (JsonObject) questionVal;
-					String lang = questionObj.getString("language");
-					q.getLanguageToQuestion().put(lang, questionObj.getString("string").trim());
-					if (questionObj.containsKey("keywords")) {
-						List<String> keywords = Arrays.asList(questionObj.getString("keywords").split(","));
-						q.getLanguageToKeywords().put(lang, keywords);
-					}
-				}
-
-				JsonObject query = (JsonObject) listObj.get("query");
-				if (query.containsKey("sparql")) {
-					String strQuery = query.getString("sparql").trim();
-					q.setSparqlQuery(strQuery);
-				}
-
-				if (query.containsKey("pseudo")) {
-					String strQuery = query.getString("pseudo").trim();
-					q.setPseudoSparqlQuery(strQuery);
-				}
-
-				JsonArray answerList = listObj.getJsonArray("answers");
-				if (!answerList.isEmpty()) {
-					JsonObject answerListHead = answerList.getJsonObject(0);
-					JsonObject headObject = answerListHead.getJsonObject("head");
-					JsonArray vars = headObject.getJsonArray("vars");
-
-					Set<String> answers = new HashSet<>();
-					if (!answerList.isEmpty()) {
-						JsonObject answerObject = answerList.getJsonObject(0);
-						if (answerObject.containsKey("boolean")) {
-							answers.add(answerObject.get("boolean").toString());
-						}
-						if (answerObject.containsKey("results")) {
-							JsonObject resultObject = answerObject.getJsonObject("results");
-							JsonArray bindingsList = resultObject.getJsonArray("bindings");
-							for (JsonValue bind : bindingsList) {
-								JsonObject bindObj = (JsonObject) bind;
-								for (JsonValue varName : vars) {
-									String var = varName.toString().replaceAll("\"", "");
-									if (bindObj.containsKey(var)) {
-										JsonObject j = bindObj.getJsonObject(var);
-										answers.add(j.getString("value").trim());
-									}
-								}
-
-							} // end for bindingsList
-						} // end if no result set
-						q.setGoldenAnswers(answers);
-					} // end if Answerlist emptiy
-
-				} // end For questions
-			}
-
-		} catch (DOMException e) {
-			e.printStackTrace();
-
-		}
-
-		/**
-		 * Removing Questions with no answers //
-		 */
-		// boolean printHappend = false;
-		// String message = "";
-		// List<IQuestion> emptyQuestions = new ArrayList<>();
-		// for (IQuestion k : output) {
-		// if (k.getGoldenAnswers().isEmpty()) {
-		// emptyQuestions.add(k);
-		// if (!printHappend) {
-		// message += "Following Questions (id) have no attached answers: ";
-		// printHappend = true;
-		// }
-		// message += k.getId() + ", ";
-		// }
-		// }
-		// if (printHappend) {
-		// log.debug(message + " and will be removed");
-		// }
-		// output.removeAll(emptyQuestions);
-		return output;
-	}
-
 	public static List<IQuestion> loadNLQ(final InputStream file) {
 
 		List<IQuestion> output = new ArrayList<>();
@@ -565,7 +462,7 @@ public class LoaderController {
 		ArrayList<String> output = new ArrayList<>();
 		ArrayList<String> output2 = new ArrayList<>();
 		for (Dataset data : Dataset.values()) {
-			// if (!data.equals(Dataset.QALD3_Test_esdbpedia)) {
+			// if (!data.equals(Dataset.QALD6_Train_Multilingual)) {
 			// continue;
 			// }
 
@@ -583,7 +480,6 @@ public class LoaderController {
 						nosparql.add(q);
 					}
 					if (((q.getGoldenAnswers() == null) || q.getGoldenAnswers().isEmpty())) {
-
 						noanswers.add(q);
 					}
 

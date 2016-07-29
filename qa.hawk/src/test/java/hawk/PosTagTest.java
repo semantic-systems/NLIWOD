@@ -24,7 +24,7 @@ import edu.stanford.nlp.pipeline.Annotation;
 /**
  * Tests the POS tags attributed to questions by either Stanford NLP or Core NLP
  * tagging methods.
- * 
+ *
  * @author jhuthmann, dec
  *
  */
@@ -47,19 +47,19 @@ public class PosTagTest {
 
 	@Test
 	@Ignore
-	//FIXME does not pass, why?
+	// FIXME does not pass, why?
 	public void test() {
 
 		boolean testPass = true;
 		StringBuilder outputStr = new StringBuilder();
-		Map<String, String> mismatched = new HashMap<String, String>();
-		Map<String, Integer> mismatchCnt = new HashMap<String, Integer>();
-		Map<String, Integer> stanTotalCnt = new HashMap<String, Integer>();
-		Map<String, Integer> coreTotalCnt = new HashMap<String, Integer>();
+		Map<String, String> mismatched = new HashMap<>();
+		Map<String, Integer> mismatchCnt = new HashMap<>();
+		Map<String, Integer> stanTotalCnt = new HashMap<>();
+		Map<String, Integer> coreTotalCnt = new HashMap<>();
 		for (HAWKQuestion currentQuestion : questionsStanford) {
 
 			Map<String, String> core = SentenceToSequence.generatePOSTags(currentQuestion);
-			Annotation doc = stanford.runAnnotation(currentQuestion);
+			Annotation doc = stanford.runAnnotation(currentQuestion.getLanguageToQuestion().get("en"));
 			Map<String, String> stanPos = stanford.generatePOSTags(doc);
 			for (Map.Entry<String, String> e : stanPos.entrySet()) {
 

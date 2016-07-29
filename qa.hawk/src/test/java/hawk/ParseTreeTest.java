@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.aksw.hawk.cache.CachedParseTreeClearnlp;
 import org.aksw.hawk.cache.Treeprinter;
-//import org.aksw.hawk.cache.CachedParseTree;
+// import org.aksw.hawk.cache.CachedParseTree;
 import org.aksw.hawk.controller.Cardinality;
 import org.aksw.hawk.controller.QueryTypeClassifier;
 import org.aksw.hawk.controller.StanfordNLPConnector;
@@ -13,35 +13,35 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.nlp.MutableTreePruner;
 import org.aksw.hawk.nlp.SentenceToSequence;
+import org.aksw.hawk.nouncombination.NounCombinationChain;
+import org.aksw.hawk.nouncombination.NounCombiners;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQL;
-import org.aksw.hawk.spotter.Fox;
+import org.aksw.hawk.spotter.Spotlight;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.stanford.nlp.pipeline.Annotation;
 
-//import org.aksw.hawk.cache.CachedParseTree;
+// import org.aksw.hawk.cache.CachedParseTree;
 
 public class ParseTreeTest {
 
-
-	//TODO remove ignore once dbpedia is up again 
+	// TODO remove ignore once dbpedia is up again
 	@Test
-	
+
 	public void testProcess() throws IOException {
 		Logger log = LoggerFactory.getLogger(ParseTreeTest.class);
-		String stanfordTree = new String();
-		String clearNLPTree = new String();
-		Fox nerdModule = new Fox();
+		new String();
+		new String();
+		Spotlight nerdModule = new Spotlight();
 
 		Cardinality cardinality = new Cardinality();
 
-		SentenceToSequence sentenceToSequence = new SentenceToSequence();
+		new SentenceToSequence();
 
 		MutableTreePruner pruner = new MutableTreePruner();
 
@@ -72,13 +72,15 @@ public class ParseTreeTest {
 			// Disambiguate parts of the query
 			log.info("Named entity recognition.");
 			q.setLanguageToNamedEntites(nerdModule.getEntities(q.getLanguageToQuestion().get("en")));
-			Annotation currentAnotation = stanfordConnector.runAnnotation(q);
+			Annotation currentAnotation = stanfordConnector.runAnnotation(q.getLanguageToQuestion().get("en"));
 
 			q.setTree(stanfordConnector.process(currentAnotation));
 			bareStanford[i] = treeprinter.printTreeStanford(q);
 			// log.info("Classify question type.");
 			// q.setIsClassifiedAsASKQuery(queryTypeClassifier.isASKQuery(q.getLanguageToQuestion().get("en")));
-			q.setTree(stanfordConnector.combineSequences(q));
+			stanfordConnector.parseTree(q, null);
+			NounCombinationChain chain = new NounCombinationChain(NounCombiners.StanfordDependecy, NounCombiners.HawkRules);
+			chain.runChain(q);
 
 			combinedStanford[i] = treeprinter.printTreeStanford(q);
 			// Build trees from questions and cache them
@@ -114,7 +116,8 @@ public class ParseTreeTest {
 			log.info("Dependency parsing.");
 			q.setTree(cParseTree2.process(q));
 			bareClearnlp[i] = treeprinter.printTreeClearnlp(q);
-			sentenceToSequence.combineSequences(q);
+
+			SentenceToSequence.combineSequences(q);
 			combinedClearnlp[i] = treeprinter.printTreeClearnlp(q);
 			// // Cardinality identifies the integer i used for LIMIT i
 			// //log.info("Cardinality calculation.");

@@ -1,14 +1,14 @@
-package org.aksw.qa.commons.load.extended;
+package org.aksw.qa.commons.load.json;
 
 public class EJDataset {
-	private Integer id;
+	private String id;
 	private String metadata;
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public EJDataset setId(final Integer id) {
+	public EJDataset setId(final String id) {
 		this.id = id;
 		return this;
 	}
@@ -22,4 +22,8 @@ public class EJDataset {
 		return this;
 	}
 
+	@Override
+	public String toString() {
+		return "\n  ID: " + id + "\n  Metadata: " + metadata;
+	}
 }
