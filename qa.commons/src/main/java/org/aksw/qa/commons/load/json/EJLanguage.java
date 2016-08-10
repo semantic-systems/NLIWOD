@@ -2,8 +2,11 @@ package org.aksw.qa.commons.load.json;
 
 import java.util.Vector;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class EJLanguage {
 
+	@JsonProperty("SPARQL")
 	private String sparql;
 	/**
 	 * Do not set this attribute for a ExtendedJson-like json
@@ -13,9 +16,9 @@ public class EJLanguage {
 	 * Do not set following attributes for a QALD-like json.
 	 */
 
-	private String language;
+	private String language="en";
 	private String question;
-	private String keywords;
+	private String keywords="";
 	private String schemaless;
 	private Vector<String> annotations;
 

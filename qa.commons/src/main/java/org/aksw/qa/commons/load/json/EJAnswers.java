@@ -1,6 +1,10 @@
 package org.aksw.qa.commons.load.json;
 
+import java.io.IOException;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class EJAnswers {
 	private EJHead head;
@@ -14,6 +18,17 @@ public class EJAnswers {
 
 	public EJAnswers() {
 		this.confidence = "";
+	}
+	
+	@JsonCreator
+	public static EJAnswers factory(String json){
+		try {
+			return new ObjectMapper().readValue(json, EJAnswers.class);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override

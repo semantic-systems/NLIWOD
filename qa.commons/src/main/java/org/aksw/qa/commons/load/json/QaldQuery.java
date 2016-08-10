@@ -1,6 +1,7 @@
 package org.aksw.qa.commons.load.json;
 
 public class QaldQuery {
+	
 	private String sparql;
 	private String pseudo;
 

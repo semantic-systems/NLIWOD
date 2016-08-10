@@ -26,10 +26,10 @@ public final class EJQuestionFactory {
 		for (EJQuestionEntry it : json.getQuestions()) {
 			IQuestion question = new Question();
 			out.add(question);
-			question.setId(it.getId() + "");
-			question.setAnswerType(it.getAnswertype());
+			question.setId(it.getQuestion().getId() + "");
+			question.setAnswerType(it.getQuestion().getAnswertype());
 
-			for (EJLanguage lang : it.getLanguage()) {
+			for (EJLanguage lang : it.getQuestion().getLanguage()) {
 
 				question.setSparqlQuery(lang.getSparql());
 
@@ -43,7 +43,7 @@ public final class EJQuestionFactory {
 				question.setLanguageToKeywords(langToKeywords);
 			}
 
-			EJAnswers answers = it.getAnswers();
+			EJAnswers answers = it.getQuestion().getAnswers();
 
 			getAnswersFromAnswerObject(answers, question);
 
@@ -59,13 +59,13 @@ public final class EJQuestionFactory {
 		for (IQuestion question : questions) {
 			EJQuestionEntry entry = new EJQuestionEntry();
 			ex.addQuestions(entry);
-			entry.setAnswertype(question.getAnswerType());
+			entry.getQuestion().setAnswertype(question.getAnswerType());
 
-			entry.setId(question.getId());
+			entry.getQuestion().setId(question.getId());
 
 			for (String langStr : question.getLanguageToQuestion().keySet()) {
 				EJLanguage language = new EJLanguage();
-				entry.getLanguage().add(language);
+				entry.getQuestion().getLanguage().add(language);
 				language.setKeywords(Joiner.on(",").join(question.getLanguageToKeywords().get(langStr)));
 				language.setLanguage(langStr);
 				language.setQuestion(question.getLanguageToQuestion().get(langStr));
@@ -74,7 +74,7 @@ public final class EJQuestionFactory {
 			}
 
 			EJAnswers answers = new EJAnswers();
-			entry.setAnswers(answers);
+			entry.getQuestion().setAnswers(answers);
 			setAnswersInJson(answers, question);
 			ex.addQuestions(entry);
 
@@ -258,11 +258,11 @@ public final class EJQuestionFactory {
 
 		for (QaldQuestionEntry qaldQuestionEntry : json.getQuestions()) {
 			EJQuestionEntry exEntry = new EJQuestionEntry();
-			exEntry.setId(qaldQuestionEntry.getId());
-			exEntry.setAnswertype(qaldQuestionEntry.getAnswertype());
+			exEntry.getQuestion().setId(qaldQuestionEntry.getId());
+			exEntry.getQuestion().setAnswertype(qaldQuestionEntry.getAnswertype());
 
 			if (!qaldQuestionEntry.getAnswers().isEmpty()) {
-				exEntry.setAnswers(qaldQuestionEntry.getAnswers().get(0));
+				exEntry.getQuestion().setAnswers(qaldQuestionEntry.getAnswers().get(0));
 			}
 
 			for (QaldQuestion qqIt : qaldQuestionEntry.getQuestion()) {
@@ -271,7 +271,7 @@ public final class EJQuestionFactory {
 				lang.setQuestion(qqIt.getString());
 				lang.setKeywords(qqIt.getKeywords());
 				lang.setSparql(qaldQuestionEntry.getQuery().getSparql());
-				exEntry.getLanguage().add(lang);
+				exEntry.getQuestion().getLanguage().add(lang);
 			}
 			exJson.getQuestions().add(exEntry);
 
@@ -290,17 +290,17 @@ public final class EJQuestionFactory {
 
 		for (EJQuestionEntry exEntry : exJson.getQuestions()) {
 			QaldQuestionEntry qEntry = new QaldQuestionEntry();
-			qEntry.setId(exEntry.getId());
-			qEntry.setAnswertype(exEntry.getAnswertype());
+			qEntry.setId(exEntry.getQuestion().getId());
+			qEntry.setAnswertype(exEntry.getQuestion().getAnswertype());
 
 			QaldQuery query = new QaldQuery();
 
 			qEntry.setQuery(query);
-			if (!exEntry.getLanguage().isEmpty()) {
-				query.setSparql(exEntry.getLanguage().get(0).getSparql());
+			if (!exEntry.getQuestion().getLanguage().isEmpty()) {
+				query.setSparql(exEntry.getQuestion().getLanguage().get(0).getSparql());
 			}
 
-			for (EJLanguage lang : exEntry.getLanguage()) {
+			for (EJLanguage lang : exEntry.getQuestion().getLanguage()) {
 				QaldQuestion qQuestion = new QaldQuestion();
 				qQuestion.setLanguage(lang.getLanguage());
 				qQuestion.setString(lang.getQuestion());
@@ -308,7 +308,7 @@ public final class EJQuestionFactory {
 
 				qEntry.getQuestion().add(qQuestion);
 			}
-			qEntry.getAnswers().add(exEntry.getAnswers());
+			qEntry.getAnswers().add(exEntry.getQuestion().getAnswers());
 			json.getQuestions().add(qEntry);
 
 		}

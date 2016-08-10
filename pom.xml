@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.aksw</groupId>
 	<artifactId>nliwod</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2016</inceptionYear>
 	<name>Natural Language Interfaces for the Web of Data collection</name>
@@ -18,7 +18,7 @@
 		<java.version>1.8</java.version>
 		<slf4j.version>1.7.13</slf4j.version>
 		<junit.version>4.12</junit.version>
-		<qa-commons.version>0.1.0-SNAPSHOT</qa-commons.version>
+		<qa-commons.version>0.1.1-SNAPSHOT</qa-commons.version>
 		<qa-datasets.version>0.1.0-SNAPSHOT</qa-datasets.version>
 		<qa-systems.version>0.0.3-SNAPSHOT</qa-systems.version>
 		<qa-ml.version>0.0.1-SNAPSHOT</qa-ml.version>
@@ -47,7 +47,9 @@
 	<!-- BUILD configuration -->
 	<!-- Javadoc plugin for generating documentation -->
 	<build>
+	 	
 		<plugins>
+		
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -183,4 +185,5 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	
 </project>
