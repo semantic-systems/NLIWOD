@@ -1,0 +1,37 @@
+{
+  "dataset": {
+    "id": "qanary-test"
+  },
+  "questions": [
+     {
+      "id": "101",
+      "answertype": "resource",
+      "aggregation": "true",
+      "onlydbo": "true",
+      "hybrid": "false",
+      "question": [
+        {
+          "language": "en",
+          "string": "Who is the president of the United States?"
+        }
+      ],
+      "answers": [
+        {
+          "head": {
+            "vars": [
+              "uri"
+            ]
+          },
+          "results": {
+            "bindings": [
+              {
+                "uri": {
+                  "type": "uri",
+                  "value": "http://dbpedia.org/resource/Bonn"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }]}
