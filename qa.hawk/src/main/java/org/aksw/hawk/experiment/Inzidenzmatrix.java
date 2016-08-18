@@ -68,6 +68,8 @@ public class Inzidenzmatrix {
 					}
 				}
 			System.out.println(graph);
+			System.out.println(Arrays.toString(vertices));
+			System.out.println(edges);
 			for(int i=0; i<vertices.length; i++){
 				System.out.println(Arrays.toString(incidenceMatrix[i]) + "\n");
 			}
