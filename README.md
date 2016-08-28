@@ -1,20 +1,16 @@
 # NLIWOD - Natural Language Interfaces for the Web of Data
-Collection of tools, utilities, datasets and approaches towards realizing natural language interfaces for the Web of Data. 
+Collection of tools, utilities, datasets and approaches towards realizing natural language interfaces for the Web of Data. Currently, we are focusing on Question Answering (QA) utilities.
 
 Especially, this repository contains 
 * QA Systems: A set of existing online webservices of QA systems all executable via a simple Java interface.
 * QA Datasets: A collection of existing Question Answering datasets
-
-This repository will soon include the following repositories as submodules:
-* https://github.com/aksw/qa-ml
-* https://github.com/aksw/qa-commons 
-
-More interesting Question Answering and Natural Language Generation projects can be found here:
-* https://github.com/aksw/hawk 
-* https://github.com/aksw/watodo
-* https://github.com/aksw/semweb2nl
+* QA Machine Learning: This projects aims at learning a ML-based algorithm to combine multiple QA systems into one
+* QA Commons: A collection to ease handling of QA datasets. It allows to load, store and evaluate datasets and systems. 
 
 We aim at providing a fast entrance to the field of natural language interfaces (search, question answering, ranking). Thus, we will offer here Maven dependencies and source code for using many available datasets, systems and techniques. 
+
+More interesting Question Answering and Natural Language Generation projects can be found here:
+* SemWeb2NL https://github.com/aksw/semweb2nl: This repository provides means to verbalize triples, entities, SPARQL queries and many more RDF dataset. This is especially useful to allow users understand Web of Data content.
 
 Foreseen modules:
 * QA Features: Features calculated on a NL question to train ML algorithms.
