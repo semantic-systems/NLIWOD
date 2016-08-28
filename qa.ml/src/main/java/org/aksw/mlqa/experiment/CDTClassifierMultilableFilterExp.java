@@ -1,8 +1,10 @@
 package org.aksw.mlqa.experiment;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,32 +30,30 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Lists;
 
 import meka.classifiers.multilabel.PSt;
+import weka.classifiers.meta.FilteredClassifier;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
+import weka.filters.unsupervised.attribute.Remove;
 
-public class CDTClassifierMultilable {
-	static Logger log = LoggerFactory.getLogger(CDTClassifierMultilable.class);
+public class CDTClassifierMultilableFilterExp {
+	static Logger log = LoggerFactory.getLogger(CDTClassifierMultilableFilterExp.class);
 	
 	
-	public static void main(String[] args) throws Exception {		
+	public static void main(String[] args) throws Exception {
 		/*
 		 * For multilable classification:
 		 */
 		
-		//The classifier
-		PSt PSt_Classifier = new PSt();
-		//load the data
+		Set<Integer> ind = new HashSet<Integer>(Arrays.asList(11,12,13,14,15,16,17,18));
+		Set<Set<Integer>> filters = powerSet(ind);
+		
 		Path datapath= Paths.get("./src/main/resources/Qald6Logs.arff");
 		BufferedReader reader = new BufferedReader(new FileReader(datapath.toString()));
 		ArffReader arff = new ArffReader(reader);
 		Instances data = arff.getData();
 		data.setClassIndex(6);
-		PSt_Classifier.buildClassifier(data);
 		
-		/*
-		 * Test the trained system
-		 */
 		
 		JSONObject qald6test = loadTestQuestions();
 		JSONArray questions = (JSONArray) qald6test.get("questions");
@@ -63,15 +63,34 @@ public class CDTClassifierMultilable {
 			JSONArray questionStrings = (JSONArray) questionData.get("question");
 			JSONObject questionEnglish = (JSONObject) questionStrings.get(0);
 			testQuestions.add((String) questionEnglish.get("string"));
-		}
+			}
+		
+		double cur_max = 0.0;
+		
+		for(Set<Integer> filter:filters){
+		List<Integer> filterlist = new ArrayList<Integer>(filter);
+		int[] atts = new int[filter.size()];
+		Remove rm = new Remove();
+		for(int i =0; i < filterlist.size(); i++) atts[i] = filterlist.get(i);
+		rm.setAttributeIndicesArray(atts);
+		PSt PSt_Classifier = new PSt();
+		FilteredClassifier fc = new FilteredClassifier();
+		fc.setFilter(rm);
+		fc.setClassifier(PSt_Classifier);
+		fc.buildClassifier(data);
+		/*
+		 * Test the trained system
+		 */
+
 
 		
 		ArrayList<String> systems = Lists.newArrayList("KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English" );
 		float ave_p = 0;
 		float ave_r = 0;
+		/*
 		Double ave_bestp = 0.0;
 		Double ave_bestr = 0.0;
-
+		*/
 		for(int j = 0; j < data.size(); j++){
 			Instance ins = data.get(j);
 			double[] confidences = PSt_Classifier.distributionForInstance(ins);
@@ -83,12 +102,12 @@ public class CDTClassifierMultilable {
 						argmax = i;
 					}
 				}
-				//compare trained system with best possible system
 				
+				//compare trained system with best possible system
 				String sys2ask = systems.get(systems.size() - argmax -1);
 				ave_p += Float.parseFloat(loadSystemP(sys2ask).get(j));				
 				ave_r += Float.parseFloat(loadSystemR(sys2ask).get(j));
-				
+				/*
 				double bestp = 0;
 				double bestr = 0;
 				String bestSystemp = "";
@@ -102,19 +121,17 @@ public class CDTClassifierMultilable {
 				System.out.println(testQuestions.get(j));
 				System.out.println(j + "... asked " + sys2ask + " with p " + loadSystemP(sys2ask).get(j) + "... best possible p: " + bestp + " was achieved by " + bestSystemp);
 				System.out.println(j + "... asked " + sys2ask + " with r " + loadSystemR(sys2ask).get(j) + "... best possible r: " + bestr + " was achieved by " + bestSystemr);
-
+				*/
 				}
 		
 		double p = ave_p/data.size();
 		double r = ave_r/data.size();
-		System.out.println("macro P : " + p);
-		System.out.println("macro R : " + r);
 		double fmeasure = 2*p*r/(p + r);
-		System.out.println("macro F : " + fmeasure);
-	
+		cur_max = fmeasure;System.out.println(fmeasure);System.out.println(rm.getAttributeIndices());
+		}
 		/*
 		 * calculate best possible fmeasure
-		 */
+		 
 
 		double bestp = ave_bestp/data.size();
 		double bestr = ave_bestr/data.size();
@@ -122,18 +139,26 @@ public class CDTClassifierMultilable {
 		System.out.println("best possible macro R : " + bestr);
 		double bestfmeasure = 2*bestp*bestr/(bestp + bestr);
 		System.out.println("best possible macro F : " + bestfmeasure);
-	
-		Set<Integer> test = new HashSet<Integer>(Arrays.asList(7,8,9,10,11,12,13,14,15,16,17,18,19));
-		System.out.println(powerSet(test).size());
+		 */
 	}
 	
 	public static ArrayList<String> loadSystemP(String system){
 
 		Path datapath = Paths.get("./src/main/resources/QALD6MultilingualLogs/multilingual_" + system + ".html");
 		ArrayList<String> result = Lists.newArrayList();
+		String loadedData = "";
 
 		try{
-			String loadedData = Files.lines(datapath).collect(Collectors.joining()); 
+			FileInputStream fstream = new FileInputStream(datapath.toString());
+			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+
+			String strLine;
+			//Read File Line By Line
+			while ((strLine = br.readLine()) != null)   {
+			  // Print the content on the console
+			  loadedData+=strLine;
+			}
+			br.close();
 			Document doc = Jsoup.parse(loadedData);
 			Element table = doc.select("table").get(5);
 			Elements tableRows = table.select("tr");
@@ -152,9 +177,19 @@ public class CDTClassifierMultilable {
 	public static ArrayList<String> loadSystemR(String system){
 		Path datapath = Paths.get("./src/main/resources/QALD6MultilingualLogs/multilingual_" + system + ".html");
 		ArrayList<String> result = Lists.newArrayList();
+		String loadedData = "";
 
 		try{
-			String loadedData = Files.lines(datapath).collect(Collectors.joining()); 
+			FileInputStream fstream = new FileInputStream(datapath.toString());
+			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+
+			String strLine;
+			//Read File Line By Line
+			while ((strLine = br.readLine()) != null)   {
+			  // Print the content on the console
+			  loadedData+=strLine;
+			}
+			br.close();
 			Document doc = Jsoup.parse(loadedData);
 			Element table = doc.select("table").get(5);
 			Elements tableRows = table.select("tr");

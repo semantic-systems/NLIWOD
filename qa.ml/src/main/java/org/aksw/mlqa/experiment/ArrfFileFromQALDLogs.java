@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import org.aksw.mlqa.analyzer.Analyzer;
+import org.aksw.qa.commons.load.Dataset;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,11 +21,11 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
+
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
-
-import com.google.common.collect.Lists;
 
 public class ArrfFileFromQALDLogs {
 	static Logger log = LoggerFactory.getLogger(ArrfFileFromQALDLogs.class);
@@ -34,13 +35,16 @@ public class ArrfFileFromQALDLogs {
 	 */
 	
 	public static void main(String[] args) {
-		ArrayList<String> systems = Lists.newArrayList("CANaLI", "KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English" );
+		ArrayList<String> systems = Lists.newArrayList("KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English" );
 		Analyzer analyzer = new Analyzer();
 		ArrayList<Attribute> fvfinal = analyzer.fvWekaAttributes;
 		// create the attributes
+		ArrayList<String> test = Lists.newArrayList(); 
 		for(String system: systems){
+			test.add(system);
 			fvfinal.add(0, new Attribute(system, Lists.newArrayList("0","1")));
 		}
+		System.out.println(test);
 		// load trainQuestions
 		JSONObject qald6test = loadTestQuestions();
 		JSONArray questions = (JSONArray) qald6test.get("questions");
@@ -57,6 +61,7 @@ public class ArrfFileFromQALDLogs {
 		for(int i = 0; i < testQuestions.size(); i++){
 			Instance tmp = analyzer.analyze(testQuestions.get(i));
 			for(int j = 0; j < systems.size(); j++){
+				//if fmeasure > 0, target will be 1, else 0
 				if(new Double(loadSystemData(systems.get(systems.size() -1  - j)).get(i)) > 0){
 					tmp.setValue(j, 1);
 				} else {
