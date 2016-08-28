@@ -3,13 +3,16 @@ package org.aksw.qa.commons.load.stanford;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.aksw.jena_sparql_api.core.FluentQueryExecutionFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.aksw.jena_sparql_api.http.QueryExecutionHttpWrapper;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.IQuestion;
@@ -41,15 +44,20 @@ import org.dllearner.kb.sparql.ConciseBoundedDescriptionGeneratorImpl;
 import org.dllearner.kb.sparql.SymmetricConciseBoundedDescriptionGeneratorImpl;
 import org.json.simple.parser.ParseException;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
 //TODO actually refactor this class to an own submodule
 public class StanfordRDFizer {
 
 	private AGDISTIS disambiguator;
 	private Spotlight recognizer;
+	private DBpediaIndex index;
 
 	public StanfordRDFizer() {
 		this.disambiguator = new AGDISTIS();
 		this.recognizer = new Spotlight();
+		this.index = new DBpediaIndex();
 	}
 
 	public Map<String, List<Entity>> recognize(String question) {
@@ -75,12 +83,8 @@ public class StanfordRDFizer {
 
 	public static void main(String[] args) throws IOException {
 		// DBpedia as SPARQL endpoint
-		QueryExecutionFactory qef  = FluentQueryExecutionFactory
-				.http("http://dbpedia.org/sparql", Lists.newArrayList("http://dbpedia.org"))
-				.config().withPostProcessor(qe -> ((QueryEngineHTTP) ((QueryExecutionHttpWrapper) qe).getDecoratee())
-						.setModelContentType(WebContent.contentTypeRDFXML))
-				.end()
-				.create();
+		QueryExecutionFactory qef = FluentQueryExecutionFactory.http("http://dbpedia.org/sparql", Lists.newArrayList("http://dbpedia.org")).config()
+		        .withPostProcessor(qe -> ((QueryEngineHTTP) ((QueryExecutionHttpWrapper) qe).getDecoratee()).setModelContentType(WebContent.contentTypeRDFXML)).end().create();
 		// CBD generator
 		ConciseBoundedDescriptionGenerator cbdGen = new ConciseBoundedDescriptionGeneratorImpl(qef);
 		cbdGen = new SymmetricConciseBoundedDescriptionGeneratorImpl(qef);
@@ -88,27 +92,11 @@ public class StanfordRDFizer {
 		// query tree factory
 		QueryTreeFactory qtf = new QueryTreeFactoryBase();
 		// filters
-		ArrayList<Filter<Statement>> treeFilters = Lists.newArrayList(
-				new PredicateDropStatementFilter(StopURIsDBpedia.get()),
-				new ObjectDropStatementFilter(StopURIsDBpedia.get()),
-				new PredicateDropStatementFilter(Sets.union(StopURIsRDFS.get(), Sets.newHashSet(RDFS.seeAlso.getURI()))),
-				new PredicateDropStatementFilter(StopURIsOWL.get()),
-				new ObjectDropStatementFilter(StopURIsOWL.get()),
-				new PredicateDropStatementFilter(StopURIsSKOS.get()),
-				new ObjectDropStatementFilter(StopURIsSKOS.get()),
-				new NamespaceDropStatementFilter(
-						Sets.newHashSet(
-								"http://dbpedia.org/property/",
-								"http://purl.org/dc/terms/",
-								"http://dbpedia.org/class/yago/"
-								, FOAF.getURI()
-						)
-				),
-				new PredicateDropStatementFilter(
-						Sets.newHashSet(
-								"http://www.w3.org/2002/07/owl#equivalentClass",
-								"http://www.w3.org/2002/07/owl#disjointWith"))
-		);
+		ArrayList<Filter<Statement>> treeFilters = Lists.newArrayList(new PredicateDropStatementFilter(StopURIsDBpedia.get()), new ObjectDropStatementFilter(StopURIsDBpedia.get()),
+		        new PredicateDropStatementFilter(Sets.union(StopURIsRDFS.get(), Sets.newHashSet(RDFS.seeAlso.getURI()))), new PredicateDropStatementFilter(StopURIsOWL.get()),
+		        new ObjectDropStatementFilter(StopURIsOWL.get()), new PredicateDropStatementFilter(StopURIsSKOS.get()), new ObjectDropStatementFilter(StopURIsSKOS.get()),
+		        new NamespaceDropStatementFilter(Sets.newHashSet("http://dbpedia.org/property/", "http://purl.org/dc/terms/", "http://dbpedia.org/class/yago/", FOAF.getURI())),
+		        new PredicateDropStatementFilter(Sets.newHashSet("http://www.w3.org/2002/07/owl#equivalentClass", "http://www.w3.org/2002/07/owl#disjointWith")));
 		qtf.addDropFilters((Filter<Statement>[]) treeFilters.toArray(new Filter[treeFilters.size()]));
 		// LGG generator
 		LGGGenerator lggGen = new LGGGeneratorSimple();
@@ -118,7 +106,7 @@ public class StanfordRDFizer {
 		// 1) NOTE! Each question has normally exactly one answer, but if
 		// crowd-workers disagreed they can have multiple answers
 
-		Dataset[] datasets = {Dataset.Stanford_dev};
+		Dataset[] datasets = { Dataset.Stanford_dev };
 
 		for (Dataset dataset : datasets) {
 			List<IQuestion> questions = LoaderController.load(Dataset.Stanford_dev);
@@ -136,7 +124,7 @@ public class StanfordRDFizer {
 
 				for (String answer : q.getGoldenAnswers()) {
 					String disambiguate = stan.disambiguate(answer);
-					System.out.println(numberOfQuestions + ". Question: " + question);
+					System.out.println("Number of Questions: " + numberOfQuestions + ". Question: " + question);
 					numberOfQuestions++;
 					bw.write(question + "\t");
 					if (disambiguate != null) {
@@ -162,13 +150,30 @@ public class StanfordRDFizer {
 							}
 							System.out.print(x.uris.get(0) + "\t");
 						});
-
+						System.out.println("\n");
 					}
+
+					// 4) run class and property detection over query
+					System.out.print("\tRecognized Classes and Properties in Question: ");
+					Arrays.stream(question.replaceAll("[^\\w]", " ").replaceAll("[\\d]", "").replaceAll("  ", " ").split(" ")).forEach(y -> {
+						ArrayList<String> classOrProperty = stan.index.search(y);
+						if (!classOrProperty.isEmpty()) {
+							classOrProperty.forEach(x -> {
+								try {
+									bw.write(x + "\t");
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+								System.out.print(x + "\t");
+							});
+							System.out.println();
+						}
+					});
 					System.out.println("\n");
 
-					// 4) for queries with a resource as answer run QTL
+					// 5) for queries with a resource as answer run QTL
 					int minNrOfExamples = 2;
-					if(disambiguatedAnswers.size() >= minNrOfExamples) {
+					if (disambiguatedAnswers.size() >= minNrOfExamples) {
 						List<RDFResourceTree> trees = new ArrayList<>(disambiguatedAnswers.size());
 						for (String uri : disambiguatedAnswers) {
 							// generate CBD
@@ -177,7 +182,7 @@ public class StanfordRDFizer {
 							// generate query tree
 							RDFResourceTree tree = qtf.getQueryTree(uri, cbd);
 							trees.add(tree);
-//							System.out.println(tree.getStringRepresentation(true));
+							// System.out.println(tree.getStringRepresentation(true));
 						}
 
 						// compute LGG
