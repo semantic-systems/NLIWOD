@@ -6,13 +6,13 @@ import java.util.Vector;
 public class EJQuestionEntry {
 
 
-	private Vector<String> question;
+	private EJQuestion question;
 
-	public Vector<String> getQuestion() {
+	public EJQuestion getQuestion() {
 		return question;
 	}
 
-	public void setQuestion(Vector<String> question) {
+	public void setQuestion(EJQuestion question) {
 		this.question = question;
 	}
 
