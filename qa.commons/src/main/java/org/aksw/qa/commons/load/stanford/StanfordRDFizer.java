@@ -199,5 +199,8 @@ public class StanfordRDFizer {
 						// f-measure/accuracy to answer
 						System.out.println(query);
 					}
-
+				}
+			}
+		}
+	}
 }
