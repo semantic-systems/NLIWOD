@@ -125,6 +125,18 @@ public final class EJQuestionFactory {
 
 	}
 
+	public static List<IQuestion> getQuestionsFromJson(final Object json){
+		if(json instanceof ExtendedJson){
+			return getQuestionsFromExtendedJson((ExtendedJson) json);
+		}
+		else if(json instanceof QaldJson){
+			return getQuestionsFromQaldJson((QaldJson) json);
+		}
+		else{
+			return null;
+		}
+	}
+	
 	public static List<IQuestion> getQuestionsFromQaldJson(final QaldJson json) {
 		List<IQuestion> questions = new ArrayList<>();
 

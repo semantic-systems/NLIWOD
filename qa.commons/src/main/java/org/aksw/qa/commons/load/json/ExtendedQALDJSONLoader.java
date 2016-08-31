@@ -81,16 +81,35 @@ public final class ExtendedQALDJSONLoader {
 	 * @throws JsonMappingException
 	 * @throws JsonParseException
 	 */
-	public static Object readJson(final InputStream in, final Class<?> type)
-			throws JsonParseException, JsonMappingException, IOException {
+	public static Object readJson(final InputStream in, final Class<?> type) {
 		Object object = null;
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(MapperFeature.USE_GETTERS_AS_SETTERS);
 
-		object = mapper.readValue(in, type);
-
-		return object;
+		try{
+			return mapper.readValue(in, type);
+		}
+		catch(Exception e){
+			return null;
+		}
 	}
+	
+	public static Object readJson(final InputStream in) throws JsonParseException, JsonMappingException, IOException {
+		Object ret =null;
+		if((ret=readJson(in, ExtendedJson.class))==null){
+			ret = readJson(in, QaldJson.class);
+		}
+		return ret;
+	}
+	
+	public static Object readJson(final File f){
+		Object ret =null;
+		if((ret=readJson(f, ExtendedJson.class))==null){
+			ret = readJson(f, QaldJson.class);
+		}
+		return ret;
+	}
+	
 
 	public static Object readJson(final File f, final Class type) {
 		try (InputStream in = new FileInputStream(f)) {

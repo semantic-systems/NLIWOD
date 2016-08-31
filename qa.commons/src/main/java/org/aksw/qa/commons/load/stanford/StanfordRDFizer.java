@@ -43,6 +43,9 @@ import org.dllearner.kb.sparql.ConciseBoundedDescriptionGenerator;
 import org.dllearner.kb.sparql.ConciseBoundedDescriptionGeneratorImpl;
 import org.dllearner.kb.sparql.SymmetricConciseBoundedDescriptionGeneratorImpl;
 import org.json.simple.parser.ParseException;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -80,6 +83,7 @@ public class StanfordRDFizer {
 		}
 		return null;
 	}
+
 
 	public static void main(String[] args) throws IOException {
 		// DBpedia as SPARQL endpoint
@@ -195,16 +199,8 @@ public class StanfordRDFizer {
 						// f-measure/accuracy to answer
 						System.out.println(query);
 					}
-
-					bw.newLine();
-				}
-				// }
-				if (numberOfQuestions % 50 == 0) {
-					bw.flush();
 				}
 			}
-			bw.close();
-			System.out.println("Number Of Linkable Answers " + numberOfLinkableAnswers);
 		}
 	}
 }

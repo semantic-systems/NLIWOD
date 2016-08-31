@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.aksw</groupId>
 	<artifactId>nliwod</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2016</inceptionYear>
 	<name>Natural Language Interfaces for the Web of Data collection</name>
@@ -17,7 +17,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<junit.version>4.12</junit.version>
-		<qa-commons.version>0.1.1-SNAPSHOT</qa-commons.version>
+		<qa-commons.version>0.1.2-SNAPSHOT</qa-commons.version>
 		<qa-datasets.version>0.1.0-SNAPSHOT</qa-datasets.version>
 		<qa-systems.version>0.0.3-SNAPSHOT</qa-systems.version>
 		<qa-ml.version>0.0.1-SNAPSHOT</qa-ml.version>
