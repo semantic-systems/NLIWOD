@@ -67,7 +67,7 @@ public class LoadTest {
 	public void loadStanfordDevTest() {
 		List<IQuestion> load = LoaderController.load(Dataset.Stanford_dev);
 		log.debug("Size of Dataset: " + load.size());
-		Assert.assertTrue(load.size() == 2067);
+		Assert.assertTrue(load.size() == 10600);
 		for (IQuestion q : load) {
 			Assert.assertNotNull(q.getLanguageToQuestion());
 			Assert.assertFalse(q.getLanguageToQuestion().values().isEmpty());
@@ -95,6 +95,8 @@ public class LoadTest {
 		List<IQuestion> load = LoaderController.load(Dataset.QALD6_Train_Multilingual);
 		List<Integer> incompletes = Arrays.asList(100, 118, 136, 137, 147, 152, 94, 95, 96, 97, 98, 99, 249, 250, 312, 340, 342);
 		log.debug("Number of Loaded Questions:" + load.size());
+		log.debug("Incomplete:" + incompletes.size());
+
 		Assert.assertTrue(load.size() == 350 - incompletes.size());
 		for (IQuestion q : load) {
 			Assert.assertNotNull(q.getAnswerType());
