@@ -16,7 +16,6 @@
 	<!-- PROPERTIES -->
 	<properties>
 		<java.version>1.8</java.version>
-		<slf4j.version>1.7.13</slf4j.version>
 		<junit.version>4.12</junit.version>
 		<qa-commons.version>0.1.1-SNAPSHOT</qa-commons.version>
 		<qa-datasets.version>0.1.0-SNAPSHOT</qa-datasets.version>
@@ -47,15 +46,15 @@
 	<!-- BUILD configuration -->
 	<!-- Javadoc plugin for generating documentation -->
 	<build>
-	 	
+
 		<plugins>
-		
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.10.4</version>
 				<configuration>
-                			<additionalparam>-Xdoclint:none</additionalparam>
+					<additionalparam>-Xdoclint:none</additionalparam>
 					<show>private</show>
 					<nohelp>true</nohelp>
 				</configuration>
@@ -135,46 +134,6 @@
 			<url>https://repo.spring.io/libs-release</url>
 		</repository>
 	</repositories>
-
-	<!-- DEPENDENCIES -->
-	<dependencies>
-		<!-- ~~~~~~~~~~~~~~~~~~~ Logging ~~~~~~~~~~~~~~~~~~~~~~ -->
-		<!-- slf4j: Logging API -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<!-- Logging - SLF4J-Log4j Binding -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<!-- ~~~~~~~~~~~~~~~~~~~ End Logging ~~~~~~~~~~~~~~~~~~~~~~ -->
-		<!-- ~~~~~~~~~~~~~~~~~~~ Testing ~~~~~~~~~~~~~~~~~~~~~~ -->
-		<!-- JUnit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-		</dependency>
-		<!-- ~~~~~~~~~~~~~~~~~~~ End Testing ~~~~~~~~~~~~~~~~~~~~~~ -->
-		<!-- QA commons is currently based on Jena for handling RDF resources -->
-		<dependency>
-			<groupId>org.aksw.jena-sparql-api</groupId>
-			<artifactId>jena-sparql-api-core</artifactId>
-			<version>${jena.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.aksw.jena-sparql-api</groupId>
-			<artifactId>jena-sparql-api-cache-h2</artifactId>
-			<version>${jena.version}</version>
-		</dependency>
-
-
-	</dependencies>
-
 	<!-- manage versions globally here in the parent project -->
 	<dependencyManagement>
 		<dependencies>
@@ -183,7 +142,25 @@
 				<artifactId>components-core</artifactId>
 				<version>${dllearner.version}</version>
 			</dependency>
+			<!-- ~~~~~~~~~~~~~~~~~~~ Testing ~~~~~~~~~~~~~~~~~~~~~~ -->
+			<!-- JUnit -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+			</dependency>
+			<!-- ~~~~~~~~~~~~~~~~~~~ End Testing ~~~~~~~~~~~~~~~~~~~~~~ -->
+			<!-- QA commons is currently based on Jena for handling RDF resources -->
+			<dependency>
+				<groupId>org.aksw.jena-sparql-api</groupId>
+				<artifactId>jena-sparql-api-core</artifactId>
+				<version>${jena.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aksw.jena-sparql-api</groupId>
+				<artifactId>jena-sparql-api-cache-h2</artifactId>
+				<version>${jena.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
 </project>

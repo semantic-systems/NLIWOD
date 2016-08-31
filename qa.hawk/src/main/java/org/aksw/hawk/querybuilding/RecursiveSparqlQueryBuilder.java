@@ -7,6 +7,7 @@ import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,7 @@ public class RecursiveSparqlQueryBuilder {
 		return returnSet;
 	}
 
-	private void recursion(final Set<SPARQLQuery> returnSet, final Set<String> variableSet, final MutableTreeNode tmp) throws CloneNotSupportedException {
+	private void recursion(Set<SPARQLQuery> returnSet, Set<String> variableSet, MutableTreeNode tmp) throws CloneNotSupportedException {
 		Set<SPARQLQuery> sb = Sets.newHashSet();
 
 		// if no annotations maybe a CombinedNN
@@ -71,9 +72,8 @@ public class RecursiveSparqlQueryBuilder {
 						SPARQLQuery variant4 = ((SPARQLQuery) query.clone());
 						variant4.addConstraint("?proj a <" + anno + ">.");
 
-						// SPARQLQuery variant5 = ((SPARQLQuery) query.clone());
-						// variant5.addFilterOverAbstractsContraint("?proj",
-						// tmp.label);
+						SPARQLQuery variant5 = ((SPARQLQuery) query.clone());
+						variant5.addFilterOverAbstractsContraint("?proj", tmp.label);
 
 						SPARQLQuery variant6 = ((SPARQLQuery) query.clone());
 						variant6.addFilterOverAbstractsContraint("?const", tmp.label);
@@ -84,7 +84,7 @@ public class RecursiveSparqlQueryBuilder {
 						sb.add(variant2);
 						sb.add(variant3);
 						sb.add(variant4);
-						// sb.add(variant5);
+						sb.add(variant5);
 						sb.add(variant6);
 						sb.add(variant7);
 
@@ -186,21 +186,23 @@ public class RecursiveSparqlQueryBuilder {
 				sb.addAll(returnSet);
 			} else {
 				log.error("Tmp: " + tmp.label + " pos: " + tmp.posTag);
+				sb.addAll(returnSet);
 			}
 		}
 		returnSet.clear();
 		returnSet.addAll(sb);
-
 		for (MutableTreeNode child : tmp.getChildren()) {
 			log.debug("Recursion started for :" + child);
 			recursion(returnSet, variableSet, child);
 		}
 
 	}
-//TODO refactor to use SPAQRL.java instead of creating a stand-alone execution factory
+
+	// TODO refactor to use SPAQRL.java instead of creating a stand-alone
+	// execution factory
 	private Set<String> getOrigLabel(final String label) {
 		Set<String> resultset = Sets.newHashSet();
-		String query = "SELECT str(?proj) as ?proj WHERE { <" + label + "> <http://www.w3.org/2000/01/rdf-schema#label> ?proj. FILTER(langMatches( lang(?proj), \"EN\" ))}";
+		String query = "SELECT str(?proj)  WHERE { <" + label + "> <http://www.w3.org/2000/01/rdf-schema#label> ?proj. FILTER(langMatches( lang(?proj), \"EN\" ))}";
 		try {
 			QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
 			QueryExecution qe = qef.createQueryExecution(query);
@@ -208,7 +210,9 @@ public class RecursiveSparqlQueryBuilder {
 				log.debug(query.toString());
 				ResultSet results = qe.execSelect();
 				while (results.hasNext()) {
-					resultset.add(results.next().get("proj").toString());
+					QuerySolution next = results.next();
+					String varName = next.varNames().next();
+					resultset.add(next.get(varName).toString());
 				}
 			}
 		} catch (Exception e) {

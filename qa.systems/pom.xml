@@ -32,6 +32,12 @@
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>commons</artifactId>
 			<version>${qa-commons.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 </project>

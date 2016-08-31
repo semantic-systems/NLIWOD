@@ -20,7 +20,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 
 public class QALD6_Pipeline {
-	static Logger log = LoggerFactory.getLogger(TrainingPipeline.class);
+	static Logger log = LoggerFactory.getLogger(QALD6_Pipeline.class);
 
 	public QALD6_Pipeline() {
 
