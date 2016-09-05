@@ -2,9 +2,12 @@
 
 This collection includes the following systems:
 * YodaQA http://live.ailao.eu/
+	* does not return DBResources; we remedy that by using a query 
 * Start http://start.csail.mit.edu/index.php
+	* unreliable through non-uniform delivery of data 
 * QAKIS http://qakis.org/qakis2/
 * SINA http://sina.aksw.org/
+	* many timeouts 
 * HAWK http://hawk.aksw.org/
 
 Not yet implemented
