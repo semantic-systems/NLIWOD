@@ -7,11 +7,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aksw.qa.commons.utils.CollectionUtils;
-import org.apache.jena.atlas.logging.Log;
 
 public class Question implements IQuestion {
 
-	private Integer id;
+	private String id;
 	private String answerType;
 	private String pseudoSparqlQuery;
 	private Map<String, String> sparqlQuery;
@@ -37,7 +36,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#toString()
 	 */
 	@Override
@@ -49,7 +47,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setValue(java.lang.String,
 	 * java.lang.String)
@@ -59,7 +56,7 @@ public class Question implements IQuestion {
 		valDescriptor = valDescriptor.toLowerCase();
 		switch (valDescriptor) {
 		case "id":
-			this.id = Integer.parseInt(val);
+			this.id = val;
 			break;
 		case "answertype":
 			this.answerType = val;
@@ -80,7 +77,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getAnswerType()
 	 */
 	@Override
@@ -90,7 +86,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#setAnswerType(java.lang.
 	 * String )
 	 */
@@ -101,7 +96,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getPseudoSparqlQuery()
 	 */
 	@Override
@@ -111,7 +105,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setPseudoSparqlQuery(java
 	 * .lang.String)
@@ -123,7 +116,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getSparqlQuery()
 	 */
 	@Override
@@ -137,7 +129,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setSparqlQuery(java.lang.
 	 * String)
@@ -153,7 +144,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getAggregation()
 	 */
 	@Override
@@ -163,7 +153,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setAggregation(java.lang.
 	 * Boolean)
@@ -175,7 +164,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getOnlydbo()
 	 */
 	@Override
@@ -185,7 +173,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setOnlydbo(java.lang.Boolean)
 	 */
@@ -196,7 +183,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getOutOfScope()
 	 */
 	@Override
@@ -206,7 +192,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#setOutOfScope(java.lang.
 	 * Boolean )
 	 */
@@ -217,7 +202,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getHybrid()
 	 */
 	@Override
@@ -227,7 +211,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setHybrid(java.lang.Boolean)
 	 */
@@ -238,7 +221,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getLanguageToQuestion()
 	 */
 	@Override
@@ -248,7 +230,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setLanguageToQuestion(java
 	 * .util.Map)
@@ -260,7 +241,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getLanguageToKeywords()
 	 */
 	@Override
@@ -270,7 +250,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setLanguageToKeywords(java
 	 * .util.Map)
@@ -282,7 +261,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getGoldenAnswers()
 	 */
 	@Override
@@ -296,7 +274,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setGoldenAnswers(java.util
 	 * .Set)
@@ -318,11 +295,13 @@ public class Question implements IQuestion {
 	@Override
 	public void setId(final String id) {
 		// Why String??
-		try {
-			this.id = Integer.parseInt(id);
-		} catch (NumberFormatException e) {
-			Log.debug(e, "couldnt set id, not a number");
-		}
+		// Stanforqa and stanford dev have hashes as id
+		// try {
+		// this.id = Integer.parseInt(id);
+		// } catch (NumberFormatException e) {
+		// Log.debug(e, "couldnt set id, not a number" + "|" + id + "|");
+		// }
+		this.id = id;
 
 	}
 

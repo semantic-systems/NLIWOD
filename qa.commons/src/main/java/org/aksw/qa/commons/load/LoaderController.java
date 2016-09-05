@@ -44,9 +44,6 @@ import org.xml.sax.SAXException;
  * @author ricardousbeck tortugaattack jonathanhuthmann
  *
  */
-// FIXME numberformatexception is thrown when loading NLQ
-// Is thrown because dataset is not clean(question has not a valid id) Changed
-// logger level to debug. Suppress completely?
 
 // TODO refactor that class to account for multiple dataset types. make qaldxml,
 // qaldjson independent of this class so it becomes easiert to load a new class
@@ -305,9 +302,6 @@ public class LoaderController {
 
 	}
 
-	// TODO separate checking for non-empty input stream in all separate load
-	// instances necessary? -Christian
-	// oldtodo check that input stream is not empty before parsing(Deez Nuts!)
 	/**
 	 * This methods loads QALD XML files (used in QALD 1 to QALD 5)
 	 *
