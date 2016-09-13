@@ -1,9 +1,10 @@
 package org.aksw.hawk.nouncombination;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
@@ -59,23 +60,55 @@ abstract class ANounCombiner {
 		}
 
 		for (Entity it : entityList) {
-			String combinedNN = Joiner.on(" ").join(it.uris.get(0).getURI().replace("http://aksw.org/combinedNN/", "").split("_"));
+
+			String combinedNN = Joiner.on(" ").join(it.getUris().get(0).getURI().replace("http://aksw.org/combinedNN/", "").split("_"));
 			List<String> subsequence = Arrays.asList(combinedNN.split(" "));
 
 			Stack<MutableTreeNode> stack = new Stack<>();
 			stack.push(tree.getRoot());
-			List<MutableTreeNode> removables = new ArrayList<>();
+			Set<MutableTreeNode> removables = new HashSet<>();
 			while (!stack.isEmpty()) {
 
 				MutableTreeNode thisNode = stack.pop();
 				String label = thisNode.label;
 				for (String iterator : subsequence) {
-					if (label.contains(iterator)) {
+
+					if (label.equals(iterator) && (thisNode.getLabelPosition() >= it.getOffset()) && (thisNode.getLabelPosition() <= (it.getOffset() + subsequence.size()))) {
 						thisNode.label = combinedNN;
 						thisNode.posTag = "CombinedNN";
 						if (!thisNode.equals(tree.getRoot())) {
 							if (thisNode.parent.getLabel() == combinedNN) {
 								removables.add(thisNode);
+							}
+							/**
+							 * Workaround for a systemic problem: when the
+							 * distance in dependency graph between labels of
+							 * one combined noun is greater than one, this will
+							 * still remove corresponding nodes. But distance
+							 * souldnt be greater than one, right?
+							 *
+							 */
+							for (MutableTreeNode pathNode : tree.getPathToRoot(thisNode)) {
+								if (pathNode.getLabel() == combinedNN) {
+									removables.add(thisNode);
+								}
+							}
+
+							/**
+							 * This is a workaround for a systemic problem:
+							 * sometimes combined nouns are found, where the
+							 * corresponding nodes are not in a child-parent
+							 * relation, so we check them too for nodes to
+							 * eliminate. But should be child-parent in the
+							 * first place, so by now noun combination or
+							 * dependency tree parsing messed up.
+							 */
+							List<MutableTreeNode> sameDepth = tree.getAllNodesWithDepth(thisNode.getDepth());
+							sameDepth.remove(thisNode);
+							for (MutableTreeNode sameDepthNode : sameDepth) {
+								if (sameDepthNode.getLabel() == combinedNN) {
+									removables.add(thisNode);
+								}
 							}
 						}
 					}
@@ -87,20 +120,22 @@ abstract class ANounCombiner {
 
 			}
 			for (MutableTreeNode m : removables) {
-				Log.debug(SentenceToSequenceStanford.class, "Removing node " + m.nodeNumber + ": " + m.toString());
+				Log.debug(ANounCombiner.class, "Removing node " + m.nodeNumber + ": " + m.toString());
 				tree.remove(m);
-				tree.updateNodeNumbers();
+
 			}
+			tree.updateNodeNumbers();
 		}
 	}
 
-	protected static void setEntity(final List<String> subsequence, final HAWKQuestion q) {
+	protected static void setEntity(final List<String> subsequence, final HAWKQuestion q, final int subsequenceStartOffset) {
 		String combinedNN = Joiner.on(" ").join(subsequence);
 		String combinedURI = "http://aksw.org/combinedNN/" + Joiner.on("_").join(subsequence);
 
 		Entity tmpEntity = new Entity();
-		tmpEntity.label = combinedNN;
-		tmpEntity.uris.add(new ResourceImpl(combinedURI));
+		tmpEntity.setLabel(combinedNN);
+		tmpEntity.setOffset(subsequenceStartOffset);
+		tmpEntity.getUris().add(new ResourceImpl(combinedURI));
 
 		List<Entity> nounphrases = q.getLanguageToNounPhrases().get("en");
 		if (null == nounphrases) {

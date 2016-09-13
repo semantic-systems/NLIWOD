@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.aksw.hawk.spotter;
 
@@ -23,7 +23,7 @@ import com.google.common.collect.Maps;
 /**
  * A wrapper class which can be used to get as much entities as possible by from
  * several added spotters.
- * 
+ *
  * @author Lorenz Buehmann
  *
  */
@@ -35,13 +35,12 @@ public class MultiSpotter extends ASpotter {
 
 	private Map<String, List<Entity>> totalResult;
 
-	public MultiSpotter(ASpotter... spotters) {
+	public MultiSpotter(final ASpotter... spotters) {
 		this.spotters = Arrays.asList(spotters);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.aksw.hawk.nlp.spotter.ASpotter#getEntities(java.lang.String)
 	 */
 	@Override
@@ -49,7 +48,7 @@ public class MultiSpotter extends ASpotter {
 		totalResult = Maps.newConcurrentMap();
 
 		ExecutorService tp = Executors.newFixedThreadPool(spotters.size());
-		CompletionService<Map<String, List<Entity>>> ecs = new ExecutorCompletionService<Map<String, List<Entity>>>(tp);
+		CompletionService<Map<String, List<Entity>>> ecs = new ExecutorCompletionService<>(tp);
 
 		for (final ASpotter spotter : spotters) {
 			tp.submit(new Runnable() {
@@ -75,7 +74,7 @@ public class MultiSpotter extends ASpotter {
 		return totalResult;
 	}
 
-	private synchronized void mergeResults(Map<String, List<Entity>> result) {
+	private synchronized void mergeResults(final Map<String, List<Entity>> result) {
 		// merge into global result
 		for (Entry<String, List<Entity>> entry : result.entrySet()) {
 			String lang = entry.getKey();
@@ -87,9 +86,9 @@ public class MultiSpotter extends ASpotter {
 				for (Entity entity1 : newEntities) {
 					boolean add = true;
 					for (Entity entity2 : existingEntities) {
-						if (entity1.label.equals(entity2.label)) {
+						if (entity1.getLabel().equals(entity2.getLabel())) {
 							add = false;
-							entity2.uris.addAll(entity1.uris);
+							entity2.getUris().addAll(entity1.getUris());
 							break;
 						}
 					}
@@ -104,7 +103,7 @@ public class MultiSpotter extends ASpotter {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(final String[] args) throws Exception {
 		String question = "Which building owned by the crown overlook the North Sea?";
 
 		ASpotter fox = new Fox();

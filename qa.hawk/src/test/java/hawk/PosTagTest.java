@@ -8,7 +8,7 @@ import org.aksw.hawk.controller.StanfordNLPConnector;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.experiment.SingleQuestionPipeline;
-import org.aksw.hawk.nlp.SentenceToSequence;
+import org.aksw.hawk.nlp.SentenceToSequenceOpenNLP;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
@@ -58,7 +58,7 @@ public class PosTagTest {
 		Map<String, Integer> coreTotalCnt = new HashMap<>();
 		for (HAWKQuestion currentQuestion : questionsStanford) {
 
-			Map<String, String> core = SentenceToSequence.generatePOSTags(currentQuestion);
+			Map<String, String> core = SentenceToSequenceOpenNLP.generatePOSTags(currentQuestion);
 			Annotation doc = stanford.runAnnotation(currentQuestion.getLanguageToQuestion().get("en"));
 			Map<String, String> stanPos = stanford.generatePOSTags(doc);
 			for (Map.Entry<String, String> e : stanPos.entrySet()) {

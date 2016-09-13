@@ -17,7 +17,7 @@ import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
 import com.google.common.collect.Sets;
 import com.google.common.collect.Sets.SetView;
 
-//TODO replace by qa-commons
+// TODO replace by qa-commons
 public class EvaluationUtils {
 
 	public static double precision(final String sparqlQueryString, final String targetSPARQLQueryString, final String endpoint) {
@@ -73,8 +73,8 @@ public class EvaluationUtils {
 		double precision = precision(sparqlQuery, targetSPARQLQuery, endpoint);
 		double recall = recall(sparqlQuery, targetSPARQLQuery, endpoint);
 		double fMeasure = 0;
-		if (precision + recall > 0) {
-			fMeasure = 2 * precision * recall / (precision + recall);
+		if ((precision + recall) > 0) {
+			fMeasure = (2 * precision * recall) / (precision + recall);
 		}
 		return fMeasure;
 	}
@@ -82,7 +82,7 @@ public class EvaluationUtils {
 	/**
 	 * Returns a set of RDFNode objects by taking the fist projection variable
 	 * of the query.
-	 * 
+	 *
 	 */
 	public static Set<RDFNode> executeSelect(final Query query, final String endpoint) {
 		if (query.isQueryResultStar()) {
@@ -122,28 +122,6 @@ public class EvaluationUtils {
 		qe.setDefaultGraphURIs(defaultGraph);
 		boolean ret = qe.execAsk();
 		return ret;
-	}
-//TODO christian unit test
-	public static void main(final String[] args) throws Exception {
-		String sparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> " + "PREFIX res: <http://dbpedia.org/resource/> " + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
-		        + "SELECT DISTINCT ?uri WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts .}";
-		String targetSPARQLQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> " + "PREFIX res: <http://dbpedia.org/resource/> " + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
-		        + "SELECT DISTINCT ?uri WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts ." + "?uri dbo:director res:Garry_Marshall .}";
-		String endpoint = "http://139.18.2.164:3030/ds/sparql";
-		double precision = EvaluationUtils.precision(sparqlQuery, targetSPARQLQuery, endpoint);
-		double recall = EvaluationUtils.recall(sparqlQuery, targetSPARQLQuery, endpoint);
-		double fMeasure = EvaluationUtils.fMeasure(sparqlQuery, targetSPARQLQuery, endpoint);
-		System.out.println("P=" + precision + "\nR=" + recall + "\nF=" + fMeasure);
-
-		// SELECT COUNT(?x)...
-		sparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> " + "PREFIX res: <http://dbpedia.org/resource/> " + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
-		        + "SELECT COUNT(DISTINCT ?uri) WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts .}";
-		targetSPARQLQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> " + "PREFIX res: <http://dbpedia.org/resource/> " + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
-		        + "SELECT COUNT(DISTINCT ?uri) WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts ." + "?uri dbo:director res:Garry_Marshall .}";
-		precision = EvaluationUtils.precision(sparqlQuery, targetSPARQLQuery, endpoint);
-		recall = EvaluationUtils.recall(sparqlQuery, targetSPARQLQuery, endpoint);
-		fMeasure = EvaluationUtils.fMeasure(sparqlQuery, targetSPARQLQuery, endpoint);
-		System.out.println("P=" + precision + "\nR=" + recall + "\nF=" + fMeasure);
 	}
 
 }

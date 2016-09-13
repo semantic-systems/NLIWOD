@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.util.JSONStatusBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,7 @@ import com.google.common.collect.Queues;
 public class MutableTreePruner {
 	Logger log = LoggerFactory.getLogger(MutableTreePruner.class);
 
-	public MutableTree prune(HAWKQuestion q) {
+	public MutableTree prune(final HAWKQuestion q) {
 		log.debug(q.getTree().toString());
 		removalRules(q);
 		removalBasedOnDependencyLabels(q);
@@ -27,12 +26,12 @@ public class MutableTreePruner {
 		applyInterrogativeRules(q);
 		sortTree(q.getTree());
 		log.debug(q.getTree().toString());
-		q.setTree_pruned(JSONStatusBuilder.treeToJSON(q.getTree()));
+		// q.setTree_pruned(JSONStatusBuilder.treeToJSON(q.getTree()));
 		return q.getTree();
 	}
 
-	private void sortTree(MutableTree tree) {
-		Queue<MutableTreeNode> queue = new LinkedList<MutableTreeNode>();
+	private void sortTree(final MutableTree tree) {
+		Queue<MutableTreeNode> queue = new LinkedList<>();
 		queue.add(tree.getRoot());
 		while (!queue.isEmpty()) {
 			MutableTreeNode tmp = queue.poll();
@@ -42,13 +41,13 @@ public class MutableTreePruner {
 
 	}
 
-	private void removalBasedOnDependencyLabels(HAWKQuestion q) {
+	private void removalBasedOnDependencyLabels(final HAWKQuestion q) {
 		for (String depLabel : Lists.newArrayList("auxpass", "aux")) {
 			inorderRemovalBasedOnDependencyLabels(q.getTree().getRoot(), q.getTree(), depLabel);
 		}
 	}
 
-	private boolean inorderRemovalBasedOnDependencyLabels(MutableTreeNode node, MutableTree tree, String depLabel) {
+	private boolean inorderRemovalBasedOnDependencyLabels(final MutableTreeNode node, final MutableTree tree, final String depLabel) {
 		if (node.depLabel.matches(depLabel)) {
 			tree.remove(node);
 			return true;
@@ -63,7 +62,7 @@ public class MutableTreePruner {
 		}
 	}
 
-	private void applyInterrogativeRules(HAWKQuestion q) {
+	private void applyInterrogativeRules(final HAWKQuestion q) {
 		MutableTreeNode root = q.getTree().getRoot();
 		// GIVE ME will be deleted
 		if (root.label.equals("Give")) {
@@ -89,10 +88,10 @@ public class MutableTreePruner {
 	/**
 	 * removes: * punctuations (.) * wh- words(WDT|WP$) * PRP($) * DT * BY and
 	 * IN (possessive) pronouns * PDT predeterminer all both
-	 * 
+	 *
 	 * Who,Where WP|WRB stays in
 	 */
-	private void removalRules(HAWKQuestion q) {
+	private void removalRules(final HAWKQuestion q) {
 		MutableTreeNode root = q.getTree().getRoot();
 		for (String posTag : Lists.newArrayList(".", "WDT", "POS", "WP\\$", "PRP\\$", "RB", "PRP", "DT", "IN", "PDT")) {
 			Queue<MutableTreeNode> queue = Queues.newLinkedBlockingQueue();

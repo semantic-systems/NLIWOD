@@ -15,12 +15,11 @@ import com.google.common.base.Joiner;
  */
 public class Entity implements Serializable, Comparable<Entity> {
 
-	// TODO make those things private
 	private static final long serialVersionUID = 7859357081713774767L;
-	public String label = "";
-	public String type = "";
-	public List<Resource> posTypesAndCategories = new ArrayList<>();
-	public List<Resource> uris = new ArrayList<>();
+	private String label = "";
+	private String type = "";
+	private List<Resource> posTypesAndCategories = new ArrayList<>();
+	private List<Resource> uris = new ArrayList<>();
 	private int offset;
 
 	public Entity(final String label, final String type) {
@@ -32,9 +31,7 @@ public class Entity implements Serializable, Comparable<Entity> {
 	}
 
 	/*
-	 * 
 	 * Currently, two entities are compared by their labels
-	 * 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
@@ -52,60 +49,96 @@ public class Entity implements Serializable, Comparable<Entity> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(final Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Entity other = (Entity) obj;
 		if (uris.get(0) == null) {
-			if (other.uris.get(0) != null)
+			if (other.uris.get(0) != null) {
 				return false;
-		} else if (!uris.get(0).equals(other.uris.get(0)))
+			}
+		} else if (!uris.get(0).equals(other.uris.get(0))) {
 			return false;
+		}
 		if (label == null) {
-			if (other.label != null)
+			if (other.label != null) {
 				return false;
-		} else if (!label.equals(other.label))
+			}
+		} else if (!label.equals(other.label)) {
 			return false;
+		}
 		return true;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((label == null) ? 0 : label.hashCode());
+		result = (prime * result) + ((label == null) ? 0 : label.hashCode());
 		return result;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return label + "(uri: "+ Joiner.on(", ").join(uris) + "; type: "+ type + ")";
+		return label + "(uri: " + Joiner.on(", ").join(uris) + "; type: " + type + ")";
 	}
 
 	public int getOffset() {
-	    return offset;
-    }
+		return offset;
+	}
 
-	public void setOffset(int offset) {
-	    this.offset = offset;
-    }
+	public void setOffset(final int offset) {
+		this.offset = offset;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public List<Resource> getPosTypesAndCategories() {
+		return posTypesAndCategories;
+	}
+
+	public List<Resource> getUris() {
+		return uris;
+	}
+
+	public void setLabel(final String label) {
+		this.label = label;
+	}
+
+	public void setType(final String type) {
+		this.type = type;
+	}
+
+	public void setPosTypesAndCategories(final List<Resource> posTypesAndCategories) {
+		this.posTypesAndCategories = posTypesAndCategories;
+	}
+
+	public void setUris(final List<Resource> uris) {
+		this.uris = uris;
+	}
 
 }

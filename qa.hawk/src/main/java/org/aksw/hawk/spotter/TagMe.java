@@ -22,8 +22,6 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Joiner;
-
 public class TagMe extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(TagMe.class);
 
@@ -69,12 +67,12 @@ public class TagMe extends ASpotter {
 			for (Object res : resources.toArray()) {
 				JSONObject next = (JSONObject) res;
 				Entity ent = new Entity();
-				ent.label = ((String) next.get("spot"));
-				ent.uris.add(new ResourceImpl(((String) next.get("title")).replaceAll(",", "%2C")));
+				ent.setLabel(((String) next.get("spot")));
+				ent.getUris().add(new ResourceImpl(((String) next.get("title")).replaceAll(",", "%2C")));
 				JSONArray types = (JSONArray) next.get("dbpedia_categories");
 				if (types != null) {
 					for (Object type : types) {
-						ent.posTypesAndCategories.add(new ResourceImpl((String) type));
+						ent.getPosTypesAndCategories().add(new ResourceImpl((String) type));
 					}
 				}
 				tmpList.add(ent);
@@ -82,11 +80,11 @@ public class TagMe extends ASpotter {
 			String baseURI = "http://dbpedia.org/resource/";
 			for (Entity entity : tmpList) {
 				// hack to make underscores where spaces are
-				Resource resource = entity.uris.get(0);
+				Resource resource = entity.getUris().get(0);
 				if (resource.getURI() != null) {
 					ResourceImpl e = new ResourceImpl(baseURI + resource.getURI().replace(" ", "_"));
-					entity.uris.add(e);
-					entity.uris.remove(0);
+					entity.getUris().add(e);
+					entity.getUris().remove(0);
 				}
 			}
 
@@ -107,11 +105,11 @@ public class TagMe extends ASpotter {
 		for (String key : q.getLanguageToNamedEntites().keySet()) {
 			System.out.println(key);
 			for (Entity entity : q.getLanguageToNamedEntites().get(key)) {
-				System.out.println("\t" + entity.label + " ->" + entity.type);
-				for (Resource r : entity.posTypesAndCategories) {
+				System.out.println("\t" + entity.getLabel() + " ->" + entity.getType());
+				for (Resource r : entity.getPosTypesAndCategories()) {
 					System.out.println("\t\tpos: " + r);
 				}
-				for (Resource r : entity.uris) {
+				for (Resource r : entity.getUris()) {
 					System.out.println("\t\turi: " + r);
 				}
 			}

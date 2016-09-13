@@ -20,8 +20,6 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Joiner;
-
 public class Spotlight extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(Spotlight.class);
 
@@ -59,11 +57,11 @@ public class Spotlight extends ASpotter {
 					// FIXME implement offset also for other spotters, write a
 					// test that each spotter returns an offset
 					ent.setOffset(Integer.valueOf((String) next.get("@offset")));
-					ent.label = (String) next.get("@surfaceForm");
+					ent.setLabel((String) next.get("@surfaceForm"));
 					String uri = ((String) next.get("@URI")).replaceAll(",", "%2C");
-					ent.uris.add(new ResourceImpl(uri));
+					ent.getUris().add(new ResourceImpl(uri));
 					for (String type : ((String) next.get("@types")).split(",")) {
-						ent.posTypesAndCategories.add(new ResourceImpl(type));
+						ent.getPosTypesAndCategories().add(new ResourceImpl(type));
 					}
 					tmpList.add(ent);
 				}
@@ -79,12 +77,12 @@ public class Spotlight extends ASpotter {
 	public static void main(final String args[]) {
 		HAWKQuestion q = new HAWKQuestion();
 		// q.getLanguageToQuestion().put("en",
-		// "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
+		// "Which buildings in art deco style did Shreve, Lamb and Harmon
+		// design?");
 		// q.getLanguageToQuestion().put("en",
 		// "Which anti-apartheid activist was born in Mvezo?");
 		q.getLanguageToQuestion().put("en", " Who was vice president under the president who approved the use of atomic weapons against Japan during World War II?");
 		ASpotter spotter = new Spotlight();
-
 
 		for (double i = 0; i <= 1.0; i += 0.05) {
 			((Spotlight) spotter).setConfidence(i);
@@ -93,11 +91,11 @@ public class Spotlight extends ASpotter {
 			for (String key : q.getLanguageToNamedEntites().keySet()) {
 				System.out.println(key);
 				for (Entity entity : q.getLanguageToNamedEntites().get(key)) {
-					System.out.println("\t" + entity.label + " ->" + entity.type);
-					for (Resource r : entity.posTypesAndCategories) {
+					System.out.println("\t" + entity.getLabel() + " ->" + entity.getType());
+					for (Resource r : entity.getPosTypesAndCategories()) {
 						System.out.println("\t\tpos: " + r);
 					}
-					for (Resource r : entity.uris) {
+					for (Resource r : entity.getUris()) {
 						System.out.println("\t\turi: " + r);
 					}
 				}
@@ -109,7 +107,7 @@ public class Spotlight extends ASpotter {
 		return confidence;
 	}
 
-	public void setConfidence(double i) {
+	public void setConfidence(final double i) {
 		this.confidence = String.valueOf(i);
 	}
 
@@ -117,7 +115,7 @@ public class Spotlight extends ASpotter {
 		return support;
 	}
 
-	public void setSupport(String support) {
+	public void setSupport(final String support) {
 		this.support = support;
 	}
 }

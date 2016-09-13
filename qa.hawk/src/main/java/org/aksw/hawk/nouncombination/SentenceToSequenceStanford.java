@@ -9,7 +9,6 @@ import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.nlp.SentenceToSequence;
 
-// TODO write unit test
 class SentenceToSequenceStanford extends ANounCombiner {
 	private static SentenceToSequenceStanford instance;
 

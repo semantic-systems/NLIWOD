@@ -6,7 +6,7 @@ import org.aksw.hawk.cache.CachedParseTreeClearnlp;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTreePruner;
-import org.aksw.hawk.nlp.SentenceToSequence;
+import org.aksw.hawk.nlp.SentenceToSequenceOpenNLP;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
@@ -18,7 +18,7 @@ public class PipelineClearNLP extends AbstractPipeline {
 	static Logger log = LoggerFactory.getLogger(PipelineClearNLP.class);
 	private Fox nerdModule;
 	private CachedParseTreeClearnlp cParseTree;
-	private SentenceToSequence sentenceToSequence;
+	private SentenceToSequenceOpenNLP sentenceToSequence;
 	private MutableTreePruner pruner;
 	private Annotater annotater;
 	private SPARQLQueryBuilder queryBuilder;
@@ -37,7 +37,7 @@ public class PipelineClearNLP extends AbstractPipeline {
 		cParseTree = new CachedParseTreeClearnlp();
 		cardinality = new Cardinality();
 
-		sentenceToSequence = new SentenceToSequence();
+		sentenceToSequence = new SentenceToSequenceOpenNLP();
 
 		pruner = new MutableTreePruner();
 
@@ -48,7 +48,7 @@ public class PipelineClearNLP extends AbstractPipeline {
 	}
 
 	@Override
-	public List<Answer> getAnswersToQuestion(HAWKQuestion q) {
+	public List<Answer> getAnswersToQuestion(final HAWKQuestion q) {
 		log.info("Question: " + q.getLanguageToQuestion().get("en"));
 
 		log.info("Classify question type.");

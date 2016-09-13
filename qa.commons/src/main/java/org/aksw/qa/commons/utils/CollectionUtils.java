@@ -5,31 +5,27 @@ import java.util.LinkedHashMap;
 import java.util.Set;
 
 /**
- * 
+ *
  * @author felixconrads (tortugaattack)
  *
  */
 
 public class CollectionUtils {
-
+	// But why?
 	public static <E> HashSet<E> newHashSet() {
-		return new HashSet<E>();
+		return new HashSet<>();
 	}
 
 	public static <K, V> LinkedHashMap<K, V> newLinkedHashMap() {
-		return new LinkedHashMap<K, V>();
+		return new LinkedHashMap<>();
 	}
 
-	public static <E> Set<E> intersection(Set<E> arg1, Set<E> arg2) {
-		Set<E> intersect = new HashSet<E>();
+	public static <E> Set<E> intersection(final Set<E> arg1, final Set<E> arg2) {
 
-		for (E entity : arg1) {
-			if (arg2.contains(entity)) {
-				intersect.add(entity);
-			}
-		}
-
+		Set<E> intersect = new HashSet<>(arg1);
+		intersect.retainAll(arg2);
 		return intersect;
+
 	}
 
 }

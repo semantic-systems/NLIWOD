@@ -5,6 +5,8 @@ import java.util.List;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTreePruner;
+import org.aksw.hawk.nouncombination.NounCombinationChain;
+import org.aksw.hawk.nouncombination.NounCombiners;
 import org.aksw.hawk.number.UnitController;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQL;
@@ -24,6 +26,7 @@ public class PipelineStanford extends AbstractPipeline {
 	private QueryTypeClassifier queryTypeClassifier;
 	private StanfordNLPConnector stanfordConnector;
 	private UnitController numberToDigit;
+	private NounCombinationChain nounCombination;
 
 	public PipelineStanford() {
 		queryTypeClassifier = new QueryTypeClassifier();
@@ -35,7 +38,10 @@ public class PipelineStanford extends AbstractPipeline {
 
 		this.stanfordConnector = new StanfordNLPConnector();
 		this.numberToDigit = new UnitController();
+
 		numberToDigit.instantiateEnglish(stanfordConnector);
+		nounCombination = new NounCombinationChain(NounCombiners.HawkRules, NounCombiners.StanfordDependecy);
+
 		cardinality = new Cardinality();
 
 		pruner = new MutableTreePruner();
@@ -64,6 +70,9 @@ public class PipelineStanford extends AbstractPipeline {
 		// @Ricardo this will calculate cardinality of reduced(combinedNN) tree.
 		// is this right?
 		q.setTree(stanfordConnector.parseTree(q, this.numberToDigit));
+
+		nounCombination.runChain(q);
+
 		// Cardinality identifies the integer i used for LIMIT i
 		log.info("Cardinality calculation.");
 		q.setCardinality(cardinality.cardinality(q));

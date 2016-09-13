@@ -13,6 +13,7 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.nlp.MutableTreePruner;
 import org.aksw.hawk.nlp.SentenceToSequence;
+import org.aksw.hawk.nlp.SentenceToSequenceOpenNLP;
 import org.aksw.hawk.nouncombination.NounCombinationChain;
 import org.aksw.hawk.nouncombination.NounCombiners;
 import org.aksw.hawk.querybuilding.Annotater;
@@ -20,17 +21,22 @@ import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.spotter.Spotlight;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.stanford.nlp.pipeline.Annotation;
-
-// import org.aksw.hawk.cache.CachedParseTree;
+import infrastructure.ServerChecks;
 
 public class ParseTreeTest {
+	@BeforeClass
+	public static void checkServer() {
+		if (!ServerChecks.titanSparqlAlive()) {
+			throw new Error("Server down");
+		}
+	}
 
-	// TODO remove ignore once dbpedia is up again
 	@Test
 
 	public void testProcess() throws IOException {
@@ -117,7 +123,7 @@ public class ParseTreeTest {
 			q.setTree(cParseTree2.process(q));
 			bareClearnlp[i] = treeprinter.printTreeClearnlp(q);
 
-			SentenceToSequence.combineSequences(q);
+			SentenceToSequenceOpenNLP.combineSequences(q);
 			combinedClearnlp[i] = treeprinter.printTreeClearnlp(q);
 			// // Cardinality identifies the integer i used for LIMIT i
 			// //log.info("Cardinality calculation.");

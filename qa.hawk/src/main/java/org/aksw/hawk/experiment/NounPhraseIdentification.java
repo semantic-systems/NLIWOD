@@ -70,7 +70,7 @@ public class NounPhraseIdentification {
 				if ((it.getRight().getLanguageToNounPhrases().get("en") != null) && !it.getRight().getLanguageToNounPhrases().get("en").isEmpty()) {
 					ArrayList<String> nouns = new ArrayList<>();
 					for (Entity entity : it.getRight().getLanguageToNounPhrases().get("en")) {
-						nouns.add(entity.label);
+						nouns.add(entity.getLabel());
 					}
 					log.info(it.getLeft() + "[" + Joiner.on(", ").join(nouns) + "]");
 				}

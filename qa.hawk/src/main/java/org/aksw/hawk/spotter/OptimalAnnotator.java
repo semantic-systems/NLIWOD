@@ -41,8 +41,8 @@ public class OptimalAnnotator extends ASpotter {
 		ArrayList<Entity> tmpList = new ArrayList<>();
 
 		Entity ent = new Entity();
-		ent.label = question;
-		ent.uris.add(new ResourceImpl(map.get(question)));
+		ent.setLabel(question);
+		ent.getUris().add(new ResourceImpl(map.get(question)));
 		tmpList.add(ent);
 		tmp.put("en", tmpList);
 
@@ -57,11 +57,11 @@ public class OptimalAnnotator extends ASpotter {
 		for (String key : q.getLanguageToNamedEntites().keySet()) {
 			System.out.println(key);
 			for (Entity entity : q.getLanguageToNamedEntites().get(key)) {
-				System.out.println("\t" + entity.label + " ->" + entity.type);
-				for (Resource r : entity.posTypesAndCategories) {
+				System.out.println("\t" + entity.getLabel() + " ->" + entity.getType());
+				for (Resource r : entity.getPosTypesAndCategories()) {
 					System.out.println("\t\tpos: " + r);
 				}
-				for (Resource r : entity.uris) {
+				for (Resource r : entity.getUris()) {
 					System.out.println("\t\turi: " + r);
 				}
 			}

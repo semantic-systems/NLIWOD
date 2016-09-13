@@ -1,6 +1,7 @@
 package org.aksw.hawk.nlp;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -14,17 +15,25 @@ import org.slf4j.LoggerFactory;
 public class MutableTree implements Serializable {
 	private static final long serialVersionUID = 1286195006804443794L;
 	static Logger log = LoggerFactory.getLogger(MutableTree.class);
-	public MutableTreeNode head = null;
+	private MutableTreeNode root = null;
 
 	public MutableTreeNode getRoot() {
-		return head;
+		return root;
+	}
+
+	public void setRoot(final MutableTreeNode root) {
+		this.root = root;
 	}
 
 	public boolean remove(final MutableTreeNode target) {
 
-		if (target.equals(head)) {
-			if (head.children.size() == 1) {
-				head = head.children.get(0);
+		if (!getAllNodes().contains(target)) {
+			return false;
+		}
+
+		if (target.equals(root)) {
+			if (root.children.size() == 1) {
+				root = root.children.get(0);
 				return true;
 			} else {
 				// more than one child on to be removed root
@@ -46,7 +55,7 @@ public class MutableTree implements Serializable {
 
 	@Override
 	public String toString() {
-		return TreeTraversal.inorderTraversal(head, 0, null);
+		return TreeTraversal.inorderTraversal(root, 0, null);
 	}
 
 	/**
@@ -56,7 +65,7 @@ public class MutableTree implements Serializable {
 	 */
 	public MutableTree hardcopy() {
 		MutableTree tree = new MutableTree();
-		tree.head = this.head.hardcopy(null);
+		tree.root = this.root.hardcopy(null);
 		return tree;
 	}
 
@@ -87,10 +96,10 @@ public class MutableTree implements Serializable {
 	 */
 	public List<MutableTreeNode> getAllNodes() {
 		List<MutableTreeNode> allNodes = new Vector<>();
-		if (head == null) {
+		if (root == null) {
 			return allNodes;
 		}
-		return head.subNodes();
+		return root.subNodes();
 	}
 
 	/**
@@ -114,4 +123,26 @@ public class MutableTree implements Serializable {
 		}
 
 	}
+
+	public List<MutableTreeNode> getAllNodesWithDepth(final int depth) {
+		List<MutableTreeNode> sameDepth = new ArrayList<>();
+		for (MutableTreeNode it : getAllNodes()) {
+			if (it.getDepth() == depth) {
+				sameDepth.add(it);
+			}
+		}
+		return sameDepth;
+	}
+
+	public List<MutableTreeNode> getPathToRoot(final MutableTreeNode node) {
+		ArrayList<MutableTreeNode> path = new ArrayList<>();
+		MutableTreeNode current = node;
+		do {
+			current = current.parent;
+			path.add(current);
+
+		} while (current != root);
+		return path;
+	}
+
 }

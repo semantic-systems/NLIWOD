@@ -7,7 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class SPARQLQueryTest {
-
+	@Ignore
 	@Test
 	public void test() {
 		SPARQL sqb = new SPARQL();

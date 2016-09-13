@@ -17,7 +17,7 @@ public class HAWKUtils {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param Sentence Sentence to transform
 	 * @param list List of Entities to replace labels with
 	 * @return Sentence with replaced labels
@@ -34,10 +34,10 @@ public class HAWKUtils {
 		for (Entity currentNE : list) {
 			// proof if this label undercuts the last one.
 			int currentNEStartPos = currentNE.getOffset();
-			int currentNEEndPos = currentNEStartPos + currentNE.label.length();
+			int currentNEEndPos = currentNEStartPos + currentNE.getLabel().length();
 			if (startFormerLabel >= currentNEEndPos) {
 				textParts.add(sentence.substring(currentNEEndPos, startFormerLabel));
-				textParts.add(currentNE.uris.get(0).getURI());
+				textParts.add(currentNE.getUris().get(0).getURI());
 				startFormerLabel = currentNEStartPos;
 			}
 		}
@@ -51,9 +51,6 @@ public class HAWKUtils {
 		return textWithMarkups.toString();
 	}
 
-	// TODO @ christian einen test schreiben mit der frage : Who was vice
-	// president under the president who approved the use of atomic weapons
-	// against Japan during World War II?
 	/**
 	 * Replaces Named Entities in question string with corresponding URL, stored
 	 * in {@link HAWKQuestion#getLanguageToNamedEntites()}
