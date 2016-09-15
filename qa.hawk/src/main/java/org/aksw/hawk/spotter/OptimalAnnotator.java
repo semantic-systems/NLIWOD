@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.qa.commons.datastructure.Entity;
+import org.aksw.qa.nerd.spotter.ASpotter;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.slf4j.Logger;

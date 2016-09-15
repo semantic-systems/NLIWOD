@@ -1,4 +1,4 @@
-package org.aksw.hawk.spotter;
+package org.aksw.qa.nerd.spotter;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -9,9 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.qa.commons.datastructure.Entity;
-import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -74,34 +72,37 @@ public class Spotlight extends ASpotter {
 	}
 
 	// TODO Christian: Unit Test
-	public static void main(final String args[]) {
-		HAWKQuestion q = new HAWKQuestion();
-		// q.getLanguageToQuestion().put("en",
-		// "Which buildings in art deco style did Shreve, Lamb and Harmon
-		// design?");
-		// q.getLanguageToQuestion().put("en",
-		// "Which anti-apartheid activist was born in Mvezo?");
-		q.getLanguageToQuestion().put("en", " Who was vice president under the president who approved the use of atomic weapons against Japan during World War II?");
-		ASpotter spotter = new Spotlight();
-
-		for (double i = 0; i <= 1.0; i += 0.05) {
-			((Spotlight) spotter).setConfidence(i);
-			System.out.println("Confidence: " + ((Spotlight) spotter).getConfidence());
-			q.setLanguageToNamedEntites(spotter.getEntities(q.getLanguageToQuestion().get("en")));
-			for (String key : q.getLanguageToNamedEntites().keySet()) {
-				System.out.println(key);
-				for (Entity entity : q.getLanguageToNamedEntites().get(key)) {
-					System.out.println("\t" + entity.getLabel() + " ->" + entity.getType());
-					for (Resource r : entity.getPosTypesAndCategories()) {
-						System.out.println("\t\tpos: " + r);
-					}
-					for (Resource r : entity.getUris()) {
-						System.out.println("\t\turi: " + r);
-					}
-				}
-			}
-		}
-	}
+	// public static void main(final String args[]) {
+	// HAWKQuestion q = new HAWKQuestion();
+	// // q.getLanguageToQuestion().put("en",
+	// // "Which buildings in art deco style did Shreve, Lamb and Harmon
+	// // design?");
+	// // q.getLanguageToQuestion().put("en",
+	// // "Which anti-apartheid activist was born in Mvezo?");
+	// q.getLanguageToQuestion().put("en", " Who was vice president under the
+	// president who approved the use of atomic weapons against Japan during
+	// World War II?");
+	// ASpotter spotter = new Spotlight();
+	//
+	// for (double i = 0; i <= 1.0; i += 0.05) {
+	// ((Spotlight) spotter).setConfidence(i);
+	// System.out.println("Confidence: " + ((Spotlight)
+	// spotter).getConfidence());
+	// q.setLanguageToNamedEntites(spotter.getEntities(q.getLanguageToQuestion().get("en")));
+	// for (String key : q.getLanguageToNamedEntites().keySet()) {
+	// System.out.println(key);
+	// for (Entity entity : q.getLanguageToNamedEntites().get(key)) {
+	// System.out.println("\t" + entity.getLabel() + " ->" + entity.getType());
+	// for (Resource r : entity.getPosTypesAndCategories()) {
+	// System.out.println("\t\tpos: " + r);
+	// }
+	// for (Resource r : entity.getUris()) {
+	// System.out.println("\t\turi: " + r);
+	// }
+	// }
+	// }
+	// }
+	// }
 
 	public String getConfidence() {
 		return confidence;

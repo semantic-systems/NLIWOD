@@ -1,4 +1,4 @@
-package org.aksw.hawk.spotter;
+package org.aksw.qa.nerd.spotter;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -112,23 +111,24 @@ public class Fox extends ASpotter {
 		return mappedEntitysReturn;
 	}
 
-	// TODO CHristian: Transform to unit test
-	public static void main(final String args[]) {
-		HAWKQuestion q = new HAWKQuestion();
-		q.getLanguageToQuestion().put("en", "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
-		ASpotter fox = new Fox();
-		q.setLanguageToNamedEntites(fox.getEntities(q.getLanguageToQuestion().get("en")));
-		for (String key : q.getLanguageToNamedEntites().keySet()) {
-			System.out.println(key);
-			for (Entity entity : q.getLanguageToNamedEntites().get(key)) {
-				System.out.println("\t" + entity.getLabel() + " ->" + entity.getType());
-				for (Resource r : entity.getPosTypesAndCategories()) {
-					System.out.println("\t\tpos: " + r);
-				}
-				for (Resource r : entity.getUris()) {
-					System.out.println("\t\turi: " + r);
-				}
-			}
-		}
-	}
+	// // TODO CHristian: Transform to unit test
+	// public static void main(final String args[]) {
+	// HAWKQuestion q = new HAWKQuestion();
+	// q.getLanguageToQuestion().put("en", "Which buildings in art deco style
+	// did Shreve, Lamb and Harmon design?");
+	// ASpotter fox = new Fox();
+	// q.setLanguageToNamedEntites(fox.getEntities(q.getLanguageToQuestion().get("en")));
+	// for (String key : q.getLanguageToNamedEntites().keySet()) {
+	// System.out.println(key);
+	// for (Entity entity : q.getLanguageToNamedEntites().get(key)) {
+	// System.out.println("\t" + entity.getLabel() + " ->" + entity.getType());
+	// for (Resource r : entity.getPosTypesAndCategories()) {
+	// System.out.println("\t\tpos: " + r);
+	// }
+	// for (Resource r : entity.getUris()) {
+	// System.out.println("\t\turi: " + r);
+	// }
+	// }
+	// }
+	// }
 }
