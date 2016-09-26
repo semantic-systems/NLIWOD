@@ -7,13 +7,24 @@ import org.aksw.hawk.pruner.SPARQLQueryPruner;
 import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
 
+import infrastructure.ServerChecks;
+
 public class SpecificQueryTest {
+
+	@BeforeClass
+	public static void checkServer() {
+		if (!ServerChecks.titanSparqlAlive()) {
+			throw new Error("Server down");
+		}
+	}
+
 	Logger log = LoggerFactory.getLogger(SpecificQueryTest.class);
 	SPARQL sparql = new SPARQL();
 	SPARQLQueryPruner pruner = new SPARQLQueryPruner(sparql);

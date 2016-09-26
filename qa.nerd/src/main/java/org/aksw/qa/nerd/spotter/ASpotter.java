@@ -1,4 +1,4 @@
-package org.aksw.hawk.spotter;
+package org.aksw.qa.nerd.spotter;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -12,11 +12,13 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import org.aksw.hawk.cache.PersistentCache;
 import org.aksw.qa.commons.datastructure.Entity;
+import org.aksw.qa.nerd.cache.PersistentCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//FIXME Jonathan move all spotter to qa.nerd except for multi and optimal (import qa.nerd as maven dep)
+
+// FIXME Jonathan move all spotter to qa.nerd except for multi and optimal
+// (import qa.nerd as maven dep)
 public abstract class ASpotter {
 
 	public abstract Map<String, List<Entity>> getEntities(String question);
@@ -25,7 +27,7 @@ public abstract class ASpotter {
 	private boolean useCache = false;
 	private static PersistentCache cache = new PersistentCache();
 
-	protected String requestPOST(String input, String requestURL) {
+	protected String requestPOST(final String input, final String requestURL) {
 
 		if (useCache) {
 			if (cache.containsKey(input)) {
@@ -50,7 +52,7 @@ public abstract class ASpotter {
 		return output;
 	}
 
-	private String post(String urlParameters, String requestURL) throws MalformedURLException, IOException, ProtocolException {
+	private String post(final String urlParameters, final String requestURL) throws MalformedURLException, IOException, ProtocolException {
 		URL url = new URL(requestURL);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("POST");

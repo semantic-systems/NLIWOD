@@ -17,6 +17,8 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 	public String posTag;
 	public String lemma;
 	private List<String> annotations = Lists.newArrayList();
+	private int depth;
+
 	/**
 	 * The position of label word in sentence.
 	 */
@@ -59,6 +61,11 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 		this.depLabel = depLabel;
 		this.nodeNumber = i;
 		this.lemma = lemma;
+		if (parent != null) {
+			this.depth = parent.getDepth() + 1;
+		} else {
+			this.depth = 0;
+		}
 	}
 
 	public MutableTreeNode(final String label, final String posTag, final String depLabel, final MutableTreeNode parent, final int i, final String lemma, final int labelPosition) {
@@ -68,6 +75,12 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 		this.depLabel = depLabel;
 		this.nodeNumber = i;
 		this.lemma = lemma;
+		if (parent != null) {
+			this.depth = parent.getDepth() + 1;
+		} else {
+			this.depth = 0;
+		}
+
 		this.setLabelPosition(labelPosition);
 	}
 
@@ -156,6 +169,10 @@ public class MutableTreeNode implements Comparable<MutableTreeNode>, Serializabl
 
 	public void setLabelPosition(final int labelPosition) {
 		this.labelPosition = labelPosition;
+	}
+
+	public int getDepth() {
+		return depth;
 	}
 
 }

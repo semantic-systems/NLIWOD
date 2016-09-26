@@ -1,4 +1,4 @@
-package org.aksw.hawk.cache;
+package org.aksw.qa.nerd.cache;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -18,18 +18,20 @@ public class PersistentCache {
 	public static String cacheLocation;
 	public HashMap<String, String> cache;
 	int i = 0;
-//TODO delete that class when the spotters are moved
+
+	// TODO delete that class when the spotters are moved
 	public PersistentCache() {
 		cacheLocation = new File("cache/spotterCache").getAbsolutePath();
 		log.debug("cacheLocation: " + cacheLocation);
 		readCache();
+
 	}
 
 	/**
 	 * Read the cache to a file
 	 */
 	public void readCache() {
-		cache = new HashMap<String, String>();
+		cache = new HashMap<>();
 		try {
 			if (new File(cacheLocation).exists()) {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(cacheLocation), "UTF8"));
@@ -62,15 +64,15 @@ public class PersistentCache {
 		}
 	}
 
-	public boolean containsKey(String input) {
+	public boolean containsKey(final String input) {
 		return cache.containsKey(input);
 	}
 
-	public String get(String input) {
+	public String get(final String input) {
 		return cache.get(input);
 	}
 
-	public void put(String input, String output) {
+	public void put(final String input, final String output) {
 		cache.put(input, output);
 	}
 

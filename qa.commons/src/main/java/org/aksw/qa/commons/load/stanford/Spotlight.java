@@ -24,7 +24,8 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//TODO refactor this and AGDISTIS to be in a submodule called qa.nerd, submodule needs to be independent of other submodules, should have caching 
+// TODO refactor this and AGDISTIS to be in a submodule called qa.nerd,
+// submodule needs to be independent of other submodules, should have caching
 public class Spotlight {
 	static Logger log = LoggerFactory.getLogger(Spotlight.class);
 
@@ -35,7 +36,7 @@ public class Spotlight {
 	public Spotlight() {
 	}
 
-	protected String requestPOST(String input, String requestURL) {
+	protected String requestPOST(final String input, final String requestURL) {
 
 		String output = "";
 		try {
@@ -47,7 +48,7 @@ public class Spotlight {
 		return output;
 	}
 
-	private String post(String urlParameters, String requestURL) throws MalformedURLException, IOException, ProtocolException {
+	private String post(final String urlParameters, final String requestURL) throws MalformedURLException, IOException, ProtocolException {
 		URL url = new URL(requestURL);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("POST");
@@ -110,11 +111,11 @@ public class Spotlight {
 					// FIXME implement offset also for other spotters, write a
 					// test that each spotter returns an offset
 					ent.setOffset(Integer.valueOf((String) next.get("@offset")));
-					ent.label = (String) next.get("@surfaceForm");
+					ent.setLabel((String) next.get("@surfaceForm"));
 					String uri = ((String) next.get("@URI")).replaceAll(",", "%2C");
-					ent.uris.add(new ResourceImpl(uri));
+					ent.getUris().add(new ResourceImpl(uri));
 					for (String type : ((String) next.get("@types")).split(",")) {
-						ent.posTypesAndCategories.add(new ResourceImpl(type));
+						ent.getPosTypesAndCategories().add(new ResourceImpl(type));
 					}
 					tmpList.add(ent);
 				}
@@ -132,8 +133,8 @@ public class Spotlight {
 		Spotlight spotter = new Spotlight();
 
 		for (double i = 0; i <= 1.0; i += 0.05) {
-			((Spotlight) spotter).setConfidence(i);
-			System.out.println("Confidence: " + ((Spotlight) spotter).getConfidence());
+			spotter.setConfidence(i);
+			System.out.println("Confidence: " + spotter.getConfidence());
 			Map<String, List<Entity>> entities = spotter.getEntities(input);
 			entities.forEach((x, y) -> System.out.println(x + " -> " + y));
 		}
@@ -143,7 +144,7 @@ public class Spotlight {
 		return confidence;
 	}
 
-	public void setConfidence(double i) {
+	public void setConfidence(final double i) {
 		this.confidence = String.valueOf(i);
 	}
 
@@ -151,7 +152,7 @@ public class Spotlight {
 		return support;
 	}
 
-	public void setSupport(String support) {
+	public void setSupport(final String support) {
 		this.support = support;
 	}
 }

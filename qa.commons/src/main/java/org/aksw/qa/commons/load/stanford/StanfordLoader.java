@@ -16,24 +16,26 @@ import javax.json.JsonString;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.datastructure.Question;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StanfordLoader {
 	/**
 	 * loads both the Stanford dev and train dataset
-	 * 
-	 * @param is
-	 *            an InputStream containing the dataset
+	 *
+	 * @param is an InputStream containing the dataset
 	 * @return a list of Questions with id, question string and a set of answer
 	 *         strings
-	 * 
+	 *
 	 */
-	// TODO Jonathan System.out weg und logging einbauen
-	public static List<IQuestion> load(InputStream is) {
+	static Logger log = LoggerFactory.getLogger(Spotlight.class);
+
+	public static List<IQuestion> load(final InputStream is) {
 		List<IQuestion> output = new ArrayList<>();
 		JsonReader jsonReader = Json.createReader(is);
 		JsonObject mainJsonObject = jsonReader.readObject();
 		JsonArray dataArray = mainJsonObject.getJsonArray("data");
-		System.out.println("Number of WikiArticles " + dataArray.size());
+		log.info("Number of WikiArticles " + dataArray.size());
 		dataArray.forEach(article -> {
 			JsonArray contexts = ((JsonObject) article).getJsonArray("paragraphs");
 			contexts.forEach(paragraph -> {
@@ -43,7 +45,7 @@ public class StanfordLoader {
 					IQuestion q = new Question();
 					JsonString question = ((JsonObject) x).getJsonString("question");
 					// FIXME Micha, geht das hier nicht schöner mit Java 8?
-					HashMap<String, String> map = new HashMap<String, String>();
+					HashMap<String, String> map = new HashMap<>();
 					map.put("en", question.getString());
 					q.setLanguageToQuestion(map);
 
@@ -51,18 +53,18 @@ public class StanfordLoader {
 					q.setId(id.getString());
 
 					JsonArray answers = ((JsonObject) x).getJsonArray("answers");
-					HashSet<String> goldenAnswers = new HashSet<String>();
+					HashSet<String> goldenAnswers = new HashSet<>();
 					answers.forEach(y -> {
 						JsonNumber answerStart = ((JsonObject) y).getJsonNumber("answer_start");
 						JsonString text = ((JsonObject) y).getJsonString("text");
-						if (text == null) {// TODO proper logging
-							System.out.println("NULL");
+						if (text == null) {
+							log.info("id: " + id.getString() + " has answertext : NULL");
+
 						}
 						goldenAnswers.add(text != null ? text.getString().trim() : null);
 					});
-					// TODO log.debu instead of system.out
 					// if (goldenAnswers.size() > 1) {
-					// goldenAnswers.forEach(System.out::print);
+					// goldenAnswers.forEach(iterator -> log.debug(iterator));
 					// }
 					q.setGoldenAnswers(goldenAnswers);
 					output.add(q);
@@ -70,10 +72,10 @@ public class StanfordLoader {
 			});
 
 		});
-		System.out.println("Number of Questions: " + output.size());
+		log.debug("Number of Questions: " + output.size());
 
 		List<IQuestion> result = output.stream().filter(x -> x.getGoldenAnswers().size() > 1).collect(Collectors.toList());
-		System.out.println("Number of Questions with more than one answer: " + result.size());
+		log.debug("Number of Questions with more than one answer: " + result.size());
 
 		return output;
 	}

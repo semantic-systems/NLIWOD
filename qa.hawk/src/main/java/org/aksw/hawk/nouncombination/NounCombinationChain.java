@@ -3,7 +3,6 @@ package org.aksw.hawk.nouncombination;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.aksw.hawk.controller.StanfordNLPConnector;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 
@@ -84,35 +83,6 @@ public class NounCombinationChain {
 		qNew.setTree(q.getTree().hardcopy());
 		runChain(qNew);
 		return qNew;
-	}
-
-	public static void main(final String[] args) {
-		StanfordNLPConnector pipe = new StanfordNLPConnector();
-
-		HAWKQuestion q = new HAWKQuestion();
-		q.getLanguageToQuestion().put("en", "In which town was the man convicted of killing Martin Luther King born?");
-		pipe.parseTree(q, null);
-
-		System.out.println(q.getTree().toString());
-
-		NounCombinationChain hawk = new NounCombinationChain(NounCombiners.HawkRules);
-		NounCombinationChain stanf = new NounCombinationChain(NounCombiners.StanfordDependecy);
-
-		NounCombinationChain hawkStanf = new NounCombinationChain(NounCombiners.HawkRules, NounCombiners.StanfordDependecy);
-		NounCombinationChain stanfHawk = new NounCombinationChain(NounCombiners.StanfordDependecy, NounCombiners.HawkRules);
-
-		System.out.println("hawk rules");
-		System.out.println(hawk.runChainReturnNew(q));
-
-		System.out.println("stanford rules");
-		System.out.println(stanf.runChainReturnNew(q));
-
-		System.out.println("first hawk, then stanford");
-		System.out.println(hawkStanf.runChainReturnNew(q));
-
-		System.out.println("first stanford, then hawk");
-		System.out.println(stanfHawk.runChainReturnNew(q));
-
 	}
 
 }

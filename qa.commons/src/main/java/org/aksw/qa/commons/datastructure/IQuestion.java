@@ -6,52 +6,53 @@ import java.util.Set;
 
 public interface IQuestion {
 
-	public abstract String toString();
+	@Override
+	public String toString();
 
-	public abstract void setValue(String valDescriptor, String val);
+	public void setValue(String valDescriptor, String val);
 
-	public abstract String getId();
+	public String getId();
 
-	public abstract void setId(String id);
+	public void setId(String id);
 
-	public abstract String getAnswerType();
+	public String getAnswerType();
 
-	public abstract void setAnswerType(String answerType);
+	public void setAnswerType(String answerType);
 
-	public abstract String getPseudoSparqlQuery();
+	public String getPseudoSparqlQuery();
 
-	public abstract void setPseudoSparqlQuery(String pseudoSparqlQuery);
+	public void setPseudoSparqlQuery(String pseudoSparqlQuery);
 
-	public abstract String getSparqlQuery();
+	public String getSparqlQuery();
 
-	public abstract void setSparqlQuery(String sparqlQuery);
+	public void setSparqlQuery(String sparqlQuery);
 
-	public abstract Boolean getAggregation();
+	public Boolean getAggregation();
 
-	public abstract void setAggregation(Boolean aggregation);
+	public void setAggregation(Boolean aggregation);
 
-	public abstract Boolean getOnlydbo();
+	public Boolean getOnlydbo();
 
-	public abstract void setOnlydbo(Boolean onlydbo);
+	public void setOnlydbo(Boolean onlydbo);
 
-	public abstract Boolean getOutOfScope();
+	public Boolean getOutOfScope();
 
-	public abstract void setOutOfScope(Boolean outOfScope);
+	public void setOutOfScope(Boolean outOfScope);
 
-	public abstract Boolean getHybrid();
+	public Boolean getHybrid();
 
-	public abstract void setHybrid(Boolean hybrid);
+	public void setHybrid(Boolean hybrid);
 
-	public abstract Map<String, String> getLanguageToQuestion();
+	public Map<String, String> getLanguageToQuestion();
 
-	public abstract void setLanguageToQuestion(Map<String, String> languageToQuestion);
+	public void setLanguageToQuestion(Map<String, String> languageToQuestion);
 
-	public abstract Map<String, List<String>> getLanguageToKeywords();
+	public Map<String, List<String>> getLanguageToKeywords();
 
-	public abstract void setLanguageToKeywords(Map<String, List<String>> languageToKeywords);
+	public void setLanguageToKeywords(Map<String, List<String>> languageToKeywords);
 
-	public abstract Set<String> getGoldenAnswers();
+	public Set<String> getGoldenAnswers();
 
-	public abstract void setGoldenAnswers(Set<String> goldenAnswers);
+	public void setGoldenAnswers(Set<String> goldenAnswers);
 
 }

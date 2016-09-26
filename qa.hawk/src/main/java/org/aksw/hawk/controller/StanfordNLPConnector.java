@@ -12,7 +12,6 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.number.UnitController;
-import org.aksw.hawk.spotter.Spotlight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,7 +121,7 @@ public class StanfordNLPConnector {
 
 		MutableTree tree = semanticGraphToMutableTree(graph, null);
 
-		log.debug(tree.toString());
+		// log.debug(tree.toString());
 
 		return tree;
 
@@ -151,7 +150,6 @@ public class StanfordNLPConnector {
 		Annotation document = this.runAnnotation(preprocessStringForStanford(sentence));
 		MutableTree tree = this.process(document);
 		q.setTree(tree);
-		log.debug(tree.toString());
 		return tree;
 	}
 
@@ -195,7 +193,7 @@ public class StanfordNLPConnector {
 		IndexedWord graphRoot = graph.getFirstRoot();
 
 		mutableRoot = new MutableTreeNode(postprocessStringForStanford(graphRoot), graphRoot.tag(), "root", null, nodeNumber++, graphRoot.lemma(), graphRoot.get(IndexAnnotation.class));
-		tree.head = mutableRoot;
+		tree.setRoot(mutableRoot);
 
 		convertGraphStanford(mutableRoot, graphRoot, graph);
 
@@ -273,61 +271,4 @@ public class StanfordNLPConnector {
 
 	}
 
-	// TODO transform to unit tests (should be three or more)
-	public static void main(final String[] args) {
-		Spotlight nerdModule = new Spotlight();
-
-		StanfordNLPConnector connector = new StanfordNLPConnector();
-		String sentence = "Who was vice president under the president who approved the use of atomic weapons against Japan during World War II?";
-		HAWKQuestion q = new HAWKQuestion();
-		q.setLanguageToNamedEntites(nerdModule.getEntities(sentence));
-		q.getLanguageToQuestion().put("en", sentence);
-		MutableTree tree = connector.parseTree(q, null);
-		System.out.println("______________________________________");
-
-		System.out.println(tree.toString());
-		//
-		// /// ------
-		// StanfordNLPConnector connector = new StanfordNLPConnector();
-		// String sentence = "Who was vice president under the president who
-		// approved the use of atomic weapons against Japan during World War
-		// II?";
-		// List<Entity> list = Lists.newArrayList();
-		// Entity e = new Entity("vice president", "");
-		// e.uris.add(new
-		// ResourceImpl("http://dbpedia.org/resource/Vice_president"));
-		// e.setOffset(8);
-		// list.add(e);
-		// e = new Entity("president", "");
-		// e.uris.add(new
-		// ResourceImpl("http://dbpedia.org/resource/President"));
-		// e.setOffset(33);
-		// list.add(e);
-		// String string = connector.replaceLabelsByIdentifiedURIs(sentence,
-		// list);
-		// log.debug(string);
-		// Assert.assertEquals(string,
-		// "Who was http://dbpedia.org/resource/Vice_president under the
-		// http://dbpedia.org/resource/President who approved the use of atomic
-		// weapons against Japan during World War II?");
-		//
-		//
-		// /// ---------------
-		// List<HAWKQuestion> questionsStanford;
-		// Spotlight nerdModule = new Spotlight();
-		// List<IQuestion> loadedQuestions =
-		// LoaderController.load(Dataset.QALD6_Train_Hybrid);
-		// questionsStanford =
-		// HAWKQuestionFactory.createInstances(loadedQuestions);
-		//
-		// for (HAWKQuestion currentQuestion : questionsStanford) {
-		// log.info(currentQuestion.getLanguageToQuestion().get("en"));
-		// currentQuestion.setLanguageToNamedEntites(nerdModule.getEntities(currentQuestion.getLanguageToQuestion().get("en")));
-		// // Annotation doc = stanford.runAnnotation(currentQuestion);
-		// connector.combineSequences(currentQuestion);
-		// // stanford.combineSequences(doc, currentQuestion);
-		//
-		// }
-		//
-	}
 }

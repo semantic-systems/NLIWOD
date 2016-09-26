@@ -8,11 +8,11 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.nouncombination.NounCombinationChain;
 import org.aksw.hawk.nouncombination.NounCombiners;
-import org.aksw.hawk.spotter.Spotlight;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
+import org.aksw.qa.nerd.spotter.Spotlight;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.jena.ext.com.google.common.base.Joiner;
 import org.slf4j.Logger;
@@ -70,7 +70,7 @@ public class NounPhraseIdentification {
 				if ((it.getRight().getLanguageToNounPhrases().get("en") != null) && !it.getRight().getLanguageToNounPhrases().get("en").isEmpty()) {
 					ArrayList<String> nouns = new ArrayList<>();
 					for (Entity entity : it.getRight().getLanguageToNounPhrases().get("en")) {
-						nouns.add(entity.label);
+						nouns.add(entity.getLabel());
 					}
 					log.info(it.getLeft() + "[" + Joiner.on(", ").join(nouns) + "]");
 				}

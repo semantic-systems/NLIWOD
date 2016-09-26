@@ -82,7 +82,7 @@ class StanfordCombinedNN extends ANounCombiner {
 			for (MutableTreeNode compoundChild : children) {
 				orderlyWords.add(compoundChild.label);
 			}
-			setEntity(orderlyWords, q);
+			setEntity(orderlyWords, q, children.get(0).getLabelPosition());
 			/**
 			 * Merge all compound-children with parent
 			 */
