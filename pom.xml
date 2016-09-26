@@ -99,6 +99,7 @@
 		<module>qa.commons</module>
 		<module>qa.ml</module>
 		<module>qa.hawk</module>
+		<module>qa.seqa</module>
 	</modules>
 	<!-- DISTRIBUTION MANAGEMENT -->
 	<distributionManagement>
