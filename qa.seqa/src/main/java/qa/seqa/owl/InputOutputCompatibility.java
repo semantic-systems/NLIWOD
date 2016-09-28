@@ -76,18 +76,18 @@ public class InputOutputCompatibility {
 
 		System.out.println("class tree");
 		PelletReasoner r = PelletReasonerFactory.getInstance().createReasoner(merged);
-		r.getKB().realize();
+		r.getKB().classify();
 		r.getKB().printClassTree();
 
 		System.out.println("subclasses of owl:Thing");
-		OWLClass thing = merged.getOWLOntologyManager().getOWLDataFactory().getOWLClass(IRI.create("owl:Thing"));
-		Set<OWLClass> classes = r.getSubClasses(thing, false).getFlattened();
+		Set<OWLClass> classes = r.getSubClasses(manager.getOWLDataFactory().getOWLThing(), false).getFlattened();
 		System.out.println(classes);
 
 		System.out.println("Equivalent classes");
 		NodeSet<OWLClass> clss = r.getSubClasses(manager.getOWLDataFactory().getOWLThing(),false);
 		clss.forEach(System.out::println);
 
+		//EntitySearcher.getEquivalentClasses(cls, merged);
 	}
 
 }

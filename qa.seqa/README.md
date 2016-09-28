@@ -10,3 +10,12 @@
  
 # Running this application
 `mvn clean package spring-boot:run`
+
+# Tasks
+
+- [ ] @J: Simple Core Komponente über Templates bauen, die disambiguierte Entities brauch
+- [ ] @J: Class Index als webservice
+- [ ] @J: Property Index als webservice
+- [ ] @N: Loader für Registry
+- [ ] @N: Webservices von oben einpflegen
+- [ ] @J,N: Vorschlag machen, wie man generierte Pipelines speichert (erstmal in memory) und so online stellt, dass man sie benutzen kann
