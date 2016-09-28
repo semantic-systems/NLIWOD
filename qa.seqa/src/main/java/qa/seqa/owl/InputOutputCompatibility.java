@@ -11,6 +11,8 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.util.OWLOntologyMerger;
 import org.springframework.stereotype.Service;
 
 import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
@@ -29,11 +31,21 @@ public class InputOutputCompatibility {
 
 	public static void main(String[] args) throws Exception {
 		// load the importing ontology
-		OWLOntology ontology = null;
+		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+		OWLOntology ontologyNIF = null;
+		OWLOntology ontologyOA = null;
+
 		try {
-			URL dbpediaURL = new URL("http://downloads.dbpedia.org/2015-10/dbpedia_2015-10.owl");
-			InputStream is = dbpediaURL.openStream();
-			ontology = OWLManager.createOWLOntologyManager().loadOntologyFromOntologyDocument(is);
+			URL nifURL = new URL("https://raw.githubusercontent.com/NLP2RDF/ontologies/master/nif-core/nif-core.ttl");
+			InputStream nifis = nifURL.openStream();
+			ontologyNIF = manager.loadOntologyFromOntologyDocument(nifis);
+
+			// FIXME when W3C fixed website https://www.w3.org/ns/oa/index.ttl
+			// broken
+			URL OAURL = new URL("https://github.com/w3c/web-annotation/raw/gh-pages/vocab/wd/ontology/index.xml");
+			InputStream oais = OAURL.openStream();
+			ontologyOA = manager.loadOntologyFromOntologyDocument(oais);
+
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (OWLOntologyCreationException e) {
@@ -41,13 +53,18 @@ public class InputOutputCompatibility {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		PelletReasoner r = PelletReasonerFactory.getInstance().createReasoner( ontology );
+		// merge relevant ontologies
+		OWLOntologyMerger merger = new OWLOntologyMerger(manager);
+		IRI mergedOntologyIRI = IRI.create("http://aksw.org/SEQA");
+		OWLOntology merged = merger.createMergedOntology(manager, mergedOntologyIRI);
+
+		PelletReasoner r = PelletReasonerFactory.getInstance().createReasoner(merged);
 		System.out.println("done.");
 		r.getKB().realize();
 		r.getKB().printClassTree();
-		
-		OWLClass person = ontology.getOWLOntologyManager().getOWLDataFactory().getOWLClass(IRI.create("http://dbpedia.org/ontology/Person"));
-		Set<OWLClass> classes = r.getSubClasses(person, false).getFlattened();
+
+		OWLClass thing = merged.getOWLOntologyManager().getOWLDataFactory().getOWLClass(IRI.create("owl:Thing"));
+		Set<OWLClass> classes = r.getSubClasses(thing, false).getFlattened();
 		System.out.println(classes);
 	}
 
