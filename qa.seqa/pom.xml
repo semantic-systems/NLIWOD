@@ -7,6 +7,7 @@
 		<version>0.0.2</version>
 	</parent>
 	<artifactId>qa.seqa</artifactId>
+	<version>0.0.3</version>
 	<build>
 		<plugins>
 			<plugin>
@@ -36,6 +37,18 @@
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-core</artifactId>
 			<version>3.1.0</version>
+		</dependency>
+		<!-- Is input and output compatible -->
+		<dependency>
+			<groupId>net.sourceforge.owlapi</groupId>
+			<artifactId>owlapi-distribution</artifactId>
+			<version>4.2.3</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.owlapi/pellet-owlapi-ignazio1977 -->
+		<dependency>
+			<groupId>net.sourceforge.owlapi</groupId>
+			<artifactId>pellet-owlapi-ignazio1977</artifactId>
+			<version>2.4.0-ignazio1977</version>
 		</dependency>
 	</dependencies>
 </project>
