@@ -59,8 +59,8 @@ public class InputOutputCompatibility {
 			prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
 			// FIXME when W3C fixed website https://www.w3.org/ns/oa/index.ttl
-			// broken
-			URL OAURL = new URL("https://github.com/w3c/web-annotation/raw/gh-pages/vocab/wd/ontology/index.xml");
+			// brokenhttps://github.com/w3c/web-annotation/raw/gh-pages/vocab/wd/ontology/index.xml
+			URL OAURL = new URL("https://www.w3.org/ns/oa.owl");
 			InputStream oais = OAURL.openStream();
 			ontologyOA = manager.loadOntologyFromOntologyDocument(oais);
 			format = ontologyOA.getOWLOntologyManager().getOntologyFormat(ontologyOA);
