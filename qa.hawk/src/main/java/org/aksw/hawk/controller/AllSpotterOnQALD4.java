@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
+import org.aksw.qa.annotation.spotter.ASpotter;
+import org.aksw.qa.annotation.spotter.Fox;
+import org.aksw.qa.annotation.spotter.Spotlight;
+import org.aksw.qa.annotation.spotter.TagMe;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
-import org.aksw.qa.nerd.spotter.ASpotter;
-import org.aksw.qa.nerd.spotter.Fox;
-import org.aksw.qa.nerd.spotter.Spotlight;
-import org.aksw.qa.nerd.spotter.TagMe;
 import org.apache.jena.query.QueryParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

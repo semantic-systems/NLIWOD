@@ -10,7 +10,7 @@ import org.aksw.hawk.nlp.SentenceToSequenceOpenNLP;
 import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
-import org.aksw.qa.nerd.spotter.Fox;
+import org.aksw.qa.annotation.spotter.Fox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

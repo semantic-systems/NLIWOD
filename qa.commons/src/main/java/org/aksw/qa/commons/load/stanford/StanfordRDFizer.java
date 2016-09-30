@@ -88,7 +88,11 @@ public class StanfordRDFizer {
 		// CBD generator
 		ConciseBoundedDescriptionGenerator cbdGen = new ConciseBoundedDescriptionGeneratorImpl(qef);
 		cbdGen = new SymmetricConciseBoundedDescriptionGeneratorImpl(qef);
-		cbdGen.setRecursionDepth(1);
+		// FIXME
+		/**
+		 * Method not available anymore
+		 */
+		// cbdGen.setRecursionDepth(1);
 		// query tree factory
 		QueryTreeFactory qtf = new QueryTreeFactoryBase();
 		// filters

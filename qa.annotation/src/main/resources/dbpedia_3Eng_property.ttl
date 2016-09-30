@@ -1,0 +1,485 @@
+<http://dbpedia.org/ontology/meltingPoint> <http://www.w3.org/2000/01/rdf-schema#label> "melt at" .
+<http://dbpedia.org/ontology/meltingPoint> <http://www.w3.org/2000/01/rdf-schema#label> "melting point" .
+<http://dbpedia.org/ontology/areaMetro> <http://www.w3.org/2000/01/rdf-schema#label> "area" .
+<http://dbpedia.org/ontology/iataLocationIdentifier> <http://www.w3.org/2000/01/rdf-schema#label> "IATA identifier" .
+<http://dbpedia.org/ontology/iataLocationIdentifier> <http://www.w3.org/2000/01/rdf-schema#label> "IATA location identifier" .
+<http://dbpedia.org/ontology/iataLocationIdentifier> <http://www.w3.org/2000/01/rdf-schema#label> "IATA code" .
+<http://dbpedia.org/ontology/revenue> <http://www.w3.org/2000/01/rdf-schema#label> "revenue" .
+<http://dbpedia.org/ontology/populationMetro> <http://www.w3.org/2000/01/rdf-schema#label> "metropolitan population" .
+<http://dbpedia.org/ontology/populationMetro> <http://www.w3.org/2000/01/rdf-schema#label> "population" .
+<http://dbpedia.org/ontology/commissioningDate> <http://www.w3.org/2000/01/rdf-schema#label> "commissioned on" .
+<http://dbpedia.org/ontology/absoluteMagnitude> <http://www.w3.org/2000/01/rdf-schema#label> "absolute magnitude" .
+<http://dbpedia.org/ontology/requirement> <http://www.w3.org/2000/01/rdf-schema#label> "requirement of" .
+<http://dbpedia.org/ontology/requirement> <http://www.w3.org/2000/01/rdf-schema#label> "require" .
+<http://dbpedia.org/ontology/agencyStationCode> <http://www.w3.org/2000/01/rdf-schema#label> "station code" .
+<http://dbpedia.org/ontology/date> <http://www.w3.org/2000/01/rdf-schema#label> "take place on" .
+<http://dbpedia.org/ontology/mascot> <http://www.w3.org/2000/01/rdf-schema#label> "mascot" .
+<http://dbpedia.org/ontology/frequency> <http://www.w3.org/2000/01/rdf-schema#label> "frequency" .
+<http://dbpedia.org/ontology/frequency> <http://www.w3.org/2000/01/rdf-schema#label> "broadcast on" .
+<http://dbpedia.org/ontology/alias> <http://www.w3.org/2000/01/rdf-schema#label> "call" .
+<http://dbpedia.org/ontology/alias> <http://www.w3.org/2000/01/rdf-schema#label> "alias" .
+<http://dbpedia.org/ontology/maximumElevation> <http://www.w3.org/2000/01/rdf-schema#label> "rise to" .
+<http://dbpedia.org/ontology/maximumElevation> <http://www.w3.org/2000/01/rdf-schema#label> "maximum altitude" .
+<http://dbpedia.org/ontology/oclc> <http://www.w3.org/2000/01/rdf-schema#label> "OCLC number" .
+<http://dbpedia.org/ontology/birthYear> <http://www.w3.org/2000/01/rdf-schema#label> "born in" .
+<http://dbpedia.org/ontology/address> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/address> <http://www.w3.org/2000/01/rdf-schema#label> "address" .
+<http://dbpedia.org/ontology/callsignMeaning> <http://www.w3.org/2000/01/rdf-schema#label> "mean" .
+<http://dbpedia.org/ontology/callsignMeaning> <http://www.w3.org/2000/01/rdf-schema#label> "stand for" .
+<http://dbpedia.org/ontology/shipLaunch> <http://www.w3.org/2000/01/rdf-schema#label> "launched on" .
+<http://dbpedia.org/ontology/lcc> <http://www.w3.org/2000/01/rdf-schema#label> "LC classification" .
+<http://dbpedia.org/ontology/iupacName> <http://www.w3.org/2000/01/rdf-schema#label> "IUPAC name" .
+<http://dbpedia.org/ontology/yearOfConstruction> <http://www.w3.org/2000/01/rdf-schema#label> "constructed in" .
+<http://dbpedia.org/ontology/populationTotal> <http://www.w3.org/2000/01/rdf-schema#label> "population" .
+<http://dbpedia.org/ontology/populationTotal> <http://www.w3.org/2000/01/rdf-schema#label> "total population" .
+<http://dbpedia.org/ontology/area> <http://www.w3.org/2000/01/rdf-schema#label> "area" .
+<http://dbpedia.org/ontology/icaoLocationIdentifier> <http://www.w3.org/2000/01/rdf-schema#label> "ICAO identifier" .
+<http://dbpedia.org/ontology/icaoLocationIdentifier> <http://www.w3.org/2000/01/rdf-schema#label> "location indicator" .
+<http://dbpedia.org/ontology/icaoLocationIdentifier> <http://www.w3.org/2000/01/rdf-schema#label> "ICAO code" .
+<http://dbpedia.org/ontology/synonym> <http://www.w3.org/2000/01/rdf-schema#label> "synonym" .
+<http://dbpedia.org/ontology/populationDensity> <http://www.w3.org/2000/01/rdf-schema#label> "population density" .
+<http://dbpedia.org/ontology/seatingCapacity> <http://www.w3.org/2000/01/rdf-schema#label> "seating capacity" .
+<http://dbpedia.org/ontology/seatingCapacity> <http://www.w3.org/2000/01/rdf-schema#label> "capacity" .
+<http://dbpedia.org/ontology/runtime> <http://www.w3.org/2000/01/rdf-schema#label> "runtime" .
+<http://dbpedia.org/ontology/runtime> <http://www.w3.org/2000/01/rdf-schema#label> "long" .
+<http://dbpedia.org/ontology/topSpeed> <http://www.w3.org/2000/01/rdf-schema#label> "top speed" .
+<http://dbpedia.org/ontology/density> <http://www.w3.org/2000/01/rdf-schema#label> "density" .
+<http://dbpedia.org/ontology/causalties> <http://www.w3.org/2000/01/rdf-schema#label> "casualties" .
+<http://dbpedia.org/ontology/activeYearsStartDate> <http://www.w3.org/2000/01/rdf-schema#label> "active since" .
+<http://dbpedia.org/ontology/capacity> <http://www.w3.org/2000/01/rdf-schema#label> "accommodate" .
+<http://dbpedia.org/ontology/capacity> <http://www.w3.org/2000/01/rdf-schema#label> "capacity" .
+<http://dbpedia.org/ontology/result> <http://www.w3.org/2000/01/rdf-schema#label> "result of" .
+<http://dbpedia.org/ontology/abbreviation> <http://www.w3.org/2000/01/rdf-schema#label> "abbreviated as" .
+<http://dbpedia.org/ontology/abbreviation> <http://www.w3.org/2000/01/rdf-schema#label> "abbreviation" .
+<http://dbpedia.org/ontology/abbreviation> <http://www.w3.org/2000/01/rdf-schema#label> "abbreviate" .
+<http://dbpedia.org/ontology/slogan> <http://www.w3.org/2000/01/rdf-schema#label> "slogan" .
+<http://dbpedia.org/ontology/deathYear> <http://www.w3.org/2000/01/rdf-schema#label> "die in" .
+<http://dbpedia.org/ontology/populationUrbanDensity> <http://www.w3.org/2000/01/rdf-schema#label> "population density" .
+<http://dbpedia.org/ontology/openingDate> <http://www.w3.org/2000/01/rdf-schema#label> "opened on" .
+<http://dbpedia.org/ontology/meanTemperature> <http://www.w3.org/2000/01/rdf-schema#label> "mean temperature on" .
+<http://dbpedia.org/ontology/dateCompleted> <http://www.w3.org/2000/01/rdf-schema#label> "completed on" .
+<http://dbpedia.org/ontology/dateUse> <http://www.w3.org/2000/01/rdf-schema#label> "opened in" .
+<http://dbpedia.org/ontology/officialSchoolColour> <http://www.w3.org/2000/01/rdf-schema#label> "official color" .
+<http://dbpedia.org/ontology/entrezgene> <http://www.w3.org/2000/01/rdf-schema#label> "Entrez Gene ID" .
+<http://dbpedia.org/ontology/entrezgene> <http://www.w3.org/2000/01/rdf-schema#label> "Entrez ID" .
+<http://dbpedia.org/ontology/birthName> <http://www.w3.org/2000/01/rdf-schema#label> "birth name" .
+<http://dbpedia.org/ontology/height> <http://www.w3.org/2000/01/rdf-schema#label> "high" .
+<http://dbpedia.org/ontology/height> <http://www.w3.org/2000/01/rdf-schema#label> "tall" .
+<http://dbpedia.org/ontology/shipDraft> <http://www.w3.org/2000/01/rdf-schema#label> "draft" .
+<http://dbpedia.org/ontology/activeYearsEndDate> <http://www.w3.org/2000/01/rdf-schema#label> "active until" .
+<http://dbpedia.org/ontology/review> <http://www.w3.org/2000/01/rdf-schema#label> "review" .
+<http://dbpedia.org/ontology/review> <http://www.w3.org/2000/01/rdf-schema#label> "reviewed at" .
+<http://dbpedia.org/ontology/nrhpReferenceNumber> <http://www.w3.org/2000/01/rdf-schema#label> "reference number" .
+<http://dbpedia.org/ontology/nrhpReferenceNumber> <http://www.w3.org/2000/01/rdf-schema#label> "National Register reference number" .
+<http://dbpedia.org/ontology/nrhpReferenceNumber> <http://www.w3.org/2000/01/rdf-schema#label> "NRHP reference number" .
+<http://dbpedia.org/ontology/recordDate> <http://www.w3.org/2000/01/rdf-schema#label> "recorded on" .
+<http://dbpedia.org/ontology/recordDate> <http://www.w3.org/2000/01/rdf-schema#label> "record date" .
+<http://dbpedia.org/ontology/facilityId> <http://www.w3.org/2000/01/rdf-schema#label> "facility ID" .
+<http://dbpedia.org/ontology/boilingPoint> <http://www.w3.org/2000/01/rdf-schema#label> "boil at" .
+<http://dbpedia.org/ontology/boilingPoint> <http://www.w3.org/2000/01/rdf-schema#label> "boiling point" .
+<http://dbpedia.org/ontology/utcOffset> <http://www.w3.org/2000/01/rdf-schema#label> "UTC offset" .
+<http://dbpedia.org/ontology/utcOffset> <http://www.w3.org/2000/01/rdf-schema#label> "time zone offset" .
+<http://dbpedia.org/ontology/position> <http://www.w3.org/2000/01/rdf-schema#label> "position" .
+<http://dbpedia.org/ontology/issn> <http://www.w3.org/2000/01/rdf-schema#label> "ISSN" .
+<http://dbpedia.org/ontology/areaLand> <http://www.w3.org/2000/01/rdf-schema#label> "land area" .
+<http://dbpedia.org/ontology/launchDate> <http://www.w3.org/2000/01/rdf-schema#label> "launched on" .
+<http://dbpedia.org/ontology/bSide> <http://www.w3.org/2000/01/rdf-schema#label> "B-side" .
+<http://dbpedia.org/ontology/militaryCommand> <http://www.w3.org/2000/01/rdf-schema#label> "command" .
+<http://dbpedia.org/ontology/gross> <http://www.w3.org/2000/01/rdf-schema#label> "gross" .
+<http://dbpedia.org/ontology/gross> <http://www.w3.org/2000/01/rdf-schema#label> "take over" .
+<http://dbpedia.org/ontology/gross> <http://www.w3.org/2000/01/rdf-schema#label> "make" .
+<http://dbpedia.org/ontology/gross> <http://www.w3.org/2000/01/rdf-schema#label> "take in" .
+<http://dbpedia.org/ontology/title> <http://www.w3.org/2000/01/rdf-schema#label> "known as" .
+<http://dbpedia.org/ontology/isbn> <http://www.w3.org/2000/01/rdf-schema#label> "ISBN" .
+<http://dbpedia.org/ontology/periapsis> <http://www.w3.org/2000/01/rdf-schema#label> "periapsis" .
+<http://dbpedia.org/ontology/periapsis> <http://www.w3.org/2000/01/rdf-schema#label> "periapse" .
+<http://dbpedia.org/ontology/elevation> <http://www.w3.org/2000/01/rdf-schema#label> "altitude" .
+<http://dbpedia.org/ontology/elevation> <http://www.w3.org/2000/01/rdf-schema#label> "stand at" .
+<http://dbpedia.org/ontology/elevation> <http://www.w3.org/2000/01/rdf-schema#label> "rise to" .
+<http://dbpedia.org/ontology/elevation> <http://www.w3.org/2000/01/rdf-schema#label> "high" .
+<http://dbpedia.org/ontology/elevation> <http://www.w3.org/2000/01/rdf-schema#label> "height" .
+<http://dbpedia.org/ontology/elevation> <http://www.w3.org/2000/01/rdf-schema#label> "elevation" .
+<http://dbpedia.org/ontology/elevation> <http://www.w3.org/2000/01/rdf-schema#label> "tall" .
+<http://dbpedia.org/ontology/orbitalPeriod> <http://www.w3.org/2000/01/rdf-schema#label> "orbital period" .
+<http://dbpedia.org/ontology/office> <http://www.w3.org/2000/01/rdf-schema#label> "position" .
+<http://dbpedia.org/ontology/latestReleaseVersion> <http://www.w3.org/2000/01/rdf-schema#label> "latest version" .
+<http://dbpedia.org/ontology/latestReleaseVersion> <http://www.w3.org/2000/01/rdf-schema#label> "current release" .
+<http://dbpedia.org/ontology/facultySize> <http://www.w3.org/2000/01/rdf-schema#label> "faculty size" .
+<http://dbpedia.org/ontology/facultySize> <http://www.w3.org/2000/01/rdf-schema#label> "employ" .
+<http://dbpedia.org/ontology/conservationStatus> <http://www.w3.org/2000/01/rdf-schema#label> "conservation status" .
+<http://dbpedia.org/ontology/weight> <http://www.w3.org/2000/01/rdf-schema#label> "weight" .
+<http://dbpedia.org/ontology/weight> <http://www.w3.org/2000/01/rdf-schema#label> "weigh" .
+<http://dbpedia.org/ontology/displacement> <http://www.w3.org/2000/01/rdf-schema#label> "engine displacement" .
+<http://dbpedia.org/ontology/displacement> <http://www.w3.org/2000/01/rdf-schema#label> "displacement" .
+<http://dbpedia.org/ontology/depth> <http://www.w3.org/2000/01/rdf-schema#label> "depth" .
+<http://dbpedia.org/ontology/depth> <http://www.w3.org/2000/01/rdf-schema#label> "deep" .
+<http://dbpedia.org/ontology/shipBeam> <http://www.w3.org/2000/01/rdf-schema#label> "beam" .
+<http://dbpedia.org/ontology/pseudonym> <http://www.w3.org/2000/01/rdf-schema#label> "call" .
+<http://dbpedia.org/ontology/pseudonym> <http://www.w3.org/2000/01/rdf-schema#label> "pseudonym" .
+<http://dbpedia.org/ontology/status> <http://www.w3.org/2000/01/rdf-schema#label> "status" .
+<http://dbpedia.org/ontology/foundingDate> <http://www.w3.org/2000/01/rdf-schema#label> "founding date" .
+<http://dbpedia.org/ontology/foundingDate> <http://www.w3.org/2000/01/rdf-schema#label> "founded on" .
+<http://dbpedia.org/ontology/foundingDate> <http://www.w3.org/2000/01/rdf-schema#label> "established on" .
+<http://dbpedia.org/ontology/range> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/range> <http://www.w3.org/2000/01/rdf-schema#label> "part of" .
+<http://dbpedia.org/ontology/activeYearsStartYear> <http://www.w3.org/2000/01/rdf-schema#label> "active since" .
+<http://dbpedia.org/ontology/sublimationPoint> <http://www.w3.org/2000/01/rdf-schema#label> "sublime at" .
+<http://dbpedia.org/ontology/sublimationPoint> <http://www.w3.org/2000/01/rdf-schema#label> "sublimation point" .
+<http://dbpedia.org/ontology/number> <http://www.w3.org/2000/01/rdf-schema#label> "squad number" .
+<http://dbpedia.org/ontology/number> <http://www.w3.org/2000/01/rdf-schema#label> "shirt number" .
+<http://dbpedia.org/ontology/areaUrban> <http://www.w3.org/2000/01/rdf-schema#label> "urban area" .
+<http://dbpedia.org/ontology/areaUrban> <http://www.w3.org/2000/01/rdf-schema#label> "area" .
+<http://dbpedia.org/ontology/squadNumber> <http://www.w3.org/2000/01/rdf-schema#label> "squad number" .
+<http://dbpedia.org/ontology/squadNumber> <http://www.w3.org/2000/01/rdf-schema#label> "shirt number" .
+<http://dbpedia.org/ontology/minimumElevation> <http://www.w3.org/2000/01/rdf-schema#label> "minimum altitude" .
+<http://dbpedia.org/ontology/areaWater> <http://www.w3.org/2000/01/rdf-schema#label> "water area" .
+<http://dbpedia.org/ontology/areaTotal> <http://www.w3.org/2000/01/rdf-schema#label> "total area" .
+<http://dbpedia.org/ontology/areaTotal> <http://www.w3.org/2000/01/rdf-schema#label> "area" .
+<http://dbpedia.org/ontology/gridReference> <http://www.w3.org/2000/01/rdf-schema#label> "grid reference" .
+<http://dbpedia.org/ontology/length> <http://www.w3.org/2000/01/rdf-schema#label> "length" .
+<http://dbpedia.org/ontology/length> <http://www.w3.org/2000/01/rdf-schema#label> "long" .
+<http://dbpedia.org/ontology/areaCode> <http://www.w3.org/2000/01/rdf-schema#label> "area code" .
+<http://dbpedia.org/ontology/deathDate> <http://www.w3.org/2000/01/rdf-schema#label> "death date" .
+<http://dbpedia.org/ontology/deathDate> <http://www.w3.org/2000/01/rdf-schema#label> "die on" .
+<http://dbpedia.org/ontology/totalPopulation> <http://www.w3.org/2000/01/rdf-schema#label> "population" .
+<http://dbpedia.org/ontology/totalPopulation> <http://www.w3.org/2000/01/rdf-schema#label> "total population" .
+<http://dbpedia.org/ontology/completionDate> <http://www.w3.org/2000/01/rdf-schema#label> "completed on" .
+<http://dbpedia.org/ontology/commonName> <http://www.w3.org/2000/01/rdf-schema#label> "call" .
+<http://dbpedia.org/ontology/commonName> <http://www.w3.org/2000/01/rdf-schema#label> "common name" .
+<http://dbpedia.org/ontology/decommissioningDate> <http://www.w3.org/2000/01/rdf-schema#label> "decommissioned on" .
+<http://dbpedia.org/ontology/width> <http://www.w3.org/2000/01/rdf-schema#label> "wide" .
+<http://dbpedia.org/ontology/width> <http://www.w3.org/2000/01/rdf-schema#label> "width" .
+<http://dbpedia.org/ontology/colourName> <http://www.w3.org/2000/01/rdf-schema#label> "color" .
+<http://dbpedia.org/ontology/day> <http://www.w3.org/2000/01/rdf-schema#label> "day" .
+<http://dbpedia.org/ontology/postalCode> <http://www.w3.org/2000/01/rdf-schema#label> "postal code" .
+<http://dbpedia.org/ontology/postalCode> <http://www.w3.org/2000/01/rdf-schema#label> "post code" .
+<http://dbpedia.org/ontology/numberOfStudents> <http://www.w3.org/2000/01/rdf-schema#label> "enrollment of" .
+<http://dbpedia.org/ontology/numberOfStudents> <http://www.w3.org/2000/01/rdf-schema#label> "serve" .
+<http://dbpedia.org/ontology/numberOfStudents> <http://www.w3.org/2000/01/rdf-schema#label> "student population" .
+<http://dbpedia.org/ontology/foundingYear> <http://www.w3.org/2000/01/rdf-schema#label> "founded in" .
+<http://dbpedia.org/ontology/foundingYear> <http://www.w3.org/2000/01/rdf-schema#label> "founding year" .
+<http://dbpedia.org/ontology/foundingYear> <http://www.w3.org/2000/01/rdf-schema#label> "established in" .
+<http://dbpedia.org/ontology/epoch> <http://www.w3.org/2000/01/rdf-schema#label> "epoch" .
+<http://dbpedia.org/ontology/openingYear> <http://www.w3.org/2000/01/rdf-schema#label> "opened in" .
+<http://dbpedia.org/ontology/apoapsis> <http://www.w3.org/2000/01/rdf-schema#label> "apoapsis" .
+<http://dbpedia.org/ontology/motto> <http://www.w3.org/2000/01/rdf-schema#label> "motto" .
+<http://dbpedia.org/ontology/formationYear> <http://www.w3.org/2000/01/rdf-schema#label> "formed in" .
+<http://dbpedia.org/ontology/formationYear> <http://www.w3.org/2000/01/rdf-schema#label> "formation year" .
+<http://dbpedia.org/ontology/formationYear> <http://www.w3.org/2000/01/rdf-schema#label> "established in" .
+<http://dbpedia.org/ontology/populationUrban> <http://www.w3.org/2000/01/rdf-schema#label> "population" .
+<http://dbpedia.org/ontology/populationUrban> <http://www.w3.org/2000/01/rdf-schema#label> "urban population" .
+<http://dbpedia.org/ontology/populationMetroDensity> <http://www.w3.org/2000/01/rdf-schema#label> "population density" .
+<http://dbpedia.org/ontology/formationDate> <http://www.w3.org/2000/01/rdf-schema#label> "formed on" .
+<http://dbpedia.org/ontology/formationDate> <http://www.w3.org/2000/01/rdf-schema#label> "formation date" .
+<http://dbpedia.org/ontology/formationDate> <http://www.w3.org/2000/01/rdf-schema#label> "established on" .
+<http://dbpedia.org/ontology/formerName> <http://www.w3.org/2000/01/rdf-schema#label> "former name" .
+<http://dbpedia.org/ontology/budget> <http://www.w3.org/2000/01/rdf-schema#label> "budget" .
+<http://dbpedia.org/ontology/birthDate> <http://www.w3.org/2000/01/rdf-schema#label> "date of birth" .
+<http://dbpedia.org/ontology/birthDate> <http://www.w3.org/2000/01/rdf-schema#label> "born on" .
+<http://dbpedia.org/ontology/birthDate> <http://www.w3.org/2000/01/rdf-schema#label> "birth date" .
+<http://dbpedia.org/ontology/dcc> <http://www.w3.org/2000/01/rdf-schema#label> "Dewey classification" .
+<http://dbpedia.org/ontology/releaseDate> <http://www.w3.org/2000/01/rdf-schema#label> "released on" .
+<http://dbpedia.org/ontology/releaseDate> <http://www.w3.org/2000/01/rdf-schema#label> "release date" .
+<http://dbpedia.org/ontology/releaseDate> <http://www.w3.org/2000/01/rdf-schema#label> "come out on" .
+<http://dbpedia.org/ontology/activeYearsEndYear> <http://www.w3.org/2000/01/rdf-schema#label> "active until" .
+<http://dbpedia.org/ontology/averageSpeed> <http://www.w3.org/2000/01/rdf-schema#label> "average speed" .
+<http://dbpedia.org/ontology/layingDown> <http://www.w3.org/2000/01/rdf-schema#label> "laid down on" .
+<http://dbpedia.org/ontology/occupation> <http://www.w3.org/2000/01/rdf-schema#label> "occupation" .
+<http://dbpedia.org/ontology/occupation> <http://www.w3.org/2000/01/rdf-schema#label> "work as" .
+<http://dbpedia.org/ontology/riverMouth> <http://www.w3.org/2000/01/rdf-schema#label> "flow into" .
+<http://dbpedia.org/ontology/riverMouth> <http://www.w3.org/2000/01/rdf-schema#label> "run into" .
+<http://dbpedia.org/ontology/structuralSystem> <http://www.w3.org/2000/01/rdf-schema#label> "structural system of" .
+<http://dbpedia.org/ontology/structuralSystem> <http://www.w3.org/2000/01/rdf-schema#label> "made of" .
+<http://dbpedia.org/ontology/computingInput> <http://www.w3.org/2000/01/rdf-schema#label> "play with" .
+<http://dbpedia.org/ontology/computingInput> <http://www.w3.org/2000/01/rdf-schema#label> "use" .
+<http://dbpedia.org/ontology/developer> <http://www.w3.org/2000/01/rdf-schema#label> "develop" .
+<http://dbpedia.org/ontology/developer> <http://www.w3.org/2000/01/rdf-schema#label> "developer" .
+<http://dbpedia.org/ontology/sisterStation> <http://www.w3.org/2000/01/rdf-schema#label> "sister station" .
+<http://dbpedia.org/ontology/sisterStation> <http://www.w3.org/2000/01/rdf-schema#label> "sister channel" .
+<http://dbpedia.org/ontology/sisterStation> <http://www.w3.org/2000/01/rdf-schema#label> "sister network" .
+<http://dbpedia.org/ontology/runningMate> <http://www.w3.org/2000/01/rdf-schema#label> "running mate" .
+<http://dbpedia.org/ontology/creator> <http://www.w3.org/2000/01/rdf-schema#label> "create" .
+<http://dbpedia.org/ontology/creator> <http://www.w3.org/2000/01/rdf-schema#label> "creator" .
+<http://dbpedia.org/ontology/mouthMountain> <http://www.w3.org/2000/01/rdf-schema#label> "flow into" .
+<http://dbpedia.org/ontology/mouthMountain> <http://www.w3.org/2000/01/rdf-schema#label> "run into" .
+<http://dbpedia.org/ontology/district> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/district> <http://www.w3.org/2000/01/rdf-schema#label> "situated in" .
+<http://dbpedia.org/ontology/presenter> <http://www.w3.org/2000/01/rdf-schema#label> "presenter" .
+<http://dbpedia.org/ontology/county> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/county> <http://www.w3.org/2000/01/rdf-schema#label> "situated in" .
+<http://dbpedia.org/ontology/computingMedia> <http://www.w3.org/2000/01/rdf-schema#label> "released on" .
+<http://dbpedia.org/ontology/country> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/populationPlace> <http://www.w3.org/2000/01/rdf-schema#label> "live in" .
+<http://dbpedia.org/ontology/recordedIn> <http://www.w3.org/2000/01/rdf-schema#label> "recorded in" .
+<http://dbpedia.org/ontology/programmeFormat> <http://www.w3.org/2000/01/rdf-schema#label> "play" .
+<http://dbpedia.org/ontology/affiliation> <http://www.w3.org/2000/01/rdf-schema#label> "affiliated to" .
+<http://dbpedia.org/ontology/affiliation> <http://www.w3.org/2000/01/rdf-schema#label> "affiliated with" .
+<http://dbpedia.org/ontology/canton> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/canton> <http://www.w3.org/2000/01/rdf-schema#label> "situated in" .
+<http://dbpedia.org/ontology/highestRegion> <http://www.w3.org/2000/01/rdf-schema#label> "highest region" .
+<http://dbpedia.org/ontology/militaryUnit> <http://www.w3.org/2000/01/rdf-schema#label> "serve in" .
+<http://dbpedia.org/ontology/builder> <http://www.w3.org/2000/01/rdf-schema#label> "build" .
+<http://dbpedia.org/ontology/stateOfOrigin> <http://www.w3.org/2000/01/rdf-schema#label> "born in" .
+<http://dbpedia.org/ontology/stateOfOrigin> <http://www.w3.org/2000/01/rdf-schema#label> "come from" .
+<http://dbpedia.org/ontology/league> <http://www.w3.org/2000/01/rdf-schema#label> "play in" .
+<http://dbpedia.org/ontology/isPartOfMilitaryConflict> <http://www.w3.org/2000/01/rdf-schema#label> "part of" .
+<http://dbpedia.org/ontology/foundationPlace> <http://www.w3.org/2000/01/rdf-schema#label> "found in" .
+<http://dbpedia.org/ontology/foundationPlace> <http://www.w3.org/2000/01/rdf-schema#label> "foundation place" .
+<http://dbpedia.org/ontology/province> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/province> <http://www.w3.org/2000/01/rdf-schema#label> "situated in" .
+<http://dbpedia.org/ontology/commandStructure> <http://www.w3.org/2000/01/rdf-schema#label> "subordinate to" .
+<http://dbpedia.org/ontology/commandStructure> <http://www.w3.org/2000/01/rdf-schema#label> "part of" .
+<http://dbpedia.org/ontology/board> <http://www.w3.org/2000/01/rdf-schema#label> "board member at" .
+<http://dbpedia.org/ontology/series> <http://www.w3.org/2000/01/rdf-schema#label> "part of" .
+<http://dbpedia.org/ontology/locationCountry> <http://www.w3.org/2000/01/rdf-schema#label> "based in" .
+<http://dbpedia.org/ontology/locationCountry> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/residence> <http://www.w3.org/2000/01/rdf-schema#label> "reside in" .
+<http://dbpedia.org/ontology/residence> <http://www.w3.org/2000/01/rdf-schema#label> "residence" .
+<http://dbpedia.org/ontology/associatedMusicalArtist> <http://www.w3.org/2000/01/rdf-schema#label> "associated act" .
+<http://dbpedia.org/ontology/arrondissement> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/arrondissement> <http://www.w3.org/2000/01/rdf-schema#label> "situated in" .
+<http://dbpedia.org/ontology/chairman> <http://www.w3.org/2000/01/rdf-schema#label> "chairman" .
+<http://dbpedia.org/ontology/musicFusionGenre> <http://www.w3.org/2000/01/rdf-schema#label> "fuse into" .
+<http://dbpedia.org/ontology/languageFamily> <http://www.w3.org/2000/01/rdf-schema#label> "language family" .
+<http://dbpedia.org/ontology/languageFamily> <http://www.w3.org/2000/01/rdf-schema#label> "belong" .
+<http://dbpedia.org/ontology/city> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/instrument> <http://www.w3.org/2000/01/rdf-schema#label> "instrument of" .
+<http://dbpedia.org/ontology/instrument> <http://www.w3.org/2000/01/rdf-schema#label> "play" .
+<http://dbpedia.org/ontology/guest> <http://www.w3.org/2000/01/rdf-schema#label> "appear in" .
+<http://dbpedia.org/ontology/guest> <http://www.w3.org/2000/01/rdf-schema#label> "feature" .
+<http://dbpedia.org/ontology/guest> <http://www.w3.org/2000/01/rdf-schema#label> "guest star in" .
+<http://dbpedia.org/ontology/network> <http://www.w3.org/2000/01/rdf-schema#label> "aired on" .
+<http://dbpedia.org/ontology/network> <http://www.w3.org/2000/01/rdf-schema#label> "broadcasted on" .
+<http://dbpedia.org/ontology/headquarter> <http://www.w3.org/2000/01/rdf-schema#label> "based in" .
+<http://dbpedia.org/ontology/timeZone> <http://www.w3.org/2000/01/rdf-schema#label> "time zone" .
+<http://dbpedia.org/ontology/channel> <http://www.w3.org/2000/01/rdf-schema#label> "air on" .
+<http://dbpedia.org/ontology/associatedBand> <http://www.w3.org/2000/01/rdf-schema#label> "associated act" .
+<http://dbpedia.org/ontology/precursor> <http://www.w3.org/2000/01/rdf-schema#label> "precursor of" .
+<http://dbpedia.org/ontology/precursor> <http://www.w3.org/2000/01/rdf-schema#label> "precede" .
+<http://dbpedia.org/ontology/precursor> <http://www.w3.org/2000/01/rdf-schema#label> "develop from" .
+<http://dbpedia.org/ontology/nearestCity> <http://www.w3.org/2000/01/rdf-schema#label> "close to" .
+<http://dbpedia.org/ontology/product> <http://www.w3.org/2000/01/rdf-schema#label> "product" .
+<http://dbpedia.org/ontology/product> <http://www.w3.org/2000/01/rdf-schema#label> "create" .
+<http://dbpedia.org/ontology/product> <http://www.w3.org/2000/01/rdf-schema#label> "develop" .
+<http://dbpedia.org/ontology/product> <http://www.w3.org/2000/01/rdf-schema#label> "produce" .
+<http://dbpedia.org/ontology/openingFilm> <http://www.w3.org/2000/01/rdf-schema#label> "opening film at" .
+<http://dbpedia.org/ontology/patron> <http://www.w3.org/2000/01/rdf-schema#label> "patron" .
+<http://dbpedia.org/ontology/patron> <http://www.w3.org/2000/01/rdf-schema#label> "patron saint" .
+<http://dbpedia.org/ontology/spokenIn> <http://www.w3.org/2000/01/rdf-schema#label> "spoken in" .
+<http://dbpedia.org/ontology/spokenIn> <http://www.w3.org/2000/01/rdf-schema#label> "language" .
+<http://dbpedia.org/ontology/origin> <http://www.w3.org/2000/01/rdf-schema#label> "made in" .
+<http://dbpedia.org/ontology/similar> <http://www.w3.org/2000/01/rdf-schema#label> "similar to" .
+<http://dbpedia.org/ontology/similar> <http://www.w3.org/2000/01/rdf-schema#label> "like" .
+<http://dbpedia.org/ontology/manufacturer> <http://www.w3.org/2000/01/rdf-schema#label> "manufacture" .
+<http://dbpedia.org/ontology/manufacturer> <http://www.w3.org/2000/01/rdf-schema#label> "produce" .
+<http://dbpedia.org/ontology/manufacturer> <http://www.w3.org/2000/01/rdf-schema#label> "manufacturer" .
+<http://dbpedia.org/ontology/relative> <http://www.w3.org/2000/01/rdf-schema#label> "relative" .
+<http://dbpedia.org/ontology/relative> <http://www.w3.org/2000/01/rdf-schema#label> "related to" .
+<http://dbpedia.org/ontology/routeJunction> <http://www.w3.org/2000/01/rdf-schema#label> "cross" .
+<http://dbpedia.org/ontology/routeJunction> <http://www.w3.org/2000/01/rdf-schema#label> "intersect with" .
+<http://dbpedia.org/ontology/relatedMeanOfTransportation> <http://www.w3.org/2000/01/rdf-schema#label> "based on" .
+<http://dbpedia.org/ontology/subsequentWork> <http://www.w3.org/2000/01/rdf-schema#label> "follow-up" .
+<http://dbpedia.org/ontology/subsequentWork> <http://www.w3.org/2000/01/rdf-schema#label> "sequel" .
+<http://dbpedia.org/ontology/programmingLanguage> <http://www.w3.org/2000/01/rdf-schema#label> "written in" .
+<http://dbpedia.org/ontology/programmingLanguage> <http://www.w3.org/2000/01/rdf-schema#label> "programming language" .
+<http://dbpedia.org/ontology/format> <http://www.w3.org/2000/01/rdf-schema#label> "format" .
+<http://dbpedia.org/ontology/foundingPerson> <http://www.w3.org/2000/01/rdf-schema#label> "found" .
+<http://dbpedia.org/ontology/foundingPerson> <http://www.w3.org/2000/01/rdf-schema#label> "founder" .
+<http://dbpedia.org/ontology/foundingPerson> <http://www.w3.org/2000/01/rdf-schema#label> "establish" .
+<http://dbpedia.org/ontology/family> <http://www.w3.org/2000/01/rdf-schema#label> "family" .
+<http://dbpedia.org/ontology/family> <http://www.w3.org/2000/01/rdf-schema#label> "belong to" .
+<http://dbpedia.org/ontology/family> <http://www.w3.org/2000/01/rdf-schema#label> "member" .
+<http://dbpedia.org/ontology/family> <http://www.w3.org/2000/01/rdf-schema#label> "contain" .
+<http://dbpedia.org/ontology/border> <http://www.w3.org/2000/01/rdf-schema#label> "border" .
+<http://dbpedia.org/ontology/musicalArtist> <http://www.w3.org/2000/01/rdf-schema#label> "record" .
+<http://dbpedia.org/ontology/musicalArtist> <http://www.w3.org/2000/01/rdf-schema#label> "interpreter of" .
+<http://dbpedia.org/ontology/musicalArtist> <http://www.w3.org/2000/01/rdf-schema#label> "write" .
+<http://dbpedia.org/ontology/influenced> <http://www.w3.org/2000/01/rdf-schema#label> "influence" .
+<http://dbpedia.org/ontology/hometown> <http://www.w3.org/2000/01/rdf-schema#label> "home town" .
+<http://dbpedia.org/ontology/hometown> <http://www.w3.org/2000/01/rdf-schema#label> "come from" .
+<http://dbpedia.org/ontology/class> <http://www.w3.org/2000/01/rdf-schema#label> "belong to" .
+<http://dbpedia.org/ontology/class> <http://www.w3.org/2000/01/rdf-schema#label> "class" .
+<http://dbpedia.org/ontology/class> <http://www.w3.org/2000/01/rdf-schema#label> "member" .
+<http://dbpedia.org/ontology/class> <http://www.w3.org/2000/01/rdf-schema#label> "contain" .
+<http://dbpedia.org/ontology/spouse> <http://www.w3.org/2000/01/rdf-schema#label> "spouse" .
+<http://dbpedia.org/ontology/spouse> <http://www.w3.org/2000/01/rdf-schema#label> "husband" .
+<http://dbpedia.org/ontology/spouse> <http://www.w3.org/2000/01/rdf-schema#label> "wife" .
+<http://dbpedia.org/ontology/spouse> <http://www.w3.org/2000/01/rdf-schema#label> "marry to" .
+<http://dbpedia.org/ontology/spouse> <http://www.w3.org/2000/01/rdf-schema#label> "marry" .
+<http://dbpedia.org/ontology/starring> <http://www.w3.org/2000/01/rdf-schema#label> "play in" .
+<http://dbpedia.org/ontology/starring> <http://www.w3.org/2000/01/rdf-schema#label> "feature" .
+<http://dbpedia.org/ontology/starring> <http://www.w3.org/2000/01/rdf-schema#label> "star" .
+<http://dbpedia.org/ontology/almaMater> <http://www.w3.org/2000/01/rdf-schema#label> "Alma Mater" .
+<http://dbpedia.org/ontology/almaMater> <http://www.w3.org/2000/01/rdf-schema#label> "graduate from" .
+<http://dbpedia.org/ontology/almaMater> <http://www.w3.org/2000/01/rdf-schema#label> "study at" .
+<http://dbpedia.org/ontology/region> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/ethnicity> <http://www.w3.org/2000/01/rdf-schema#label> "ethnicity" .
+<http://dbpedia.org/ontology/locationCity> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/debutTeam> <http://www.w3.org/2000/01/rdf-schema#label> "debut for" .
+<http://dbpedia.org/ontology/intercommunality> <http://www.w3.org/2000/01/rdf-schema#label> "suburb of" .
+<http://dbpedia.org/ontology/intercommunality> <http://www.w3.org/2000/01/rdf-schema#label> "part of" .
+<http://dbpedia.org/ontology/rector> <http://www.w3.org/2000/01/rdf-schema#label> "rector" .
+<http://dbpedia.org/ontology/president> <http://www.w3.org/2000/01/rdf-schema#label> "serve under" .
+<http://dbpedia.org/ontology/editing> <http://www.w3.org/2000/01/rdf-schema#label> "edit" .
+<http://dbpedia.org/ontology/highestMountain> <http://www.w3.org/2000/01/rdf-schema#label> "highest mountain" .
+<http://dbpedia.org/ontology/highestMountain> <http://www.w3.org/2000/01/rdf-schema#label> "highest mountain in" .
+<http://dbpedia.org/ontology/executiveProducer> <http://www.w3.org/2000/01/rdf-schema#label> "executive producer" .
+<http://dbpedia.org/ontology/formerCoach> <http://www.w3.org/2000/01/rdf-schema#label> "former coach" .
+<http://dbpedia.org/ontology/operatedBy> <http://www.w3.org/2000/01/rdf-schema#label> "operate" .
+<http://dbpedia.org/ontology/distributor> <http://www.w3.org/2000/01/rdf-schema#label> "distributor" .
+<http://dbpedia.org/ontology/distributor> <http://www.w3.org/2000/01/rdf-schema#label> "distribute" .
+<http://dbpedia.org/ontology/crosses> <http://www.w3.org/2000/01/rdf-schema#label> "traverse" .
+<http://dbpedia.org/ontology/crosses> <http://www.w3.org/2000/01/rdf-schema#label> "bridge" .
+<http://dbpedia.org/ontology/crosses> <http://www.w3.org/2000/01/rdf-schema#label> "bridge over" .
+<http://dbpedia.org/ontology/crosses> <http://www.w3.org/2000/01/rdf-schema#label> "span" .
+<http://dbpedia.org/ontology/crosses> <http://www.w3.org/2000/01/rdf-schema#label> "cross" .
+<http://dbpedia.org/ontology/crosses> <http://www.w3.org/2000/01/rdf-schema#label> "crossing" .
+<http://dbpedia.org/ontology/servingRailwayLine> <http://www.w3.org/2000/01/rdf-schema#label> "serve" .
+<http://dbpedia.org/ontology/kingdom> <http://www.w3.org/2000/01/rdf-schema#label> "belong to" .
+<http://dbpedia.org/ontology/kingdom> <http://www.w3.org/2000/01/rdf-schema#label> "kingdom" .
+<http://dbpedia.org/ontology/kingdom> <http://www.w3.org/2000/01/rdf-schema#label> "member" .
+<http://dbpedia.org/ontology/kingdom> <http://www.w3.org/2000/01/rdf-schema#label> "contain" .
+<http://dbpedia.org/ontology/award> <http://www.w3.org/2000/01/rdf-schema#label> "awarded" .
+<http://dbpedia.org/ontology/award> <http://www.w3.org/2000/01/rdf-schema#label> "recipient" .
+<http://dbpedia.org/ontology/award> <http://www.w3.org/2000/01/rdf-schema#label> "award" .
+<http://dbpedia.org/ontology/award> <http://www.w3.org/2000/01/rdf-schema#label> "receive" .
+<http://dbpedia.org/ontology/award> <http://www.w3.org/2000/01/rdf-schema#label> "win" .
+<http://dbpedia.org/ontology/broadcastArea> <http://www.w3.org/2000/01/rdf-schema#label> "cover" .
+<http://dbpedia.org/ontology/broadcastArea> <http://www.w3.org/2000/01/rdf-schema#label> "broadcasted in" .
+<http://dbpedia.org/ontology/composer> <http://www.w3.org/2000/01/rdf-schema#label> "compose" .
+<http://dbpedia.org/ontology/composer> <http://www.w3.org/2000/01/rdf-schema#label> "composer" .
+<http://dbpedia.org/ontology/composer> <http://www.w3.org/2000/01/rdf-schema#label> "write" .
+<http://dbpedia.org/ontology/influencedBy> <http://www.w3.org/2000/01/rdf-schema#label> "influence" .
+<http://dbpedia.org/ontology/literaryGenre> <http://www.w3.org/2000/01/rdf-schema#label> "genre" .
+<http://dbpedia.org/ontology/order> <http://www.w3.org/2000/01/rdf-schema#label> "belong to" .
+<http://dbpedia.org/ontology/order> <http://www.w3.org/2000/01/rdf-schema#label> "order" .
+<http://dbpedia.org/ontology/order> <http://www.w3.org/2000/01/rdf-schema#label> "member" .
+<http://dbpedia.org/ontology/order> <http://www.w3.org/2000/01/rdf-schema#label> "contain" .
+<http://dbpedia.org/ontology/assembly> <http://www.w3.org/2000/01/rdf-schema#label> "assembled in" .
+<http://dbpedia.org/ontology/source> <http://www.w3.org/2000/01/rdf-schema#label> "originate in" .
+<http://dbpedia.org/ontology/source> <http://www.w3.org/2000/01/rdf-schema#label> "source" .
+<http://dbpedia.org/ontology/department> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/department> <http://www.w3.org/2000/01/rdf-schema#label> "situated in" .
+<http://dbpedia.org/ontology/profession> <http://www.w3.org/2000/01/rdf-schema#label> "profession" .
+<http://dbpedia.org/ontology/profession> <http://www.w3.org/2000/01/rdf-schema#label> "work as" .
+<http://dbpedia.org/ontology/locatedInArea> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/foundedBy> <http://www.w3.org/2000/01/rdf-schema#label> "found" .
+<http://dbpedia.org/ontology/foundedBy> <http://www.w3.org/2000/01/rdf-schema#label> "founder" .
+<http://dbpedia.org/ontology/foundedBy> <http://www.w3.org/2000/01/rdf-schema#label> "establish" .
+<http://dbpedia.org/ontology/previousWork> <http://www.w3.org/2000/01/rdf-schema#label> "prequel" .
+<http://dbpedia.org/ontology/phylum> <http://www.w3.org/2000/01/rdf-schema#label> "belong to" .
+<http://dbpedia.org/ontology/phylum> <http://www.w3.org/2000/01/rdf-schema#label> "phylum" .
+<http://dbpedia.org/ontology/phylum> <http://www.w3.org/2000/01/rdf-schema#label> "member" .
+<http://dbpedia.org/ontology/phylum> <http://www.w3.org/2000/01/rdf-schema#label> "contain" .
+<http://dbpedia.org/ontology/cinematography> <http://www.w3.org/2000/01/rdf-schema#label> "cinematographer" .
+<http://dbpedia.org/ontology/bandMember> <http://www.w3.org/2000/01/rdf-schema#label> "member of" .
+<http://dbpedia.org/ontology/university> <http://www.w3.org/2000/01/rdf-schema#label> "university" .
+<http://dbpedia.org/ontology/university> <http://www.w3.org/2000/01/rdf-schema#label> "study at" .
+<http://dbpedia.org/ontology/binomialAuthority> <http://www.w3.org/2000/01/rdf-schema#label> "name" .
+<http://dbpedia.org/ontology/binomialAuthority> <http://www.w3.org/2000/01/rdf-schema#label> "first describe" .
+<http://dbpedia.org/ontology/militaryBranch> <http://www.w3.org/2000/01/rdf-schema#label> "serve in" .
+<http://dbpedia.org/ontology/language> <http://www.w3.org/2000/01/rdf-schema#label> "written in" .
+<http://dbpedia.org/ontology/manager> <http://www.w3.org/2000/01/rdf-schema#label> "manager" .
+<http://dbpedia.org/ontology/manager> <http://www.w3.org/2000/01/rdf-schema#label> "manage" .
+<http://dbpedia.org/ontology/musicalBand> <http://www.w3.org/2000/01/rdf-schema#label> "record" .
+<http://dbpedia.org/ontology/musicalBand> <http://www.w3.org/2000/01/rdf-schema#label> "write" .
+<http://dbpedia.org/ontology/isPartOf> <http://www.w3.org/2000/01/rdf-schema#label> "part of" .
+<http://dbpedia.org/ontology/parentCompany> <http://www.w3.org/2000/01/rdf-schema#label> "parent company" .
+<http://dbpedia.org/ontology/parentCompany> <http://www.w3.org/2000/01/rdf-schema#label> "daughter company" .
+<http://dbpedia.org/ontology/parentCompany> <http://www.w3.org/2000/01/rdf-schema#label> "subsidiary" .
+<http://dbpedia.org/ontology/canonizedPlace> <http://www.w3.org/2000/01/rdf-schema#label> "canonize in" .
+<http://dbpedia.org/ontology/publisher> <http://www.w3.org/2000/01/rdf-schema#label> "publisher" .
+<http://dbpedia.org/ontology/publisher> <http://www.w3.org/2000/01/rdf-schema#label> "publish" .
+<http://dbpedia.org/ontology/neighboringMunicipality> <http://www.w3.org/2000/01/rdf-schema#label> "neighboring municipality" .
+<http://dbpedia.org/ontology/designer> <http://www.w3.org/2000/01/rdf-schema#label> "develop" .
+<http://dbpedia.org/ontology/designer> <http://www.w3.org/2000/01/rdf-schema#label> "create" .
+<http://dbpedia.org/ontology/designer> <http://www.w3.org/2000/01/rdf-schema#label> "design" .
+<http://dbpedia.org/ontology/license> <http://www.w3.org/2000/01/rdf-schema#label> "licensed under" .
+<http://dbpedia.org/ontology/owner> <http://www.w3.org/2000/01/rdf-schema#label> "owner" .
+<http://dbpedia.org/ontology/owner> <http://www.w3.org/2000/01/rdf-schema#label> "own" .
+<http://dbpedia.org/ontology/operator> <http://www.w3.org/2000/01/rdf-schema#label> "home of" .
+<http://dbpedia.org/ontology/child> <http://www.w3.org/2000/01/rdf-schema#label> "child" .
+<http://dbpedia.org/ontology/child> <http://www.w3.org/2000/01/rdf-schema#label> "parent" .
+<http://dbpedia.org/ontology/restingPlace> <http://www.w3.org/2000/01/rdf-schema#label> "buried in" .
+<http://dbpedia.org/ontology/restingPlace> <http://www.w3.org/2000/01/rdf-schema#label> "resting place" .
+<http://dbpedia.org/ontology/album> <http://www.w3.org/2000/01/rdf-schema#label> "song on" .
+<http://dbpedia.org/ontology/album> <http://www.w3.org/2000/01/rdf-schema#label> "track on" .
+<http://dbpedia.org/ontology/homeArena> <http://www.w3.org/2000/01/rdf-schema#label> "home of" .
+<http://dbpedia.org/ontology/homeArena> <http://www.w3.org/2000/01/rdf-schema#label> "home arena" .
+<http://dbpedia.org/ontology/homeArena> <http://www.w3.org/2000/01/rdf-schema#label> "home stadium" .
+<http://dbpedia.org/ontology/battle> <http://www.w3.org/2000/01/rdf-schema#label> "serve in" .
+<http://dbpedia.org/ontology/battle> <http://www.w3.org/2000/01/rdf-schema#label> "fight in" .
+<http://dbpedia.org/ontology/genus> <http://www.w3.org/2000/01/rdf-schema#label> "genus" .
+<http://dbpedia.org/ontology/genus> <http://www.w3.org/2000/01/rdf-schema#label> "belong to" .
+<http://dbpedia.org/ontology/genus> <http://www.w3.org/2000/01/rdf-schema#label> "member" .
+<http://dbpedia.org/ontology/successor> <http://www.w3.org/2000/01/rdf-schema#label> "succeed" .
+<http://dbpedia.org/ontology/successor> <http://www.w3.org/2000/01/rdf-schema#label> "predecessor" .
+<http://dbpedia.org/ontology/successor> <http://www.w3.org/2000/01/rdf-schema#label> "successor" .
+<http://dbpedia.org/ontology/successor> <http://www.w3.org/2000/01/rdf-schema#label> "preceed" .
+<http://dbpedia.org/ontology/formerBandMember> <http://www.w3.org/2000/01/rdf-schema#label> "former band member of" .
+<http://dbpedia.org/ontology/broadcastNetwork> <http://www.w3.org/2000/01/rdf-schema#label> "operate" .
+<http://dbpedia.org/ontology/broadcastNetwork> <http://www.w3.org/2000/01/rdf-schema#label> "part of" .
+<http://dbpedia.org/ontology/mouthPlace> <http://www.w3.org/2000/01/rdf-schema#label> "flow into" .
+<http://dbpedia.org/ontology/mouthPlace> <http://www.w3.org/2000/01/rdf-schema#label> "run into" .
+<http://dbpedia.org/ontology/associatedRocket> <http://www.w3.org/2000/01/rdf-schema#label> "take off from" .
+<http://dbpedia.org/ontology/associatedRocket> <http://www.w3.org/2000/01/rdf-schema#label> "launch off from" .
+<http://dbpedia.org/ontology/associatedRocket> <http://www.w3.org/2000/01/rdf-schema#label> "blast off from" .
+<http://dbpedia.org/ontology/place> <http://www.w3.org/2000/01/rdf-schema#label> "take place in" .
+<http://dbpedia.org/ontology/location> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/commander> <http://www.w3.org/2000/01/rdf-schema#label> "leader in" .
+<http://dbpedia.org/ontology/commander> <http://www.w3.org/2000/01/rdf-schema#label> "commander in" .
+<http://dbpedia.org/ontology/commander> <http://www.w3.org/2000/01/rdf-schema#label> "command during" .
+<http://dbpedia.org/ontology/managerClub> <http://www.w3.org/2000/01/rdf-schema#label> "manager" .
+<http://dbpedia.org/ontology/managerClub> <http://www.w3.org/2000/01/rdf-schema#label> "manage" .
+<http://dbpedia.org/ontology/regionServed> <http://www.w3.org/2000/01/rdf-schema#label> "operate in" .
+<http://dbpedia.org/ontology/operatingSystem> <http://www.w3.org/2000/01/rdf-schema#label> "run under" .
+<http://dbpedia.org/ontology/writer> <http://www.w3.org/2000/01/rdf-schema#label> "writer of" .
+<http://dbpedia.org/ontology/writer> <http://www.w3.org/2000/01/rdf-schema#label> "write" .
+<http://dbpedia.org/ontology/writer> <http://www.w3.org/2000/01/rdf-schema#label> "author" .
+<http://dbpedia.org/ontology/deathPlace> <http://www.w3.org/2000/01/rdf-schema#label> "death place" .
+<http://dbpedia.org/ontology/deathPlace> <http://www.w3.org/2000/01/rdf-schema#label> "place of death" .
+<http://dbpedia.org/ontology/deathPlace> <http://www.w3.org/2000/01/rdf-schema#label> "die in" .
+<http://dbpedia.org/ontology/parent> <http://www.w3.org/2000/01/rdf-schema#label> "child" .
+<http://dbpedia.org/ontology/parent> <http://www.w3.org/2000/01/rdf-schema#label> "parent" .
+<http://dbpedia.org/ontology/state> <http://www.w3.org/2000/01/rdf-schema#label> "located in" .
+<http://dbpedia.org/ontology/state> <http://www.w3.org/2000/01/rdf-schema#label> "situated in" .
+<http://dbpedia.org/ontology/team> <http://www.w3.org/2000/01/rdf-schema#label> "team" .
+<http://dbpedia.org/ontology/division> <http://www.w3.org/2000/01/rdf-schema#label> "belong to" .
+<http://dbpedia.org/ontology/field> <http://www.w3.org/2000/01/rdf-schema#label> "field" .
+<http://dbpedia.org/ontology/field> <http://www.w3.org/2000/01/rdf-schema#label> "work on" .
+<http://dbpedia.org/ontology/predecessor> <http://www.w3.org/2000/01/rdf-schema#label> "succeed" .
+<http://dbpedia.org/ontology/predecessor> <http://www.w3.org/2000/01/rdf-schema#label> "predecessor" .
+<http://dbpedia.org/ontology/predecessor> <http://www.w3.org/2000/01/rdf-schema#label> "successor" .
+<http://dbpedia.org/ontology/predecessor> <http://www.w3.org/2000/01/rdf-schema#label> "preceed" .
+<http://dbpedia.org/ontology/college> <http://www.w3.org/2000/01/rdf-schema#label> "play for" .
+<http://dbpedia.org/ontology/college> <http://www.w3.org/2000/01/rdf-schema#label> "graduate from" .
+<http://dbpedia.org/ontology/college> <http://www.w3.org/2000/01/rdf-schema#label> "attend" .
+<http://dbpedia.org/ontology/ground> <http://www.w3.org/2000/01/rdf-schema#label> "home of" .
+<http://dbpedia.org/ontology/religion> <http://www.w3.org/2000/01/rdf-schema#label> "religion" .
+<http://dbpedia.org/ontology/mountainRange> <http://www.w3.org/2000/01/rdf-schema#label> "part of" .
+<http://dbpedia.org/ontology/architect> <http://www.w3.org/2000/01/rdf-schema#label> "design" .
+<http://dbpedia.org/ontology/architect> <http://www.w3.org/2000/01/rdf-schema#label> "build" .
+<http://dbpedia.org/ontology/architect> <http://www.w3.org/2000/01/rdf-schema#label> "architect" .
+<http://dbpedia.org/ontology/birthPlace> <http://www.w3.org/2000/01/rdf-schema#label> "birth place" .
+<http://dbpedia.org/ontology/birthPlace> <http://www.w3.org/2000/01/rdf-schema#label> "place of birth" .
+<http://dbpedia.org/ontology/birthPlace> <http://www.w3.org/2000/01/rdf-schema#label> "born in" .
+<http://dbpedia.org/ontology/viceChancellor> <http://www.w3.org/2000/01/rdf-schema#label> "vice chancellor" .
+<http://dbpedia.org/ontology/owningCompany> <http://www.w3.org/2000/01/rdf-schema#label> "parent company" .
+<http://dbpedia.org/ontology/owningCompany> <http://www.w3.org/2000/01/rdf-schema#label> "daughter company" .
+<http://dbpedia.org/ontology/owningCompany> <http://www.w3.org/2000/01/rdf-schema#label> "own" .
+<http://dbpedia.org/ontology/owningCompany> <http://www.w3.org/2000/01/rdf-schema#label> "subsidiary" .
+<http://dbpedia.org/ontology/computingPlatform> <http://www.w3.org/2000/01/rdf-schema#label> "developed for" .
+<http://dbpedia.org/ontology/computingPlatform> <http://www.w3.org/2000/01/rdf-schema#label> "ported to" .
+<http://dbpedia.org/ontology/genre> <http://www.w3.org/2000/01/rdf-schema#label> "genre" .
+<http://dbpedia.org/ontology/sourceCountry> <http://www.w3.org/2000/01/rdf-schema#label> "originate in" .
+<http://dbpedia.org/ontology/closestCity> <http://www.w3.org/2000/01/rdf-schema#label> "located near" .
+<http://dbpedia.org/ontology/closestCity> <http://www.w3.org/2000/01/rdf-schema#label> "situated near" .
+<http://dbpedia.org/ontology/magnitude> <http://www.w3.org/2000/01/rdf-schema#label> "magnitude" .
+<http://dbpedia.org/ontology/owningOrganization> <http://www.w3.org/2000/01/rdf-schema#label> "own" .
+<http://dbpedia.org/ontology/cinematographer> <http://www.w3.org/2000/01/rdf-schema#label> "shoot" .
+<http://dbpedia.org/ontology/raceHorse> <http://www.w3.org/2000/01/rdf-schema#label> "ride" .
+<http://dbpedia.org/ontology/musicComposer> <http://www.w3.org/2000/01/rdf-schema#label> "composer" .
+<http://dbpedia.org/ontology/monarch> <http://www.w3.org/2000/01/rdf-schema#label> "king" .
+<http://dbpedia.org/ontology/birthPlace> <http://www.w3.org/2000/01/rdf-schema#label> "come from" .
+<http://dbpedia.org/ontology/birthPlace> <http://www.w3.org/2000/01/rdf-schema#label> "birthplace" .
+<http://dbpedia.org/ontology/residence> <http://www.w3.org/2000/01/rdf-schema#label> "live" .

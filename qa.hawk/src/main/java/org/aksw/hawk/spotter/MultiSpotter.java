@@ -13,11 +13,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.aksw.qa.annotation.spotter.ASpotter;
+import org.aksw.qa.annotation.spotter.Fox;
+import org.aksw.qa.annotation.spotter.Spotlight;
+import org.aksw.qa.annotation.spotter.TagMe;
 import org.aksw.qa.commons.datastructure.Entity;
-import org.aksw.qa.nerd.spotter.ASpotter;
-import org.aksw.qa.nerd.spotter.Fox;
-import org.aksw.qa.nerd.spotter.Spotlight;
-import org.aksw.qa.nerd.spotter.TagMe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

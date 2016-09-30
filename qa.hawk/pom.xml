@@ -191,8 +191,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
-			<artifactId>nerd</artifactId>
-			<version>${qa-nerd.version}</version>
+			<artifactId>annotation</artifactId>
+			<version>${qa-annotation.version}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>slf4j-log4j12</artifactId>

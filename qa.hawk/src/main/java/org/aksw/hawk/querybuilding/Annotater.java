@@ -7,8 +7,6 @@ import java.util.Stack;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.index.DBOIndex;
-import org.aksw.hawk.index.IndexDBO_classes;
-import org.aksw.hawk.index.IndexDBO_properties;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.util.JSONStatusBuilder;
@@ -20,6 +18,9 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
+import or.aksw.qa.annotation.index.IndexDBO_classes;
+import or.aksw.qa.annotation.index.IndexDBO_properties;
 
 public class Annotater {
 	Logger log = LoggerFactory.getLogger(Annotater.class);
