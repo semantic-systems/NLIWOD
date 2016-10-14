@@ -18,6 +18,39 @@ Not yet implemented
 * gAnswer http://59.108.48.18:8080/gAnswer/ganswer.jsp
 * poweraqua http://poweraqua.open.ac.uk:8080/poweraqua
 
+ACTION: Clean up both lists
+
+Action items: Implement various wrappers for webservices to train and test on. Store the results in files.
+* NLSearch https://wikidata.metaphacts.com/resource/NLSearch
+* YodaQA http://live.ailao.eu/
+* Start http://start.csail.mit.edu/index.php
+* QAKIS http://qakis.org/qakis2/
+* TBSL http://linkedspending.aksw.org/tbsl/
+* SINA http://sina.aksw.org/
+* LODQA http://lodqa.org/
+* HAWK http://hawk.aksw.org/
+* poweraqua http://poweraqua.open.ac.uk:8080/poweraqua
+* gAnswer http://59.108.48.18:8080/gAnswer/ganswer.jsp
+* Alexandria http://alexandria.neofonie.de/
+
+No demo found sofar for
+* ISOFT
+* QAnswer
+* APEQ
+* SemGraphQA
+* Xser
+* Freya
+* questIO
+* DEANNA
+* Intui3
+* RTV
+* CASIA
+* MHE
+* SemSeK
+
+
+For more systems see page 7 http://www.semantic-web-journal.net/system/files/swj1205.pdf
+
 
 ## Maven Dependency
 This library is available as snapshot here: http://maven.aksw.org/archiva/#artifact~snapshots/org.aksw.qa/datasets
