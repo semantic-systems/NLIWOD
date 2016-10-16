@@ -2,6 +2,8 @@ package hawk;
 
 import org.aksw.hawk.index.DBOIndex;
 import org.aksw.hawk.index.Patty_relations;
+import org.aksw.qa.annotation.index.IndexDBO_classes;
+import org.aksw.qa.annotation.index.IndexDBO_properties;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -9,9 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
-
-import or.aksw.qa.annotation.index.IndexDBO_classes;
-import or.aksw.qa.annotation.index.IndexDBO_properties;
 
 public class IndexTest {
 	Logger log = LoggerFactory.getLogger(IndexTest.class);

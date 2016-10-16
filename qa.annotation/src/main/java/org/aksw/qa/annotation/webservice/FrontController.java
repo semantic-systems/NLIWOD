@@ -11,6 +11,9 @@ import org.aksw.gerbil.transfer.nif.Document;
 import org.aksw.gerbil.transfer.nif.Marking;
 import org.aksw.gerbil.transfer.nif.data.DocumentImpl;
 import org.aksw.gerbil.transfer.nif.data.TypedSpanImpl;
+import org.aksw.qa.annotation.index.IndexDBO;
+import org.aksw.qa.annotation.index.IndexDBO_classes;
+import org.aksw.qa.annotation.index.IndexDBO_properties;
 import org.aksw.qa.annotation.spotter.Fox;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.apache.commons.collections.CollectionUtils;
@@ -22,10 +25,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import or.aksw.qa.annotation.index.IndexDBO;
-import or.aksw.qa.annotation.index.IndexDBO_classes;
-import or.aksw.qa.annotation.index.IndexDBO_properties;
 
 @RestController
 

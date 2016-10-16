@@ -1,4 +1,4 @@
-package or.aksw.qa.annotation.index;
+package org.aksw.qa.annotation.index;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,11 +1,10 @@
-package or.aksw.qa.annotation.index;
+package org.aksw.qa.annotation.index;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
@@ -70,6 +69,7 @@ public class IndexDBO_classes implements IndexDBO {
 		}
 	}
 
+	@Override
 	public ArrayList<String> search(final String object) {
 		ArrayList<String> uris = Lists.newArrayList();
 		try {
@@ -92,6 +92,7 @@ public class IndexDBO_classes implements IndexDBO {
 		return uris;
 	}
 
+	@Override
 	public void close() {
 		try {
 			ireader.close();
@@ -132,19 +133,19 @@ public class IndexDBO_classes implements IndexDBO {
 		iwriter.addDocument(doc);
 	}
 
-	public static void main(final String[] args) {
-		IndexDBO_classes classes = new IndexDBO_classes();
-		Scanner sc = new Scanner(System.in);
-		do {
-			System.out.println("Search: ");
-			String in = sc.next();
-			ArrayList<String> out = classes.search(in);
-			for (String it : out) {
-				System.out.println(it);
-			}
-
-		} while (true);
-
-	}
+	// public static void main(final String[] args) {
+	// IndexDBO_classes classes = new IndexDBO_classes();
+	// Scanner sc = new Scanner(System.in);
+	// do {
+	// System.out.println("Search: ");
+	// String in = sc.next();
+	// ArrayList<String> out = classes.search(in);
+	// for (String it : out) {
+	// System.out.println(it);
+	// }
+	//
+	// } while (true);
+	//
+	// }
 
 }

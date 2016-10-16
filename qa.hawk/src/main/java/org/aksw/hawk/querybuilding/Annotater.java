@@ -10,6 +10,8 @@ import org.aksw.hawk.index.DBOIndex;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.util.JSONStatusBuilder;
+import org.aksw.qa.annotation.index.IndexDBO_classes;
+import org.aksw.qa.annotation.index.IndexDBO_properties;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.ResultSet;
 import org.slf4j.Logger;
@@ -18,9 +20,6 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-
-import or.aksw.qa.annotation.index.IndexDBO_classes;
-import or.aksw.qa.annotation.index.IndexDBO_properties;
 
 public class Annotater {
 	Logger log = LoggerFactory.getLogger(Annotater.class);
