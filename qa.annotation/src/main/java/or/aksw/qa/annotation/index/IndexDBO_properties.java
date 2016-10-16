@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 
-public class IndexDBO_properties {
+public class IndexDBO_properties implements IndexDBO {
 
 	private static final Version LUCENE_VERSION = Version.LUCENE_46;
 	private org.slf4j.Logger log = LoggerFactory.getLogger(IndexDBO_properties.class);
@@ -69,6 +69,7 @@ public class IndexDBO_properties {
 		}
 	}
 
+	@Override
 	public ArrayList<String> search(final String object) {
 		ArrayList<String> uris = Lists.newArrayList();
 		try {
@@ -92,6 +93,7 @@ public class IndexDBO_properties {
 		return uris;
 	}
 
+	@Override
 	public void close() {
 		try {
 			ireader.close();

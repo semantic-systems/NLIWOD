@@ -1,14 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  	<parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
 		<groupId>org.aksw</groupId>
 		<artifactId>nliwod</artifactId>
 		<version>0.0.2</version>
 		<relativePath>..</relativePath>
 	</parent>
-  <groupId>org.aksw.qa</groupId>
-  <artifactId>annotation</artifactId>
-  <version>${qa-annotation.version}</version>
+	<groupId>org.aksw.qa</groupId>
+	<artifactId>annotation</artifactId>
+	<version>${qa-annotation.version}</version>
 	<build>
 		<plugins>
 			<plugin>
@@ -23,6 +24,12 @@
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -34,7 +41,7 @@
 			<scope>test</scope>
 		</dependency>
 
-  		<dependency>
+		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 		</dependency>
@@ -43,5 +50,15 @@
 			<artifactId>commons</artifactId>
 			<version>${qa-commons.version}</version>
 		</dependency>
-  </dependencies>
+		<!--
+		Change this dependency to a maven.aksw.org artifact(and remove JitPack), once this bug:
+		https://github.com/AKSW/gerbil/issues/150
+		went into a build
+		 -->
+		<dependency>
+			<groupId>com.github.AKSW</groupId>
+			<artifactId>gerbil</artifactId>
+			<version>gerbil.nif.transfer-jena3.1-gerbil.nif.transfer-v1.2.1-gfbde5f8-8</version>
+		</dependency>
+	</dependencies>
 </project>

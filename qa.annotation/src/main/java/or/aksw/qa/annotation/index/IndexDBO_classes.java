@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 
-public class IndexDBO_classes {
+public class IndexDBO_classes implements IndexDBO {
 
 	private static final Version LUCENE_VERSION = Version.LUCENE_46;
 	private org.slf4j.Logger log = LoggerFactory.getLogger(IndexDBO_classes.class);
