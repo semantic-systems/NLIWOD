@@ -50,11 +50,8 @@
 			<artifactId>commons</artifactId>
 			<version>${qa-commons.version}</version>
 		</dependency>
-		<!--
-		Change this dependency to a maven.aksw.org artifact(and remove JitPack), once this bug:
-		https://github.com/AKSW/gerbil/issues/150
-		went into a build
-		 -->
+		<!-- Change this dependency to a maven.aksw.org artifact(and remove JitPack), 
+			once this bug: https://github.com/AKSW/gerbil/issues/150 went into a build -->
 		<dependency>
 			<groupId>com.github.AKSW</groupId>
 			<artifactId>gerbil</artifactId>

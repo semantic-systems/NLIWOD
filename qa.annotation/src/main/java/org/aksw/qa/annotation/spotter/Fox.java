@@ -27,8 +27,6 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 
-// FIXME deprecated until offset is set
-@Deprecated
 public class Fox extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(Fox.class);
 
@@ -95,6 +93,13 @@ public class Fox extends ASpotter {
 							ent.getPosTypesAndCategories().add(statement.getObject().asResource());
 						}
 					}
+					// FIXME handling when duplicates occur
+					/**
+					 * This will not work if there is the same named entity
+					 * twice. Checked other spotters, they do it similar
+					 * (Duplicate named entity results in one found"
+					 */
+					ent.setOffset(question.indexOf(ent.getLabel()));
 					tmpList.add(ent);
 				}
 				mappedEntitysReturn.put("en", tmpList);

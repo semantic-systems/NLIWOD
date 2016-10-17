@@ -17,8 +17,6 @@ import org.aksw.qa.commons.datastructure.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// FIXME Jonathan move all spotter to qa.nerd except for multi and optimal
-// (import qa.nerd as maven dep)
 public abstract class ASpotter {
 
 	public abstract Map<String, List<Entity>> getEntities(String question);

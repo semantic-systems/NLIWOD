@@ -54,6 +54,9 @@ public class Spotlight extends ASpotter {
 					Entity ent = new Entity();
 					// FIXME implement offset also for other spotters, write a
 					// test that each spotter returns an offset
+					/**
+					 * Offset doesnt work for duplicate named entities
+					 */
 					ent.setOffset(Integer.valueOf((String) next.get("@offset")));
 					ent.setLabel((String) next.get("@surfaceForm"));
 					String uri = ((String) next.get("@URI")).replaceAll(",", "%2C");
