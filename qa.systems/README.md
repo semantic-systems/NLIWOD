@@ -8,43 +8,44 @@ This collection includes the following systems:
 * HAWK 
 
 In the future, we want to support more systems.
+
 | System        |                   Webservice URI                  | Comment                                                      |
 |---------------|:-------------------------------------------------:|--------------------------------------------------------------|
-| QALD 1        |                                                   |                                                              |
+| **-QALD 1** |
 | FREYA         |                                                   |                                                              |
 | poweraqua     | http://poweraqua.open.ac.uk:8080/poweraqua        |                                                              |
 | SWIP          |                                                   |                                                              |
-| QALD 2        |                                                   |                                                              |
+| **-QALD 2** |
 | Alexandria    | http://alexandria.neofonie.de/                    |                                                              |
 | SemSeK        |                                                   |                                                              |
 | MHE           |                                                   |                                                              |
 | QAKIS         | http://qakis.org/qakis2/                          |                                                              |
-| QALD 3        |                                                   |                                                              |
+| **-QALD 3** |
 | squal2sparql  |                                                   |                                                              |
 | CASIA         |                                                   |                                                              |
 | Scalewelis    |                                                   |                                                              |
 | RTV           |                                                   |                                                              |
 | Intui2        |                                                   |                                                              |
-| QALD 4        |                                                   |                                                              |
+| **-QALD 4** |
 | Xser          |                                                   |                                                              |
 | gAnswer       | http://59.108.48.18:8080/gAnswer/ganswer.jsp      |                                                              |
 | Intui3        |                                                   |                                                              |
 | ISOFT         |                                                   |                                                              |
 | RO_FII        |                                                   |                                                              |
-| QALD 5        |                                                   |                                                              |
+| **-QALD 5** |
 | APEQ          |                                                   |                                                              |
 | QAnswer       |                                                   |                                                              |
 | SemGraphQA    |                                                   |                                                              |
 | YodaQA        | http://live.ailao.eu/                             | does not return DBResources; we remedy that by using a query |
 | HAWK          | http://hawk.aksw.org/                             |                                                              |
-| QALD 6        |                                                   |                                                              |
+| **-QALD 6** |
 | CANaLI        |                                                   |                                                              |
 | PersionQA     |                                                   |                                                              |
 | UTQA          |                                                   |                                                              |
 | KGWAnswer     |                                                   |                                                              |
 | NbFramework   |                                                   |                                                              |
 | UIQA          |                                                   |                                                              |
-| Miscelleanous |                                                   |                                                              |
+| **-Miscelleanous** |
 | NLSearch      | https://wikidata.metaphacts.com/resource/NLSearch |                                                              |
 | OKBQA         | http://ws.okbqa.org/~testuser02/                  |                                                              |
 | DEANNA        |                                                   |                                                              |
