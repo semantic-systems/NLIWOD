@@ -10,6 +10,7 @@ in production (adding answers):
 * https://www.stonetemple.com/great-knowledge-box-showdown/
 
 to analyze: 
+* http://qallme.fbk.eu/index.php?location=benchmark
 * http://agarciaduran.org/ 30M questions to freebase
 * https://github.com/brmson/yodaqa/wiki/Benchmarks
  * https://github.com/brmson/dataset-factoid-curated for evolution 
