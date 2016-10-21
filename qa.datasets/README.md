@@ -38,6 +38,7 @@ out of scope (?) :
 * https://www.microsoft.com/en-us/download/details.aspx?id=52419 WikiQA (big!)
 * https://stanford-qa.com/ 100k+ questions with leaderboard 
 * http://www.aclweb.org/anthology/P/P16/P16-1145.pdf WIKIREADING, largest dataset!
+* http://www.cl.ecei.tohoku.ac.jp/rite2/doku.php?id=wiki:resources only japanese
 
 
 
