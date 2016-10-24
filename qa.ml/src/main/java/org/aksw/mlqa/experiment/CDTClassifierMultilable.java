@@ -7,8 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +25,29 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 
+import meka.classifiers.multilabel.BCC;
+import meka.classifiers.multilabel.BPNN;
+import meka.classifiers.multilabel.BRq;
+import meka.classifiers.multilabel.CC;
+import meka.classifiers.multilabel.CDN;
+import meka.classifiers.multilabel.CDT;
+import meka.classifiers.multilabel.CT;
+import meka.classifiers.multilabel.DBPNN;
+import meka.classifiers.multilabel.FW;
+import meka.classifiers.multilabel.HASEL;
+import meka.classifiers.multilabel.LC;
+import meka.classifiers.multilabel.MCC;
+import meka.classifiers.multilabel.MULAN;
+import meka.classifiers.multilabel.MajorityLabelset;
+import meka.classifiers.multilabel.MultiLabelClassifier;
+import meka.classifiers.multilabel.PCC;
+import meka.classifiers.multilabel.PMCC;
+import meka.classifiers.multilabel.PS;
 import meka.classifiers.multilabel.PSt;
+import meka.classifiers.multilabel.RAkEL;
+import meka.classifiers.multilabel.RAkELd;
+import meka.classifiers.multilabel.RT;
+import weka.core.Debug.Random;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
@@ -37,94 +57,122 @@ public class CDTClassifierMultilable {
 	
 	
 	public static void main(String[] args) throws Exception {		
-		/*
-		 * For multilable classification:
-		 */
-		
-		//The classifier
-		PSt PSt_Classifier = new PSt();
-		//load the data
+
 		Path datapath= Paths.get("./src/main/resources/Qald6Logs.arff");
 		BufferedReader reader = new BufferedReader(new FileReader(datapath.toString()));
 		ArffReader arff = new ArffReader(reader);
 		Instances data = arff.getData();
 		data.setClassIndex(6);
-		PSt_Classifier.buildClassifier(data);
-		
-		/*
-		 * Test the trained system
-		 */
 		
 		JSONObject qald6test = loadTestQuestions();
-		JSONArray questions = (JSONArray) qald6test.get("questions");
-		ArrayList<String> testQuestions = Lists.newArrayList();
-		for(int i = 0; i < questions.size(); i++){
-			JSONObject questionData = (JSONObject) questions.get(i);
-			JSONArray questionStrings = (JSONArray) questionData.get("question");
-			JSONObject questionEnglish = (JSONObject) questionStrings.get(0);
-			testQuestions.add((String) questionEnglish.get("string"));
-		}
-
-		
+			JSONArray questions = (JSONArray) qald6test.get("questions");
+			ArrayList<String> testQuestions = Lists.newArrayList();
+			for(int i = 0; i < questions.size(); i++){
+				JSONObject questionData = (JSONObject) questions.get(i);
+				JSONArray questionStrings = (JSONArray) questionData.get("question");
+				JSONObject questionEnglish = (JSONObject) questionStrings.get(0);
+				testQuestions.add((String) questionEnglish.get("string"));
+			}
 		ArrayList<String> systems = Lists.newArrayList("KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English" );
-		float ave_p = 0;
-		float ave_r = 0;
-		Double ave_bestp = 0.0;
-		Double ave_bestr = 0.0;
 
-		for(int j = 0; j < data.size(); j++){
-			Instance ins = data.get(j);
-			double[] confidences = PSt_Classifier.distributionForInstance(ins);
-			int argmax = -1;
-			double max = -1;
-				for(int i = 0; i < 6; i++){
-					if(confidences[i]>max){
-						max = confidences[i];
-						argmax = i;
+
+		int seed = 133;
+		int folds = 10;
+		
+		Random rand = new Random(seed);
+		Instances randData = new Instances(data);
+		randData.randomize(rand);
+		
+		float cv_ave_p = 0;
+		float cv_ave_r = 0;
+		float cv_ave_f = 0;
+		float cv_ave_best_p = 0;
+		float cv_ave_best_r = 0;
+		float cv_ave_best_f = 0;
+
+		for(int n=0; n < folds; n++){
+		    Instances train = randData.trainCV(folds,  n);
+		    Instances test = randData.testCV(folds,  n);
+			RT Classifier = new RT();
+			Classifier.buildClassifier(train);
+			
+			/*
+			 * Test the trained system
+			 */
+				
+			float ave_p = 0;
+			float ave_r = 0;
+			Double ave_bestp = 0.0;
+			Double ave_bestr = 0.0;
+	
+			for(int j = 0; j < test.size(); j++){
+				Instance ins = test.get(j);
+				int k = 0; 
+				for(int l=0; l < data.size(); l++){
+					Instance tmp = data.get(l);
+					if(tmp.toString().equals(ins.toString())){
+						k = l;
 					}
 				}
-				//compare trained system with best possible system
 				
+						
+				double[] confidences = Classifier.distributionForInstance(ins);
+				int argmax = -1;
+				double max = -1;
+					for(int i = 0; i < 6; i++){
+						if(confidences[i]>max){
+							max = confidences[i];
+							argmax = i;
+						}
+					}
+					//compare trained system with best possible system
+					
 				String sys2ask = systems.get(systems.size() - argmax -1);
-				ave_p += Float.parseFloat(loadSystemP(sys2ask).get(j));				
-				ave_r += Float.parseFloat(loadSystemR(sys2ask).get(j));
-				
+				ave_p += Float.parseFloat(loadSystemP(sys2ask).get(k));				
+				ave_r += Float.parseFloat(loadSystemR(sys2ask).get(k));
 				double bestp = 0;
 				double bestr = 0;
-				String bestSystemp = "";
-				String bestSystemr = ""; 
 				for(String system:systems){
-					if(Double.parseDouble(loadSystemP(system).get(j)) > bestp){bestSystemp = system; bestp = Double.parseDouble(loadSystemP(system).get(j));}; 
-					if(Double.parseDouble(loadSystemR(system).get(j)) > bestr){bestSystemr = system; bestr = Double.parseDouble(loadSystemR(system).get(j));}; 
+					if(Double.parseDouble(loadSystemP(system).get(k)) > bestp){bestp = Double.parseDouble(loadSystemP(system).get(k));}; 
+					if(Double.parseDouble(loadSystemR(system).get(k)) > bestr){bestr = Double.parseDouble(loadSystemR(system).get(k));}; 
 					}
 				ave_bestp += bestp;
 				ave_bestr += bestr;
-				System.out.println(testQuestions.get(j));
-				System.out.println(j + "... asked " + sys2ask + " with p " + loadSystemP(sys2ask).get(j) + "... best possible p: " + bestp + " was achieved by " + bestSystemp);
-				System.out.println(j + "... asked " + sys2ask + " with r " + loadSystemR(sys2ask).get(j) + "... best possible r: " + bestr + " was achieved by " + bestSystemr);
-
 				}
-		
-		double p = ave_p/data.size();
-		double r = ave_r/data.size();
-		System.out.println("macro P : " + p);
-		System.out.println("macro R : " + r);
-		double fmeasure = 2*p*r/(p + r);
-		System.out.println("macro F : " + fmeasure);
-	
-		/*
-		 * calculate best possible fmeasure
-		 */
+			
+			double p = ave_p/test.size();
+			double r = ave_r/test.size();
+			//System.out.println("macro P : " + p);
+			//System.out.println("macro R : " + r);
+			double fmeasure = 2*p*r/(p + r);
+			System.out.println("macro F : " + fmeasure);
+			
+			cv_ave_p += p/folds;
+			cv_ave_r += r/folds;
+			cv_ave_f += fmeasure/folds;
+			
+			/*
+			 * calculate best possible fmeasure
+			 */
+			double bestp = ave_bestp/test.size();
+			double bestr = ave_bestr/test.size();
+			//System.out.println("best possible macro P : " + bestp);
+			//System.out.println("best possible macro R : " + bestr);
+			double bestfmeasure = 2*bestp*bestr/(bestp + bestr);
+			System.out.println("best possible macro F : " + bestfmeasure);
+			
+			cv_ave_best_p += bestp/folds;
+			cv_ave_best_r += bestr/folds;
+			cv_ave_best_f += bestfmeasure/folds;
 
-		double bestp = ave_bestp/data.size();
-		double bestr = ave_bestr/data.size();
-		System.out.println("best possible macro P : " + bestp);
-		System.out.println("best possible macro R : " + bestr);
-		double bestfmeasure = 2*bestp*bestr/(bestp + bestr);
-		System.out.println("best possible macro F : " + bestfmeasure);
-	
-		Set<Integer> test = new HashSet<Integer>(Arrays.asList(7,8,9,10,11,12,13,14,15,16,17,18,19));
-		System.out.println(powerSet(test).size());
+		}
+		System.out.println(cv_ave_p);
+		System.out.println(cv_ave_r);
+		System.out.println(cv_ave_f);
+		System.out.println('\n');
+		System.out.println(cv_ave_best_p);
+		System.out.println(cv_ave_best_r);
+		System.out.println(cv_ave_best_f);
 	}
 	
 	public static ArrayList<String> loadSystemP(String system){
@@ -185,24 +233,4 @@ public class CDTClassifierMultilable {
 			return new JSONObject();
 		}
 	}
-	
-	public static <T> Set<Set<T>> powerSet(Set<T> originalSet) {
-	    Set<Set<T>> sets = new HashSet<Set<T>>();
-	    if (originalSet.isEmpty()) {
-	    	sets.add(new HashSet<T>());
-	    	return sets;
-	    }
-	    List<T> list = new ArrayList<T>(originalSet);
-	    T head = list.get(0);
-	    Set<T> rest = new HashSet<T>(list.subList(1, list.size())); 
-	    for (Set<T> set : powerSet(rest)) {
-	    	Set<T> newSet = new HashSet<T>();
-	    	newSet.add(head);
-	    	newSet.addAll(set);
-	    	sets.add(newSet);
-	    	sets.add(set);
-	    }		
-	    return sets;
-	}
-
 }
