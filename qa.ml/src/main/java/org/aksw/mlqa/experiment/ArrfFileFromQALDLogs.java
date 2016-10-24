@@ -35,7 +35,7 @@ public class ArrfFileFromQALDLogs {
 	 */
 	
 	public static void main(String[] args) {
-		ArrayList<String> systems = Lists.newArrayList("KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English" );
+		ArrayList<String> systems = Lists.newArrayList("KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English");
 		Analyzer analyzer = new Analyzer();
 		ArrayList<Attribute> fvfinal = analyzer.fvWekaAttributes;
 		// create the attributes

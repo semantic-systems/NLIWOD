@@ -29,8 +29,7 @@ public class Inzidenzmatrix {
 		StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
 		for (Question q : questions) {
-			//String text = q.getLanguageToQuestion().get("en");
-			String text = "Who is the leader of germany?";
+			String text = q.getLanguageToQuestion().get("en");
 			System.out.println("\n" + text);
 			Annotation doc = new Annotation(text);
 			pipeline.annotate(doc);
@@ -73,7 +72,6 @@ public class Inzidenzmatrix {
 			for(int i=0; i<vertices.length; i++){
 				System.out.println(Arrays.toString(incidenceMatrix[i]) + "\n");
 			}
-			break;
 		}
 	}
 }
