@@ -239,7 +239,7 @@ public class NifEverything {
 	 * @param doc A {@link Document} to vonvert to an NIF
 	 * @return NIF as String
 	 */
-	private String nifStringFromDocument(final Document doc) {
+	public String nifStringFromDocument(final Document doc) {
 		List<Document> documents = new ArrayList<>();
 		documents.add(doc);
 		NIFWriter writer = new TurtleNIFWriter();
@@ -300,7 +300,7 @@ public class NifEverything {
 	 * @return NIF as {@link Document} list
 	 * @throws IllegalArgumentException When input is empty or not parsable.
 	 */
-	private List<Document> parseNIF(final String input) throws IllegalArgumentException {
+	public List<Document> parseNIF(final String input) throws IllegalArgumentException {
 		NIFParser parser = new TurtleNIFParser();
 		List<Document> docs = parser.parseNIF(input);
 		/**
