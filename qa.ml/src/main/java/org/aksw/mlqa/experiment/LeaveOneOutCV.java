@@ -7,8 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,24 +45,19 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
 
-public class CDTClassifierMultilable {
-	static Logger log = LoggerFactory.getLogger(CDTClassifierMultilable.class);
+public class LeaveOneOutCV {
+static Logger log = LoggerFactory.getLogger(CDTClassifierMultilable.class);
 	
 	
 	public static void main(String[] args) throws Exception {		
 		/*
 		 * For multilable classification:
 		 */
-		
-		//The classifier
-		RAkELd PSt_Classifier = new RAkELd();
 		//load the data
 		Path datapath= Paths.get("./src/main/resources/Qald6Logs.arff");
 		BufferedReader reader = new BufferedReader(new FileReader(datapath.toString()));
 		ArffReader arff = new ArffReader(reader);
-		Instances data = arff.getData();
-		data.setClassIndex(6);
-		PSt_Classifier.buildClassifier(data);		/*
+		/*
 		 * Test the trained system
 		 */
 		
@@ -78,47 +71,36 @@ public class CDTClassifierMultilable {
 			testQuestions.add((String) questionEnglish.get("string"));
 		}
 
-		
-		ArrayList<String> systems = Lists.newArrayList("KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English" );
-		double ave_f = 0;
-		Double ave_bestp = 0.0;
-		Double ave_bestr = 0.0;
+		Instances data = arff.getData();
+		data.setClassIndex(6);
 
-		for(int j = 0; j < data.size(); j++){
-			Instance ins = data.get(j);
-			double[] confidences = PSt_Classifier.distributionForInstance(ins);
+		double cv_ave = 0;
+		ArrayList<String> systems = Lists.newArrayList("KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English" );
+		for(int i = 0; i < 100; i++){
+			Instance testquestion = data.get(i);
+			data.remove(i);
+			RT classifier = new RT();
+			classifier.buildClassifier(data);
+			double[] confidences = classifier.distributionForInstance(testquestion);
+
 			int argmax = -1;
 			double max = -1;
-				for(int i = 0; i < 6; i++){
-					if(confidences[i]>max){
-						max = confidences[i];
-						argmax = i;
-					}
+			for(int j = 0; j < 6; j++){
+				if(confidences[j]>max){
+					max = confidences[j];
+					argmax = j;
 				}
-				//compare trained system with best possible system
-				
-				String sys2ask = systems.get(systems.size() - argmax -1);
-				float p = Float.parseFloat(loadSystemP(sys2ask).get(j));				
-				float r = Float.parseFloat(loadSystemR(sys2ask).get(j));
-				
-				double bestp = 0;
-				double bestr = 0;
-				String bestSystemp = "";
-				String bestSystemr = ""; 
-				for(String system:systems){
-					if(Double.parseDouble(loadSystemP(system).get(j)) > bestp){bestSystemp = system; bestp = Double.parseDouble(loadSystemP(system).get(j));}; 
-					if(Double.parseDouble(loadSystemR(system).get(j)) > bestr){bestSystemr = system; bestr = Double.parseDouble(loadSystemR(system).get(j));}; 
-					}
-				ave_bestp += bestp;
-				ave_bestr += bestr;
-				System.out.println(testQuestions.get(j));
-				System.out.println(j + "... asked " + sys2ask + " with p " + loadSystemP(sys2ask).get(j) + "... best possible p: " + bestp + " was achieved by " + bestSystemp);
-				System.out.println(j + "... asked " + sys2ask + " with r " + loadSystemR(sys2ask).get(j) + "... best possible r: " + bestr + " was achieved by " + bestSystemr);
-				if(p>0&&r>0){ave_f += 2*p*r/(p + r);}
-
-				}
-		System.out.println("macro F : " + ave_f/data.size());
+			}
+			String sys2ask = systems.get(systems.size() - argmax -1);
+			float p = Float.parseFloat(loadSystemP(sys2ask).get(i));				
+			float r = Float.parseFloat(loadSystemR(sys2ask).get(i));
+			double f = 0;
+			if(p>0&&r>0){f = 2*p*r/(p + r);}
+			cv_ave += f;
+			data.add(i, testquestion);
 		}
+		System.out.println(cv_ave/100);
+	}
 	
 	public static ArrayList<String> loadSystemP(String system){
 
@@ -197,5 +179,6 @@ public class CDTClassifierMultilable {
 	    }		
 	    return sets;
 	}
+
 
 }
