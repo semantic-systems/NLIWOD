@@ -1,7 +1,100 @@
 <xml>
-webservice-url  
-  input (klassen)
-    param1 (bspw text) =>       "XXX  a               nif:RFC5147String , nif:String , nif:Context "
-  output (tripel properties)
-     itsrdf:taClassRef
-     itsrdf:taIdentRef
+	
+	<webservice>
+		<name>Class</name>
+		
+		<input>
+			<param>
+				<name>q</name>
+				<rdf:type>
+					nif:String
+				</rdf:type>
+				<rdf:type>
+					nif:Context
+				</rdf:type>
+			</param>
+		</input>
+
+		<output type="nif">
+		 	<namedEntity minOccurs="0" maxOccurs="unbound">
+		 		alle RDF Tripel in RDF/XML?
+		 	</namedEntity>
+
+		</output>
+	</webservice>
+
+	<webservice>
+		<name>Fox</name>
+		
+		<input>
+			<param>
+				<name>q</name>
+				<rdf:type>
+					nif:String
+				</rdf:type>
+				<rdf:type>
+					nif:Context
+				</rdf:type>
+			</param>
+		</input>
+
+		<output type="nif">
+		 	<namedEntity minOccurs="0" maxOccurs="unbound">
+		 		alle RDF Tripel in RDF/XML?
+		 	</namedEntity>
+		 	
+		</output>
+	</webservice>
+
+	<webservice>
+		<name>Property</name>
+		
+		<input>
+			<param>
+				<name>q</name>
+				<rdf:type>
+					nif:String
+				</rdf:type>
+				<rdf:type>
+					nif:Context
+				</rdf:type>
+			</param>
+		</input>
+
+		<output type="nif">
+		 	<namedEntity minOccurs="0" maxOccurs="unbound">
+		 		alle RDF Tripel in RDF/XML?
+		 	</namedEntity>
+		 	
+		</output>
+	</webservice>
+
+	<webservice>
+		<name>Spotlight</name>
+		
+		<input>
+			<param>
+				<name>q</name>
+				<rdf:type>
+					nif:String
+				</rdf:type>
+				<rdf:type>
+					nif:Context
+				</rdf:type>
+			</param>
+		</input>
+
+		<output type="nif">
+		 	<namedEntity minOccurs="0" maxOccurs="unbound">
+		 		alle RDF Tripel in RDF/XML?
+		 	</namedEntity>
+		 	
+		</output>
+	</webservice>
+
+		
+	
+
+
+
+</xml>
