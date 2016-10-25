@@ -1,6 +1,5 @@
 package org.aksw.qa.commons.load;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.RoundingMode;
@@ -246,7 +245,7 @@ public class LoaderController {
 				case QALD6_Train_Hybrid:
 				case QALD6_Train_Multilingual:
 
-					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(new File(mapDatasetToPath(data).getPath().replaceAll("%20", " ")), QaldJson.class);
+					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(getInputStream(data), QaldJson.class);
 					out = EJQuestionFactory.getQuestionsFromQaldJson(json);
 					break;
 				case nlq:

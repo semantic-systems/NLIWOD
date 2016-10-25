@@ -17,6 +17,13 @@
 		<!-- TODO put lucene to own subpackage -->
 		<lucene.version>4.6.0</lucene.version>
 	</properties>
+	<!--  <distributionManagement>
+    <repository>
+      <id>org.aksw.qa</id>
+      <name>commons</name>
+      <url>maven.aksw.org</url>
+    </repository>
+  </distributionManagement> -->
 	<dependencies>
 		<!-- QA datasets provided by github.com/aksw/qa-datasets -->
 		<dependency>
