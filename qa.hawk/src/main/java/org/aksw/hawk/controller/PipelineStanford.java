@@ -25,6 +25,7 @@ public class PipelineStanford extends AbstractPipeline {
 	private Cardinality cardinality;
 	private QueryTypeClassifier queryTypeClassifier;
 	private StanfordNLPConnector stanfordConnector;
+
 	private UnitController numberToDigit;
 	private NounCombinationChain nounCombination;
 
@@ -90,6 +91,10 @@ public class PipelineStanford extends AbstractPipeline {
 		List<Answer> answers = queryBuilder.build(q);
 
 		return answers;
+	}
+
+	public StanfordNLPConnector getStanfordConnector() {
+		return stanfordConnector;
 	}
 
 	public static void main(final String[] args) {
