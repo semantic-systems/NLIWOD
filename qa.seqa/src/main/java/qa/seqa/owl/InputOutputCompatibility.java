@@ -50,6 +50,7 @@ public class InputOutputCompatibility {
 		OWLOntology ontologyNIF = null;
 		OWLOntology ontologyOA = null;
 		OWLOntology ontologyQANARY = null;
+//TODO add FRED ontology/EARMARK http://www.essepuntato.it/lode/imported/http://www.essepuntato.it/2008/12/earmark
 //TODO add Framenet http://www.lrec-conf.org/proceedings/lrec2016/workshops/LREC2016Workshop-LDL2016_Proceedings.pdf
 		try {
 			URL nifURL = new URL("https://raw.githubusercontent.com/NLP2RDF/ontologies/master/nif-core/nif-core.ttl");
