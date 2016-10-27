@@ -50,7 +50,7 @@ public class InputOutputCompatibility {
 		OWLOntology ontologyNIF = null;
 		OWLOntology ontologyOA = null;
 		OWLOntology ontologyQANARY = null;
-
+//TODO add Framenet http://www.lrec-conf.org/proceedings/lrec2016/workshops/LREC2016Workshop-LDL2016_Proceedings.pdf
 		try {
 			URL nifURL = new URL("https://raw.githubusercontent.com/NLP2RDF/ontologies/master/nif-core/nif-core.ttl");
 			InputStream nifis = nifURL.openStream();
@@ -58,8 +58,6 @@ public class InputOutputCompatibility {
 			OWLDocumentFormat format = ontologyNIF.getOWLOntologyManager().getOntologyFormat(ontologyNIF);
 			prefixManager.copyPrefixesFrom(format.asPrefixOWLOntologyFormat().getPrefixName2PrefixMap());
 
-			// FIXME when W3C fixed website https://www.w3.org/ns/oa/index.ttl
-			// brokenhttps://github.com/w3c/web-annotation/raw/gh-pages/vocab/wd/ontology/index.xml
 			URL OAURL = new URL("https://www.w3.org/ns/oa.owl");
 			InputStream oais = OAURL.openStream();
 			ontologyOA = manager.loadOntologyFromOntologyDocument(oais);
