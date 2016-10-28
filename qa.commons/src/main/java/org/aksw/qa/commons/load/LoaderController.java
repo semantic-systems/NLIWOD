@@ -6,8 +6,12 @@ import java.io.InputStream;
 import java.math.RoundingMode;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +32,7 @@ import org.aksw.qa.commons.load.json.EJQuestionFactory;
 import org.aksw.qa.commons.load.json.ExtendedQALDJSONLoader;
 import org.aksw.qa.commons.load.json.QaldJson;
 import org.aksw.qa.commons.load.stanford.StanfordLoader;
+import org.aksw.qa.commons.utils.DateFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMException;
@@ -53,6 +58,7 @@ import org.xml.sax.SAXException;
 public class LoaderController {
 	static Logger log = LoggerFactory.getLogger(LoaderController.class);
 
+	
 	private static InputStream getInputStream(final Dataset set) {
 		// Magical get the path from qa-datasets
 
@@ -380,8 +386,24 @@ public class LoaderController {
 				for (int j = 0; j < answers.getLength(); j++) {
 					NodeList answer = ((Element) answers.item(j)).getElementsByTagName("answer");
 					for (int k = 0; k < answer.getLength(); k++) {
-						String answerString = ((Element) answer.item(k)).getTextContent();
-						set.add(answerString.trim());
+						
+						if(((Element) answer.item(k)).hasChildNodes()){
+							switch(((Element) answer.item(k).getFirstChild().getNextSibling()).getNodeName().toLowerCase()){
+							case "boolean":
+								Boolean b = Boolean.valueOf(((Element) answer.item(k)).getTextContent());
+								set.add(b.toString().trim());
+								break;
+							case "date":
+								set.add(DateFormatter.formatDate(((Element) answer.item(k)).getTextContent()).trim());
+								break;
+							default: 
+								String answerString = ((Element) answer.item(k)).getTextContent();
+								set.add(answerString.trim());
+							}
+						}else{
+							String answerString = ((Element) answer.item(k)).getTextContent();
+							set.add(answerString.trim());
+						}
 					}
 				}
 				question.setGoldenAnswers(set);
@@ -442,7 +464,7 @@ public class LoaderController {
 				String lang = currentJsonObject.getString("lang");
 				String questiion = currentJsonObject.getString("question");
 				String answer = currentJsonObject.getString("answer");
-
+				//TODO somhow check if answer is boolean or date
 				String sparql = currentJsonObject.getString("sparql");
 
 				q.getLanguageToQuestion().put(lang, questiion);
@@ -457,8 +479,10 @@ public class LoaderController {
 		return output;
 	}
 
+
+	
 	// TODO transform to unit test
-	public static void main(final String[] args) {
+	public static void main(final String[] args) throws ParseException {
 		ArrayList<String> output = new ArrayList<>();
 		ArrayList<String> output2 = new ArrayList<>();
 		for (Dataset data : Dataset.values()) {
