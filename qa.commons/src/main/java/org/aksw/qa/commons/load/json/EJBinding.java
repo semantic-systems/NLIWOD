@@ -1,5 +1,8 @@
 package org.aksw.qa.commons.load.json;
 
+import org.aksw.qa.commons.utils.DateFormatter;
+
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EJBinding {
@@ -27,8 +30,21 @@ public class EJBinding {
 	}
 
 	public EJBinding setValue(final String value) {
-		this.value = value;
-		return this;
+		if(this.datatype==null){
+			this.value=value;
+			return this;
+		}
+		switch(this.datatype.toLowerCase()){
+		case "http://www.w3.org/2001/XMLSchema#boolean":
+			this.value = Boolean.valueOf(value).toString();
+			return this;
+		case "http://www.w3.org/2001/XMLSchema#date":
+			this.value = DateFormatter.formatDate(value);
+			return this;
+		default:
+			this.value = value;
+			return this;
+		}
 	}
 
 	public String getDatatype() {
