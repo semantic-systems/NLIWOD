@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,21 +52,17 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
 
-public class TableMaker {
-	static Logger log = LoggerFactory.getLogger(TableMaker.class);
+public class CrossValidationExperiments {
+	static Logger log = LoggerFactory.getLogger(CrossValidationExperiments.class);
 	
 	
-	public static void main(String[] args) throws Exception {				 
+	public static void main(String[] args) throws Exception {		
+
 		Path datapath= Paths.get("./src/main/resources/Qald6Logs.arff");
 		BufferedReader reader = new BufferedReader(new FileReader(datapath.toString()));
 		ArffReader arff = new ArffReader(reader);
 		Instances data = arff.getData();
 		data.setClassIndex(6);
-		
-		//Change To Classifier of Choice
-		PSt Classifier = new PSt();
-		Classifier.buildClassifier(data);
-
 		
 		JSONObject qald6test = Utils.loadTestQuestions();
 			JSONArray questions = (JSONArray) qald6test.get("questions");
@@ -80,52 +74,64 @@ public class TableMaker {
 				testQuestions.add((String) questionEnglish.get("string"));
 			}
 		ArrayList<String> systems = Lists.newArrayList("KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English" );
-		double avef = 0;
-		double[] systemavef = {0,0,0,0,0,0,0};
-		for(int i=0; i<data.size(); i++){
-			String tmp = "";
-			tmp += i +"\t &" + testQuestions.get(i);
-			double bestf = 0;
-			for(String system: systems){
-				double p = Float.parseFloat(Utils.loadSystemP(system).get(i));				
-				double r = Float.parseFloat(Utils.loadSystemR(system).get(i));
-				double f = 0;
-				if(!(p==0&&r==0)){
-					f = 2*p*r/(p+r);
-				}
-				if(f > bestf){
-					bestf = f;
-				}
-				tmp += "\t &" + Math.floor(f * 100) / 100;
-				systemavef[systems.indexOf(system)] += f/data.size();
-			}
-			systemavef[6] += bestf/data.size();
-			tmp += "\t &" + Math.floor(bestf * 100) / 100;
-			double[] confidences = Classifier.distributionForInstance(data.get(i));
-			int argmax = -1;
-			double max = -1;
-				for(int j = 0; j < 6; j++){
-					if(confidences[j]>max){
-						max = confidences[j];
-						argmax = j;
-					}
-				}
-				//compare trained system with best possible system
-				
-			String sys2ask = systems.get(systems.size() - argmax -1);
-			double systemp = Float.parseFloat(Utils.loadSystemP(sys2ask).get(i));				
-			double systemr = Float.parseFloat(Utils.loadSystemR(sys2ask).get(i));
-			double systemf = 0;
-			if(!(systemp==0&&systemr==0)){
-				systemf = 2*systemp*systemr/(systemp+systemr);
-			}
-			avef += systemf;
-			tmp += "\t &" + Math.floor(systemf * 100) / 100;
 
-			tmp += "\\\\";
-			System.out.println(tmp);
+
+		int seed = 133;
+		
+		// Change to 100 for leave-one-out CV
+		int folds = 10;
+		
+		Random rand = new Random(seed);
+		Instances randData = new Instances(data);
+		randData.randomize(rand);
+		
+		float cv_ave_f = 0;
+		
+		for(int n=0; n < folds; n++){
+		    Instances train = randData.trainCV(folds,  n);
+		    Instances test = randData.testCV(folds,  n);
+		    
+		    //Change to the Classifier of your choice
+			RT Classifier = new RT();
+			Classifier.buildClassifier(train);
+			
+
+			float ave_p = 0;
+			float ave_r = 0;
+	
+			for(int j = 0; j < test.size(); j++){
+				Instance ins = test.get(j);
+				int k = 0; 
+				for(int l=0; l < data.size(); l++){
+					Instance tmp = data.get(l);
+					if(tmp.toString().equals(ins.toString())){
+						k = l;
+					}
+				}		
+				double[] confidences = Classifier.distributionForInstance(ins);
+				int argmax = -1;
+				double max = -1;
+					for(int i = 0; i < 6; i++){
+						if(confidences[i]>max){
+							max = confidences[i];
+							argmax = i;
+						}
+					}
+				String sys2ask = systems.get(systems.size() - argmax -1);
+				ave_p += Float.parseFloat(Utils.loadSystemP(sys2ask).get(k));				
+				ave_r += Float.parseFloat(Utils.loadSystemR(sys2ask).get(k));
+			}
+			
+			double p = ave_p/test.size();
+			double r = ave_r/test.size();
+			double fmeasure = 0;
+			if(p>0&&r>0){fmeasure = 2*p*r/(p + r);}
+			System.out.println("macro F on fold " + n + ": " + fmeasure);
+			
+			cv_ave_f += fmeasure/folds;
+						
 		}
-		System.out.println(Arrays.toString(systemavef));
-		System.out.println(avef/data.size());
+		System.out.println("macro F average: " + cv_ave_f);
+		System.out.println('\n');
 	}
 }

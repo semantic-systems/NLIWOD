@@ -46,7 +46,7 @@ public class ArrfFileFromQALDLogs {
 		}
 		System.out.println(test);
 		// load trainQuestions
-		JSONObject qald6test = loadTestQuestions();
+		JSONObject qald6test = Utils.loadTestQuestions();
 		JSONArray questions = (JSONArray) qald6test.get("questions");
 		ArrayList<String> testQuestions = Lists.newArrayList();
 		for(int i = 0; i < questions.size(); i++){
@@ -62,7 +62,7 @@ public class ArrfFileFromQALDLogs {
 			Instance tmp = analyzer.analyze(testQuestions.get(i));
 			for(int j = 0; j < systems.size(); j++){
 				//if fmeasure > 0, target will be 1, else 0
-				if(new Double(loadSystemData(systems.get(systems.size() -1  - j)).get(i)) > 0){
+				if(new Double(Utils.loadSystemData(systems.get(systems.size() -1  - j)).get(i)) > 0){
 					tmp.setValue(j, 1);
 				} else {
 					tmp.setValue(j, 0);
@@ -79,42 +79,4 @@ public class ArrfFileFromQALDLogs {
 			e.printStackTrace();
 		}				
 	};
-	
-	public static ArrayList<String> loadSystemData(String system){
-		Path datapath = Paths.get("./src/main/resources/QALD6MultilingualLogs/multilingual_" + system + ".html");
-		ArrayList<String> result = Lists.newArrayList();
-
-		try{
-			String loadedData = Files.lines(datapath).collect(Collectors.joining()); 
-			Document doc = Jsoup.parse(loadedData);
-			Element table = doc.select("table").get(5);
-			Elements tableRows = table.select("tr");
-			for(Element row: tableRows){
-				Elements tableEntry = row.select("td");
-				result.add(tableEntry.get(3).ownText());
-			}
-			result.remove(0); //remove the head of the table
-			return result;
-		}catch(IOException e){
-			e.printStackTrace();
-			log.debug("loading failed.");
-			return result;
-		}
-
-	}
-	
-	public static JSONObject loadTestQuestions(){
-		String loadeddata;
-		try {			
-			Path datapath = Paths.get("./src/main/resources/qald-6-test-multilingual.json");
-			loadeddata = Files.lines(datapath).collect(Collectors.joining());
-			JSONParser parser = new JSONParser();
-			JSONObject arr = (JSONObject) parser.parse(loadeddata);
-			return arr;
-		} catch (IOException | ParseException  e) {
-			e.printStackTrace();
-			log.debug("loading failed.");
-			return new JSONObject();
-		}
-	}
 }
