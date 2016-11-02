@@ -52,7 +52,7 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
 
-public class CDTClassifierMultilable {
+public class SystemTestonCV {
 	static Logger log = LoggerFactory.getLogger(CDTClassifierMultilable.class);
 	
 	
@@ -77,103 +77,41 @@ public class CDTClassifierMultilable {
 
 
 		int seed = 133;
-		int folds = 100;
+		int folds = 10;
 		
 		Random rand = new Random(seed);
 		Instances randData = new Instances(data);
 		randData.randomize(rand);
 		
-		float cv_ave_p = 0;
-		float cv_ave_r = 0;
-		float cv_ave_f = 0;
-		float cv_ave_best_p = 0;
-		float cv_ave_best_r = 0;
-		float cv_ave_best_f = 0;
-
-		for(int n=0; n < folds; n++){
-		    Instances train = randData.trainCV(folds,  n);
-		    Instances test = randData.testCV(folds,  n);
-			RT Classifier = new RT();
-			Classifier.buildClassifier(train);
-			
-			/*
-			 * Test the trained system
-			 */
-				
-			float ave_p = 0;
-			float ave_r = 0;
-			Double ave_bestp = 0.0;
-			Double ave_bestr = 0.0;
+		for(String system: systems){
+			double cv_ave_f = 0;
+			for(int n=0; n < folds; n++){
+			    Instances train = randData.trainCV(folds,  n);
+			    Instances test = randData.testCV(folds,  n);
+				double cv_f = 0;
 	
-			for(int j = 0; j < test.size(); j++){
-				Instance ins = test.get(j);
-				int k = 0; 
-				for(int l=0; l < data.size(); l++){
-					Instance tmp = data.get(l);
-					if(tmp.toString().equals(ins.toString())){
-						k = l;
-					}
-				}
-				
-						
-				double[] confidences = Classifier.distributionForInstance(ins);
-				int argmax = -1;
-				double max = -1;
-					for(int i = 0; i < 6; i++){
-						if(confidences[i]>max){
-							max = confidences[i];
-							argmax = i;
+				for(int j = 0; j < test.size(); j++){
+					Instance ins = test.get(j);
+					int k = 0; 
+					for(int l=0; l < data.size(); l++){
+						Instance tmp = data.get(l);
+						if(tmp.toString().equals(ins.toString())){
+							k = l;
 						}
 					}
-					//compare trained system with best possible system
 					
-				String sys2ask = systems.get(systems.size() - argmax -1);
-				ave_p += Float.parseFloat(loadSystemP(sys2ask).get(k));				
-				ave_r += Float.parseFloat(loadSystemR(sys2ask).get(k));
-				double bestp = 0;
-				double bestr = 0;
-				for(String system:systems){
-					if(Double.parseDouble(loadSystemP(system).get(k)) > bestp){bestp = Double.parseDouble(loadSystemP(system).get(k));}; 
-					if(Double.parseDouble(loadSystemR(system).get(k)) > bestr){bestr = Double.parseDouble(loadSystemR(system).get(k));}; 
+			//compare trained system with best possible system
+						
+					double p = Float.parseFloat(loadSystemP(system).get(k));				
+					double r = Float.parseFloat(loadSystemR(system).get(k));
+					if(!(p==0&&r==0)){
+						cv_f += (2*p*r/(p+r))/test.size();
 					}
-				ave_bestp += bestp;
-				ave_bestr += bestr;
 				}
-			
-			double p = ave_p/test.size();
-			double r = ave_r/test.size();
-			//System.out.println("macro P : " + p);
-			//System.out.println("macro R : " + r);
-			double fmeasure = 0;
-			if(p>0&&r>0){fmeasure = 2*p*r/(p + r);}
-			System.out.println("macro F : " + fmeasure);
-			
-			cv_ave_p += p/folds;
-			cv_ave_r += r/folds;
-			cv_ave_f += fmeasure/folds;
-			
-			/*
-			 * calculate best possible fmeasure
-			 */
-			double bestp = ave_bestp/test.size();
-			double bestr = ave_bestr/test.size();
-			//System.out.println("best possible macro P : " + bestp);
-			//System.out.println("best possible macro R : " + bestr);
-			double bestfmeasure = 2*bestp*bestr/(bestp + bestr);
-			System.out.println("best possible macro F : " + bestfmeasure);
-			
-			cv_ave_best_p += bestp/folds;
-			cv_ave_best_r += bestr/folds;
-			cv_ave_best_f += bestfmeasure/folds;
-
+				cv_ave_f += cv_f/folds;
+			}
+			System.out.println(system + ": " + cv_ave_f);
 		}
-		System.out.println(cv_ave_p);
-		System.out.println(cv_ave_r);
-		System.out.println(cv_ave_f);
-		System.out.println('\n');
-		System.out.println(cv_ave_best_p);
-		System.out.println(cv_ave_best_r);
-		System.out.println(cv_ave_best_f);
 	}
 	
 	public static ArrayList<String> loadSystemP(String system){

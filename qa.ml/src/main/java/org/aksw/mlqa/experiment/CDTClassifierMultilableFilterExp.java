@@ -31,6 +31,7 @@ import com.google.common.collect.Lists;
 
 import meka.classifiers.multilabel.PSt;
 import weka.classifiers.meta.FilteredClassifier;
+import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
@@ -44,16 +45,14 @@ public class CDTClassifierMultilableFilterExp {
 		/*
 		 * For multilable classification:
 		 */
-		
-		Set<Integer> ind = new HashSet<Integer>(Arrays.asList(11,12,13,14,15,16,17,18));
+		Set<Integer> ind = new HashSet<Integer>(Arrays.asList(7,8,9,10,11,12,13,14,15,16,17,18));
 		Set<Set<Integer>> filters = powerSet(ind);
 		
 		Path datapath= Paths.get("./src/main/resources/Qald6Logs.arff");
 		BufferedReader reader = new BufferedReader(new FileReader(datapath.toString()));
 		ArffReader arff = new ArffReader(reader);
 		Instances data = arff.getData();
-		data.setClassIndex(6);
-		
+		data.setClassIndex(6);	
 		
 		JSONObject qald6test = loadTestQuestions();
 		JSONArray questions = (JSONArray) qald6test.get("questions");
@@ -63,72 +62,52 @@ public class CDTClassifierMultilableFilterExp {
 			JSONArray questionStrings = (JSONArray) questionData.get("question");
 			JSONObject questionEnglish = (JSONObject) questionStrings.get(0);
 			testQuestions.add((String) questionEnglish.get("string"));
-			}
-		
-		double cur_max = 0.0;
-		
+			}		
 		for(Set<Integer> filter:filters){
-		List<Integer> filterlist = new ArrayList<Integer>(filter);
-		int[] atts = new int[filter.size()];
-		Remove rm = new Remove();
-		for(int i =0; i < filterlist.size(); i++) atts[i] = filterlist.get(i);
-		rm.setAttributeIndicesArray(atts);
-		PSt PSt_Classifier = new PSt();
-		FilteredClassifier fc = new FilteredClassifier();
-		fc.setFilter(rm);
-		fc.setClassifier(PSt_Classifier);
-		fc.buildClassifier(data);
-		/*
-		 * Test the trained system
-		 */
+			List<Integer> filterlist = new ArrayList<Integer>(filter);
+			int[] atts = new int[filter.size()];
+			Remove rm = new Remove();
+			for(int i =0; i < filterlist.size(); i++) atts[i] = filterlist.get(i);
+			rm.setAttributeIndicesArray(atts);
+			PSt PSt_Classifier = new PSt();
+			FilteredClassifier fc = new FilteredClassifier();
+			fc.setFilter(rm);
+			fc.setClassifier(PSt_Classifier);
+			fc.buildClassifier(data);
 
-
-		
-		ArrayList<String> systems = Lists.newArrayList("KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English" );
-		float ave_p = 0;
-		float ave_r = 0;
-		/*
-		Double ave_bestp = 0.0;
-		Double ave_bestr = 0.0;
-		*/
-		for(int j = 0; j < data.size(); j++){
-			Instance ins = data.get(j);
-			double[] confidences = PSt_Classifier.distributionForInstance(ins);
-			int argmax = -1;
-			double max = -1;
+	
+			
+			ArrayList<String> systems = Lists.newArrayList("KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English" );
+			float p = 0;
+			float r = 0;
+			double ave_f = 0;
+			/*
+			Double ave_bestp = 0.0;
+			Double ave_bestr = 0.0;
+			*/
+			for(int j = 0; j < data.size(); j++){
+				Instance ins = data.get(j);
+				double[] confidences = fc.distributionForInstance(ins);
+				int argmax = -1;
+				double max = -1;
 				for(int i = 0; i < 6; i++){
 					if(confidences[i]>max){
 						max = confidences[i];
 						argmax = i;
+						}	
 					}
-				}
-				
-				//compare trained system with best possible system
 				String sys2ask = systems.get(systems.size() - argmax -1);
-				ave_p += Float.parseFloat(loadSystemP(sys2ask).get(j));				
-				ave_r += Float.parseFloat(loadSystemR(sys2ask).get(j));
-				/*
-				double bestp = 0;
-				double bestr = 0;
-				String bestSystemp = "";
-				String bestSystemr = ""; 
-				for(String system:systems){
-					if(Double.parseDouble(loadSystemP(system).get(j)) > bestp){bestSystemp = system; bestp = Double.parseDouble(loadSystemP(system).get(j));}; 
-					if(Double.parseDouble(loadSystemR(system).get(j)) > bestr){bestSystemr = system; bestr = Double.parseDouble(loadSystemR(system).get(j));}; 
+				p = Float.parseFloat(loadSystemP(sys2ask).get(j));				
+				r = Float.parseFloat(loadSystemR(sys2ask).get(j));
+				if(p>0&&r>0){
+				ave_f += 2*p*r/(p + r);
 					}
-				ave_bestp += bestp;
-				ave_bestr += bestr;
-				System.out.println(testQuestions.get(j));
-				System.out.println(j + "... asked " + sys2ask + " with p " + loadSystemP(sys2ask).get(j) + "... best possible p: " + bestp + " was achieved by " + bestSystemp);
-				System.out.println(j + "... asked " + sys2ask + " with r " + loadSystemR(sys2ask).get(j) + "... best possible r: " + bestr + " was achieved by " + bestSystemr);
-				*/
 				}
-		
-		double p = ave_p/data.size();
-		double r = ave_r/data.size();
-		double fmeasure = 2*p*r/(p + r);
-		cur_max = fmeasure;System.out.println(fmeasure);System.out.println(rm.getAttributeIndices());
-		}
+			
+			double fmeasure = ave_f/data.size();
+			System.out.println(fmeasure);
+			System.out.println(rm.getAttributeIndices());
+			}
 		/*
 		 * calculate best possible fmeasure
 		 
