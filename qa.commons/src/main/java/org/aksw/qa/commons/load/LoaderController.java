@@ -363,7 +363,8 @@ public class LoaderController {
 
 					NodeList childNodes = element.getChildNodes();
 					Node item = childNodes.item(0);
-					question.setSparqlQuery(item.getNodeValue().trim());
+					question.setSparqlQuery(item.getNodeValue().trim());					
+					//TODO validate SPARQLQuery
 				}
 				// check if OUT OF SCOPE marked
 				if (question.getPseudoSparqlQuery() != null) {
@@ -380,23 +381,20 @@ public class LoaderController {
 					NodeList answer = ((Element) answers.item(j)).getElementsByTagName("answer");
 					for (int k = 0; k < answer.getLength(); k++) {
 						
-						if(((Element) answer.item(k)).hasChildNodes()){
-							switch(((Element) answer.item(k).getFirstChild().getNextSibling()).getNodeName().toLowerCase()){
-							case "boolean":
-								Boolean b = Boolean.valueOf(((Element) answer.item(k)).getTextContent());
-								set.add(b.toString().trim());
-								break;
-							case "date":
-								set.add(DateFormatter.formatDate(((Element) answer.item(k)).getTextContent()).trim());
-								break;
-							default: 
-								String answerString = ((Element) answer.item(k)).getTextContent();
-								set.add(answerString.trim());
-							}
-						}else{
+						
+						switch(question.getAnswerType().toLowerCase()){
+						case "boolean":
+							Boolean b = Boolean.valueOf(((Element) answer.item(k)).getTextContent().toLowerCase().trim());
+							set.add(b.toString().trim());
+							break;
+						case "date":
+							set.add(DateFormatter.formatDate(((Element) answer.item(k)).getTextContent()).trim());
+							break;
+						default: 
 							String answerString = ((Element) answer.item(k)).getTextContent();
 							set.add(answerString.trim());
 						}
+
 					}
 				}
 				question.setGoldenAnswers(set);
@@ -462,6 +460,7 @@ public class LoaderController {
 
 				q.getLanguageToQuestion().put(lang, questiion);
 				q.setSparqlQuery(lang, sparql);
+				//TODO validate SPARQL Query
 				Set<String> answ = new HashSet<>();
 				answ.add(answer);
 				q.setGoldenAnswers(lang, answ);

@@ -34,7 +34,7 @@ public class EJBinding {
 			this.value=value;
 			return this;
 		}
-		switch(this.datatype.toLowerCase()){
+		switch(this.datatype){
 		case "http://www.w3.org/2001/XMLSchema#boolean":
 			this.value = Boolean.valueOf(value).toString();
 			return this;
