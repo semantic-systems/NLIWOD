@@ -52,6 +52,10 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
 
+/*
+ * The purpose of this Class is to to k-fold Cross Validation of our classification algorithm on the QALD6 benchmark data. 
+ */
+
 public class CrossValidationExperiments {
 	static Logger log = LoggerFactory.getLogger(CrossValidationExperiments.class);
 	
@@ -64,15 +68,6 @@ public class CrossValidationExperiments {
 		Instances data = arff.getData();
 		data.setClassIndex(6);
 		
-		JSONObject qald6test = Utils.loadTestQuestions();
-			JSONArray questions = (JSONArray) qald6test.get("questions");
-			ArrayList<String> testQuestions = Lists.newArrayList();
-			for(int i = 0; i < questions.size(); i++){
-				JSONObject questionData = (JSONObject) questions.get(i);
-				JSONArray questionStrings = (JSONArray) questionData.get("question");
-				JSONObject questionEnglish = (JSONObject) questionStrings.get(0);
-				testQuestions.add((String) questionEnglish.get("string"));
-			}
 		ArrayList<String> systems = Lists.newArrayList("KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English" );
 
 

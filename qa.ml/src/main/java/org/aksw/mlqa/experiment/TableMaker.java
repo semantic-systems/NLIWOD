@@ -54,6 +54,10 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
 
+/*
+ * This Class creates the Large Table for the Paper.
+ */
+
 public class TableMaker {
 	static Logger log = LoggerFactory.getLogger(TableMaker.class);
 	
@@ -110,7 +114,6 @@ public class TableMaker {
 						argmax = j;
 					}
 				}
-				//compare trained system with best possible system
 				
 			String sys2ask = systems.get(systems.size() - argmax -1);
 			double systemp = Float.parseFloat(Utils.loadSystemP(sys2ask).get(i));				

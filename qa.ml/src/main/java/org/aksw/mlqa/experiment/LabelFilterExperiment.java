@@ -38,6 +38,10 @@ import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
 import weka.filters.unsupervised.attribute.Remove;
 
+/*
+ * Purpose of this Class is to test the influence of different label combinations on the training score 
+ */
+
 public class LabelFilterExperiment {
 	static Logger log = LoggerFactory.getLogger(LabelFilterExperiment.class);
 	
@@ -52,18 +56,7 @@ public class LabelFilterExperiment {
 		ArffReader arff = new ArffReader(reader);
 		Instances data = arff.getData();
 		data.setClassIndex(6);	
-		
-		JSONObject qald6test = Utils.loadTestQuestions();
-		JSONArray questions = (JSONArray) qald6test.get("questions");
-		ArrayList<String> testQuestions = Lists.newArrayList();
-		
-		for(int i = 0; i < questions.size(); i++){
-			JSONObject questionData = (JSONObject) questions.get(i);
-			JSONArray questionStrings = (JSONArray) questionData.get("question");
-			JSONObject questionEnglish = (JSONObject) questionStrings.get(0);
-			testQuestions.add((String) questionEnglish.get("string"));
-			}
-		
+				
 		ArrayList<String> systems = Lists.newArrayList("KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English" );
 		HashMap<String, ArrayList<String>> precisions = new HashMap<String, ArrayList<String>>();
 		HashMap<String, ArrayList<String>> recalls = new HashMap<String, ArrayList<String>>();
