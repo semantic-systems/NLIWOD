@@ -53,7 +53,7 @@ import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
 
 /*
- * The purpose of this Class is to to k-fold Cross Validation of our classification algorithm on the QALD6 benchmark data. 
+ * The purpose of this Class is to do k-fold Cross Validation of our classification algorithm on the QALD6 benchmark data. 
  */
 
 public class CrossValidationExperiments {
@@ -72,7 +72,6 @@ public class CrossValidationExperiments {
 
 
 		int seed = 133;
-		
 		// Change to 100 for leave-one-out CV
 		int folds = 10;
 		
