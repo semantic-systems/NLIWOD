@@ -14,6 +14,7 @@ public class QaldQuery {
 	}
 
 	public void setSparql(final String sparql) {
+		//TODO validate SPARQL Query
 		this.sparql = sparql;
 	}
 

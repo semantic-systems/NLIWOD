@@ -32,6 +32,7 @@ import org.aksw.qa.commons.load.json.ExtendedQALDJSONLoader;
 import org.aksw.qa.commons.load.json.QaldJson;
 import org.aksw.qa.commons.load.stanford.StanfordLoader;
 import org.aksw.qa.commons.utils.DateFormatter;
+import org.apache.jena.query.QueryFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMException;
@@ -364,7 +365,12 @@ public class LoaderController {
 					NodeList childNodes = element.getChildNodes();
 					Node item = childNodes.item(0);
 					question.setSparqlQuery(item.getNodeValue().trim());					
-					//TODO validate SPARQLQuery
+					//validate SPARQLQuery
+					try{
+						QueryFactory.create(question.getSparqlQuery());
+					}catch(Exception e){
+						continue;
+					}
 				}
 				// check if OUT OF SCOPE marked
 				if (question.getPseudoSparqlQuery() != null) {
@@ -460,10 +466,16 @@ public class LoaderController {
 
 				q.getLanguageToQuestion().put(lang, questiion);
 				q.setSparqlQuery(lang, sparql);
-				//TODO validate SPARQL Query
+				
 				Set<String> answ = new HashSet<>();
 				answ.add(answer);
 				q.setGoldenAnswers(lang, answ);
+			}
+			// validate SPARQL Query
+			try{
+				QueryFactory.create(q.getSparqlQuery());
+			}catch(Exception e){
+				continue;
 			}
 			output.add(q);
 		}

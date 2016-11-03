@@ -3,6 +3,8 @@ package org.aksw.qa.commons.load.json;
 import java.util.Objects;
 import java.util.Vector;
 
+import org.apache.jena.query.QueryFactory;
+
 public class EJQuestion {
 	private String id;
 	private String answertype;
@@ -80,6 +82,13 @@ public class EJQuestion {
 
 	public EJQuestion setLanguage(final Vector<EJLanguage> language) {
 		this.language = language;
+		for(EJLanguage lang : this.language){
+			try{
+				QueryFactory.create(lang.getSparql());
+			}catch(Exception e){
+				this.language.remove(lang);
+			}
+		}
 		return this;
 	}
 
