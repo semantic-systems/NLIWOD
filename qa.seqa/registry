@@ -4,97 +4,53 @@
 		<name>Class</name>
 		
 		<input>
-			<param>
-				<name>q</name>
-				<rdf:type>
-					nif:String
-				</rdf:type>
-				<rdf:type>
-					nif:Context
-				</rdf:type>
-			</param>
+	        
+	        <owl:Class rdf:about="ClassInput1">
+         	   
+         	   <owl:equivalentClass>
+     				<owl:Restriction>
+       					<owl:onProperty rdf:resource="rdf:type"></owl:onProperty>
+       					<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String"/>
+       				</owl:Restriction>
+
+       				<owl:Restriction>
+       					<owl:onProperty rdf:resource="rdf:type"></owl:onProperty>
+       					<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context"/>
+       				</owl:Restriction>
+
+   				</owl:equivalentClass>
+
+            </owl:Class>
+
 		</input>
 
-		<output type="nif">
-		 	<namedEntity minOccurs="0" maxOccurs="unbound">
-		 		alle RDF Tripel in RDF/XML?
-		 	</namedEntity>
+		<output>
+	        <owl:Class rdf:about="ClassOutput1">
+         	   
+         	   <owl:equivalentClass>
+     				<owl:Restriction>
+       					<owl:onProperty rdf:resource="rdf:type"></owl:onProperty>
+       					<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context"/>
+       				</owl:Restriction>
+       				<owl:Restriction>
+       					<owl:onProperty rdf:resource="rdf:type"></owl:onProperty>
+       					<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String"/>
+       				</owl:Restriction>
+   				</owl:equivalentClass>
 
+            </owl:Class>
+
+          	<owl:Class rdf:about="ClassOutput2">
+         	   
+         	   <owl:equivalentClass>
+     				<owl:Restriction>
+       					<owl:onProperty rdf:resource="rdf:type"></owl:onProperty>
+       					<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String"/>
+       				</owl:Restriction>
+   				</owl:equivalentClass>
+
+            </owl:Class>
 		</output>
 	</webservice>
-
-	<webservice>
-		<name>Fox</name>
-		
-		<input>
-			<param>
-				<name>q</name>
-				<rdf:type>
-					nif:String
-				</rdf:type>
-				<rdf:type>
-					nif:Context
-				</rdf:type>
-			</param>
-		</input>
-
-		<output type="nif">
-		 	<namedEntity minOccurs="0" maxOccurs="unbound">
-		 		alle RDF Tripel in RDF/XML?
-		 	</namedEntity>
-		 	
-		</output>
-	</webservice>
-
-	<webservice>
-		<name>Property</name>
-		
-		<input>
-			<param>
-				<name>q</name>
-				<rdf:type>
-					nif:String
-				</rdf:type>
-				<rdf:type>
-					nif:Context
-				</rdf:type>
-			</param>
-		</input>
-
-		<output type="nif">
-		 	<namedEntity minOccurs="0" maxOccurs="unbound">
-		 		alle RDF Tripel in RDF/XML?
-		 	</namedEntity>
-		 	
-		</output>
-	</webservice>
-
-	<webservice>
-		<name>Spotlight</name>
-		
-		<input>
-			<param>
-				<name>q</name>
-				<rdf:type>
-					nif:String
-				</rdf:type>
-				<rdf:type>
-					nif:Context
-				</rdf:type>
-			</param>
-		</input>
-
-		<output type="nif">
-		 	<namedEntity minOccurs="0" maxOccurs="unbound">
-		 		alle RDF Tripel in RDF/XML?
-		 	</namedEntity>
-		 	
-		</output>
-	</webservice>
-
-		
-	
-
-
 
 </xml>
