@@ -64,7 +64,7 @@
 
 	<owl:Class rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#inputContext">
         <rdfs:type rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#input" /> 		   
-        <owl:equivalentClass>
+        <owl:unionOf rdf:parseType="Collection">
    			<owl:Restriction>
     			<owl:onProperty rdf:resource="rdf:type"></owl:onProperty>
        			<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String"/>
@@ -80,7 +80,7 @@
        			<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context"/>
        		</owl:Restriction>
 
-   		</owl:equivalentClass>
+   		</owl:unionOf>
 
     </owl:Class>
 
@@ -88,7 +88,7 @@
 
 	<owl:Class rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#outputContext">
         <rdfs:type rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#input" /> 		   
-        <owl:equivalentClass>
+        <owl:unionOf rdf:parseType="Collection">
    			<owl:Restriction>
     			<owl:onProperty rdf:resource="rdf:type"></owl:onProperty>
        			<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String"/>
@@ -104,7 +104,7 @@
        			<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context"/>
        		</owl:Restriction>
 
-   		</owl:equivalentClass>
+   		</owl:unionOf>
 
     </owl:Class>
 
