@@ -1,116 +1,112 @@
 <?xml version="1.0"?>
-<rdf:RDF
-	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-	xmlns:owl="http://www.w3.org/2002/07/owl#"
-	xmlns:dc="http://purl.org/dc/elements/1.1/"
-	xmlns:seqa="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#">
+<rdf:RDF xmlns="http://aksw.org/nliwod/qa.seqa/"
+     xml:base="http://aksw.org/nliwod/qa.seqa/"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:nif="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#"
+     xmlns:vann="http://purl.org/vocab/vann/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <owl:Ontology rdf:about="http://aksw.org/nliwod/qa.seqa/">
+        <owl:imports rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#"/>
+    </owl:Ontology>
+    
 
 
-	<owl:Ontology rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa">
-		<dc:title>Webservices QA Ontology</dc:title>
-		<dc:description>Describes the input and output of nlp webservices.</dc:description>
-	</owl:Ontology>
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
 
-	<!-- webservice class -->
-	<owl:Class rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#webservice">
-		<rdfs:label>SEQA Webservice</rdfs:label>
-		<rdfs:comment>This class contains all webservices for QA.SEQA</rdfs:comment>
-	</owl:Class>
+    
 
 
-	<!-- webservice instances -->
-	<owl:Class rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#class">
-		<rdfs:type rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#webservice" />
-		<seqa:hasInput rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#inputContext">
-		<seqa:hasOutput rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#OutputContext">
-	</owl:Class>
+    <!-- http://aksw.org/nliwod/qa.seqa/hasInput -->
 
-	<owl:Class rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#fox">
-		<rdfs:type rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#webservice" />
-		<seqa:hasInput rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#inputContext">
-		<seqa:hasOutput rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#OutputContext">	
-	</owl:Class>
+    <owl:ObjectProperty rdf:about="http://aksw.org/nliwod/qa.seqa/hasInput">
+        <rdfs:domain rdf:resource="http://aksw.org/nliwod/qa.seqa/Webservice"/>
+        <rdfs:range rdf:resource="http://aksw.org/nliwod/qa.seqa/WebserviceIO"/>
+    </owl:ObjectProperty>
+    
 
-	<owl:Class rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#spotlight">
-		<rdfs:type rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#webservice" />
-		<seqa:hasInput rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#inputContext">
-		<seqa:hasOutput rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#OutputContext">
-	</owl:Class>
 
-	<!-- webservice input output mapping -->
+    <!-- http://aksw.org/nliwod/qa.seqa/hasOutput -->
 
-	<owl:ObjectProperty rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#hasInput"> 
-  		<rdfs:domain rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#webservice"/>
-  		<rdfs:range rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#input"/> 
-	</owl:ObjectProperty> 
+    <owl:ObjectProperty rdf:about="http://aksw.org/nliwod/qa.seqa/hasOutput">
+        <rdfs:domain rdf:resource="http://aksw.org/nliwod/qa.seqa/Webservice"/>
+        <rdfs:range rdf:resource="http://aksw.org/nliwod/qa.seqa/WebserviceIO"/>
+    </owl:ObjectProperty>
+    
 
-	<owl:ObjectProperty rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#hasOutput"> 
-  		<rdfs:domain rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#webservice"/>
-  		<rdfs:range rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#output"/> 
-	</owl:ObjectProperty> 
 
-	<!-- input and output class -->
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
 
-	<owl:Class rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#input">
-		<rdfs:label>webservice input</rdfs:label>
-	</owl:Class>
+    
 
-	<owl:Class rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#output">
-		<rdfs:label>webservice output</rdfs:label>
-	</owl:Class>
 
-	<!-- input instances-->
+    <!-- http://aksw.org/nliwod/qa.seqa/ClassWebservice -->
 
-	<owl:Class rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#inputContext">
-        <rdfs:type rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#input" /> 		   
-        <owl:intersectionOf rdf:parseType="Collection">
-   			<owl:Restriction>
-    			<owl:onProperty rdf:resource="rdf:type"></owl:onProperty>
-       			<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String"/>
-       		</owl:Restriction>
-
-       		<owl:Restriction>
-    			<owl:onProperty rdf:resource="rdf:type"></owl:onProperty>
-       			<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#String"/>
-       		</owl:Restriction>
-
-       		<owl:Restriction>
-       			<owl:onProperty rdf:resource="rdf:type"></owl:onProperty>
-       			<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context"/>
-       		</owl:Restriction>
-
-   		<owl:intersectionOf>
-
+    <owl:Class rdf:about="http://aksw.org/nliwod/qa.seqa/ClassWebservice">
+        <rdfs:subClassOf rdf:resource="http://aksw.org/nliwod/qa.seqa/Webservice"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://aksw.org/nliwod/qa.seqa/hasInput"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://aksw.org/nliwod/qa.seqa/ContextIO"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://aksw.org/nliwod/qa.seqa/hasOutput"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://aksw.org/nliwod/qa.seqa/ContextIO"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
+    
 
-	<!-- output instances-->
 
-	<owl:Class rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#outputContext">
-        <rdfs:type rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/seqa#input" /> 		   
-        <owl:intersectionOf rdf:parseType="Collection">
-   			<owl:Restriction>
-    			<owl:onProperty rdf:resource="rdf:type"></owl:onProperty>
-       			<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String"/>
-       		</owl:Restriction>
+    <!-- http://aksw.org/nliwod/qa.seqa/ContextIO -->
 
-       		<owl:Restriction>
-    			<owl:onProperty rdf:resource="rdf:type"></owl:onProperty>
-       			<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#String"/>
-       		</owl:Restriction>
-
-       		<owl:Restriction>
-       			<owl:onProperty rdf:resource="rdf:type"></owl:onProperty>
-       			<owl:someValuesFrom rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context"/>
-       		</owl:Restriction>
-
-   		<owl:intersectionOf rdf:parseType="Collection">
-
+    <owl:Class rdf:about="http://aksw.org/nliwod/qa.seqa/ContextIO">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context"/>
+                    <rdf:Description rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String"/>
+                    <rdf:Description rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#String"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://aksw.org/nliwod/qa.seqa/WebserviceIO"/>
     </owl:Class>
+    
 
 
+    <!-- http://aksw.org/nliwod/qa.seqa/Webservice -->
+
+    <owl:Class rdf:about="http://aksw.org/nliwod/qa.seqa/Webservice"/>
+    
 
 
+    <!-- http://aksw.org/nliwod/qa.seqa/WebserviceIO -->
+
+    <owl:Class rdf:about="http://aksw.org/nliwod/qa.seqa/WebserviceIO"/>
 </rdf:RDF>
 
+
+
+<!-- Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi -->
 
