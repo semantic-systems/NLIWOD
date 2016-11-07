@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://aksw.org/nliwod/qa.seqa/"
+     xml:base="http://aksw.org/nliwod/qa.seqa/"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:nif="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#"
+     xmlns:vann="http://purl.org/vocab/vann/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <owl:Ontology rdf:about="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owl">
+        <owl:imports rdf:resource="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlhasInput -->
+
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlhasInput">
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlWebservice"/>
+        <rdfs:range rdf:resource="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlWebserviceIO"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlhasOutput -->
+
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlhasOutput">
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlWebservice"/>
+        <rdfs:range rdf:resource="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlWebserviceIO"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlClassWebservice -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlClassWebservice">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlWebservice"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlhasInput"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlContextIO"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlhasOutput"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlContextIO"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlContextIO -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlContextIO">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#Context"/>
+                    <rdf:Description rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#RFC5147String"/>
+                    <rdf:Description rdf:about="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#String"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlWebserviceIO"/>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlWebservice -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlWebservice"/>
+    
+
+
+    <!-- https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlWebserviceIO -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/AKSW/NLIWOD/nico/qa.seqa/registry.owlWebserviceIO"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi -->
+
