@@ -10,7 +10,7 @@ in production (adding answers):
 * https://www.stonetemple.com/great-knowledge-box-showdown/
 
 to analyze: 
-* https://stanford-qa.com/ 100k+ questions with leaderboard
+* http://qallme.fbk.eu/index.php?location=benchmark
 * http://agarciaduran.org/ 30M questions to freebase
 * https://github.com/brmson/yodaqa/wiki/Benchmarks
  * https://github.com/brmson/dataset-factoid-curated for evolution 
@@ -35,6 +35,11 @@ to analyze:
 out of scope (?) :
 * http://alt.qcri.org/semeval2015/task3/ SemEval-2015 Task 3: Answer Selection in Community Question Answering 
 * http://alt.qcri.org/semeval2016/task3/ Semeval-2016 Task 3: Community Question Answering
+* https://www.microsoft.com/en-us/download/details.aspx?id=52419 WikiQA (big!)
+* https://stanford-qa.com/ 100k+ questions with leaderboard 
+* http://www.aclweb.org/anthology/P/P16/P16-1145.pdf WIKIREADING, largest dataset!
+* http://www.cl.ecei.tohoku.ac.jp/rite2/doku.php?id=wiki:resources only japanese
+
 
 
 ## Focus

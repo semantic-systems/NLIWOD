@@ -7,11 +7,11 @@ import java.util.Stack;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.index.DBOIndex;
-import org.aksw.hawk.index.IndexDBO_classes;
-import org.aksw.hawk.index.IndexDBO_properties;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.util.JSONStatusBuilder;
+import org.aksw.qa.annotation.index.IndexDBO_classes;
+import org.aksw.qa.annotation.index.IndexDBO_properties;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.ResultSet;
 import org.slf4j.Logger;

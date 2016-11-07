@@ -22,75 +22,81 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class YODA extends ASystem {
-    Logger log = LoggerFactory.getLogger(YODA.class);
+	Logger log = LoggerFactory.getLogger(YODA.class);
 
-    /**
-     * Time to wait between calls.
-     */
-    private static final long YODAY_WAIT_TIME = 1000;
+	/**
+	 * Time to wait between calls.
+	 */
+	private static final long YODAY_WAIT_TIME = 1000;
 
-    /**
-     * timestamp of the last time YODA has been called.
-     */
-    private long lastCall = 0;
+	/**
+	 * timestamp of the last time YODA has been called.
+	 */
+	private long lastCall = 0;
 
-    public String name() {
-        return "yoda";
-    };
+	public String name() {
+		return "yoda";
+	};
 
-    public void search(IQuestion question) {
-        String questionString;
-        if (!question.getLanguageToQuestion().containsKey("en")) {
-            return;
-        }
-        questionString = question.getLanguageToQuestion().get("en");
-        log.debug(this.getClass().getSimpleName() + ": " + questionString);
-        try {
-            long timeToWait = (lastCall + YODAY_WAIT_TIME) - System.currentTimeMillis();
-            if (timeToWait > 0) {
-                Thread.sleep(timeToWait);
-            }
-            lastCall = System.currentTimeMillis();
-            HashSet<String> result = new HashSet<String>();
+	public void search(IQuestion question) throws Exception {
+		String questionString;
+		if (!question.getLanguageToQuestion().containsKey("en")) {
+			return;
+		}
+		questionString = question.getLanguageToQuestion().get("en");
+		log.debug(this.getClass().getSimpleName() + ": " + questionString);
 
-            String url = "http://qa.ailao.eu/q";
+		long timeToWait = (lastCall + YODAY_WAIT_TIME)
+				- System.currentTimeMillis();
+		if (timeToWait > 0) {
+			Thread.sleep(timeToWait);
+		}
+		lastCall = System.currentTimeMillis();
+		HashSet<String> result = new HashSet<String>();
 
-            HttpClient client = HttpClientBuilder.create().build();
-            HttpPost httppost = new HttpPost(url);
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("text", questionString));
+		String url = "http://qa.ailao.eu/q";
 
-            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, Consts.UTF_8);
-            httppost.setEntity(entity);
-            HttpResponse response = client.execute(httppost);
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost httppost = new HttpPost(url);
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("text", questionString));
 
-            JSONParser parser = new JSONParser();
-            JSONObject idjson = (JSONObject) parser.parse(responseparser.responseToString(response));
-            String id = idjson.get("id").toString();
+		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params,
+				Consts.UTF_8);
+		httppost.setEntity(entity);
+		HttpResponse response = client.execute(httppost);
+		// Test if error occured
+		if (response.getStatusLine().getStatusCode() >= 400) {
+			throw new Exception("YODA Server could not answer due to: "
+					+ response.getStatusLine());
+		}
 
-            HttpGet questionpost = new HttpGet(url + "/" + id);
+		JSONParser parser = new JSONParser();
+		JSONObject idjson = (JSONObject) parser.parse(responseparser
+				.responseToString(response));
+		String id = idjson.get("id").toString();
 
-            String finished;
-            do {
-                Thread.sleep(50);
-                HttpResponse questionresponse = client.execute(questionpost);
-                JSONObject responsejson = (JSONObject) parser.parse(responseparser.responseToString(questionresponse));
-                finished = responsejson.get("finished").toString();
-                if (finished.equals("true")) {
-                    JSONArray answer = (JSONArray) responsejson.get("answers");
-                    for (int j = 0; j < answer.size(); j++) {
-                        JSONObject answerj = (JSONObject) answer.get(j);
-                        String textj = answerj.get("text").toString();
-                        String confj = answerj.get("confidence").toString();
-                        if (Float.parseFloat(confj) > 0.70)
-                            result.add(textj);
-                    }
-                } else
-                    EntityUtils.consume(questionresponse.getEntity());
-            } while (finished.equals("false"));
-            question.setGoldenAnswers(result);
-        } catch (Exception e) {
-            log.error(e.getLocalizedMessage(), e);
-        }
-    }
+		HttpGet questionpost = new HttpGet(url + "/" + id);
+
+		String finished;
+		do {
+			Thread.sleep(50);
+			HttpResponse questionresponse = client.execute(questionpost);
+			JSONObject responsejson = (JSONObject) parser.parse(responseparser
+					.responseToString(questionresponse));
+			finished = responsejson.get("finished").toString();
+			if (finished.equals("true")) {
+				JSONArray answer = (JSONArray) responsejson.get("answers");
+				for (int j = 0; j < answer.size(); j++) {
+					JSONObject answerj = (JSONObject) answer.get(j);
+					String textj = answerj.get("text").toString();
+					String confj = answerj.get("confidence").toString();
+					if (Float.parseFloat(confj) > 0.70)
+						result.add(textj);
+				}
+			} else
+				EntityUtils.consume(questionresponse.getEntity());
+		} while (finished.equals("false"));
+		question.setGoldenAnswers(result);
+	}
 }

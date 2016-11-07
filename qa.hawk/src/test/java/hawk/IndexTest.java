@@ -1,9 +1,9 @@
 package hawk;
 
 import org.aksw.hawk.index.DBOIndex;
-import org.aksw.hawk.index.IndexDBO_classes;
-import org.aksw.hawk.index.IndexDBO_properties;
 import org.aksw.hawk.index.Patty_relations;
+import org.aksw.qa.annotation.index.IndexDBO_classes;
+import org.aksw.qa.annotation.index.IndexDBO_properties;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;

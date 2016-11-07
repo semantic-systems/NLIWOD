@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Stack;
 
+import org.aksw.hawk.controller.HAWKUtils;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.slf4j.Logger;
@@ -20,9 +21,9 @@ import com.google.common.base.Joiner;
 
 /**
  * generates a dependency tree called predicate argument tree
- * 
+ *
  * @author r.usbeck
- * 
+ *
  */
 public class ParseTree {
 	// TODO find the point where the performance is lost here
@@ -59,25 +60,26 @@ public class ParseTree {
 		initialize();
 	}
 
-	public DEPTree process(HAWKQuestion q) {
+	public DEPTree process(final HAWKQuestion q) {
 		return process(tokenizer, components, q);
 
 	}
 
-	private DEPTree process(AbstractTokenizer tokenizer, AbstractComponent[] components, HAWKQuestion q) {
+	private DEPTree process(final AbstractTokenizer tokenizer, final AbstractComponent[] components, final HAWKQuestion q) {
 		String sentence = q.getLanguageToQuestion().get("en");
 		if (!q.getLanguageToNamedEntites().isEmpty()) {
-			sentence = replaceLabelsByIdentifiedURIs(sentence, q.getLanguageToNamedEntites().get("en"));
+			sentence = HAWKUtils.replaceLabelsByIdentifiedURIs(sentence, q.getLanguageToNamedEntites().get("en"));
 			log.debug(sentence);
 		}
 		if (!q.getLanguageToNounPhrases().isEmpty()) {
-			sentence = replaceLabelsByIdentifiedURIs(sentence, q.getLanguageToNounPhrases().get("en"));
+			sentence = HAWKUtils.replaceLabelsByIdentifiedURIs(sentence, q.getLanguageToNounPhrases().get("en"));
 			log.debug(sentence);
 		}
 		DEPTree tree = NLPGetter.toDEPTree(tokenizer.getTokens(sentence));
 
-		for (AbstractComponent component : components)
+		for (AbstractComponent component : components) {
 			component.process(tree);
+		}
 
 		log.debug(TreeTraversal.inorderTraversal(tree.getFirstRoot(), 0, null));
 		log.debug(tree.toStringSRL());
@@ -87,9 +89,9 @@ public class ParseTree {
 		return tree;
 	}
 
-	private void resolveCompoundNouns(DEPTree tree, List<Entity> list) {
+	private void resolveCompoundNouns(final DEPTree tree, final List<Entity> list) {
 
-		Stack<DEPNode> stack = new Stack<DEPNode>();
+		Stack<DEPNode> stack = new Stack<>();
 		stack.push(tree.getFirstRoot());
 		while (!stack.isEmpty()) {
 
@@ -104,19 +106,6 @@ public class ParseTree {
 			}
 		}
 
-	}
-
-	private String replaceLabelsByIdentifiedURIs(String sentence, List<Entity> list) {
-		for (Entity entity : list) {
-			if (!entity.label.equals("")) {
-				// " " inserted so punctuation gets separated correctly from
-				// URIs
-				sentence = sentence.replace(entity.label, entity.uris.get(0).getURI() + " ").trim();
-			} else {
-				log.error("Entity has no label in sentence: " + sentence);
-			}
-		}
-		return sentence;
 	}
 
 }

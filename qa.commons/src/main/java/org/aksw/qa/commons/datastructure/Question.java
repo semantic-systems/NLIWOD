@@ -10,7 +10,7 @@ import org.aksw.qa.commons.utils.CollectionUtils;
 
 public class Question implements IQuestion {
 
-	private Integer id;
+	private String id;
 	private String answerType;
 	private String pseudoSparqlQuery;
 	private Map<String, String> sparqlQuery;
@@ -24,10 +24,10 @@ public class Question implements IQuestion {
 
 	public Question() {
 		HashSet<String> ga = CollectionUtils.newHashSet();
-		goldenAnswers = new HashMap<String, Set<String>>();
+		goldenAnswers = new HashMap<>();
 		goldenAnswers.put("en", ga);
 
-		sparqlQuery = new HashMap<String, String>();
+		sparqlQuery = new HashMap<>();
 
 		languageToQuestion = CollectionUtils.newLinkedHashMap();
 		languageToKeywords = CollectionUtils.newLinkedHashMap();
@@ -36,7 +36,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#toString()
 	 */
 	@Override
@@ -48,17 +47,16 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setValue(java.lang.String,
 	 * java.lang.String)
 	 */
 	@Override
-	public void setValue(String valDescriptor, String val) {
+	public void setValue(String valDescriptor, final String val) {
 		valDescriptor = valDescriptor.toLowerCase();
 		switch (valDescriptor) {
 		case "id":
-			this.id = Integer.parseInt(val);
+			this.id = val;
 			break;
 		case "answertype":
 			this.answerType = val;
@@ -79,27 +77,6 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#getId()
-	 */
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.aksw.qa.commons.datastructure.IQuestion#setId(java.lang.Integer)
-	 */
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getAnswerType()
 	 */
 	@Override
@@ -109,19 +86,16 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.aksw.qa.commons.datastructure.IQuestion#setAnswerType(java.lang.String
-	 * )
+	 * @see org.aksw.qa.commons.datastructure.IQuestion#setAnswerType(java.lang.
+	 * String )
 	 */
 	@Override
-	public void setAnswerType(String answerType) {
+	public void setAnswerType(final String answerType) {
 		this.answerType = answerType;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getPseudoSparqlQuery()
 	 */
 	@Override
@@ -131,19 +105,17 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setPseudoSparqlQuery(java
 	 * .lang.String)
 	 */
 	@Override
-	public void setPseudoSparqlQuery(String pseudoSparqlQuery) {
+	public void setPseudoSparqlQuery(final String pseudoSparqlQuery) {
 		this.pseudoSparqlQuery = pseudoSparqlQuery;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getSparqlQuery()
 	 */
 	@Override
@@ -151,29 +123,27 @@ public class Question implements IQuestion {
 		return sparqlQuery.get("en");
 	}
 
-	public String getSparqlQuery(String lang) {
+	public String getSparqlQuery(final String lang) {
 		return sparqlQuery.get(lang);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setSparqlQuery(java.lang.
 	 * String)
 	 */
 	@Override
-	public void setSparqlQuery(String sparqlQuery) {
+	public void setSparqlQuery(final String sparqlQuery) {
 		this.sparqlQuery.put("en", sparqlQuery);
 	}
 
-	public void setSparqlQuery(String lang, String sparqlQuery) {
+	public void setSparqlQuery(final String lang, final String sparqlQuery) {
 		this.sparqlQuery.put(lang, sparqlQuery);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getAggregation()
 	 */
 	@Override
@@ -183,19 +153,17 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setAggregation(java.lang.
 	 * Boolean)
 	 */
 	@Override
-	public void setAggregation(Boolean aggregation) {
+	public void setAggregation(final Boolean aggregation) {
 		this.aggregation = aggregation;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getOnlydbo()
 	 */
 	@Override
@@ -205,18 +173,16 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setOnlydbo(java.lang.Boolean)
 	 */
 	@Override
-	public void setOnlydbo(Boolean onlydbo) {
+	public void setOnlydbo(final Boolean onlydbo) {
 		this.onlydbo = onlydbo;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getOutOfScope()
 	 */
 	@Override
@@ -226,19 +192,16 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.aksw.qa.commons.datastructure.IQuestion#setOutOfScope(java.lang.Boolean
-	 * )
+	 * @see org.aksw.qa.commons.datastructure.IQuestion#setOutOfScope(java.lang.
+	 * Boolean )
 	 */
 	@Override
-	public void setOutOfScope(Boolean outOfScope) {
+	public void setOutOfScope(final Boolean outOfScope) {
 		this.outOfScope = outOfScope;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getHybrid()
 	 */
 	@Override
@@ -248,18 +211,16 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setHybrid(java.lang.Boolean)
 	 */
 	@Override
-	public void setHybrid(Boolean hybrid) {
+	public void setHybrid(final Boolean hybrid) {
 		this.hybrid = hybrid;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getLanguageToQuestion()
 	 */
 	@Override
@@ -269,19 +230,17 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setLanguageToQuestion(java
 	 * .util.Map)
 	 */
 	@Override
-	public void setLanguageToQuestion(Map<String, String> languageToQuestion) {
+	public void setLanguageToQuestion(final Map<String, String> languageToQuestion) {
 		this.languageToQuestion = languageToQuestion;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getLanguageToKeywords()
 	 */
 	@Override
@@ -291,19 +250,17 @@ public class Question implements IQuestion {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setLanguageToKeywords(java
 	 * .util.Map)
 	 */
 	@Override
-	public void setLanguageToKeywords(Map<String, List<String>> languageToKeywords) {
+	public void setLanguageToKeywords(final Map<String, List<String>> languageToKeywords) {
 		this.languageToKeywords = languageToKeywords;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see org.aksw.qa.commons.datastructure.IQuestion#getGoldenAnswers()
 	 */
 	@Override
@@ -311,24 +268,41 @@ public class Question implements IQuestion {
 		return goldenAnswers.get("en");
 	}
 
-	public Set<String> getGoldenAnswers(String lang) {
+	public Set<String> getGoldenAnswers(final String lang) {
 		return goldenAnswers.get(lang);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * org.aksw.qa.commons.datastructure.IQuestion#setGoldenAnswers(java.util
 	 * .Set)
 	 */
 	@Override
-	public void setGoldenAnswers(Set<String> goldenAnswers) {
+	public void setGoldenAnswers(final Set<String> goldenAnswers) {
 		this.goldenAnswers.put("en", goldenAnswers);
 	}
 
-	public void setGoldenAnswers(String lang, Set<String> goldenAnswers) {
+	public void setGoldenAnswers(final String lang, final Set<String> goldenAnswers) {
 		this.goldenAnswers.put(lang, goldenAnswers);
+	}
+
+	@Override
+	public String getId() {
+		return this.id + "";
+	}
+
+	@Override
+	public void setId(final String id) {
+		// Why String??
+		// Stanforqa and stanford dev have hashes as id
+		// try {
+		// this.id = Integer.parseInt(id);
+		// } catch (NumberFormatException e) {
+		// Log.debug(e, "couldnt set id, not a number" + "|" + id + "|");
+		// }
+		this.id = id;
+
 	}
 
 }

@@ -12,7 +12,7 @@ public class SystemsTest {
     Logger log = LoggerFactory.getLogger(SystemsTest.class);
 
     @Test
-    public void testAllSystems() {
+    public void testAllSystems() throws Exception {
         String questionString = "What is the capital of Germany?";
         List<ASystem> systems = Arrays.asList(
 //                (ASystem) new HAWK(), 

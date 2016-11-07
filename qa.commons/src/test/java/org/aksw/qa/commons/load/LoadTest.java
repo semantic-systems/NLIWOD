@@ -1,6 +1,7 @@
 package org.aksw.qa.commons.load;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,14 +30,19 @@ public class LoadTest {
 		for (Dataset d : Dataset.values()) {
 			log.info("Try to load:" + d.name());
 			try {
-				List<IQuestion> questions = QALD_Loader.load(d);
+				List<IQuestion> questions = LoaderController.load(d);
 				log.info("Dataset succesfully loaded:" + d.name());
 
 				for (IQuestion q : questions) {
-					Assert.assertTrue(q.getId() > 0);
 					// TODO enable that once the answer type of NLQ is fixed
 					// Assert.assertNotNull(q.toString(), q.getAnswerType());
-					Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null);
+
+					// TODO enable this if datasets are clean
+					// Assert.assertTrue((q.getPseudoSparqlQuery() != null) ||
+					// (q.getSparqlQuery() != null) ||
+					// d.equals(Dataset.Stanford_dev) ||
+					// d.equals(Dataset.Stanford_train));
+
 					if (q.getSparqlQuery() != null) {
 						queriesValid = (execQueryWithoutResults(q) && queriesValid);
 					}
@@ -64,37 +70,59 @@ public class LoadTest {
 	}
 
 	@Test
-	public void loadQALD5Test() {
-		List<IQuestion> load = QALD_Loader.load(Dataset.QALD5_Test_Hybrid);
+	public void loadStanfordDevTest() {
+		List<IQuestion> load = LoaderController.load(Dataset.Stanford_dev);
 		log.debug("Size of Dataset: " + load.size());
-		Assert.assertTrue(load.size() == 10);
+		Assert.assertTrue(load.size() == 10600);
 		for (IQuestion q : load) {
-			Assert.assertTrue(q.getId() > 0);
-			Assert.assertNotNull(q.getAnswerType());
-			Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null);
 			Assert.assertNotNull(q.getLanguageToQuestion());
 			Assert.assertFalse(q.getLanguageToQuestion().values().isEmpty());
-			Assert.assertNotNull(q.getLanguageToKeywords());
-			Assert.assertTrue(q.getGoldenAnswers() != null && q.getAnswerType().matches("resource||boolean||number||date||string"));
+			Assert.assertTrue((q.getGoldenAnswers() != null) && (q.getGoldenAnswers().size() > 0));
 		}
 	}
 
 	@Test
-	public void loadQALD6Test_Multilingual() throws IOException {
-		List<IQuestion> load = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
-		List<Integer> incompletes = Arrays.asList(100, 118, 136, 137, 147, 152, 94, 95, 96, 97, 98, 99, 249, 250, 312, 340, 342);
-		log.debug("Number of Loaded Questions:" + load.size());
-		Assert.assertTrue(load.size() == 350 - incompletes.size());
+	public void loadQALD5Test() {
+		List<IQuestion> load = LoaderController.load(Dataset.QALD5_Test_Hybrid);
+		log.debug("Size of Dataset: " + load.size());
+		Assert.assertTrue(load.size() == 10);
 		for (IQuestion q : load) {
-			Assert.assertTrue(q.getId() > 0);
 			Assert.assertNotNull(q.getAnswerType());
-			Assert.assertTrue(q.getGoldenAnswers() != null && q.getAnswerType().matches("resource||boolean||number||date||string"));
+			Assert.assertTrue((q.getPseudoSparqlQuery() != null) || (q.getSparqlQuery() != null));
+			Assert.assertNotNull(q.getLanguageToQuestion());
+			Assert.assertFalse(q.getLanguageToQuestion().values().isEmpty());
+			Assert.assertNotNull(q.getLanguageToKeywords());
+			Assert.assertTrue((q.getGoldenAnswers() != null) && q.getAnswerType().matches("resource||boolean||number||date||string"));
+		}
+	}
+
+	@Test
+	public void loadQALD6Train_Multilingual() throws IOException {
+		List<IQuestion> load = LoaderController.load(Dataset.QALD6_Train_Multilingual);
+		List<Integer> expectedIncompletes = Arrays.asList(100, 118, 136, 137, 147, 152, 94, 95, 96, 97, 98, 99, 249, 250, 312, 342);
+		log.debug("Number of Loaded Questions:" + load.size());
+		log.debug("Incomplete:" + expectedIncompletes.size());
+
+		ArrayList<Integer> foundIncompletes = new ArrayList<>();
+		for (IQuestion q : load) {
+			if ((q.getGoldenAnswers() == null) || q.getGoldenAnswers().isEmpty()) {
+				foundIncompletes.add(Integer.parseInt(q.getId()));
+			}
+
+		}
+		Assert.assertTrue(load.size() == 350);
+		Assert.assertTrue(expectedIncompletes.size() == foundIncompletes.size());
+		Assert.assertTrue(expectedIncompletes.containsAll(foundIncompletes) && foundIncompletes.containsAll(expectedIncompletes));
+
+		for (IQuestion q : load) {
+			Assert.assertNotNull(q.getAnswerType());
+			Assert.assertTrue((q.getGoldenAnswers() != null) && q.getAnswerType().matches("resource||boolean||number||date||string"));
 			Assert.assertNotNull(q.getLanguageToQuestion());
 			Assert.assertFalse(q.getLanguageToQuestion().values().isEmpty());
 			Assert.assertNotNull(q.getLanguageToKeywords());
 			// skipping Answer on known incompletes:
-			if (!incompletes.contains(q.getId())) {
-				Assert.assertTrue(q.getPseudoSparqlQuery() != null || q.getSparqlQuery() != null);
+			if (!foundIncompletes.contains(new Integer(q.getId()))) {
+				Assert.assertTrue((q.getPseudoSparqlQuery() != null) || (q.getSparqlQuery() != null));
 				// log.debug(q.getLanguageToQuestion().get("en") + "\t" +
 				// "Answer:" + "\t" + q.getSparqlQuery());
 			} else {

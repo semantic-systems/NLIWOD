@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.aksw</groupId>
 		<artifactId>nliwod</artifactId>
-		<version>0.0.1</version>
+		<version>0.0.3</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<groupId>org.aksw.qa</groupId>
@@ -36,6 +36,12 @@
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<!-- Lucene -->
 		<dependency>
@@ -60,20 +66,17 @@
 		</dependency>
 		<!-- NIF document creator for testing spotter -->
 		<dependency>
-			<groupId>org.aksw</groupId>
-			<artifactId>gerbil.nif.transfer</artifactId>
-			<version>1.2.0</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>jena-core</artifactId>
-					<groupId>org.apache.jena</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jena-arq</artifactId>
-					<groupId>org.apache.jena</groupId>
-				</exclusion>
-			</exclusions>
+			<groupId>com.github.AKSW</groupId>
+			<artifactId>gerbil</artifactId>
+			<version>gerbil.nif.transfer-jena3.1-SNAPSHOT</version>
 		</dependency>
+
+		<!-- <dependency> <groupId>org.aksw</groupId> <artifactId>gerbil.nif.transfer</artifactId> 
+			<version>1.2.0</version> <exclusions> <exclusion> <artifactId>jena-core</artifactId> 
+			<groupId>org.apache.jena</groupId> </exclusion> <exclusion> <artifactId>jena-arq</artifactId> 
+			<groupId>org.apache.jena</groupId> </exclusion> <exclusion> <artifactId>slf4j-log4j12</artifactId> 
+			<groupId>org.slf4j</groupId> </exclusion> </exclusions> </dependency> -->
+
 		<!-- Predicate-Argument Trees -->
 		<dependency>
 			<groupId>com.clearnlp</groupId>
@@ -114,6 +117,7 @@
 			<version>3.1</version>
 		</dependency>
 		<!-- JSON -->
+		<!-- TODO can be deleted when spotter moved to qa.nerd -->
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
@@ -153,8 +157,8 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>
 				<exclusion>
-					<artifactId>logback-classic</artifactId>
 					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -183,6 +187,28 @@
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>commons</artifactId>
 			<version>${qa-commons.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-core</artifactId>
+
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.aksw.qa</groupId>
+			<artifactId>annotation</artifactId>
+			<version>${qa-annotation.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>edu.stanford.nlp</groupId>
@@ -212,6 +238,17 @@
 			<groupId>com.jamonapi</groupId>
 			<artifactId>jamon</artifactId>
 			<version>2.80</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aksw.jena-sparql-api</groupId>
+			<artifactId>jena-sparql-api-core</artifactId>
+			<version>${jena.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 </project>

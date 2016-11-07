@@ -11,7 +11,7 @@ public abstract class ASystem {
 	
 	protected ResponseToStringParser responseparser = new ResponseToStringParser();
 	
-    public IQuestion search(String question) {
+    public IQuestion search(String question) throws Exception{
         IQuestion iQuestion = new Question();
         Map<String, String> langToQuestion = new HashMap<String, String>();
         langToQuestion.put("en", question);
@@ -20,7 +20,7 @@ public abstract class ASystem {
         return iQuestion;
     }
 
-    public abstract void search(IQuestion question);
+    public abstract void search(IQuestion question) throws Exception;
 
     public abstract String name();
 

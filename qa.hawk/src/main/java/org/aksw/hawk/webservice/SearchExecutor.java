@@ -3,19 +3,20 @@ package org.aksw.hawk.webservice;
 import java.util.List;
 
 import org.aksw.hawk.controller.AbstractPipeline;
-import org.aksw.hawk.controller.PipelineStanford;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.ranking.BucketRanker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Joiner;
 
+@Component
 @Service("searchExecutor")
 public class SearchExecutor {
-	private AbstractPipeline pipeline = new PipelineStanford();
+	private AbstractPipeline pipeline;
 	private Logger log = LoggerFactory.getLogger(SearchExecutor.class);
 
 	// public Future<HAWKQuestion> search(HAWKQuestion q) {
@@ -33,7 +34,11 @@ public class SearchExecutor {
 	// return new AsyncResult<HAWKQuestion>(q);
 	// }
 
-	public String runPipeline(String question) {
+	public void setPipeline(final AbstractPipeline pipeline) {
+		this.pipeline = pipeline;
+	}
+
+	public String runPipeline(final String question) {
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", question);
 		log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
@@ -46,4 +51,5 @@ public class SearchExecutor {
 		q.setFinalAnswer(rankedAnswer);
 		return q.getJSONStatus();
 	}
+
 }

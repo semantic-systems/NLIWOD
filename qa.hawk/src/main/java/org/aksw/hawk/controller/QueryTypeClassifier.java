@@ -5,7 +5,7 @@ import java.util.List;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +35,7 @@ public class QueryTypeClassifier {
 	public static void main(String args[]) {
 		log.info("Test QueryType classification ...");
 		log.debug("Initialize components ...");
-		QALD_Loader datasetLoader = new QALD_Loader();
+		LoaderController datasetLoader = new LoaderController();
 		QueryTypeClassifier queryTypeClassifier = new QueryTypeClassifier();
 
 		log.info("Run queries through components ...");

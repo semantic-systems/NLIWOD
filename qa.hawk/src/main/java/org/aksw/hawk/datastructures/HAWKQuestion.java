@@ -17,7 +17,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-//TODO delete everything from that class that already exists in the abstract class
 public class HAWKQuestion extends Question implements IQuestion, Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -25,9 +24,9 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 	private Boolean isClassifiedAsASKQuery; // what the program classifies
 	private Boolean loadedAsASKQuery; // what we load from the data file
 	private MutableTree tree;
-	private Map<String, List<Entity>> languageToNamedEntites = new LinkedHashMap<String, List<Entity>>();
-	private Map<String, List<Entity>> languageToNounPhrases = new LinkedHashMap<String, List<Entity>>();
-	private Map<String, List<Entity>> goldEntites = new HashMap<String, List<Entity>>();
+	private Map<String, List<Entity>> languageToNamedEntites = new LinkedHashMap<>();
+	private Map<String, List<Entity>> languageToNounPhrases = new LinkedHashMap<>();
+	private Map<String, List<Entity>> goldEntites = new HashMap<>();
 
 	// for proper handling in webservice
 	// TODO remove this all after new webservice based on JSON RDF is
@@ -41,13 +40,19 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 	private JSONArray pruning_messages = new JSONArray();
 
 	public HAWKQuestion() {
-
 		goldEntites.put("en", new ArrayList<Entity>());
 		goldEntites.put("de", new ArrayList<Entity>());
+
+	}
+
+	public HAWKQuestion(final String englishQuestion) {
+		this();
+		this.getLanguageToQuestion().put("en", englishQuestion);
 	}
 
 	// TODO remove this method and replace it with a senseful one, once the rest
 	// interface is changed
+	@Override
 	public String toString() {
 
 		String output = String.format("id: %s answerType: %s aggregation: %s onlydbo: %s\n", getId(), getAnswerType(), getAggregation(), getOnlydbo());
@@ -55,10 +60,12 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 			output += "\t" + entry.getKey() + "\tQuestion: " + entry.getValue() + "\n";
 			output += "\t\tKeywords: " + StringUtils.join(getLanguageToKeywords().get(entry.getKey()), ", ") + "\n";
 			output += "\t\tGold-Entities: " + StringUtils.join(goldEntites, ", ") + "\n";
-			if (getLanguageToNamedEntites().containsKey(entry.getKey()))
+			if (getLanguageToNamedEntites().containsKey(entry.getKey())) {
 				output += "\t\tEntities: " + StringUtils.join(getLanguageToNamedEntites().get(entry.getKey()), ", ") + "\n";
-			if (getLanguageToNounPhrases().containsKey(entry.getKey()))
+			}
+			if (getLanguageToNounPhrases().containsKey(entry.getKey())) {
 				output += "\t\tNouns: " + StringUtils.join(getLanguageToNounPhrases().get(entry.getKey()), ", ") + "\n";
+			}
 		}
 		output += "PseudoSPARQL: " + getPseudoSparqlQuery() + "\n";
 		output += "SPARQL: " + getSparqlQuery() + "\n";
@@ -77,7 +84,7 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 		return tree_full;
 	}
 
-	public void setTree_full(JSONObject tree_full) {
+	public void setTree_full(final JSONObject tree_full) {
 		this.tree_full = tree_full;
 	}
 
@@ -85,7 +92,7 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 		return isClassifiedAsASKQuery;
 	}
 
-	public void setIsClassifiedAsASKQuery(Boolean isClassifiedAsASKQuery) {
+	public void setIsClassifiedAsASKQuery(final Boolean isClassifiedAsASKQuery) {
 		this.isClassifiedAsASKQuery = isClassifiedAsASKQuery;
 	}
 
@@ -93,7 +100,7 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 		return loadedAsASKQuery;
 	}
 
-	public void setLoadedAsASKQuery(Boolean loadedAsASKQuery) {
+	public void setLoadedAsASKQuery(final Boolean loadedAsASKQuery) {
 		this.loadedAsASKQuery = loadedAsASKQuery;
 	}
 
@@ -101,7 +108,7 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 		return languageToNamedEntites;
 	}
 
-	public void setLanguageToNamedEntites(Map<String, List<Entity>> languageToNamedEntites) {
+	public void setLanguageToNamedEntites(final Map<String, List<Entity>> languageToNamedEntites) {
 		this.languageToNamedEntites = languageToNamedEntites;
 	}
 
@@ -109,7 +116,7 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 		return languageToNounPhrases;
 	}
 
-	public void setLanguageToNounPhrases(Map<String, List<Entity>> languageToNounPhrases) {
+	public void setLanguageToNounPhrases(final Map<String, List<Entity>> languageToNounPhrases) {
 		this.languageToNounPhrases = languageToNounPhrases;
 	}
 
@@ -117,7 +124,7 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 		return tree;
 	}
 
-	public void setTree(MutableTree tree) {
+	public void setTree(final MutableTree tree) {
 		this.tree = tree;
 	}
 
@@ -125,7 +132,7 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 		return tree_final;
 	}
 
-	public void setTree_final(JSONObject tree_final) {
+	public void setTree_final(final JSONObject tree_final) {
 		this.tree_final = tree_final;
 	}
 
@@ -133,7 +140,7 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 		return tree_pruned;
 	}
 
-	public void setTree_pruned(JSONObject tree_pruned) {
+	public void setTree_pruned(final JSONObject tree_pruned) {
 		this.tree_pruned = tree_pruned;
 	}
 
@@ -141,7 +148,7 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 		return pruning_messages;
 	}
 
-	public void setPruning_messages(JSONArray pruning_messages) {
+	public void setPruning_messages(final JSONArray pruning_messages) {
 		this.pruning_messages = pruning_messages;
 	}
 
@@ -149,7 +156,7 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 		return finalAnswer;
 	}
 
-	public void setFinalAnswer(List<Answer> finalAnswer) {
+	public void setFinalAnswer(final List<Answer> finalAnswer) {
 		this.finalAnswer = finalAnswer;
 	}
 
@@ -157,7 +164,7 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 		return UUID;
 	}
 
-	public void setUUID(UUID uUID) {
+	public void setUUID(final UUID uUID) {
 		UUID = uUID;
 	}
 
@@ -165,7 +172,7 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 		return cardinality;
 	}
 
-	public void setCardinality(int cardinality) {
+	public void setCardinality(final int cardinality) {
 		this.cardinality = cardinality;
 	}
 

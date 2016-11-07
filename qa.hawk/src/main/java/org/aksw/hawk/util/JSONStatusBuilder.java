@@ -12,7 +12,7 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-//TODO remove class when rest interface is not constantly pulling anymore
+// TODO remove class when rest interface is not constantly pulling anymore
 public class JSONStatusBuilder {
 
 	@SuppressWarnings("unchecked")
@@ -25,8 +25,8 @@ public class JSONStatusBuilder {
 			JSONArray tmp = new JSONArray();
 			for (Entity key : question.getLanguageToNamedEntites().get("en")) {
 				JSONObject tmpobj = new JSONObject();
-				tmpobj.put("key", key.label);
-				tmpobj.put("value", new JsonString(key.uris.get(0).getURI()));
+				tmpobj.put("key", key.getLabel());
+				tmpobj.put("value", new JsonString(key.getUris().get(0).getURI()));
 				tmp.add(tmpobj);
 			}
 			document.put("named_entities", tmp);
@@ -36,8 +36,8 @@ public class JSONStatusBuilder {
 			JSONArray tmp = new JSONArray();
 			for (Entity key : question.getLanguageToNounPhrases().get("en")) {
 				JSONObject tmpobj = new JSONObject();
-				tmpobj.put("key", key.label);
-				tmpobj.put("value", new JsonString(key.uris.get(0).getURI()));
+				tmpobj.put("key", key.getLabel());
+				tmpobj.put("value", new JsonString(key.getUris().get(0).getURI()));
 				tmp.add(tmpobj);
 			}
 			document.put("combined_nouns", tmp);
@@ -101,7 +101,7 @@ public class JSONStatusBuilder {
 			document.put("pruning_messages", question.getPruning_messages());
 		}
 		// final sparql
-		if (question.getFinalAnswer() != null && !question.getFinalAnswer().isEmpty()) {
+		if ((question.getFinalAnswer() != null) && !question.getFinalAnswer().isEmpty()) {
 			document.put("final_sparql_base64", new String(Base64.encodeBase64(question.getFinalAnswer().get(0).queryString.getBytes())));
 			// final answer FIXME schwachsinnige struktur hier
 			JSONArray array = new JSONArray();

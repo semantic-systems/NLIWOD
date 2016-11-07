@@ -38,7 +38,7 @@ public class QueryUtils extends ElementVisitorBase {
 
 	/**
 	 * Returns all variables that occur in a triple pattern of the SPARQL query.
-	 * 
+	 *
 	 */
 	public Set<Var> getVariables(final Query query) {
 		Set<Var> vars = new HashSet<>();
@@ -61,7 +61,7 @@ public class QueryUtils extends ElementVisitorBase {
 	/**
 	 * Returns all variables that occur as subject in a triple pattern of the
 	 * SPARQL query.
-	 * 
+	 *
 	 */
 	public Set<Var> getSubjectVariables(final Query query) {
 		Set<Var> vars = new HashSet<>();
@@ -80,7 +80,7 @@ public class QueryUtils extends ElementVisitorBase {
 	/**
 	 * Returns all variables that occur as subject in a triple pattern of the
 	 * SPARQL query.
-	 * 
+	 *
 	 */
 	public Set<Var> getObjectVariables(final Query query) {
 		Set<Var> vars = new HashSet<>();
@@ -98,7 +98,7 @@ public class QueryUtils extends ElementVisitorBase {
 
 	/**
 	 * Returns all triples with rdf:type as predicate.
-	 * 
+	 *
 	 */
 	public Set<Triple> getRDFTypeTriples(final Query query) {
 		Set<Triple> triplePatterns = extractTriplePattern(query);
@@ -116,7 +116,7 @@ public class QueryUtils extends ElementVisitorBase {
 	/**
 	 * Returns all triple patterns in given SPARQL query that have the given
 	 * node in subject position, i.e. the outgoing triple patterns.
-	 * 
+	 *
 	 * @param query The SPARQL query.
 	 */
 	public Set<Triple> extractOutgoingTriplePatterns(final Query query, final Node node) {
@@ -135,7 +135,7 @@ public class QueryUtils extends ElementVisitorBase {
 	/**
 	 * Returns all triple patterns in given SPARQL query that have the given
 	 * node in object position, i.e. the incoming triple patterns.
-	 * 
+	 *
 	 * @param query The SPARQL query.
 	 */
 	public Set<Triple> extractIncomingTriplePatterns(final Query query, final Node node) {
@@ -154,7 +154,7 @@ public class QueryUtils extends ElementVisitorBase {
 	/**
 	 * Returns all triple patterns in given SPARQL query that have the given
 	 * node in object position, i.e. the ingoing triple patterns.
-	 * 
+	 *
 	 * @param query The SPARQL query.
 	 */
 	public Set<Triple> extractIngoingTriplePatterns(final Query query, final Node node) {
@@ -174,7 +174,7 @@ public class QueryUtils extends ElementVisitorBase {
 	 * Returns all triple patterns in given SPARQL query that have the given
 	 * node either in subject or in object position, i.e. the ingoing and
 	 * outgoing triple patterns.
-	 * 
+	 *
 	 * @param query The SPARQL query.
 	 */
 	public Set<Triple> extractTriplePatterns(final Query query, final Node node) {
@@ -188,7 +188,7 @@ public class QueryUtils extends ElementVisitorBase {
 	 * Returns all triple patterns in given SPARQL query that have the given
 	 * node either in subject or in object position, i.e. the ingoing and
 	 * outgoing triple patterns.
-	 * 
+	 *
 	 * @param query The SPARQL query.
 	 */
 	public Set<Triple> extractNonOptionalTriplePatterns(final Query query, final Node node) {
@@ -202,7 +202,7 @@ public class QueryUtils extends ElementVisitorBase {
 	/**
 	 * Returns triple patterns for each projection variable v such that v is
 	 * either in subject or object position.
-	 * 
+	 *
 	 * @param query The SPARQL query.
 	 */
 	public Map<Var, Set<Triple>> extractTriplePatternsForProjectionVars(final Query query) {
@@ -219,7 +219,7 @@ public class QueryUtils extends ElementVisitorBase {
 	/**
 	 * Returns triple patterns for each projection variable v such that v is in
 	 * subject position.
-	 * 
+	 *
 	 * @param query The SPARQL query.
 	 */
 	public Map<Var, Set<Triple>> extractOutgoingTriplePatternsForProjectionVars(final Query query) {
@@ -242,7 +242,7 @@ public class QueryUtils extends ElementVisitorBase {
 	/**
 	 * Returns triple patterns for each projection variable v such that v is in
 	 * subject position.
-	 * 
+	 *
 	 * @param query The SPARQL query.
 	 */
 	public Map<Var, Set<Triple>> extractIncomingTriplePatternsForProjectionVars(final Query query) {
@@ -258,7 +258,7 @@ public class QueryUtils extends ElementVisitorBase {
 	/**
 	 * Returns triple patterns for each projection variable v such that v is in
 	 * object position.
-	 * 
+	 *
 	 * @param query The SPARQL query.
 	 */
 	public Map<Var, Set<Triple>> extractIngoingTriplePatternsForProjectionVars(final Query query) {
@@ -384,11 +384,17 @@ public class QueryUtils extends ElementVisitorBase {
 	public int getFilterCount() {
 		return filterCount;
 	}
-//TODO christian unit test
+
+	// TODO christian unit test
+	// This returns empty Set. Not sure what to test here.
 	public static void main(final String[] args) throws Exception {
 		Query q = QueryFactory.create(
 		        "PREFIX  dbp:  <http://dbpedia.org/resource/>\n" + "PREFIX  dbo: <http://dbpedia.org/ontology/>\n" + "SELECT  ?thumbnail\n" + "WHERE\n" + "  { dbp:total !dbo:thumbnail ?thumbnail }");
 		QueryUtils triplePatternExtractor = new QueryUtils();
 		triplePatternExtractor.extractIngoingTriplePatterns(q, q.getProjectVars().get(0));
+
+		// String s = triplePatternExtractor.extractIngoingTriplePatterns(q,
+		// q.getProjectVars().get(0)).toString();
+		// System.out.println(s);
 	}
 }

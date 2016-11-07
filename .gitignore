@@ -8,12 +8,18 @@ hs_err_pid*
 target
 .settings
 target/
+bin/
+
+#IntelliJ
+.idea/*
 
 # Project-based exclusions
 **/.clover/
 log.out
 qa.datasets/src/main/resources/QALD
 qa.datasets/src/main/resources/QALD-master
+qa.datasets/src/main/resources/stanfordqa-dev.json
+qa.datasets/src/main/resources/stanfordqa-train.json
 qa.ml/src/main/resources/QALD-5_logs.zip
 qa.ml/src/main/resources/QALD-5_logs/
 qa.ml/src/main/resources/qald5train/

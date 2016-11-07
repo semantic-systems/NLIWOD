@@ -8,10 +8,10 @@ import org.aksw.hawk.controller.StanfordNLPConnector;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.experiment.SingleQuestionPipeline;
-import org.aksw.hawk.nlp.SentenceToSequence;
+import org.aksw.hawk.nlp.SentenceToSequenceOpenNLP;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -24,7 +24,7 @@ import edu.stanford.nlp.pipeline.Annotation;
 /**
  * Tests the POS tags attributed to questions by either Stanford NLP or Core NLP
  * tagging methods.
- * 
+ *
  * @author jhuthmann, dec
  *
  */
@@ -39,7 +39,7 @@ public class PosTagTest {
 	public void load() {
 		log.info("Starting POS-Tag comparison between StanvordNLP and ClearNLP using QALD6 Multilingual dataset");
 
-		List<IQuestion> loadedQuestions = QALD_Loader.load(Dataset.QALD6_Train_Multilingual);
+		List<IQuestion> loadedQuestions = LoaderController.load(Dataset.QALD6_Train_Multilingual);
 		questionsStanford = HAWKQuestionFactory.createInstances(loadedQuestions);
 		questionsClear = HAWKQuestionFactory.createInstances(loadedQuestions);
 		stanford = new StanfordNLPConnector();
@@ -47,19 +47,19 @@ public class PosTagTest {
 
 	@Test
 	@Ignore
-	//FIXME does not pass, why?
+	// FIXME does not pass, why?
 	public void test() {
 
 		boolean testPass = true;
 		StringBuilder outputStr = new StringBuilder();
-		Map<String, String> mismatched = new HashMap<String, String>();
-		Map<String, Integer> mismatchCnt = new HashMap<String, Integer>();
-		Map<String, Integer> stanTotalCnt = new HashMap<String, Integer>();
-		Map<String, Integer> coreTotalCnt = new HashMap<String, Integer>();
+		Map<String, String> mismatched = new HashMap<>();
+		Map<String, Integer> mismatchCnt = new HashMap<>();
+		Map<String, Integer> stanTotalCnt = new HashMap<>();
+		Map<String, Integer> coreTotalCnt = new HashMap<>();
 		for (HAWKQuestion currentQuestion : questionsStanford) {
 
-			Map<String, String> core = SentenceToSequence.generatePOSTags(currentQuestion);
-			Annotation doc = stanford.runAnnotation(currentQuestion);
+			Map<String, String> core = SentenceToSequenceOpenNLP.generatePOSTags(currentQuestion);
+			Annotation doc = stanford.runAnnotation(currentQuestion.getLanguageToQuestion().get("en"));
 			Map<String, String> stanPos = stanford.generatePOSTags(doc);
 			for (Map.Entry<String, String> e : stanPos.entrySet()) {
 

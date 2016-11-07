@@ -58,7 +58,7 @@ public class UnitController {
 		try {
 			fileReader = new FileReader(file);
 		} catch (FileNotFoundException e) {
-			log.debug("Could not load number conversion rules - File not fond" + file.getAbsolutePath(), e);
+			log.info("Could not load number conversion rules - File not fond" + file.getAbsolutePath(), e);
 			return null;
 		}
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -74,7 +74,7 @@ public class UnitController {
 			}
 
 		} catch (IOException e) {
-			log.debug("Error while parsing number conversion rules " + file.getAbsolutePath(), e);
+			log.info("Error while parsing number conversion rules " + file.getAbsolutePath(), e);
 		}
 		try {
 			bufferedReader.close();

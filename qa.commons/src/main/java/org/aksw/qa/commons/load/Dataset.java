@@ -14,11 +14,13 @@ public enum Dataset {
 	QALD2_Train_dbpedia,
 	QALD2_Test_musicbrainz,
 	QALD2_Train_musicbrainz,
+	QALD2_Participants_Challenge,
 	QALD3_Test_dbpedia,
 	QALD3_Train_dbpedia,
 	QALD3_Test_musicbrainz,
 	QALD3_Train_musicbrainz,
 	QALD3_Test_esdbpedia,
+    // QALD3_Test_esdbpedia_sparql,
 	QALD3_Train_esdbpedia,
 	QALD4_Test_Hybrid,
 	QALD4_Train_Hybrid,
@@ -32,4 +34,8 @@ public enum Dataset {
 	QALD5_Train_Multilingual,
 	QALD6_Train_Hybrid,
 	QALD6_Train_Multilingual,
+	QALD6_Test_Hybrid,
+	QALD6_Test_Multilingual,
+	Stanford_dev,
+	Stanford_train
 }

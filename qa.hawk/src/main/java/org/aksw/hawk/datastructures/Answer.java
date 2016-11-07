@@ -37,7 +37,7 @@ public class Answer implements Comparable<Answer> {
 	public SPARQLQuery query;
 	public Double score = 1.0;
 	public String question;
-	public Integer question_id;
+	public String question_id;
 	public String queryString;
 
 	@Override

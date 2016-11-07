@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
-import org.aksw.hawk.spotter.ASpotter;
-import org.aksw.hawk.spotter.Fox;
-import org.aksw.hawk.spotter.Spotlight;
-import org.aksw.hawk.spotter.TagMe;
+import org.aksw.qa.annotation.spotter.ASpotter;
+import org.aksw.qa.annotation.spotter.Fox;
+import org.aksw.qa.annotation.spotter.Spotlight;
+import org.aksw.qa.annotation.spotter.TagMe;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.apache.jena.query.QueryParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ public class AllSpotterOnQALD4 {
 
 	public static void main(final String args[]) {
 
-		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD5_Train_Hybrid));
+		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(LoaderController.load(Dataset.QALD5_Train_Hybrid));
 		for (HAWKQuestion q : questions) {
 			log.info(q.getLanguageToQuestion().get("en"));
 			try {

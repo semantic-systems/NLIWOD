@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.aksw</groupId>
+		<artifactId>nliwod</artifactId>
+		<version>0.0.3</version>
+	</parent>
+	<artifactId>qa.seqa</artifactId>
+	<version>0.0.3</version>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<systemProperties>
+						<JAVA_OPTS>-Xms415m -Xmx16G -XX:MaxPermSize=1G</JAVA_OPTS>
+					</systemProperties>
+					<mainClass>qa.seqa.controller.FrontController</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.jena/jena-core -->
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>jena-core</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<!-- Is input and output compatible -->
+		<dependency>
+			<groupId>net.sourceforge.owlapi</groupId>
+			<artifactId>owlapi-distribution</artifactId>
+			<version>4.2.3</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.owlapi/pellet-owlapi-ignazio1977 -->
+		<dependency>
+			<groupId>net.sourceforge.owlapi</groupId>
+			<artifactId>pellet-owlapi-ignazio1977</artifactId>
+			<version>2.4.0-ignazio1977</version>
+		</dependency>
+	</dependencies>
+</project>

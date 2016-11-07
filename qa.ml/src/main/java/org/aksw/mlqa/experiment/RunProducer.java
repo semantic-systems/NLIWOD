@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.aksw.qa.systems.ASystem;
 import org.aksw.qa.systems.HAWK;
 import org.aksw.qa.systems.QAKIS;
@@ -79,7 +79,7 @@ public class RunProducer {
 		QAKIS qakis = new QAKIS();
 		YODA yoda = new YODA();
 		List<ASystem> systems = Arrays.asList(hawk, sina, qakis, yoda);
-		List<IQuestion> questions = QALD_Loader.load(dataset);
+		List<IQuestion> questions = LoaderController.load(dataset);
 		
 		for(IQuestion question: questions){			
 			JSONObject questiondata = new JSONObject();
@@ -91,7 +91,12 @@ public class RunProducer {
 			//we have to use Lists to get a valid json array
 			questiondata.put("goldanswers", goldAnswers.stream().collect(Collectors.toList()));
 			for(ASystem system: systems){
-				Set<String> foundAnswers = system.search(question.getLanguageToQuestion().get("en")).getGoldenAnswers();
+				Set<String> foundAnswers = null;
+				try{
+					foundAnswers = system.search(question.getLanguageToQuestion().get("en")).getGoldenAnswers();
+				}catch(Exception e){
+					continue;
+				}
 				JSONObject s = new JSONObject();
 				//yodas answers have to be converted to resources if the answertype is "resource"
 				if(system.name().equals("yoda") && question.getAnswerType().equals("resource"))

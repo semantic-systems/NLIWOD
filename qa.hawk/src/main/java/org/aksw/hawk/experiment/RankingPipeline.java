@@ -15,7 +15,7 @@ import org.aksw.hawk.ranking.BucketRanker;
 import org.aksw.hawk.ranking.FeatureBasedRanker;
 import org.aksw.hawk.ranking.OptimalRanker;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +37,7 @@ public class RankingPipeline {
 		AbstractPipeline pipeline = new PipelineStanford();
 
 		log.info("Loading dataset");
-		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(Dataset.QALD6_Train_Multilingual));
+		List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(LoaderController.load(Dataset.QALD6_Train_Multilingual));
 
 		for (HAWKQuestion q : questions) {
 			if ((q.getHybrid() & q.getAnswerType().equals("resource") & q.getOnlydbo() & !q.getAggregation()) || q.getLoadedAsASKQuery()) {
