@@ -1,42 +1,38 @@
 package org.aksw.hawk.webservice;
 
-import java.util.HashMap;
-import java.util.UUID;
-import java.util.concurrent.Future;
-
 import javax.servlet.http.HttpServletResponse;
 
-import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.hawk.controller.PipelineStanford;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.util.SimpleIdGenerator;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
+// import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.Maps;
-
 @RestController
+@Component
 // @EnableAsync
 public class WebController {
+	private Logger log = LoggerFactory.getLogger(WebController.class);
+	private PipelineStanford pipeline = new PipelineStanford();
+	private NounCombinationWeb nouns = new NounCombinationWeb(pipeline.getStanfordConnector());
 
 	// @Autowired
 	// @Qualifier("asyncSearchExecutor")
 	@Qualifier("SearchExecutor")
 	private SearchExecutor searchExecutor = new SearchExecutor();
 
-	private Logger log = LoggerFactory.getLogger(WebController.class);
-	private HashMap<UUID, Future<HAWKQuestion>> runningProcesses = Maps.newHashMap();
-	private HashMap<UUID, HAWKQuestion> UuidQuestionMap = Maps.newHashMap();
-	private SimpleIdGenerator IdGenerator = new SimpleIdGenerator();
+	public WebController() {
+		searchExecutor.setPipeline(pipeline);
+	}
 
-	// TODO refactor that class to simple
-	// /search?q=What+is+the+capital+of+Germany+%3F
 	@RequestMapping("/search")
-	public String search(@RequestParam(value = "q") String question, HttpServletResponse response) {
+	public String search(@RequestParam(value = "q") final String question, final HttpServletResponse response) {
 		log.debug("Received question = " + question);
 		// CORS
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -62,6 +58,16 @@ public class WebController {
 		// q.setFinalAnswer(rankedAnswer);
 		//
 		// return q.getJSONStatus();
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/nounphrase")
+	public String nounphraseGET(@RequestParam(value = "q") final String question) {
+		return nouns.stringToNif(question);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/nounphrase")
+	public String nounphrasePOST(@RequestBody final String input) {
+		return nouns.nifToAnswerNif(input);
 	}
 
 }

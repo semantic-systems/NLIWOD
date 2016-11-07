@@ -27,7 +27,22 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 
+import meka.classifiers.multilabel.BRq;
+import meka.classifiers.multilabel.CC;
+import meka.classifiers.multilabel.CDN;
+import meka.classifiers.multilabel.CDT;
+import meka.classifiers.multilabel.CT;
+import meka.classifiers.multilabel.FW;
+import meka.classifiers.multilabel.HASEL;
+import meka.classifiers.multilabel.LC;
+import meka.classifiers.multilabel.MCC;
+import meka.classifiers.multilabel.PCC;
+import meka.classifiers.multilabel.PMCC;
+import meka.classifiers.multilabel.PS;
 import meka.classifiers.multilabel.PSt;
+import meka.classifiers.multilabel.RAkEL;
+import meka.classifiers.multilabel.RAkELd;
+import meka.classifiers.multilabel.RT;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
@@ -42,16 +57,14 @@ public class CDTClassifierMultilable {
 		 */
 		
 		//The classifier
-		PSt PSt_Classifier = new PSt();
+		RAkELd PSt_Classifier = new RAkELd();
 		//load the data
 		Path datapath= Paths.get("./src/main/resources/Qald6Logs.arff");
 		BufferedReader reader = new BufferedReader(new FileReader(datapath.toString()));
 		ArffReader arff = new ArffReader(reader);
 		Instances data = arff.getData();
 		data.setClassIndex(6);
-		PSt_Classifier.buildClassifier(data);
-		
-		/*
+		PSt_Classifier.buildClassifier(data);		/*
 		 * Test the trained system
 		 */
 		
@@ -67,8 +80,7 @@ public class CDTClassifierMultilable {
 
 		
 		ArrayList<String> systems = Lists.newArrayList("KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English" );
-		float ave_p = 0;
-		float ave_r = 0;
+		double ave_f = 0;
 		Double ave_bestp = 0.0;
 		Double ave_bestr = 0.0;
 
@@ -86,8 +98,8 @@ public class CDTClassifierMultilable {
 				//compare trained system with best possible system
 				
 				String sys2ask = systems.get(systems.size() - argmax -1);
-				ave_p += Float.parseFloat(loadSystemP(sys2ask).get(j));				
-				ave_r += Float.parseFloat(loadSystemR(sys2ask).get(j));
+				float p = Float.parseFloat(loadSystemP(sys2ask).get(j));				
+				float r = Float.parseFloat(loadSystemR(sys2ask).get(j));
 				
 				double bestp = 0;
 				double bestr = 0;
@@ -102,30 +114,11 @@ public class CDTClassifierMultilable {
 				System.out.println(testQuestions.get(j));
 				System.out.println(j + "... asked " + sys2ask + " with p " + loadSystemP(sys2ask).get(j) + "... best possible p: " + bestp + " was achieved by " + bestSystemp);
 				System.out.println(j + "... asked " + sys2ask + " with r " + loadSystemR(sys2ask).get(j) + "... best possible r: " + bestr + " was achieved by " + bestSystemr);
+				if(p>0&&r>0){ave_f += 2*p*r/(p + r);}
 
 				}
-		
-		double p = ave_p/data.size();
-		double r = ave_r/data.size();
-		System.out.println("macro P : " + p);
-		System.out.println("macro R : " + r);
-		double fmeasure = 2*p*r/(p + r);
-		System.out.println("macro F : " + fmeasure);
-	
-		/*
-		 * calculate best possible fmeasure
-		 */
-
-		double bestp = ave_bestp/data.size();
-		double bestr = ave_bestr/data.size();
-		System.out.println("best possible macro P : " + bestp);
-		System.out.println("best possible macro R : " + bestr);
-		double bestfmeasure = 2*bestp*bestr/(bestp + bestr);
-		System.out.println("best possible macro F : " + bestfmeasure);
-	
-		Set<Integer> test = new HashSet<Integer>(Arrays.asList(7,8,9,10,11,12,13,14,15,16,17,18,19));
-		System.out.println(powerSet(test).size());
-	}
+		System.out.println("macro F : " + ave_f/data.size());
+		}
 	
 	public static ArrayList<String> loadSystemP(String system){
 

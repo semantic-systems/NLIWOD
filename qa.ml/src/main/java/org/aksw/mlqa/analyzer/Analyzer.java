@@ -29,25 +29,25 @@ public class Analyzer {
 
 		analyzers = new ArrayList<IAnalyzer>();
 		// !!! ADD ANALYZERS HERE !!!
-		analyzers.add(new QuestionTypeAnalyzer());
+		//analyzers.add(new QuestionTypeAnalyzer());
 		analyzers.add(new QueryResourceTypeAnalyzer());
 		analyzers.add(new QuestionWord());
-		analyzers.add(new NumberOfToken());
-		analyzers.add(new Superlative());
-		analyzers.add(new Comperative());
-		analyzers.add(new EntityPerson());
-		analyzers.add(new EntityMoney());
-		analyzers.add(new EntityLocation());
-		analyzers.add(new EntityPercent());
-		analyzers.add(new EntityOrganization());
-		analyzers.add(new EntityDate());
+		//analyzers.add(new NumberOfToken());
+		//analyzers.add(new Superlative());
+		//analyzers.add(new Comperative());
+		//analyzers.add(new EntityPerson());
+		//analyzers.add(new EntityMoney());
+		//analyzers.add(new EntityLocation());
+		//analyzers.add(new EntityPercent());
+		//analyzers.add(new EntityOrganization());
+		//analyzers.add(new EntityDate());
 
 		// Declare the feature vector, register their attributes
 		for (IAnalyzer analyzer : analyzers) {
 			fvWekaAttributes.add(analyzer.getAttribute());
 		}
 		// put the fmeasure/class attribute
-		fvWekaAttributes.add(fmeasureAtt);
+		//fvWekaAttributes.add(fmeasureAtt);
 	}
 
 	/**

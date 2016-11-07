@@ -1,16 +1,12 @@
 package org.aksw.mlqa.experiment;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,31 +25,41 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 
+import meka.classifiers.multilabel.BRq;
+import meka.classifiers.multilabel.CC;
+import meka.classifiers.multilabel.CDN;
+import meka.classifiers.multilabel.CDT;
+import meka.classifiers.multilabel.CT;
+import meka.classifiers.multilabel.FW;
+import meka.classifiers.multilabel.HASEL;
+import meka.classifiers.multilabel.LC;
+import meka.classifiers.multilabel.MCC;
+import meka.classifiers.multilabel.PCC;
+import meka.classifiers.multilabel.PMCC;
+import meka.classifiers.multilabel.PS;
 import meka.classifiers.multilabel.PSt;
-import weka.classifiers.meta.FilteredClassifier;
+import meka.classifiers.multilabel.RAkEL;
+import meka.classifiers.multilabel.RAkELd;
+import meka.classifiers.multilabel.RT;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
-import weka.filters.unsupervised.attribute.Remove;
 
-public class CDTClassifierMultilableFilterExp {
-	static Logger log = LoggerFactory.getLogger(CDTClassifierMultilableFilterExp.class);
+public class LeaveOneOutCV {
+static Logger log = LoggerFactory.getLogger(CDTClassifierMultilable.class);
 	
 	
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {		
 		/*
 		 * For multilable classification:
 		 */
-		
-		Set<Integer> ind = new HashSet<Integer>(Arrays.asList(11,12,13,14,15,16,17,18));
-		Set<Set<Integer>> filters = powerSet(ind);
-		
+		//load the data
 		Path datapath= Paths.get("./src/main/resources/Qald6Logs.arff");
 		BufferedReader reader = new BufferedReader(new FileReader(datapath.toString()));
 		ArffReader arff = new ArffReader(reader);
-		Instances data = arff.getData();
-		data.setClassIndex(6);
-		
+		/*
+		 * Test the trained system
+		 */
 		
 		JSONObject qald6test = loadTestQuestions();
 		JSONArray questions = (JSONArray) qald6test.get("questions");
@@ -63,102 +69,46 @@ public class CDTClassifierMultilableFilterExp {
 			JSONArray questionStrings = (JSONArray) questionData.get("question");
 			JSONObject questionEnglish = (JSONObject) questionStrings.get(0);
 			testQuestions.add((String) questionEnglish.get("string"));
-			}
-		
-		double cur_max = 0.0;
-		
-		for(Set<Integer> filter:filters){
-		List<Integer> filterlist = new ArrayList<Integer>(filter);
-		int[] atts = new int[filter.size()];
-		Remove rm = new Remove();
-		for(int i =0; i < filterlist.size(); i++) atts[i] = filterlist.get(i);
-		rm.setAttributeIndicesArray(atts);
-		PSt PSt_Classifier = new PSt();
-		FilteredClassifier fc = new FilteredClassifier();
-		fc.setFilter(rm);
-		fc.setClassifier(PSt_Classifier);
-		fc.buildClassifier(data);
-		/*
-		 * Test the trained system
-		 */
+		}
 
+		Instances data = arff.getData();
+		data.setClassIndex(6);
 
-		
+		double cv_ave = 0;
 		ArrayList<String> systems = Lists.newArrayList("KWGAnswer", "NbFramework", "PersianQA", "SemGraphQA", "UIQA_withoutManualEntries", "UTQA_English" );
-		float ave_p = 0;
-		float ave_r = 0;
-		/*
-		Double ave_bestp = 0.0;
-		Double ave_bestr = 0.0;
-		*/
-		for(int j = 0; j < data.size(); j++){
-			Instance ins = data.get(j);
-			double[] confidences = PSt_Classifier.distributionForInstance(ins);
+		for(int i = 0; i < 100; i++){
+			Instance testquestion = data.get(i);
+			data.remove(i);
+			RT classifier = new RT();
+			classifier.buildClassifier(data);
+			double[] confidences = classifier.distributionForInstance(testquestion);
+
 			int argmax = -1;
 			double max = -1;
-				for(int i = 0; i < 6; i++){
-					if(confidences[i]>max){
-						max = confidences[i];
-						argmax = i;
-					}
+			for(int j = 0; j < 6; j++){
+				if(confidences[j]>max){
+					max = confidences[j];
+					argmax = j;
 				}
-				
-				//compare trained system with best possible system
-				String sys2ask = systems.get(systems.size() - argmax -1);
-				ave_p += Float.parseFloat(loadSystemP(sys2ask).get(j));				
-				ave_r += Float.parseFloat(loadSystemR(sys2ask).get(j));
-				/*
-				double bestp = 0;
-				double bestr = 0;
-				String bestSystemp = "";
-				String bestSystemr = ""; 
-				for(String system:systems){
-					if(Double.parseDouble(loadSystemP(system).get(j)) > bestp){bestSystemp = system; bestp = Double.parseDouble(loadSystemP(system).get(j));}; 
-					if(Double.parseDouble(loadSystemR(system).get(j)) > bestr){bestSystemr = system; bestr = Double.parseDouble(loadSystemR(system).get(j));}; 
-					}
-				ave_bestp += bestp;
-				ave_bestr += bestr;
-				System.out.println(testQuestions.get(j));
-				System.out.println(j + "... asked " + sys2ask + " with p " + loadSystemP(sys2ask).get(j) + "... best possible p: " + bestp + " was achieved by " + bestSystemp);
-				System.out.println(j + "... asked " + sys2ask + " with r " + loadSystemR(sys2ask).get(j) + "... best possible r: " + bestr + " was achieved by " + bestSystemr);
-				*/
-				}
-		
-		double p = ave_p/data.size();
-		double r = ave_r/data.size();
-		double fmeasure = 2*p*r/(p + r);
-		cur_max = fmeasure;System.out.println(fmeasure);System.out.println(rm.getAttributeIndices());
+			}
+			String sys2ask = systems.get(systems.size() - argmax -1);
+			float p = Float.parseFloat(loadSystemP(sys2ask).get(i));				
+			float r = Float.parseFloat(loadSystemR(sys2ask).get(i));
+			double f = 0;
+			if(p>0&&r>0){f = 2*p*r/(p + r);}
+			cv_ave += f;
+			data.add(i, testquestion);
 		}
-		/*
-		 * calculate best possible fmeasure
-		 
-
-		double bestp = ave_bestp/data.size();
-		double bestr = ave_bestr/data.size();
-		System.out.println("best possible macro P : " + bestp);
-		System.out.println("best possible macro R : " + bestr);
-		double bestfmeasure = 2*bestp*bestr/(bestp + bestr);
-		System.out.println("best possible macro F : " + bestfmeasure);
-		 */
+		System.out.println(cv_ave/100);
 	}
 	
 	public static ArrayList<String> loadSystemP(String system){
 
 		Path datapath = Paths.get("./src/main/resources/QALD6MultilingualLogs/multilingual_" + system + ".html");
 		ArrayList<String> result = Lists.newArrayList();
-		String loadedData = "";
 
 		try{
-			FileInputStream fstream = new FileInputStream(datapath.toString());
-			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-
-			String strLine;
-			//Read File Line By Line
-			while ((strLine = br.readLine()) != null)   {
-			  // Print the content on the console
-			  loadedData+=strLine;
-			}
-			br.close();
+			String loadedData = Files.lines(datapath).collect(Collectors.joining()); 
 			Document doc = Jsoup.parse(loadedData);
 			Element table = doc.select("table").get(5);
 			Elements tableRows = table.select("tr");
@@ -177,19 +127,9 @@ public class CDTClassifierMultilableFilterExp {
 	public static ArrayList<String> loadSystemR(String system){
 		Path datapath = Paths.get("./src/main/resources/QALD6MultilingualLogs/multilingual_" + system + ".html");
 		ArrayList<String> result = Lists.newArrayList();
-		String loadedData = "";
 
 		try{
-			FileInputStream fstream = new FileInputStream(datapath.toString());
-			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-
-			String strLine;
-			//Read File Line By Line
-			while ((strLine = br.readLine()) != null)   {
-			  // Print the content on the console
-			  loadedData+=strLine;
-			}
-			br.close();
+			String loadedData = Files.lines(datapath).collect(Collectors.joining()); 
 			Document doc = Jsoup.parse(loadedData);
 			Element table = doc.select("table").get(5);
 			Elements tableRows = table.select("tr");
@@ -239,5 +179,6 @@ public class CDTClassifierMultilableFilterExp {
 	    }		
 	    return sets;
 	}
+
 
 }
