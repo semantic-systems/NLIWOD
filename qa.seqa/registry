@@ -1,7 +1,0 @@
-<xml>
-webservice-url  
-  input (klassen)
-    param1 (bspw text) =>       "XXX  a               nif:RFC5147String , nif:String , nif:Context "
-  output (tripel properties)
-     itsrdf:taClassRef
-     itsrdf:taIdentRef
