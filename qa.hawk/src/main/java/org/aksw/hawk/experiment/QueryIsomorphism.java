@@ -8,7 +8,8 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.qa.commons.datastructure.Question;
 import org.aksw.qa.commons.load.Dataset;
-import org.aksw.qa.commons.load.QALD_Loader;
+import org.aksw.qa.commons.load.LoaderController;
+
 import org.apache.jena.graph.Graph;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
@@ -30,7 +31,8 @@ public class QueryIsomorphism {
 		Dataset[] datasets = Dataset.values();
 		for(Dataset d: datasets){
 			List<HAWKQuestion> questions = null;
-			questions = HAWKQuestionFactory.createInstances(QALD_Loader.load(d));
+			questions = HAWKQuestionFactory.createInstances(LoaderController.load(d));
+
 			for(Question q: questions){
 				//build the graph associated to the query
 				Graph g = GraphFactory.createDefaultGraph();
