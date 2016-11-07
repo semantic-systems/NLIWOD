@@ -32,7 +32,7 @@ public class NifEverything {
 	/**
 	 * Will be returned when given NIF via POST is not parsable or empty
 	 */
-	private static final String INPUT_NOT_PARSABLE = "Given input not parsable or nothing found";
+	public static final String INPUT_NOT_PARSABLE = "Given input not parsable or nothing found";
 
 	/**
 	 * Singleton
@@ -86,7 +86,7 @@ public class NifEverything {
 	public String createNIFResultFromIndexDBO(final String q, final IndexDBO indexDBO, final NifProperty nif) {
 		Document doc = new DocumentImpl(q);
 		addAllMarkingsToDoc(doc, stringToMarkingsIndexDBO(q, indexDBO, nif));
-		return nifStringFromDocument(doc);
+		return writeNIF(doc);
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class NifEverything {
 	 * @param doc The {@link Document} you wish to add {@link Marking}s to
 	 * @param markings The {@link Marking}s you want to add.
 	 */
-	private void addAllMarkingsToDoc(final Document doc, final Collection<Marking> markings) {
+	public void addAllMarkingsToDoc(final Document doc, final Collection<Marking> markings) {
 		for (Marking marking : markings) {
 			doc.addMarking(marking);
 		}
@@ -184,7 +184,7 @@ public class NifEverything {
 	 * @param docs List of {@link Document}s to convert
 	 * @return NIF as String
 	 */
-	private String writeNIF(final List<Document> docs) {
+	public String writeNIF(final List<Document> docs) {
 		NIFWriter writer = new TurtleNIFWriter();
 		return writer.writeNIF(docs);
 	}
@@ -203,7 +203,7 @@ public class NifEverything {
 
 		addAllMarkingsToDoc(doc, stringToMarkingsSpotters(q, spotter));
 
-		return nifStringFromDocument(doc);
+		return writeNIF(doc);
 	}
 
 	/**
@@ -239,7 +239,7 @@ public class NifEverything {
 	 * @param doc A {@link Document} to vonvert to an NIF
 	 * @return NIF as String
 	 */
-	private String nifStringFromDocument(final Document doc) {
+	public String writeNIF(final Document doc) {
 		List<Document> documents = new ArrayList<>();
 		documents.add(doc);
 		NIFWriter writer = new TurtleNIFWriter();
@@ -265,7 +265,7 @@ public class NifEverything {
 		 */
 		TAIDENTREF {
 			@Override
-			Marking getInstanceWith(final int offset, final int len, final List<String> uris) {
+			public Marking getInstanceWith(final int offset, final int len, final List<String> uris) {
 				return new NamedEntity(offset, len, new HashSet<>(uris));
 			}
 		},
@@ -278,7 +278,7 @@ public class NifEverything {
 		 */
 		TACLASSREF {
 			@Override
-			Marking getInstanceWith(final int offset, final int len, final List<String> uris) {
+			public Marking getInstanceWith(final int offset, final int len, final List<String> uris) {
 				return new TypedSpanImpl(offset, len, new HashSet<>(uris));
 			}
 		};
@@ -290,7 +290,7 @@ public class NifEverything {
 		 * @param uris list of annotations
 		 * @return a new instance of {@link Marking}
 		 */
-		abstract Marking getInstanceWith(final int offset, final int len, final List<String> uris);
+		public abstract Marking getInstanceWith(final int offset, final int len, final List<String> uris);
 	}
 
 	/**
@@ -300,7 +300,7 @@ public class NifEverything {
 	 * @return NIF as {@link Document} list
 	 * @throws IllegalArgumentException When input is empty or not parsable.
 	 */
-	private List<Document> parseNIF(final String input) throws IllegalArgumentException {
+	public List<Document> parseNIF(final String input) throws IllegalArgumentException {
 		NIFParser parser = new TurtleNIFParser();
 		List<Document> docs = parser.parseNIF(input);
 		/**
@@ -310,7 +310,7 @@ public class NifEverything {
 			doc.setDocumentURI(null);
 		}
 		if (CollectionUtils.isEmpty(docs)) {
-			logger.debug("Recieved emty or not parsable POST body");
+			logger.debug("Recieved empty or not parsable POST body");
 			throw new IllegalArgumentException("Nothing parsed");
 		}
 		return docs;

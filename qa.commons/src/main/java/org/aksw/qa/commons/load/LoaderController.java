@@ -1,13 +1,16 @@
 package org.aksw.qa.commons.load;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.RoundingMode;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +31,8 @@ import org.aksw.qa.commons.load.json.EJQuestionFactory;
 import org.aksw.qa.commons.load.json.ExtendedQALDJSONLoader;
 import org.aksw.qa.commons.load.json.QaldJson;
 import org.aksw.qa.commons.load.stanford.StanfordLoader;
+import org.aksw.qa.commons.utils.DateFormatter;
+import org.apache.jena.query.QueryFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMException;
@@ -50,6 +55,7 @@ import org.xml.sax.SAXException;
 public class LoaderController {
 	static Logger log = LoggerFactory.getLogger(LoaderController.class);
 
+	
 	private static InputStream getInputStream(final Dataset set) {
 		// Magical get the path from qa-datasets
 
@@ -246,7 +252,7 @@ public class LoaderController {
 				case QALD6_Train_Hybrid:
 				case QALD6_Train_Multilingual:
 
-					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(new File(mapDatasetToPath(data).getPath().replaceAll("%20", " ")), QaldJson.class);
+					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(getInputStream(data), QaldJson.class);
 					out = EJQuestionFactory.getQuestionsFromQaldJson(json);
 					break;
 				case nlq:
@@ -358,7 +364,13 @@ public class LoaderController {
 
 					NodeList childNodes = element.getChildNodes();
 					Node item = childNodes.item(0);
-					question.setSparqlQuery(item.getNodeValue().trim());
+					question.setSparqlQuery(item.getNodeValue().trim());					
+					//validate SPARQLQuery
+					try{
+						QueryFactory.create(question.getSparqlQuery());
+					}catch(Exception e){
+						continue;
+					}
 				}
 				// check if OUT OF SCOPE marked
 				if (question.getPseudoSparqlQuery() != null) {
@@ -374,8 +386,21 @@ public class LoaderController {
 				for (int j = 0; j < answers.getLength(); j++) {
 					NodeList answer = ((Element) answers.item(j)).getElementsByTagName("answer");
 					for (int k = 0; k < answer.getLength(); k++) {
-						String answerString = ((Element) answer.item(k)).getTextContent();
-						set.add(answerString.trim());
+						
+						
+						switch(question.getAnswerType().toLowerCase()){
+						case "boolean":
+							Boolean b = Boolean.valueOf(((Element) answer.item(k)).getTextContent().toLowerCase().trim());
+							set.add(b.toString().trim());
+							break;
+						case "date":
+							set.add(DateFormatter.formatDate(((Element) answer.item(k)).getTextContent()).trim());
+							break;
+						default: 
+							String answerString = ((Element) answer.item(k)).getTextContent();
+							set.add(answerString.trim());
+						}
+
 					}
 				}
 				question.setGoldenAnswers(set);
@@ -436,14 +461,21 @@ public class LoaderController {
 				String lang = currentJsonObject.getString("lang");
 				String questiion = currentJsonObject.getString("question");
 				String answer = currentJsonObject.getString("answer");
-
+				//TODO somhow check if answer is boolean or date
 				String sparql = currentJsonObject.getString("sparql");
 
 				q.getLanguageToQuestion().put(lang, questiion);
 				q.setSparqlQuery(lang, sparql);
+				
 				Set<String> answ = new HashSet<>();
 				answ.add(answer);
 				q.setGoldenAnswers(lang, answ);
+			}
+			// validate SPARQL Query
+			try{
+				QueryFactory.create(q.getSparqlQuery());
+			}catch(Exception e){
+				continue;
 			}
 			output.add(q);
 		}
@@ -451,8 +483,10 @@ public class LoaderController {
 		return output;
 	}
 
+
+	
 	// TODO transform to unit test
-	public static void main(final String[] args) {
+	public static void main(final String[] args) throws ParseException {
 		ArrayList<String> output = new ArrayList<>();
 		ArrayList<String> output2 = new ArrayList<>();
 		for (Dataset data : Dataset.values()) {

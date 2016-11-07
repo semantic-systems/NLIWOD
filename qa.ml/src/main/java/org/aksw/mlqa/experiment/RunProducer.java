@@ -91,7 +91,12 @@ public class RunProducer {
 			//we have to use Lists to get a valid json array
 			questiondata.put("goldanswers", goldAnswers.stream().collect(Collectors.toList()));
 			for(ASystem system: systems){
-				Set<String> foundAnswers = system.search(question.getLanguageToQuestion().get("en")).getGoldenAnswers();
+				Set<String> foundAnswers = null;
+				try{
+					foundAnswers = system.search(question.getLanguageToQuestion().get("en")).getGoldenAnswers();
+				}catch(Exception e){
+					continue;
+				}
 				JSONObject s = new JSONObject();
 				//yodas answers have to be converted to resources if the answertype is "resource"
 				if(system.name().equals("yoda") && question.getAnswerType().equals("resource"))
