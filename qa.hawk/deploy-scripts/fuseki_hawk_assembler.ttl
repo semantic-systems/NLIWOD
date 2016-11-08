@@ -32,11 +32,11 @@ text:TextIndexLucene  rdfs:subClassOf   text:TextIndex .
     .
 
 :dataset rdf:type      tdb:DatasetTDB ;
-    tdb:location "hawk_data_10-2015_dbpediatbd" ;
+    tdb:location "hawk_data_04-2016_dbpediatbd" ;
     .
 
 :indexLucene a text:TextIndexLucene ;
-    text:directory <file:hawk_data_10-2015_dbpedialucene> ;
+    text:directory <file:hawk_data_04-2016_dbpedialucene> ;
     ##text:directory "mem" ;
     text:entityMap :entMap ;
     .
