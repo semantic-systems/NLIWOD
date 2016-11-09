@@ -3,6 +3,7 @@ package org.aksw.hawk.util;
 import java.sql.SQLException;
 import java.util.Set;
 
+import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheBackend;
 import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
@@ -29,23 +30,14 @@ import com.google.common.collect.Sets;
  * @author ricardousbeck
  *
  */
+//TODO test, that this class is able to generate a JSONObject
 public class AnswerBox {
 	static Logger log = LoggerFactory.getLogger(AnswerBox.class);
 	private static QueryExecutionFactory qef;
 
 	static {
-		try {
-			long timeToLive = 360l * 24l * 60l * 60l * 1000l;
-			CacheBackend cacheBackend = CacheCoreH2.create("./sparql", timeToLive, true);
-			CacheFrontend cacheFrontend = new CacheFrontendImpl(cacheBackend);
-			// CacheCoreEx cacheBackend = CacheCoreH2.create("./sparql",
-			// timeToLive, true);
-			// CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
-			qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
-			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
-		} catch (ClassNotFoundException | SQLException e) {
-			log.error("Could not create SPARQL interface! ", e);
-		}
+		SPARQL sparql = new SPARQL();
+		qef = sparql.qef;
 	}
 
 	public static JSONObject buildAnswerBoxFeatures(final String uri) {

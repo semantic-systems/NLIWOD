@@ -6,6 +6,9 @@ import org.aksw.hawk.controller.PipelineStanford;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 // import org.springframework.scheduling.annotation.EnableAsync;
@@ -16,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Component
-// @EnableAsync
+@SpringBootApplication
+@EnableAsync
 public class WebController {
 	private Logger log = LoggerFactory.getLogger(WebController.class);
 	private PipelineStanford pipeline = new PipelineStanford();
@@ -31,8 +35,8 @@ public class WebController {
 		searchExecutor.setPipeline(pipeline);
 	}
 
-	@RequestMapping("/search")
-	public String search(@RequestParam(value = "q") final String question, final HttpServletResponse response) {
+	@RequestMapping("/gerbil-search")
+	public String search(@RequestParam(value = "query") final String question, final HttpServletResponse response) {
 		log.debug("Received question = " + question);
 		// CORS
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -70,4 +74,7 @@ public class WebController {
 		return nouns.nifToAnswerNif(input);
 	}
 
+	public static void main(final String[] args) {
+		SpringApplication.run(WebController.class, args);
+	}
 }
