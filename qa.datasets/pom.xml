@@ -33,9 +33,9 @@
 						<fileset>
 							<directory>qa.datasets/src/main/resources/stanfordqa-train.json</directory>
 						</fileset>
-<!-- 						<fileset> -->
-<!-- 							<DIRECTORY>QA.DATASETS/SRC/MAIN/RESOURCES/QALD</DIRECTORY> -->
-<!-- 						</FILESET> -->
+						<fileset>
+							<directory>qa.datasets/src/main/resources/QALD</directory>
+						</fileset>
 						<fileset>
 							<directory>qa.datasets/src/main/resources/QALD-master</directory>
 						</fileset>
@@ -47,21 +47,21 @@
 				<artifactId>download-maven-plugin</artifactId>
 				<version>1.3.0</version>
 				<executions>
-<!-- 					<execution> -->
-<!-- 						<id>resources-QALD</id> -->
-<!-- 						<phase>package</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>wget</goal> -->
-<!-- 						</goals> -->
-<!-- 						<configuration> -->
-<!-- 							<url>https://github.com/ag-sc/QALD/archive/master.zip</url> -->
-<!-- 							<unpack>true</unpack> -->
-<!-- 							<overwrite>false</overwrite> -->
-<!-- 							<skipCache>true</skipCache> -->
-<!-- 							<outputFileName>QALD</outputFileName> -->
-<!-- 							<outputDirectory>src/main/resources/</outputDirectory> -->
-<!-- 						</configuration> -->
-<!-- 					</execution> -->
+					<execution>
+						<id>resources-QALD</id>
+						<phase>package</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://github.com/ag-sc/QALD/archive/master.zip</url>
+							<unpack>true</unpack>
+							<overwrite>false</overwrite>
+							<skipCache>true</skipCache>
+							<outputFileName>QALD.zip</outputFileName>
+							<outputDirectory>src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
 					<execution>
 						<id>resources-stanfordqa-dev</id>
 						<phase>package</phase>
