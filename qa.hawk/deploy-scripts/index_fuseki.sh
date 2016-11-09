@@ -120,6 +120,13 @@ then
 	java -Xmx16G -cp $JENA_FUSEKI_JAR jena.textindexer --desc=fuseki_hawk_assembler.ttl
 fi
 
+if [ ! -d "data" ];
+then
+	mkdir data
+	mv hawk_data_04-2016_dbpedialucene data/
+	mv hawk_data_04-2016_dbpediatbd data/
+fi
+
 #Clean up
 
 rm *.bz2
