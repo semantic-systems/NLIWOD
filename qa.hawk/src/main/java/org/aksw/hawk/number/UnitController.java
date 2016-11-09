@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -47,40 +49,27 @@ public class UnitController {
 	 * Loads a file with tab separated values. Lines starting with "//" will be
 	 * ignored.
 	 * 
-	 * @param file The file you want to load.
+	 * @param input
+	 *            The file you want to load.
 	 * @return A List containing lists. Outer list are the lines, inner lists
 	 *         are the values separated by tab.
+	 * @throws IOException 
 	 */
-	public static List<List<String>> loadTabSplit(final File file) {
+	public static List<List<String>> loadTabSplit(final InputStream input) throws IOException {
 		List<List<String>> ret = new ArrayList<>();
 
-		FileReader fileReader;
-		try {
-			fileReader = new FileReader(file);
-		} catch (FileNotFoundException e) {
-			log.info("Could not load number conversion rules - File not fond" + file.getAbsolutePath(), e);
-			return null;
-		}
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		try {
-			String line = bufferedReader.readLine();
-			while (line != null) {
-				if (line.startsWith("//")) {
-					line = bufferedReader.readLine();
-					continue;
-				}
-				ret.add(new ArrayList<>(Arrays.asList(line.split("\t"))));
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
+		String line = bufferedReader.readLine();
+		while (line != null) {
+			if (line.startsWith("//")) {
 				line = bufferedReader.readLine();
+				continue;
 			}
+			ret.add(new ArrayList<>(Arrays.asList(line.split("\t"))));
+			line = bufferedReader.readLine();
+		}
 
-		} catch (IOException e) {
-			log.info("Error while parsing number conversion rules " + file.getAbsolutePath(), e);
-		}
-		try {
-			bufferedReader.close();
-		} catch (IOException e) {
-			log.debug("Could not close resource " + file.getAbsolutePath(), e);
-		}
+		bufferedReader.close();
 		return ret;
 	}
 

@@ -22,7 +22,7 @@
 		<qa-datasets.version>0.5.0-SNAPSHOT</qa-datasets.version>
 		<qa-systems.version>0.0.4-SNAPSHOT</qa-systems.version>
 		<qa-ml.version>0.0.1-SNAPSHOT</qa-ml.version>
-		<qa-hawk.version>0.0.2</qa-hawk.version>
+		<qa-hawk.version>0.3.0</qa-hawk.version>
 		<qa-watodo.version>0.0.1-SNAPSHOT</qa-watodo.version>
 		<jena.version>3.1.0-1</jena.version>
 		<dllearner.version>1.3.0-jena3-SNAPSHOT</dllearner.version>
