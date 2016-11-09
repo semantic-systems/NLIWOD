@@ -125,7 +125,7 @@ fi
 rm *.bz2
 rm *.sorted
 rm -r apache-jena-3.1.0*
-rm -r apache-jena-fuseki-2.4.0		
+#rm -r apache-jena-fuseki-2.4.0		
 rm dbpedia_2016-04.owl* 
 rm disambiguations_en.ttl
 rm mappingbased_literals_en.ttl
