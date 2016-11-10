@@ -1,7 +1,8 @@
 package org.aksw.hawk.number;
 
 import java.io.File;
-import java.net.URISyntaxException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,13 +38,13 @@ import edu.stanford.nlp.util.CoreMap;
  * "$80 thousand and three hundred four" -> "$ 80304"
  * "Show the first ten screws with a length of two inches" -> "Show the first 10 screws with a length of 0.0508 m"
  * "10 miles" -> "1609.344 m"
- *
+ * 
  * "one" can be a numeral, but it does not have to be. To handle those cases,
  * The Stanford pipeline will be started on sentences containing "one". It will only be converted to a number,
  * if its not in a relation "nmod" with any other word. With this, we can handle sentences like:
- *
+ * 
  * "The color is different from the old one."
- *
+ * 
  *  This sentence will be the same after parsing.
  *
  * </pre>
@@ -63,7 +64,11 @@ public class UnitEnglish implements IUnitLanguage {
 		this.stanford = stanford;
 		identifierToMultiplier = new HashMap<>();
 		identifierToUnit = new HashMap<>();
-		loadResource();
+		try {
+	        loadResource();
+        } catch (IOException e) {
+	        e.printStackTrace();
+        }
 	}
 
 	@Override
@@ -146,8 +151,8 @@ public class UnitEnglish implements IUnitLanguage {
 	 * beforehand, to load data. To add numerals which should be recognized,
 	 * edit resource file.
 	 *
-	 * @param replaceThis String which may or may not contain something to
-	 *            convert.
+	 * @param replaceThis
+	 *            String which may or may not contain something to convert.
 	 * @return InputString, but with replaced natural language numerals.
 	 */
 	private String replaceNumerals(final String replaceThis) {
@@ -248,7 +253,8 @@ public class UnitEnglish implements IUnitLanguage {
 	 * if a unit is found, and the word left from unit is a number, conversion
 	 * takes place.
 	 *
-	 * @param str Any string which may or may not contain a unit
+	 * @param str
+	 *            Any string which may or may not contain a unit
 	 * @return Input string but with unit converted to base unit.
 	 */
 	private String convertToBaseUnit(final String str) {
@@ -296,8 +302,10 @@ public class UnitEnglish implements IUnitLanguage {
 	 * parseable to an integer, decimals will not be printed. All zeros will be
 	 * printed. Scientific representation will not be used.
 	 *
-	 * @param out String to append to.
-	 * @param val Val to append.
+	 * @param out
+	 *            String to append to.
+	 * @param val
+	 *            Val to append.
 	 * @return String with appended Double val.
 	 */
 	private String prettyAppendDouble(final String out, final Double val) {
@@ -312,7 +320,8 @@ public class UnitEnglish implements IUnitLanguage {
 
 	/**
 	 *
-	 * @param s String to be parsed to Double. Also accepts all numeral words
+	 * @param s
+	 *            String to be parsed to Double. Also accepts all numeral words
 	 *            defined in English file
 	 * @return If String is parsable to Double, this will be returned. otherwise
 	 *         null.
@@ -327,17 +336,13 @@ public class UnitEnglish implements IUnitLanguage {
 		return out;
 	}
 
-	private void loadResource() {
+	private void loadResource() throws IOException {
 		log.debug("Loading number conversion rules for english");
-		final ClassLoader classLoader = getClass().getClassLoader();
-		File file = null;
-		try {
-			file = new File(classLoader.getResource("unitconversion/englishIdentifierToUnit.txt").toURI().getPath());
-		} catch (URISyntaxException e) {
-			log.debug("Invalid Path", e);
-		}
+		
+		ClassLoader classLoader = getClass().getClassLoader();
+		InputStream input = classLoader.getResourceAsStream("unitconversion/englishIdentifierToUnit.txt");
 
-		List<List<String>> data = UnitController.loadTabSplit(file);
+		List<List<String>> data = UnitController.loadTabSplit(input);
 		if ((data == null) || data.isEmpty()) {
 			return;
 		}
@@ -350,7 +355,7 @@ public class UnitEnglish implements IUnitLanguage {
 				}
 
 			} catch (NullPointerException | NumberFormatException | IndexOutOfBoundsException e) {
-				log.debug("Could not parse line " + data.indexOf(line) + "from file " + file.getAbsolutePath());
+				log.debug("Could not parse line " + data.indexOf(line) + "from file " +input.toString());
 			}
 		}
 	}
@@ -377,7 +382,7 @@ public class UnitEnglish implements IUnitLanguage {
 		for (String q : sentenceToSentence.keySet()) {
 		System.out.println(ue.convert(q));
 		}
-		*/
+		 */
 
 	}
 
