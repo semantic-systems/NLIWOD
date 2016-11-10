@@ -1,10 +1,26 @@
 FROM maven
 
-RUN mkdir -p /usr/src/app
-ADD . /usr/src/app
+WORKDIR /
 
-WORKDIR /usr/src/app/qa.hawk
-RUN mvn clean package -U -DskipTests
+# Config and data
+RUN mkdir hawk
 
+COPY pom.xml /hawk/pom.xml
+COPY qa.datasets /hawk/qa.datasets/
+COPY qa.commons /hawk/qa.commons/
+COPY qa.annotation /hawk/qa.annotation/
+COPY qa.systems /hawk/qa.systems
+COPY qa.ml /hawk/qa.ml
+COPY qa.seqa /hawk/qa.seqa
+
+COPY qa.hawk /hawk/qa.hawk/
+
+
+# Build all dependencies from multi-module
+WORKDIR /hawk/
+RUN mvn clean package -DskipTests -Dmaven.javadoc.skip=true
+
+# Execute main hawk
+WORKDIR /hawk/qa.hawk
 EXPOSE 8181
-CMD ["java", "-jar", "./target/hawk-0.0.2.jar"]
+CMD ["mvn", "spring-boot:run"]

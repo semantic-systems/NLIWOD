@@ -118,6 +118,10 @@
 	</distributionManagement>
 	<!-- REPOSITORIES -->
 	<repositories>
+                <repository>
+                        <id>jitpack.io</id>
+                        <url>https://jitpack.io</url>
+                </repository>
 		<repository>
 			<id>Apache Repo Central</id>
 			<name>Apache Repository</name>

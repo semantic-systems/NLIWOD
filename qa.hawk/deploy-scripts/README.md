@@ -12,8 +12,9 @@ Use wget to download the latest data from http://139.18.2.164/rusbeck/hawk/index
 Now use docker to build an image and run it
 ```
 docker build -f Dockerfile-fuseki -t fuseki .
-docker run --name fuseki-data -p 3030:3030 -v `pwd`/data/:/jena-fuseki/data fuseki
+docker run -d --name fuseki-data -p 3030:3030 -v `pwd`/data/:/jena-fuseki/data --restart=always fuseki 
 ```
+
 ##Deployment without docker
 
 Download apache-jena-fuseki-2.4.0 from https://www.apache.org/dist/jena/binaries/apache-jena-fuseki-2.4.1.zip and unzip it. 
