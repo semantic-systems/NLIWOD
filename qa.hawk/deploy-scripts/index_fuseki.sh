@@ -108,31 +108,30 @@ export FUSEKI_HOME=apache-jena-fuseki-2.4.0
 APACHE_JENA_BIN=./apache-jena-3.1.0/bin
 JENA_FUSEKI_JAR=apache-jena-fuseki-2.4.0/fuseki-server.jar
 
-mkdir hawk_data_04-2016_dbpediatbd/
-
-if [ ! -d "hawk_data_04-2016_dbpediatbd" ];
+if [ ! -d "data/hawk_data_04-2016_dbpediatbd" ];
 then
-	$APACHE_JENA_BIN/tdbloader2 --loc=hawk_data_04-2016_dbpediatbd dbpedia_2016-04.owl disambiguations_en.ttl instance_types_en.ttl long_abstracts_en.ttl labels_en.ttl mappingbased_objects_en.ttl mappingbased_literals_en.ttl persondata_en.ttl specific_mappingbased_properties_en.ttl en_surface_forms.ttl pagerank_en_2016-04.ttl redirect_labels.ttl instance_types_en.ttl instance_types_transitive_en.ttl
+	mkdir data
+	cd data
+        mkdir hawk_data_04-2016_dbpediatbd/
+        cd ..
+	$APACHE_JENA_BIN/tdbloader2 --loc=data/hawk_data_04-2016_dbpediatbd dbpedia_2016-04.owl disambiguations_en.ttl instance_types_en.ttl long_abstracts_en.ttl labels_en.ttl mappingbased_objects_en.ttl mappingbased_literals_en.ttl persondata_en.ttl specific_mappingbased_properties_en.ttl en_surface_forms.ttl pagerank_en_2016-04.ttl redirect_labels.ttl instance_types_en.ttl instance_types_transitive_en.ttl
 fi
 
-if [ ! -d "hawk_data_04-2016_dbpedialucene" ];
+if [ ! -d "data/hawk_data_04-2016_dbpedialucene" ];
 then
+	cd data
+	mkdir hawk_data_04-2016_dbpedialucene
+        cd ..
 	java -Xmx16G -cp $JENA_FUSEKI_JAR jena.textindexer --desc=fuseki_hawk_assembler.ttl
 fi
 
-if [ ! -d "data" ];
-then
-	mkdir data
-	mv hawk_data_04-2016_dbpedialucene data/
-	mv hawk_data_04-2016_dbpediatbd data/
-fi
 
 #Clean up
 
 rm *.bz2
 rm *.sorted
 rm -r apache-jena-3.1.0*
-#rm -r apache-jena-fuseki-2.4.0		
+rm -r apache-jena-fuseki-2.4.0		
 rm dbpedia_2016-04.owl* 
 rm disambiguations_en.ttl
 rm mappingbased_literals_en.ttl
@@ -148,4 +147,3 @@ rm labels_en.ttl
 rm persondata_en.ttl
 rm long_abstracts_en.ttl
 rm redirect_labels.ttl
-
