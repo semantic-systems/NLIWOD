@@ -18,9 +18,10 @@ COPY qa.hawk /hawk/qa.hawk/
 
 # Build all dependencies from multi-module
 WORKDIR /hawk/
-RUN mvn clean package -DskipTests -Dmaven.javadoc.skip=true
+#RUN mvn clean install -DskipTests -Dmaven.javadoc.skip=true
 
 # Execute main hawk
 WORKDIR /hawk/qa.hawk
 EXPOSE 8181
+#CMD ["mvn", "clean", "install", "spring-boot:run", "-DskipTests", "-Dmaven.javadoc.skip=true"]
 CMD ["mvn", "spring-boot:run"]
