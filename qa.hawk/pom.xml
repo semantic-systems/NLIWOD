@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.aksw</groupId>
 		<artifactId>nliwod</artifactId>
-		<version>0.0.3</version>
+		<version>0.0.4</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<groupId>org.aksw.qa</groupId>
@@ -62,11 +62,10 @@
 			<artifactId>lucene-analyzers-common</artifactId>
 			<version>${lucene.version}</version>
 		</dependency>
-		<!-- NIF document creator for testing spotter -->
 		<dependency>
-			<groupId>com.github.AKSW</groupId>
-			<artifactId>gerbil</artifactId>
-			<version>gerbil.nif.transfer-jena3.1-SNAPSHOT</version>
+			<groupId>org.aksw</groupId>
+			<artifactId>gerbil.nif.transfer</artifactId>
+			<version>1.2.2-jena3.1</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>slf4j-log4j12</artifactId>
@@ -74,13 +73,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-		<!-- <dependency> <groupId>org.aksw</groupId> <artifactId>gerbil.nif.transfer</artifactId> 
-			<version>1.2.0</version> <exclusions> <exclusion> <artifactId>jena-core</artifactId> 
-			<groupId>org.apache.jena</groupId> </exclusion> <exclusion> <artifactId>jena-arq</artifactId> 
-			<groupId>org.apache.jena</groupId> </exclusion> <exclusion> <artifactId>slf4j-log4j12</artifactId> 
-			<groupId>org.slf4j</groupId> </exclusion> </exclusions> </dependency> -->
-
 		<!-- Predicate-Argument Trees -->
 		<dependency>
 			<groupId>com.clearnlp</groupId>
@@ -168,6 +160,16 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
@@ -199,7 +201,6 @@
 				<exclusion>
 					<groupId>ch.qos.logback</groupId>
 					<artifactId>logback-core</artifactId>
-
 				</exclusion>
 			</exclusions>
 		</dependency>
