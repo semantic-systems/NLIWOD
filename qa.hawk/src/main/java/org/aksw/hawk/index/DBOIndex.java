@@ -108,20 +108,23 @@ public class DBOIndex {
 
 	private void index() {
 		try {
-			Model dbpedia = ModelFactory.createDefaultModel();
 			Properties prop = new Properties();
 			InputStream input = getClass().getClassLoader().getResourceAsStream("hawk.properties");
 			prop.load(input);
 			String file = prop.getProperty("owl");
-
-			dbpedia.read(getClass().getClassLoader().getResourceAsStream(file), "RDF/XML");
-			StmtIterator stmts = dbpedia.listStatements(null, RDFS.label, (RDFNode) null);
+			
+			InputStream res = this.getClass().getResourceAsStream(file);
+			Model model = ModelFactory.createDefaultModel();
+			model.read(res, "http://dbpedia.org/","RDF/XML");
+			
+			
+			StmtIterator stmts = model.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();
 				RDFNode label = stmt.getObject();
 				if (label.asLiteral().getLanguage().equals("en")) {
 					addDocumentToIndex(stmt.getSubject(), "rdfs:label", label.asLiteral().getString());
-					NodeIterator comment = dbpedia.listObjectsOfProperty(stmt.getSubject(), RDFS.comment);
+					NodeIterator comment = model.listObjectsOfProperty(stmt.getSubject(), RDFS.comment);
 					while (comment.hasNext()) {
 						RDFNode next = comment.next();
 						if (next.asLiteral().getLanguage().equals("en")) {
