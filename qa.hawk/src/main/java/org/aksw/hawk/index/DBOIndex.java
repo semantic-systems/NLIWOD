@@ -114,7 +114,7 @@ public class DBOIndex {
 			prop.load(input);
 			String file = prop.getProperty("owl");
 
-			dbpedia.read(file, "RDF/XML");
+			dbpedia.read(getClass().getClassLoader().getResourceAsStream(file), "RDF/XML");
 			StmtIterator stmts = dbpedia.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();
