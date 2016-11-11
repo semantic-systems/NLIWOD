@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>log.out</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%d{dd.MM.yy HH:mm:ss} %-5p [%-30.30c{1.}] %-5L - &lt;%m&gt;%n
+			</Pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>log.out.%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+	</appender>
+
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%d{dd.MM.yy HH:mm:ss} %-5p [%-30.30c{1.}] %-5L - &lt;%m&gt;%n
+			</Pattern>
+		</layout>
+	</appender>
+
+	<logger name="org.apache" level="ERROR" />
+	<logger name="com.clearnlp.component" level="ERROR" />
+	<logger name="ch.qos.logback" level="ERROR" />
+
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="stdout" />
+	</root>
+</configuration>

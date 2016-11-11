@@ -2,11 +2,13 @@ package org.aksw.qa.annotation.index;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
@@ -105,11 +107,9 @@ public class IndexDBO_properties implements IndexDBO {
 
 	private void index() {
 		try {
-			URL res = this.getClass().getResource("/dbpedia_3Eng_property.ttl");
-			if (res == null) {
-				throw new IOException("Couldnt locate resource");
-			}
-			Model model = RDFDataMgr.loadModel(URLDecoder.decode(res.getPath(), "UTF-8"));
+			InputStream res = this.getClass().getResourceAsStream("/dbpedia_3Eng_class.ttl");
+			Model model = ModelFactory.createDefaultModel();
+			model.read(res, "http://dbpedia.org/","TTL");
 			StmtIterator stmts = model.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();
