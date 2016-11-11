@@ -108,16 +108,10 @@ public class DBOIndex {
 
 	private void index() {
 		try {
-			Properties prop = new Properties();
-			InputStream input = getClass().getClassLoader().getResourceAsStream("hawk.properties");
-			prop.load(input);
-			String file = prop.getProperty("owl");
-			
-			InputStream res = this.getClass().getResourceAsStream(file);
+			InputStream res = this.getClass().getResourceAsStream("/dbpedia_2016-04.owl");
 			Model model = ModelFactory.createDefaultModel();
-			model.read(res, "http://dbpedia.org/","RDF/XML");
-			
-			
+			model.read(res, "http://dbpedia.org/", "RDF/XML");
+
 			StmtIterator stmts = model.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();
