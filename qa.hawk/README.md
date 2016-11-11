@@ -23,6 +23,7 @@ Running HAWK
 ==
 !!!Befor running hawk make sure there is a SPARQL endpoint at http://139.18.2.164:3030/ds/sparql or http://titan.informatik.uni-leipzig.de:3030/ds/sparql!!!
 !!!Make sure there is an available Stanford CoreNLP server at http://localhost: or http://titan.informatik.uni-leipzig.de:9000/!!!
+
 Running HAWK via Docker
 ===
 
@@ -31,11 +32,11 @@ There is also a public hawk-specific sparql endpoint http://titan.informatik.uni
 For starting our specific SPARQL endpoint locally look at deploy-scripts/README.md
 If you already have it running, you can build a hawk docker file using the following commands.
 
-```
+``
 cd ..
 docker build -f qa.hawk/deploy-scripts/Dockerfile-hawk -t hawk .
 docker run -d --name hawk -p 8181:8181 --restart=always hawk
-```
+``
 
 Running  HAWK via Maven
 ===

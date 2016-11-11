@@ -1,16 +1,9 @@
 package org.aksw.hawk.util;
 
-import java.sql.SQLException;
 import java.util.Set;
 
 import org.aksw.hawk.querybuilding.SPARQL;
-import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
-import org.aksw.jena_sparql_api.cache.extra.CacheBackend;
-import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
-import org.aksw.jena_sparql_api.cache.extra.CacheFrontendImpl;
-import org.aksw.jena_sparql_api.cache.h2.CacheCoreH2;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.apache.jena.atlas.json.JsonString;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QuerySolution;

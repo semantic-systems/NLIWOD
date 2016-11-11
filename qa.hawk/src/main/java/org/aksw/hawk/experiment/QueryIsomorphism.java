@@ -1,7 +1,6 @@
 package org.aksw.hawk.experiment;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
@@ -9,7 +8,6 @@ import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.qa.commons.datastructure.Question;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
-
 import org.apache.jena.graph.Graph;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;

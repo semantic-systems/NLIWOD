@@ -35,8 +35,7 @@ public class SPARQL {
 			// "http://dbpedia.org/");
 			// qef = new
 			// QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
-			//qef = FluentQueryExecutionFactory.http("http://139.18.2.164:3030/ds/sparql").config().withCache(cacheFrontend).end().create();
-			qef = FluentQueryExecutionFactory.http("http://localhost:3030/ds/sparql").config().withCache(cacheFrontend).end().create();
+			qef = FluentQueryExecutionFactory.http("http://139.18.2.164:3030/ds/sparql").config().withCache(cacheFrontend).end().create();
 
 			// qef = new
 			// QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
