@@ -1,4 +1,4 @@
-package hawk;
+package org.aksw.hawk;
 
 import org.aksw.hawk.index.DBOIndex;
 import org.aksw.hawk.index.Patty_relations;

@@ -3,7 +3,6 @@ package org.aksw.hawk.number;
 import java.util.HashMap;
 
 import org.aksw.hawk.controller.StanfordNLPConnector;
-import org.aksw.hawk.number.UnitEnglish;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package hawk;
+package org.aksw.hawk;
 
 import static org.junit.Assert.assertEquals;
 

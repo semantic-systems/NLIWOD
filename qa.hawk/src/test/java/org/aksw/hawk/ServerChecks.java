@@ -1,4 +1,4 @@
-package infrastructure;
+package org.aksw.hawk;
 
 public class ServerChecks {
 
