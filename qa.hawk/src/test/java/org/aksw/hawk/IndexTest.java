@@ -56,6 +56,7 @@ public class IndexTest {
 		Assert.assertFalse(propertiesindex.search("recipients").contains("http://dbpedia.org/ontology/award"));
 		log.info("recipient \n" + Joiner.on("\n").join(propertiesindex.search("recipient")));
 		Assert.assertTrue(propertiesindex.search("recipient").contains("http://dbpedia.org/ontology/award"));
+		//TODO move also lemon test cases away
 	}
 
 	@Test
