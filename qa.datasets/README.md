@@ -16,7 +16,8 @@ to analyze:
  * https://github.com/brmson/dataset-factoid-curated for evolution 
  * https://github.com/brmson/dataset-factoid-movies for domain-specific
  * https://github.com/brmson/dataset-factoid-webquestions for a suit
-* GeoQuery, Free917, WebQuestions, SimpleQuestions and QALD
+* GeoQuery, Free917, WebQuestions, SimpleQuestions, GraphQuestions, and QALD
+* https://github.com/ysu1989/GraphQuestions GraphQuestions: compositional and paraphrased questions 
 * http://www-nlp.stanford.edu/software/sempre/
 * https://sites.google.com/site/trecliveqa2015/
 * http://trec.nist.gov/data/qa.html
