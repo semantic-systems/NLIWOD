@@ -28,8 +28,7 @@ public class IndexTest {
 		log.info("currency \n" + Joiner.on("\n").join(dboindex.search("currency")));
 		Assert.assertTrue(dboindex.search("currency").contains("http://dbpedia.org/ontology/currency"));
 	}
-
-	@Test
+	@Test @Ignore
 	public void lemonLexiconClassesTest() {
 		log.info("king \n" + Joiner.on("\n").join(classesindex.search("king")));
 		Assert.assertTrue(classesindex.search("king").contains("http://dbpedia.org/ontology/Monarch"));
@@ -43,8 +42,7 @@ public class IndexTest {
 		log.info("building \n" + Joiner.on("\n").join(classesindex.search("building")));
 		Assert.assertTrue(classesindex.search("building").contains("http://dbpedia.org/ontology/Building"));
 	}
-
-	@Test
+	@Test @Ignore
 	public void lemonLexiconPropertiesTest() {
 		log.info("come \n" + Joiner.on("\n").join(propertiesindex.search("come")));
 		Assert.assertTrue(propertiesindex.search("come").contains("http://dbpedia.org/ontology/birthPlace"));
