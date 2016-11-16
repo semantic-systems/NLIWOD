@@ -10,15 +10,16 @@ in production (adding answers):
 * https://www.stonetemple.com/great-knowledge-box-showdown/
 
 to analyze: 
+* GeoQuery, Free917, WebQuestions, SimpleQuestions, GraphQuestions, and QALD
+* https://github.com/ysu1989/GraphQuestions GraphQuestions: compositional questions; multiple paraphrases for each question 
 * http://qallme.fbk.eu/index.php?location=benchmark
 * http://agarciaduran.org/ 30M questions to freebase
 * https://github.com/brmson/yodaqa/wiki/Benchmarks
  * https://github.com/brmson/dataset-factoid-curated for evolution 
  * https://github.com/brmson/dataset-factoid-movies for domain-specific
  * https://github.com/brmson/dataset-factoid-webquestions for a suit
-* GeoQuery, Free917, WebQuestions, SimpleQuestions, GraphQuestions, and QALD
-* https://github.com/ysu1989/GraphQuestions GraphQuestions: compositional questions; multiple paraphrases for each question 
 * http://www-nlp.stanford.edu/software/sempre/
+* http://research.microsoft.com/en-us/um/redmond/projects/mctest/ 
 * https://sites.google.com/site/trecliveqa2015/
 * http://trec.nist.gov/data/qa.html
 * http://trec.nist.gov/data/qamain.html
