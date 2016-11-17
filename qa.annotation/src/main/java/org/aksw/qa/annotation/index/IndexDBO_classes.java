@@ -2,16 +2,21 @@ package org.aksw.qa.annotation.index;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.system.stream.StreamManager;
 import org.apache.jena.vocabulary.RDFS;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.Document;
@@ -105,12 +110,9 @@ public class IndexDBO_classes implements IndexDBO {
 	private void index() {
 		try {
 
-			URL res = this.getClass().getResource("/dbpedia_3Eng_class.ttl");
-			if (res == null) {
-				throw new IOException("Couldnt locate resource");
-			}
-
-			Model model = RDFDataMgr.loadModel(URLDecoder.decode(res.getPath(), "UTF-8"));
+			InputStream res = this.getClass().getResourceAsStream("/dbpedia_3Eng_class.ttl");
+			Model model = ModelFactory.createDefaultModel();
+			model.read(res, "http://dbpedia.org/","TTL");
 			StmtIterator stmts = model.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();
@@ -133,19 +135,20 @@ public class IndexDBO_classes implements IndexDBO {
 		iwriter.addDocument(doc);
 	}
 
-	// public static void main(final String[] args) {
-	// IndexDBO_classes classes = new IndexDBO_classes();
-	// Scanner sc = new Scanner(System.in);
-	// do {
-	// System.out.println("Search: ");
-	// String in = sc.next();
-	// ArrayList<String> out = classes.search(in);
-	// for (String it : out) {
-	// System.out.println(it);
-	// }
-	//
-	// } while (true);
-	//
-	// }
+	//TODO unit test with president
+	public static void main(final String[] args) {
+		IndexDBO_classes classes = new IndexDBO_classes();
+		Scanner sc = new Scanner(System.in);
+		do {
+			System.out.println("Search: ");
+			String in = sc.next();
+			ArrayList<String> out = classes.search(in);
+			for (String it : out) {
+				System.out.println(it);
+			}
+
+		} while (true);
+
+	}
 
 }

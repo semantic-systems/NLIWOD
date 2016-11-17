@@ -1,4 +1,4 @@
-package hawk;
+package org.aksw.hawk;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,7 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.stanford.nlp.pipeline.Annotation;
-import infrastructure.ServerChecks;
 
 public class ParseTreeTest {
 	@BeforeClass

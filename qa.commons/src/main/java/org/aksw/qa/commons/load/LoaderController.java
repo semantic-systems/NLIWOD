@@ -3,14 +3,10 @@ package org.aksw.qa.commons.load;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.RoundingMode;
-import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -60,10 +56,8 @@ public class LoaderController {
 		// Magical get the path from qa-datasets
 
 		try {
-			URL url = mapDatasetToPath(set);
-			return url.openStream();
-		} catch (IOException e) {
-			log.error("Couldnt open stream to dataset", e);
+			InputStream url = mapDatasetToPath(set);
+			return url;
 		} catch (NullPointerException e) {
 			log.error("No Mapping for this Dataset " + set.toString(), e);
 		}
@@ -81,97 +75,97 @@ public class LoaderController {
 		return loadingAnchor;
 	}
 
-	public static URL mapDatasetToPath(final Dataset set) {
+	public static InputStream mapDatasetToPath(final Dataset set) {
 		Class<?> loadingAnchor = getLoadingAnchor();
 
 		switch (set) {
 		case nlq:
-			return loadingAnchor.getResource("/NLQ-OKBQA/nlq1_vis.json");
+			return loadingAnchor.getResourceAsStream("/NLQ-OKBQA/nlq1_vis.json");
 
 		case QALD1_Test_dbpedia:
-			return loadingAnchor.getResource("/QALD-master/1/data/dbpedia-test.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/1/data/dbpedia-test.xml");
 		case QALD1_Test_musicbrainz:
-			return loadingAnchor.getResource("/QALD-master/1/data/musicbrainz-test.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/1/data/musicbrainz-test.xml");
 		case QALD1_Train_dbpedia:
-			return loadingAnchor.getResource("/QALD-master/1/data/dbpedia-train.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/1/data/dbpedia-train.xml");
 		case QALD1_Train_musicbrainz:
-			return loadingAnchor.getResource("/QALD-master/1/data/musicbrainz-train.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/1/data/musicbrainz-train.xml");
 
 		case QALD2_Test_dbpedia:
-			return loadingAnchor.getResource("/QALD-master/2/data/dbpedia-test.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/2/data/dbpedia-test.xml");
 		case QALD2_Test_musicbrainz:
-			return loadingAnchor.getResource("/QALD-master/2/data/musicbrainz-test.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/2/data/musicbrainz-test.xml");
 		case QALD2_Train_dbpedia:
-			return loadingAnchor.getResource("/QALD-master/2/data/dbpedia-train-answers.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/2/data/dbpedia-train-answers.xml");
 		case QALD2_Train_musicbrainz:
-			return loadingAnchor.getResource("/QALD-master/2/data/musicbrainz-train-answers.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/2/data/musicbrainz-train-answers.xml");
 		case QALD2_Participants_Challenge:
-			return loadingAnchor.getResource("/QALD-master/2/data/participants-challenge-answers.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/2/data/participants-challenge-answers.xml");
 
 		case QALD3_Test_dbpedia:
-			return loadingAnchor.getResource("/QALD-master/3/data/dbpedia-test-answers.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/3/data/dbpedia-test-answers.xml");
 		case QALD3_Test_esdbpedia:
-			return loadingAnchor.getResource("/QALD-master/3/data/esdbpedia-test-answers.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/3/data/esdbpedia-test-answers.xml");
 		// case QALD3_Test_esdbpedia_sparql:
 		// return
-		// loadingAnchor.getResource("/QALD-master/3/data/esdbpedia-test.xml");
+		// loadingAnchor.getResourceAsStream("/QALD-master/3/data/esdbpedia-test.xml");
 		case QALD3_Test_musicbrainz:
-			return loadingAnchor.getResource("/QALD-master/3/data/musicbrainz-test-answers.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/3/data/musicbrainz-test-answers.xml");
 		case QALD3_Train_dbpedia:
-			return loadingAnchor.getResource("/QALD-master/3/data/dbpedia-train-answers.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/3/data/dbpedia-train-answers.xml");
 		case QALD3_Train_esdbpedia:
-			return loadingAnchor.getResource("/QALD-master/3/data/esdbpedia-train-answers.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/3/data/esdbpedia-train-answers.xml");
 		case QALD3_Train_musicbrainz:
-			return loadingAnchor.getResource("/QALD-master/3/data/musicbrainz-train-answers.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/3/data/musicbrainz-train-answers.xml");
 
 		case QALD4_Test_Hybrid:
-			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_hybrid_test_withanswers.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/4/data/qald-4_hybrid_test_withanswers.xml");
 		case QALD4_Test_Multilingual:
-			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_multilingual_test_withanswers.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/4/data/qald-4_multilingual_test_withanswers.xml");
 		case QALD4_Test_biomedical:
-			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_biomedical_test_withanswers.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/4/data/qald-4_biomedical_test_withanswers.xml");
 		case QALD4_Train_Hybrid:
-			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_hybrid_train.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/4/data/qald-4_hybrid_train.xml");
 		case QALD4_Train_Multilingual:
-			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_multilingual_train_withanswers.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/4/data/qald-4_multilingual_train_withanswers.xml");
 		case QALD4_Train_biomedical:
-			return loadingAnchor.getResource("/QALD-master/4/data/qald-4_biomedical_train_withanswers.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/4/data/qald-4_biomedical_train_withanswers.xml");
 
 		case QALD5_Test_Hybrid:
 		case QALD5_Test_Multilingual:
-			return loadingAnchor.getResource("/QALD-master/5/data/qald-5_test.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/5/data/qald-5_test.xml");
 		case QALD5_Train_Hybrid:
 		case QALD5_Train_Multilingual:
-			return loadingAnchor.getResource("/QALD-master/5/data/qald-5_train.xml");
+			return loadingAnchor.getResourceAsStream("/QALD-master/5/data/qald-5_train.xml");
 
 		case QALD6_Train_Hybrid:
-			return loadingAnchor.getResource("/QALD-master/6/data/qald-6-train-hybrid.json");
+			return loadingAnchor.getResourceAsStream("/QALD-master/6/data/qald-6-train-hybrid.json");
 		case QALD6_Train_Multilingual:
-			return loadingAnchor.getResource("/QALD-master/6/data/qald-6-train-multilingual.json");
+			return loadingAnchor.getResourceAsStream("/QALD-master/6/data/qald-6-train-multilingual.json");
 
 		case QALD6_Test_Hybrid:
-			return loadingAnchor.getResource("/QALD-master/6/data/qald-6-test-hybrid.json");
+			return loadingAnchor.getResourceAsStream("/QALD-master/6/data/qald-6-test-hybrid.json");
 		case QALD6_Test_Multilingual:
-			return loadingAnchor.getResource("/QALD-master/6/data/qald-6-test-multilingual.json");
+			return loadingAnchor.getResourceAsStream("/QALD-master/6/data/qald-6-test-multilingual.json");
 
 		case Stanford_dev:
-			return loadingAnchor.getResource("/stanfordqa-dev.json");
+			return loadingAnchor.getResourceAsStream("/stanfordqa-dev.json");
 		case Stanford_train:
-			return loadingAnchor.getResource("/stanfordqa-train.json");
+			return loadingAnchor.getResourceAsStream("/stanfordqa-train.json");
 		// case qbench1:
 		// return
-		// ClassLoader.getSystemClassLoader().getResource("qbench/qbench1.xml");
+		// ClassLoader.getSystemClassLoader().getResourceAsStream("qbench/qbench1.xml");
 		// case qbench2:
 		// return
-		// ClassLoader.getSystemClassLoader().getResource("qbench/qbench2.xml");
+		// ClassLoader.getSystemClassLoader().getResourceAsStream("qbench/qbench2.xml");
 		// case stonetemple:
 		// return
-		// ClassLoader.getSystemClassLoader().getResource("stonetemple/stonetemple");
+		// ClassLoader.getSystemClassLoader().getResourceAsStream("stonetemple/stonetemple");
 		// FIXME datacube und qbench sollte gleich sein?!Konrad Höffner
 		// Fragen
 		// case QALD6_Train_Datacube:
 		// return
-		// ClassLoader.getSystemClassLoader().getResource("QALD-6/qald-6-train-datacube.json");
+		// ClassLoader.getSystemClassLoader().getResourceAsStream("QALD-6/qald-6-train-datacube.json");
 
 		default:
 			break;
@@ -267,9 +261,9 @@ public class LoaderController {
 				is.close();
 				return out;
 			} else {
+				is.close();
 				throw new IOException("InputStream is null");
 			}
-
 		} catch (IOException e) {
 			log.info("Couldnt load dataset ", e);
 		}

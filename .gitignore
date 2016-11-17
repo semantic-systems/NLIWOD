@@ -26,9 +26,11 @@ qa.ml/src/main/resources/qald5train/
 qa.ml/cache
 qa.hawk/src/main/resources/general-en/
 qa.hawk/src/main/resources/hawk.properties
+qa.hawk/Archive.zip
 qa.hawk/*.txt
 qa.hawk/cache/*
 qa.hawk/ranking/*
+qa.hawk/deploy-scripts/data
 qa.hawk/resources/indexAbstract/
 qa.hawk/resources/indexOntology/
 qa.hawk/resources/ontologyClasses/

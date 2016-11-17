@@ -1,7 +1,7 @@
 /**
  * 
  */
-package hawk.experiments;
+package org.aksw.hawk;
 
 import java.io.File;
 import java.util.Collections;

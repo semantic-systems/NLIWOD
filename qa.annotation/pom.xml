@@ -4,32 +4,35 @@
 	<parent>
 		<groupId>org.aksw</groupId>
 		<artifactId>nliwod</artifactId>
-		<version>0.0.3</version>
+		<version>0.0.4</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>annotation</artifactId>
 	<version>${qa-annotation.version}</version>
+	<packaging>jar</packaging>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+				<!-- http://docs.spring.io/spring-boot/docs/current/reference/html/howto-build.html#howto-create-an-additional-executable-jar -->
+					<classifier>exec</classifier>
 					<systemProperties>
 						<JAVA_OPTS>-Xms415m -Xmx16G -XX:MaxPermSize=1G</JAVA_OPTS>
 					</systemProperties>
-					<mainClass>org.aksw.qa.annotation.webservice.index.FrontController</mainClass>
+					<mainClass>org.aksw.qa.annotation.webservice.FrontController</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-	<repositories>
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</repository>
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -38,7 +41,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -50,12 +52,16 @@
 			<artifactId>commons</artifactId>
 			<version>${qa-commons.version}</version>
 		</dependency>
-		<!-- Change this dependency to a maven.aksw.org artifact(and remove JitPack), 
-			once this bug: https://github.com/AKSW/gerbil/issues/150 went into a build -->
 		<dependency>
-			<groupId>com.github.AKSW</groupId>
-			<artifactId>gerbil</artifactId>
-			<version>gerbil.nif.transfer-jena3.1-SNAPSHOT</version>
+			<groupId>org.aksw</groupId>
+			<artifactId>gerbil.nif.transfer</artifactId>
+			<version>1.2.2-jena3.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 </project>

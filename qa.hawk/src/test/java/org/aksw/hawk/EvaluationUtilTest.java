@@ -1,4 +1,4 @@
-package hawk;
+package org.aksw.hawk;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

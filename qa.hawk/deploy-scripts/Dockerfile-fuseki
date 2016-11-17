@@ -1,0 +1,24 @@
+FROM openjdk:8
+
+WORKDIR /tmp
+
+# Config and data
+VOLUME /fuseki
+ENV FUSEKI_BASE /fuseki
+ENV FUSEKI_HOME /jena-fuseki
+
+# Installation folder
+
+RUN wget http://archive.apache.org/dist/jena/binaries/apache-jena-fuseki-2.4.0.zip &&\
+ unzip apache-jena-fuseki-2.4.0.zip&&\
+ rm apache-jena-fuseki-2.4.0.zip&&\
+ mv apache-jena-fuseki-* $FUSEKI_HOME
+
+COPY fuseki_hawk_assembler.ttl /jena-fuseki/fuseki_hawk_assembler.ttl
+COPY shiro.ini /fuseki/shiro.ini
+
+WORKDIR $FUSEKI_HOME
+EXPOSE 3030
+CMD ["java", "-Xmx32G", "-jar", "/jena-fuseki/fuseki-server.jar", "--conf=fuseki_hawk_assembler.ttl", "--timeout=1000000"]
+
+

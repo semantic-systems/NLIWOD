@@ -1,4 +1,4 @@
-package hawk;
+package org.aksw.hawk.ranking;
 
 import org.aksw.hawk.experiment.SingleQuestionPipeline;
 import org.junit.Before;

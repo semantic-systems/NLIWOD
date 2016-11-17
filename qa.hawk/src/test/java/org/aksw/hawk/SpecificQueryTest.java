@@ -1,4 +1,4 @@
-package hawk;
+package org.aksw.hawk;
 
 import java.util.Set;
 
@@ -13,8 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
-
-import infrastructure.ServerChecks;
 
 public class SpecificQueryTest {
 

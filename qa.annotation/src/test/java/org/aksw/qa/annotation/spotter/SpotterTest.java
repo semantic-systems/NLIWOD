@@ -22,7 +22,7 @@ public class SpotterTest {
 	public void emtpyTest() {
 		Set<RDFNode> systemAnswers = new HashSet<>();
 		systemAnswers.add(new ResourceImpl("true"));
-		for (ASpotter m : new ASpotter[] { new Fox(), new Spotlight() }) {
+		for (ASpotter m : new ASpotter[] { new Spotlight() }) {
 			log.info(m.toString());
 			Map<String, List<Entity>> ents = m.getEntities("Where did the first man in space die?");
 			if (!ents.isEmpty()) {
