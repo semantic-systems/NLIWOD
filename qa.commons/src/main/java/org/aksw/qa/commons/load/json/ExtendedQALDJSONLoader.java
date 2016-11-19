@@ -7,9 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -22,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 // TODO rename class and packages
 public final class ExtendedQALDJSONLoader {
-	private static final Logger LOGGER = LogManager.getLogger(ExtendedQALDJSONLoader.class);
+	static Logger LOGGER = LoggerFactory.getLogger(ExtendedQALDJSONLoader.class);
 
 	/**
 	 * Make this class non instatiable.
@@ -57,7 +56,7 @@ public final class ExtendedQALDJSONLoader {
 		try {
 			mapper.writerWithDefaultPrettyPrinter().writeValue(f, o);
 		} catch (IOException e) {
-			LOGGER.debug(Level.ERROR, e);
+			LOGGER.error("", e);
 		}
 		LOGGER.info("File Written to " + f.getAbsolutePath());
 	}
@@ -104,10 +103,10 @@ public final class ExtendedQALDJSONLoader {
 			return readJson(in, type);
 		} catch (FileNotFoundException e) {
 			LOGGER.error("Could not find File :" + f.getAbsolutePath());
-			LOGGER.error(Level.ERROR, e);
+			LOGGER.error("", e);
 
 		} catch (IOException e) {
-			LOGGER.error(Level.ERROR, e);
+			LOGGER.error("", e);
 
 		}
 		return null;

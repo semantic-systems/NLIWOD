@@ -10,12 +10,12 @@ import java.util.Vector;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.datastructure.Question;
 import org.apache.jena.ext.com.google.common.base.Joiner;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class EJQuestionFactory {
 	public static final String SPLIT_KEYWORDS_ON = ",";
-	private static final Logger log = LogManager.getLogger(EJQuestionFactory.class);
+	final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private EJQuestionFactory() {
 
