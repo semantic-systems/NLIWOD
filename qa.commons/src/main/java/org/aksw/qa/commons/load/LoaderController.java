@@ -6,11 +6,8 @@ import java.math.RoundingMode;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -55,7 +52,6 @@ import org.xml.sax.SAXException;
 public class LoaderController {
 	static Logger log = LoggerFactory.getLogger(LoaderController.class);
 
-	
 	private static InputStream getInputStream(final Dataset set) {
 		// Magical get the path from qa-datasets
 
@@ -364,11 +360,11 @@ public class LoaderController {
 
 					NodeList childNodes = element.getChildNodes();
 					Node item = childNodes.item(0);
-					question.setSparqlQuery(item.getNodeValue().trim());					
-					//validate SPARQLQuery
-					try{
+					question.setSparqlQuery(item.getNodeValue().trim());
+					// validate SPARQLQuery
+					try {
 						QueryFactory.create(question.getSparqlQuery());
-					}catch(Exception e){
+					} catch (Exception e) {
 						continue;
 					}
 				}
@@ -386,9 +382,8 @@ public class LoaderController {
 				for (int j = 0; j < answers.getLength(); j++) {
 					NodeList answer = ((Element) answers.item(j)).getElementsByTagName("answer");
 					for (int k = 0; k < answer.getLength(); k++) {
-						
-						
-						switch(question.getAnswerType().toLowerCase()){
+
+						switch (question.getAnswerType().toLowerCase()) {
 						case "boolean":
 							Boolean b = Boolean.valueOf(((Element) answer.item(k)).getTextContent().toLowerCase().trim());
 							set.add(b.toString().trim());
@@ -396,7 +391,7 @@ public class LoaderController {
 						case "date":
 							set.add(DateFormatter.formatDate(((Element) answer.item(k)).getTextContent()).trim());
 							break;
-						default: 
+						default:
 							String answerString = ((Element) answer.item(k)).getTextContent();
 							set.add(answerString.trim());
 						}
@@ -461,20 +456,20 @@ public class LoaderController {
 				String lang = currentJsonObject.getString("lang");
 				String questiion = currentJsonObject.getString("question");
 				String answer = currentJsonObject.getString("answer");
-				//TODO somhow check if answer is boolean or date
+				// TODO somhow check if answer is boolean or date
 				String sparql = currentJsonObject.getString("sparql");
 
 				q.getLanguageToQuestion().put(lang, questiion);
 				q.setSparqlQuery(lang, sparql);
-				
+
 				Set<String> answ = new HashSet<>();
 				answ.add(answer);
 				q.setGoldenAnswers(lang, answ);
 			}
 			// validate SPARQL Query
-			try{
+			try {
 				QueryFactory.create(q.getSparqlQuery());
-			}catch(Exception e){
+			} catch (Exception e) {
 				continue;
 			}
 			output.add(q);
@@ -483,8 +478,6 @@ public class LoaderController {
 		return output;
 	}
 
-
-	
 	// TODO transform to unit test
 	public static void main(final String[] args) throws ParseException {
 		ArrayList<String> output = new ArrayList<>();
