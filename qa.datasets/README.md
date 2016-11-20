@@ -41,6 +41,7 @@ out of scope (?) :
 * https://stanford-qa.com/ 100k+ questions with leaderboard 
 * http://www.aclweb.org/anthology/P/P16/P16-1145.pdf WIKIREADING, largest dataset!
 * http://www.cl.ecei.tohoku.ac.jp/rite2/doku.php?id=wiki:resources only japanese
+* QGSTEC automatic question generation workshop
 
 
 
