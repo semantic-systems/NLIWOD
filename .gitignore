@@ -16,6 +16,7 @@ bin/
 # Project-based exclusions
 **/.clover/
 log.out
+log.out.*
 qa.datasets/src/main/resources/QALD
 qa.datasets/src/main/resources/QALD-master
 qa.datasets/src/main/resources/stanfordqa-dev.json
@@ -38,3 +39,4 @@ qa.hawk/resources/ontologyProperties/
 qa.hawk/resources/qald-4_hybrid_train.xml
 qa.hawk/results.html
 qa.hawk/resources/qald-4_hybrid_train.xml
+qa.annotation/resources/*
