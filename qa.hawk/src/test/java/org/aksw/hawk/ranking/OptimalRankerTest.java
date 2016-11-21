@@ -3,7 +3,7 @@ package org.aksw.hawk.ranking;
 import java.util.List;
 
 import org.aksw.hawk.controller.EvalObj;
-import org.aksw.hawk.controller.PipelineClearNLP;
+import org.aksw.hawk.controller.PipelineStanford;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.experiment.Measures;
@@ -23,7 +23,7 @@ public class OptimalRankerTest {
 	@Ignore
 	public void test() {
 
-		PipelineClearNLP pipeline = new PipelineClearNLP();
+		PipelineStanford pipeline = new PipelineStanford();
 
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", "Which actress starring in the TV series Friends owns the production company Coquette Productions?");
