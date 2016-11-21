@@ -1,13 +1,16 @@
 package org.aksw.hawk.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.hawk.nlp.MutableTree;
+import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.stanford.nlp.ling.CoreLabel;
@@ -66,6 +69,23 @@ public class StanfordNLPConnectorTest {
 		//@formatter:on
 
 		Assert.assertTrue("Wrong tree\n" + tree.toString(), tree.toString().equals(shouldBe));
+	}
+
+	@Ignore
+	@Test
+	public void datasetTest() {
+
+		List<Dataset> allDatasets = Arrays.asList(Dataset.values());
+
+		for (Dataset dataset : allDatasets) {
+			List<IQuestion> questions = LoaderController.load(dataset);
+			for (HAWKQuestion q : HAWKQuestionFactory.createInstances(questions)) {
+				if (q.getLanguageToQuestion().get("en") == null) {
+					continue;
+				}
+				connector.parseTree(q, null);
+			}
+		}
 	}
 
 }
