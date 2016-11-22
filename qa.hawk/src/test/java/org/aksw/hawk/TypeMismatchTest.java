@@ -6,9 +6,9 @@ import java.util.Set;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.pruner.TypeMismatch;
-import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
+import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.junit.Ignore;
 import org.junit.Test;
 

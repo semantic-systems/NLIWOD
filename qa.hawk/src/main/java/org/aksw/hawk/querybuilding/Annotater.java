@@ -12,6 +12,7 @@ import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.util.JSONStatusBuilder;
 import org.aksw.qa.annotation.index.IndexDBO_classes;
 import org.aksw.qa.annotation.index.IndexDBO_properties;
+import org.aksw.qa.commons.sparql.SPARQL;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.ResultSet;
 import org.slf4j.Logger;

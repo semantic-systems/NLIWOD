@@ -1,4 +1,4 @@
-package org.aksw.autosparql.commons.qald;
+package org.aksw.qa.commons.qald;
 
 import java.util.ArrayList;
 import java.util.HashMap;

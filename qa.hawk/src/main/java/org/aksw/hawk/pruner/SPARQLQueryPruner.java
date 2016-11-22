@@ -7,8 +7,8 @@ import javax.xml.ws.http.HTTPException;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.pruner.disjointness.DisjointnessBasedQueryFilter;
-import org.aksw.hawk.querybuilding.SPARQL;
-import org.aksw.hawk.querybuilding.SPARQLQuery;
+import org.aksw.qa.commons.sparql.SPARQL;
+import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;

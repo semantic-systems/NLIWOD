@@ -2,7 +2,7 @@ package org.aksw.hawk.datastructures;
 
 import java.util.Set;
 
-import org.aksw.hawk.querybuilding.SPARQLQuery;
+import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.apache.jena.rdf.model.RDFNode;
 
 //FIXME mach eine ordentliche toString()

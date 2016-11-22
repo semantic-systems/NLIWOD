@@ -12,8 +12,8 @@ import java.util.Set;
 
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.qa.commons.datastructure.IQuestion;
+import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.apache.jena.rdf.model.RDFNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

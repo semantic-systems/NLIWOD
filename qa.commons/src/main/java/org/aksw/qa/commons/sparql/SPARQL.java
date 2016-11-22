@@ -1,12 +1,12 @@
-package org.aksw.hawk.querybuilding;
+package org.aksw.qa.commons.sparql;
 
 import java.util.Set;
 
-import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
 import org.aksw.jena_sparql_api.cache.h2.CacheUtilsH2;
 import org.aksw.jena_sparql_api.core.FluentQueryExecutionFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.qa.commons.qald.QALD4_EvaluationUtils;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.RDFNode;
@@ -63,13 +63,13 @@ public class SPARQL {
 
 	/**
 	 * using the AKSW library for wrapping Jena API
-	 * 
+	 *
 	 */
 	public Set<RDFNode> sparql(final String query) {
 		Set<RDFNode> set = Sets.newHashSet();
 		try {
 			QueryExecution qe = qef.createQueryExecution(query);
-			if (qe != null && query.toString() != null) {
+			if ((qe != null) && (query.toString() != null)) {
 				if (QALD4_EvaluationUtils.isAskType(query)) {
 					set.add(new ResourceImpl(String.valueOf(qe.execAsk())));
 				} else {
@@ -88,15 +88,25 @@ public class SPARQL {
 	// TODO Christian: transform to unit test
 	public static void main(final String args[]) {
 		SPARQL sqb = new SPARQL();
+		// TODO @ricardo from jonathan please take a moment to look at this:
 
+		// TODO In order of generateQueries() to work
+		// you need to set something to
+		// SparqlQuery.textMapFromVariableToCombinedNNExactMatchToken
+		// or to SparqlQuery.textMapFromVariableToSingleFuzzyToken, which are
+		// public Maps
+		// But for a query with a few basic constraints you wouldnt set
+		// something there?! So, only by setting Constraints, generateQueries
+		// will always be empty
 		SPARQLQuery query = new SPARQLQuery();
-		query.addConstraint("?proj a <http://dbpedia.org/ontology/Cleric>.");
+		query.addConstraint("?proj a <http://dbpedia.org/ontology/Person>.");
 		// query.addConstraint("?proj ?p ?const.");
 		// query.addFilter("proj",
 		// Lists.newArrayList("http://dbpedia.org/resource/Pope_John_Paul_I",
 		// "http://dbpedia.org/resource/Pope_John_Paul_II"));
 		// query.addFilter("const",
 		// Lists.newArrayList("http://dbpedia.org/resource/Canale_d'Agordo"));
+
 		for (String q : query.generateQueries()) {
 			Set<RDFNode> set = sqb.sparql(q);
 			for (RDFNode item : set) {

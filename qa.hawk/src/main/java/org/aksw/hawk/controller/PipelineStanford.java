@@ -9,10 +9,10 @@ import org.aksw.hawk.nouncombination.NounCombinationChain;
 import org.aksw.hawk.nouncombination.NounCombiners;
 import org.aksw.hawk.number.UnitController;
 import org.aksw.hawk.querybuilding.Annotater;
-import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
 import org.aksw.qa.annotation.spotter.ASpotter;
 import org.aksw.qa.annotation.spotter.Spotlight;
+import org.aksw.qa.commons.sparql.SPARQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.qa.commons.qald.QALD4_EvaluationUtils;
 import org.apache.jena.rdf.model.RDFNode;
 
 import com.google.common.collect.Maps;

@@ -1,9 +1,9 @@
-package org.aksw.autosparql.commons.qald;
+package org.aksw.qa.commons.qald;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.qa.commons.datastructure.IQuestion;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import com.google.common.collect.Sets.SetView;
 public class QALD4_EvaluationUtils {
 	static Logger log = LoggerFactory.getLogger(QALD4_EvaluationUtils.class);
 
-	public static double precision(final Set<RDFNode> systemAnswer, final HAWKQuestion question) {
+	public static double precision(final Set<RDFNode> systemAnswer, final IQuestion question) {
 		if (systemAnswer == null) {
 			return 0;
 		}
@@ -59,7 +59,7 @@ public class QALD4_EvaluationUtils {
 		return precision;
 	}
 
-	public static double recall(final Set<RDFNode> systemAnswer, final HAWKQuestion question) {
+	public static double recall(final Set<RDFNode> systemAnswer, final IQuestion question) {
 		if (systemAnswer == null) {
 			return 0;
 		}
@@ -101,12 +101,12 @@ public class QALD4_EvaluationUtils {
 		return recall;
 	}
 
-	public static double fMeasure(final Set<RDFNode> systemAnswers, final HAWKQuestion question) {
+	public static double fMeasure(final Set<RDFNode> systemAnswers, final IQuestion question) {
 		double precision = precision(systemAnswers, question);
 		double recall = recall(systemAnswers, question);
 		double fMeasure = 0;
-		if (precision + recall > 0) {
-			fMeasure = 2 * precision * recall / (precision + recall);
+		if ((precision + recall) > 0) {
+			fMeasure = (2 * precision * recall) / (precision + recall);
 		}
 		return fMeasure;
 	}

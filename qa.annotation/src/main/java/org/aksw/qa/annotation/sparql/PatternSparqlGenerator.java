@@ -6,9 +6,6 @@ import java.util.List;
 
 import org.aksw.gerbil.transfer.nif.Document;
 import org.aksw.gerbil.transfer.nif.Marking;
-import org.aksw.gerbil.transfer.nif.data.NamedEntity;
-import org.aksw.gerbil.transfer.nif.data.TypedNamedEntity;
-import org.aksw.gerbil.transfer.nif.data.TypedSpanImpl;
 import org.aksw.qa.annotation.util.NifEverything;
 import org.apache.commons.collections.list.UnmodifiableList;
 
@@ -51,29 +48,31 @@ public class PatternSparqlGenerator {
 		List<String> namedUri = new ArrayList<>();
 
 		for (Marking marking : markings) {
-			if (marking instanceof TypedSpanImpl) {
-				// taclassref
-				TypedSpanImpl typedspan = (TypedSpanImpl) marking;
+			// if (marking instanceof TypedSpanImpl) {
+			// // taclassref
+			// TypedSpanImpl typedspan = (TypedSpanImpl) marking;
+			//
+			// classUri.add(typedspan.getTypes().iterator().next());
+			// }
+			// if (marking instanceof TypedNamedEntity) {
+			// // annotated with TaClassRef AND taIdentRef
+			// TypedNamedEntity typednamed = (TypedNamedEntity) marking;
+			// classUri.add(typednamed.getTypes().iterator().next());
+			//
+			// }
+			// if (marking instanceof NamedEntity) {
+			// // taIdentRef properties
+			// NamedEntity named = (NamedEntity) marking;
+			// String uri = named.getUris().iterator().next();
+			// if (uri.contains("dbpedia.org/resource")) {
+			// namedUri.add(uri);
+			// } else {
+			// propertyUri.add(uri);
+			// }
+			//
+			// }
+			//
 
-				classUri.add(typedspan.getTypes().iterator().next());
-			}
-			if (marking instanceof TypedNamedEntity) {
-				// annotated with TaClassRef AND taIdentRef
-				TypedNamedEntity typednamed = (TypedNamedEntity) marking;
-				classUri.add(typednamed.getTypes().iterator().next());
-
-			}
-			if (marking instanceof NamedEntity) {
-				// taIdentRef properties
-				NamedEntity named = (NamedEntity) marking;
-				String uri = named.getUris().iterator().next();
-				if (uri.contains("dbpedia.org/resource")) {
-					namedUri.add(uri);
-				} else {
-					propertyUri.add(uri);
-				}
-
-			}
 		}
 
 		return generateQuery(classUri, propertyUri, namedUri);
