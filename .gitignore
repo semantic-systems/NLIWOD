@@ -12,6 +12,7 @@ bin/
 
 #IntelliJ
 .idea/*
+*.iml
 
 # Project-based exclusions
 **/.clover/
