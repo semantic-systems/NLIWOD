@@ -11,6 +11,7 @@ in production (adding answers):
 
 to analyze: 
 * GeoQuery, Free917, WebQuestions, SimpleQuestions, GraphQuestions, and QALD
+* http://datasets.maluuba.com/NewsQA
 * https://github.com/ysu1989/GraphQuestions GraphQuestions: compositional questions; multiple paraphrases for each question 
 * http://qallme.fbk.eu/index.php?location=benchmark
 * http://agarciaduran.org/ 30M questions to freebase
