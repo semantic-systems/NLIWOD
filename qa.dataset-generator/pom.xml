@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.aksw</groupId>
+		<artifactId>nliwod</artifactId>
+		<version>0.0.4</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<groupId>org.aksw.qa</groupId>
+	<artifactId>dataset-generator</artifactId>
+	<version>${qa-dataset-generator.version}</version>
+	<name>Question Answering (QA) dataset generators</name>
+	<description>Question Answering (QA) dataset generators to generate new structured QA datasets out of existing NL-only datasets</description>
+
+
+	<dependencies>
+		<!-- QA commons -->
+		<dependency>
+			<groupId>org.aksw.qa</groupId>
+			<artifactId>commons</artifactId>
+			<version>${qa-commons.version}</version>
+		</dependency>
+
+		<!-- QA datasets provided by github.com/aksw/qa-datasets -->
+		<dependency>
+			<groupId>org.aksw.qa</groupId>
+			<artifactId>datasets</artifactId>
+			<version>${qa-datasets.version}</version>
+		</dependency>
+
+		<!-- DL-Learner used for LGG -->
+		<dependency>
+			<groupId>org.dllearner</groupId>
+			<artifactId>components-core</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+	</dependencies>
+</project>

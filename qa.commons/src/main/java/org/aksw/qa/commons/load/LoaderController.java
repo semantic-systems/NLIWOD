@@ -435,7 +435,9 @@ public class LoaderController {
 							idToQuestion.put(id, jArray);
 						}
 					} catch (NumberFormatException e) {
-						log.debug("Couldnt load question from dataset due to wrong or missing question-id", e);
+						log.debug("Couldn't load question \"" +
+										  ((JsonObject) currentJsonValue).getString("question") +
+										  "\" from dataset due to wrong or missing question ID", e);
 					}
 				}
 
@@ -488,7 +490,7 @@ public class LoaderController {
 			if (questions == null) {
 				System.out.println("Dataset null" + data.toString());
 			} else if (questions.size() == 0) {
-				System.out.println("Dataset Empty" + data.toString());
+				System.out.println("Dataset empty" + data.toString());
 			} else {
 				Set<IQuestion> noanswers = new HashSet<>();
 				Set<IQuestion> nosparql = new HashSet<>();
@@ -505,7 +507,7 @@ public class LoaderController {
 				DecimalFormat df = new DecimalFormat("###.##");
 				df.setRoundingMode(RoundingMode.CEILING);
 				if (!noanswers.isEmpty()) {
-					output.add(((df.format(((double) noanswers.size() / questions.size()) * 100)) + "%") + " Missing answes on  : " + data.toString() + ", " + noanswers.size() + " Question(s).");
+					output.add(((df.format(((double) noanswers.size() / questions.size()) * 100)) + "%") + " Missing answers on  : " + data.toString() + ", " + noanswers.size() + " Question(s).");
 				}
 
 				if (!nosparql.isEmpty()) {
