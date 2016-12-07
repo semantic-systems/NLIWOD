@@ -17,9 +17,11 @@ public class SystemsTest {
         List<ASystem> systems = Arrays.asList(
 //                (ASystem) new HAWK(), 
 //                (ASystem) new QAKIS(),
-                (ASystem) new SINA()
+                (ASystem) new SINA(),
 //                (ASystem) new START(), 
-//                (ASystem) new YODA()
+//                (ASystem) new YODA(),
+                (ASystem) new OKBQA(),
+                (ASystem) new QANARY()
                 );
         for (ASystem system : systems) {
             IQuestion question = system.search(questionString);
