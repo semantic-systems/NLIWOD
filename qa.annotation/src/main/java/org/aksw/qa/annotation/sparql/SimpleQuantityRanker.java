@@ -45,15 +45,51 @@ public class SimpleQuantityRanker {
 
 	private String constructQuery(final String uri) {
 
-		Character character = uri.charAt(DBPEDIA_ONTO_URI.length());
-
-		if (Character.isLowerCase(character)) {
+		if (disambiguateOntologyIsProperty(uri)) {
 			// lowercase start so property in dbpedia
 			return "SELECT(count(*) AS ?proj)  {?x <" + uri + "> ?y . }";
-		} else {
+		}
+		if (disambiguateOntologyIsClass(uri)) {
 			// uppercase so class in dbpedia
 			return "SELECT (count(*) AS ?proj) {?x a  <" + uri + "> .  }";
 		}
+		return null;
+	}
+
+	/**
+	 * Checks if String is a property. Checks if string begins with:
+	 * "http://dbpedia.org/ontology/" , if following character is lowercase, its
+	 * a property. Only works for dbpedia.
+	 *
+	 * @param uri String to check.
+	 * @return true if string is a property within dbpedia.
+	 */
+	public boolean disambiguateOntologyIsProperty(final String uri) {
+		Character character = uri.charAt(DBPEDIA_ONTO_URI.length());
+
+		if (uri.startsWith(DBPEDIA_ONTO_URI) && Character.isLowerCase(character)) {
+			// lowercase start so property in dbpedia
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if String is a class. Checks if string begins with:
+	 * "http://dbpedia.org/ontology/" , if following character is uppercase, its
+	 * a class. Only works for dbpedia.
+	 *
+	 * @param uri String to check.
+	 * @return true if string is a property within dbpedia.
+	 */
+	public boolean disambiguateOntologyIsClass(final String uri) {
+		Character character = uri.charAt(DBPEDIA_ONTO_URI.length());
+
+		if (uri.startsWith(DBPEDIA_ONTO_URI) && Character.isUpperCase(character)) {
+			// uppercase so class in dbpedia
+			return true;
+		}
+		return false;
 	}
 
 }

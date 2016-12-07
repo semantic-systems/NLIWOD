@@ -6,8 +6,10 @@ import java.util.List;
 
 import org.aksw.gerbil.transfer.nif.Document;
 import org.aksw.gerbil.transfer.nif.Marking;
+import org.aksw.gerbil.transfer.nif.data.NamedEntity;
+import org.aksw.gerbil.transfer.nif.data.TypedNamedEntity;
+import org.aksw.gerbil.transfer.nif.data.TypedSpanImpl;
 import org.aksw.qa.annotation.util.NifEverything;
-import org.apache.commons.collections.list.UnmodifiableList;
 
 public class PatternSparqlGenerator {
 
@@ -16,6 +18,7 @@ public class PatternSparqlGenerator {
 	private static PatternSparqlGenerator instance;
 	private Integer limit = null;
 	private NifEverything nif = NifEverything.getInstance();
+	private SimpleQuantityRanker ranker = new SimpleQuantityRanker();
 
 	private List<String> classes;
 	private List<String> properties;
@@ -25,9 +28,7 @@ public class PatternSparqlGenerator {
 	private final static String PROPERTY_PREFIX = "dbo:";
 	private final static String NAMED_ENTITY_PREFIX = "dbr:";
 	private final static String URI_START_PREFIX = "http://dbpedia.org/";
-
 	private final static String PROJ = " ?proj ";
-
 	private final static String PROJ2 = " ?proj2 ";
 
 	private PatternSparqlGenerator() {
@@ -48,30 +49,47 @@ public class PatternSparqlGenerator {
 		List<String> namedUri = new ArrayList<>();
 
 		for (Marking marking : markings) {
-			// if (marking instanceof TypedSpanImpl) {
-			// // taclassref
-			// TypedSpanImpl typedspan = (TypedSpanImpl) marking;
-			//
-			// classUri.add(typedspan.getTypes().iterator().next());
-			// }
-			// if (marking instanceof TypedNamedEntity) {
-			// // annotated with TaClassRef AND taIdentRef
-			// TypedNamedEntity typednamed = (TypedNamedEntity) marking;
-			// classUri.add(typednamed.getTypes().iterator().next());
-			//
-			// }
-			// if (marking instanceof NamedEntity) {
-			// // taIdentRef properties
-			// NamedEntity named = (NamedEntity) marking;
-			// String uri = named.getUris().iterator().next();
-			// if (uri.contains("dbpedia.org/resource")) {
-			// namedUri.add(uri);
-			// } else {
-			// propertyUri.add(uri);
-			// }
-			//
-			// }
-			//
+			if (marking instanceof TypedSpanImpl) {
+				// taclassref
+
+				classUri.add(ranker.rank(((TypedSpanImpl) marking).getTypes()));
+			} else if (marking instanceof TypedNamedEntity) {
+				// annotated with TaClassRef AND taIdentRef
+
+				TypedNamedEntity typednamed = (TypedNamedEntity) marking;
+				boolean foundNamed = false;
+				for (String uri : typednamed.getUris()) {
+					if (uri.contains("dbpedia.org/resource")) {
+						namedUri.add(uri);
+						foundNamed = true;
+						break;
+					}
+				}
+				if (!foundNamed) {
+					List<String> uris = new ArrayList<>();
+					uris.addAll(typednamed.getUris());
+					uris.addAll(typednamed.getTypes());
+					String ranked = ranker.rank(uris);
+					if (ranker.disambiguateOntologyIsProperty(ranked)) {
+						propertyUri.add(ranked);
+					} else {
+						classUri.add(ranked);
+					}
+				}
+
+				classUri.add(typednamed.getTypes().iterator().next());
+
+			} else if (marking instanceof NamedEntity) {
+				// taIdentRef properties
+				NamedEntity named = (NamedEntity) marking;
+				String uri = named.getUris().iterator().next();
+				if (uri.contains("dbpedia.org/resource")) {
+					namedUri.add(uri);
+				} else {
+					propertyUri.add(uri);
+				}
+
+			}
 
 		}
 
@@ -229,10 +247,9 @@ public class PatternSparqlGenerator {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	private <T> List<T> emptyIfNull(final List<T> coll) {
 		if (coll == null) {
-			return UnmodifiableList.decorate(new ArrayList<T>());
+			return new ArrayList<>();
 		}
 		return coll;
 	}
@@ -352,39 +369,68 @@ public class PatternSparqlGenerator {
 		}
 	}
 
-	public static void main(final String[] args) {
-		PatternSparqlGenerator gen = PatternSparqlGenerator.getInstance();
-		List<String> cStr = new ArrayList<>(Arrays.asList("class1", "class2", "dummy"));
-		List<String> pStr = new ArrayList<>(Arrays.asList("property1", "property2", "dummy"));
-		List<String> nStr = new ArrayList<>(Arrays.asList("namedEntity1", "namedEntity2", "dummy"));
-
-		List<String> classes = new ArrayList<>();
-		List<String> properties = new ArrayList<>();
-		List<String> namedEntities = new ArrayList<>();
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				for (int k = 0; k < 3; k++) {
-					System.out.println("constructing for " + i + "Classes, " + j + " properties, " + k + " namedEntitites");
-					System.out.println();
-					System.out.println(gen.generateQuery(classes, properties, namedEntities));
-					System.out.println("\r\n");
-
-					namedEntities.add(nStr.get(0));
-					nStr.remove(0);
-				}
-				nStr.addAll(namedEntities);
-				namedEntities.clear();
-
-				properties.add(pStr.get(0));
-				pStr.remove(0);
-			}
-			pStr.addAll(properties);
-			properties.clear();
-
-			classes.add(cStr.get(0));
-			cStr.remove(0);
-		}
-
-	}
+	// public static void main(final String[] args) {
+	// PatternSparqlGenerator gen = PatternSparqlGenerator.getInstance();
+	// List<String> cStr = new ArrayList<>(Arrays.asList("class1", "class2",
+	// "dummy"));
+	// List<String> pStr = new ArrayList<>(Arrays.asList("property1",
+	// "property2", "dummy"));
+	// List<String> nStr = new ArrayList<>(Arrays.asList("namedEntity1",
+	// "namedEntity2", "dummy"));
+	//
+	// List<String> classes = new ArrayList<>();
+	// List<String> properties = new ArrayList<>();
+	// List<String> namedEntities = new ArrayList<>();
+	// for (int i = 0; i < 3; i++) {
+	// for (int j = 0; j < 3; j++) {
+	// for (int k = 0; k < 3; k++) {
+	// System.out.println("constructing for " + i + "Classes, " + j + "
+	// properties, " + k + " namedEntitites");
+	// System.out.println();
+	// System.out.println(gen.generateQuery(classes, properties,
+	// namedEntities));
+	// System.out.println("\r\n");
+	//
+	// namedEntities.add(nStr.get(0));
+	// nStr.remove(0);
+	// }
+	// nStr.addAll(namedEntities);
+	// namedEntities.clear();
+	//
+	// properties.add(pStr.get(0));
+	// pStr.remove(0);
+	// }
+	// pStr.addAll(properties);
+	// properties.clear();
+	//
+	// classes.add(cStr.get(0));
+	// cStr.remove(0);
+	// }
+	//
+	// }
+	// public static void main(final String[] args) {
+	// List<IQuestion> questions =
+	// LoaderController.load(Dataset.QALD6_Train_Multilingual);
+	// IndexDBO_classes classIndex = new IndexDBO_classes();
+	// IndexDBO_properties propertyindex = new IndexDBO_properties();
+	// NifEverything nif = NifEverything.getInstance();
+	// Spotlight spotlight = new Spotlight();
+	// for (IQuestion question : questions) {
+	// String q = question.getLanguageToQuestion().get("en");
+	// System.out.println("classesSearch");
+	// String classNif = nif.createNIFResultFromIndexDBO(q, classIndex,
+	// NifProperty.TACLASSREF);
+	// System.out.println("PropertySearch");
+	// String propNif = nif.appendNIFResultFromIndexDBO(classNif, propertyindex,
+	// NifProperty.TAIDENTREF);
+	// System.out.println("Spotlight");
+	// String nerNif = nif.appendNIFResultFromSpotters(propNif, spotlight);
+	//
+	// System.out.println("Ranking and generation");
+	// System.out.println(new PatternSparqlGenerator().nifStrigToQuery(nerNif));
+	//
+	// }
+	//
+	// }
 
 }
