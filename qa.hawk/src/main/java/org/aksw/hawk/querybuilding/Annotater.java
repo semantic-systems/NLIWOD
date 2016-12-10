@@ -54,7 +54,7 @@ public class Annotater {
 	 * thus two lexical entries are built { one containing a semantic
 	 * representation with a class slot and one containing a semantic
 	 * representation with a property slot." citation by Unger et al. tbsl
-	 * 
+	 *
 	 */
 	private void annotateNouns(final MutableTree tree) {
 		Stack<MutableTreeNode> stack = new Stack<>();
@@ -66,7 +66,7 @@ public class Annotater {
 			if (!blacklist.contains(label)) {
 
 				if (posTag.matches("NN(.)*") && tmp.getAnnotations().isEmpty()) {
-					ArrayList<String> search = classesIndex.search(label);
+					List<String> search = classesIndex.search(label);
 					if (!search.isEmpty()) {
 						for (String uri : search) {
 							tmp.addAnnotation(uri);
@@ -118,7 +118,7 @@ public class Annotater {
 	 * built, that does not contain a property slot corresponding to the verb
 	 * but assumes that the property slot is contributed by a noun (inhabitants
 	 * in this case)." citation by Unger et al. tbsl
-	 * 
+	 *
 	 */
 	private void annotateVerbs(final MutableTree tree) {
 		Stack<MutableTreeNode> stack = new Stack<>();
@@ -129,7 +129,7 @@ public class Annotater {
 			String posTag = tmp.posTag;
 			if (posTag.matches("VB(.)*")) {
 				List<String> search = propertiesIndex.search(label);
-				if (search.isEmpty() && tmp.lemma != null) {
+				if (search.isEmpty() && (tmp.lemma != null)) {
 					search = propertiesIndex.search(tmp.lemma);
 				} else if (search.isEmpty()) {
 					search = dboIndex.search(label);
@@ -163,7 +163,7 @@ public class Annotater {
 						int predicateCount = results.next().get(".1").asLiteral().getInt();
 						log.debug(predicate + "\t" + predicateCount);
 						// TODO hack because of date properties
-						if (predicateCount > maxNum && !(predicate.contains("Year") || predicate.contains("Date"))) {
+						if ((predicateCount > maxNum) && !(predicate.contains("Year") || predicate.contains("Date"))) {
 							maxNum = predicateCount;
 							maxPred = predicate;
 						}
@@ -181,11 +181,11 @@ public class Annotater {
 	/**
 	 * this method annotates the left-most child of the root and uses the inline
 	 * commented heuristics to annotate the tree
-	 * 
+	 *
 	 */
 	private void annotateProjectionLeftTree(final MutableTree tree) {
 		Stack<MutableTreeNode> stack = new Stack<>();
-		if (tree.getRoot() != null && tree.getRoot().getChildren() != null && !tree.getRoot().getChildren().isEmpty()) {
+		if ((tree.getRoot() != null) && (tree.getRoot().getChildren() != null) && !tree.getRoot().getChildren().isEmpty()) {
 			stack.push(tree.getRoot().getChildren().get(0));
 
 			while (!stack.isEmpty()) {
@@ -209,11 +209,12 @@ public class Annotater {
 								// TODO improve lemmatization. e.g.,
 								// birds->bird, by using a new NLP library,
 								// write tests for the different libraries
-								if (tmp.lemma != null)
+								if (tmp.lemma != null) {
 									label = tmp.lemma;
+								}
 							}
 							if (classesIndex.search(label).size() > 0) {
-								ArrayList<String> uris = classesIndex.search(label);
+								List<String> uris = classesIndex.search(label);
 								for (String resourceURL : uris) {
 									tmp.addAnnotation(resourceURL);
 								}
@@ -233,11 +234,12 @@ public class Annotater {
 							if (posTag.matches("NNS")) {
 								// TODO improve lemmatization. e.g.,
 								// birds->bird, buildings -> building
-								if (tmp.lemma != null)
+								if (tmp.lemma != null) {
 									label = tmp.lemma;
+								}
 							}
-							if (classesIndex.search(label).size() > 0 || propertiesIndex.search(label).size() > 0) {
-								ArrayList<String> uris = classesIndex.search(label);
+							if ((classesIndex.search(label).size() > 0) || (propertiesIndex.search(label).size() > 0)) {
+								List<String> uris = classesIndex.search(label);
 								for (String resourceURL : uris) {
 									tmp.addAnnotation(resourceURL);
 								}
