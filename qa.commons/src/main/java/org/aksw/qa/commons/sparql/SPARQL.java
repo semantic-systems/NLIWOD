@@ -1,6 +1,8 @@
 package org.aksw.qa.commons.sparql;
 
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
 import org.aksw.jena_sparql_api.cache.h2.CacheUtilsH2;
@@ -57,7 +59,6 @@ public class SPARQL {
 			// qef = new QueryExecutionFactoryPaginated(qef, 10000);
 		} catch (RuntimeException e) {
 			log.error("Could not create SPARQL interface! ", e);
-			System.exit(0);
 		}
 	}
 
@@ -67,6 +68,7 @@ public class SPARQL {
 	 */
 	public Set<RDFNode> sparql(final String query) {
 		Set<RDFNode> set = Sets.newHashSet();
+
 		try {
 			QueryExecution qe = qef.createQueryExecution(query);
 			if ((qe != null) && (query.toString() != null)) {
@@ -75,14 +77,34 @@ public class SPARQL {
 				} else {
 					ResultSet results = qe.execSelect();
 					while (results.hasNext()) {
-						set.add(results.next().get("proj"));
+						RDFNode node = results.next().get(extractFirstVarname(query));
+						/**
+						 * Instead of returning a set with size 1 and value
+						 * (null) in it, when no answers are found, this ensures
+						 * that Set is empty
+						 */
+						if (node != null) {
+							set.add(node);
+						}
 					}
 				}
+				qe.close();
 			}
 		} catch (Exception e) {
 			log.error(query.toString(), e);
+
 		}
 		return set;
+	}
+
+	/**
+	 * Searching varname. For this, find first occurrence of "?" and extract
+	 * what comes after that and before next whitespace
+	 */
+	public String extractFirstVarname(final String sparqlQuery) {
+		Pattern pattern = Pattern.compile(".+?\\?(\\w+).+", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+		Matcher m = pattern.matcher(sparqlQuery);
+		return m.replaceAll("$1");
 	}
 
 	// TODO Christian: transform to unit test

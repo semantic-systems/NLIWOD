@@ -389,8 +389,15 @@ public class LoaderController {
 							set.add(DateFormatter.formatDate(((Element) answer.item(k)).getTextContent()).trim());
 							break;
 						default:
+
 							String answerString = ((Element) answer.item(k)).getTextContent();
-							set.add(answerString.trim());
+							/**
+							 * QALD1 questions have in answerSets "uri" and
+							 * "string" nodes, and returned string contains
+							 * both. This is a quick workaround
+							 */
+							String x = Arrays.asList(answerString.trim().split("\n")).get(0);
+							set.add(x);
 						}
 
 					}
@@ -435,9 +442,7 @@ public class LoaderController {
 							idToQuestion.put(id, jArray);
 						}
 					} catch (NumberFormatException e) {
-						log.debug("Couldn't load question \"" +
-										  ((JsonObject) currentJsonValue).getString("question") +
-										  "\" from dataset due to wrong or missing question ID", e);
+						log.debug("Couldn't load question \"" + ((JsonObject) currentJsonValue).getString("question") + "\" from dataset due to wrong or missing question ID", e);
 					}
 				}
 
