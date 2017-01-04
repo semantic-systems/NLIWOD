@@ -26,8 +26,12 @@ public class ThreadedSPARQL {
 		sparql = new SPARQL();
 	}
 
-	public ThreadedSPARQL(final int timeoutInSeconds) {
-		sparql = new SPARQL();
+	public ThreadedSPARQL(final int timeoutInSeconds, final String endpoint) {
+		if ((endpoint == null) || endpoint.isEmpty()) {
+			sparql = new SPARQL();
+		} else {
+			sparql = new SPARQL(endpoint);
+		}
 		this.timeoutInSeconds = timeoutInSeconds;
 	}
 
@@ -80,7 +84,7 @@ public class ThreadedSPARQL {
 		String query = "PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT ?uri ?string WHERE {         ?uri rdf:type dbo:FormulaOneRacer . 	?uri dbo:races ?x .         OPTIONAL { ?uri rdfs:label ?string. FILTER (lang(?string) = 'en') } } ORDER BY DESC(?x) OFFSET 0 LIMIT 1";
 		// System.out.println(new
 		// ThreadedSPARQL().sparql(LoaderController.load(Dataset.QALD6_Test_Multilingual).get(0).getSparqlQuery()).toString());
-		System.out.println(new ThreadedSPARQL().sparql(query));
+		System.out.println(new ThreadedSPARQL(90, SPARQL.ENDPOINT_DBPEIDA_ORG).sparql(query));
 		System.out.println("system exit");
 	}
 }

@@ -18,6 +18,7 @@ import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.datastructure.Question;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
+import org.aksw.qa.commons.sparql.SPARQL;
 import org.aksw.qa.commons.sparql.ThreadedSPARQL;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jena.query.Query;
@@ -25,19 +26,23 @@ import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QueryParseException;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.shared.PrefixMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.ImmutableSet;
 
 public class Qald7CreationTool {
 	private final static String DBO_URI = "http://dbpedia.org/ontology/";
 	private final static String RES_URI = "http://dbpedia.org/resource/";
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 	/**
 	 * QALD2_dbpedia is missing due to missing answers in file.
 	 */
 
 	private Set<Dataset> testSets = ImmutableSet.of(Dataset.QALD1_Test_dbpedia, Dataset.QALD3_Test_dbpedia, Dataset.QALD4_Test_Multilingual, Dataset.QALD5_Test_Multilingual,
-	        Dataset.QALD6_Test_Multilingual);
-	private ThreadedSPARQL sparql = new ThreadedSPARQL(90);
+	        Dataset.QALD6_Test_Multilingual, Dataset.QALD1_Train_dbpedia, Dataset.QALD2_Train_dbpedia, Dataset.QALD3_Train_dbpedia, Dataset.QALD4_Train_Multilingual, Dataset.QALD4_Train_Multilingual,
+	        Dataset.QALD5_Train_Multilingual, Dataset.QALD6_Train_Multilingual);
+	private ThreadedSPARQL sparql = new ThreadedSPARQL(90, SPARQL.ENDPOINT_DBPEIDA_ORG);
 	int badQuestionCounter = 0;
 
 	public List<IQuestion> getMultilingualTest() {
@@ -171,10 +176,13 @@ public class Qald7CreationTool {
 		Map<IQuestion, Set<Fail>> questionToFail = new HashMap<>();
 		StringBuilder out = new StringBuilder();
 		int questionCount = 0;
+		int questionIterator = 1;
 		for (Dataset dataset : datasets) {
 			List<IQuestion> questions = LoaderController.load(dataset);
 			questionCount += questions.size();
 			for (IQuestion question : questions) {
+				log.debug("Processing Question " + questionIterator++ + "/" + questionCount);
+
 				((Question) question).setFromDataset(dataset);
 				/**
 				 * Checking flags
@@ -235,6 +243,7 @@ public class Qald7CreationTool {
 					out.append("|  Question Dataset: " + ((Question) question).getFromDataset().name() + " Id: " + question.getId() + n);
 					out.append(line("|  Flags: " + questionToFail.get(question).toString() + n));
 					if (appendAnswerSets && (!inDatasetNotinServer.isEmpty() || !inServerNotinDataset.isEmpty())) {
+						out.append("| Question: " + question.getLanguageToQuestion().get("en") + n);
 						out.append("| Sparql Query:" + n);
 						out.append("| " + question.getSparqlQuery().replaceAll("\\s", " ") + n);
 						out.append("| Answers in dataset and not in Server response" + n);
@@ -340,9 +349,10 @@ public class Qald7CreationTool {
 		// HashSet<>(Arrays.asList(Dataset.QALD3_Test_dbpedia)),
 		// "C:/output/QuestionsWithWrongAnswers.txt");
 		boolean appendAnswerSets = true;
-		boolean skipQuestionsWithTooFewLanguages = true;
-		tool.createFileReport(tool.testSets, "C:/output/QuestionsWithWrongAnswers.txt", appendAnswerSets, skipQuestionsWithTooFewLanguages);
+		boolean skipQuestionsWithInsufficientLanguages = true;
+		tool.createFileReport(tool.testSets, "C:/output/QuestionsWithWrongAnswers.txt", appendAnswerSets, skipQuestionsWithInsufficientLanguages);
 		tool.sparql.destroy();
+		System.out.println("Done");
 	}
 
 }
