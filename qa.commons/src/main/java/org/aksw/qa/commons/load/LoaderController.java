@@ -38,6 +38,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.google.common.base.Strings;
+
 /**
  *
  * Loads both QALD XML and JSON
@@ -147,6 +149,11 @@ public class LoaderController {
 		case QALD6_Test_Multilingual:
 			return loadingAnchor.getResourceAsStream("/QALD-master/6/data/qald-6-test-multilingual.json");
 
+		case QALD7_Train_Hybrid:
+			return loadingAnchor.getResourceAsStream("/QALD-master/7/qald-7-train-hybrid.json");
+		case QALD7_Train_Multilingual:
+			return loadingAnchor.getResourceAsStream("/QALD-master/7/qald-7-train-multilingual.json");
+
 		case Stanford_dev:
 			return loadingAnchor.getResourceAsStream("/stanfordqa-dev.json");
 		case Stanford_train:
@@ -244,6 +251,8 @@ public class LoaderController {
 				case QALD6_Test_Multilingual:
 				case QALD6_Train_Hybrid:
 				case QALD6_Train_Multilingual:
+				case QALD7_Train_Hybrid:
+				case QALD7_Train_Multilingual:
 
 					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(getInputStream(data), QaldJson.class);
 					out = EJQuestionFactory.getQuestionsFromQaldJson(json);
@@ -331,6 +340,13 @@ public class LoaderController {
 				NodeList nlrs = questionNode.getElementsByTagName("string");
 				for (int j = 0; j < nlrs.getLength(); j++) {
 					String lang = ((Element) nlrs.item(j)).getAttribute("lang");
+					/**
+					 * Workaround for QALD1 Datasets
+					 */
+					if (Strings.isNullOrEmpty(lang)) {
+						question.getLanguageToQuestion().put("en", ((Element) nlrs.item(j)).getTextContent().trim());
+						break;
+					}
 					question.getLanguageToQuestion().put(lang, ((Element) nlrs.item(j)).getTextContent().trim());
 				}
 
@@ -389,8 +405,15 @@ public class LoaderController {
 							set.add(DateFormatter.formatDate(((Element) answer.item(k)).getTextContent()).trim());
 							break;
 						default:
+
 							String answerString = ((Element) answer.item(k)).getTextContent();
-							set.add(answerString.trim());
+							/**
+							 * QALD1 questions have in answerSets "uri" and
+							 * "string" nodes, and returned string contains
+							 * both. This is a quick workaround
+							 */
+							String x = Arrays.asList(answerString.trim().split("\n")).get(0);
+							set.add(x);
 						}
 
 					}
@@ -435,9 +458,7 @@ public class LoaderController {
 							idToQuestion.put(id, jArray);
 						}
 					} catch (NumberFormatException e) {
-						log.debug("Couldn't load question \"" +
-										  ((JsonObject) currentJsonValue).getString("question") +
-										  "\" from dataset due to wrong or missing question ID", e);
+						log.debug("Couldn't load question \"" + ((JsonObject) currentJsonValue).getString("question") + "\" from dataset due to wrong or missing question ID", e);
 					}
 				}
 
@@ -477,7 +498,7 @@ public class LoaderController {
 		return output;
 	}
 
-	// TODO transform to unit test
+	// // TODO transform to unit test
 	public static void main(final String[] args) throws ParseException {
 		ArrayList<String> output = new ArrayList<>();
 		ArrayList<String> output2 = new ArrayList<>();
@@ -507,12 +528,12 @@ public class LoaderController {
 				DecimalFormat df = new DecimalFormat("###.##");
 				df.setRoundingMode(RoundingMode.CEILING);
 				if (!noanswers.isEmpty()) {
-					output.add(((df.format(((double) noanswers.size() / questions.size()) * 100)) + "%") + " Missing answers on  : " + data.toString() + ", " + noanswers.size() + " Question(s).");
+					output.add(((df.format(((double) noanswers.size() / questions.size()) * 100)) + "%") + " Missing answers on : " + data.toString() + ", " + noanswers.size() + " Question(s).");
 				}
 
 				if (!nosparql.isEmpty()) {
 					output2.add(
-					        (df.format((((double) nosparql.size() / questions.size()) * 100)) + "%") + " Neither Sparql nor Pseudo  : " + data.toString() + ", " + nosparql.size() + " Question(s).");
+					        (df.format((((double) nosparql.size() / questions.size()) * 100)) + "%") + " Neither Sparql nor Pseudo : " + data.toString() + ", " + nosparql.size() + " Question(s).");
 				}
 
 				System.out.println("Loaded successfully: " + data.toString());

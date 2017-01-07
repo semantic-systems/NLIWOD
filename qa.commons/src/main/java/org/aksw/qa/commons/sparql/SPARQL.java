@@ -1,6 +1,8 @@
 package org.aksw.qa.commons.sparql;
 
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
 import org.aksw.jena_sparql_api.cache.h2.CacheUtilsH2;
@@ -19,10 +21,13 @@ import com.google.common.collect.Sets;
 public class SPARQL {
 	Logger log = LoggerFactory.getLogger(SPARQL.class);
 	public QueryExecutionFactory qef;
+	public static final String ENDPOINT_TITAN = "http://139.18.2.164:3030/ds/sparql";
+	public static final String ENDPOINT_DBPEIDA_ORG = "http://dbpedia.org/sparql";
+	private long timeToLive = 360l * 24l * 60l * 60l * 1000l;
 
 	public SPARQL() {
 		try {
-			long timeToLive = 360l * 24l * 60l * 60l * 1000l;
+
 			// CacheBackend cacheBackend = CacheCoreH2.create("./sparql",
 			// timeToLive, true);
 			// CacheFrontend cacheFrontend = new
@@ -35,7 +40,7 @@ public class SPARQL {
 			// "http://dbpedia.org/");
 			// qef = new
 			// QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
-			qef = FluentQueryExecutionFactory.http("http://139.18.2.164:3030/ds/sparql").config().withCache(cacheFrontend).end().create();
+			qef = FluentQueryExecutionFactory.http(ENDPOINT_TITAN).config().withCache(cacheFrontend).end().create();
 
 			// qef = new
 			// QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
@@ -57,7 +62,15 @@ public class SPARQL {
 			// qef = new QueryExecutionFactoryPaginated(qef, 10000);
 		} catch (RuntimeException e) {
 			log.error("Could not create SPARQL interface! ", e);
-			System.exit(0);
+		}
+	}
+
+	public SPARQL(final String endpoint) {
+		try {
+			CacheFrontend cacheFrontend = CacheUtilsH2.createCacheFrontend("./sparql", true, timeToLive);
+			qef = FluentQueryExecutionFactory.http(endpoint).config().withCache(cacheFrontend).end().create();
+		} catch (RuntimeException e) {
+			log.error("Could not create SPARQL interface! ", e);
 		}
 	}
 
@@ -67,6 +80,7 @@ public class SPARQL {
 	 */
 	public Set<RDFNode> sparql(final String query) {
 		Set<RDFNode> set = Sets.newHashSet();
+
 		try {
 			QueryExecution qe = qef.createQueryExecution(query);
 			if ((qe != null) && (query.toString() != null)) {
@@ -75,14 +89,42 @@ public class SPARQL {
 				} else {
 					ResultSet results = qe.execSelect();
 					while (results.hasNext()) {
-						set.add(results.next().get("proj"));
+						RDFNode node = results.next().get(extractFirstVarname(query));
+						/**
+						 * Instead of returning a set with size 1 and value
+						 * (null) in it, when no answers are found, this ensures
+						 * that Set is empty
+						 */
+						if (node != null) {
+							set.add(node);
+						}
 					}
 				}
+				qe.close();
 			}
 		} catch (Exception e) {
 			log.error(query.toString(), e);
+
 		}
 		return set;
+	}
+
+	/**
+	 * Searching varname. For this, find first occurrence of "?" and extract
+	 * what comes after that and before next whitespace
+	 */
+	public String extractFirstVarname(final String sparqlQuery) {
+		Pattern pattern = Pattern.compile(".+?\\?(\\w+).+", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+		Matcher m = pattern.matcher(sparqlQuery);
+		return m.replaceAll("$1");
+	}
+
+	public long getTimeToLive() {
+		return timeToLive;
+	}
+
+	public void setTimeToLive(final long timeToLive) {
+		this.timeToLive = timeToLive;
 	}
 
 	// TODO Christian: transform to unit test

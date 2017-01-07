@@ -13,6 +13,8 @@ import org.apache.jena.ext.com.google.common.base.Joiner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Strings;
+
 public final class EJQuestionFactory {
 	public static final String SPLIT_KEYWORDS_ON = ",";
 	final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -58,15 +60,21 @@ public final class EJQuestionFactory {
 
 		for (IQuestion question : questions) {
 			EJQuestionEntry entry = new EJQuestionEntry();
-			ex.addQuestions(entry);
-			entry.getQuestion().setAnswertype(question.getAnswerType());
-
-			entry.getQuestion().setId(question.getId());
+			if (!Strings.isNullOrEmpty(question.getAnswerType())) {
+				entry.getQuestion().setAnswertype(question.getAnswerType());
+			}
+			if (!Strings.isNullOrEmpty(question.getId())) {
+				entry.getQuestion().setId(question.getId());
+			} else {
+				entry.getQuestion().setId("undefined");
+			}
 
 			for (String langStr : question.getLanguageToQuestion().keySet()) {
 				EJLanguage language = new EJLanguage();
 				entry.getQuestion().getLanguage().add(language);
-				language.setKeywords(Joiner.on(",").join(question.getLanguageToKeywords().get(langStr)));
+				if ((question.getLanguageToKeywords().get(langStr) != null) && !question.getLanguageToKeywords().get(langStr).isEmpty()) {
+					language.setKeywords(Joiner.on(",").join(question.getLanguageToKeywords().get(langStr)));
+				}
 				language.setLanguage(langStr);
 				language.setQuestion(question.getLanguageToQuestion().get(langStr));
 				language.setSparql(question.getSparqlQuery());
