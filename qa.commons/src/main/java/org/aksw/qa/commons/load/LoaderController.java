@@ -38,6 +38,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.google.common.base.Strings;
+
 /**
  *
  * Loads both QALD XML and JSON
@@ -331,6 +333,13 @@ public class LoaderController {
 				NodeList nlrs = questionNode.getElementsByTagName("string");
 				for (int j = 0; j < nlrs.getLength(); j++) {
 					String lang = ((Element) nlrs.item(j)).getAttribute("lang");
+					/**
+					 * Workaround for QALD1 Datasets
+					 */
+					if (Strings.isNullOrEmpty(lang)) {
+						question.getLanguageToQuestion().put("en", ((Element) nlrs.item(j)).getTextContent().trim());
+						break;
+					}
 					question.getLanguageToQuestion().put(lang, ((Element) nlrs.item(j)).getTextContent().trim());
 				}
 
@@ -482,7 +491,7 @@ public class LoaderController {
 		return output;
 	}
 
-	// TODO transform to unit test
+	// // TODO transform to unit test
 	public static void main(final String[] args) throws ParseException {
 		ArrayList<String> output = new ArrayList<>();
 		ArrayList<String> output2 = new ArrayList<>();
@@ -512,12 +521,12 @@ public class LoaderController {
 				DecimalFormat df = new DecimalFormat("###.##");
 				df.setRoundingMode(RoundingMode.CEILING);
 				if (!noanswers.isEmpty()) {
-					output.add(((df.format(((double) noanswers.size() / questions.size()) * 100)) + "%") + " Missing answers on  : " + data.toString() + ", " + noanswers.size() + " Question(s).");
+					output.add(((df.format(((double) noanswers.size() / questions.size()) * 100)) + "%") + " Missing answers on : " + data.toString() + ", " + noanswers.size() + " Question(s).");
 				}
 
 				if (!nosparql.isEmpty()) {
 					output2.add(
-					        (df.format((((double) nosparql.size() / questions.size()) * 100)) + "%") + " Neither Sparql nor Pseudo  : " + data.toString() + ", " + nosparql.size() + " Question(s).");
+					        (df.format((((double) nosparql.size() / questions.size()) * 100)) + "%") + " Neither Sparql nor Pseudo : " + data.toString() + ", " + nosparql.size() + " Question(s).");
 				}
 
 				System.out.println("Loaded successfully: " + data.toString());
