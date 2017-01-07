@@ -168,7 +168,7 @@ public class Qald7CreationTool {
 
 						}
 					} catch (QueryParseException e) {
-						question.addFail(Fail.SPARQL_PRASE_ERROR);
+						question.addFail(Fail.SPARQL_PARSE_ERROR);
 					}
 				} // end if sparql missing
 
@@ -437,7 +437,7 @@ public class Qald7CreationTool {
 		} // end for badQuestions
 
 		out.append("From Datasets :" + datasets.toString() + n);
-		out.append("Questions total in all Datasets: " + allQuestions.size() + " Faulty: " + badQuestions.size() + " beforehand removed duplicates: " + duplicate);
+		out.append("Unique Questions total in all Datasets: " + allQuestions.size() + " Faulty: " + badQuestions.size() + " beforehand removed duplicates: " + duplicate);
 
 		File file = new File(pathAndFilenameWithExtension);
 		FileWriter writer;
