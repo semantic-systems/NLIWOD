@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.utils.CollectionUtils;
 
 public class Question implements IQuestion {
@@ -22,7 +21,6 @@ public class Question implements IQuestion {
 	private Map<String, String> languageToQuestion;
 	private Map<String, List<String>> languageToKeywords;
 	private Map<String, Set<String>> goldenAnswers;
-	private Dataset fromDataset;
 
 	public Question() {
 		HashSet<String> ga = CollectionUtils.newHashSet();
@@ -306,13 +304,4 @@ public class Question implements IQuestion {
 		this.id = id;
 
 	}
-
-	public Dataset getFromDataset() {
-		return fromDataset;
-	}
-
-	public void setFromDataset(final Dataset fromDataset) {
-		this.fromDataset = fromDataset;
-	}
-
 }
