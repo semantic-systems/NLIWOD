@@ -289,7 +289,7 @@ _____________________________________________________
 |[133]
 
 | Answers in Server response and not in Dataset
-|[]
+|[0]
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD6_Train_Multilingual Id: 96
@@ -362,18 +362,6 @@ _____________________________________________________
 |[]
 _____________________________________________________
 _____________________________________________________
-| Question Dataset: QALD6_Train_Multilingual Id: 126
-| Flags: [ANSWERSET_DIFFERS]
-| Question: How many languages are spoken in Turkmenistan?
-| Sparql Query:
-| SELECT (COUNT(DISTINCT ?x) as ?c) WHERE {  <http://dbpedia.org/resource/Turkmenistan> <http://dbpedia.org/ontology/language> ?x . } 
-| Answers in dataset and not in Server response
-|[2]
-
-| Answers in Server response and not in Dataset
-|[]
-_____________________________________________________
-_____________________________________________________
 | Question Dataset: QALD6_Test_Multilingual Id: 4
 | Flags: [ANSWERSET_DIFFERS]
 | Question: Who was on the Apollo 11 mission?
@@ -417,18 +405,6 @@ _____________________________________________________
 | PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT ?num  WHERE {  res:Vrije_Universiteit dbo:numberOfStudents ?num . }
 | Answers in dataset and not in Server response
 |[22730]
-
-| Answers in Server response and not in Dataset
-|[]
-_____________________________________________________
-_____________________________________________________
-| Question Dataset: QALD6_Train_Multilingual Id: 132
-| Flags: [ANSWERSET_DIFFERS]
-| Question: How often did Jane Fonda marry?
-| Sparql Query:
-| SELECT (COUNT(DISTINCT ?uri) as ?c) WHERE {  <http://dbpedia.org/resource/Jane_Fonda> <http://dbpedia.org/ontology/spouse> ?uri . } 
-| Answers in dataset and not in Server response
-|[3]
 
 | Answers in Server response and not in Dataset
 |[]
@@ -503,7 +479,7 @@ _____________________________________________________
 |[1057]
 
 | Answers in Server response and not in Dataset
-|[]
+|[3896]
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD3_Test_dbpedia Id: 56
@@ -727,18 +703,6 @@ _____________________________________________________
 |[false]
 _____________________________________________________
 _____________________________________________________
-| Question Dataset: QALD6_Train_Multilingual Id: 323
-| Flags: [ANSWERSET_DIFFERS]
-| Question: How many companies were founded in the same year as Google?
-| Sparql Query:
-| SELECT (COUNT(DISTINCT ?uri) as ?c) WHERE {  ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Company> .  ?uri <http://dbpedia.org/ontology/foundingYear> ?year .  <http://dbpedia.org/resource/Google> <http://dbpedia.org/ontology/foundingYear> ?year . } 
-| Answers in dataset and not in Server response
-|[0]
-
-| Answers in Server response and not in Dataset
-|[]
-_____________________________________________________
-_____________________________________________________
 | Question Dataset: QALD5_Test_Multilingual Id: 1
 | Flags: [ANSWERSET_DIFFERS]
 | Question: Give me all ESA astronauts.
@@ -813,7 +777,7 @@ _____________________________________________________
 |[22]
 
 | Answers in Server response and not in Dataset
-|[]
+|[90]
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD6_Train_Multilingual Id: 95
@@ -931,7 +895,7 @@ _____________________________________________________
 |[14]
 
 | Answers in Server response and not in Dataset
-|[]
+|[15]
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD3_Test_dbpedia Id: 59
@@ -1044,7 +1008,7 @@ _____________________________________________________
 |[50]
 
 | Answers in Server response and not in Dataset
-|[]
+|[0]
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD3_Test_dbpedia Id: 78
@@ -1439,18 +1403,6 @@ _____________________________________________________
 |[http://dbpedia.org/resource/Eduardo_Saverin, http://dbpedia.org/resource/Dustin_Moskovitz, http://dbpedia.org/resource/Andrew_McCollum, http://dbpedia.org/resource/Chris_Hughes]
 _____________________________________________________
 _____________________________________________________
-| Question Dataset: QALD6_Train_Multilingual Id: 322
-| Flags: [ANSWERSET_DIFFERS]
-| Question: How many companies were founded by the founder of Facebook?
-| Sparql Query:
-| SELECT (COUNT(DISTINCT ?uri) as ?c) WHERE {  <http://dbpedia.org/resource/Facebook> <http://dbpedia.org/ontology/foundedBy> ?uri .  ?uri <http://dbpedia.org/ontology/foundedBy> ?uri . } 
-| Answers in dataset and not in Server response
-|[0]
-
-| Answers in Server response and not in Dataset
-|[]
-_____________________________________________________
-_____________________________________________________
 | Question Dataset: QALD3_Test_dbpedia Id: 3
 | Flags: [ANSWERSET_DIFFERS]
 | Question: Who is the mayor of Berlin?
@@ -1487,18 +1439,6 @@ _____________________________________________________
 |[http://dbpedia.org/resource/For_You_(Bruce_Springsteen_song)]
 _____________________________________________________
 _____________________________________________________
-| Question Dataset: QALD6_Train_Multilingual Id: 173
-| Flags: [ANSWERSET_DIFFERS]
-| Question: How many children did Benjamin Franklin have?
-| Sparql Query:
-| SELECT (COUNT(DISTINCT ?uri) as ?c) WHERE {  <http://dbpedia.org/resource/Benjamin_Franklin> <http://dbpedia.org/ontology/child> ?uri . } 
-| Answers in dataset and not in Server response
-|[3]
-
-| Answers in Server response and not in Dataset
-|[]
-_____________________________________________________
-_____________________________________________________
 | Question Dataset: QALD6_Train_Multilingual Id: 284
 | Flags: [ANSWERSET_DIFFERS]
 | Question: How many politicians graduated from Columbia University?
@@ -1508,7 +1448,7 @@ _____________________________________________________
 |[4]
 
 | Answers in Server response and not in Dataset
-|[]
+|[10]
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD6_Test_Multilingual Id: 61
@@ -1645,7 +1585,7 @@ _____________________________________________________
 |[480]
 
 | Answers in Server response and not in Dataset
-|[]
+|[529]
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD6_Test_Multilingual Id: 79
@@ -1684,18 +1624,6 @@ _____________________________________________________
 | PREFIX res: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> SELECT DISTINCT ?date  WHERE {                res:Latvia dbp:accessioneudate ?date .       }
 | Answers in dataset and not in Server response
 |[2004-05-01]
-
-| Answers in Server response and not in Dataset
-|[]
-_____________________________________________________
-_____________________________________________________
-| Question Dataset: QALD6_Train_Multilingual Id: 345
-| Flags: [ANSWERSET_DIFFERS]
-| Question: How many ethnic groups live in Slovenia?
-| Sparql Query:
-| SELECT (COUNT(DISTINCT ?uri) as ?c) WHERE {  <http://dbpedia.org/resource/Slovenia> <http://dbpedia.org/ontology/ethnicGroup> ?uri . } 
-| Answers in dataset and not in Server response
-|[4]
 
 | Answers in Server response and not in Dataset
 |[]
@@ -2128,7 +2056,7 @@ _____________________________________________________
 |[24]
 
 | Answers in Server response and not in Dataset
-|[]
+|[0]
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD6_Test_Multilingual Id: 91
@@ -2419,7 +2347,7 @@ _____________________________________________________
 |[319]
 
 | Answers in Server response and not in Dataset
-|[]
+|[389]
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD3_Train_dbpedia Id: 15
@@ -2860,15 +2788,8 @@ _____________________________________________________
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD6_Train_Multilingual Id: 340
-| Flags: [ANSWERSET_DIFFERS, SPARQL_PARSE_ERROR]
+| Flags: [SPARQL_PARSE_ERROR]
 | Question: What is the height difference between Mount Everest and K2?
-| Sparql Query:
-| SELECT DISTINCT (?h1-?h2) WHERE {  <http://dbpedia.org/resource/Mount_Everest> <http://dbpedia.org/ontology/elevation> ?h1 .  <http://dbpedia.org/resource/K2> <http://dbpedia.org/ontology/elevation> ?h2 . } 
-| Answers in dataset and not in Server response
-|[237.0]
-
-| Answers in Server response and not in Dataset
-|[]
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD3_Train_dbpedia Id: 72
@@ -3130,7 +3051,7 @@ _____________________________________________________
 |[749]
 
 | Answers in Server response and not in Dataset
-|[]
+|[1125]
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD3_Train_dbpedia Id: 8
@@ -3183,7 +3104,7 @@ _____________________________________________________
 |[23]
 
 | Answers in Server response and not in Dataset
-|[]
+|[26]
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD4_Train_Multilingual Id: 196
@@ -3378,18 +3299,6 @@ _____________________________________________________
 |[http://dbpedia.org/resource/Azerbaijan_People's_Government]
 _____________________________________________________
 _____________________________________________________
-| Question Dataset: QALD6_Train_Multilingual Id: 202
-| Flags: [ANSWERSET_DIFFERS]
-| Question: How many languages are spoken in Colombia?
-| Sparql Query:
-| SELECT (COUNT(DISTINCT ?uri) as ?c) WHERE {  ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Language> .  <http://dbpedia.org/resource/Colombia> <http://dbpedia.org/ontology/language> ?uri . } 
-| Answers in dataset and not in Server response
-|[2]
-
-| Answers in Server response and not in Dataset
-|[]
-_____________________________________________________
-_____________________________________________________
 | Question Dataset: QALD6_Test_Multilingual Id: 53
 | Flags: [ANSWERSET_DIFFERS]
 | Question: Give me a list of all Canadians that reside in the U.S.
@@ -3415,15 +3324,8 @@ _____________________________________________________
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD6_Test_Multilingual Id: 34
-| Flags: [ANSWERSET_DIFFERS, SPARQL_PARSE_ERROR]
+| Flags: [SPARQL_PARSE_ERROR]
 | Question: How many grand-children did Jacques Cousteau have?
-| Sparql Query:
-| SELECT COUNT(DISTINCT ?y) WHERE { <http://dbpedia.org/resource/Jacques_Cousteau> <http://dbpedia.org/ontology/child> ?x . ?x <http://dbpedia.org/ontology/child> ?y . }
-| Answers in dataset and not in Server response
-|[4]
-
-| Answers in Server response and not in Dataset
-|[]
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD3_Test_dbpedia Id: 22
@@ -3524,7 +3426,7 @@ _____________________________________________________
 |[245]
 
 | Answers in Server response and not in Dataset
-|[]
+|[12]
 _____________________________________________________
 _____________________________________________________
 | Question Dataset: QALD5_Train_Multilingual Id: 258
@@ -3575,4 +3477,4 @@ _____________________________________________________
 |[http://dbpedia.org/resource/Yichang_Yangtze_River_Highway_Bridge, http://dbpedia.org/resource/Île_d'Orléans_Bridge, http://dbpedia.org/resource/Luojiao_River_Bridge, http://dbpedia.org/resource/Tajik–Afghan_bridge_at_Tem-Demogan, http://dbpedia.org/resource/Beipan_River_Guanxing_Highway_Bridge, http://dbpedia.org/resource/Askøy_Bridge, http://dbpedia.org/resource/Xixi_Bridge, http://dbpedia.org/resource/Liede_Bridge, http://dbpedia.org/resource/Yangmingtan_Bridge, http://dbpedia.org/resource/Chirundu_Bridge, http://dbpedia.org/resource/Millennium_Bridge,_London, http://dbpedia.org/resource/George_Washington_Bridge, http://dbpedia.org/resource/Yingwuzhou_Yangtze_River_Bridge, http://dbpedia.org/resource/Peak_Walk, http://dbpedia.org/resource/Meshginshahr_suspension_bridge, http://dbpedia.org/resource/Sudama_Setu, http://dbpedia.org/resource/Samora_Machel_Bridge, http://dbpedia.org/resource/Kurushima-Kaikyō_Bridge, http://dbpedia.org/resource/Fyksesund_Bridge, http://dbpedia.org/resource/İzmit_Bay_Bridge, http://dbpedia.org/resource/Tamar_Bridge, http://dbpedia.org/resource/Shantou_Bay_Bridge, http://dbpedia.org/resource/Choluteca_Bridge, http://dbpedia.org/resource/Bronx–Whitestone_Bridge, http://dbpedia.org/resource/Osterøy_Bridge, http://dbpedia.org/resource/Zhongxian_Yangtze_River_Bridge, http://dbpedia.org/resource/Angers_Bridge, http://dbpedia.org/resource/Kattel_Bridge, http://dbpedia.org/resource/Gateway_Bridge_(Illinois–Iowa), http://dbpedia.org/resource/Lawas_Bridge, http://dbpedia.org/resource/Waldo–Hancock_Bridge, http://dbpedia.org/resource/Hakuchō_Bridge, http://dbpedia.org/resource/Thuận_Phước_Bridge, http://dbpedia.org/resource/Erfjord_Bridge, http://dbpedia.org/resource/Otowi_Suspension_Bridge, http://dbpedia.org/resource/Yeongjong_Bridge, http://dbpedia.org/resource/Varodd_Bridge, http://dbpedia.org/resource/Nærøysund_Bridge, http://dbpedia.org/resource/Carquinez_Bridge, http://dbpedia.org/resource/Hakata–Ōshima_Bridge, http://dbpedia.org/resource/Allen_Street_Bridge_disaster, http://dbpedia.org/resource/Dazi_Bridge, http://dbpedia.org/resource/Höga_Kusten_Bridge, http://dbpedia.org/resource/Fourth_Nanjing_Yangtze_Bridge, http://dbpedia.org/resource/Sidu_River_Bridge, http://dbpedia.org/resource/Amu_Darya_Pipeline_Bridge, http://dbpedia.org/resource/Luding_Bridge, http://dbpedia.org/resource/Lal_Mandi_Footbridge, http://dbpedia.org/resource/Chain_Bridge_(Massachusetts), http://dbpedia.org/resource/Yi_Sun-sin_Bridge, http://dbpedia.org/resource/Jim_Stynes_Bridge, http://dbpedia.org/resource/Second_Wanzhou_Yangtze_River_Bridge, http://dbpedia.org/resource/Nanxi_Bridge, http://dbpedia.org/resource/Ōnaruto_Bridge, http://dbpedia.org/resource/Hagwilget_Canyon_Bridge, http://dbpedia.org/resource/Hirado_Bridge, http://dbpedia.org/resource/EG_LNG_Pipeline_Suspension_Bridge, http://dbpedia.org/resource/Yuzui_Yangtze_River_Bridge, http://dbpedia.org/resource/Pingsheng_Bridge, http://dbpedia.org/resource/Egongyan_Bridge, http://dbpedia.org/resource/Beaver_Bridge_(Arkansas), http://dbpedia.org/resource/Haicang_Bridge, http://dbpedia.org/resource/Monorail_Suspension_Bridge, http://dbpedia.org/resource/Seaway_International_Bridge, http://dbpedia.org/resource/Älvsborg_Bridge, http://dbpedia.org/resource/Yangluo_Yangtze_River_Bridge, http://dbpedia.org/resource/Triborough_Bridge, http://dbpedia.org/resource/Beipan_River_Hukun_Expressway_Bridge, http://dbpedia.org/resource/Hardanger_Bridge, http://dbpedia.org/resource/Tajik–Afghan_Friendship_Bridge, http://dbpedia.org/resource/Jiangyin_Yangtze_River_Bridge, http://dbpedia.org/resource/Akashi_Kaikyō_Bridge, http://dbpedia.org/resource/Lumberville–Raven_Rock_Bridge, http://dbpedia.org/resource/Bømla_Bridge, http://dbpedia.org/resource/Lysefjord_Bridge, http://dbpedia.org/resource/Ogdensburg–Prescott_International_Bridge, http://dbpedia.org/resource/Çanakkale_Suspension_Bridge, http://dbpedia.org/resource/Bertrand_Road_suspension_bridge]
 _____________________________________________________
 From Datasets :[QALD6_Test_Multilingual, QALD6_Train_Multilingual, QALD4_Test_Multilingual, QALD5_Train_Multilingual, QALD3_Train_dbpedia, QALD3_Test_dbpedia, QALD5_Test_Multilingual, QALD4_Train_Multilingual]
-Unique Questions total in all Datasets: 520 Faulty: 312 beforehand removed duplicates: 617
+Unique Questions total in all Datasets: 520 Faulty: 305 beforehand removed duplicates: 617
