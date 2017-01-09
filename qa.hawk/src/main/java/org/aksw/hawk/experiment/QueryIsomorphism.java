@@ -1,5 +1,6 @@
 package org.aksw.hawk.experiment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,9 +29,13 @@ public class QueryIsomorphism {
 		HashMap<Graph, Integer> graphs = new HashMap<Graph, Integer>();
 		Dataset[] datasets = Dataset.values();
 		for(Dataset d: datasets){
-			List<HAWKQuestion> questions = null;
+			List<HAWKQuestion> questions = new ArrayList<HAWKQuestion>(0);
+			try{
 			questions = HAWKQuestionFactory.createInstances(LoaderController.load(d));
-
+			}
+			catch(Exception e){
+				System.out.println(d.name());
+			}
 			for(Question q: questions){
 				//build the graph associated to the query
 				Graph g = GraphFactory.createDefaultGraph();
@@ -81,9 +86,10 @@ public class QueryIsomorphism {
 		for(Graph g: graphs.keySet()){
 			i+= graphs.get(g);
 			if(graphs.get(g) > 10){
-			j+= graphs.get(g);
-			System.out.println(g.toString());
-			System.out.println(graphs.get(g));}
+				j+= graphs.get(g);
+				System.out.println(g.toString());
+				System.out.println(graphs.get(g));
+				}
 		}
 		System.out.print(i + "\n");
 		System.out.print(j);
