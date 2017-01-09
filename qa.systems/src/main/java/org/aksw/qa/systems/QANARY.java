@@ -8,6 +8,8 @@ import java.util.Vector;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.json.EJAnswers;
 import org.aksw.qa.commons.load.json.EJBinding;
+import org.aksw.qa.commons.load.json.EJLanguage;
+import org.aksw.qa.commons.load.json.EJQuestion;
 import org.aksw.qa.commons.load.json.EJQuestionEntry;
 import org.aksw.qa.commons.load.json.ExtendedJson;
 import org.aksw.qa.commons.load.json.ExtendedQALDJSONLoader;
@@ -59,7 +61,13 @@ public class QANARY extends ASystem {
 				ExtendedJson.class);
 		
 		for (EJQuestionEntry it : json.getQuestions()) {
-			EJAnswers answers = it.getQuestion().getAnswers();
+			EJQuestion q = it.getQuestion();
+			for(EJLanguage lang : q.getLanguage()){
+				question.setSparqlQuery(lang.getSparql());
+				question.setPseudoSparqlQuery(lang.getPseudo());
+			}
+			EJAnswers answers = q.getAnswers();
+		
 			if (answers == null) {
 				return;
 			}
@@ -69,7 +77,7 @@ public class QANARY extends ASystem {
 			if (answers.getResults() != null) {
 				Vector<HashMap<String, EJBinding>> answerVector = answers.getResults().getBindings();
 				for (HashMap<String, EJBinding> answerMap : answerVector) {
-					for (EJBinding bind : answerMap.values()) {
+					for (EJBinding bind : answerMap.values()) {	
 						question.getGoldenAnswers().add(bind.getValue());
 					}
 				}
