@@ -7,9 +7,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 // @RestController
-@Configuration
-@ComponentScan
-@EnableAutoConfiguration
+//@Configuration
+//@ComponentScan
+//@EnableAutoConfiguration
 @SpringBootApplication
 public class FrontController {
 

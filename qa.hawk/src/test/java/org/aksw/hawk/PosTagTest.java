@@ -1,4 +1,4 @@
-package hawk;
+package org.aksw.hawk;
 
 import java.util.HashMap;
 import java.util.List;

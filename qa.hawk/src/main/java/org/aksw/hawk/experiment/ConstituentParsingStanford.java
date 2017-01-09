@@ -10,8 +10,6 @@ import org.aksw.qa.commons.load.LoaderController;
 
 import edu.stanford.nlp.simple.Document;
 import edu.stanford.nlp.simple.Sentence;
-import edu.stanford.nlp.trees.Constituent;
-import edu.stanford.nlp.trees.LabeledScoredConstituent;
 import edu.stanford.nlp.trees.Tree;
 
 public class ConstituentParsingStanford {
