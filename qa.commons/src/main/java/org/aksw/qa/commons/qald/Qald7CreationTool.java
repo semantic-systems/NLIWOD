@@ -214,8 +214,8 @@ public class Qald7CreationTool {
 	}
 
 	private boolean checkKeywordsPresent(final IQuestion q) {
-		for (List<String> it : q.getLanguageToKeywords().values()) {
-			if (it.isEmpty()) {
+		for (String it : q.getLanguageToQuestion().keySet()) {
+			if ((q.getLanguageToKeywords().get(it) == null) || q.getLanguageToKeywords().get(it).isEmpty()) {
 				return false;
 			}
 		}

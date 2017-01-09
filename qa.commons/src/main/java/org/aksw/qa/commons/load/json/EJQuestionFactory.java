@@ -103,7 +103,7 @@ public final class EJQuestionFactory {
 				q.setLanguage(entry.getKey()).setString(entry.getValue());
 
 				if ((question.getLanguageToKeywords() != null) && (question.getLanguageToKeywords().get(entry.getKey()) != null)) {
-					q.setKeywords(Joiner.on(",").join(question.getLanguageToKeywords().get(entry.getKey())));
+					q.setKeywords(Joiner.on(", ").join(question.getLanguageToKeywords().get(entry.getKey())));
 				}
 
 				questionEntry.getQuestion().add(q);
@@ -161,7 +161,12 @@ public final class EJQuestionFactory {
 
 			for (QaldQuestion qQuestion : it.getQuestion()) {
 				question.getLanguageToQuestion().put(qQuestion.getLanguage(), qQuestion.getString());
+				if ((qQuestion.getKeywords() != null) && !qQuestion.getKeywords().isEmpty()) {
+					question.getLanguageToKeywords().put(qQuestion.getLanguage(), Arrays.asList(qQuestion.getKeywords().split(",\\s*")));
+				}
+
 			}
+
 			for (EJAnswers answerObject : it.getAnswers()) {
 				getAnswersFromAnswerObject(answerObject, question);
 			}
