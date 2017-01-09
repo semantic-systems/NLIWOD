@@ -10,6 +10,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +20,7 @@ public class OKBQA extends ASystem {
 	
 	private static final String CONTROLLER_URI = "http://ws.okbqa.org:7042/cm";
 	private static final String TGM_URI = "http://ws.okbqa.org:1515/templategeneration/rocknrole";
-	private static final String KB_URI1 = "http://143.248.135.20:45103/sparql";
-	private static final String KB_URI2 = "http://en.dbpedia2015-10.kaist.ac.kr";
+	private static final String KB_URI2 = "http://dbpedia.org/sparql";
 	private static final String QGM_URI = "http://ws.okbqa.org:38401/queries";
 	private static final String AGM_URI = "http://ws.okbqa.org:7745/agm";
 	private static final String DM_URI = "http://ws.okbqa.org:2357/agdistis/run";
@@ -31,6 +31,21 @@ public class OKBQA extends ASystem {
 		createJSONConf();
 	}
 	
+	private String execute(String jsonInput) throws Exception{
+
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost httppost = new HttpPost(CONTROLLER_URI);
+		StringEntity entity = new StringEntity(jsonInput);
+		
+		httppost.setEntity(entity);
+		HttpResponse response = client.execute(httppost);
+		
+		if(response.getStatusLine().getStatusCode()>=400){
+			throw new Exception("OKBQA Server could not answer due to: "+response.getStatusLine());
+		}
+		return responseparser.responseToString(response);
+	}
+	
 	@Override
 	public void search(IQuestion question) throws Exception {
 		String questionString;
@@ -39,29 +54,45 @@ public class OKBQA extends ASystem {
 		}
 		questionString = question.getLanguageToQuestion().get("en");
 		log.debug(this.getClass().getSimpleName() + ": " + questionString);
-
-
-		HttpClient client = HttpClientBuilder.create().build();
-		HttpPost httppost = new HttpPost(CONTROLLER_URI);
-		StringEntity entity = new StringEntity(createInputJSON(questionString));
 		
-		httppost.setEntity(entity);
-		HttpResponse response = client.execute(httppost);
-		
-		if(response.getStatusLine().getStatusCode()>=400){
-			throw new Exception("OKBQA Server could not answer due to: "+response.getStatusLine());
-		}
 		
 		Set<String> answerSet = new HashSet<String>();
-
-		String responseString = responseparser.responseToString(response);
+		question.setGoldenAnswers(answerSet);
+		
+		//Execute TGM to AGM. 
+		String responseString = execute(createInputJSON(questionString));
 		JSONObject obj = new JSONObject(responseString);
 		JSONArray results = obj.getJSONArray("result");
+		//Iterate over answers and add them to the final answerSet
 		for(int i=0; i<results.length(); i++){
 			JSONObject result = results.getJSONObject(i);
+			String answerType = result.get("answer").getClass().getSimpleName();
+			this.log.info("D1: answerType: "+answerType);
+			question.setAnswerType(answerType);
 			String answerString = result.getString("answer");
 			answerSet.add(answerString);
+			
 		}
+		
+		//Get Query from log
+		JSONArray logs = obj.getJSONArray("log");
+		for(int i=0; i<logs.length(); i++){
+			JSONObject log = logs.getJSONObject(i);
+			if(log.getString("1. module").equals("QGM")){
+				if(log.has("4. output")){
+					try{
+						JSONArray qout = log.getJSONArray("4. output");
+						if(qout.length()>0&& qout.getJSONObject(0).has("query")){
+							String queryString = qout.getJSONObject(0).getString("query");
+							question.setSparqlQuery(queryString);
+						}
+					}catch(JSONException e){
+						return;
+					}
+				}
+			}
+		}
+
 		question.setGoldenAnswers(answerSet);
 	}
 	
@@ -96,8 +127,8 @@ public class OKBQA extends ASystem {
 		JSONObject address = new JSONObject();
 		JSONArray kbAddress = new JSONArray();
 		JSONArray kbAddressURIs = new JSONArray();
-		kbAddressURIs.put(0, KB_URI1);
-		kbAddressURIs.put(1, KB_URI2);
+		kbAddressURIs.put(0, KB_URI2);
+		kbAddressURIs.put(1, "");
 		kbAddress.put(kbAddressURIs);
 		JSONArray tgmAddress = new JSONArray();
 		tgmAddress.put(TGM_URI);
@@ -115,5 +146,6 @@ public class OKBQA extends ASystem {
 		address.put("AGM", agmAddress);
 		conf.put("address", address);
 	}
+
 
 }
