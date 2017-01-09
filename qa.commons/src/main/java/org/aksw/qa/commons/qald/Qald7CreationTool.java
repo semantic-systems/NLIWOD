@@ -54,7 +54,16 @@ public class Qald7CreationTool {
 	public static final Set<Dataset> HYBRID_SETS = ImmutableSet.of(Dataset.QALD4_Test_Hybrid, Dataset.QALD4_Train_Hybrid, Dataset.QALD5_Test_Hybrid, Dataset.QALD5_Train_Hybrid,
 	        Dataset.QALD6_Test_Hybrid, Dataset.QALD6_Train_Hybrid);
 
-	private ThreadedSPARQL sparql = new ThreadedSPARQL(90, SPARQL.ENDPOINT_DBPEIDA_ORG);
+	private ThreadedSPARQL sparql;
+
+	public Qald7CreationTool() {
+		sparql = new ThreadedSPARQL(90, SPARQL.ENDPOINT_DBPEIDA_ORG);
+	}
+
+	public Qald7CreationTool(final String sparqlEndpoint, final int timeout) {
+		sparql = new ThreadedSPARQL(timeout, sparqlEndpoint);
+	}
+
 	int badQuestionCounter = 0;
 
 	/**
@@ -178,11 +187,11 @@ public class Qald7CreationTool {
 				Set<String> answersFromServer = Collections.emptySet();
 				try {
 					answersFromServer = getAnswersFromServer(question);
-					question.setServerAnswers(answersFromServer);
+
 				} catch (ExecutionException e) {
 					question.addFail(Fail.SPARQL_NOT_EXECUTABLE);
 				}
-
+				question.setServerAnswers(answersFromServer);
 				Set<String> answersFromDataset = question.getGoldenAnswers();
 				answersFromDataset = answersFromDataset == null ? Collections.emptySet() : answersFromDataset;
 
@@ -397,7 +406,7 @@ public class Qald7CreationTool {
 	 */
 	public void createFileReportForTestQuestions(final Set<Dataset> datasets, final boolean autocorrectOnlydbo, final String pathAndFilenameWithExtension,
 	        final boolean skipQuestionsWithTooLittleLanguages) {
-		createFileReport(getQald7MultilingualTrainQuestions(datasets, autocorrectOnlydbo), pathAndFilenameWithExtension, skipQuestionsWithTooLittleLanguages);
+		createFileReport(loadAndAnnotateTrain(datasets, autocorrectOnlydbo), pathAndFilenameWithExtension, skipQuestionsWithTooLittleLanguages);
 
 	}
 
