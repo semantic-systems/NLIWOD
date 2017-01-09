@@ -3,8 +3,8 @@ package org.aksw.hawk.datastructures;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.qa.commons.datastructure.IQuestion;
+import org.aksw.qa.commons.qald.QALD4_EvaluationUtils;
 
 public class HAWKQuestionFactory {
 

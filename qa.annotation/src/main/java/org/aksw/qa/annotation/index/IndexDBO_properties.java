@@ -3,9 +3,9 @@ package org.aksw.qa.annotation.index;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -13,7 +13,6 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.RDFS;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.Document;
@@ -34,9 +33,10 @@ import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
-public class IndexDBO_properties implements IndexDBO {
+public class IndexDBO_properties extends IndexDBO {
 
 	private static final Version LUCENE_VERSION = Version.LUCENE_46;
 	private org.slf4j.Logger log = LoggerFactory.getLogger(IndexDBO_properties.class);
@@ -72,10 +72,15 @@ public class IndexDBO_properties implements IndexDBO {
 	}
 
 	@Override
-	public ArrayList<String> search(final String object) {
+	public List<String> search(final String object) {
+		if (stopwords.contains(object.toLowerCase())) {
+			log.debug("\t Stopword detected: |" + object + "|");
+			System.out.println("returning immutable empty");
+			return ImmutableList.of();
+		}
 		ArrayList<String> uris = Lists.newArrayList();
 		try {
-			log.debug("\t start asking index...");
+			log.debug("\t start asking index for |" + object + "|");
 
 			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 0);
 			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
@@ -107,9 +112,9 @@ public class IndexDBO_properties implements IndexDBO {
 
 	private void index() {
 		try {
-			InputStream res = this.getClass().getResourceAsStream("/dbpedia_3Eng_class.ttl");
+			InputStream res = this.getClass().getResourceAsStream("/dbpedia_3Eng_property.ttl");
 			Model model = ModelFactory.createDefaultModel();
-			model.read(res, "http://dbpedia.org/","TTL");
+			model.read(res, "http://dbpedia.org/", "TTL");
 			StmtIterator stmts = model.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();
@@ -130,6 +135,21 @@ public class IndexDBO_properties implements IndexDBO {
 		doc.add(new StringField(FIELD_NAME_PREDICATE, predicate, Store.YES));
 		doc.add(new TextField(FIELD_NAME_OBJECT, next.asLiteral().getString(), Store.YES));
 		iwriter.addDocument(doc);
+	}
+
+	public static void main(final String[] args) {
+		IndexDBO_properties classes = new IndexDBO_properties();
+		Scanner sc = new Scanner(System.in);
+		do {
+			System.out.println("Search: ");
+			String in = sc.next();
+			List<String> out = classes.search(in);
+			for (String it : out) {
+				System.out.println("Result: " + it);
+			}
+
+		} while (true);
+
 	}
 
 }

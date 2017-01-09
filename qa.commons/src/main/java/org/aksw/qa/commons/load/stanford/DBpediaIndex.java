@@ -110,8 +110,7 @@ public class DBpediaIndex {
 	private void index() {
 		try {
 			Model dbpedia = ModelFactory.createDefaultModel();
-
-			dbpedia.read("src/main/resources/dbpedia_2015-10.owl", "RDF/XML");
+			dbpedia.read(this.getClass().getClassLoader().getResource("dbpedia_2015-10.owl").getPath(), "RDF/XML");
 			StmtIterator stmts = dbpedia.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();

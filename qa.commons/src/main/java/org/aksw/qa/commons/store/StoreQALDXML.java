@@ -3,7 +3,6 @@ package org.aksw.qa.commons.store;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -18,52 +17,62 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.aksw.qa.commons.load.Dataset;
+import org.aksw.qa.commons.datastructure.IQuestion;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-//so the eval tool works http://greententacle.techfak.uni-bielefeld.de/~cunger/qald/index.php?x=evaltool&q=5 
+import com.google.common.base.Joiner;
+
+// so the eval tool works
+// http://greententacle.techfak.uni-bielefeld.de/~cunger/qald/index.php?x=evaltool&q=5
 public class StoreQALDXML {
 
-	private Dataset dataset;
+	private String dataset;
 	private List<Element> questions;
 	private Document doc;
 
-	public StoreQALDXML(Dataset dataset) throws IOException, ParserConfigurationException {
+	public StoreQALDXML(final String dataset) throws IOException, ParserConfigurationException {
 		this.dataset = dataset;
-		questions = new ArrayList<Element>();
+		questions = new ArrayList<>();
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		doc = db.newDocument();
 
 	}
 
-	public static void main(String[] args) throws IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+	// public static void main(final String[] args) throws IOException,
+	// ParserConfigurationException, TransformerFactoryConfigurationError,
+	// TransformerException {
+	//
+	// String dataset = "QALD5_Train";
+	// StoreQALDXML qw = new StoreQALDXML(dataset);
+	//
+	// StringBuilder sb = new StringBuilder();
+	// sb.append("PREFIX text:<http://jena.apache.org/text#> \n");
+	// sb.append("SELECT DISTINCT ?proj WHERE {\n ");
+	// sb.append("?const <http://dbpedia.org/ontology/starring> ?proj. ");
+	// sb.append("?proj text:query (<http://dbpedia.org/ontology/abstract>
+	// \"Coquette Productions\"'");
+	// sb.append("' " + 1000 + "). \n");
+	// sb.append("}\n");
+	//
+	// Set<String> answerSet = new HashSet<>();
+	// answerSet.add("http://dbpedia.org/resource/1");
+	// answerSet.add("http://dbpedia.org/resource/2");
+	// String query = sb.toString();
+	// String question = "Where was the assassin of Martin Luther King born?";
+	// Integer question_id = 1;
+	// qw.write(question, query, answerSet, question_id);
+	// qw.close();
+	// }
 
-		String dataset = "QALD5_Train";
-		StoreQALDXML qw = new StoreQALDXML(Dataset.valueOf(dataset));
+	public static void main(final String[] args) {
 
-		StringBuilder sb = new StringBuilder();
-		sb.append("PREFIX text:<http://jena.apache.org/text#> \n");
-		sb.append("SELECT DISTINCT ?proj WHERE {\n ");
-		sb.append("?const <http://dbpedia.org/ontology/starring> ?proj. ");
-		sb.append("?proj text:query (<http://dbpedia.org/ontology/abstract> \"Coquette Productions\"'");
-		sb.append("' " + 1000 + "). \n");
-		sb.append("}\n");
-
-		Set<String> answerSet = new HashSet<String>();
-		answerSet.add("http://dbpedia.org/resource/1");
-		answerSet.add("http://dbpedia.org/resource/2");
-		String query = sb.toString();
-		String question = "Where was the assassin of Martin Luther King born?";
-		Integer question_id = 1;
-		qw.write(question, query, answerSet, question_id);
-		qw.close();
 	}
 
 	public void close() throws IOException, TransformerFactoryConfigurationError, TransformerException {
 		Element root = doc.createElement("dataset");
-		root.setAttribute("id", dataset.toString());
+		root.setAttribute("id", dataset);
 		doc.appendChild(root);
 		for (Element question : questions) {
 			root.appendChild(question);
@@ -78,14 +87,32 @@ public class StoreQALDXML {
 		System.out.println("\nXML DOM Created Successfully..");
 	}
 
-	public void write(String questionString, String queryString, Set<String> answerSet, Integer questionID) throws ParserConfigurationException, IOException {
+	public void close(final String path, final String datasetName) throws IOException, TransformerFactoryConfigurationError, TransformerException {
+		Element root = doc.createElement("dataset");
+		root.setAttribute("id", datasetName);
+		doc.appendChild(root);
+		for (Element question : questions) {
+			root.appendChild(question);
+		}
+
+		Transformer transformer = TransformerFactory.newInstance().newTransformer();
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		DOMSource source = new DOMSource(doc);
+		StreamResult file = new StreamResult(new File(path));
+		transformer.transform(source, file);
+
+		System.out.println("\nXML DOM Created Successfully..");
+	}
+
+	public void write(final String questionString, final String queryString, final Set<String> answerSet, final Integer questionID) throws ParserConfigurationException, IOException {
 
 		if (questionString != null) {
 			Element question = doc.createElement("question");
 			if (questionID != null) {
 				question.setAttribute("id", String.valueOf(questionID));
 			}
-			// TODO adapt to be more flexible. therefore use the question object to write an XML instead of four parameters
+			// TODO adapt to be more flexible. therefore use the question object
+			// to write an XML instead of four parameters
 			question.setAttribute("answertype", "resource");
 			question.setAttribute("aggregation", "false");
 			question.setAttribute("onlydbo", "true");
@@ -110,5 +137,54 @@ public class StoreQALDXML {
 			question.appendChild(answers);
 			questions.add(question);
 		}
+	}
+
+	public void write(final IQuestion q) throws ParserConfigurationException, IOException {
+
+		Element question = doc.createElement("question");
+
+		question.setAttribute("id", String.valueOf(q.getId()));
+
+		// TODO adapt to be more flexible. therefore use the question object to
+		// write an XML instead of four parameters
+		question.setAttribute("answertype", q.getAnswerType());
+		question.setAttribute("aggregation", "" + q.getAggregation());
+		question.setAttribute("onlydbo", "" + q.getOnlydbo());
+		question.setAttribute("hybrid", "" + q.getHybrid());
+
+		for (String key : q.getLanguageToQuestion().keySet()) {
+			Element string = doc.createElement("string");
+			string.setAttribute("lang", key);
+			string.setTextContent(q.getLanguageToQuestion().get(key));
+			question.appendChild(string);
+		}
+		for (String key : q.getLanguageToKeywords().keySet()) {
+			Element keyword = doc.createElement("keywords");
+			keyword.setAttribute("lang", key);
+			keyword.setTextContent(Joiner.on(", ").join(q.getLanguageToKeywords().get(key)));
+			question.appendChild(keyword);
+		}
+
+		if (!((q.getPseudoSparqlQuery() == null) || q.getPseudoSparqlQuery().isEmpty())) {
+			Element pseudoquery = doc.createElement("pseudoquery");
+			pseudoquery.setTextContent(q.getPseudoSparqlQuery());
+			question.appendChild(pseudoquery);
+		}
+		if (!((q.getSparqlQuery() == null) || q.getSparqlQuery().isEmpty())) {
+			Element query = doc.createElement("query");
+			query.setTextContent(q.getSparqlQuery());
+			question.appendChild(query);
+		}
+
+		Element answers = doc.createElement("answers");
+
+		for (String uri : q.getGoldenAnswers()) {
+			Element answer = doc.createElement("answer");
+			answer.setTextContent(uri);
+			answers.appendChild(answer);
+		}
+		question.appendChild(answers);
+		questions.add(question);
+
 	}
 }

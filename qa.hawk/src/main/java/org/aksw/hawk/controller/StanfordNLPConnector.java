@@ -23,7 +23,7 @@ import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.Annotation;
-import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.pipeline.StanfordCoreNLPClient;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
@@ -43,11 +43,14 @@ import edu.stanford.nlp.util.CoreMap;
  */
 public class StanfordNLPConnector {
 
-	private StanfordCoreNLP stanfordPipe;
+	private StanfordCoreNLPClient stanfordPipe;
 	private int nodeNumber;
 	private Set<IndexedWord> visitedNodes;
 	public static StringBuilder out = new StringBuilder();
 	private static Logger log = LoggerFactory.getLogger(StanfordNLPConnector.class);
+	private static final String STANFORD_IP = "139.18.2.164";
+	private static final int STANFORD_PORT = 9000;
+	private static final int USED_CORES = 4;
 
 	/**
 	 * Initializes the StanfordNLP with given Annotators.Complete Annotator list
@@ -58,7 +61,7 @@ public class StanfordNLPConnector {
 	public StanfordNLPConnector(final String annotators) {
 		Properties props = new Properties();
 		props.setProperty("annotators", annotators);
-		stanfordPipe = new StanfordCoreNLP(props);
+		stanfordPipe = new StanfordCoreNLPClient(props, STANFORD_IP, STANFORD_PORT, USED_CORES);
 
 	}
 
@@ -69,9 +72,9 @@ public class StanfordNLPConnector {
 	public StanfordNLPConnector() {
 
 		Properties props = new Properties();
-		props.setProperty("annotators", "tokenize, ssplit,pos,lemma, ner,parse");
+		props.setProperty("annotators", "tokenize, ssplit, pos,lemma, ner,parse");
 
-		stanfordPipe = new StanfordCoreNLP(props);
+		stanfordPipe = new StanfordCoreNLPClient(props, STANFORD_IP, STANFORD_PORT, USED_CORES);
 	}
 
 	/**
@@ -269,6 +272,14 @@ public class StanfordNLPConnector {
 			convertGraphStanford(childMutableNode, child, graph);
 		}
 
+	}
+
+	public static String getStanfordIp() {
+		return STANFORD_IP;
+	}
+
+	public static int getStanfordPort() {
+		return STANFORD_PORT;
 	}
 
 }

@@ -3,10 +3,10 @@ package org.aksw.hawk.experiment;
 import java.util.List;
 import java.util.Set;
 
-import org.aksw.autosparql.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.hawk.controller.EvalObj;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.qa.commons.qald.QALD4_EvaluationUtils;
 import org.apache.jena.rdf.model.RDFNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -2,8 +2,8 @@ package org.aksw.hawk.util;
 
 import java.util.Set;
 
-import org.aksw.hawk.querybuilding.SPARQL;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.qa.commons.sparql.SPARQL;
 import org.apache.jena.atlas.json.JsonString;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QuerySolution;

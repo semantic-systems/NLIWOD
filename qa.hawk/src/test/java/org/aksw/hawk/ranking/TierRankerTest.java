@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.aksw.hawk.controller.PipelineClearNLP;
+import org.aksw.hawk.controller.PipelineStanford;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.experiment.SingleQuestionPipeline;
@@ -23,7 +23,7 @@ public class TierRankerTest {
 	@Ignore
 	public void test() {
 
-		PipelineClearNLP pipeline = new PipelineClearNLP();
+		PipelineStanford pipeline = new PipelineStanford();
 
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", "What is the capital of Spain called?");

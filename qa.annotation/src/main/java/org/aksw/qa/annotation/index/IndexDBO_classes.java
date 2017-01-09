@@ -3,10 +3,8 @@ package org.aksw.qa.annotation.index;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.List;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -14,9 +12,6 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.riot.system.stream.StreamManager;
 import org.apache.jena.vocabulary.RDFS;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.Document;
@@ -37,12 +32,14 @@ import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
-public class IndexDBO_classes implements IndexDBO {
+public class IndexDBO_classes extends IndexDBO {
 
 	private static final Version LUCENE_VERSION = Version.LUCENE_46;
 	private org.slf4j.Logger log = LoggerFactory.getLogger(IndexDBO_classes.class);
+
 	public String FIELD_NAME_SUBJECT = "subject";
 	public String FIELD_NAME_PREDICATE = "predicate";
 	public String FIELD_NAME_OBJECT = "object";
@@ -75,7 +72,11 @@ public class IndexDBO_classes implements IndexDBO {
 	}
 
 	@Override
-	public ArrayList<String> search(final String object) {
+	public List<String> search(final String object) {
+		if (stopwords.contains(object.toLowerCase())) {
+			log.debug("\t Stopword detected: |" + object + "|");
+			return ImmutableList.of();
+		}
 		ArrayList<String> uris = Lists.newArrayList();
 		try {
 			log.debug("\t start asking index...");
@@ -112,7 +113,7 @@ public class IndexDBO_classes implements IndexDBO {
 
 			InputStream res = this.getClass().getResourceAsStream("/dbpedia_3Eng_class.ttl");
 			Model model = ModelFactory.createDefaultModel();
-			model.read(res, "http://dbpedia.org/","TTL");
+			model.read(res, "http://dbpedia.org/", "TTL");
 			StmtIterator stmts = model.listStatements(null, RDFS.label, (RDFNode) null);
 			while (stmts.hasNext()) {
 				final Statement stmt = stmts.next();
@@ -135,20 +136,19 @@ public class IndexDBO_classes implements IndexDBO {
 		iwriter.addDocument(doc);
 	}
 
-	//TODO unit test with president
-	public static void main(final String[] args) {
-		IndexDBO_classes classes = new IndexDBO_classes();
-		Scanner sc = new Scanner(System.in);
-		do {
-			System.out.println("Search: ");
-			String in = sc.next();
-			ArrayList<String> out = classes.search(in);
-			for (String it : out) {
-				System.out.println(it);
-			}
-
-		} while (true);
-
-	}
+	// public static void main(final String[] args) {
+	// IndexDBO_classes classes = new IndexDBO_classes();
+	// Scanner sc = new Scanner(System.in);
+	// do {
+	// System.out.println("Search: ");
+	// String in = sc.next();
+	// List<String> out = classes.search(in);
+	// for (String it : out) {
+	// System.out.println("Result: " + it);
+	// }
+	//
+	// } while (true);
+	//
+	// }
 
 }

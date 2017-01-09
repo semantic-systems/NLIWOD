@@ -1,4 +1,4 @@
-package org.aksw.hawk.querybuilding;
+package org.aksw.qa.commons.sparql;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,8 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.aksw.hawk.datastructures.Answer;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -25,31 +23,31 @@ public class SPARQLQuery implements Cloneable, Serializable {
 	private boolean isASKQuery = false;
 	private int limit = 1;
 
-	public SPARQLQuery(String initialConstraint) {
+	public SPARQLQuery(final String initialConstraint) {
 		constraintTriples.add(initialConstraint);
 	}
 
 	/**
 	 * only for clone()
 	 */
-	protected SPARQLQuery() {
+	public SPARQLQuery() {
 	}
 
-	public void isASKQuery(boolean isASKQuery) {
+	public void isASKQuery(final boolean isASKQuery) {
 		this.isASKQuery = isASKQuery;
 	}
 
-	public void addConstraint(String constraint) {
+	public void addConstraint(final String constraint) {
 		constraintTriples.add(constraint);
 	}
 
-	public void addFilterOverAbstractsContraint(String variable, String label) {
+	public void addFilterOverAbstractsContraint(final String variable, final String label) {
 		fuzzyToken(variable, label);
 		exactToken(variable, label);
 
 	}
 
-	private void exactToken(String variable, String label) {
+	private void exactToken(final String variable, final String label) {
 		// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
 		// anti-apartheid activist').
 
@@ -63,7 +61,7 @@ public class SPARQLQuery implements Cloneable, Serializable {
 		}
 	}
 
-	private void fuzzyToken(String variable, String label) {
+	private void fuzzyToken(final String variable, final String label) {
 		// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
 		// anti-apartheid activist').
 		String[] separatedLabel = label.split("[ \\-]");
@@ -87,7 +85,7 @@ public class SPARQLQuery implements Cloneable, Serializable {
 		}
 	}
 
-	public boolean constraintsContains(String target) {
+	public boolean constraintsContains(final String target) {
 		for (String c : constraintTriples) {
 			if (c.contains(target)) {
 				return true;
@@ -96,13 +94,13 @@ public class SPARQLQuery implements Cloneable, Serializable {
 		return false;
 	}
 
-	public void addFilter(String string) {
+	public void addFilter(final String string) {
 		filter.add(string);
 
 	}
 
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
+	public Object clone() throws CloneNotSupportedException {
 		SPARQLQuery q = new SPARQLQuery();
 		q.isASKQuery(isASKQuery);
 		q.constraintTriples = Lists.newArrayList();
@@ -163,7 +161,7 @@ public class SPARQLQuery implements Cloneable, Serializable {
 				for (int i = 0; i < list.size(); i++) {
 					// TODO photographer does not match photographers in index
 					// temporary solution is a a hack with ~ for fuzzy
-					if (i > 0 && fulltext.length() > 0) {
+					if ((i > 0) && (fulltext.length() > 0)) {
 						fulltext.append(" AND ");
 					}
 					fulltext.append("\"" + list.get(i) + "\"");
@@ -207,7 +205,7 @@ public class SPARQLQuery implements Cloneable, Serializable {
 				for (int i = 0; i < list.size(); i++) {
 					// TODO photographer does not match photographers in index
 					// temporary solution is a a hack with ~ for fuzzy
-					if (i > 0 && fulltext.length() > 0) {
+					if ((i > 0) && (fulltext.length() > 0)) {
 						fulltext.append(" AND ");
 					}
 					if (isInteger(list.get(i))) {
@@ -237,7 +235,7 @@ public class SPARQLQuery implements Cloneable, Serializable {
 
 	// taken from
 	// http://stackoverflow.com/questions/237159/whats-the-best-way-to-check-to-see-if-a-string-represents-an-integer-in-java
-	private boolean isInteger(String str) {
+	private boolean isInteger(final String str) {
 		if (str == null) {
 			return false;
 		}
@@ -254,29 +252,29 @@ public class SPARQLQuery implements Cloneable, Serializable {
 		}
 		for (; i < length; i++) {
 			char c = str.charAt(i);
-			if (c <= '/' || c >= ':') {
+			if ((c <= '/') || (c >= ':')) {
 				return false;
 			}
 		}
 		return true;
 	}
 
-	public void setLimit(int cardinality) {
+	public void setLimit(final int cardinality) {
 		this.limit = cardinality;
 
 	}
 
-	public Answer toAnswer() {
-		Answer answer = new Answer();
-		try {
-			SPARQLQuery tmpQuery = (SPARQLQuery) this.clone();
-			answer.query = tmpQuery;
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
-		return answer;
-	}
+	// public Answer toAnswer() {
+	// Answer answer = new Answer();
+	// try {
+	// SPARQLQuery tmpQuery = (SPARQLQuery) this.clone();
+	// answer.query = tmpQuery;
+	// } catch (CloneNotSupportedException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	//
+	// }
+	// return answer;
+	// }
 
 }

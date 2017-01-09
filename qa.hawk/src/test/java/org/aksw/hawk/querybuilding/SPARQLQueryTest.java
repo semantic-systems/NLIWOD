@@ -2,6 +2,8 @@ package org.aksw.hawk.querybuilding;
 
 import java.util.Set;
 
+import org.aksw.qa.commons.sparql.SPARQL;
+import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.apache.jena.rdf.model.RDFNode;
 import org.junit.Ignore;
 import org.junit.Test;

@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.querybuilding.SPARQLQuery;
+import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

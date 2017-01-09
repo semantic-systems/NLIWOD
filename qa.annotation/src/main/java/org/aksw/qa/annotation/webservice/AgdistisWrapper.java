@@ -195,33 +195,4 @@ public class AgdistisWrapper {
 		return docStr.toString();
 	}
 
-	public static void main(final String[] args) throws Exception {
-		System.out.println("Started agdistis wrapper");
-		AgdistisWrapper wrapper = new AgdistisWrapper();
-		System.out.println("|" + wrapper.agdistisPost("<entity>Barack Obama</entity> arrives in <entity>Washington, D.C.</entity>.") + "|");
-		// System.out.println(wrapper.requestWordUrl("Black Hawk"));
-
-		// File f = new File("c:/output/nifexample.txt");
-		// FileReader reader = new FileReader(f);
-		// BufferedReader buff = new BufferedReader(reader);
-		// StringBuilder str = new StringBuilder();
-		// while (buff.ready()) {
-		// str.append((char) buff.read());
-		// }
-		//
-		// List<Document> docs = parseNIF(str.toString());
-		// for (Document d : docs) {
-		// System.out.println(d.toString());
-		// }
-
-		// Document doc = new DocumentImpl("qwe");
-		// Marking m = new SpanImpl(0, 1);
-		// doc.setText("awesd");
-		// doc.addMarking(m);
-		// List<Document> docs = new ArrayList<>();
-		// docs.add(doc);
-		// System.out.println(writeNIF(docs));
-
-	}
-
 }

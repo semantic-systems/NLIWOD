@@ -4,8 +4,8 @@ import java.util.Set;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.pruner.SPARQLQueryPruner;
-import org.aksw.hawk.querybuilding.SPARQL;
-import org.aksw.hawk.querybuilding.SPARQLQuery;
+import org.aksw.qa.commons.sparql.SPARQL;
+import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

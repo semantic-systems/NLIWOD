@@ -10,12 +10,14 @@ import java.util.Vector;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.datastructure.Question;
 import org.apache.jena.ext.com.google.common.base.Joiner;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Strings;
 
 public final class EJQuestionFactory {
 	public static final String SPLIT_KEYWORDS_ON = ",";
-	private static final Logger log = LogManager.getLogger(EJQuestionFactory.class);
+	final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private EJQuestionFactory() {
 
@@ -58,15 +60,21 @@ public final class EJQuestionFactory {
 
 		for (IQuestion question : questions) {
 			EJQuestionEntry entry = new EJQuestionEntry();
-			ex.addQuestions(entry);
-			entry.getQuestion().setAnswertype(question.getAnswerType());
-
-			entry.getQuestion().setId(question.getId());
+			if (!Strings.isNullOrEmpty(question.getAnswerType())) {
+				entry.getQuestion().setAnswertype(question.getAnswerType());
+			}
+			if (!Strings.isNullOrEmpty(question.getId())) {
+				entry.getQuestion().setId(question.getId());
+			} else {
+				entry.getQuestion().setId("undefined");
+			}
 
 			for (String langStr : question.getLanguageToQuestion().keySet()) {
 				EJLanguage language = new EJLanguage();
 				entry.getQuestion().getLanguage().add(language);
-				language.setKeywords(Joiner.on(",").join(question.getLanguageToKeywords().get(langStr)));
+				if ((question.getLanguageToKeywords().get(langStr) != null) && !question.getLanguageToKeywords().get(langStr).isEmpty()) {
+					language.setKeywords(Joiner.on(",").join(question.getLanguageToKeywords().get(langStr)));
+				}
 				language.setLanguage(langStr);
 				language.setQuestion(question.getLanguageToQuestion().get(langStr));
 				language.setSparql(question.getSparqlQuery());
@@ -95,7 +103,7 @@ public final class EJQuestionFactory {
 				q.setLanguage(entry.getKey()).setString(entry.getValue());
 
 				if ((question.getLanguageToKeywords() != null) && (question.getLanguageToKeywords().get(entry.getKey()) != null)) {
-					q.setKeywords(Joiner.on(",").join(question.getLanguageToKeywords().get(entry.getKey())));
+					q.setKeywords(Joiner.on(", ").join(question.getLanguageToKeywords().get(entry.getKey())));
 				}
 
 				questionEntry.getQuestion().add(q);
@@ -153,7 +161,12 @@ public final class EJQuestionFactory {
 
 			for (QaldQuestion qQuestion : it.getQuestion()) {
 				question.getLanguageToQuestion().put(qQuestion.getLanguage(), qQuestion.getString());
+				if ((qQuestion.getKeywords() != null) && !qQuestion.getKeywords().isEmpty()) {
+					question.getLanguageToKeywords().put(qQuestion.getLanguage(), Arrays.asList(qQuestion.getKeywords().split(",\\s*")));
+				}
+
 			}
+
 			for (EJAnswers answerObject : it.getAnswers()) {
 				getAnswersFromAnswerObject(answerObject, question);
 			}

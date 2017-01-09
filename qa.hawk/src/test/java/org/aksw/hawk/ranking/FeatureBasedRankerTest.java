@@ -7,8 +7,8 @@ import java.util.Set;
 
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.querybuilding.SPARQLQuery;
 import org.aksw.hawk.ranking.FeatureBasedRanker.Feature;
+import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -51,7 +51,14 @@ public class FeatureBasedRankerTest {
 
 				List<Answer> answers = Lists.newArrayList();
 				for (SPARQLQuery q : queries) {
-					answers.add(q.toAnswer());
+					Answer answer = new Answer();
+					try {
+						answer.query = (SPARQLQuery) q.clone();
+					} catch (CloneNotSupportedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					answers.add(answer);
 				}
 				System.out.println("answers:");
 				System.out.println(answers);

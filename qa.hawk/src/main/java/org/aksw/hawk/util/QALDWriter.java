@@ -16,7 +16,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.aksw.hawk.datastructures.Answer;
-import org.aksw.hawk.querybuilding.SPARQLQuery;
+import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.w3c.dom.Document;

@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.querybuilding.SPARQLQuery;
+import org.aksw.qa.commons.sparql.SPARQLQuery;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;

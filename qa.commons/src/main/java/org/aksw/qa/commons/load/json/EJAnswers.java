@@ -19,9 +19,9 @@ public class EJAnswers {
 	public EJAnswers() {
 		this.confidence = "";
 	}
-	
+
 	@JsonCreator
-	public static EJAnswers factory(String json){
+	public static EJAnswers factory(final String json) {
 		try {
 			return new ObjectMapper().readValue(json, EJAnswers.class);
 		} catch (IOException e) {
@@ -37,10 +37,16 @@ public class EJAnswers {
 	}
 
 	public EJResults getResults() {
+		if (results == null) {
+			results = new EJResults();
+		}
 		return results;
 	}
 
 	public EJHead getHead() {
+		if (head == null) {
+			head = new EJHead();
+		}
 		return head;
 	}
 
