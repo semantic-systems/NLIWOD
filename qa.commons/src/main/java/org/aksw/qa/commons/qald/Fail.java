@@ -6,7 +6,7 @@ package org.aksw.qa.commons.qald;
  * @author Jonathan
  *
  */
-enum Fail {
+public enum Fail {
 	ISONLYDBO_WRONG,
 	MISSING_KEYWORDS,
 	MISSING_LANGUAGES,
