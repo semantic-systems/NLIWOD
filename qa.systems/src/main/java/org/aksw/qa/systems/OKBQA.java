@@ -66,9 +66,7 @@ public class OKBQA extends ASystem {
 		//Iterate over answers and add them to the final answerSet
 		for(int i=0; i<results.length(); i++){
 			JSONObject result = results.getJSONObject(i);
-			String answerType = result.get("answer").getClass().getSimpleName();
-			this.log.info("D1: answerType: "+answerType);
-			question.setAnswerType(answerType);
+
 			String answerString = result.getString("answer");
 			answerSet.add(answerString);
 			
