@@ -1,0 +1,125 @@
+<?xml version="1.0" ?>
+<dataset id="dbpedia-test">
+
+<!-- STRING as answer -->
+<question aggregation="false" answertype="string" id="1" onlydbo="true">
+<string lang="en"><![CDATA[What is the official color of the University of Oxford?]]></string>
+<keywords lang="en"><![CDATA[University of Oxford, official color]]></keywords>
+<query><![CDATA[PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?string
+WHERE {
+        res:University_of_Oxford dbo:officialSchoolColour ?string . 
+}]]></query>
+<answers>
+<answer>
+<string><![CDATA[Oxford Blue]]></string>
+</answer>
+</answers>
+</question>
+
+<!-- RES as answer -->
+<question aggregation="false" answertype="resource" id="2" onlydbo="true">
+<string lang="en"><![CDATA[Where was Bach born?]]></string>
+<keywords lang="en"><![CDATA[birthplace, Bach]]></keywords>
+<query><![CDATA[PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?uri 
+WHERE {
+        res:Johann_Sebastian_Bach dbo:birthPlace ?uri .
+}]]></query>
+<answers>
+<answer>
+<uri>http://dbpedia.org/resource/Eisenach</uri>
+</answer>
+</answers>
+</question>
+
+<!-- BOOLEAN as answer -->
+<question aggregation="false" answertype="boolean" id="3" onlydbo="true">
+<string lang="en"><![CDATA[Does the Isar flow into a lake?]]></string>
+<keywords lang="en"><![CDATA[Isar, flow, lake]]></keywords>
+<query><![CDATA[PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+ASK
+WHERE {
+        ?x dbo:inflow res:Isar .
+        ?x rdf:type dbo:Lake . 
+}]]></query>
+<answers>
+<answer>
+<boolean>true</boolean>
+</answer>
+</answers>
+</question>
+
+<!-- NUMBER as answer -->
+<question aggregation="false" answertype="number" id="4" onlydbo="true">
+<string lang="en"><![CDATA[How many pages does War and Peace have?]]></string>
+<keywords lang="en"><![CDATA[how many, pages, War and Peace]]></keywords>
+<query><![CDATA[PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?n
+WHERE {
+        res:War_and_Peace dbo:numberOfPages ?n .
+}]]></query>
+<answers>
+<answer>
+<number>1225</number>
+</answer>
+</answers>
+</question>
+
+
+<!-- DATE as answer -->
+<question aggregation="false" answertype="date" id="5" onlydbo="true">
+<string lang="en"><![CDATA[When was Barack Obama born?]]></string>
+<keywords lang="en"><![CDATA[Barack Obama, born]]></keywords>
+<query><![CDATA[PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX res: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?date
+WHERE {
+        res:Barack_Obama dbo:birthDate ?date .
+}]]></query>
+<answers>
+<answer>
+<date>1961-08-04</date>
+</answer>
+</answers>
+</question>
+
+<!-- MULTIPLE answers -->
+<question aggregation="false" answertype="resource" id="6" onlydbo="true">
+<string lang="en">Which countries are connected by the Rhine?</string>
+<keywords lang="en">Rhine, country</keywords>
+<query><![CDATA[PREFIX dbo: <http://dbpedia.org/ontology/> 
+PREFIX dbp: <http://dbpedia.org/property/> 
+PREFIX res: <http://dbpedia.org/resource/> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+SELECT DISTINCT ?uri 
+WHERE { 
+        res:Rhine dbp:country ?string .  
+        ?uri rdf:type dbo:Country .  
+        ?uri rdfs:label ?string . 
+}]]></query>
+<answers>
+<answer><uri>http://dbpedia.org/resource/Switzerland</uri></answer>
+<answer><uri>http://dbpedia.org/resource/Germany</uri></answer>
+<answer><uri>http://dbpedia.org/resource/Netherlands</uri></answer>
+<answer><uri>http://dbpedia.org/resource/France</uri></answer>
+<answer><uri>http://dbpedia.org/resource/Austria</uri></answer>
+</answers>
+</question>
+
+
+<question aggregation="false" answertype="resource" id="7" onlydbo="true">
+<string lang="en"><![CDATA[Who are the parents of Jesus?]]></string>
+<keywords lang="en"><![CDATA[parents, Jesus]]></keywords>
+<query><![CDATA[SELECT ?v1 WHERE { ?v1 <http://dbpedia.org/ontology/parent> <http://dbpedia.org/resource/Jesus>} ]]></query>
+<answers>
+<answer><uri>http://dbpedia.org/resource/Saint_Joseph</uri></answer>
+<answer><uri>http://dbpedia.org/resource/Mary_(mother_of_Jesus)</uri></answer>
+</answers>
+</question>
+</dataset>
