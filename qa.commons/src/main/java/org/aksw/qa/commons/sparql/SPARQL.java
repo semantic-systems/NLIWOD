@@ -1,8 +1,6 @@
 package org.aksw.qa.commons.sparql;
 
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
 import org.aksw.jena_sparql_api.cache.h2.CacheUtilsH2;
@@ -23,6 +21,7 @@ public class SPARQL {
 	public QueryExecutionFactory qef;
 	public static final String ENDPOINT_TITAN = "http://139.18.2.164:3030/ds/sparql";
 	public static final String ENDPOINT_DBPEIDA_ORG = "http://dbpedia.org/sparql";
+	public static final String ENDPOINT_WIKIDATA_ORG = "http://query.wikidata.org/sparql";
 	private long timeToLive = 360l * 24l * 60l * 60l * 1000l;
 
 	public SPARQL() {
@@ -88,8 +87,10 @@ public class SPARQL {
 					set.add(new ResourceImpl(String.valueOf(qe.execAsk())));
 				} else {
 					ResultSet results = qe.execSelect();
+					String firstVarName = results.getResultVars().get(0);
 					while (results.hasNext()) {
-						RDFNode node = results.next().get(extractFirstVarname(query));
+
+						RDFNode node = results.next().get(firstVarName);
 						/**
 						 * Instead of returning a set with size 1 and value
 						 * (null) in it, when no answers are found, this ensures
@@ -109,15 +110,16 @@ public class SPARQL {
 		return set;
 	}
 
-	/**
-	 * Searching varname. For this, find first occurrence of "?" and extract
-	 * what comes after that and before next whitespace
-	 */
-	public String extractFirstVarname(final String sparqlQuery) {
-		Pattern pattern = Pattern.compile(".+?\\?(\\w+).+", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
-		Matcher m = pattern.matcher(sparqlQuery);
-		return m.replaceAll("$1");
-	}
+	// /**
+	// * Searching varname. For this, find first occurrence of "?" and extract
+	// * what comes after that and before next whitespace
+	// */
+	// public String extractFirstVarname(final String sparqlQuery) {
+	// Pattern pattern = Pattern.compile(".+?\\?(\\w+).+", Pattern.DOTALL |
+	// Pattern.CASE_INSENSITIVE);
+	// Matcher m = pattern.matcher(sparqlQuery);
+	// return m.replaceAll("$1");
+	// }
 
 	public long getTimeToLive() {
 		return timeToLive;

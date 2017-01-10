@@ -54,7 +54,16 @@ public class Qald7CreationTool {
 	public static final Set<Dataset> HYBRID_SETS = ImmutableSet.of(Dataset.QALD4_Test_Hybrid, Dataset.QALD4_Train_Hybrid, Dataset.QALD5_Test_Hybrid, Dataset.QALD5_Train_Hybrid,
 	        Dataset.QALD6_Test_Hybrid, Dataset.QALD6_Train_Hybrid);
 
-	private ThreadedSPARQL sparql = new ThreadedSPARQL(90, SPARQL.ENDPOINT_DBPEIDA_ORG);
+	private ThreadedSPARQL sparql;
+
+	public Qald7CreationTool() {
+		sparql = new ThreadedSPARQL(90, SPARQL.ENDPOINT_DBPEIDA_ORG);
+	}
+
+	public Qald7CreationTool(final String sparqlEndpoint, final int timeout) {
+		sparql = new ThreadedSPARQL(timeout, sparqlEndpoint);
+	}
+
 	int badQuestionCounter = 0;
 
 	/**
@@ -110,7 +119,7 @@ public class Qald7CreationTool {
 
 		this.createQald7Dataset(extractGoodTrainQuestionsFromAnnotated(questions), path, filenameWithoutExtension);
 		if (fileReport) {
-			this.createFileReport(questions, path + "BadQuestionsfileReport.txt", false);
+			this.createFileReport(questions, path + "BadQuestionsfileReport.txt", new HashSet<Fail>());
 		}
 
 	}
@@ -178,11 +187,11 @@ public class Qald7CreationTool {
 				Set<String> answersFromServer = Collections.emptySet();
 				try {
 					answersFromServer = getAnswersFromServer(question);
-					question.setServerAnswers(answersFromServer);
+
 				} catch (ExecutionException e) {
 					question.addFail(Fail.SPARQL_NOT_EXECUTABLE);
 				}
-
+				question.setServerAnswers(answersFromServer);
 				Set<String> answersFromDataset = question.getGoldenAnswers();
 				answersFromDataset = answersFromDataset == null ? Collections.emptySet() : answersFromDataset;
 
@@ -322,14 +331,13 @@ public class Qald7CreationTool {
 		return goodQuestions;
 	}
 
-	private Set<Qald7Question> extractBadQuestionsFromAnnotated(final Set<Qald7Question> questions, final boolean skipQuestionsWithTooLittleLanguages) {
+	private Set<Qald7Question> extractBadQuestionsFromAnnotated(final Set<Qald7Question> questions, final Set<Fail> ignoreFlags) {
 		Set<Qald7Question> badQuestions = new HashSet<>();
 		for (Qald7Question question : questions) {
+			Set<Fail> flags = new HashSet<>(question.getFails());
+			flags.removeAll(ignoreFlags);
 
-			if (skipQuestionsWithTooLittleLanguages && question.getFails().contains(Fail.MISSING_LANGUAGES)) {
-				continue;
-			}
-			if (!question.getFails().isEmpty()) {
+			if (!flags.isEmpty()) {
 				badQuestions.add(question);
 			}
 		}
@@ -395,15 +403,14 @@ public class Qald7CreationTool {
 	 *            its an error {@link Fail} and the question goes into the
 	 *            report
 	 */
-	public void createFileReportForTestQuestions(final Set<Dataset> datasets, final boolean autocorrectOnlydbo, final String pathAndFilenameWithExtension,
-	        final boolean skipQuestionsWithTooLittleLanguages) {
-		createFileReport(getQald7MultilingualTrainQuestions(datasets, autocorrectOnlydbo), pathAndFilenameWithExtension, skipQuestionsWithTooLittleLanguages);
+	public void createFileReportForTestQuestions(final Set<Dataset> datasets, final boolean autocorrectOnlydbo, final String pathAndFilenameWithExtension, final Set<Fail> ignoreFlags) {
+		createFileReport(loadAndAnnotateTrain(datasets, autocorrectOnlydbo), pathAndFilenameWithExtension, ignoreFlags);
 
 	}
 
-	private void createFileReport(final Set<Qald7Question> allQuestions, final String pathAndFilenameWithExtension, final boolean skipQuestionsWithTooLittleLanguages) {
+	public void createFileReport(final Set<Qald7Question> allQuestions, final String pathAndFilenameWithExtension, final Set<Fail> ignoreFlags) {
 		String n = System.getProperty("line.separator");
-		Set<Qald7Question> badQuestions = extractBadQuestionsFromAnnotated(allQuestions, skipQuestionsWithTooLittleLanguages);
+		Set<Qald7Question> badQuestions = extractBadQuestionsFromAnnotated(allQuestions, ignoreFlags);
 		StringBuilder out = new StringBuilder();
 		Set<Dataset> datasets = new HashSet<>();
 		for (Qald7Question question : badQuestions) {
@@ -420,9 +427,11 @@ public class Qald7CreationTool {
 			/**
 			 * Creating output
 			 */
+			Set<Fail> flags = new HashSet<>(question.getFails());
+			flags.removeAll(ignoreFlags);
 			out.append("_____________________________________________________" + n);
 			out.append("| Question Dataset: " + question.getFromDataset().name() + " Id: " + question.getId() + n);
-			out.append("| Flags: " + question.getFails().toString() + n);
+			out.append("| Flags: " + flags.toString() + n);
 			out.append("| Question: " + question.getLanguageToQuestion().get("en") + n);
 			if ((!inDatasetNotinServer.isEmpty() || !inServerNotinDataset.isEmpty())) {
 				out.append("| Sparql Query:" + n);

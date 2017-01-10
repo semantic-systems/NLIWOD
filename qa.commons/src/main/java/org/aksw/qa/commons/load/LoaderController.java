@@ -150,9 +150,11 @@ public class LoaderController {
 			return loadingAnchor.getResourceAsStream("/QALD-master/6/data/qald-6-test-multilingual.json");
 
 		case QALD7_Train_Hybrid:
-			return loadingAnchor.getResourceAsStream("/QALD-master/7/qald-7-train-hybrid.json");
+			return loadingAnchor.getResourceAsStream("/QALD-master/7/data/qald-7-train-hybrid.json");
 		case QALD7_Train_Multilingual:
-			return loadingAnchor.getResourceAsStream("/QALD-master/7/qald-7-train-multilingual.json");
+			return loadingAnchor.getResourceAsStream("/QALD-master/7/data/qald-7-train-multilingual.json");
+		case QALD7_Train_Multilingual_Wikidata:
+			return loadingAnchor.getResourceAsStream("/QALD-master/7/data/qald-7-train-multilingual-wikidata.json");
 
 		case Stanford_dev:
 			return loadingAnchor.getResourceAsStream("/stanfordqa-dev.json");
@@ -253,6 +255,7 @@ public class LoaderController {
 				case QALD6_Train_Multilingual:
 				case QALD7_Train_Hybrid:
 				case QALD7_Train_Multilingual:
+				case QALD7_Train_Multilingual_Wikidata:
 
 					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(getInputStream(data), QaldJson.class);
 					out = EJQuestionFactory.getQuestionsFromQaldJson(json);
