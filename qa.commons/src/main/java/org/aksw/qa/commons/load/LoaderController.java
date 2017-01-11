@@ -28,7 +28,9 @@ import org.aksw.qa.commons.load.json.ExtendedQALDJSONLoader;
 import org.aksw.qa.commons.load.json.QaldJson;
 import org.aksw.qa.commons.load.stanford.StanfordLoader;
 import org.aksw.qa.commons.utils.DateFormatter;
+import org.aksw.qa.commons.utils.SPARQLExecutor;
 import org.apache.jena.query.QueryFactory;
+import org.apache.jena.rdf.model.RDFNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMException;
@@ -182,6 +184,10 @@ public class LoaderController {
 	}
 
 	public static List<IQuestion> load(final Dataset data) {
+		return load(data, null);
+	}
+	
+	public static List<IQuestion> load(final Dataset data, String deriveUri){
 		try {
 			InputStream is = null;
 			is = getInputStream(data);
@@ -217,19 +223,19 @@ public class LoaderController {
 				case QALD4_Train_Hybrid:
 				case QALD4_Train_Multilingual:
 				case QALD4_Train_biomedical:
-					out = loadXML(is);
+					out = loadXML(is, deriveUri);
 					break;
 				// this is necessary because sparql and answers are spread over
 				// two files.
 				case QALD3_Test_esdbpedia:
 					is.close();
-					out = qald3_test_esdbpedia_loader();
+					out = qald3_test_esdbpedia_loader(deriveUri);
 					break;
 
 				case QALD5_Test_Hybrid:
 				case QALD5_Train_Hybrid:
 					hybrid = new ArrayList<>();
-					loadedQ = loadXML(is);
+					loadedQ = loadXML(is, deriveUri);
 					for (IQuestion q : loadedQ) {
 						if (q.getHybrid()) {
 							hybrid.add(q);
@@ -241,7 +247,7 @@ public class LoaderController {
 				case QALD5_Test_Multilingual:
 				case QALD5_Train_Multilingual:
 					hybrid = new ArrayList<>();
-					loadedQ = loadXML(is);
+					loadedQ = loadXML(is, deriveUri);
 					for (IQuestion q : loadedQ) {
 						if (!q.getHybrid()) {
 							hybrid.add(q);
@@ -261,7 +267,7 @@ public class LoaderController {
 					out = EJQuestionFactory.getQuestionsFromQaldJson(json);
 					break;
 				case nlq:
-					out = loadNLQ(is);
+					out = loadNLQ(is, deriveUri);
 					break;
 
 				case Stanford_dev:
@@ -281,7 +287,7 @@ public class LoaderController {
 		return null;
 	}
 
-	private static List<IQuestion> qald3_test_esdbpedia_loader() {
+	private static List<IQuestion> qald3_test_esdbpedia_loader(String deriveUri) {
 		List<IQuestion> answerList = null;
 		try {
 			InputStream sparqlIs = null;
@@ -294,8 +300,8 @@ public class LoaderController {
 			}
 
 			if ((sparqlIs.available() > 0) && (answerIs.available() > 0)) {
-				answerList = loadXML(answerIs);
-				List<IQuestion> sparqlList = loadXML(sparqlIs);
+				answerList = loadXML(answerIs, deriveUri);
+				List<IQuestion> sparqlList = loadXML(sparqlIs, deriveUri);
 				for (IQuestion q : answerList) {
 					for (IQuestion sparqlQ : sparqlList) {
 						if (q.getId().equals(sparqlQ.getId())) {
@@ -318,6 +324,13 @@ public class LoaderController {
 	 *
 	 */
 	public static List<IQuestion> loadXML(final InputStream file) {
+		return loadXML(file, null);
+	}
+	/**
+	 * This methods loads QALD XML files (used in QALD 1 to QALD 5)
+	 * and will get the Answers from the given Endpoint deriveUri
+	 */
+	public static List<IQuestion> loadXML(final InputStream file, String deriveUri) {
 		List<IQuestion> questions = new ArrayList<>();
 
 		try {
@@ -393,36 +406,45 @@ public class LoaderController {
 					question.setOutOfScope(question.getSparqlQuery().toUpperCase().contains("OUT OF SCOPE"));
 				}
 				// Read answers
-				NodeList answers = questionNode.getElementsByTagName("answers");
 				HashSet<String> set = new HashSet<>();
-				for (int j = 0; j < answers.getLength(); j++) {
-					NodeList answer = ((Element) answers.item(j)).getElementsByTagName("answer");
-					for (int k = 0; k < answer.getLength(); k++) {
+				if(deriveUri!=null && question.getSparqlQuery()!=null){
+					
+					Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, question.getSparqlQuery());
+					for(RDFNode answ : answers){
+						set.add(answ.toString());
+					}
+				}
+				else{
+					NodeList answers = questionNode.getElementsByTagName("answers");
+					
+					for (int j = 0; j < answers.getLength(); j++) {
+						NodeList answer = ((Element) answers.item(j)).getElementsByTagName("answer");
+						for (int k = 0; k < answer.getLength(); k++) {
+						
+							switch (question.getAnswerType().toLowerCase()) {
+							case "boolean":
+								Boolean b = Boolean.valueOf(((Element) answer.item(k)).getTextContent().toLowerCase().trim());
+								set.add(b.toString().trim());
+								break;
+							case "date":
+								set.add(DateFormatter.formatDate(((Element) answer.item(k)).getTextContent()).trim());
+								break;
+							default:
 
-						switch (question.getAnswerType().toLowerCase()) {
-						case "boolean":
-							Boolean b = Boolean.valueOf(((Element) answer.item(k)).getTextContent().toLowerCase().trim());
-							set.add(b.toString().trim());
-							break;
-						case "date":
-							set.add(DateFormatter.formatDate(((Element) answer.item(k)).getTextContent()).trim());
-							break;
-						default:
+								String answerString = ((Element) answer.item(k)).getTextContent();
+								/**
+								 * QALD1 questions have in answerSets "uri" and
+								 * "string" nodes, and returned string contains
+								 * both. This is a quick workaround
+								 */
+								String x = Arrays.asList(answerString.trim().split("\n")).get(0);
+								set.add(x);
+							}
 
-							String answerString = ((Element) answer.item(k)).getTextContent();
-							/**
-							 * QALD1 questions have in answerSets "uri" and
-							 * "string" nodes, and returned string contains
-							 * both. This is a quick workaround
-							 */
-							String x = Arrays.asList(answerString.trim().split("\n")).get(0);
-							set.add(x);
 						}
-
 					}
 				}
 				question.setGoldenAnswers(set);
-
 				questions.add(question);
 			}
 
@@ -440,6 +462,10 @@ public class LoaderController {
 	}
 
 	public static List<IQuestion> loadNLQ(final InputStream file) {
+		return loadNLQ(file, null);
+	}
+	
+	public static List<IQuestion> loadNLQ(final InputStream file, String deriveUri) {
 
 		List<IQuestion> output = new ArrayList<>();
 		HashMap<Integer, ArrayList<JsonObject>> idToQuestion = new HashMap<>();
@@ -486,7 +512,16 @@ public class LoaderController {
 				q.setSparqlQuery(lang, sparql);
 
 				Set<String> answ = new HashSet<>();
-				answ.add(answer);
+				if(deriveUri!=null && q.getSparqlQuery()!=null){
+					Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, q.getSparqlQuery());
+
+					for(RDFNode a : answers){
+						answ.add(a.toString());
+					}
+				}
+				else {
+					answ.add(answer);
+				}
 				q.setGoldenAnswers(lang, answ);
 			}
 			// validate SPARQL Query

@@ -10,15 +10,24 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.aksw.qa.commons.qald.QALD4_EvaluationUtils;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import com.google.common.collect.Sets;
 
 public class SPARQLExecutor {
 
@@ -111,4 +120,33 @@ public class SPARQLExecutor {
 		return reader;
 	}
 
+	public static Set<RDFNode> sparql(final String service, final String query) {
+		Set<RDFNode> set = Sets.newHashSet();
+
+	
+			QueryExecution qe = QueryExecutionFactory.sparqlService(service, query);
+			if ((qe != null) && (query.toString() != null)) {
+				if (QALD4_EvaluationUtils.isAskType(query)) {
+					set.add(new ResourceImpl(String.valueOf(qe.execAsk())));
+				} else {
+					ResultSet results = qe.execSelect();
+					String firstVarName = results.getResultVars().get(0);
+					while (results.hasNext()) {
+
+						RDFNode node = results.next().get(firstVarName);
+						/**
+						 * Instead of returning a set with size 1 and value
+						 * (null) in it, when no answers are found, this ensures
+						 * that Set is empty
+						 */
+						if (node != null) {
+							set.add(node);
+						}
+					}
+				}
+				qe.close();
+			}
+		return set;
+	}
+	
 }

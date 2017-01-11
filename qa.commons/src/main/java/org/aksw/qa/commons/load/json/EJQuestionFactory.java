@@ -3,13 +3,17 @@ package org.aksw.qa.commons.load.json;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Map.Entry;
 import java.util.Vector;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.datastructure.Question;
 import org.apache.jena.ext.com.google.common.base.Joiner;
+import org.aksw.qa.commons.utils.SPARQLExecutor;
+import org.apache.jena.rdf.model.RDFNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +28,10 @@ public final class EJQuestionFactory {
 	}
 
 	public static List<IQuestion> getQuestionsFromExtendedJson(final ExtendedJson json) {
+		return getQuestionsFromExtendedJson(json, null);
+	}
+	
+	public static List<IQuestion> getQuestionsFromExtendedJson(final ExtendedJson json, String deriveUri) {
 		List<IQuestion> out = new ArrayList<>();
 		for (EJQuestionEntry it : json.getQuestions()) {
 			IQuestion question = new Question();
@@ -44,11 +52,20 @@ public final class EJQuestionFactory {
 				langToKeywords.put(lang.getLanguage(), Arrays.asList(lang.getKeywords().split(SPLIT_KEYWORDS_ON)));
 				question.setLanguageToKeywords(langToKeywords);
 			}
+			if(deriveUri!=null && question.getSparqlQuery()!=null){
+				HashSet<String> set = new HashSet<>();
+				Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, question.getSparqlQuery());
 
-			EJAnswers answers = it.getQuestion().getAnswers();
+				for(RDFNode answ : answers){
+					set.add(answ.toString());
+				}
+				question.setGoldenAnswers(set);
+			}
+			else{
+				EJAnswers answers = it.getQuestion().getAnswers();
 
-			getAnswersFromAnswerObject(answers, question);
-
+				getAnswersFromAnswerObject(answers, question);
+			}
 		}
 
 		return out;
@@ -134,16 +151,24 @@ public final class EJQuestionFactory {
 	}
 
 	public static List<IQuestion> getQuestionsFromJson(final Object json) {
+		return getQuestionsFromJson(json, null);
+	}
+	
+	public static List<IQuestion> getQuestionsFromJson(final Object json, String deriveUri) {
 		if (json instanceof ExtendedJson) {
-			return getQuestionsFromExtendedJson((ExtendedJson) json);
+			return getQuestionsFromExtendedJson((ExtendedJson) json, deriveUri);
 		} else if (json instanceof QaldJson) {
-			return getQuestionsFromQaldJson((QaldJson) json);
+			return getQuestionsFromQaldJson((QaldJson) json, deriveUri);
 		} else {
 			return null;
 		}
 	}
 
 	public static List<IQuestion> getQuestionsFromQaldJson(final QaldJson json) {
+		return getQuestionsFromQaldJson(json, null);
+	}
+	
+	public static List<IQuestion> getQuestionsFromQaldJson(final QaldJson json, String deriveUri) {
 		List<IQuestion> questions = new ArrayList<>();
 
 		for (QaldQuestionEntry it : json.getQuestions()) {
@@ -167,8 +192,19 @@ public final class EJQuestionFactory {
 
 			}
 
-			for (EJAnswers answerObject : it.getAnswers()) {
-				getAnswersFromAnswerObject(answerObject, question);
+			if(deriveUri!=null && question.getSparqlQuery()!=null){
+				HashSet<String> set = new HashSet<>();
+				Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, question.getSparqlQuery());
+
+				for(RDFNode answ : answers){
+					set.add(answ.toString());
+				}
+				question.setGoldenAnswers(set);
+			}
+			else{
+				for (EJAnswers answerObject : it.getAnswers()) {
+					getAnswersFromAnswerObject(answerObject, question);
+				}
 			}
 
 			questions.add(question);
