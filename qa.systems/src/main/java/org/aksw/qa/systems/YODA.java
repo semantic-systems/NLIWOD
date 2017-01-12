@@ -54,7 +54,7 @@ public class YODA extends ASystem {
 		lastCall = System.currentTimeMillis();
 		HashSet<String> result = new HashSet<String>();
 
-		String url = "http://qa.ailao.eu/q";
+		String url = "http://live.ailao.eu/?e=http://yodaqa.felk.cvut.cz:4568/q";
 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPost httppost = new HttpPost(url);
