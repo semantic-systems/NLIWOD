@@ -156,8 +156,7 @@ public class LoaderController {
 		case QALD7_Train_Multilingual:
 			return loadingAnchor.getResourceAsStream("/QALD-master/7/data/qald-7-train-multilingual.json");
 		case QALD7_Train_Multilingual_Wikidata:
-			return loadingAnchor.getResourceAsStream("/QALD-master/7/data/qald-7-train-multilingual-wikidata.json");
-
+			return loadingAnchor.getResourceAsStream("/QALD-master/7/data/qald-7-train-en-wikidata.json");
 		case Stanford_dev:
 			return loadingAnchor.getResourceAsStream("/stanfordqa-dev.json");
 		case Stanford_train:
@@ -186,8 +185,8 @@ public class LoaderController {
 	public static List<IQuestion> load(final Dataset data) {
 		return load(data, null);
 	}
-	
-	public static List<IQuestion> load(final Dataset data, String deriveUri){
+
+	public static List<IQuestion> load(final Dataset data, final String deriveUri) {
 		try {
 			InputStream is = null;
 			is = getInputStream(data);
@@ -287,7 +286,7 @@ public class LoaderController {
 		return null;
 	}
 
-	private static List<IQuestion> qald3_test_esdbpedia_loader(String deriveUri) {
+	private static List<IQuestion> qald3_test_esdbpedia_loader(final String deriveUri) {
 		List<IQuestion> answerList = null;
 		try {
 			InputStream sparqlIs = null;
@@ -326,11 +325,12 @@ public class LoaderController {
 	public static List<IQuestion> loadXML(final InputStream file) {
 		return loadXML(file, null);
 	}
+
 	/**
-	 * This methods loads QALD XML files (used in QALD 1 to QALD 5)
-	 * and will get the Answers from the given Endpoint deriveUri
+	 * This methods loads QALD XML files (used in QALD 1 to QALD 5) and will get
+	 * the Answers from the given Endpoint deriveUri
 	 */
-	public static List<IQuestion> loadXML(final InputStream file, String deriveUri) {
+	public static List<IQuestion> loadXML(final InputStream file, final String deriveUri) {
 		List<IQuestion> questions = new ArrayList<>();
 
 		try {
@@ -407,20 +407,19 @@ public class LoaderController {
 				}
 				// Read answers
 				HashSet<String> set = new HashSet<>();
-				if(deriveUri!=null && question.getSparqlQuery()!=null){
-					
+				if ((deriveUri != null) && (question.getSparqlQuery() != null)) {
+
 					Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, question.getSparqlQuery());
-					for(RDFNode answ : answers){
+					for (RDFNode answ : answers) {
 						set.add(answ.toString());
 					}
-				}
-				else{
+				} else {
 					NodeList answers = questionNode.getElementsByTagName("answers");
-					
+
 					for (int j = 0; j < answers.getLength(); j++) {
 						NodeList answer = ((Element) answers.item(j)).getElementsByTagName("answer");
 						for (int k = 0; k < answer.getLength(); k++) {
-						
+
 							switch (question.getAnswerType().toLowerCase()) {
 							case "boolean":
 								Boolean b = Boolean.valueOf(((Element) answer.item(k)).getTextContent().toLowerCase().trim());
@@ -464,8 +463,8 @@ public class LoaderController {
 	public static List<IQuestion> loadNLQ(final InputStream file) {
 		return loadNLQ(file, null);
 	}
-	
-	public static List<IQuestion> loadNLQ(final InputStream file, String deriveUri) {
+
+	public static List<IQuestion> loadNLQ(final InputStream file, final String deriveUri) {
 
 		List<IQuestion> output = new ArrayList<>();
 		HashMap<Integer, ArrayList<JsonObject>> idToQuestion = new HashMap<>();
@@ -512,14 +511,13 @@ public class LoaderController {
 				q.setSparqlQuery(lang, sparql);
 
 				Set<String> answ = new HashSet<>();
-				if(deriveUri!=null && q.getSparqlQuery()!=null){
+				if ((deriveUri != null) && (q.getSparqlQuery() != null)) {
 					Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, q.getSparqlQuery());
 
-					for(RDFNode a : answers){
+					for (RDFNode a : answers) {
 						answ.add(a.toString());
 					}
-				}
-				else {
+				} else {
 					answ.add(answer);
 				}
 				q.setGoldenAnswers(lang, answ);

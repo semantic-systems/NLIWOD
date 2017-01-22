@@ -13,10 +13,16 @@ import org.junit.Ignore;
 public class DatasetWikidataTest {
 
 	public static void main(final String[] args) {
-		Qald7CreationTool tool = new Qald7CreationTool(SPARQL.ENDPOINT_WIKIDATA_ORG, 30);
+		Qald7CreationTool tool = new Qald7CreationTool(SPARQL.ENDPOINT_WIKIDATA_METAPHACTS, 30);
 		boolean autocorrectOnlydbo = false;
-		Set<Fail> ignoreFlags = Sets.newHashSet(Fail.ISONLYDBO_WRONG);
-		Set<Qald7Question> allQuestions = tool.loadAndAnnotateTrain(Sets.newHashSet(Dataset.QALD7_Train_Multilingual_Wikidata), autocorrectOnlydbo);
+		Set<Fail> ignoreFlags = Sets.newHashSet(Fail.ISONLYDBO_WRONG, Fail.MISSING_LANGUAGES);
+		Set<Qald7Question> allQuestions = Sets.newHashSet();
+		try {
+			allQuestions = tool.loadAndAnnotateTrain(Sets.newHashSet(Dataset.QALD7_Train_Multilingual_Wikidata), autocorrectOnlydbo);
+		} catch (Exception e) {
+			System.out.println("Be sure to copy the SSL certificate from metaphacts to your local JRE SSL store.\n See more @ SPARQL.ENDPOINT_WIKIDATA_METAPHACTS");
+			e.printStackTrace();
+		}
 
 		for (Qald7Question question : allQuestions) {
 			for (String answer : question.getServerAnswers()) {
