@@ -13,6 +13,7 @@ public class EJQuestion {
 	private Vector<String> answeritemtype;
 	private Vector<EJLanguage> language;
 	private EJAnswers answers;
+	private EJMetadata metadata;
 
 	public EJQuestion() {
 		this.answeritemtype = new Vector<>();
@@ -82,10 +83,10 @@ public class EJQuestion {
 
 	public EJQuestion setLanguage(final Vector<EJLanguage> language) {
 		this.language = language;
-		for(EJLanguage lang : this.language){
-			try{
+		for (EJLanguage lang : this.language) {
+			try {
 				QueryFactory.create(lang.getSparql());
-			}catch(Exception e){
+			} catch (Exception e) {
 				this.language.remove(lang);
 			}
 		}
@@ -95,6 +96,14 @@ public class EJQuestion {
 	public EJQuestion setAnswers(final EJAnswers answers) {
 		this.answers = answers;
 		return this;
+	}
+
+	public EJMetadata getMetadata() {
+		return metadata;
+	}
+
+	public void setMetadata(final EJMetadata metadata) {
+		this.metadata = metadata;
 	}
 
 }

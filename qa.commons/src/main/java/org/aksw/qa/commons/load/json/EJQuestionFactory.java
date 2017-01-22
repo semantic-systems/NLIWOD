@@ -5,14 +5,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.Vector;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.datastructure.Question;
-import org.apache.jena.ext.com.google.common.base.Joiner;
 import org.aksw.qa.commons.utils.SPARQLExecutor;
+import org.apache.jena.ext.com.google.common.base.Joiner;
 import org.apache.jena.rdf.model.RDFNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,14 +30,21 @@ public final class EJQuestionFactory {
 	public static List<IQuestion> getQuestionsFromExtendedJson(final ExtendedJson json) {
 		return getQuestionsFromExtendedJson(json, null);
 	}
-	
-	public static List<IQuestion> getQuestionsFromExtendedJson(final ExtendedJson json, String deriveUri) {
+
+	public static List<IQuestion> getQuestionsFromExtendedJson(final ExtendedJson json, final String deriveUri) {
 		List<IQuestion> out = new ArrayList<>();
 		for (EJQuestionEntry it : json.getQuestions()) {
 			IQuestion question = new Question();
 			out.add(question);
 			question.setId(it.getQuestion().getId() + "");
 			question.setAnswerType(it.getQuestion().getAnswertype());
+			if (it.getQuestion().getMetadata() != null) {
+				EJMetadata meta = it.getQuestion().getMetadata();
+				question.setAggregation(meta.getAggregation());
+				question.setHybrid(meta.getHybrid());
+				question.setOnlydbo(meta.getOnlydbo());
+
+			}
 
 			for (EJLanguage lang : it.getQuestion().getLanguage()) {
 
@@ -52,16 +59,15 @@ public final class EJQuestionFactory {
 				langToKeywords.put(lang.getLanguage(), Arrays.asList(lang.getKeywords().split(SPLIT_KEYWORDS_ON)));
 				question.setLanguageToKeywords(langToKeywords);
 			}
-			if(deriveUri!=null && question.getSparqlQuery()!=null){
+			if ((deriveUri != null) && (question.getSparqlQuery() != null)) {
 				HashSet<String> set = new HashSet<>();
 				Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, question.getSparqlQuery());
 
-				for(RDFNode answ : answers){
+				for (RDFNode answ : answers) {
 					set.add(answ.toString());
 				}
 				question.setGoldenAnswers(set);
-			}
-			else{
+			} else {
 				EJAnswers answers = it.getQuestion().getAnswers();
 
 				getAnswersFromAnswerObject(answers, question);
@@ -77,6 +83,15 @@ public final class EJQuestionFactory {
 
 		for (IQuestion question : questions) {
 			EJQuestionEntry entry = new EJQuestionEntry();
+
+			if ((question.getHybrid() != null) || (question.getOnlydbo() != null) || (question.getAggregation() != null) || question.getOutOfScope()) {
+				EJMetadata metadata = new EJMetadata();
+				metadata.setAggregation(question.getAggregation());
+				metadata.setOnlydbo(question.getOnlydbo());
+				metadata.setHybrid(question.getHybrid());
+				entry.getQuestion().setMetadata(metadata);
+			}
+
 			if (!Strings.isNullOrEmpty(question.getAnswerType())) {
 				entry.getQuestion().setAnswertype(question.getAnswerType());
 			}
@@ -153,8 +168,8 @@ public final class EJQuestionFactory {
 	public static List<IQuestion> getQuestionsFromJson(final Object json) {
 		return getQuestionsFromJson(json, null);
 	}
-	
-	public static List<IQuestion> getQuestionsFromJson(final Object json, String deriveUri) {
+
+	public static List<IQuestion> getQuestionsFromJson(final Object json, final String deriveUri) {
 		if (json instanceof ExtendedJson) {
 			return getQuestionsFromExtendedJson((ExtendedJson) json, deriveUri);
 		} else if (json instanceof QaldJson) {
@@ -167,8 +182,8 @@ public final class EJQuestionFactory {
 	public static List<IQuestion> getQuestionsFromQaldJson(final QaldJson json) {
 		return getQuestionsFromQaldJson(json, null);
 	}
-	
-	public static List<IQuestion> getQuestionsFromQaldJson(final QaldJson json, String deriveUri) {
+
+	public static List<IQuestion> getQuestionsFromQaldJson(final QaldJson json, final String deriveUri) {
 		List<IQuestion> questions = new ArrayList<>();
 
 		for (QaldQuestionEntry it : json.getQuestions()) {
@@ -192,16 +207,15 @@ public final class EJQuestionFactory {
 
 			}
 
-			if(deriveUri!=null && question.getSparqlQuery()!=null){
+			if ((deriveUri != null) && (question.getSparqlQuery() != null)) {
 				HashSet<String> set = new HashSet<>();
 				Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, question.getSparqlQuery());
 
-				for(RDFNode answ : answers){
+				for (RDFNode answ : answers) {
 					set.add(answ.toString());
 				}
 				question.setGoldenAnswers(set);
-			}
-			else{
+			} else {
 				for (EJAnswers answerObject : it.getAnswers()) {
 					getAnswersFromAnswerObject(answerObject, question);
 				}
@@ -323,8 +337,14 @@ public final class EJQuestionFactory {
 			if (!qaldQuestionEntry.getAnswers().isEmpty()) {
 				exEntry.getQuestion().setAnswers(qaldQuestionEntry.getAnswers().get(0));
 			}
+			EJMetadata meta = new EJMetadata();
+			meta.setAggregation(qaldQuestionEntry.getAggregation());
+			meta.setHybrid(qaldQuestionEntry.getHybrid());
+			meta.setOnlydbo(qaldQuestionEntry.getOnlydbo());
+			exEntry.getQuestion().setMetadata(meta);
 
 			for (QaldQuestion qqIt : qaldQuestionEntry.getQuestion()) {
+
 				EJLanguage lang = new EJLanguage();
 				lang.setLanguage(qqIt.getLanguage());
 				lang.setQuestion(qqIt.getString());
@@ -349,6 +369,13 @@ public final class EJQuestionFactory {
 
 		for (EJQuestionEntry exEntry : exJson.getQuestions()) {
 			QaldQuestionEntry qEntry = new QaldQuestionEntry();
+
+			if (exEntry.getQuestion().getMetadata() != null) {
+				EJMetadata meta = exEntry.getQuestion().getMetadata();
+				qEntry.setAggregation(meta.getAggregation());
+				qEntry.setHybrid(meta.getHybrid());
+				qEntry.setOnlydbo(meta.getOnlydbo());
+			}
 			qEntry.setId(exEntry.getQuestion().getId());
 			qEntry.setAnswertype(exEntry.getQuestion().getAnswertype());
 
