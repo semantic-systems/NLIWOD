@@ -234,7 +234,7 @@ public class DatasetGenerator {
 	// of resources in the benchmark data
 	private static void updateGoldenAnswers(QueryExecutionFactory qef, IQuestion q) {
 		Set<String> uris = new HashSet<>();
-		try(QueryExecution qe = qef.createQueryExecution(q.getSparqlQuery()) {
+		try(QueryExecution qe = qef.createQueryExecution(q.getSparqlQuery())) {
 			ResultSet rs = qe.execSelect();
 			while(rs.hasNext()) {
 				QuerySolution qs = rs.next();
