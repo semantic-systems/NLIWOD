@@ -50,7 +50,7 @@ out of scope (?) :
 * http://jmcauley.ucsd.edu/data/amazon/qa/
 * http://www.aclweb.org/aclwiki/index.php?title=Question_Answering_(State_of_the_art) 
 * https://stackoverflow.blog/2009/06/stack-overflow-creative-commons-data-dump/
-
+* https://medium.com/startup-grind/fueling-the-ai-gold-rush-7ae438505bc2#.51rfdj1kd 
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
