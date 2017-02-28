@@ -15,10 +15,10 @@ import org.aksw.qa.commons.load.LoaderController;
 import org.aksw.qa.commons.nlp.nerd.AGDISTIS;
 import org.aksw.qa.commons.nlp.nerd.Spotlight;
 import org.apache.jena.query.Query;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.apache.jena.riot.WebContent;
 import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
@@ -52,9 +52,12 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-//TODO actually refactor this class to an own submodule
+/**
+ * @author Lorenz Buehmann
+ */
 public class DatasetGenerator {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DatasetGenerator.class);
@@ -110,6 +113,7 @@ public class DatasetGenerator {
 	public void generate(Map<String, Set<String>> question2Answers) {
 
 		question2Answers.forEach((question, answers) -> {
+			if(!question.contains("writer")) return;
 			LOGGER.info("###################################################################################");
 			LOGGER.info("processing \"{}\" ...", question);
 
@@ -117,10 +121,7 @@ public class DatasetGenerator {
 			Map<String, List<Entity>> questionEntities = recognize(question);
 
 			// 2. disambiguate the answers
-			Set<String> answerEntities = answers.stream()
-					.map(answer -> disambiguate(answer))
-					.filter(entity -> entity != null)
-					.collect(Collectors.toSet());
+			Map<String, Optional<String>> answerEntities = disambiguateAnswers(answers);
 
 			// we stop if we could not find entities
 			if(answerEntities.isEmpty()) {
@@ -157,34 +158,43 @@ public class DatasetGenerator {
 		return entities;
 	}
 
-	private String disambiguate(String label) {
+	private Map<String, Optional<String>> disambiguateAnswers(Set<String> answers) {
+		return answers.stream()
+				.collect(Collectors.toMap(a -> a, a -> disambiguate(a)));
+	}
+
+	private Optional<String> disambiguate(String label) {
 		LOGGER.info("NED for {} ...", label);
 		String preAnnotatedText = "<entity>" + label + "</entity>";
 
-		HashMap<String, String> results;
 		try {
-			results = disambiguator.runDisambiguation(preAnnotatedText);
-			for (String namedEntity : results.keySet()) {
-				LOGGER.info("entity for {}: {}", label, results.get(namedEntity));
-				return results.get(namedEntity);
+			HashMap<String, String> results = disambiguator.runDisambiguation(preAnnotatedText);
+			String namedEntity = results.get(label);
+			if(namedEntity == null) {
+				LOGGER.warn("no entity found for {}", label);
+			} else {
+				LOGGER.info("{} -> {}", label, namedEntity);
 			}
+			return Optional.ofNullable(namedEntity);
 		} catch (ParseException | IOException e) {
 			e.printStackTrace();
 		}
-		LOGGER.info("no entity found for {}", label);
 		return null;
 	}
 
-	private void generateSPARQLQuery(Set<String> entities, Map<String, List<Entity>> questionEntities) {
+	private void generateSPARQLQuery(Map<String, Optional<String>> entities, Map<String, List<Entity>> questionEntities) {
 		Set<Resource> filterResources = questionEntities.values().stream().flatMap(l -> l.stream()).map(
 				e -> e.getUris()).flatMap(u -> u.stream()).collect(
 				Collectors.toSet());
+		System.out.println(filterResources);
 
 		Set<Entity> filterEntities = questionEntities.values().stream().flatMap(l -> l.stream()).collect(Collectors.toSet());
+		System.out.println(filterEntities);
 
 		// generate query trees
 		List<RDFResourceTree> trees = new ArrayList<>(entities.size());
-		for (String uri : entities) {
+
+		entities.values().stream().filter(e -> e.isPresent()).map(e -> e.get()).forEach(uri -> {
 			LOGGER.info(uri);
 			// generate CBD
 			Model cbd = cbdGen.getConciseBoundedDescription(uri);
@@ -194,9 +204,9 @@ public class DatasetGenerator {
 				Resource root = ResourceFactory.createResource(uri);
 //				return filterResources.contains(st.getSubject())|| filterResources.contains(st.getObject());
 
-				return filterEntities.stream().anyMatch(e ->
+				return filterEntities.isEmpty() || filterEntities.stream().anyMatch(e ->
 																(st.getSubject().toString().toLowerCase().contains(e.getLabel().toLowerCase())) ||
-																 st.getObject().toString().toLowerCase().contains(e.getLabel().toLowerCase()));
+																		st.getObject().toString().toLowerCase().contains(e.getLabel().toLowerCase()));
 			};
 
 			// filter CBD
@@ -207,8 +217,7 @@ public class DatasetGenerator {
 			RDFResourceTree tree = qtf.getQueryTree(uri, cbd);
 			trees.add(tree);
 			LOGGER.info(tree.getStringRepresentation(true));
-		}
-
+		});
 
 		// compute LGG
 		RDFResourceTree lgg = lggGen.getLGG(trees);
@@ -221,23 +230,44 @@ public class DatasetGenerator {
 		System.out.println(query);
 	}
 
+	// used to get up-to-date answers for a SPARQL query instead of the hard-code and probably out-dated list
+	// of resources in the benchmark data
+	private static void updateGoldenAnswers(QueryExecutionFactory qef, IQuestion q) {
+		Set<String> uris = new HashSet<>();
+		try(QueryExecution qe = qef.createQueryExecution(q.getSparqlQuery())) {
+			ResultSet rs = qe.execSelect();
+			while(rs.hasNext()) {
+				QuerySolution qs = rs.next();
+
+				RDFNode node = qs.get("uri");
+
+				if(node != null && node.isResource()) {
+					uris.add(node.asResource().getURI());
+				}
+			}
+		}
+		q.setGoldenAnswers(uris);
+	}
+
 	public static void main(String[] args) throws IOException {
 		// DBpedia as SPARQL endpoint
-		QueryExecutionFactory qef  = FluentQueryExecutionFactory
+		long timeToLive = TimeUnit.DAYS.toMillis(30);
+		CacheFrontend cacheFrontend = CacheUtilsH2.createCacheFrontend("/tmp/qald/sparql", true, timeToLive);
+		final QueryExecutionFactory qef  = FluentQueryExecutionFactory
 				.http("http://dbpedia.org/sparql", Lists.newArrayList("http://dbpedia.org"))
 				.config().withPostProcessor(qe -> ((QueryEngineHTTP) ((QueryExecutionHttpWrapper) qe).getDecoratee())
 						.setModelContentType(WebContent.contentTypeRDFXML))
+				.withCache(cacheFrontend)
 				.end()
 				.create();
-		long timeToLive = TimeUnit.DAYS.toMillis(30);
-		CacheFrontend cacheFrontend = CacheUtilsH2.createCacheFrontend("/tmp/qald/sparql", true, timeToLive);
-		qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
 
 //		List<IQuestion> questions = LoaderController.load(Dataset.Stanford_dev);
 		List<IQuestion> questions = LoaderController.load(Dataset.QALD6_Train_Multilingual);
 		questions.stream()
 				.filter(q -> q.getAnswerType().equals("resource"))
 				.collect(Collectors.toList());
+		questions.forEach(q -> updateGoldenAnswers(qef, q));
+
 		IRIShortFormProvider sfp = new SimpleIRIShortFormProvider();
 		questions.forEach(q -> q.setGoldenAnswers(q.getGoldenAnswers().stream()
 														  .map(a -> sfp.getShortForm(IRI.create(a)))
