@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>datasets</artifactId>
-			<version>${qa-datasets.version}</version>
+			<version>0.5.4</version>
 		</dependency>
 		<!-- Reading JSON files -->
 		<dependency>

@@ -19,7 +19,6 @@
 		<junit.version>4.12</junit.version>
 		<qa-commons.version>0.4.4</qa-commons.version>
 		<qa-annotation.version>0.2.0-SNAPSHOT</qa-annotation.version>
-		<qa-datasets.version>0.5.4</qa-datasets.version>
 		<qa-systems.version>0.0.4-SNAPSHOT</qa-systems.version>
 		<qa-ml.version>0.0.1-SNAPSHOT</qa-ml.version>
 		<qa-hawk.version>0.3.1</qa-hawk.version>
