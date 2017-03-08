@@ -21,7 +21,7 @@ or
 
 Running HAWK
 ==
-!!!Befor running hawk make sure there is a SPARQL endpoint at http://139.18.2.164:3030/ds/sparql or http://titan.informatik.uni-leipzig.de:3030/ds/sparql!!!
+!!!Before running hawk make sure there is a SPARQL endpoint at http://139.18.2.164:3030/ds/sparql or http://titan.informatik.uni-leipzig.de:3030/ds/sparql!!!
 !!!Make sure there is an available Stanford CoreNLP server at http://localhost: or http://titan.informatik.uni-leipzig.de:9000/!!!
 
 Running HAWK via Docker
@@ -37,6 +37,16 @@ cd ..
 docker build -f qa.hawk/deploy-scripts/Dockerfile-hawk -t hawk .
 docker run -d --name hawk -p 8181:8181 --restart=always hawk
 ``
+
+Building HAWK
+===
+Using mvn package or mvn install there will be two artifacts generated (and installed) :
+
+-> hawk-(version).jar only contains hawk and can be used as a dependency for other projects.
+
+-> hawk-(version)-bootable-with-spring.jar does not only contains hawk, but makes it runnable 
+   via spring (see Running HAWK via maven)
+
 
 Running  HAWK via Maven
 ===
