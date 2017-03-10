@@ -183,10 +183,10 @@ public class LoaderController {
 	}
 
 	public static List<IQuestion> load(final Dataset data) {
-		return load(data, null);
+		return load(data, null, "en");
 	}
 
-	public static List<IQuestion> load(final Dataset data, final String deriveUri) {
+	public static List<IQuestion> load(final Dataset data, final String deriveUri, String questionLang) {
 		try {
 			InputStream is = null;
 			is = getInputStream(data);
@@ -222,19 +222,19 @@ public class LoaderController {
 				case QALD4_Train_Hybrid:
 				case QALD4_Train_Multilingual:
 				case QALD4_Train_biomedical:
-					out = loadXML(is, deriveUri);
+					out = loadXML(is, deriveUri, questionLang);
 					break;
 				// this is necessary because sparql and answers are spread over
 				// two files.
 				case QALD3_Test_esdbpedia:
 					is.close();
-					out = qald3_test_esdbpedia_loader(deriveUri);
+					out = qald3_test_esdbpedia_loader(deriveUri, questionLang);
 					break;
 
 				case QALD5_Test_Hybrid:
 				case QALD5_Train_Hybrid:
 					hybrid = new ArrayList<>();
-					loadedQ = loadXML(is, deriveUri);
+					loadedQ = loadXML(is, deriveUri, questionLang);
 					for (IQuestion q : loadedQ) {
 						if (q.getHybrid()) {
 							hybrid.add(q);
@@ -246,7 +246,7 @@ public class LoaderController {
 				case QALD5_Test_Multilingual:
 				case QALD5_Train_Multilingual:
 					hybrid = new ArrayList<>();
-					loadedQ = loadXML(is, deriveUri);
+					loadedQ = loadXML(is, deriveUri, questionLang);
 					for (IQuestion q : loadedQ) {
 						if (!q.getHybrid()) {
 							hybrid.add(q);
@@ -286,7 +286,7 @@ public class LoaderController {
 		return null;
 	}
 
-	private static List<IQuestion> qald3_test_esdbpedia_loader(final String deriveUri) {
+	private static List<IQuestion> qald3_test_esdbpedia_loader(final String deriveUri, String questionLang) {
 		List<IQuestion> answerList = null;
 		try {
 			InputStream sparqlIs = null;
@@ -299,8 +299,8 @@ public class LoaderController {
 			}
 
 			if ((sparqlIs.available() > 0) && (answerIs.available() > 0)) {
-				answerList = loadXML(answerIs, deriveUri);
-				List<IQuestion> sparqlList = loadXML(sparqlIs, deriveUri);
+				answerList = loadXML(answerIs, deriveUri, questionLang);
+				List<IQuestion> sparqlList = loadXML(sparqlIs, deriveUri, questionLang);
 				for (IQuestion q : answerList) {
 					for (IQuestion sparqlQ : sparqlList) {
 						if (q.getId().equals(sparqlQ.getId())) {
@@ -322,15 +322,15 @@ public class LoaderController {
 	 * This methods loads QALD XML files (used in QALD 1 to QALD 5)
 	 *
 	 */
-	public static List<IQuestion> loadXML(final InputStream file) {
-		return loadXML(file, null);
+	public static List<IQuestion> loadXML(final InputStream file, String questionLang) {
+		return loadXML(file, null, questionLang);
 	}
 
 	/**
 	 * This methods loads QALD XML files (used in QALD 1 to QALD 5) and will get
 	 * the Answers from the given Endpoint deriveUri
 	 */
-	public static List<IQuestion> loadXML(final InputStream file, final String deriveUri) {
+	public static List<IQuestion> loadXML(final InputStream file, final String deriveUri, String questionLang) {
 		List<IQuestion> questions = new ArrayList<>();
 
 		try {
@@ -360,7 +360,8 @@ public class LoaderController {
 					 * Workaround for QALD1 Datasets
 					 */
 					if (Strings.isNullOrEmpty(lang)) {
-						question.getLanguageToQuestion().put("en", ((Element) nlrs.item(j)).getTextContent().trim());
+						//TODO change "en" to questionLanguage
+						question.getLanguageToQuestion().put(questionLang, ((Element) nlrs.item(j)).getTextContent().trim());
 						break;
 					}
 					question.getLanguageToQuestion().put(lang, ((Element) nlrs.item(j)).getTextContent().trim());
