@@ -6,6 +6,7 @@ import java.util.HashSet;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -22,19 +23,25 @@ public class SINA extends ASystem {
 		return "sina";
 	};
 
-	public void search(IQuestion question) throws Exception {
+	public void search(IQuestion question, String language) throws Exception {
 		String questionString;
-		if (!question.getLanguageToQuestion().containsKey("en")) {
+		if (!question.getLanguageToQuestion().containsKey(language)) {
 			return;
 		}
-		questionString = question.getLanguageToQuestion().get("en");
+		questionString = question.getLanguageToQuestion().get(language);
 		log.debug(this.getClass().getSimpleName() + ": " + questionString);
 		HashSet<String> resultSet = new HashSet<String>();
 
-		HttpClient client = HttpClientBuilder.create().build();
-		URI uri = new URIBuilder().setScheme("http").setHost("sina.aksw.org")
-				.setPath("/api/rest/search").setParameter("q", questionString)
-				.build();
+		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).build();
+		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
+
+		URIBuilder builder = new URIBuilder().setScheme("http").setHost("sina.aksw.org")
+				.setPath("/api/rest/search").setParameter("q", questionString);
+		if(this.setLangPar){
+			builder=  builder.setParameter("lang", language);
+		}
+		
+		URI uri = builder.build();
 		HttpGet httpget = new HttpGet(uri);
 		HttpResponse response = client.execute(httpget);
 		//Test if error occured

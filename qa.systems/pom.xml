@@ -49,5 +49,10 @@
 			<artifactId>logback-core</artifactId>
 			<version>${logback.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.aksw.qa</groupId>
+			<artifactId>datasets</artifactId>
+			<version>0.5.5</version>
+		</dependency>
 	</dependencies>
 </project>

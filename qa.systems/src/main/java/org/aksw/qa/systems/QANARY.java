@@ -17,6 +17,7 @@ import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -32,19 +33,23 @@ public class QANARY extends ASystem {
 	private static final String QANARY_URI = "http://wdaqua-qanary.univ-st-etienne.fr/gerbil";
 	
 	@Override
-	public void search(IQuestion question) throws Exception {
+	public void search(IQuestion question, String language) throws Exception {
 		String questionString;
-		if (!question.getLanguageToQuestion().containsKey("en")) {
+		if (!question.getLanguageToQuestion().containsKey(language)) {
 			return;
 		}
-		questionString = question.getLanguageToQuestion().get("en");
+		questionString = question.getLanguageToQuestion().get(language);
 		log.debug(this.getClass().getSimpleName() + ": " + questionString);
 
-		HttpClient client = HttpClientBuilder.create().build();
+		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
+		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 		HttpPost httppost = new HttpPost(QANARY_URI);
 		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("query", questionString));
+		if(this.setLangPar){
+			params.add(new BasicNameValuePair("lang", language));
+		}
 
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params,
 				Consts.UTF_8);

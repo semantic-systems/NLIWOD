@@ -9,6 +9,7 @@ import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -38,12 +39,12 @@ public class YODA extends ASystem {
 		return "yoda";
 	};
 
-	public void search(IQuestion question) throws Exception {
+	public void search(IQuestion question, String language) throws Exception {
 		String questionString;
-		if (!question.getLanguageToQuestion().containsKey("en")) {
+		if (!question.getLanguageToQuestion().containsKey(language)) {
 			return;
 		}
-		questionString = question.getLanguageToQuestion().get("en");
+		questionString = question.getLanguageToQuestion().get(language);
 		log.debug(this.getClass().getSimpleName() + ": " + questionString);
 
 		long timeToWait = (lastCall + YODAY_WAIT_TIME)
@@ -56,10 +57,14 @@ public class YODA extends ASystem {
 
 		String url = "http://live.ailao.eu/?e=http://yodaqa.felk.cvut.cz:4568/q";
 
-		HttpClient client = HttpClientBuilder.create().build();
+		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
+		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("text", questionString));
+		if(this.setLangPar){
+			params.add(new BasicNameValuePair("lang", language));
+		}
 
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params,
 				Consts.UTF_8);

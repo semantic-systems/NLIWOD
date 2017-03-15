@@ -9,6 +9,7 @@ import org.aksw.qa.commons.datastructure.IQuestion;
 import org.apache.commons.codec.Charsets;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -27,18 +28,23 @@ public class HAWK extends ASystem {
 		return "hawk";
 	};
 
-	public void search(IQuestion question) throws Exception {
+	public void search(IQuestion question, String language) throws Exception {
 		String questionString;
-		if (!question.getLanguageToQuestion().containsKey("en")) {
+		if (!question.getLanguageToQuestion().containsKey(language)) {
 			return;
 		}
-		questionString = question.getLanguageToQuestion().get("en");
+		questionString = question.getLanguageToQuestion().get(language);
 		log.debug(this.getClass().getSimpleName() + ": " + questionString);
 
-		HttpClient client = HttpClientBuilder.create().build();
-		URI iduri = new URIBuilder().setScheme("http")
+		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
+		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
+		URIBuilder builder = new URIBuilder().setScheme("http")
 				.setHost("139.18.2.164:8181").setPath("/search")
-				.setParameter("q", questionString).build();
+				.setParameter("q", questionString);
+		if(this.setLangPar){
+			builder = builder.setParameter("lang", language);
+		}
+		URI iduri = builder.build();
 		HttpGet httpget = new HttpGet(iduri);
 		HttpResponse idresponse = client.execute(httpget);
 		
