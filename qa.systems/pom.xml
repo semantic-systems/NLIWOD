@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.aksw</groupId>
 		<artifactId>nliwod</artifactId>
-		<version>0.0.4</version>
+		<version>0.0.5</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<groupId>org.aksw.qa</groupId>
@@ -48,6 +48,11 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
 			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aksw.qa</groupId>
+			<artifactId>datasets</artifactId>
+			<version>0.5.5</version>
 		</dependency>
 	</dependencies>
 </project>

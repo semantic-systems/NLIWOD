@@ -9,6 +9,7 @@ import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -29,17 +30,18 @@ public class QAKIS extends ASystem {
 		return "qakis";
 	};
 
-	public void search(IQuestion question) throws Exception {
+	public void search(IQuestion question, String language) throws Exception {
 		String questionString;
-		if (!question.getLanguageToQuestion().containsKey("en")) {
+		if (!question.getLanguageToQuestion().containsKey(language)) {
 			return;
 		}
-		questionString = question.getLanguageToQuestion().get("en");
+		questionString = question.getLanguageToQuestion().get(language);
 		log.debug(this.getClass().getSimpleName() + ": " + questionString);
 		final HashSet<String> resultSet = new HashSet<String>();
 		String url = "http://qakis.org/qakis/index.xhtml";
 
-		HttpClient client = HttpClientBuilder.create().build();
+		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
+		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 		HttpPost httppost = new HttpPost(url);
 		HttpResponse ping = client.execute(httppost);
 		//Test if error occured
@@ -59,7 +61,10 @@ public class QAKIS extends ASystem {
 		formparams.add(new BasicNameValuePair("index_form:submitQuestion", ""));
 		formparams.add(new BasicNameValuePair("javax.faces.ViewState",
 				viewstate));
-
+		if(this.setLangPar){
+			formparams.add(new BasicNameValuePair("index_form:language", language));
+		}
+		
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams,
 				Consts.UTF_8);
 		httppost.setEntity(entity);

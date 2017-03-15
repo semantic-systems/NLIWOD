@@ -1,5 +1,6 @@
 package org.aksw.qa.systems;
 
+import java.net.SocketTimeoutException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,20 +13,48 @@ public class SystemsTest {
     Logger log = LoggerFactory.getLogger(SystemsTest.class);
 
     @Test
-    public void testAllSystems() throws Exception {
+    public void testAllSystemsEN() throws Exception {
         String questionString = "What is the capital of Germany?";
         List<ASystem> systems = Arrays.asList(
 //                (ASystem) new HAWK(), 
-//                (ASystem) new QAKIS(),
+                (ASystem) new QAKIS(),
                 (ASystem) new SINA(),
-//                (ASystem) new START(), 
-//                (ASystem) new YODA(),
+                (ASystem) new START(), 
                 (ASystem) new OKBQA(),
+//                (ASystem) new YODA(),
                 (ASystem) new QANARY()
                 );
         for (ASystem system : systems) {
-            IQuestion question = system.search(questionString);
-            log.debug(question.toString());
+        	system.setSocketTimeOutMs(30000);
+            try{
+        		IQuestion question = system.search(questionString, "en", true);
+            	log.debug(question.toString());
+        	}catch(SocketTimeoutException e){
+        	
+        	}
+        }
+    }
+    
+    @Test
+    public void testAllSystemsDE() throws Exception {
+        String questionString = "Was ist die Hauptstadt von Deutschland?";
+        List<ASystem> systems = Arrays.asList(
+//                (ASystem) new HAWK(), 
+                (ASystem) new QAKIS(),
+                (ASystem) new SINA(),
+                (ASystem) new START(), 
+                (ASystem) new OKBQA(),
+//                (ASystem) new YODA(),
+                (ASystem) new QANARY()
+                );
+        for (ASystem system : systems) {
+        	system.setSocketTimeOutMs(30000);
+        	try{
+        		IQuestion question = system.search(questionString, "de", true);
+            	log.debug(question.toString());
+        	}catch(SocketTimeoutException e){
+        		
+        	}
         }
     }
 }

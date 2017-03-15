@@ -6,9 +6,13 @@ import java.util.Set;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,12 +36,13 @@ public class OKBQA extends ASystem {
 	}
 	
 	private String execute(String jsonInput) throws Exception{
-
-		HttpClient client = HttpClientBuilder.create().build();
+		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
+		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 		HttpPost httppost = new HttpPost(CONTROLLER_URI);
 		StringEntity entity = new StringEntity(jsonInput);
 		
 		httppost.setEntity(entity);
+		
 		HttpResponse response = client.execute(httppost);
 		
 		if(response.getStatusLine().getStatusCode()>=400){
@@ -47,12 +52,12 @@ public class OKBQA extends ASystem {
 	}
 	
 	@Override
-	public void search(IQuestion question) throws Exception {
+	public void search(IQuestion question, String language) throws Exception {
 		String questionString;
-		if (!question.getLanguageToQuestion().containsKey("en")) {
+		if (!question.getLanguageToQuestion().containsKey(language)) {
 			return;
 		}
-		questionString = question.getLanguageToQuestion().get("en");
+		questionString = question.getLanguageToQuestion().get(language);
 		log.debug(this.getClass().getSimpleName() + ": " + questionString);
 		
 		
@@ -60,7 +65,7 @@ public class OKBQA extends ASystem {
 		question.setGoldenAnswers(answerSet);
 		
 		//Execute TGM to AGM. 
-		String responseString = execute(createInputJSON(questionString));
+		String responseString = execute(createInputJSON(questionString, language));
 		JSONObject obj = new JSONObject(responseString);
 		JSONArray results = obj.getJSONArray("result");
 		//Iterate over answers and add them to the final answerSet
@@ -99,11 +104,11 @@ public class OKBQA extends ASystem {
 		return "okbqa";
 	}
 	
-	private String createInputJSON(String questionString){
+	private String createInputJSON(String questionString, String language){
 		JSONObject json = new JSONObject();
 		JSONObject input = new JSONObject();
 		
-		input.put("language", "en");
+		input.put("language", language);
 		input.put("string", questionString);
 	
 		json.put("input", input);
