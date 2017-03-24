@@ -1,4 +1,6 @@
 # NLIWOD - Natural Language Interfaces for the Web of Data
+[![Project Stats](https://www.openhub.net/p/NLIWOD/widgets/project_thin_badge.gif)](https://www.openhub.net/p/NLIWOD)
+
 Collection of tools, utilities, datasets and approaches towards realizing natural language interfaces for the Web of Data. Currently, we are focusing on Question Answering (QA) utilities.
 
 Especially, this repository contains 
