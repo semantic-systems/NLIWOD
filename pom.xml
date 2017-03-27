@@ -166,17 +166,6 @@
 				<artifactId>jena-sparql-api-cache-h2</artifactId>
 				<version>${jena.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>ch.qos.logback</groupId>
-				<artifactId>logback-classic</artifactId>
-				<version>${logback.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>ch.qos.logback</groupId>
-				<artifactId>logback-core</artifactId>
-				<version>${logback.version}</version>
-			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
