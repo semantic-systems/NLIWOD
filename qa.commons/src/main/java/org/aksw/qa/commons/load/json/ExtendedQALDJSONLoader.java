@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,6 +60,40 @@ public final class ExtendedQALDJSONLoader {
 			LOGGER.error("", e);
 		}
 		LOGGER.info("File Written to " + f.getAbsolutePath());
+	}
+	/**
+	 * Writes the json to an byte array
+	 * @param json
+	 * @return the given json as byte representation
+	 * @throws JsonProcessingException
+	 */
+	public static byte[] writeJson(final Object json) throws JsonProcessingException {
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(Include.NON_NULL);
+		mapper.setSerializationInclusion(Include.NON_EMPTY);
+		mapper.disable(MapperFeature.USE_GETTERS_AS_SETTERS);
+
+		return mapper.writer().writeValueAsBytes(json);
+
+	}
+	
+	/**
+	 * Parses Json file and returns an Object containing the results. You need
+	 * to cast the return of this class to the class specified in type.
+	 *
+	 * @param inputJson the json to parse
+	 * @param type The class type you want to read.
+	 * @return An Object you should cast.
+	 * @throws IOException
+	 * @throws JsonMappingException
+	 * @throws JsonParseException
+	 */
+	public static Object readJson(final byte[] inputJson, final Class<?> type) throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.disable(MapperFeature.USE_GETTERS_AS_SETTERS);
+		return mapper.readValue(inputJson, type);
+
 	}
 
 	/**

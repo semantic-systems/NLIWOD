@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.aksw</groupId>
 		<artifactId>nliwod</artifactId>
-		<version>0.0.6</version>
+		<version>0.0.7</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<groupId>org.aksw.qa</groupId>
@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>datasets</artifactId>
-			<version>0.5.5</version>
+			<version>0.5.4</version>
 		</dependency>
 		<!-- Reading JSON files -->
 		<dependency>
