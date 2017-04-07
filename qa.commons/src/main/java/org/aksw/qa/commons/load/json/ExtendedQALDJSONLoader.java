@@ -107,14 +107,11 @@ public final class ExtendedQALDJSONLoader {
 	 * @throws JsonMappingException
 	 * @throws JsonParseException
 	 */
-	public static Object readJson(final InputStream in, final Class<?> type) {
+	public static Object readJson(final InputStream in, final Class<?> type)  throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(MapperFeature.USE_GETTERS_AS_SETTERS);
-		try {
-			return mapper.readValue(in, type);
-		} catch (Exception e) {
-			return null;
-		}
+
+		return mapper.readValue(in, type);
 	}
 
 	public static Object readJson(final InputStream in) throws JsonParseException, JsonMappingException, IOException {

@@ -395,6 +395,7 @@ public class LoaderController {
 					try {
 						QueryFactory.create(question.getSparqlQuery());
 					} catch (Exception e) {
+						log.error("Couldn't parse a query - Skipping question",e);
 						continue;
 					}
 				}
