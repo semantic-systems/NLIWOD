@@ -19,7 +19,7 @@
 		<junit.version>4.12</junit.version>
 		<qa-commons.version>0.4.6</qa-commons.version>
 		<qa-annotation.version>0.2.0-SNAPSHOT</qa-annotation.version>
-		<qa-systems.version>0.0.4-SNAPSHOT</qa-systems.version>
+		<qa-systems.version>0.0.5-SNAPSHOT</qa-systems.version>
 		<qa-ml.version>0.0.1-SNAPSHOT</qa-ml.version>
 		<qa-hawk.version>0.3.2</qa-hawk.version>
 		<qa-watodo.version>0.0.1-SNAPSHOT</qa-watodo.version>

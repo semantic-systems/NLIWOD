@@ -35,10 +35,14 @@ public class YODA extends ASystem {
 	 */
 	private long lastCall = 0;
 
+	private String url = "http://yodaqa.felk.cvut.cz:4567/q";
+
+	@Override
 	public String name() {
 		return "yoda";
 	};
 
+	@Override
 	public void search(IQuestion question, String language) throws Exception {
 		String questionString;
 		if (!question.getLanguageToQuestion().containsKey(language)) {
@@ -55,7 +59,7 @@ public class YODA extends ASystem {
 		lastCall = System.currentTimeMillis();
 		HashSet<String> result = new HashSet<String>();
 
-		String url = "http://live.ailao.eu/?e=http://yodaqa.felk.cvut.cz:4568/q";
+
 
 		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
 		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
@@ -104,4 +108,13 @@ public class YODA extends ASystem {
 		} while (finished.equals("false"));
 		question.setGoldenAnswers(result);
 	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 }

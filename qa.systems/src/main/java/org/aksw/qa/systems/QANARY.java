@@ -29,8 +29,7 @@ public class QANARY extends ASystem {
 
 	Logger log = LoggerFactory.getLogger(QANARY.class);
 
-	
-	private static final String QANARY_URI = "http://wdaqua-qanary.univ-st-etienne.fr/gerbil";
+	private String qanaryUrl = "http://wdaqua-qanary.univ-st-etienne.fr/gerbil";
 	
 	@Override
 	public void search(IQuestion question, String language) throws Exception {
@@ -43,7 +42,7 @@ public class QANARY extends ASystem {
 
 		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
 		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
-		HttpPost httppost = new HttpPost(QANARY_URI);
+		HttpPost httppost = new HttpPost(qanaryUrl);
 		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("query", questionString));
@@ -94,6 +93,14 @@ public class QANARY extends ASystem {
 	@Override
 	public String name() {
 		return "qanary";
+	}
+
+	public String getQanaryUrl() {
+		return qanaryUrl;
+	}
+
+	public void setQanaryUrl(String qanaryUrl) {
+		this.qanaryUrl = qanaryUrl;
 	}
 
 }
