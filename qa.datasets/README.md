@@ -1,4 +1,4 @@
-#Question answering datasets
+# Question answering datasets
 
 This collection includes the following datasets or respectivly looks at the following datasets to be included:
 
@@ -11,6 +11,9 @@ in production (adding answers):
 
 to analyze: 
 * GeoQuery, Free917, WebQuestions, SimpleQuestions, GraphQuestions, and QALD
+* http://parl.ai/
+* www.msmarco.org
+* convai.io 
 * https://www.microsoft.com/en-us/download/details.aspx?id=52763
 * http://datasets.maluuba.com/NewsQA
 * https://github.com/ysu1989/GraphQuestions GraphQuestions: compositional questions; multiple paraphrases for each question 
@@ -39,6 +42,7 @@ to analyze:
 * http://nlp.stanford.edu/blog/wikitablequestions-a-complex-real-world-question-understanding-dataset/
 * https://cs.umd.edu/~miyyer/qblearn/
 * https://ciir.cs.umass.edu/downloads/nfL6/
+* https://drive.google.com/file/d/0BwT5wj_P7BKXb2hfM3d2RHU1ckE/view
 out of scope (?) :
 * http://alt.qcri.org/semeval2015/task3/ SemEval-2015 Task 3: Answer Selection in Community Question Answering 
 * http://alt.qcri.org/semeval2016/task3/ Semeval-2016 Task 3: Community Question Answering
