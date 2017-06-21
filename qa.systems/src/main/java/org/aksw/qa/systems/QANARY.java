@@ -29,10 +29,10 @@ public class QANARY extends ASystem {
 
 	Logger log = LoggerFactory.getLogger(QANARY.class);
 
-	private String qanaryUrl = "http://wdaqua-qanary.univ-st-etienne.fr/gerbil";
-	
+	private String qanaryUrl = "https://wdaqua-qanary.univ-st-etienne.fr/gerbil-execute/wdaqua-core0,%20QueryExecuter/";
+
 	@Override
-	public void search(IQuestion question, String language) throws Exception {
+	public void search(final IQuestion question, final String language) throws Exception {
 		String questionString;
 		if (!question.getLanguageToQuestion().containsKey(language)) {
 			return;
@@ -43,35 +43,33 @@ public class QANARY extends ASystem {
 		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
 		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 		HttpPost httppost = new HttpPost(qanaryUrl);
-		
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+		List<NameValuePair> params = new ArrayList<>();
 		params.add(new BasicNameValuePair("query", questionString));
-		if(this.setLangPar){
+		if (this.setLangPar) {
 			params.add(new BasicNameValuePair("lang", language));
 		}
 
-		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params,
-				Consts.UTF_8);
+		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, Consts.UTF_8);
 		httppost.setEntity(entity);
-		
+
 		HttpResponse response = client.execute(httppost);
-		
+
 		//Test if error occured
-		if(response.getStatusLine().getStatusCode()>=400){
-			throw new Exception("QANARY Server could not answer due to: "+response.getStatusLine());
+		if (response.getStatusLine().getStatusCode() >= 400) {
+			throw new Exception("QANARY Server could not answer due to: " + response.getStatusLine());
 		}
-		
-		ExtendedJson json = (ExtendedJson) ExtendedQALDJSONLoader.readJson(response.getEntity().getContent(), 
-				ExtendedJson.class);
-		
+
+		ExtendedJson json = (ExtendedJson) ExtendedQALDJSONLoader.readJson(response.getEntity().getContent(), ExtendedJson.class);
+
 		for (EJQuestionEntry it : json.getQuestions()) {
 			EJQuestion q = it.getQuestion();
-			for(EJLanguage lang : q.getLanguage()){
+			for (EJLanguage lang : q.getLanguage()) {
 				question.setSparqlQuery(lang.getSparql());
 				question.setPseudoSparqlQuery(lang.getPseudo());
 			}
 			EJAnswers answers = q.getAnswers();
-		
+
 			if (answers == null) {
 				return;
 			}
@@ -81,13 +79,13 @@ public class QANARY extends ASystem {
 			if (answers.getResults() != null) {
 				Vector<HashMap<String, EJBinding>> answerVector = answers.getResults().getBindings();
 				for (HashMap<String, EJBinding> answerMap : answerVector) {
-					for (EJBinding bind : answerMap.values()) {	
+					for (EJBinding bind : answerMap.values()) {
 						question.getGoldenAnswers().add(bind.getValue());
 					}
 				}
 			}
 
-		}	
+		}
 	}
 
 	@Override
@@ -99,7 +97,7 @@ public class QANARY extends ASystem {
 		return qanaryUrl;
 	}
 
-	public void setQanaryUrl(String qanaryUrl) {
+	public void setQanaryUrl(final String qanaryUrl) {
 		this.qanaryUrl = qanaryUrl;
 	}
 

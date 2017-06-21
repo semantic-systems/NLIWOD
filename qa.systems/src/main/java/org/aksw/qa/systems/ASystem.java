@@ -38,4 +38,8 @@ public abstract class ASystem {
 
     public abstract String name();
 
+	public void setSetLangPar(boolean setLangPar) {
+		this.setLangPar = setLangPar;
+	}
+
 }
