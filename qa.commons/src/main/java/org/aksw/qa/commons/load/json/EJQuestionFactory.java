@@ -258,7 +258,8 @@ public final class EJQuestionFactory {
 
 		switch (ansType.toLowerCase()) {
 		case "boolean":
-			answers.setBoolean(Boolean.TRUE.equals(Joiner.on(" ").join(question.getLanguageToQuestion().values()).toLowerCase().contains("true")));
+			answers.setBoolean(question.getGoldenAnswers().iterator().next().contains("true"));
+//			answers.setBoolean(Boolean.TRUE.equals(Joiner.on(" ").join(question.getLanguageToQuestion().values()).toLowerCase().contains("true")));
 			break;
 		case "date":
 			head.getVars().add("date");
