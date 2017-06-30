@@ -5,8 +5,19 @@
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>datasets</artifactId>
 	<name>Question Answering (QA) datasets collection</name>
-	<version>0.5.5</version>
-	
+	<version>0.5.6</version>
+	<!-- DISTRIBUTION MANAGEMENT -->
+	<distributionManagement>
+		<repository>
+			<id>maven.aksw.internal</id>
+			<url>http://maven.aksw.org/archiva/repository/internal</url>
+		</repository>
+		<snapshotRepository>
+			<id>maven.aksw.snapshots</id>
+			<name>AKSW Snapshot Repository</name>
+			<url>http://maven.aksw.org/archiva/repository/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<build>
 		<plugins>
 			<plugin>

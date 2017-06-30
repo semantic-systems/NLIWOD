@@ -157,6 +157,10 @@ public class LoaderController {
 			return loadingAnchor.getResourceAsStream("/QALD-master/7/data/qald-7-train-multilingual.json");
 		case QALD7_Train_Multilingual_Wikidata:
 			return loadingAnchor.getResourceAsStream("/QALD-master/7/data/qald-7-train-en-wikidata.json");
+		case QALD7_Test_Multilingual:
+			return loadingAnchor.getResourceAsStream("/QALD-master/7/data/qald-7-test-multilingual.json");
+		case QALD7_Test_Multilingual_Wikidata:
+			return loadingAnchor.getResourceAsStream("/QALD-master/7/data/qald-7-test-en-wikidata.json");
 		case Stanford_dev:
 			return loadingAnchor.getResourceAsStream("/stanfordqa-dev.json");
 		case Stanford_train:
