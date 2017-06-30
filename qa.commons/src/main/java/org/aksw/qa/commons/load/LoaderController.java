@@ -265,6 +265,8 @@ public class LoaderController {
 				case QALD7_Train_Hybrid:
 				case QALD7_Train_Multilingual:
 				case QALD7_Train_Multilingual_Wikidata:
+				case QALD7_Test_Multilingual:
+				case QALD7_Test_Multilingual_Wikidata:
 
 					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(getInputStream(data), QaldJson.class);
 					out = EJQuestionFactory.getQuestionsFromQaldJson(json);
