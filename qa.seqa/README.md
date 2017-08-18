@@ -7,7 +7,10 @@
  * https://github.com/NLP2RDF/software , covering stanford
  * http://wit.istc.cnr.it/stlab-tools/fred , fred as sentiment tool
  * wrapping of services using http://restdesc.org/ and https://spring.io/guides/gs/service-registration-and-discovery/
- 
+
+# Idea as publication
+https://arxiv.org/abs/1611.01802
+
 # Running this application
 `mvn clean package spring-boot:run`
 
