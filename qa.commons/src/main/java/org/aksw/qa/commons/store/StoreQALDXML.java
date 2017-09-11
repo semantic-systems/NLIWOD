@@ -18,6 +18,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
+import org.apache.jena.ext.com.google.common.base.Strings;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -27,9 +28,9 @@ import com.google.common.base.Joiner;
 // http://greententacle.techfak.uni-bielefeld.de/~cunger/qald/index.php?x=evaltool&q=5
 public class StoreQALDXML {
 
-	private String dataset;
-	private List<Element> questions;
-	private Document doc;
+	private final String dataset;
+	private final List<Element> questions;
+	private final Document doc;
 
 	public StoreQALDXML(final String dataset) throws IOException, ParserConfigurationException {
 		this.dataset = dataset;
@@ -153,12 +154,19 @@ public class StoreQALDXML {
 		question.setAttribute("hybrid", "" + q.getHybrid());
 
 		for (String key : q.getLanguageToQuestion().keySet()) {
+			if (Strings.isNullOrEmpty(q.getLanguageToQuestion().get(key))) {
+				continue;
+			}
+
 			Element string = doc.createElement("string");
 			string.setAttribute("lang", key);
 			string.setTextContent(q.getLanguageToQuestion().get(key));
 			question.appendChild(string);
 		}
 		for (String key : q.getLanguageToKeywords().keySet()) {
+			if (org.apache.commons.collections.CollectionUtils.isEmpty(q.getLanguageToKeywords().get(key))) {
+				continue;
+			}
 			Element keyword = doc.createElement("keywords");
 			keyword.setAttribute("lang", key);
 			keyword.setTextContent(Joiner.on(", ").join(q.getLanguageToKeywords().get(key)));
