@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import junit.framework.Assert;
+
 public class AnswerBasedEvaluationTest {
 
 	Logger logger = LoggerFactory.getLogger(AnswerBasedEvaluationTest.class);
@@ -33,6 +35,35 @@ public class AnswerBasedEvaluationTest {
 		logger.debug("R=" + recall);
 		logger.debug("F=" + fMeasure);
 
+	}
+
+	@Test
+	public void testAggregationNullDueToLoadingError() {
+		IQuestion question = new Question();
+		question.setAggregation(null);
+		question.setSparqlQuery(
+				"SELECT ?pers {?pers <http://dbpedia.org/prop/division> <http://dbpedia.org/DivisionA> . "
+						+ " ?pers rdf:type <http://dbpedia.org/prop/worker> }");
+
+		Set<String> systemAnswer = CollectionUtils.newHashSet();
+
+		double precision = AnswerBasedEvaluation.precision(systemAnswer, question);
+		double recall = AnswerBasedEvaluation.recall(systemAnswer, question);
+		double fMeasure = AnswerBasedEvaluation.fMeasure(systemAnswer, question);
+
+		question = new Question();
+		question.setAggregation(null);
+		question.setPseudoSparqlQuery(
+				"SELECT ?pers {?pers <http://dbpedia.org/prop/division> <http://dbpedia.org/DivisionA> . "
+						+ " ?pers rdf:type <http://dbpedia.org/prop/worker> }");
+
+		systemAnswer = CollectionUtils.newHashSet();
+
+		precision = AnswerBasedEvaluation.precision(systemAnswer, question);
+		recall = AnswerBasedEvaluation.recall(systemAnswer, question);
+		fMeasure = AnswerBasedEvaluation.fMeasure(systemAnswer, question);
+
+		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -87,7 +118,9 @@ public class AnswerBasedEvaluationTest {
 	private IQuestion getQuestion() {
 		IQuestion q = new Question();
 		q.setAggregation(false);
-		q.setPseudoSparqlQuery("SELECT ?pers {?pers <http://dbpedia.org/prop/division> <http://dbpedia.org/DivisionA> . " + " ?pers rdf:type <http://dbpedia.org/prop/worker> }");
+		q.setPseudoSparqlQuery(
+				"SELECT ?pers {?pers <http://dbpedia.org/prop/division> <http://dbpedia.org/DivisionA> . "
+						+ " ?pers rdf:type <http://dbpedia.org/prop/worker> }");
 		q.setGoldenAnswers(getGoldenAnswers());
 		return q;
 	}

@@ -60,10 +60,12 @@ public class AnswerBasedEvaluation {
 		}
 		double recall = 0;
 		Set<String> goldenStrings = answersToString(question.getGoldenAnswers());
+
+		Boolean aggregation = question.getAggregation() == null ? false : question.getAggregation();
 		if (question.getPseudoSparqlQuery() != null) {
 			if (isSelectType(question.getPseudoSparqlQuery())) {
 				// if queries contain aggregation return always 1
-				if (question.getAggregation()) {
+				if (aggregation) {
 					recall = 1;
 				}
 				Set<String> intersection = CollectionUtils.intersection(systemAnswer, goldenStrings);
@@ -79,7 +81,7 @@ public class AnswerBasedEvaluation {
 		} else if (question.getSparqlQuery() != null) {
 			if (isSelectType(question.getSparqlQuery())) {
 				// if queries contain aggregation return always 1
-				if (question.getAggregation()) {
+				if (aggregation) {
 					recall = 1;
 				}
 				Set<String> intersection = CollectionUtils.intersection(systemAnswer, goldenStrings);
