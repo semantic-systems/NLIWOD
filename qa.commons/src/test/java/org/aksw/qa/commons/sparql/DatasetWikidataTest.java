@@ -19,7 +19,7 @@ public class DatasetWikidataTest {
 	 */
 	public static void main(final String[] args) {
 		String outputPath = "c:/output/wikidataTest.txt";
-
+		
 		Qald7CreationTool tool = new Qald7CreationTool(SPARQL.ENDPOINT_WIKIDATA_METAPHACTS, 30);
 		boolean autocorrectOnlydbo = false;
 		Set<Fail> ignoreFlags = Sets.newHashSet(Fail.ISONLYDBO_WRONG, Fail.MISSING_LANGUAGES);
@@ -48,7 +48,9 @@ public class DatasetWikidataTest {
 		List<IQuestion> questions = LoaderController.load(Dataset.QALD7_Train_Wikidata_en);
 		questions.addAll(LoaderController.load(Dataset.QALD7_Test_Wikidata_en));
 		for (IQuestion it : questions) {
-			QueryFactory.create(it.getSparqlQuery());
+			String sparqlQuery = it.getSparqlQuery();
+			System.out.println(sparqlQuery);
+			QueryFactory.create(sparqlQuery);
 		}
 	}
 

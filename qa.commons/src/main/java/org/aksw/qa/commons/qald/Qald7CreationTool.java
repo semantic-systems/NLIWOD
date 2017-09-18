@@ -57,7 +57,7 @@ public class Qald7CreationTool {
 	private ThreadedSPARQL sparql;
 
 	public Qald7CreationTool() {
-		sparql = new ThreadedSPARQL(90, SPARQL.ENDPOINT_DBPEIDA_ORG);
+		sparql = new ThreadedSPARQL(90, SPARQL.ENDPOINT_DBPEDIA_ORG);
 	}
 
 	public Qald7CreationTool(final String sparqlEndpoint, final int timeout) {

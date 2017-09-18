@@ -19,8 +19,8 @@ import com.google.common.collect.Sets;
 public class SPARQL {
 	Logger log = LoggerFactory.getLogger(SPARQL.class);
 	public QueryExecutionFactory qef;
-	public static final String ENDPOINT_TITAN = "http://139.18.2.164:3030/ds/sparql";
-	public static final String ENDPOINT_DBPEIDA_ORG = "http://dbpedia.org/sparql";
+	
+	public static final String ENDPOINT_DBPEDIA_ORG = "http://dbpedia.org/sparql";
 	public static final String ENDPOINT_WIKIDATA_ORG = "http://query.wikidata.org/sparql";
 	/**
 	 * Be sure to imprt the SSL certificate from the metaphacts site to your
@@ -35,38 +35,11 @@ public class SPARQL {
 	public SPARQL() {
 		try {
 
-			// CacheBackend cacheBackend = CacheCoreH2.create("./sparql",
-			// timeToLive, true);
-			// CacheFrontend cacheFrontend = new
-			// CacheFrontendImpl(cacheBackend);
 			CacheFrontend cacheFrontend = CacheUtilsH2.createCacheFrontend("./sparql", true, timeToLive);
 
 			// AKSW SPARQL API call
-			// qef = new
-			// QueryExecutionFactoryHttp("http://192.168.15.69:8890/sparql",
-			// "http://dbpedia.org/");
-			// qef = new
-			// QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
-			qef = FluentQueryExecutionFactory.http(ENDPOINT_TITAN).config().withCache(cacheFrontend).end().create();
+			qef = FluentQueryExecutionFactory.http(SPARQL.ENDPOINT_DBPEDIA_ORG).config().withCache(cacheFrontend).end().create();
 
-			// qef = new
-			// QueryExecutionFactoryHttp("http://localhost:3030/ds/sparql");
-			// qef = new
-			// QueryExecutionFactoryHttp("http://dbpedia.org/sparql","http://dbpedia.org");
-
-			// qef = new
-			// QueryExecutionFactoryHttp("http://live.dbpedia.org/sparql","http://dbpedia.org");
-			// qef = new
-			// QueryExecutionFactoryHttp("http://lod.openlinksw.com/sparql/",
-			// "http://dbpedia.org");
-			// qef = new
-			// QueryExecutionFactoryHttp("http://vtentacle.techfak.uni-bielefeld.de:443/sparql",
-			// "http://dbpedia.org");
-			// --> No reason to be nice
-			// qef = new QueryExecutionFactoryDelay(qef, 2000);
-			// qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
-			// qef = new QueryExecutionFactoryDelay(qef, 150);
-			// qef = new QueryExecutionFactoryPaginated(qef, 10000);
 		} catch (RuntimeException e) {
 			log.error("Could not create SPARQL interface! ", e);
 		}
