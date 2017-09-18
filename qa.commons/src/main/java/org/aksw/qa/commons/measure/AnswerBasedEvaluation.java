@@ -106,11 +106,13 @@ public class AnswerBasedEvaluation {
 		return fMeasure;
 	}
 
-	private static boolean isAskType(String sparqlQuery) {
+	public static boolean isAskType(String sparqlQuery) {
+		sparqlQuery = sparqlQuery.toUpperCase();
 		return sparqlQuery.contains("\nASK\n") || sparqlQuery.contains("ASK ");
 	}
 
-	private static boolean isSelectType(String sparqlQuery) {
+	public static boolean isSelectType(String sparqlQuery) {
+		sparqlQuery = sparqlQuery.toUpperCase();
 		return sparqlQuery.contains("\nSELECT\n") || sparqlQuery.contains("SELECT ");
 	}
 
