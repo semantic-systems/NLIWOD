@@ -77,6 +77,7 @@ public class AnswerBasedEvaluationTest {
 		assertEquals(1, precision, 0);
 		assertEquals(0.75, recall, 0.0);
 		assertEquals(0.857, fMeasure, 0.001);
+		System.out.println(fMeasure);
 
 		logger.debug(Thread.currentThread().getStackTrace()[1].getMethodName());
 		logger.debug("P=" + precision);
