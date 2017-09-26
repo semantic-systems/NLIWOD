@@ -32,18 +32,15 @@ public final class ExtendedQALDJSONLoader {
 	}
 
 	/**
-	 * Loads and saves Settings into and from json files
-	 *
-	 *
-	 *
-	 * /** Writes the given Object as JSON to location specified in File. If
-	 * File already exists and overwrite ==false, AttemptedOverwriteException
+	 * Loads and saves Settings into and from json files /** Writes the given Object as JSON to location specified in File. If File already exists and overwrite ==false, AttemptedOverwriteException
 	 * will be thrown
 	 *
-	 * @param o The object you want to write.
-	 * @param f The File (-location) to save it in.
-	 * @param overwrite Set this true to overwrite existing file.
-	 *
+	 * @param o
+	 *            The object you want to write.
+	 * @param f
+	 *            The File (-location) to save it in.
+	 * @param overwrite
+	 *            Set this true to overwrite existing file.
 	 */
 	public static void writeJson(final Object o, final File f, final boolean overwrite) throws IOException {
 		if (f.exists() && !overwrite) {
@@ -61,8 +58,10 @@ public final class ExtendedQALDJSONLoader {
 		}
 		LOGGER.info("File Written to " + f.getAbsolutePath());
 	}
+
 	/**
 	 * Writes the json to an byte array
+	 *
 	 * @param json
 	 * @return the given json as byte representation
 	 * @throws JsonProcessingException
@@ -77,13 +76,14 @@ public final class ExtendedQALDJSONLoader {
 		return mapper.writer().writeValueAsBytes(json);
 
 	}
-	
+
 	/**
-	 * Parses Json file and returns an Object containing the results. You need
-	 * to cast the return of this class to the class specified in type.
+	 * Parses Json file and returns an Object containing the results. You need to cast the return of this class to the class specified in type.
 	 *
-	 * @param inputJson the json to parse
-	 * @param type The class type you want to read.
+	 * @param inputJson
+	 *            the json to parse
+	 * @param type
+	 *            The class type you want to read.
 	 * @return An Object you should cast.
 	 * @throws IOException
 	 * @throws JsonMappingException
@@ -97,17 +97,18 @@ public final class ExtendedQALDJSONLoader {
 	}
 
 	/**
-	 * Parses Json file and returns an Object containing the results. You need
-	 * to cast the return of this class to the class specified in type.
+	 * Parses Json file and returns an Object containing the results. You need to cast the return of this class to the class specified in type.
 	 *
-	 * @param f The file location you want to read from.
-	 * @param type The class type you want to read.
+	 * @param f
+	 *            The file location you want to read from.
+	 * @param type
+	 *            The class type you want to read.
 	 * @return An Object you should cast.
 	 * @throws IOException
 	 * @throws JsonMappingException
 	 * @throws JsonParseException
 	 */
-	public static Object readJson(final InputStream in, final Class<?> type)  throws JsonParseException, JsonMappingException, IOException {
+	public static Object readJson(final InputStream in, final Class<?> type) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(MapperFeature.USE_GETTERS_AS_SETTERS);
 
@@ -116,32 +117,30 @@ public final class ExtendedQALDJSONLoader {
 
 	public static Object readJson(final InputStream in) throws JsonParseException, JsonMappingException, IOException {
 		Object ret = null;
-		if ((ret = readJson(in, ExtendedJson.class)) == null) {
+		// try to read ExtendedJson
+		try {
+			ret = readJson(in, ExtendedJson.class);
+		} catch (JsonParseException | JsonMappingException e1) {
+			LOGGER.debug("Parsing as ExtendedJson doesnt work, trying QaldJson", e1);
 			ret = readJson(in, QaldJson.class);
 		}
+
 		return ret;
 	}
 
-	public static Object readJson(final File f) {
+	public static Object readJson(final File f) throws FileNotFoundException, IOException {
 		Object ret = null;
-		if ((ret = readJson(f, ExtendedJson.class)) == null) {
+		try {
+			ret = readJson(f, ExtendedJson.class);
+		} catch (JsonParseException | JsonMappingException e1) {
+			LOGGER.debug("Parsing as ExtendedJson doesnt work, trying QaldJson", e1);
 			ret = readJson(f, QaldJson.class);
 		}
 		return ret;
 	}
 
-	public static Object readJson(final File f, final Class<?> type) {
-		try (InputStream in = new FileInputStream(f)) {
-			return readJson(in, type);
-		} catch (FileNotFoundException e) {
-			LOGGER.error("Could not find File :" + f.getAbsolutePath());
-			LOGGER.error("", e);
-
-		} catch (IOException e) {
-			LOGGER.error("", e);
-
-		}
-		return null;
+	public static Object readJson(final File f, final Class<?> type) throws JsonParseException, JsonMappingException, FileNotFoundException, IOException {
+		return readJson(new FileInputStream(f), type);
 	}
 
 	// TODO transform to unit test
