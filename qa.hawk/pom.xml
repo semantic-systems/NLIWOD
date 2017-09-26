@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.aksw</groupId>
 		<artifactId>nliwod</artifactId>
-		<version>0.0.6</version>
+		<version>0.0.7</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<groupId>org.aksw.qa</groupId>
@@ -130,7 +130,7 @@
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>commons</artifactId>
-			<version>${qa-commons.version}</version>
+			<version>0.4.11</version>
 			<exclusions>
 				<exclusion>
 					<groupId>ch.qos.logback</groupId>
