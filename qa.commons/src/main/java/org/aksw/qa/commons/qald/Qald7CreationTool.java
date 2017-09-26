@@ -488,8 +488,8 @@ public class Qald7CreationTool {
 
 	public static void main(final String[] args) {
 		Qald7CreationTool tool = new Qald7CreationTool();
-		tool.createQald7HybridDataset(HYBRID_SETS, "c:/output/", "qald-7-train-hybrid");
-		tool.createQald7MultilingualTrainDataset(MULTILINGUAL_TRAIN_TEST_SETS, true, true, "c:/output/", "qald-7-train-multilingual");
+		tool.createQald7HybridDataset(HYBRID_SETS, "", "qald-7-train-hybrid");
+		tool.createQald7MultilingualTrainDataset(MULTILINGUAL_TRAIN_TEST_SETS, true, true, "", "qald-7-train-multilingual");
 		tool.sparql.destroy();
 		System.out.println("duplcates " + tool.duplicate);
 		System.out.println("Done");

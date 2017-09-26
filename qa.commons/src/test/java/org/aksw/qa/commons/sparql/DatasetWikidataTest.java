@@ -18,7 +18,7 @@ public class DatasetWikidataTest {
 	 * creates a health report for the wikidata qald7 datasets. be sure to set output path to your needs.
 	 */
 	public static void main(final String[] args) {
-		String outputPath = "c:/output/wikidataTest.txt";
+		String outputPath = "wikidataTest.txt";
 		
 		Qald7CreationTool tool = new Qald7CreationTool(SPARQL.ENDPOINT_WIKIDATA_METAPHACTS, 30);
 		boolean autocorrectOnlydbo = false;

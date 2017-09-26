@@ -248,7 +248,7 @@ public class LoaderController {
 					break;
 
 				case QALD5_Test_Multilingual:
-				case QALD5_Train_Multilingual:
+				case QALD5_Train_Multilingual: 
 					hybrid = new ArrayList<>();
 					loadedQ = loadXML(is, deriveUri, questionLang);
 					for (IQuestion q : loadedQ) {

@@ -164,9 +164,10 @@ public final class ExtendedQALDJSONLoader {
 		ej.setDataset(dataset);
 
 		ej.addQuestions(entry);
-
-		ExtendedQALDJSONLoader.writeJson(ej, new File("C:/output/ExtendedJson2.json"), true);
-		System.out.println(ExtendedQALDJSONLoader.readJson(new File("C:/output/ExtendedJson2.json"), ExtendedJson.class).toString());
+       
+		ExtendedQALDJSONLoader.writeJson(ej, new File("ExtendedJson2.json"), true);
+		System.out.println(ExtendedQALDJSONLoader.readJson(new File("ExtendedJson2.json"), ExtendedJson.class).toString());
+		System.out.println("done");
 
 	}
 }
