@@ -1,5 +1,7 @@
 # Question answering datasets
 
+NOTE: PARL.AI does a tremendous job in including different tasks. Thus it would make sense to analyze their state before starting to include more tasks http://www.parl.ai/static/docs/tasks.html# 
+
 This collection includes the following datasets or respectivly looks at the following datasets to be included:
 
 * added: http://www.okbqa.org/nlq
