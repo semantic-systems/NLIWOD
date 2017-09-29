@@ -30,6 +30,7 @@ import org.aksw.qa.commons.load.stanford.StanfordLoader;
 import org.aksw.qa.commons.utils.DateFormatter;
 import org.aksw.qa.commons.utils.SPARQLExecutor;
 import org.apache.jena.query.QueryFactory;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.RDFNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -270,6 +271,25 @@ public class LoaderController {
 
 					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(getInputStream(data), QaldJson.class);
 					out = EJQuestionFactory.getQuestionsFromQaldJson(json);
+					for(IQuestion q : out) {
+						HashSet<String> set = new HashSet<>();
+						if ((deriveUri != null) && (q.getSparqlQuery() != null)) {
+
+							Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, q.getSparqlQuery());
+							for (RDFNode answ : answers) {
+								if(answ.isResource()) {
+									set.add(answ.asResource().getURI());
+								}
+								else if(answ.isLiteral()) {
+									set.add(((Literal) answ).getValue().toString());
+								}
+								else {
+									set.add(answ.toString());
+								}
+							}
+							q.setGoldenAnswers(set);
+						}
+					}
 					break;
 				case nlq:
 					out = loadNLQ(is, deriveUri);
@@ -419,7 +439,15 @@ public class LoaderController {
 
 					Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, question.getSparqlQuery());
 					for (RDFNode answ : answers) {
-						set.add(answ.toString());
+						if(answ.isResource()) {
+							set.add(answ.asResource().getURI());
+						}
+						else if(answ.isLiteral()) {
+							set.add(((Literal) answ).getValue().toString());
+						}
+						else {
+							set.add(answ.toString());
+						}
 					}
 				} else {
 					NodeList answers = questionNode.getElementsByTagName("answers");
@@ -523,7 +551,15 @@ public class LoaderController {
 					Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, q.getSparqlQuery());
 
 					for (RDFNode a : answers) {
-						answ.add(a.toString());
+						if(a.isResource()) {
+							answ.add(a.asResource().getURI());
+						}
+						else if(a.isLiteral()) {
+							answ.add(((Literal) answ).getValue().toString());
+						}
+						else {
+							answ.add(answ.toString());
+						}
 					}
 				} else {
 					answ.add(answer);
