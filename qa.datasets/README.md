@@ -14,6 +14,7 @@ in production (adding answers):
 Overview articles:
 * https://github.com/karthikncode/nlp-datasets
 * http://www.cs.cmu.edu/~ark/QA-data/
+* http://searchivarius.org/dir/000/00I/000
 
 QA datasets to analyze: 
 * GeoQuery, Free917, WebQuestions, SimpleQuestions, GraphQuestions, and QALD
