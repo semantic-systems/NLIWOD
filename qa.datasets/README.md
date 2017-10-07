@@ -11,7 +11,12 @@ This collection includes the following datasets or respectivly looks at the foll
 in production (adding answers):
 * https://www.stonetemple.com/great-knowledge-box-showdown/
 
-to analyze: 
+Overview articles:
+* https://github.com/karthikncode/nlp-datasets
+* http://www.cs.cmu.edu/~ark/QA-data/
+* http://searchivarius.org/dir/000/00I/000
+
+QA datasets to analyze: 
 * GeoQuery, Free917, WebQuestions, SimpleQuestions, GraphQuestions, and QALD
 * http://parl.ai/
 * www.msmarco.org
