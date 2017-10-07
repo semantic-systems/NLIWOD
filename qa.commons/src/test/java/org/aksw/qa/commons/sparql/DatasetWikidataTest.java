@@ -19,8 +19,8 @@ public class DatasetWikidataTest {
 	 */
 	public static void main(final String[] args) {
 		String outputPath = "wikidataTest.txt";
-		
-		Qald7CreationTool tool = new Qald7CreationTool(SPARQL.ENDPOINT_WIKIDATA_METAPHACTS, 30);
+
+		Qald7CreationTool tool = new Qald7CreationTool(SPARQLEndpoints.WIKIDATA_METAPHACTS, 30);
 		boolean autocorrectOnlydbo = false;
 		Set<Fail> ignoreFlags = Sets.newHashSet(Fail.ISONLYDBO_WRONG, Fail.MISSING_LANGUAGES);
 		Set<Qald7Question> allQuestions = Sets.newHashSet();

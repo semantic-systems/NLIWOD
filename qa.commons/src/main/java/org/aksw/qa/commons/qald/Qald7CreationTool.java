@@ -25,7 +25,7 @@ import org.aksw.qa.commons.load.json.EJQuestionFactory;
 import org.aksw.qa.commons.load.json.ExtendedJson;
 import org.aksw.qa.commons.load.json.ExtendedQALDJSONLoader;
 import org.aksw.qa.commons.load.json.QaldJson;
-import org.aksw.qa.commons.sparql.SPARQL;
+import org.aksw.qa.commons.sparql.SPARQLEndpoints;
 import org.aksw.qa.commons.sparql.ThreadedSPARQL;
 import org.aksw.qa.commons.store.StoreQALDXML;
 import org.apache.commons.lang3.StringUtils;
@@ -34,8 +34,6 @@ import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QueryParseException;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.shared.PrefixMapping;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
@@ -43,7 +41,6 @@ import com.google.common.collect.ImmutableSet;
 public class Qald7CreationTool {
 	private final static String DBO_URI = "http://dbpedia.org/ontology/";
 	private final static String RES_URI = "http://dbpedia.org/resource/";
-	private Logger log = LoggerFactory.getLogger(this.getClass());
 	private int duplicate = 0;
 	/**
 	 * QALD1 and QALD2 not multilingual!
@@ -54,10 +51,10 @@ public class Qald7CreationTool {
 	public static final Set<Dataset> HYBRID_SETS = ImmutableSet.of(Dataset.QALD4_Test_Hybrid, Dataset.QALD4_Train_Hybrid, Dataset.QALD5_Test_Hybrid, Dataset.QALD5_Train_Hybrid,
 	        Dataset.QALD6_Test_Hybrid, Dataset.QALD6_Train_Hybrid);
 
-	private ThreadedSPARQL sparql;
+	private final ThreadedSPARQL sparql;
 
 	public Qald7CreationTool() {
-		sparql = new ThreadedSPARQL(90, SPARQL.ENDPOINT_DBPEDIA_ORG);
+		sparql = new ThreadedSPARQL(90, SPARQLEndpoints.DBPEDIA_ORG);
 	}
 
 	public Qald7CreationTool(final String sparqlEndpoint, final int timeout) {
@@ -67,18 +64,16 @@ public class Qald7CreationTool {
 	int badQuestionCounter = 0;
 
 	/**
-	 * Returns all Hybrid questions for Qald7 (Loads all previous qald hybrid
-	 * questions and drops duplicates). <b> This will set "hybrid:true" in all
-	 * questions!!!</b>
+	 * Returns all Hybrid questions for Qald7 (Loads all previous qald hybrid questions and drops duplicates). <b> This will set "hybrid:true" in all questions!!!</b>
 	 *
-	 * @param datasets All datasets from which questions should be extracted
+	 * @param datasets
+	 *            All datasets from which questions should be extracted
 	 * @return All available unique questions from given datasets
 	 */
 	public Set<Qald7Question> getQald7HybridQuestions(final Set<Dataset> datasets) {
 		Set<Qald7Question> out = new HashSet<>();
 		/**
-		 * Qald7Question has english question hashcode as hash. so simply adding
-		 * them to a set filters duplicates.
+		 * Qald7Question has english question hashcode as hash. so simply adding them to a set filters duplicates.
 		 */
 		for (Dataset dataset : datasets) {
 			for (Qald7Question it : Qald7QuestionFactory.createInstances(LoaderController.load(dataset))) {
@@ -92,27 +87,30 @@ public class Qald7CreationTool {
 	}
 
 	/**
-	 * Creates the hybrid datasets. Three files will be stored in given
-	 * location: QALD-Json, Extended-Json and xml
+	 * Creates the hybrid datasets. Three files will be stored in given location: QALD-Json, Extended-Json and xml
 	 *
-	 * @param hybridDatasets The sets questions are taken from.
-	 * @param path The path to write the datasets to.
-	 * @param filenameWithoutExtension The name of the new dataset
+	 * @param hybridDatasets
+	 *            The sets questions are taken from.
+	 * @param path
+	 *            The path to write the datasets to.
+	 * @param filenameWithoutExtension
+	 *            The name of the new dataset
 	 */
 	public void createQald7HybridDataset(final Set<Dataset> hybridDatasets, final String path, final String filenameWithoutExtension) {
 		this.createQald7Dataset(getQald7HybridQuestions(hybridDatasets), path, filenameWithoutExtension);
 	}
 
 	/**
-	 * Creates the multilingual train datasets. Three files will be stored in
-	 * given location: QALD-Json, Extended-Json and xml
+	 * Creates the multilingual train datasets. Three files will be stored in given location: QALD-Json, Extended-Json and xml
 	 *
-	 * @param datasets The sets questions are taken from.
-	 * @param autocorrectOnlydbo Is a bad Onlydbo-flag a exclusion criterion
-	 *            (Question wont appear in file) for a question or should it be
-	 *            autofixed?
-	 * @param path The path to write the datasets to.
-	 * @param filenameWithoutExtension The name of the new dataset
+	 * @param datasets
+	 *            The sets questions are taken from.
+	 * @param autocorrectOnlydbo
+	 *            Is a bad Onlydbo-flag a exclusion criterion (Question wont appear in file) for a question or should it be autofixed?
+	 * @param path
+	 *            The path to write the datasets to.
+	 * @param filenameWithoutExtension
+	 *            The name of the new dataset
 	 */
 	public void createQald7MultilingualTrainDataset(final Set<Dataset> datasets, final boolean fileReport, final boolean autocorrectOnlydbo, final String path, final String filenameWithoutExtension) {
 		Set<Qald7Question> questions = loadAndAnnotateTrain(datasets, autocorrectOnlydbo);
@@ -125,19 +123,14 @@ public class Qald7CreationTool {
 	}
 
 	/**
-	 * Loads all questions from given datasets, checks question integrity (is
-	 * the stored answerset still identical with the one returned for given
-	 * sparql query, is a sparql present and parseable, are at least 6 languages
-	 * available with keywords, is an answertype set,... ) Also, duplicates are
-	 * filtered out, only the candidate with the least error flags @link
-	 * {@link Fail} will be in returned set. So, returned Questions are all
-	 * clean. To get a duplicate free, with {@link Fail} annotated dataset, use
-	 * {@link #loadAndAnnotateTrain(Set, boolean)}
+	 * Loads all questions from given datasets, checks question integrity (is the stored answerset still identical with the one returned for given sparql query, is a sparql present and parseable, are
+	 * at least 6 languages available with keywords, is an answertype set,... ) Also, duplicates are filtered out, only the candidate with the least error flags @link {@link Fail} will be in returned
+	 * set. So, returned Questions are all clean. To get a duplicate free, with {@link Fail} annotated dataset, use {@link #loadAndAnnotateTrain(Set, boolean)}
 	 *
-	 * @param datasets The datasets from which the questions are gathered
-	 * @param autocorrectOnlydbo Is a bad Onlydbo-flag a exclusion criterion
-	 *            (Question wont appear in file) for a question or should it be
-	 *            autofixed?
+	 * @param datasets
+	 *            The datasets from which the questions are gathered
+	 * @param autocorrectOnlydbo
+	 *            Is a bad Onlydbo-flag a exclusion criterion (Question wont appear in file) for a question or should it be autofixed?
 	 * @return All clean duplicate free questions from given datasets.
 	 */
 	public Set<Qald7Question> getQald7MultilingualTrainQuestions(final Set<Dataset> datasets, final boolean autocorrectOnlydbo) {
@@ -239,10 +232,10 @@ public class Qald7CreationTool {
 	}
 
 	/**
-	 * Returns answers from official dbpedia endpoint to the stored sparql in
-	 * {@link IQuestion}
+	 * Returns answers from official dbpedia endpoint to the stored sparql in {@link IQuestion}
 	 *
-	 * @param q Question to be answered
+	 * @param q
+	 *            Question to be answered
 	 * @return Answers as string set
 	 * @throws ExecutionException
 	 */
@@ -392,16 +385,15 @@ public class Qald7CreationTool {
 	/**
 	 * Creates a file report to all bad questions in given datasets
 	 *
-	 * @param datasets All datasets to be checked
-	 * @param autocorrectOnlydbo Is a bad Onlydbo-flag a exclusion criterion
-	 *            (Question wont appear in file) for a question or should it be
-	 *            autofixed?
-	 * @param pathAndFilenameWithExtension Path and name of new file report
-	 * @param skipQuestionsWithTooLittleLanguages Normally, multilingual
-	 *            datasets have at least six languages. When this flag is set,
-	 *            all questions with less languages will be ignored, otherwise
-	 *            its an error {@link Fail} and the question goes into the
-	 *            report
+	 * @param datasets
+	 *            All datasets to be checked
+	 * @param autocorrectOnlydbo
+	 *            Is a bad Onlydbo-flag a exclusion criterion (Question wont appear in file) for a question or should it be autofixed?
+	 * @param pathAndFilenameWithExtension
+	 *            Path and name of new file report
+	 * @param skipQuestionsWithTooLittleLanguages
+	 *            Normally, multilingual datasets have at least six languages. When this flag is set, all questions with less languages will be ignored, otherwise its an error {@link Fail} and the
+	 *            question goes into the report
 	 */
 	public void createFileReportForTestQuestions(final Set<Dataset> datasets, final boolean autocorrectOnlydbo, final String pathAndFilenameWithExtension, final Set<Fail> ignoreFlags) {
 		createFileReport(loadAndAnnotateTrain(datasets, autocorrectOnlydbo), pathAndFilenameWithExtension, ignoreFlags);
@@ -479,8 +471,7 @@ public class Qald7CreationTool {
 	}
 
 	/**
-	 * Call this if you dont need this object anymore. Closes the Threads around
-	 * the server connection to the sparql server.
+	 * Call this if you dont need this object anymore. Closes the Threads around the server connection to the sparql server.
 	 */
 	public void destroy() {
 		this.sparql.destroy();

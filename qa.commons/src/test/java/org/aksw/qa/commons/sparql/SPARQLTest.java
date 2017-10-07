@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SPARQLTest {
-	private Logger log = LoggerFactory.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Test
 	public void dbpediaTest() {
@@ -17,7 +17,7 @@ public class SPARQLTest {
 		String answer = "[http://dbpedia.org/resource/Michael_Schumacher]";
 		String realAnswer = "";
 		try {
-			realAnswer = new ThreadedSPARQL(5, SPARQL.ENDPOINT_DBPEDIA_ORG).sparql(query).toString();
+			realAnswer = new ThreadedSPARQL(5, SPARQLEndpoints.DBPEDIA_ORG).sparql(query).toString();
 		} catch (ExecutionException e) {
 
 			e.printStackTrace();
@@ -27,7 +27,7 @@ public class SPARQLTest {
 	}
 
 	@Test
-	public void wikidataTest() {
+	public void wikidataTest() throws ExecutionException {
 		log.debug("Trying to query wikidata...(Timeout 5s)");
 		String query = "SELECT DISTINCT ?company WHERE {?company 		 <http://www.wikidata.org/prop/direct/P452> 		 <http://www.wikidata.org/entity/Q581105> ; 		 <http://www.wikidata.org/prop/direct/P740> 		 <http://www.wikidata.org/entity/Q956> . }";
 		// String query = "SELECT (COUNT(DISTINCT ?uri) as ?count) WHERE {
@@ -36,7 +36,7 @@ public class SPARQLTest {
 		// ?uri }";
 		String answer = "[http://www.wikidata.org/entity/Q14799, http://www.wikidata.org/entity/Q1636958]";
 		String realAnswer = "";
-		realAnswer = new SPARQL(SPARQL.ENDPOINT_WIKIDATA_ORG).sparql(query).toString();
+		realAnswer = new SPARQL(SPARQLEndpoints.WIKIDATA_ORG).sparql(query).toString();
 		Assert.assertTrue("Answersets differ", answer.equals(realAnswer));
 
 	}
