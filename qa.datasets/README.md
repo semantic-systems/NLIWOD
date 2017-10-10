@@ -17,6 +17,7 @@ Overview articles:
 * http://searchivarius.org/dir/000/00I/000
 
 QA datasets to analyze: 
+* WebQuestions Semantic Parses Dataset https://www.microsoft.com/en-us/download/confirmation.aspx?id=52763
 * GeoQuery, Free917, WebQuestions, SimpleQuestions, GraphQuestions, and QALD
 * http://parl.ai/
 * www.msmarco.org
