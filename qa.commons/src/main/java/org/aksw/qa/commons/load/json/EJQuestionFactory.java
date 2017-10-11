@@ -11,6 +11,7 @@ import java.util.Vector;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.datastructure.Question;
+import org.aksw.qa.commons.sparql.AnswerSyncer;
 import org.aksw.qa.commons.utils.SPARQLExecutor;
 import org.apache.jena.ext.com.google.common.base.Joiner;
 import org.apache.jena.rdf.model.RDFNode;
@@ -31,6 +32,10 @@ public final class EJQuestionFactory {
 		return getQuestionsFromExtendedJson(json, null);
 	}
 
+	/**
+	 * Use this to load answers from server:{@link AnswerSyncer}
+	 */
+	@Deprecated //TODO refactor this so that answersyncing is no longer in this class
 	public static List<IQuestion> getQuestionsFromExtendedJson(final ExtendedJson json, final String deriveUri) {
 		List<IQuestion> out = new ArrayList<>();
 		for (EJQuestionEntry it : json.getQuestions()) {
@@ -109,7 +114,7 @@ public final class EJQuestionFactory {
 				}
 				language.setLanguage(langStr);
 				language.setQuestion(question.getLanguageToQuestion().get(langStr));
-				language.setSparql(question.getSparqlQuery());
+				language.setSparql(removeAdditinalWhitespaceCharacters(question.getSparqlQuery()));
 
 			}
 
@@ -147,8 +152,8 @@ public final class EJQuestionFactory {
 			questionEntry.setHybrid(question.getHybrid());
 
 			QaldQuery language = new QaldQuery();
-			language.setSparql(question.getSparqlQuery());
-			language.setPseudo(question.getPseudoSparqlQuery());
+			language.setSparql(removeAdditinalWhitespaceCharacters(question.getSparqlQuery()));
+			language.setPseudo(removeAdditinalWhitespaceCharacters(question.getPseudoSparqlQuery()));
 			questionEntry.setQuery(language);
 
 			EJAnswers answers = new EJAnswers();
@@ -165,10 +170,22 @@ public final class EJQuestionFactory {
 
 	}
 
+	private static String removeAdditinalWhitespaceCharacters(final String in) {
+		if (in == null) {
+			return null;
+		}
+		String out = in.replaceAll("\\s+", " ").trim();
+		return out;
+	}
+
 	public static List<IQuestion> getQuestionsFromJson(final Object json) {
 		return getQuestionsFromJson(json, null);
 	}
 
+	/**
+	 * Use this to load answers from server:{@link AnswerSyncer}
+	 */
+	@Deprecated //TODO refactor this so that answersyncing is no longer in this class
 	public static List<IQuestion> getQuestionsFromJson(final Object json, final String deriveUri) {
 		if (json instanceof ExtendedJson) {
 			return getQuestionsFromExtendedJson((ExtendedJson) json, deriveUri);
@@ -183,6 +200,10 @@ public final class EJQuestionFactory {
 		return getQuestionsFromQaldJson(json, null);
 	}
 
+	/**
+	 * Use this to load answers from server:{@link AnswerSyncer}
+	 */
+	@Deprecated //TODO refactor this so that answersyncing is no longer in this class
 	public static List<IQuestion> getQuestionsFromQaldJson(final QaldJson json, final String deriveUri) {
 		List<IQuestion> questions = new ArrayList<>();
 
@@ -258,8 +279,12 @@ public final class EJQuestionFactory {
 
 		switch (ansType.toLowerCase()) {
 		case "boolean":
-			answers.setBoolean(question.getGoldenAnswers().iterator().next().contains("true"));
-//			answers.setBoolean(Boolean.TRUE.equals(Joiner.on(" ").join(question.getLanguageToQuestion().values()).toLowerCase().contains("true")));
+			try {
+				answers.setBoolean(question.getGoldenAnswers().iterator().next().contains("true"));
+			} catch (Exception e) {
+				System.out.println("sss");
+			}
+			//			answers.setBoolean(Boolean.TRUE.equals(Joiner.on(" ").join(question.getLanguageToQuestion().values()).toLowerCase().contains("true")));
 			break;
 		case "date":
 			head.getVars().add("date");

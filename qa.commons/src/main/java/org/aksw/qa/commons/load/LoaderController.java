@@ -27,9 +27,11 @@ import org.aksw.qa.commons.load.json.EJQuestionFactory;
 import org.aksw.qa.commons.load.json.ExtendedQALDJSONLoader;
 import org.aksw.qa.commons.load.json.QaldJson;
 import org.aksw.qa.commons.load.stanford.StanfordLoader;
+import org.aksw.qa.commons.sparql.AnswerSyncer;
 import org.aksw.qa.commons.utils.DateFormatter;
 import org.aksw.qa.commons.utils.SPARQLExecutor;
 import org.apache.jena.query.QueryFactory;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.RDFNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,11 +45,9 @@ import org.xml.sax.SAXException;
 import com.google.common.base.Strings;
 
 /**
- *
  * Loads both QALD XML and JSON
  *
  * @author ricardousbeck tortugaattack jonathanhuthmann
- *
  */
 
 // TODO refactor that class to account for multiple dataset types. make qaldxml,
@@ -165,6 +165,10 @@ public class LoaderController {
 			return loadingAnchor.getResourceAsStream("/stanfordqa-dev.json");
 		case Stanford_train:
 			return loadingAnchor.getResourceAsStream("/stanfordqa-train.json");
+		case QALD8_Test_Multilingual:
+			return loadingAnchor.getResourceAsStream("/QALD-master/8/data/qald-8-test-multilingual.json");
+		case QALD8_Train_Multilingual:
+			return loadingAnchor.getResourceAsStream("/QALD-master/8/data/qald-8-train-multilingual.json");
 		// case qbench1:
 		// return
 		// ClassLoader.getSystemClassLoader().getResourceAsStream("qbench/qbench1.xml");
@@ -190,7 +194,11 @@ public class LoaderController {
 		return load(data, null, "en");
 	}
 
-	public static List<IQuestion> load(final Dataset data, final String deriveUri, String questionLang) {
+	/**
+	 * Use this to load answers from server:{@link AnswerSyncer}
+	 */
+	@Deprecated //TODO refactor this so that answersyncing is no longer in this class
+	public static List<IQuestion> load(final Dataset data, final String deriveUri, final String questionLang) {
 		try {
 			InputStream is = null;
 			is = getInputStream(data);
@@ -248,7 +256,7 @@ public class LoaderController {
 					break;
 
 				case QALD5_Test_Multilingual:
-				case QALD5_Train_Multilingual: 
+				case QALD5_Train_Multilingual:
 					hybrid = new ArrayList<>();
 					loadedQ = loadXML(is, deriveUri, questionLang);
 					for (IQuestion q : loadedQ) {
@@ -267,9 +275,28 @@ public class LoaderController {
 				case QALD7_Train_Wikidata_en:
 				case QALD7_Test_Multilingual:
 				case QALD7_Test_Wikidata_en:
+				case QALD8_Test_Multilingual:
+				case QALD8_Train_Multilingual:
 
 					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(getInputStream(data), QaldJson.class);
 					out = EJQuestionFactory.getQuestionsFromQaldJson(json);
+					for (IQuestion q : out) {
+						HashSet<String> set = new HashSet<>();
+						if ((deriveUri != null) && (q.getSparqlQuery() != null)) {
+
+							Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, q.getSparqlQuery());
+							for (RDFNode answ : answers) {
+								if (answ.isResource()) {
+									set.add(answ.asResource().getURI());
+								} else if (answ.isLiteral()) {
+									set.add(((Literal) answ).getValue().toString());
+								} else {
+									set.add(answ.toString());
+								}
+							}
+							q.setGoldenAnswers(set);
+						}
+					}
 					break;
 				case nlq:
 					out = loadNLQ(is, deriveUri);
@@ -292,7 +319,11 @@ public class LoaderController {
 		return null;
 	}
 
-	private static List<IQuestion> qald3_test_esdbpedia_loader(final String deriveUri, String questionLang) {
+	/**
+	 * Use this to load answers from server:{@link AnswerSyncer}
+	 */
+	@Deprecated //TODO refactor this so that answersyncing is no longer in this class
+	private static List<IQuestion> qald3_test_esdbpedia_loader(final String deriveUri, final String questionLang) {
 		List<IQuestion> answerList = null;
 		try {
 			InputStream sparqlIs = null;
@@ -326,17 +357,16 @@ public class LoaderController {
 
 	/**
 	 * This methods loads QALD XML files (used in QALD 1 to QALD 5)
-	 *
 	 */
-	public static List<IQuestion> loadXML(final InputStream file, String questionLang) {
+	public static List<IQuestion> loadXML(final InputStream file, final String questionLang) {
 		return loadXML(file, null, questionLang);
 	}
 
 	/**
-	 * This methods loads QALD XML files (used in QALD 1 to QALD 5) and will get
-	 * the Answers from the given Endpoint deriveUri
+	 * Use this to load answers from server:{@link AnswerSyncer} This methods loads QALD XML files (used in QALD 1 to QALD 5) and will get the Answers from the given Endpoint deriveUri
 	 */
-	public static List<IQuestion> loadXML(final InputStream file, final String deriveUri, String questionLang) {
+	@Deprecated //TODO refactor this so that answersyncing is no longer in this class
+	public static List<IQuestion> loadXML(final InputStream file, final String deriveUri, final String questionLang) {
 		List<IQuestion> questions = new ArrayList<>();
 
 		try {
@@ -401,7 +431,7 @@ public class LoaderController {
 					try {
 						QueryFactory.create(question.getSparqlQuery());
 					} catch (Exception e) {
-						log.error("Couldn't parse a query - Skipping question",e);
+						log.error("Couldn't parse a query - Skipping question", e);
 						continue;
 					}
 				}
@@ -419,7 +449,13 @@ public class LoaderController {
 
 					Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, question.getSparqlQuery());
 					for (RDFNode answ : answers) {
-						set.add(answ.toString());
+						if (answ.isResource()) {
+							set.add(answ.asResource().getURI());
+						} else if (answ.isLiteral()) {
+							set.add(((Literal) answ).getValue().toString());
+						} else {
+							set.add(answ.toString());
+						}
 					}
 				} else {
 					NodeList answers = questionNode.getElementsByTagName("answers");
@@ -440,9 +476,7 @@ public class LoaderController {
 
 								String answerString = ((Element) answer.item(k)).getTextContent();
 								/**
-								 * QALD1 questions have in answerSets "uri" and
-								 * "string" nodes, and returned string contains
-								 * both. This is a quick workaround
+								 * QALD1 questions have in answerSets "uri" and "string" nodes, and returned string contains both. This is a quick workaround
 								 */
 								String x = Arrays.asList(answerString.trim().split("\n")).get(0);
 								set.add(x);
@@ -523,7 +557,13 @@ public class LoaderController {
 					Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, q.getSparqlQuery());
 
 					for (RDFNode a : answers) {
-						answ.add(a.toString());
+						if (a.isResource()) {
+							answ.add(a.asResource().getURI());
+						} else if (a.isLiteral()) {
+							answ.add(((Literal) answ).getValue().toString());
+						} else {
+							answ.add(answ.toString());
+						}
 					}
 				} else {
 					answ.add(answer);
@@ -584,8 +624,7 @@ public class LoaderController {
 			}
 		}
 		/*
-		 * QUALD2__test_dbpedia has no answers in File (only sparql)
-		 * QUALD2_test_musicbrainz has no answers in File (only sparql)
+		 * QUALD2__test_dbpedia has no answers in File (only sparql) QUALD2_test_musicbrainz has no answers in File (only sparql)
 		 */
 		System.out.println("\n\n");
 		for (String s : output) {
