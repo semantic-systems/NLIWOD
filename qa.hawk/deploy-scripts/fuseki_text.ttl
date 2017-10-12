@@ -1,0 +1,83 @@
+@prefix fuseki:  <http://jena.apache.org/fuseki#> .
+@prefix :        <http://localhost/jena_example/#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .
+@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix text:    <http://jena.apache.org/text#> .
+
+## Example of a TDB dataset and text index
+## Initialize TDB
+[] ja:loadClass "org.apache.jena.tdb.TDB" .
+tdb:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
+tdb:GraphTDB    rdfs:subClassOf  ja:Model .
+
+
+## Initialize text query
+[] ja:loadClass       "org.apache.jena.query.text.TextQuery" .
+# A TextDataset is a regular dataset with a text index.
+text:TextDataset      rdfs:subClassOf   ja:RDFDataset .
+# Lucene index
+text:TextIndexLucene  rdfs:subClassOf   text:TextIndex .
+
+:text_dataset rdf:type     text:TextDataset ;
+    text:dataset   <#dataset> ;
+    text:index     <#indexLucene> ;
+    .
+
+# A TDB datset used for RDF storage
+<#dataset> rdf:type      tdb:DatasetTDB ;
+    tdb:location "/home/datascienceadmin/NLIWOD/qa.hawk/deploy-scripts/data/hawk_data_10-2016_dbpediatbd" ;
+    .
+
+
+# Text index description
+<#indexLucene> a text:TextIndexLucene ;
+    text:directory <file:/home/datascienceadmin/NLIWOD/qa.hawk/deploy-scripts/data/hawk_data_10-2016_dbpedialucene>;
+    text:entityMap <#entMap> ;
+    .
+
+<#entMap> a text:EntityMap ;
+    text:defaultField     "text" ;
+    text:entityField      "uri" ;
+       text:map (
+         #RDF label abstracts
+         [ text:field "text" ; 
+           text:predicate <http://www.w3.org/2000/01/rdf-schema#label> ;
+           text:analyzer [
+                a text:StandardAnalyzer
+             ]  
+           ] 
+         #DBpedia abstracts
+         [ text:field "text" ;
+           text:predicate <http://dbpedia.org/ontology/abstract> ;
+           text:analyzer [
+                a text:StandardAnalyzer
+             ]
+           ]
+         # SKOS alternativ labels from surface forms and redirects
+         [ text:field "text" ;
+           text:predicate <http://www.w3.org/2004/02/skos/core#altLabel> ;
+           text:analyzer [
+                a text:StandardAnalyzer
+             ]
+           ]
+         #dc term labels
+         [ text:field "text" ;
+           text:predicate <http://purl.org/dc/elements/1.1/description> ;
+           text:analyzer [
+                a text:StandardAnalyzer
+             ]
+           ]
+          ) .
+
+<#service_text_tdb> rdf:type fuseki:Service ;
+    fuseki:name                     "ds" ;
+    fuseki:serviceQuery             "query" ;
+    fuseki:serviceQuery             "sparql" ;
+    fuseki:serviceUpdate            "update" ;
+    fuseki:serviceUpload            "upload" ;
+    fuseki:serviceReadGraphStore    "get" ;
+    fuseki:serviceReadWriteGraphStore    "data" ;
+    fuseki:dataset                  :text_dataset ;
+    .
