@@ -29,8 +29,17 @@ public class QANARY extends ASystem {
 
 	Logger log = LoggerFactory.getLogger(QANARY.class);
 
-	private String qanaryUrl = "https://wdaqua-qanary.univ-st-etienne.fr/gerbil-execute/wdaqua-core0,%20QueryExecuter/";
+	private String qanaryUrl = "https://wdaqua-qanary.univ-st-etienne.fr/gerbil-execute/wdaqua-core1,%20QueryExecuter/";
 
+	public QANARY() {
+		super();
+	}
+	
+	public QANARY(String url) {
+		super();
+		this.qanaryUrl=url;
+	}
+	
 	@Override
 	public void search(final IQuestion question, final String language) throws Exception {
 		String questionString;
