@@ -24,7 +24,7 @@ public class SpecificQueryTest {
 	}
 
 	Logger log = LoggerFactory.getLogger(SpecificQueryTest.class);
-	SPARQL sparql = new SPARQL();
+	SPARQL sparql = new SPARQL("http://131.234.28.52:3030/ds/sparql");
 	SPARQLQueryPruner pruner = new SPARQLQueryPruner(sparql);
 
 	@Test
