@@ -21,8 +21,8 @@ or
 
 Running HAWK
 ==
-!!!Before running hawk make sure there is a SPARQL endpoint at http://139.18.2.164:3030/ds/sparql or http://titan.informatik.uni-leipzig.de:3030/ds/sparql!!!
-!!!Make sure there is an available Stanford CoreNLP server at http://localhost: or http://titan.informatik.uni-leipzig.de:9000/!!!
+!!!Before running hawk make sure there is a SPARQL endpoint at http://131.234.28.52:3030/ds/sparql!!! <br>
+!!!Make sure there is an available Stanford CoreNLP server at http://localhost: or http://akswnc9.informatik.uni-leipzig.de:9000/!!!
 
 Running HAWK via Docker
 ===
