@@ -91,8 +91,10 @@ fi
 
 #Create more labels for URIs from redirects (takes a long time)
 
-#if [ ! -f "redirect_labels.ttl" ];
-#then
+if [ ! -f "redirect_labels.ttl" ];
+then
+  wget http://139.18.2.164/rusbeck/hawk/redirect_resolved.ttl
+fi
 #	sort labels_en.ttl > labels_en.ttl.sorted 
 #	sort transitive_redirects_en.ttl  > transitive_redirects_en.ttl.sorted
 #	join -1 1 -2 1 labels_en.ttl.sorted transitive_redirects_en.ttl.sorted  > join.tsv

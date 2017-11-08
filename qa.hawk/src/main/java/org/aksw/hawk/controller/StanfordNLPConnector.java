@@ -48,7 +48,7 @@ public class StanfordNLPConnector {
 	private Set<IndexedWord> visitedNodes;
 	public static StringBuilder out = new StringBuilder();
 	private static Logger log = LoggerFactory.getLogger(StanfordNLPConnector.class);
-	private static final String STANFORD_IP = "139.18.2.164";
+	private static final String STANFORD_IP = "139.18.2.39";
 	private static final int STANFORD_PORT = 9000;
 	private static final int USED_CORES = 4;
 
