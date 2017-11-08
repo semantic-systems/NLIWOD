@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>annotation</artifactId>
-	<version>0.3.0</version>
+	<version>0.3.1</version>
 	<packaging>jar</packaging>
 	<pluginRepositories>
 		<pluginRepository>
@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>commons</artifactId>
-			<version>0.4.13</version>
+			<version>0.4.14</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aksw</groupId>

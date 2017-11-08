@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import org.aksw.qa.commons.sparql.SPARQL;
 import org.apache.jena.ext.com.google.common.collect.Iterables;
@@ -30,10 +31,15 @@ public class SimpleQuantityRanker {
 		Map<Integer, String> uriToQuantity = new HashMap<>();
 
 		for (String it : uris) {
-			ArrayList<RDFNode> answers = new ArrayList<>(sparql.sparql(constructQuery(it)));
+			ArrayList<RDFNode> answers;
+            try {
+	            answers = new ArrayList<>(sparql.sparql(constructQuery(it)));
 			System.out.println(constructQuery(it));
 			RDFNode node = answers.get(0);
 			uriToQuantity.put(((Integer) node.asLiteral().getValue()), it);
+            } catch (ExecutionException e) {
+            	e.printStackTrace();
+            }
 		}
 
 		List<Integer> sorted = new ArrayList<>(uriToQuantity.keySet());
