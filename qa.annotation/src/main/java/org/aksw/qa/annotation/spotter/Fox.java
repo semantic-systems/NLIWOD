@@ -30,9 +30,9 @@ import com.google.common.base.Joiner;
 public class Fox extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(Fox.class);
 
-	private String requestURL = "http://139.18.2.164:4444/api";
+	private String requestURL = "http://fox-demo.aksw.org/fox";
 	private String outputFormat = "N-Triples";
-	private String taskType = "NER";
+	private String taskType = "ner";
 	private String inputType = "text";
 
 	private String doTask(final String inputText) {

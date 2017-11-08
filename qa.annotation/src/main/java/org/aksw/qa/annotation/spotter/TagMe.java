@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 public class TagMe extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(TagMe.class);
 
-	private String requestURL = "http://tagme.di.unipi.it/tag";
+	private String requestURL = "https://tagme.d4science.org/tagme/tag";
 	private String key = "";
 	private String lang = "en";
 	private String include_all_spots = "true";
