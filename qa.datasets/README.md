@@ -23,6 +23,7 @@ QA datasets to analyze:
 * www.msmarco.org
 * TriviaQA for 95k reading comprehension questions http://nlp.cs.washington.edu/triviaqa/ 
 * convai.io 
+* https://github.com/deepmind/aqua Algebraic QA
 * https://www.microsoft.com/en-us/download/details.aspx?id=52763
 * http://datasets.maluuba.com/NewsQA
 * https://github.com/ysu1989/GraphQuestions GraphQuestions: compositional questions; multiple paraphrases for each question 
