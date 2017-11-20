@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>annotation</artifactId>
-	<version>0.3.2</version>
+	<version>0.3.3</version>
 	<packaging>jar</packaging>
 	<pluginRepositories>
 		<pluginRepository>
