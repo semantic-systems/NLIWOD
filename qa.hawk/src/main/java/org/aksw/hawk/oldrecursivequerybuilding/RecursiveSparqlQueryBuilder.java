@@ -1,4 +1,4 @@
-package org.aksw.hawk.querybuilding;
+package org.aksw.hawk.oldrecursivequerybuilding;
 
 import java.util.Set;
 

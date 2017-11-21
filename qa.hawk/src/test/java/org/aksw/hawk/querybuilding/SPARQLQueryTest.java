@@ -1,6 +1,7 @@
 package org.aksw.hawk.querybuilding;
 
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import org.aksw.qa.commons.sparql.SPARQL;
 import org.aksw.qa.commons.sparql.SPARQLQuery;
@@ -11,8 +12,8 @@ import org.junit.Test;
 public class SPARQLQueryTest {
 	@Ignore
 	@Test
-	public void test() {
-		SPARQL sqb = new SPARQL();
+	public void test() throws ExecutionException {
+		SPARQL sqb = new SPARQL("http://131.234.28.52:3030/ds/sparql");
 		SPARQLQuery query = new SPARQLQuery();
 		query.addConstraint("?proj a <http://dbpedia.org/ontology/Cleric>.");
 		query.addConstraint("?proj ?p ?const.");

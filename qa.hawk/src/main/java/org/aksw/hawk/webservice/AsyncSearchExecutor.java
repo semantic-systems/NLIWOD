@@ -1,6 +1,7 @@
 package org.aksw.hawk.webservice;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import org.aksw.hawk.controller.PipelineStanford;
@@ -21,7 +22,7 @@ public class AsyncSearchExecutor {
 	private Logger log = LoggerFactory.getLogger(AsyncSearchExecutor.class);
 
 	@Async
-	public Future<HAWKQuestion> search(HAWKQuestion q) {
+	public Future<HAWKQuestion> search(HAWKQuestion q) throws ExecutionException, RuntimeException {
 		log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
 		List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
