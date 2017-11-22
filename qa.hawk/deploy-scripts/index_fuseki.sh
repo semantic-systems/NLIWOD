@@ -124,7 +124,7 @@ then
 	cd data
 	mkdir hawk_data_10-2016_dbpedialucene
         cd ..
-	java -Xmx16G -cp $JENA_FUSEKI_JAR jena.textindexer --desc=fuseki_hawk_assembler.ttl
+	java -Xmx16G -cp $JENA_FUSEKI_JAR jena.textindexer --desc=fuseki_text.ttl
 fi
 
 
