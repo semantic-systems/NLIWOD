@@ -91,7 +91,7 @@ fi
 
 #Create more labels for URIs from redirects (takes a long time)
 
-if [ ! -f "redirect_labels.ttl" ];
+if [ ! -f "redirect_resolved.ttl" ];
 then
   wget http://139.18.2.164/rusbeck/hawk/redirect_resolved.ttl
 fi
