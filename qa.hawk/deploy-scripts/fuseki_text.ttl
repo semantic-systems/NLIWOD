@@ -27,13 +27,13 @@ text:TextIndexLucene  rdfs:subClassOf   text:TextIndex .
 
 # A TDB datset used for RDF storage
 <#dataset> rdf:type      tdb:DatasetTDB ;
-    tdb:location "/home/datascienceadmin/NLIWOD/qa.hawk/deploy-scripts/data/hawk_data_10-2016_dbpediatbd" ;
+    tdb:location "./data/hawk_data_10-2016_dbpediatbd" ;
     .
 
 
 # Text index description
 <#indexLucene> a text:TextIndexLucene ;
-    text:directory <file:/home/datascienceadmin/NLIWOD/qa.hawk/deploy-scripts/data/hawk_data_10-2016_dbpedialucene>;
+    text:directory <file:./data/hawk_data_10-2016_dbpedialucene>;
     text:entityMap <#entMap> ;
     .
 

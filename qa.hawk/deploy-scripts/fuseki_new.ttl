@@ -20,7 +20,7 @@
     .
 
 <#dataset> rdf:type      tdb:DatasetTDB ;
-    tdb:location "/home/datascienceadmin/NLIWOD/qa.hawk/deploy-scripts/data/hawk_data_10-2016_dbpediatbd" ;
+    tdb:location "./data/hawk_data_10-2016_dbpediatbd" ;
     # Query timeout on this dataset (1s, 1000 milliseconds)
     ja:context [ ja:cxtName "arq:queryTimeout" ;  ja:cxtValue "1000" ] ;
     # Make the default graph be the union of all named graphs.

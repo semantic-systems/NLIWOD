@@ -47,7 +47,7 @@ public class PipelineStanford extends AbstractPipeline {
 
 		pruner = new MutableTreePruner();
 
-		SPARQL sparql = new SPARQL();
+		SPARQL sparql = new SPARQL("http://131.234.28.52:3030/ds/sparql");
 		annotater = new Annotater(sparql);
 
 		queryBuilder = new SPARQLQueryBuilder(sparql);

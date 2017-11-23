@@ -14,7 +14,7 @@ RUN wget http://archive.apache.org/dist/jena/binaries/apache-jena-fuseki-3.4.0.z
  rm apache-jena-fuseki-3.4.0.zip&&\
  mv apache-jena-fuseki-* $FUSEKI_HOME
 
-COPY fuseki_text.ttl /jena-fuseki/fuseki_text.ttl
+COPY ./fuseki_text.ttl /jena-fuseki/fuseki_text.ttl
 COPY shiro.ini /fuseki/shiro.ini
 
 WORKDIR $FUSEKI_HOME
