@@ -17,18 +17,18 @@ will return a UUID.
 
 or
 
-``curl localhost:8181/simple-search?q=What+is+the+capital+of+Germany+%3F``
+``curl localhost:8181/simple-search?query=What+is+the+capital+of+Germany+%3F``
 
 Running HAWK
 ==
-!!!Before running hawk make sure there is a SPARQL endpoint at http://131.234.28.52:3030/ds/sparql!!! <br>
+!!!Before running hawk make sure there is a SPARQL endpoint at http://localhost: or http://131.234.28.52:3030/ds/sparql!!! <br>
 !!!Make sure there is an available Stanford CoreNLP server at http://localhost: or http://akswnc9.informatik.uni-leipzig.de:9000/!!!
 
 Running HAWK via Docker
 ===
 
 HAWK will connect with a SPARQL endpoint on localhost.
-There is also a public hawk-specific sparql endpoint http://titan.informatik.uni-leipzig.de:3030/
+There is also a public hawk-specific sparql endpoint http://131.234.28.52:3030/
 For starting our specific SPARQL endpoint locally look at deploy-scripts/README.md
 If you already have it running, you can build a hawk docker file using the following commands.
 
