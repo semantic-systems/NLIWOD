@@ -12,7 +12,7 @@ import org.junit.Test;
 public class SPARQLQueryTest {
 	@Ignore
 	@Test
-	public void test() throws ExecutionException {
+	public void test() throws ExecutionException, RuntimeException {
 		SPARQL sqb = new SPARQL("http://131.234.28.52:3030/ds/sparql");
 		SPARQLQuery query = new SPARQLQuery();
 		query.addConstraint("?proj a <http://dbpedia.org/ontology/Cleric>.");

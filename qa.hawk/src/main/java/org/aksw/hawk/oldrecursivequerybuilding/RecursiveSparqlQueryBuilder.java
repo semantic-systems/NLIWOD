@@ -205,7 +205,7 @@ public class RecursiveSparqlQueryBuilder {
 		Set<String> resultset = Sets.newHashSet();
 		String query = "SELECT str(?proj)  WHERE { <" + label + "> <http://www.w3.org/2000/01/rdf-schema#label> ?proj. FILTER(langMatches( lang(?proj), \"EN\" ))}";
 		try {
-			QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://139.18.2.164:3030/ds/sparql");
+			QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://131.234.28.52:3030/ds/sparql");
 			QueryExecution qe = qef.createQueryExecution(query);
 			if (qe != null) {
 				log.debug(query.toString());

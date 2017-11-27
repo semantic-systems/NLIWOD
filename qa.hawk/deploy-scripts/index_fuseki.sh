@@ -91,7 +91,7 @@ fi
 
 #Create more labels for URIs from redirects (takes a long time)
 
-if [ ! -f "redirect_labels.ttl" ];
+if [ ! -f "redirect_resolved.ttl" ];
 then
   wget http://139.18.2.164/rusbeck/hawk/redirect_resolved.ttl
 fi
@@ -124,7 +124,7 @@ then
 	cd data
 	mkdir hawk_data_10-2016_dbpedialucene
         cd ..
-	java -Xmx16G -cp $JENA_FUSEKI_JAR jena.textindexer --desc=fuseki_hawk_assembler.ttl
+	java -Xmx16G -cp $JENA_FUSEKI_JAR jena.textindexer --desc=fuseki_text.ttl
 fi
 
 

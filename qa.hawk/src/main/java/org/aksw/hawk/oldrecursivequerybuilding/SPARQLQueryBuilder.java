@@ -71,6 +71,7 @@ public class SPARQLQueryBuilder {
 		tmp.put("value", numberOfOverallQueriesExecuted);
 		q.getPruning_messages().add(tmp);
 		log.debug("Number of sofar executed queries: " + numberOfOverallQueriesExecuted);
+		
 		return answer;
 	}
 
