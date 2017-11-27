@@ -2,6 +2,7 @@ package org.aksw.hawk.experiment;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -32,7 +33,7 @@ import com.google.common.base.Joiner;
 public class RankingPipeline {
 	static Logger log = LoggerFactory.getLogger(RankingPipeline.class);
 
-	public static void main(String args[]) throws IOException, ParserConfigurationException {
+	public static void main(String args[]) throws IOException, ParserConfigurationException, ExecutionException, RuntimeException {
 		log.info("Configuring controller");
 		AbstractPipeline pipeline = new PipelineStanford();
 

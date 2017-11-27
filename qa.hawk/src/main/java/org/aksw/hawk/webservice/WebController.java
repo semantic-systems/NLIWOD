@@ -51,7 +51,7 @@ public class WebController {
 	}
 
 	@RequestMapping("/simple-search")
-	public String simplesearch(@RequestParam(value = "query") final String question, final HttpServletResponse response) {
+	public String simplesearch(@RequestParam(value = "query") final String question, final HttpServletResponse response) throws ExecutionException, RuntimeException {
 		log.debug("Received question = " + question);
 		// CORS
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -64,7 +64,7 @@ public class WebController {
 	}
 
 	@RequestMapping("/search")
-	public UUID search(@RequestParam(value = "q") String question, HttpServletResponse response) {
+	public UUID search(@RequestParam(value = "q") String question, HttpServletResponse response) throws ExecutionException, RuntimeException {
 		// CORS
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");

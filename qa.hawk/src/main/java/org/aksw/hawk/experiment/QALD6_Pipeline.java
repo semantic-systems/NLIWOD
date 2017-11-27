@@ -2,6 +2,7 @@ package org.aksw.hawk.experiment;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import org.aksw.hawk.controller.AbstractPipeline;
 import org.aksw.hawk.controller.EvalObj;
@@ -22,7 +23,7 @@ import com.google.common.collect.Sets;
 public class QALD6_Pipeline {
 	static Logger log = LoggerFactory.getLogger(QALD6_Pipeline.class);
 
-	public QALD6_Pipeline() {
+	public QALD6_Pipeline() throws ExecutionException, RuntimeException {
 
 		log.info("Configuring controller");
 		AbstractPipeline pipeline = new PipelineStanford();
@@ -49,6 +50,8 @@ public class QALD6_Pipeline {
 					continue;
 				}
 				++count;
+				
+				
 
 				// ##############~~RANKING~~##############
 				log.info("Run ranking");
@@ -74,6 +77,7 @@ public class QALD6_Pipeline {
 					}
 				}
 				log.info("Max F-measure: " + fmax);
+				//System.out.println("Max F-measure: " + fmax);
 				average += fmax;
 				// log.info("Feature-based ranking begins training.");
 				// feature_ranker.learn(q, queries);
@@ -82,11 +86,12 @@ public class QALD6_Pipeline {
 		
 		log.info("Number of questions with answer: " + count + ", number of questions without answer: " + countNULLAnswer);
 		log.info("Average F-measure: " + (average / count));
-
+		System.out.println("Number of questions with answer: " + count + ", number of questions without answer: " + countNULLAnswer);
+		System.out.println("Average F-measure: " + (average / count));
 	}
 
 	// TODO When HAWK is fast enough change to unit test
-	public static void main(String args[]) {
+	public static void main(String args[]) throws ExecutionException, RuntimeException {
 		new QALD6_Pipeline();
 
 	}

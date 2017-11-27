@@ -1,6 +1,7 @@
 package org.aksw.hawk.webservice;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.aksw.hawk.controller.AbstractPipeline;
 import org.aksw.hawk.datastructures.Answer;
@@ -24,7 +25,7 @@ public class SearchExecutor {
 		this.pipeline = pipeline;
 	}
 
-	public String runPipeline(final String question) {
+	public String runPipeline(final String question) throws ExecutionException, RuntimeException {
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", question);
 		log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));

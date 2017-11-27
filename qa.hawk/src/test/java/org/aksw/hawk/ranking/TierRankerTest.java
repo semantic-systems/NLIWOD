@@ -3,6 +3,7 @@ package org.aksw.hawk.ranking;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.aksw.hawk.controller.PipelineStanford;
 import org.aksw.hawk.datastructures.Answer;
@@ -21,7 +22,7 @@ public class TierRankerTest {
 
 	@Test
 	@Ignore
-	public void test() {
+	public void test() throws ExecutionException, RuntimeException {
 
 		PipelineStanford pipeline = new PipelineStanford();
 

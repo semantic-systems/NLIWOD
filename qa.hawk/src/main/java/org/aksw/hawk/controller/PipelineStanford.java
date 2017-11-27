@@ -1,6 +1,7 @@
 package org.aksw.hawk.controller;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
@@ -8,8 +9,8 @@ import org.aksw.hawk.nlp.MutableTreePruner;
 import org.aksw.hawk.nouncombination.NounCombinationChain;
 import org.aksw.hawk.nouncombination.NounCombiners;
 import org.aksw.hawk.number.UnitController;
+import org.aksw.hawk.querybuilding.PatternSparqlGenerator;
 import org.aksw.hawk.querybuilding.Annotater;
-import org.aksw.hawk.querybuilding.SPARQLQueryBuilder;
 import org.aksw.qa.annotation.spotter.ASpotter;
 import org.aksw.qa.annotation.spotter.Spotlight;
 import org.aksw.qa.commons.sparql.SPARQL;
@@ -21,7 +22,7 @@ public class PipelineStanford extends AbstractPipeline {
 	private ASpotter nerdModule;
 	private MutableTreePruner pruner;
 	private Annotater annotater;
-	private SPARQLQueryBuilder queryBuilder;
+	private PatternSparqlGenerator patternsparqlgenerator;
 	private Cardinality cardinality;
 	private QueryTypeClassifier queryTypeClassifier;
 	private StanfordNLPConnector stanfordConnector;
@@ -50,19 +51,21 @@ public class PipelineStanford extends AbstractPipeline {
 		SPARQL sparql = new SPARQL("http://131.234.28.52:3030/ds/sparql");
 		annotater = new Annotater(sparql);
 
-		queryBuilder = new SPARQLQueryBuilder(sparql);
+		patternsparqlgenerator = new PatternSparqlGenerator();
 	}
 
 	@Override
-	public List<Answer> getAnswersToQuestion(final HAWKQuestion q) {
+	public List<Answer> getAnswersToQuestion(final HAWKQuestion q) throws ExecutionException, RuntimeException {
 		log.info("Question: " + q.getLanguageToQuestion().get("en"));
 
 		log.info("Classify question type.");
 		q.setIsClassifiedAsASKQuery(queryTypeClassifier.isASKQuery(q.getLanguageToQuestion().get("en")));
+		
 
 		// Disambiguate parts of the query
 		log.info("Named entity recognition.");
 		q.setLanguageToNamedEntites(nerdModule.getEntities(q.getLanguageToQuestion().get("en")));
+		
 		// Noun combiner, decrease #nodes in the DEPTree
 		log.info("Noun phrase combination / Dependency Parsing");
 		// TODO make tlhis method return the combine sequence and work on this,
@@ -73,6 +76,7 @@ public class PipelineStanford extends AbstractPipeline {
 		q.setTree(stanfordConnector.parseTree(q, this.numberToDigit));
 
 		nounCombination.runChain(q);
+		
 
 		// Cardinality identifies the integer i used for LIMIT i
 		log.info("Cardinality calculation.");
@@ -81,14 +85,16 @@ public class PipelineStanford extends AbstractPipeline {
 		// Apply pruning rules
 		log.info("Pruning tree.");
 		q.setTree(pruner.prune(q));
+		
 
 		// Annotate tree
 		log.info("Semantically annotating the tree.");
-		annotater.annotateTree(q);
+		//annotater.annotateTree(q);
 
 		// Calculating all possible SPARQL BGPs with given semantic annotations
 		log.info("Calculating SPARQL representations.");
-		List<Answer> answers = queryBuilder.build(q);
+		List<Answer> answers = patternsparqlgenerator.build(q);
+		
 
 		return answers;
 	}
@@ -97,7 +103,7 @@ public class PipelineStanford extends AbstractPipeline {
 		return stanfordConnector;
 	}
 
-	public static void main(final String[] args) {
+	public static void main(final String[] args) throws ExecutionException, RuntimeException {
 		PipelineStanford p = new PipelineStanford();
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", "Which anti-apartheid activist was born in Mvezo?");

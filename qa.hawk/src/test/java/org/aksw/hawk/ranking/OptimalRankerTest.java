@@ -1,6 +1,7 @@
 package org.aksw.hawk.ranking;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.aksw.hawk.controller.EvalObj;
 import org.aksw.hawk.controller.PipelineStanford;
@@ -21,7 +22,7 @@ public class OptimalRankerTest {
 
 	@Test
 	@Ignore
-	public void test() {
+	public void test() throws ExecutionException, RuntimeException {
 
 		PipelineStanford pipeline = new PipelineStanford();
 
