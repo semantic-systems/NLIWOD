@@ -1,13 +1,22 @@
 # Indexing of DBpedia and Deployment with docker
 
+On the terminal, change the directory to deploy-scripts if you are in the qa.hawk directory.
+```
+cd deploy-scripts/
+```
+Then proceed with any of the following steps. 
+
 ## Indexing
 
 Run ´./index_fuseki.sh´ This can take several hours.
 This will create two folders under a subfolder called ´data´.
 
+To deploy the sparql endpoint locally, after the indexing is done, run ```./run_fuseki.sh``` .  
+ 
+
 ## Deployment with docker
 
-Use wget to download the latest data from http://hobbitdata.informatik.uni-leipzig.de/hawk/hawk_dbpedia_2016-10.tar.gz and unzip it.
+Use wget to download the latest 'data' from http://hobbitdata.informatik.uni-leipzig.de/hawk/hawk_dbpedia_2016-10.tar.gz and unzip it.  
 
 Now use docker to build an image and run it
 ```
