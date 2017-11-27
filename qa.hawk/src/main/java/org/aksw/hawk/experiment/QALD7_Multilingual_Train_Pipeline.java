@@ -30,6 +30,7 @@ public class QALD7_Multilingual_Train_Pipeline {
 		log.info("Loading dataset");
 		List<HAWKQuestion> questions = null;
 
+//		questions = HAWKQuestionFactory.createInstances(LoaderController.load(Dataset.QALD7_Train_Hybrid));
 		questions = HAWKQuestionFactory.createInstances(LoaderController.load(Dataset.QALD7_Train_Multilingual));
 
 		double average = 0;
