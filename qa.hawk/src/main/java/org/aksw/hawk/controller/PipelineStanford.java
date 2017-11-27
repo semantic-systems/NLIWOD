@@ -5,12 +5,13 @@ import java.util.concurrent.ExecutionException;
 
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.aksw.hawk.nlp.Annotater;
+import org.aksw.hawk.nlp.Cardinality;
 import org.aksw.hawk.nlp.MutableTreePruner;
 import org.aksw.hawk.nouncombination.NounCombinationChain;
 import org.aksw.hawk.nouncombination.NounCombiners;
 import org.aksw.hawk.number.UnitController;
 import org.aksw.hawk.querybuilding.PatternSparqlGenerator;
-import org.aksw.hawk.querybuilding.Annotater;
 import org.aksw.qa.annotation.spotter.ASpotter;
 import org.aksw.qa.annotation.spotter.Spotlight;
 import org.aksw.qa.commons.sparql.SPARQL;
@@ -106,7 +107,7 @@ public class PipelineStanford extends AbstractPipeline {
 	public static void main(final String[] args) throws ExecutionException, RuntimeException {
 		PipelineStanford p = new PipelineStanford();
 		HAWKQuestion q = new HAWKQuestion();
-		q.getLanguageToQuestion().put("en", "Which anti-apartheid activist was born in Mvezo?");
+		q.getLanguageToQuestion().put("en", "What is the capital of Germany?");
 		p.getAnswersToQuestion(q);
 
 	}

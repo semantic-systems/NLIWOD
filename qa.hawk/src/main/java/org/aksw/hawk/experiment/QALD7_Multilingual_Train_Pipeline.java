@@ -10,20 +10,19 @@ import org.aksw.hawk.controller.PipelineStanford;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
-import org.aksw.hawk.ranking.OptimalRanker;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.ranking.OptimalRanker;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
 import org.aksw.qa.commons.sparql.SPARQLQuery;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 
-public class QALD6_Pipeline {
-	static Logger log = LoggerFactory.getLogger(QALD6_Pipeline.class);
+public class QALD7_Multilingual_Train_Pipeline {
+	private static Logger log = Logger.getLogger(QALD7_Multilingual_Train_Pipeline.class);
 
-	public QALD6_Pipeline() throws ExecutionException, RuntimeException {
+	public QALD7_Multilingual_Train_Pipeline() throws ExecutionException, RuntimeException {
 
 		log.info("Configuring controller");
 		AbstractPipeline pipeline = new PipelineStanford();
@@ -31,7 +30,7 @@ public class QALD6_Pipeline {
 		log.info("Loading dataset");
 		List<HAWKQuestion> questions = null;
 
-		questions = HAWKQuestionFactory.createInstances(LoaderController.load(Dataset.QALD6_Train_Hybrid));
+		questions = HAWKQuestionFactory.createInstances(LoaderController.load(Dataset.QALD7_Train_Multilingual));
 
 		double average = 0;
 		double count = 0;
@@ -86,13 +85,11 @@ public class QALD6_Pipeline {
 		
 		log.info("Number of questions with answer: " + count + ", number of questions without answer: " + countNULLAnswer);
 		log.info("Average F-measure: " + (average / count));
-		System.out.println("Number of questions with answer: " + count + ", number of questions without answer: " + countNULLAnswer);
-		System.out.println("Average F-measure: " + (average / count));
 	}
 
 	// TODO When HAWK is fast enough change to unit test
 	public static void main(String args[]) throws ExecutionException, RuntimeException {
-		new QALD6_Pipeline();
+		new QALD7_Multilingual_Train_Pipeline();
 
 	}
 

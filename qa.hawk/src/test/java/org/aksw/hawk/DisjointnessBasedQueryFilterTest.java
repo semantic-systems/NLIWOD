@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Set;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.pruner.disjointness.DisjointnessBasedQueryFilter;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.pruner.disjointness.DisjointnessBasedQueryFilter;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.aksw.qa.commons.sparql.SPARQLQuery;

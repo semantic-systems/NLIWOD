@@ -9,6 +9,7 @@ import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.experiment.Measures;
 import org.aksw.hawk.experiment.SingleQuestionPipeline;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.ranking.OptimalRanker;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;

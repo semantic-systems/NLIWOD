@@ -3,10 +3,10 @@ package org.aksw.hawk;
 import java.util.Set;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.pruner.BGPisConnected;
-import org.aksw.hawk.pruner.NumberOfTypesPerVariable;
-import org.aksw.hawk.pruner.PredicatesPerVariableEdge;
-import org.aksw.hawk.pruner.UnboundTriple;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.pruner.BGPisConnected;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.pruner.NumberOfTypesPerVariable;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.pruner.PredicatesPerVariableEdge;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.pruner.UnboundTriple;
 import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.junit.Assert;
 import org.junit.Test;

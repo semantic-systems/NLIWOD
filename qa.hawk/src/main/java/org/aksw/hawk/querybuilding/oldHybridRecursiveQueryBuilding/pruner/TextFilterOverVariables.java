@@ -1,4 +1,4 @@
-package org.aksw.hawk.pruner;
+package org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.pruner;
 
 import java.util.Set;
 
@@ -7,16 +7,14 @@ import org.aksw.qa.commons.sparql.SPARQLQuery;
 
 import com.google.common.collect.Sets;
 
-public class ContainsTooManyNodesAsTextLookUp implements ISPARQLQueryPruner {
+public class TextFilterOverVariables implements ISPARQLQueryPruner {
+	private int maximalVariables = 1;
 
 	public Set<SPARQLQuery> prune(Set<SPARQLQuery> queryStrings, HAWKQuestion q) {
 		Set<SPARQLQuery> returnList = Sets.newHashSet();
 		for (SPARQLQuery query : queryStrings) {
-			// assume only one variable left
-			for (String variable : query.textMapFromVariableToCombinedNNExactMatchToken.keySet()) {
-				if (query.textMapFromVariableToCombinedNNExactMatchToken.get(variable).size() <= 2) {
-					returnList.add(query);
-				}
+			if (query.textMapFromVariableToSingleFuzzyToken.size() <= maximalVariables) {
+				returnList.add(query);
 			}
 		}
 		return returnList;

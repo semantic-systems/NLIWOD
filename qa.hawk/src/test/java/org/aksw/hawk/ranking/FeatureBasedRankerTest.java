@@ -7,7 +7,8 @@ import java.util.Set;
 
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.ranking.FeatureBasedRanker.Feature;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.ranking.FeatureBasedRanker;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.ranking.FeatureBasedRanker.Feature;
 import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.junit.Ignore;
 import org.junit.Test;

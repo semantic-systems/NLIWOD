@@ -1,4 +1,4 @@
-package org.aksw.hawk.pruner.disjointness;
+package org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.pruner.disjointness;
 
 import java.util.ArrayList;
 import java.util.HashMap;

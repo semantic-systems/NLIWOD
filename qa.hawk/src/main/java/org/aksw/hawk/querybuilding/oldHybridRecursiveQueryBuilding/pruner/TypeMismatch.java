@@ -1,14 +1,14 @@
 /**
  * 
  */
-package org.aksw.hawk.pruner;
+package org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.pruner;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.pruner.disjointness.QueryUtils;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.pruner.disjointness.QueryUtils;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.apache.jena.graph.Node;

@@ -1,4 +1,4 @@
-package org.aksw.hawk.pruner;
+package org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.pruner;
 
 import java.util.Set;
 

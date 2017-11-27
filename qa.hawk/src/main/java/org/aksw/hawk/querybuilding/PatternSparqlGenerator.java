@@ -2,11 +2,8 @@ package org.aksw.hawk.querybuilding;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import java.util.Stack;
 import java.util.concurrent.ExecutionException;
 
 import org.aksw.gerbil.transfer.nif.Document;
@@ -16,21 +13,15 @@ import org.aksw.gerbil.transfer.nif.data.TypedNamedEntity;
 import org.aksw.gerbil.transfer.nif.data.TypedSpanImpl;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.nlp.MutableTree;
-import org.aksw.hawk.nlp.MutableTreeNode;
+import org.aksw.hawk.nlp.Annotater;
 import org.aksw.qa.annotation.sparql.SimpleQuantityRanker;
 import org.aksw.qa.annotation.util.NifEverything;
-import org.aksw.qa.commons.sparql.SPARQL;
-import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.aksw.qa.commons.datastructure.Entity;
-import org.aksw.hawk.querybuilding.Annotater;
-
-import org.json.simple.JSONObject;
+import org.aksw.qa.commons.sparql.SPARQL;
 
 import com.google.common.collect.Lists;
 
-
-public class PatternSparqlGenerator implements ISparqlBuilder{
+public class PatternSparqlGenerator implements ISparqlBuilder {
 
 	private final static String NOT_DEFINED = "No pattern for those quantities of classes / properties / named entities available";
 
@@ -38,7 +29,7 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 	private Integer limit = null;
 	private NifEverything nif = NifEverything.getInstance();
 	private SimpleQuantityRanker ranker = new SimpleQuantityRanker();
-	
+
 	private List<String> classes;
 	private List<String> properties;
 	private List<String> namedEntities;
@@ -52,7 +43,6 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 	private final static String PROJ2 = " ?proj2 ";
 
 	public PatternSparqlGenerator() {
-		
 
 	}
 
@@ -69,7 +59,7 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 		List<String> propertyUri = new ArrayList<>();
 		List<String> namedUri = new ArrayList<>();
 		List<String> nounpUri = new ArrayList<>();
-		
+
 		for (Marking marking : markings) {
 			if (marking instanceof TypedSpanImpl) {
 				// taclassref
@@ -128,7 +118,8 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 		return nifToQuery(parsedDocs.get(0));
 	}
 
-	public String generateQuery(final List<String> classesIn, final List<String> propertiesIn, final List<String> namedEntitiesIn, List<String> nounPhrasesIn, Boolean isASK) {
+	public String generateQuery(final List<String> classesIn, final List<String> propertiesIn,
+			final List<String> namedEntitiesIn, List<String> nounPhrasesIn, Boolean isASK) {
 		classes = emptyIfNull(classesIn);
 		properties = emptyIfNull(propertiesIn);
 		namedEntities = emptyIfNull(namedEntitiesIn);
@@ -136,7 +127,8 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 		Querytype type;
 		if (isASK == true)
 			type = Querytype.ASK;
-		else type = Querytype.SELECT;
+		else
+			type = Querytype.SELECT;
 
 		switch (classes.size()) {
 
@@ -150,17 +142,17 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 					case 0:
 						return NOT_DEFINED;
 					case 1:
-						return "SELECT ?uri { ?uri <http://jena.apache.org/text#query> " + nounp(0) + " }" ;
+						return "SELECT ?uri { ?uri <http://jena.apache.org/text#query> " + nounp(0) + " }";
 					default:
 						return NOT_DEFINED;
 					}
 				case 1:
-					//return "SELECT " + named(0).get() + " WHERE {}";
+					// return "SELECT " + named(0).get() + " WHERE {}";
 					return NOT_DEFINED;
 				case 2:
 					// return "SELECT * WHERE { dbr:" + named(0) + " ?proj dbr:"
 					// + named(1) + " . }";
-					
+
 					return construct(type, named(0), var(PROJ), named(1));
 
 				default:
@@ -170,27 +162,27 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 				switch (namedEntities.size()) {
 				case 0:
 					/**
-					 * having only one property and nothing else doesnt make
-					 * sense, does it?
+					 * having only one property and nothing else doesnt make sense, does it?
 					 */
 					// return "SELECT * WHERE{ ?proj dbo:" + prop(0) + " ?proj2
 					// . } ";
-					
+
 					return construct(type, var(PROJ), prop(0), var(PROJ2));
 				case 1:
-					switch(nounPhrases.size()) {
+					switch (nounPhrases.size()) {
 					case 0:
 						// return "SELECT * WHERE{ ?proj dbo:" + prop(0) + " dbr:" +
 						// named(0) + " . } ";
 						return construct(type, named(0), prop(0), var(PROJ));
-					case 1: 
-						return "SELECT ?uri { ?uri <" + properties.get(0) + ">  <" + namedEntities.get(0) + "> . ?uri <http://jena.apache.org/text#query> " + nounp(0) + " }" ;
+					case 1:
+						return "SELECT ?uri { ?uri <" + properties.get(0) + ">  <" + namedEntities.get(0)
+								+ "> . ?uri <http://jena.apache.org/text#query> " + nounp(0) + " }";
 					default:
 						return NOT_DEFINED;
 					}
 					// return "SELECT * WHERE{ ?proj dbo:" + prop(0) + " dbr:" +
 					// named(0) + " . } ";
-					//return construct(type, named(0), prop(0), var(PROJ));
+					// return construct(type, named(0), prop(0), var(PROJ));
 				case 2:
 					return construct(type, named(0), prop(0), var(PROJ), named(1), prop(0), var(PROJ));
 				default:
@@ -232,18 +224,22 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 				case 1:
 					return construct(type, var(PROJ), clazz(0), named(0), prop(0), var(PROJ));
 				case 2:
-					return construct(type, var(PROJ), clazz(0), named(0), prop(0), var(PROJ), named(1), prop(0), var(PROJ));
+					return construct(type, var(PROJ), clazz(0), named(0), prop(0), var(PROJ), named(1), prop(0),
+							var(PROJ));
 				default:
 					return NOT_DEFINED;
 				}
 			case 2:
 				switch (namedEntities.size()) {
 				case 0:
-					return construct(type, var(PROJ), clazz(0), var(PROJ), prop(0), var(PROJ2), var(PROJ), prop(1), var(PROJ2));
+					return construct(type, var(PROJ), clazz(0), var(PROJ), prop(0), var(PROJ2), var(PROJ), prop(1),
+							var(PROJ2));
 				case 1:
-					return construct(type, var(PROJ), clazz(0), named(0), prop(0), var(PROJ), named(0), prop(1), var(PROJ));
+					return construct(type, var(PROJ), clazz(0), named(0), prop(0), var(PROJ), named(0), prop(1),
+							var(PROJ));
 				case 2:
-					return construct(type, var(PROJ), clazz(0), named(0), prop(0), var(PROJ), named(1), prop(1), var(PROJ));
+					return construct(type, var(PROJ), clazz(0), named(0), prop(0), var(PROJ), named(1), prop(1),
+							var(PROJ));
 				default:
 					return NOT_DEFINED;
 				}
@@ -270,18 +266,22 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 				case 1:
 					return construct(type, var(PROJ), clazz(0), var(PROJ), clazz(1), named(0), prop(0), var(PROJ));
 				case 2:
-					return construct(type, var(PROJ), clazz(0), var(PROJ), clazz(1), named(0), prop(0), var(PROJ), named(1), prop(0), var(PROJ));
+					return construct(type, var(PROJ), clazz(0), var(PROJ), clazz(1), named(0), prop(0), var(PROJ),
+							named(1), prop(0), var(PROJ));
 				default:
 					return NOT_DEFINED;
 				}
 			case 2:
 				switch (namedEntities.size()) {
 				case 0:
-					return construct(type, var(PROJ), clazz(0), var(PROJ), clazz(1), var(PROJ), prop(0), var(PROJ2), var(PROJ), prop(1), var(PROJ2));
+					return construct(type, var(PROJ), clazz(0), var(PROJ), clazz(1), var(PROJ), prop(0), var(PROJ2),
+							var(PROJ), prop(1), var(PROJ2));
 				case 1:
-					return construct(type, var(PROJ), clazz(0), var(PROJ), clazz(1), named(0), prop(0), var(PROJ), named(0), prop(1), var(PROJ));
+					return construct(type, var(PROJ), clazz(0), var(PROJ), clazz(1), named(0), prop(0), var(PROJ),
+							named(0), prop(1), var(PROJ));
 				case 2:
-					return construct(type, var(PROJ), clazz(0), var(PROJ), clazz(1), named(0), prop(0), var(PROJ), named(1), prop(1), var(PROJ));
+					return construct(type, var(PROJ), clazz(0), var(PROJ), clazz(1), named(0), prop(0), var(PROJ),
+							named(1), prop(1), var(PROJ));
 				default:
 					return NOT_DEFINED;
 				}
@@ -325,9 +325,9 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 		}
 		return new Named(NAMED_ENTITY_PREFIX + uri);
 	}
-	
+
 	private String nounp(final int index) {
-		String uri= "\'"+ nounPhrases.get(index)+ "\'";
+		String uri = "\'" + nounPhrases.get(index) + "\'";
 		return uri;
 	}
 
@@ -362,7 +362,7 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 		String out = "";
 		switch (type) {
 		case SELECT:
-			out = "SELECT * WHERE{ " + query + " }";
+			out = "SELECT ?proj WHERE{ " + query + " }";
 			break;
 
 		case ASK:
@@ -380,8 +380,7 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 	}
 
 	enum Querytype {
-		SELECT,
-		ASK
+		SELECT, ASK
 	}
 
 	class Querypart {
@@ -421,20 +420,19 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 			super(part);
 		}
 	}
-	
+
 	public String getLink(String str) {
-		str= str.replaceAll(".*(?=http://)", "");
+		str = str.replaceAll(".*(?=http://)", "");
 		str = str.replaceAll("\\;.*$", "");
 		return str;
 	}
-	
+
 	public String getWordAfterLastSlash(String str) {
 		str = getLink(str);
 		str = str.replaceAll(".*/", "");
 		return str;
 	}
-	
- 
+
 	@Override
 	public List<Answer> build(HAWKQuestion q) throws ExecutionException, RuntimeException {
 		SPARQL sparql = new SPARQL("http://131.234.28.52:3030/ds/sparql");
@@ -452,20 +450,24 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 		//String smallest = "";
 		//Collections.sort(properties);
 		//Collections.sort(classes);
-		String base = properties.get(0);
+		//TODO Rricha write test case if zero properties, classes or entities found, that this class still works
+		String base = null ;
 		int smallestIndex =0;
-		if (properties.size() > 1 && properties.get(0).isEmpty()) {
-			smallestIndex = 1;
-			base = properties.get(1);
-		}
-		for (int i = smallestIndex + 1; i <properties.size(); i++) {
-			if (properties.get(i).length() < base.length() ) {
-				smallestIndex = i;
-				base = properties.get(i);
+			if(properties!=null&&properties.size()>0) {
+				base =  properties.get(0);
+			if (properties.size() > 1 && properties.get(0).isEmpty()) {
+				smallestIndex = 1;
+				base = properties.get(1);
 			}
+			for (int i = smallestIndex + 1; i <properties.size(); i++) {
+				if (properties.get(i).length() < base.length() ) {
+					smallestIndex = i;
+					base = properties.get(i);
+				}
+			}
+			if (!base.isEmpty())
+				propertiesIn.add(base);
 		}
-		if (!base.isEmpty())
-			propertiesIn.add(base);
 		/*if(!properties.isEmpty()) {
 			base = properties.get(0);
 		}*/
@@ -501,7 +503,7 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 				base = classes.get(i);
 			}
 		}
-		if (!base.isEmpty())
+		if ( base != null &&!base.isEmpty() )
 			classesIn.add(base);
 		/*base = "";
 		if (classes.size() != 0) {
@@ -532,8 +534,6 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 			else {i++; k++;}
 		}
 		
-		//System.out.println("properties for generate query "+propertiesIn);
-		//System.out.println("classes for generate query "+classesIn);
 		
 		//Extract NamedEntitiesIn and nounPhrases
 		List<Entity> namedEntity =  q.getLanguageToNamedEntites().get("en");
@@ -560,7 +560,6 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 		Boolean isASK = q.getIsClassifiedAsASKQuery();
 		
 		String queryString = generateQuery(classesIn, propertiesIn, namedEntitiesIn, nounPhrasesIn, isASK);
-		//System.out.println("queryString: " + queryString);
 		List<Answer> answer = Lists.newArrayList();
 			// build sparql queries
 
@@ -570,6 +569,7 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 		Answer a = new Answer();
 		if (queryString == "No pattern for those quantities of classes / properties / named entities available")
 			return answer;
+		System.out.println(queryString);
 		a.answerSet = sparql.sparql(queryString);
 		a.queryString = queryString;
 		a.question_id = q.getId();
@@ -577,7 +577,6 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 		if (!a.answerSet.isEmpty()) {
 			answer.add(a);
 		}
-		
 		System.out.println(answer);
 		return answer;
 	}
@@ -597,9 +596,7 @@ public class PatternSparqlGenerator implements ISparqlBuilder{
 	// for (int i = 0; i < 3; i++) {
 	// for (int j = 0; j < 3; j++) {
 	// for (int k = 0; k < 3; k++) {
-	// System.out.println("constructing for " + i + "Classes, " + j + "
 	// properties, " + k + " namedEntitites");
-	// System.out.println();
 	// System.out.println(gen.generateQuery(classes, properties,
 	// namedEntities));
 	// System.out.println("\r\n");

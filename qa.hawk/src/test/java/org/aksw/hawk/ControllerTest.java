@@ -28,7 +28,7 @@ public class ControllerTest {
 
 	    @Test
 	    public void testSayHelloWorld() throws Exception {
-	        this.mockMvc.perform(get("/simple-search?query=\"XYZ\"").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+	        this.mockMvc.perform(get("/simple-search?query=\"\"").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 	                .andExpect(status().isOk());
 
 	    }

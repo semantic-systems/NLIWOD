@@ -10,9 +10,9 @@ import org.aksw.hawk.controller.AbstractPipeline;
 import org.aksw.hawk.controller.PipelineStanford;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.ranking.BucketRanker;
-import org.aksw.hawk.ranking.OptimalRanker;
-import org.aksw.hawk.ranking.TierRanker;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.ranking.BucketRanker;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.ranking.OptimalRanker;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.ranking.TierRanker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

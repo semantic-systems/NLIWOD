@@ -1,11 +1,11 @@
-package org.aksw.hawk.oldrecursivequerybuilding;
+package org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding;
 
 import java.util.List;
 import java.util.Set;
 
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.pruner.SPARQLQueryPruner;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.pruner.SPARQLQueryPruner;
 import org.aksw.qa.commons.sparql.SPARQL;
 import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.json.simple.JSONObject;

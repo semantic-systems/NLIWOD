@@ -1,4 +1,4 @@
-package org.aksw.hawk.ranking;
+package org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.ranking;
 
 import java.io.File;
 import java.util.Set;

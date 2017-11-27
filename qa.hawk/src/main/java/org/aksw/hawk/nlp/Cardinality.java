@@ -1,7 +1,6 @@
-package org.aksw.hawk.controller;
+package org.aksw.hawk.nlp;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.nlp.MutableTreeNode;
 
 public class Cardinality {
 

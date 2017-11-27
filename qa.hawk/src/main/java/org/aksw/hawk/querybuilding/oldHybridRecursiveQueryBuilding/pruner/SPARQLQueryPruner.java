@@ -1,4 +1,4 @@
-package org.aksw.hawk.pruner;
+package org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.pruner;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.xml.ws.http.HTTPException;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.pruner.disjointness.DisjointnessBasedQueryFilter;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.pruner.disjointness.DisjointnessBasedQueryFilter;
 import org.aksw.qa.commons.sparql.SPARQL;
 import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.json.simple.JSONArray;

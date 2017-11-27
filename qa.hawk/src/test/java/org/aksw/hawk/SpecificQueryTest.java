@@ -3,7 +3,7 @@ package org.aksw.hawk;
 import java.util.Set;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.pruner.SPARQLQueryPruner;
+import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.pruner.SPARQLQueryPruner;
 import org.aksw.qa.commons.sparql.SPARQL;
 import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.junit.Assert;
