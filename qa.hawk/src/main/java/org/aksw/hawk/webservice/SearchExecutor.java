@@ -6,7 +6,6 @@ import java.util.concurrent.ExecutionException;
 import org.aksw.hawk.controller.AbstractPipeline;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
-import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.ranking.BucketRanker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -31,11 +30,8 @@ public class SearchExecutor {
 		log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
 		List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
-		BucketRanker bucket_ranker = new BucketRanker();
-		log.info("Bucket-based ranking");
-		List<Answer> rankedAnswer = bucket_ranker.rank(answers, q);
-		log.info(Joiner.on("\n\t").join(rankedAnswer));
-		q.setFinalAnswer(rankedAnswer);
+		log.info(Joiner.on("\n\t").join(answers));
+		q.setFinalAnswer(answers);
 		return q.getJSONStatus();
 	}
 
