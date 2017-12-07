@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.aksw.hawk.controller.AbstractPipeline;
+import org.aksw.hawk.controller.PipelineStanford;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.querybuilding.oldHybridRecursiveQueryBuilding.ranking.BucketRanker;
@@ -17,7 +18,7 @@ import com.google.common.base.Joiner;
 @Component
 @Service("searchExecutor")
 public class SearchExecutor {
-	private AbstractPipeline pipeline;
+	private AbstractPipeline pipeline = new PipelineStanford();
 	private Logger log = LoggerFactory.getLogger(SearchExecutor.class);
 
 
@@ -29,6 +30,7 @@ public class SearchExecutor {
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", question);
 		log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
+		//log.info("q value" + q);
 		List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
 		BucketRanker bucket_ranker = new BucketRanker();

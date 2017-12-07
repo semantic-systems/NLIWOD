@@ -125,7 +125,7 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 		namedEntities = emptyIfNull(namedEntitiesIn);
 		nounPhrases = emptyIfNull(nounPhrasesIn);
 		Querytype type;
-		if (isASK == true)
+		if (isASK != null && isASK == true)
 			type = Querytype.ASK;
 		else
 			type = Querytype.SELECT;
@@ -468,28 +468,32 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 			if (!base.isEmpty())
 				propertiesIn.add(base);
 		}
-		/*if(!properties.isEmpty()) {
-			base = properties.get(0);
-		}*/
-		/*for (int i = 1; i < properties.size(); i++) {
-			String bstr = base, pstr = properties.get(i);
-			bstr= getWordAfterLastSlash(bstr);
-			pstr = getWordAfterLastSlash(pstr); 
 			
-			if (!base.equals("") && !pstr.toLowerCase().contains(bstr.toLowerCase())) {
-				propertiesIn.add(base);
-				base = properties.get(i);
-			}
-			else if(base.equals(""))
-				base = properties.get(i);
-		}
-		
-		if (!base.isEmpty()) {
-			propertiesIn.add(base);
-			propertiesIn = annotator.rank(propertiesIn);
-		}*/
+//		if(!properties.isEmpty()) {
+//			base = properties.get(0);
+//		}
+//		for (int i = 1; i < properties.size(); i++) {
+//			String bstr = base, pstr = properties.get(i);
+//			bstr= getWordAfterLastSlash(bstr);
+//			pstr = getWordAfterLastSlash(pstr); 
+//			
+//			if (!base.equals("") && !pstr.toLowerCase().contains(bstr.toLowerCase())) {
+//				propertiesIn.add(base);
+//				base = properties.get(i);
+//			}
+//			else if(base.equals(""))
+//				base = properties.get(i);
+//		}
+//		
+//		if (base != null && !base.equals("")) {
+//			propertiesIn.add(base);
+//			properties = annotator.rank(propertiesIn);
+//			if (!properties.isEmpty() && properties.get(0) != "")
+//				propertiesIn = properties; 
+//		}
 		
 		//Extract shortest distinct string from the list of classes
+		base = null; 
 		if (classes.size() != 0)
 			base = classes.get(0);
 		smallestIndex =0;
@@ -505,24 +509,24 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 		}
 		if ( base != null &&!base.isEmpty() )
 			classesIn.add(base);
-		/*base = "";
-		if (classes.size() != 0) {
-			base = classes.get(0);
-		}
-		for (int i = 1; i < classes.size(); i++) {
-			String bstr = base, cstr = classes.get(i);
-			bstr= getWordAfterLastSlash(bstr);
-			cstr = getWordAfterLastSlash(cstr); 
-			
-			if (!base.equals("") && !cstr.toLowerCase().contains(bstr.toLowerCase())) {
-				classesIn.add(base);
-				base = classes.get(i);
-			}
-			else if(base.equals(""))
-				base = classes.get(i);
-		}
-		if (!base.isEmpty())
-			classesIn.add(base);*/
+//		base = null;
+//		if (classes.size() != 0) {
+//			base = classes.get(0);
+//		}
+//		for (int i = 1; i < classes.size(); i++) {
+//			String bstr = base, cstr = classes.get(i);
+//			bstr= getWordAfterLastSlash(bstr);
+//			cstr = getWordAfterLastSlash(cstr); 
+//			
+//			if (!base.equals("") && !cstr.toLowerCase().contains(bstr.toLowerCase())) {
+//				classesIn.add(base);
+//				base = classes.get(i);
+//			}
+//			else if(base.equals(""))
+//				base = classes.get(i);
+//		}
+//		if (base != null)
+//			classesIn.add(base);
 		
 		
 		//if a label appears in both properties and classes, keep the label in properties
@@ -577,7 +581,7 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 		if (!a.answerSet.isEmpty()) {
 			answer.add(a);
 		}
-		System.out.println(answer);
+		//System.out.println(answer);
 		return answer;
 	}
 
