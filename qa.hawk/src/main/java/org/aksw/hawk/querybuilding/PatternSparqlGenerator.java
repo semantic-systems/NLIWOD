@@ -14,10 +14,17 @@ import org.aksw.gerbil.transfer.nif.data.TypedSpanImpl;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.Annotater;
+import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
+import org.aksw.jena_sparql_api.cache.h2.CacheUtilsH2;
+import org.aksw.jena_sparql_api.core.FluentQueryExecutionFactory;
+import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
 import org.aksw.qa.annotation.sparql.SimpleQuantityRanker;
 import org.aksw.qa.annotation.util.NifEverything;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.sparql.SPARQL;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 
 import com.google.common.collect.Lists;
 
@@ -574,6 +581,13 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 		if (queryString == "No pattern for those quantities of classes / properties / named entities available")
 			return answer;
 		//System.out.println(queryString);
+		
+		//FIXME Rricha, here goes the output as json, best would be to return this or add this to Answer object
+		CacheFrontend cacheFrontend = CacheUtilsH2.createCacheFrontend("./sparql", true, 1000000);
+		QueryExecutionFactory qef = FluentQueryExecutionFactory.http("http://dbpedia.org/sparql").config().withCache(cacheFrontend).end().create();
+		QueryExecution qe = qef.createQueryExecution(queryString);
+		ResultSet resultSet = qe.execSelect();
+		ResultSetFormatter.outputAsJSON(resultSet);
 		
 		a.answerSet = sparql.sparql(queryString);
 		a.queryString = queryString;
