@@ -15,3 +15,8 @@ bzip2 -d disambiguations_en.ttl.bz2
 
 wget http://downloads.dbpedia.org/2016-10/core-i18n/en/interlanguage_links_en.ttl.bz2
 bzip2 -d interlanguage_links_en.ttl.bz2
+
+wget http://downloads.dbpedia.org/2016-10/dbpedia_2016-10.nt
+
+wget http://downloads.dbpedia.org/2016-10/core-i18n/en/infobox_property_definitions_en.ttl.bz2
+bzip2 -d infobox_property_definitions_en.ttl.bz2
