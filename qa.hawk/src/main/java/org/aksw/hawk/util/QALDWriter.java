@@ -43,7 +43,7 @@ public class QALDWriter {
 	}
 
 	// TODO transform to unit case in qa-commons
-	private static void main(final String[] args) throws IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+	public static void main(final String[] args) throws IOException, ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 
 		String dataset = "qald-5_train";
 		QALDWriter qw = new QALDWriter(dataset);
@@ -58,6 +58,7 @@ public class QALDWriter {
 		a.question_id = "1";
 		qw.write(a);
 		qw.close();
+		System.out.println(a);
 	}
 
 	public void close() throws IOException, TransformerFactoryConfigurationError, TransformerException {
