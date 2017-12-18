@@ -36,6 +36,8 @@ public class Annotater {
 	}
 
 	public void annotateTree(final HAWKQuestion q) {
+		  classesIn = new ArrayList<>();
+		 propertiesIn = new ArrayList<>();
 		MutableTree tree = q.getTree();
 		annotateProjectionLeftTree(tree);
 		annotateVerbs(tree);
