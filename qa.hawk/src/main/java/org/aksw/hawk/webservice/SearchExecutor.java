@@ -1,5 +1,6 @@
 package org.aksw.hawk.webservice;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -20,25 +21,35 @@ import com.google.common.base.Joiner;
 public class SearchExecutor {
 	private AbstractPipeline pipeline = new PipelineStanford();
 	private Logger log = LoggerFactory.getLogger(SearchExecutor.class);
+	public List<Answer> rankedAnswer = new ArrayList<>();
 
 
 	public void setPipeline(final AbstractPipeline pipeline) {
 		this.pipeline = pipeline;
 	}
+	
+	int uniqueID = 0;
+	
+	public synchronized long getUniqueId()
+	{
+	    return uniqueID++;
+	}
 
-	public String runPipeline(final String question) throws ExecutionException, RuntimeException {
+	public HAWKQuestion runPipeline(final String question) throws ExecutionException, RuntimeException {
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", question);
+		q.setId(String.valueOf(this.getUniqueId()));
 		log.info("Run pipeline on " + q.getLanguageToQuestion().get("en"));
 		//log.info("q value" + q);
 		List<Answer> answers = pipeline.getAnswersToQuestion(q);
 
 		BucketRanker bucket_ranker = new BucketRanker();
 		log.info("Bucket-based ranking");
-		List<Answer> rankedAnswer = bucket_ranker.rank(answers, q);
+		rankedAnswer = bucket_ranker.rank(answers, q);
 		log.info(Joiner.on("\n\t").join(rankedAnswer));
+		log.info("Ranked Answer: " + rankedAnswer);
 		q.setFinalAnswer(rankedAnswer);
-		return q.getJSONStatus();
+		return q;
 	}
 
 }

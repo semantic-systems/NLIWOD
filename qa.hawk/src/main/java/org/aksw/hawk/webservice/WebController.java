@@ -59,7 +59,7 @@ public class WebController {
 		response.setHeader("Access-Control-Max-Age", "3600");
 		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
 
-		return searchExecutor.runPipeline(question);
+		return searchExecutor.runPipeline(question).getJSONStatus();
 
 	}
 

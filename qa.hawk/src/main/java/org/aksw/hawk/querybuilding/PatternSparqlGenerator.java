@@ -573,9 +573,11 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 		Answer a = new Answer();
 		if (queryString == "No pattern for those quantities of classes / properties / named entities available")
 			return answer;
-		System.out.println(queryString);
+		//System.out.println(queryString);
+		
 		a.answerSet = sparql.sparql(queryString);
 		a.queryString = queryString;
+		q.setSparqlQuery("en", queryString);
 		a.question_id = q.getId();
 		a.question = q.getLanguageToQuestion().get("en").toString();
 		if (!a.answerSet.isEmpty()) {
