@@ -16,7 +16,7 @@ public class GerbilFinalResponse {
 		questions = new ArrayList<>();
 	}
 	
-	public GerbilFinalResponse setResponse(HAWKQuestion answer){
+	public GerbilFinalResponse setQuestions(HAWKQuestion answer){
 		GerbilResponseBuilder responseToGerbil = new GerbilResponseBuilder();
 		responseToGerbil.setId(answer.getId());
 		responseToGerbil.setAnswertype(answer.getAnswerType());
@@ -29,7 +29,7 @@ public class GerbilFinalResponse {
 		return this;
 	}
 	
-	public List<GerbilResponseBuilder> getResponse(){
+	public List<GerbilResponseBuilder> getQuestions(){
 		return questions;
 	}
 	

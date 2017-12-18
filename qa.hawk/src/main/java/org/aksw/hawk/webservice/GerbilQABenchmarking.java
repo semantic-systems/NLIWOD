@@ -48,11 +48,11 @@ import com.google.common.collect.Maps;
 public class GerbilQABenchmarking{
 	private Logger log = LoggerFactory.getLogger(GerbilQABenchmarking.class);
 	private PipelineStanford pipeline = new PipelineStanford();
-	private GerbilFinalResponse resp = new GerbilFinalResponse();
 	
 	
 	@Qualifier("SearchExecutor")
 	private SearchExecutor searchExecutor = new SearchExecutor();
+	
 	
 	@RequestMapping(value = "/ask-gerbil", method = RequestMethod.POST)
 	public String askGerbil(@RequestParam Map<String,String> params, final HttpServletResponse response) throws ExecutionException, RuntimeException, IOException {
@@ -67,19 +67,19 @@ public class GerbilQABenchmarking{
 		String question = params.get("query");
 		String lang = params.get("lang");
 		
-		
 		HAWKQuestion answer = searchExecutor.runPipeline(question);
 		
-		resp.setResponse(answer);
+		GerbilFinalResponse resp = new GerbilFinalResponse();
+		resp.setQuestions(answer);
 		log.info("resp value: " + resp);
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 		String json = ow.writeValueAsString(resp);
 		
 		log.info("\n\n JSON object: \n\n" + json);
-		
+
 		//ExtendedQALDJSONLoader.writeJson(resp, new File("./from_qald_to_extended_to_question_to_qald.json"), true);
 		log.info("Final Answer in object: " +answer.getFinalAnswer() + " Answertype: " + answer.getAnswerType() + " Sparql query: " + answer.getSparqlQuery("en"));
-		return answer.toString();
+		return json;
 	}
 	
 	public static void main(final String[] args) {
