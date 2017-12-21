@@ -30,11 +30,11 @@ There is also a public hawk-specific sparql endpoint http://131.234.28.52:3030/
 For starting our specific SPARQL endpoint locally look at deploy-scripts/README.md
 If you already have it running, you can build a hawk docker file using the following commands.
 
-``
+```
 cd ..
 docker build -f qa.hawk/deploy-scripts/Dockerfile-hawk -t hawk .
 docker run -d --name hawk -p 8181:8181 --restart=always hawk
-``
+```
 
 Building HAWK
 ===
