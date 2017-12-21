@@ -1,5 +1,6 @@
 package org.aksw.hawk.querybuilding;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -25,6 +26,9 @@ import org.aksw.qa.commons.sparql.SPARQL;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.google.common.collect.Lists;
 
@@ -441,7 +445,7 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 	}
 
 	@Override
-	public List<Answer> build(HAWKQuestion q) throws ExecutionException, RuntimeException {
+	public List<Answer> build(HAWKQuestion q) throws ExecutionException, RuntimeException, ParseException {
 		SPARQL sparql = new SPARQL("http://131.234.28.52:3030/ds/sparql");
 		Annotater annotator = new Annotater(sparql);
 		annotator.annotateTree(q);
@@ -587,13 +591,21 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 		QueryExecutionFactory qef = FluentQueryExecutionFactory.http("http://dbpedia.org/sparql").config().withCache(cacheFrontend).end().create();
 		QueryExecution qe = qef.createQueryExecution(queryString);
 		ResultSet resultSet = qe.execSelect();
-		ResultSetFormatter.outputAsJSON(resultSet);
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ResultSetFormatter.outputAsJSON(baos, resultSet);
+		String jsonString = new String(baos.toByteArray());
+		
+		JSONParser parser = new JSONParser();
+		JSONObject json = (JSONObject) parser.parse(jsonString);
+		a.answerAsJson = (JSONObject) json;
 		
 		a.answerSet = sparql.sparql(queryString);
 		a.queryString = queryString;
 		q.setSparqlQuery("en", queryString);
 		a.question_id = q.getId();
 		a.question = q.getLanguageToQuestion().get("en").toString();
+		q.setFinalAnswer(answer);
 		if (!a.answerSet.isEmpty()) {
 			answer.add(a);
 		}

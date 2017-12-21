@@ -13,8 +13,10 @@ import org.aksw.hawk.nouncombination.NounCombiners;
 import org.aksw.hawk.number.UnitController;
 import org.aksw.hawk.querybuilding.PatternSparqlGenerator;
 import org.aksw.qa.annotation.spotter.ASpotter;
+import org.aksw.qa.annotation.spotter.Fox;
 import org.aksw.qa.annotation.spotter.Spotlight;
 import org.aksw.qa.commons.sparql.SPARQL;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +58,7 @@ public class PipelineStanford extends AbstractPipeline {
 	}
 
 	@Override
-	public List<Answer> getAnswersToQuestion(final HAWKQuestion q) throws ExecutionException, RuntimeException {
+	public List<Answer> getAnswersToQuestion(final HAWKQuestion q) throws ExecutionException, RuntimeException, ParseException{
 		log.info("Question: " + q.getLanguageToQuestion().get("en"));
 
 		log.info("Classify question type.");
@@ -104,7 +106,7 @@ public class PipelineStanford extends AbstractPipeline {
 		return stanfordConnector;
 	}
 
-	public static void main(final String[] args) throws ExecutionException, RuntimeException {
+	public static void main(final String[] args) throws ExecutionException, RuntimeException, ParseException{
 		PipelineStanford p = new PipelineStanford();
 		HAWKQuestion q = new HAWKQuestion();
 		q.getLanguageToQuestion().put("en", "What is the capital of Germany?");

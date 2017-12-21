@@ -19,7 +19,7 @@ public class GerbilFinalResponse {
 	public GerbilFinalResponse setQuestions(HAWKQuestion answer){
 		GerbilResponseBuilder responseToGerbil = new GerbilResponseBuilder();
 		responseToGerbil.setId(answer.getId());
-		responseToGerbil.setAnswertype(answer.getAnswerType());
+		//responseToGerbil.setAnswertype(answer.getAnswerType());
 		responseToGerbil.setQuery(answer.getSparqlQuery("en"));
 		log.info("query: " + responseToGerbil.getQuery());
 		responseToGerbil.setQuestion(answer);

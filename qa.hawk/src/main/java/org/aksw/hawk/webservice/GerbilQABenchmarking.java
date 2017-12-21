@@ -11,6 +11,7 @@ import org.aksw.hawk.controller.PipelineStanford;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.util.GerbilFinalResponse;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +28,10 @@ public class GerbilQABenchmarking {
 	private PipelineStanford pipeline = new PipelineStanford();
 
 	// test via
-	// curl -d "query=Who is the president of Europe?&lang=en" -X POST http://localhost:8181/ask-gerbil
+	//TODO unit test for Who is the president of Europe?
+	// curl -d "query=What is the capital of Germany?&lang=en" -X POST http://localhost:8181/ask-gerbil
 	@RequestMapping(value = "/ask-gerbil", method = RequestMethod.POST)
-	public String askGerbil(@RequestParam Map<String, String> params, final HttpServletResponse response) throws ExecutionException, RuntimeException, IOException {
+	public String askGerbil(@RequestParam Map<String, String> params, final HttpServletResponse response) throws ExecutionException, RuntimeException, IOException, ParseException {
 		log.debug("Received question = " + params.get("query"));
 		log.debug("Language of question = " + params.get("lang"));
 		// CORS to allow for communication between https and http

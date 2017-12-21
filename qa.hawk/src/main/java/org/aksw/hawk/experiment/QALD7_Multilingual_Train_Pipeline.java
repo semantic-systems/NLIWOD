@@ -14,6 +14,7 @@ import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
 import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.apache.log4j.Logger;
+import org.json.simple.parser.ParseException;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
@@ -21,7 +22,7 @@ import com.google.common.collect.Sets;
 public class QALD7_Multilingual_Train_Pipeline {
 	private static Logger log = Logger.getLogger(QALD7_Multilingual_Train_Pipeline.class);
 
-	public QALD7_Multilingual_Train_Pipeline() throws ExecutionException, RuntimeException {
+	public QALD7_Multilingual_Train_Pipeline() throws ExecutionException, RuntimeException, ParseException {
 
 		log.info("Configuring controller");
 		AbstractPipeline pipeline = new PipelineStanford();
@@ -84,7 +85,7 @@ public class QALD7_Multilingual_Train_Pipeline {
 	}
 
 	// TODO When HAWK is fast enough change to unit test
-	public static void main(String args[]) throws ExecutionException, RuntimeException {
+	public static void main(String args[]) throws ExecutionException, RuntimeException, ParseException {
 		new QALD7_Multilingual_Train_Pipeline();
 
 	}

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.aksw.hawk.controller.PipelineStanford;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class SimpleSearchController {
 	// test via
 	// curl -d "query=Who is the president of Europe?" -X POST http://localhost:8181/simple-search
 	@RequestMapping("/simple-search")
-	public String simplesearch(@RequestParam(value = "query") final String question, final HttpServletResponse response) throws ExecutionException, RuntimeException {
+	public String simplesearch(@RequestParam(value = "query") final String question, final HttpServletResponse response) throws ExecutionException, RuntimeException, ParseException {
 		log.debug("Received question = " + question);
 		// CORS
 		response.setHeader("Access-Control-Allow-Origin", "*");

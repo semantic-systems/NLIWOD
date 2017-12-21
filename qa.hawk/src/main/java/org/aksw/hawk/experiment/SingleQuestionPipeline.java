@@ -10,6 +10,7 @@ import org.aksw.hawk.controller.AbstractPipeline;
 import org.aksw.hawk.controller.PipelineStanford;
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,7 @@ public class SingleQuestionPipeline {
 	static Logger log = LoggerFactory.getLogger(SingleQuestionPipeline.class);
 
 	public static void main(String args[])
-			throws IOException, ParserConfigurationException, ExecutionException, RuntimeException {
+			throws IOException, ParserConfigurationException, ExecutionException, RuntimeException, ParseException {
 		log.info("Configuring controller");
 		AbstractPipeline pipeline = new PipelineStanford();
 
