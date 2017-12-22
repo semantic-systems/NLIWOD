@@ -27,7 +27,7 @@
 					<systemProperties>
 						<JAVA_OPTS>-Xms415m -Xmx16G -XX:MaxPermSize=1G</JAVA_OPTS>
 					</systemProperties>
-					<mainClass>org.aksw.hawk.webservice.WebController</mainClass>
+					<mainClass>org.aksw.hawk.webservice.WebApplication</mainClass>
 					<layout>JAR</layout>
 				</configuration>
 				<executions>
