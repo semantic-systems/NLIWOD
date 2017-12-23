@@ -37,7 +37,7 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 	private final static String NOT_DEFINED = "No pattern for those quantities of classes / properties / named entities available";
 
 	private static PatternSparqlGenerator instance;
-	private Integer limit = null;
+	private Integer limit = 12;
 	private NifEverything nif = NifEverything.getInstance();
 	private SimpleQuantityRanker ranker = new SimpleQuantityRanker();
 
@@ -601,6 +601,7 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 		a.answerAsJson = (JSONObject) json;
 		
 		a.answerSet = sparql.sparql(queryString);
+	
 		a.queryString = queryString;
 		q.setSparqlQuery("en", queryString);
 		a.question_id = q.getId();
