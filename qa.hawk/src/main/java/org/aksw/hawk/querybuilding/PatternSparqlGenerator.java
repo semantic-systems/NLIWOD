@@ -382,7 +382,7 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 		default:
 			return NOT_DEFINED;
 		}
-		if (limit != null) {
+		if (limit != null && type != Querytype.ASK ) {
 			out = out + " LIMIT " + limit;
 		}
 
@@ -584,16 +584,25 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 		Answer a = new Answer();
 		if (queryString == "No pattern for those quantities of classes / properties / named entities available")
 			return answer;
-		//System.out.println(queryString);
+		System.out.println(queryString);
 		
 		//FIXME Rricha, here goes the output as json, best would be to return this or add this to Answer object
 		CacheFrontend cacheFrontend = CacheUtilsH2.createCacheFrontend("./sparql", true, 1000000);
 		QueryExecutionFactory qef = FluentQueryExecutionFactory.http("http://dbpedia.org/sparql").config().withCache(cacheFrontend).end().create();
 		QueryExecution qe = qef.createQueryExecution(queryString);
-		ResultSet resultSet = qe.execSelect();
-		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ResultSetFormatter.outputAsJSON(baos, resultSet);
+		
+		if (!q.getIsClassifiedAsASKQuery()) {
+			ResultSet resultSet = qe.execSelect();
+			ResultSetFormatter.outputAsJSON(baos, resultSet);
+		}
+		else {
+			boolean resultSet = qe.execAsk();
+			ResultSetFormatter.outputAsJSON(baos, resultSet);
+		}
+		
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		ResultSetFormatter.outputAsJSON(baos, resultSet);
 		String jsonString = new String(baos.toByteArray());
 		
 		JSONParser parser = new JSONParser();

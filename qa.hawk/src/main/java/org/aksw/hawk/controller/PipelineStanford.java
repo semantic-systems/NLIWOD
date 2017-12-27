@@ -114,7 +114,7 @@ public class PipelineStanford extends AbstractPipeline {
 		 
 		p = new PipelineStanford();
 		q = new HAWKQuestion();
-		q.getLanguageToQuestion().put("en", "Where was Barack Obama born?");
+		q.getLanguageToQuestion().put("en", "Is horse racing a sport?");
 		p.getAnswersToQuestion(q);
 
 	}
