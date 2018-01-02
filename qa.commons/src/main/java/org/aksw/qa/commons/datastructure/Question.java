@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aksw.qa.commons.utils.CollectionUtils;
+import org.json.simple.JSONObject;
 
 public class Question implements IQuestion {
 
@@ -21,6 +22,7 @@ public class Question implements IQuestion {
 	private Map<String, String> languageToQuestion;
 	private Map<String, List<String>> languageToKeywords;
 	private Map<String, Set<String>> goldenAnswers;
+	private JSONObject answerAsJson; 
 
 	public Question() {
 		HashSet<String> ga = CollectionUtils.newHashSet();
@@ -285,6 +287,14 @@ public class Question implements IQuestion {
 
 	public void setGoldenAnswers(final String lang, final Set<String> goldenAnswers) {
 		this.goldenAnswers.put(lang, goldenAnswers);
+	}
+	
+	public void setAnswerAsJson(final JSONObject json) {
+		this.answerAsJson = json;
+	}
+	
+	public JSONObject getAnswerAsJson() {
+		return answerAsJson;
 	}
 
 	@Override
