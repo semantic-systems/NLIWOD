@@ -22,7 +22,7 @@ public class Question implements IQuestion {
 	private Map<String, String> languageToQuestion;
 	private Map<String, List<String>> languageToKeywords;
 	private Map<String, Set<String>> goldenAnswers;
-	private JSONObject answerAsJson; 
+	private JSONObject answerAsQALDJSON; 
 
 	public Question() {
 		HashSet<String> ga = CollectionUtils.newHashSet();
@@ -289,12 +289,12 @@ public class Question implements IQuestion {
 		this.goldenAnswers.put(lang, goldenAnswers);
 	}
 	
-	public void setAnswerAsJson(final JSONObject json) {
-		this.answerAsJson = json;
+	public void setAnswerAsQALDJSON(final JSONObject json) {
+		this.answerAsQALDJSON = json;
 	}
 	
-	public JSONObject getAnswerAsJson() {
-		return answerAsJson;
+	public JSONObject getAnswerAsQALDJSON() {
+		return answerAsQALDJSON;
 	}
 
 	@Override
