@@ -23,6 +23,10 @@ public class Question implements IQuestion {
 	private Map<String, List<String>> languageToKeywords;
 	private Map<String, Set<String>> goldenAnswers;
 	private JSONObject answerAsQALDJSON; 
+	
+	/**
+	 * The attribute answerAsQALDJSON stores the information as defined by the link: https://github.com/dice-group/gerbil/wiki/Question-Answering#web-service-interface
+	 */
 
 	public Question() {
 		HashSet<String> ga = CollectionUtils.newHashSet();
