@@ -94,7 +94,9 @@
 	</build>
 	<!-- MODULES -->
 	<modules>
-		<module>qa.datasets</module>
+                <module>qa.dataset-generator</module>
+	
+	<module>qa.datasets</module>
 		<module>qa.systems</module>
 		<module>qa.commons</module>
 		<module>qa.ml</module>
