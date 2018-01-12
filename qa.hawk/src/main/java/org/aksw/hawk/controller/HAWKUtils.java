@@ -66,6 +66,12 @@ public class HAWKUtils {
 			int currentNEStartPos = currentNE.getOffset();
 			
 			int currentNEEndPos = currentNEStartPos + currentNE.getLabel().length();
+			if (currentNEStartPos != 0) {
+				String stringFromStartPos = sentence.substring(currentNEStartPos-1);
+				//check if replacement happens at the beginning of a word
+				if(!stringFromStartPos.startsWith(" "))
+					break;
+			}
 			
 			if (startFormerLabel >= currentNEEndPos) {
 				textParts.add(sentence.substring(currentNEEndPos, startFormerLabel));
