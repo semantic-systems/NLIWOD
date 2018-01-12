@@ -1,7 +1,9 @@
 package org.aksw.hawk.nlp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
@@ -30,19 +32,19 @@ public class Annotater {
 	private SPARQL sparql;
 	public List<String> classesIn = new ArrayList<>();
 	public List<String> propertiesIn = new ArrayList<>();
+	public Map<String, String> annotationToWords = new HashMap<>();
 
 	public Annotater(final SPARQL sparql) {
 		this.sparql = sparql;
 	}
 
 	public void annotateTree(final HAWKQuestion q) {
-		  classesIn = new ArrayList<>();
-		 propertiesIn = new ArrayList<>();
 		MutableTree tree = q.getTree();
 		annotateProjectionLeftTree(tree);
 		annotateVerbs(tree);
 		annotateNouns(tree);
 		q.setTree_final(JSONStatusBuilder.treeToJSON(q.getTree()));
+		log.info("annotationToWords" + annotationToWords);
 	}
 
 	/**
@@ -65,6 +67,7 @@ public class Annotater {
 			MutableTreeNode tmp = stack.pop();
 			String label = tmp.label;
 			String posTag = tmp.posTag;
+			
 			if (!blacklist.contains(label)) {
 
 				if (posTag.matches("NN(.)*") && tmp.getAnnotations().isEmpty()) {
@@ -73,12 +76,14 @@ public class Annotater {
 						for (String uri : search) {
 							tmp.addAnnotation(uri);
 							classesIn.add(uri);
+							annotationToWords.put(label, uri + "#class");
 						}
 					} else if (!propertiesIndex.search(label).isEmpty()) {
 						search = propertiesIndex.search(label);
 						for (String uri : search) {
 							tmp.addAnnotation(uri);
 							propertiesIn.add(uri);
+							annotationToWords.put(label, uri + "#property");
 						}
 					} else {
 						search = dboIndex.search(label);
@@ -86,8 +91,12 @@ public class Annotater {
 							tmp.addAnnotation(uri);
 							if (Character.isUpperCase(uri.codePointAt(28))){
 								classesIn.add(uri);
+								annotationToWords.put(label, uri + "#class");
 							}
-							else propertiesIn.add(uri);
+							else {
+								propertiesIn.add(uri);
+								annotationToWords.put(label, uri + "#property");
+							}
 
 						}
 					}
@@ -100,19 +109,25 @@ public class Annotater {
 						for (String uri : search) {
 							tmp.addAnnotation(uri);
 							classesIn.add(uri);
+							annotationToWords.put(label, uri + "#class");
 						}
 						search = propertiesIndex.search(label);
 						for (String uri : search) {
 							tmp.addAnnotation(uri);
 							propertiesIn.add(uri);
+							annotationToWords.put(label, uri + "#property");
 						}
 						search = dboIndex.search(label);
 						for (String uri : search) {
 							tmp.addAnnotation(uri);
 							if (Character.isUpperCase(uri.codePointAt(28))){
 								classesIn.add(uri);
+								annotationToWords.put(label, uri + "#class");
 							}
-							else propertiesIn.add(uri);
+							else {
+								propertiesIn.add(uri);
+								annotationToWords.put(label, uri + "#property");
+							}
 						}
 					}
 				} else {
@@ -153,6 +168,7 @@ public class Annotater {
 				for (String uri : search) {
 					tmp.addAnnotation(uri);
 					propertiesIn.add(uri);
+					annotationToWords.put(label, uri + "#property");
 				}
 				log.debug(Joiner.on(", ").join(tmp.getAnnotations()));
 			}
@@ -217,9 +233,11 @@ public class Annotater {
 							if (label.equals("Where")) {
 								tmp.addAnnotation("http://dbpedia.org/ontology/Place");
 								classesIn.add("http://dbpedia.org/ontology/Place");
+								annotationToWords.put(label, "http://dbpedia.org/ontology/Place" + "#class");
 							} else if (label.equals("Who")) {
 								tmp.addAnnotation("http://dbpedia.org/ontology/Agent");
 								classesIn.add("http://dbpedia.org/ontology/Agent");
+								annotationToWords.put(label, "http://dbpedia.org/ontology/Agent" + "#class");
 							}
 						} else if (posTag.matches("NN(.)*")) {
 							// DBO look up
@@ -236,6 +254,7 @@ public class Annotater {
 								for (String resourceURL : uris) {
 									tmp.addAnnotation(resourceURL);
 									classesIn.add(resourceURL);
+									annotationToWords.put(label, resourceURL + "#class");
 								}
 							} else {
 								log.error("Strange case that never should happen");
@@ -262,11 +281,13 @@ public class Annotater {
 								for (String resourceURL : uris) {
 									tmp.addAnnotation(resourceURL);
 									classesIn.add(resourceURL);
+									annotationToWords.put(label, resourceURL + "#class");
 								}
 								uris = propertiesIndex.search(label);
 								for (String resourceURL : uris) {
 									tmp.addAnnotation(resourceURL);
 									propertiesIn.add(resourceURL);
+									annotationToWords.put(label, resourceURL + "#property");
 								}
 
 							} else if (dboIndex.search(label).size() > 0) {
@@ -276,8 +297,12 @@ public class Annotater {
 									tmp.addAnnotation(resourceURL);
 									if (Character.isUpperCase(resourceURL.codePointAt(28))){
 										classesIn.add(resourceURL);
+										annotationToWords.put(label, resourceURL + "#class");
 									}
-									else propertiesIn.add(resourceURL);
+									else {
+										propertiesIn.add(resourceURL);
+										annotationToWords.put(label, resourceURL + "#property");
+									}
 								}
 							} else {
 								// full text lookup
@@ -296,9 +321,11 @@ public class Annotater {
 							if (label.equals("Where")) {
 								tmp.addAnnotation("http://dbpedia.org/ontology/Place");
 								classesIn.add("http://dbpedia.org/ontology/Place");
+								annotationToWords.put(label, "http://dbpedia.org/ontology/Place" + "#class");
 							} else if (label.equals("Who")) {
 								tmp.addAnnotation("http://dbpedia.org/ontology/Agent");
 								classesIn.add("http://dbpedia.org/ontology/Agent");
+								annotationToWords.put(label, "http://dbpedia.org/ontology/Agent" + "#class");
 							}
 						} else {
 							log.error("Strange case that never should happen: " + posTag);
