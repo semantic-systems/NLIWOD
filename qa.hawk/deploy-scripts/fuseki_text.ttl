@@ -43,30 +43,38 @@ text:TextIndexLucene  rdfs:subClassOf   text:TextIndex .
        text:map (
          #RDF label abstracts
          [ text:field "text" ; 
-           text:predicate <http://www.w3.org/2000/01/rdf-schema#label> ;
-           text:analyzer [
-                a text:StandardAnalyzer
-             ]  
-           ] 
-         #DBpedia abstracts
-         [ text:field "text" ;
            text:predicate <http://dbpedia.org/ontology/abstract> ;
            text:analyzer [
-                a text:StandardAnalyzer
-             ]
+		  a text:ConfigurableAnalyzer ;
+		  text:tokenizer text:LetterTokenizer ;
+		  text:filters (text:StandardFilter text:LowerCaseFilter)
+		]  
+           ] 
+           #RDF label abstracts
+         [ text:field "text" ; 
+           text:predicate <http://www.w3.org/2000/01/rdf-schema#label> ;
+           text:analyzer [
+		  a text:ConfigurableAnalyzer ;
+		  text:tokenizer text:LetterTokenizer ;
+		  text:filters (text:StandardFilter text:LowerCaseFilter)
+		]    
            ]
-         # SKOS alternativ labels from surface forms and redirects
+	 # SKOS alternativ labels from surface forms and redirects
          [ text:field "text" ;
            text:predicate <http://www.w3.org/2004/02/skos/core#altLabel> ;
            text:analyzer [
-                a text:StandardAnalyzer
+                a text:ConfigurableAnalyzer ;
+		text:tokenizer text:LetterTokenizer ;
+		text:filters (text:StandardFilter text:LowerCaseFilter)
              ]
            ]
          #dc term labels
          [ text:field "text" ;
            text:predicate <http://purl.org/dc/elements/1.1/description> ;
            text:analyzer [
-                a text:StandardAnalyzer
+                a text:ConfigurableAnalyzer ;
+		text:tokenizer text:LetterTokenizer ;
+		text:filters (text:StandardFilter text:LowerCaseFilter)
              ]
            ]
           ) .
