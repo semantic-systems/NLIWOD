@@ -34,7 +34,7 @@ public class SentenceToSequence {
 			}
 
 			// look for start "RB|JJ|NN(.)*"
-			if (subsequence.isEmpty() && (null != pos) && pos.matches("CD|JJ|NN(.)*|RB(.)*")) {
+			if (subsequence.isEmpty() && (null != pos) && pos.matches("CD|JJ|NN(.)*|RB(.)*")&& !token.startsWith("http")) {
 				subsequence.add(token);
 			}
 			// split "of the" or "of all" or "against" via pos_i=IN and
@@ -48,7 +48,7 @@ public class SentenceToSequence {
 			}
 			// do not combine NNS and NNPS but combine "stage name",
 			// "British Prime minister"
-			else if (!subsequence.isEmpty() && (null != pos) && (null != lastPos) && lastPos.matches("NNS") && pos.matches("NNP(S)?")) {
+			else if (!subsequence.isEmpty() && (null != pos) && (null != lastPos) && lastPos.matches("NNS") && pos.matches("NNP(S)?") && !token.startsWith("http")) {
 				if (subsequence.size() > 2) {
 					transformTree(subsequence, q, tokenOffset);
 				}
@@ -56,8 +56,8 @@ public class SentenceToSequence {
 			}
 			// finish via VB* or IN -> null or IN -> DT or WDT (now a that or
 			// which follows)
-			else if (!subsequence.isEmpty() && !lastPos.matches("JJ|HYPH")
-			        && ((null == pos) || pos.matches("VB(.)*|\\.|WDT") || (pos.matches("IN") && (nextPos == null)) || (pos.matches("IN") && nextPos.matches("DT")))) {
+			else if (!subsequence.isEmpty() && !lastPos.matches("JJ|HYPH") && !token.startsWith("http")
+			        && ((null == pos) || pos.matches("VB(.)*|\\.|WDT") || (pos.matches("IN") && (nextPos == null) && !token.startsWith("http")) || (pos.matches("IN") && nextPos.matches("DT") && !token.startsWith("http")))) {
 				// more than one token, so summarizing makes sense
 				if (subsequence.size() > 1) {
 					transformTree(subsequence, q, tokenOffset);
@@ -65,7 +65,7 @@ public class SentenceToSequence {
 				subsequence = Lists.newArrayList();
 			}
 			// continue via "NN(.)*|RB|CD|CC|JJ|DT|IN|PRP|HYPH"
-			else if (!subsequence.isEmpty() && (null != pos) && pos.matches("NN(.)*|RB|CD|CC|JJ|DT|IN|PRP|HYPH|VBN")) {
+			else if (!subsequence.isEmpty() && (null != pos) && pos.matches("NN(.)*|RB|CD|CC|JJ|DT|IN|PRP|HYPH|VBN") && !token.startsWith("http")) {
 				subsequence.add(token);
 			} else {
 				subsequence = Lists.newArrayList();
@@ -77,7 +77,6 @@ public class SentenceToSequence {
 	public static void transformTree(final List<String> subsequence, final HAWKQuestion q, final int subsequenceStartOffset) {
 		String combinedNN = Joiner.on(" ").join(subsequence);
 		String combinedURI = "http://aksw.org/combinedNN/" + Joiner.on("_").join(subsequence);
-
 		Entity tmpEntity = new Entity();
 		tmpEntity.setOffset(subsequenceStartOffset);
 
