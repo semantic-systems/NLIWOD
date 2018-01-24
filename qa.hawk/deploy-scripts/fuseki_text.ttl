@@ -45,9 +45,10 @@ text:TextIndexLucene  rdfs:subClassOf   text:TextIndex .
          [ text:field "text" ; 
            text:predicate <http://dbpedia.org/ontology/abstract> ;
            text:analyzer [
+           ## https://jena.apache.org/documentation/query/text-query.html#configurableanalyzer
 		  a text:ConfigurableAnalyzer ;
 		  text:tokenizer text:LetterTokenizer ;
-		  text:filters (text:StandardFilter text:LowerCaseFilter)
+		  text:filters (text:StandardFilter)
 		]  
            ] 
            #RDF label abstracts
@@ -56,7 +57,7 @@ text:TextIndexLucene  rdfs:subClassOf   text:TextIndex .
            text:analyzer [
 		  a text:ConfigurableAnalyzer ;
 		  text:tokenizer text:LetterTokenizer ;
-		  text:filters (text:StandardFilter text:LowerCaseFilter)
+		  text:filters (text:StandardFilter)
 		]    
            ]
 	 # SKOS alternativ labels from surface forms and redirects
@@ -65,16 +66,26 @@ text:TextIndexLucene  rdfs:subClassOf   text:TextIndex .
            text:analyzer [
                 a text:ConfigurableAnalyzer ;
 		text:tokenizer text:LetterTokenizer ;
-		text:filters (text:StandardFilter text:LowerCaseFilter)
+		text:filters (text:StandardFilter)
              ]
            ]
+	 #dbp title labels 
+	[ text:field "text" ;
+           text:predicate <http://dbpedia.org/property/title> ;
+           text:analyzer [
+                a text:ConfigurableAnalyzer ;
+                text:tokenizer text:LetterTokenizer ;
+                text:filters (text:StandardFilter)
+             ]
+           ]
+
          #dc term labels
          [ text:field "text" ;
            text:predicate <http://purl.org/dc/elements/1.1/description> ;
            text:analyzer [
                 a text:ConfigurableAnalyzer ;
 		text:tokenizer text:LetterTokenizer ;
-		text:filters (text:StandardFilter text:LowerCaseFilter)
+		text:filters (text:StandardFilter)
              ]
            ]
           ) .
