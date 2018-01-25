@@ -112,7 +112,7 @@ public class IndexDBO_properties extends IndexDBO {
 
 	private void index() {
 		try {
-			InputStream res = this.getClass().getResourceAsStream("/dbpedia_3Eng_property.ttl");
+			InputStream res = this.getClass().getResourceAsStream("/matoll_EN_surface_forms.ttl");
 			Model model = ModelFactory.createDefaultModel();
 			model.read(res, "http://dbpedia.org/", "TTL");
 			StmtIterator stmts = model.listStatements(null, RDFS.label, (RDFNode) null);

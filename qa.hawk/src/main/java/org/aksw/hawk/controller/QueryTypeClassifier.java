@@ -6,6 +6,7 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.datastructures.HAWKQuestionFactory;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
+import org.apache.jena.sdb.store.DatasetStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,8 @@ public class QueryTypeClassifier {
 		// VBN -> VBZ (Is)
 
 		// regex: ^(Are|D(id|o(es)?)|Is|Was)( .*)$
-		return question.startsWith("Are ") || question.startsWith("Did ") || question.startsWith("Do ") || question.startsWith("Does ") || question.startsWith("Is ") || question.startsWith("Was ");
+		return question.startsWith("Are ") || question.startsWith("Did ") || question.startsWith("Do ")
+				|| question.startsWith("Does ") || question.startsWith("Is ") || question.startsWith("Was ");
 	}
 
 	public static void main(String args[]) {
@@ -40,32 +42,38 @@ public class QueryTypeClassifier {
 
 		log.info("Run queries through components ...");
 		for (Dataset d : Dataset.values()) {
-			log.debug("Load data file: " + d);
-			List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(datasetLoader.load(d));
-			int counter = 0;
-			int counterASK = 0;
-			int counterClassifiedWrong = 0;
+			if (d != Dataset.Stanford_train && d!= Dataset.Stanford_dev) {// exclude stanford train since it still has errors
+				log.debug("Load data file: " + d);
+				List<HAWKQuestion> questions = HAWKQuestionFactory.createInstances(datasetLoader.load(d));
+				int counter = 0;
+				int counterASK = 0;
+				int counterClassifiedWrong = 0;
 
-			for (HAWKQuestion q : questions) {
-				// Classify query type
-				q.setIsClassifiedAsASKQuery(queryTypeClassifier.isASKQuery(q.getLanguageToQuestion().get("en")));
+				for (HAWKQuestion q : questions) {
+					// Classify query type
+					q.setIsClassifiedAsASKQuery(queryTypeClassifier.isASKQuery(q.getLanguageToQuestion().get("en")));
 
-				if (log.isDebugEnabled()) {
-					log.debug("Question ID=" + q.getId() + ": isASK=" + q.getIsClassifiedAsASKQuery() + " - " + q.getLanguageToQuestion().get("en"));
+					if (log.isDebugEnabled()) {
+						log.debug("Question ID=" + q.getId() + ": isASK=" + q.getIsClassifiedAsASKQuery() + " - "
+								+ q.getLanguageToQuestion().get("en"));
+					}
+
+					if (q.getIsClassifiedAsASKQuery()) {
+						++counterASK;
+					}
+
+					++counter;
+					if (q.getIsClassifiedAsASKQuery().booleanValue() != q.getLoadedAsASKQuery().booleanValue()) {
+						log.warn("Expected ASK query classification: " + q.getLoadedAsASKQuery() + ", got: "
+								+ q.getIsClassifiedAsASKQuery() + ", for: " + q.getLanguageToQuestion().get("en")
+								+ ", from " + d.toString());
+						++counterClassifiedWrong;
+					}
 				}
 
-				if (q.getIsClassifiedAsASKQuery()) {
-					++counterASK;
-				}
-
-				++counter;
-				if (q.getIsClassifiedAsASKQuery().booleanValue() != q.getLoadedAsASKQuery().booleanValue()) {
-					log.warn("Expected ASK query classification: " + q.getLoadedAsASKQuery() + ", got: " + q.getIsClassifiedAsASKQuery() + ", for: " + q.getLanguageToQuestion().get("en"));
-					++counterClassifiedWrong;
-				}
+				log.info("Classified " + counterClassifiedWrong + " wrong from " + counter + " queries. (" + counterASK
+						+ " are ASK)");
 			}
-
-			log.info("Classified " + counterClassifiedWrong + " wrong from " + counter + " queries. (" + counterASK + " are ASK)");
 		}
 	}
 }

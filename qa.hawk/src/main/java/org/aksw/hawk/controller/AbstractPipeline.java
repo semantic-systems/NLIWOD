@@ -5,14 +5,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import org.aksw.hawk.datastructures.Answer;
 import org.aksw.hawk.datastructures.HAWKQuestion;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractPipeline {
-	abstract public List<Answer> getAnswersToQuestion(HAWKQuestion q);
+	abstract public List<Answer> getAnswersToQuestion(HAWKQuestion q) throws ExecutionException, RuntimeException, ParseException;
 
 	private static Logger log = LoggerFactory.getLogger(AbstractPipeline.class);
 

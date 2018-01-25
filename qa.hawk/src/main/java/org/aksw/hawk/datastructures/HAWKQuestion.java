@@ -27,6 +27,7 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 	private Map<String, List<Entity>> languageToNamedEntites = new LinkedHashMap<>();
 	private Map<String, List<Entity>> languageToNounPhrases = new LinkedHashMap<>();
 	private Map<String, List<Entity>> goldEntites = new HashMap<>();
+	private String transformedQuestion = new String(); // for POS-tagged and annotated sentence in HybridPSG
 
 	// for proper handling in webservice
 	// TODO remove this all after new webservice based on JSON RDF is
@@ -175,9 +176,17 @@ public class HAWKQuestion extends Question implements IQuestion, Serializable {
 	public void setCardinality(final int cardinality) {
 		this.cardinality = cardinality;
 	}
+	
+	public void setTransformedQuestion(final String transformedQuestion) {
+		this.transformedQuestion = transformedQuestion;
+	}
+	
+	public String getTransformedQuestion() {
+		return transformedQuestion; 
+	}
 
 	public boolean checkSuitabillity() {
-		return (this.getAnswerType().matches("resource||boolean") & this.getOnlydbo() & !this.getAggregation());// ||
+		return (this.getAnswerType().matches("resource||boolean||uri") & this.getOnlydbo() & !this.getAggregation());// ||
 		                                                                                                        // this.getLoadedAsASKQuery();
 
 	}

@@ -1,21 +1,27 @@
 package org.aksw.hawk.datastructures;
 
+
 import java.util.Set;
 
 import org.aksw.qa.commons.sparql.SPARQLQuery;
 import org.apache.jena.rdf.model.RDFNode;
+import org.json.simple.JSONObject;
 
-//FIXME mach eine ordentliche toString()
+
 public class Answer implements Comparable<Answer> {
 
+	public Set<RDFNode> answerSet;
+	public SPARQLQuery query;
+	public String queryString;
+	public String question;
+	public String question_id;
+	public Double score = 1.0;
+	public JSONObject answerAsJson;
+	
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((answerSet == null) ? 0 : answerSet.hashCode());
-		return result;
+	public int compareTo(final Answer a) {
+		return Double.compare(this.score, a.score);
 	}
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj)
@@ -33,26 +39,18 @@ public class Answer implements Comparable<Answer> {
 		return true;
 	}
 
-	public Set<RDFNode> answerSet;
-	public SPARQLQuery query;
-	public Double score = 1.0;
-	public String question;
-	public String question_id;
-	public String queryString;
-
 	@Override
-	public int compareTo(final Answer a) {
-		return Double.compare(this.score, a.score);
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((answerSet == null) ? 0 : answerSet.hashCode());
+		return result;
 	}
+
 
 	@Override
 	public String toString() {
 		return "Answer [answerSet=" + answerSet + ", score=" + score + ", queryString=" + queryString + "]";
-	}
-
-	public SPARQLQuery toSPARQLQuery() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
