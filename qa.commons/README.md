@@ -17,7 +17,7 @@ This library is available as snapshot here: http://maven.aksw.org/archiva/#artif
 <dependency>
   <groupId>org.aksw.qa</groupId>
   <artifactId>commons</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.4.17</version>
 </dependency>
 ```
 Add the following repository:
