@@ -21,6 +21,7 @@ QA datasets to analyze:
 * GeoQuery, Free917, WebQuestions, SimpleQuestions, GraphQuestions, and QALD
 * http://parl.ai/
 * www.msmarco.org
+* https://github.com/ysu1989/GraphQuestions/tree/master/freebase13
 * http://dl.acm.org/citation.cfm?id=2878551
 * TriviaQA for 95k reading comprehension questions http://nlp.cs.washington.edu/triviaqa/ 
 * convai.io 
