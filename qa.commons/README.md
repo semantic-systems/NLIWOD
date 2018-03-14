@@ -17,11 +17,10 @@ This library is available as snapshot here: http://maven.aksw.org/archiva/#artif
 <dependency>
   <groupId>org.aksw.qa</groupId>
   <artifactId>commons</artifactId>
-  <version>0.4.17</version>
+  <version>0.4.18</version>
 </dependency>
 ```
 Add the following repository:
->>>>>>> qa.commons/master
 ```
 <repository>
 			<id>maven.aksw.internal</id>
