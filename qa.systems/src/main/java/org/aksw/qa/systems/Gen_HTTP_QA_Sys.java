@@ -42,7 +42,7 @@ public class Gen_HTTP_QA_Sys extends ASystem{
 	private Boolean isPostReq;
 	private Map<String,String> paramMap;
 	private String name;
-	public Gen_HTTP_QA_Sys(String name, String url, Boolean isPostReq) {
+	public Gen_HTTP_QA_Sys( String url, String name, Boolean isPostReq) {
 		super();
 		this.paramMap = new HashMap<>();
 		this.name = name;
@@ -50,7 +50,7 @@ public class Gen_HTTP_QA_Sys extends ASystem{
 		this.isPostReq = isPostReq;
 	}
 	
-	public Gen_HTTP_QA_Sys(String name, String url, Boolean isPostReq, Map<String, String> paramMap) {
+	public Gen_HTTP_QA_Sys( String url, String name, Boolean isPostReq, Map<String, String> paramMap) {
 		super();
 		if(paramMap == null) {
 			paramMap = new HashMap<>();
