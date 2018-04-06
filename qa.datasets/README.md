@@ -73,6 +73,13 @@ out of scope (?) :
 * https://stackoverflow.blog/2009/06/stack-overflow-creative-commons-data-dump/
 * https://medium.com/startup-grind/fueling-the-ai-gold-rush-7ae438505bc2#.51rfdj1kd 
 * http://mrc2018.cipsc.org.cn/?utm_campaign=Revue%20newsletter&utm_medium=Newsletter&utm_source=NLP%20News
+*   [Identifying key phrases in text](https://www.crowdflower.com/data-for-everyone/): Question/Answer pairs + context; context was judged if relevant to question/answer. (8 MB)
+*   [Jeopardy](http://www.reddit.com/r/datasets/comments/1uyd0t/200000_jeopardy_questions_in_a_json_file/): archive of 216,930 past Jeopardy questions (53 MB)
+*   [MCTest](http://research.microsoft.com/en-us/um/redmond/projects/mctest/index.html): a freely available set of 660 stories and associated questions intended for research on the machine comprehension of text; for question answering (1 MB)
+*   [Stackoverflow](http://data.stackexchange.com/): 7.3 million stackoverflow questions + other stackexchanges (query tool)
+*   [Yahoo! Answers Comprehensive Questions and Answers](http://webscope.sandbox.yahoo.com/catalog.php?datatype=l): Yahoo! Answers corpus as of 10/25/2007. Contains 4,483,032 questions and their answers. (3.6 GB)
+*   [Yahoo! Answers consisting of questions asked in French](http://webscope.sandbox.yahoo.com/catalog.php?datatype=l): Subset of the Yahoo! Answers corpus from 2006 to 2015 consisting of 1.7 million questions posed in French, and their corresponding answers. (3.8 GB)
+*   [Yahoo! Answers Manner Questions](http://webscope.sandbox.yahoo.com/catalog.php?datatype=l): subset of the Yahoo! Answers corpus from a 10/25/2007 dump, selected for their linguistic properties. Contains 142,627 questions and their answers. (104 MB)
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
@@ -102,3 +109,6 @@ Add the following repository:
 ```
 
 Look for more interesting libraries here: http://maven.aksw.org/archiva/#browse/org.aksw.qa 
+
+### Acknowledgement
+- Sources: https://raw.githubusercontent.com/niderhoff/nlp-datasets/master/README.md
