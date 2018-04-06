@@ -43,18 +43,19 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-public class Gen_HTTP_QA_Sys extends ASystem{
+public class Gen_HTTP_QA_Sys extends ASystem {
 	Logger log = LoggerFactory.getLogger(Gen_HTTP_QA_Sys.class);
-	//String constants
+	// String constants
 	private String query_key = "query";
 	private String lang_key = "lang";
-	
+
 	private String url;
 	private Boolean isPostReq;
 	private Boolean isEQALD;
-	private Map<String,String> paramMap;
+	private Map<String, String> paramMap;
 	private String name;
-	public Gen_HTTP_QA_Sys( String url, String name, Boolean isPostReq, Boolean isEQALD) {
+
+	public Gen_HTTP_QA_Sys(String url, String name, Boolean isPostReq, Boolean isEQALD) {
 		super();
 		this.paramMap = new HashMap<>();
 		this.name = name;
@@ -62,10 +63,10 @@ public class Gen_HTTP_QA_Sys extends ASystem{
 		this.isPostReq = isPostReq;
 		this.isEQALD = isEQALD;
 	}
-	
-	public Gen_HTTP_QA_Sys( String url, String name, Boolean isPostReq, Boolean isEQALD, Map<String, String> paramMap) {
+
+	public Gen_HTTP_QA_Sys(String url, String name, Boolean isPostReq, Boolean isEQALD, Map<String, String> paramMap) {
 		super();
-		if(paramMap == null) {
+		if (paramMap == null) {
 			paramMap = new HashMap<>();
 		}
 		this.name = name;
@@ -74,17 +75,18 @@ public class Gen_HTTP_QA_Sys extends ASystem{
 		this.paramMap = paramMap;
 		this.isEQALD = isEQALD;
 	}
-	
-	protected HttpResponse fetchPostResponse() throws ClientProtocolException, IOException {
+
+	public static HttpResponse fetchPostResponse(String url, int timeout, Map<String, String> paramMap)
+			throws ClientProtocolException, IOException {
 		HttpResponse response = null;
-		
-		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
+
+		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).build();
 		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
-		HttpPost httppost = new HttpPost(this.url);
+		HttpPost httppost = new HttpPost(url);
 
 		List<NameValuePair> params = new ArrayList<>();
-		
-		for(String key: paramMap.keySet()) {
+
+		for (String key : paramMap.keySet()) {
 			params.add(new BasicNameValuePair(key, paramMap.get(key)));
 		}
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, Consts.UTF_8);
@@ -93,17 +95,18 @@ public class Gen_HTTP_QA_Sys extends ASystem{
 		response = client.execute(httppost);
 		return response;
 	}
-	
-	protected HttpResponse fetchGetResponse() throws URISyntaxException, ClientProtocolException, IOException {
+
+	public static HttpResponse fetchGetResponse(String url, int timeout, Map<String, String> paramMap)
+			throws URISyntaxException, ClientProtocolException, IOException {
 		HttpResponse response = null;
 		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).build();
 		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 
 		URIBuilder builder = new URIBuilder();
-		for(String key: paramMap.keySet()) {
+		for (String key : paramMap.keySet()) {
 			builder.setParameter(key, paramMap.get(key));
 		}
-		URI uri = new URI(this.url+builder.toString());
+		URI uri = new URI(url + builder.toString());
 		HttpGet httpget = new HttpGet(uri);
 		response = client.execute(httpget);
 		return response;
@@ -121,30 +124,106 @@ public class Gen_HTTP_QA_Sys extends ASystem{
 		if (this.setLangPar) {
 			this.paramMap.put(lang_key, language);
 		}
-		HttpResponse response = isPostReq?fetchPostResponse():fetchGetResponse();
-		
-		
-		QaldJson qaldJson = (QaldJson) ExtendedQALDJSONLoader.readJson(response.getEntity().getContent(), QaldJson.class);
-		
-		
-		//Test if error occured
+		HttpResponse response = isPostReq ? fetchPostResponse(this.url, this.timeout, this.paramMap)
+				: fetchGetResponse(this.url, this.timeout, this.paramMap);
+
+		// Test if error occured
 		if (response.getStatusLine().getStatusCode() >= 400) {
 			throw new Exception("QANARY Server could not answer due to: " + response.getStatusLine());
 		}
-		/*//Check switch to decide QALD or EQALD
-		if(isEQALD)
+		//Checking if expected format is EQALD or QALD
+		if(this.isEQALD)
 			processEQALDResponse(response, question, language);
 		else
-			processQALDResponse(response, question, language);*/
+			processQALDResp(response, question, language);		
+	}
+
+	/**
+	 * Method to process a QALD Based http response and set the details in
+	 * 'IQuestion' Formatting based on QALD as mentioned :
+	 * https://github.com/dice-group/gerbil/wiki/Question-Answering
+	 * 
+	 * @param response
+	 *            - response to be processed
+	 * @param question
+	 *            - IQuestion instance to be set
+	 * @param language
+	 *            - language of the question
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws IllegalStateException
+	 */
+	@Deprecated
+	public void processQALDResponse(HttpResponse response, IQuestion question, String language)
+			throws IllegalStateException, ParseException, IOException {
+		JSONParser parser = new JSONParser();
+
+		JSONObject responsejson = (JSONObject) parser.parse(responseparser.responseToString(response));
+		JSONArray questionsArr = (JSONArray) responsejson.get("questions");
+		if (questionsArr != null && questionsArr.size() > 0) {
+			JSONObject questionsObj = (JSONObject) questionsArr.get(0);
+			if (questionsObj != null && questionsObj.containsKey("query")) {
+				JSONObject queryJson = (JSONObject) questionsObj.get("query");
+				String sparqlQuery = queryJson.get("sparql").toString();
+				sparqlQuery = new String(sparqlQuery);
+				question.setSparqlQuery(sparqlQuery);
+			}
+			if (questionsObj.containsKey("answers")) {
+				JSONArray answerlist = (JSONArray) questionsObj.get("answers");
+				JSONObject answersJson = (JSONObject) answerlist.get(0);
+
+				HashSet<String> vars = new HashSet<String>();
+				JSONObject headJson = (JSONObject) answersJson.get("head");
+				if (headJson != null && headJson.containsKey("vars")) {
+					JSONArray varsArr = (JSONArray) headJson.get("vars");
+					for (int i = 0; i < varsArr.size(); i++) {
+						vars.add(varsArr.get(i).toString());
+					}
+
+					JSONObject resultsJson = (JSONObject) answersJson.get("results");
+					JSONArray bindingsArr = (JSONArray) resultsJson.get("bindings");
+					HashSet<String> result = new HashSet<String>();
+					for (int i = 0; i < bindingsArr.size(); i++) {
+						JSONObject answer = (JSONObject) bindingsArr.get(i);
+						for (String varLabel : vars) {
+							JSONObject uriJson = (JSONObject) answer.get(varLabel);
+							if (uriJson.containsKey("value"))
+								result.add(uriJson.get("value").toString());
+						}
+					}
+					question.setGoldenAnswers(result);
+				}
+			}
+		}
+
+	}
+	/**
+	 * Method to process a QALD Based http response and set the details in
+	 * 'IQuestion'.
+	 * 
+	 * @param response
+	 *            - response to be processed
+	 * @param question
+	 *            - IQuestion instance to be set
+	 * @param language
+	 *            - language of the question
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws IllegalStateException
+	 */
+	public void processQALDResp(HttpResponse response, IQuestion question, String language) throws JsonParseException, JsonMappingException, UnsupportedOperationException, IOException {
+		QaldJson qaldJson = (QaldJson) ExtendedQALDJSONLoader.readJson(response.getEntity().getContent(),
+				QaldJson.class);
+		//Fetch all answers
 		for (QaldQuestionEntry it : qaldJson.getQuestions()) {
 			QaldQuery qry = it.getQuery();
-			if(qry!=null) {
+			if (qry != null) {
 				question.setSparqlQuery(qry.getSparql());
 				question.setPseudoSparqlQuery(qry.getPseudo());
 			}
-			if(it.getAnswers()!=null && it.getAnswers().size()>0) {
+			if (it.getAnswers() != null && it.getAnswers().size() > 0) {
 				EJAnswers answers = it.getAnswers().get(0);
-	
+
 				if (answers == null) {
 					return;
 				}
@@ -162,62 +241,11 @@ public class Gen_HTTP_QA_Sys extends ASystem{
 			}
 		}
 	}
+
 	/**
-	 * Method to process a QALD Based http response and set the details in 'IQuestion'
-	 * Formatting based on QALD as mentioned : https://github.com/dice-group/gerbil/wiki/Question-Answering
-	 * @param response - response to be processed
-	 * @param question - IQuestion instance to be set
-	 * @param language - language of the question
-	 * @throws IOException 
-	 * @throws ParseException 
-	 * @throws IllegalStateException 
-	 */
-	public void processQALDResponse(HttpResponse response, IQuestion question, String language) throws IllegalStateException, ParseException, IOException {
-		JSONParser parser = new JSONParser();
-		
-		JSONObject responsejson = (JSONObject) parser.parse(responseparser
-				.responseToString(response));
-		JSONArray questionsArr = (JSONArray) responsejson.get("questions");
-		if(questionsArr!=null && questionsArr.size()>0) {
-			JSONObject questionsObj = (JSONObject) questionsArr.get(0);
-			if (questionsObj!=null && questionsObj.containsKey("query")) {
-				JSONObject queryJson = (JSONObject) questionsObj.get("query");
-				String sparqlQuery = queryJson
-						.get("sparql").toString();
-				sparqlQuery = new String(sparqlQuery);
-				question.setSparqlQuery(sparqlQuery);
-			}
-			if (questionsObj.containsKey("answers")) {
-				JSONArray answerlist = (JSONArray) questionsObj.get("answers");
-				JSONObject answersJson = (JSONObject) answerlist.get(0);
-				
-				HashSet<String> vars = new HashSet<String>();
-				JSONObject headJson = (JSONObject) answersJson.get("head");
-				if( headJson!=null && headJson.containsKey("vars")) {
-					JSONArray varsArr = (JSONArray) headJson.get("vars");
-					for (int i = 0; i < varsArr.size(); i++) {
-						vars.add( varsArr.get(i).toString());
-					}
-					
-					JSONObject resultsJson = (JSONObject) answersJson.get("results");
-					JSONArray bindingsArr = (JSONArray) resultsJson.get("bindings");
-					HashSet<String> result = new HashSet<String>();
-					for (int i = 0; i < bindingsArr.size(); i++) {
-						JSONObject answer = (JSONObject) bindingsArr.get(i);
-						for(String varLabel: vars) {
-							JSONObject uriJson = (JSONObject) answer.get(varLabel);
-							if(uriJson.containsKey("value"))
-								result.add(uriJson.get("value").toString());
-						}
-					}
-					question.setGoldenAnswers(result);
-				}
-			}
-		}
-		
-	}
-	/**
-	 * Method to process a EQALD Based http response and set the details in 'IQuestion'
+	 * Method to process a EQALD Based http response and set the details in
+	 * 'IQuestion'
+	 * 
 	 * @param response
 	 * @param question
 	 * @param language
@@ -226,8 +254,10 @@ public class Gen_HTTP_QA_Sys extends ASystem{
 	 * @throws UnsupportedOperationException
 	 * @throws IOException
 	 */
-	public void processEQALDResponse(HttpResponse response, IQuestion question, String language) throws JsonParseException, JsonMappingException, UnsupportedOperationException, IOException {
-		ExtendedJson json = (ExtendedJson) ExtendedQALDJSONLoader.readJson(response.getEntity().getContent(), ExtendedJson.class);
+	public void processEQALDResponse(HttpResponse response, IQuestion question, String language)
+			throws JsonParseException, JsonMappingException, UnsupportedOperationException, IOException {
+		ExtendedJson json = (ExtendedJson) ExtendedQALDJSONLoader.readJson(response.getEntity().getContent(),
+				ExtendedJson.class);
 
 		for (EJQuestionEntry it : json.getQuestions()) {
 			EJQuestion q = it.getQuestion();
@@ -315,5 +345,5 @@ public class Gen_HTTP_QA_Sys extends ASystem{
 	public void setIsEQALD(Boolean isEQALD) {
 		this.isEQALD = isEQALD;
 	}
-	
+
 }

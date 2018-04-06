@@ -19,11 +19,16 @@ import org.json.simple.parser.JSONParser;
 
 public class QUEPY extends Gen_HTTP_QA_Sys {
 	private static final String SPARQL_ENDPOINT = "http://dbpedia.org/sparql";
+
 	public QUEPY(String url) {
 		super(url, "quepy", false, false);
 		this.setQuery_key("question");
 	}
 
+	/**
+	 * Overriding Original search method to implement Quepy's two step requests for
+	 * QA
+	 */
 	@Override
 	public void search(IQuestion question, String language) throws Exception {
 		String questionString;
@@ -36,47 +41,46 @@ public class QUEPY extends Gen_HTTP_QA_Sys {
 		if (this.setLangPar) {
 			this.getParamMap().put(this.getLang_key(), language);
 		}
-		HttpResponse response = this.getIsPostReq() ? fetchPostResponse() : fetchGetResponse();
+		HttpResponse response = this.getIsPostReq() ? fetchPostResponse(getUrl(), this.timeout, getParamMap())
+				: fetchGetResponse(getUrl(), this.timeout, getParamMap());
 		// Test if error occured
 		if (response.getStatusLine().getStatusCode() >= 400) {
 			throw new Exception("QUEPY Server could not answer due to: " + response.getStatusLine());
 		}
-		//Fetch the SPARQL
+		// Fetch the SPARQL
 		String sparqlStr = null;
 		JSONParser parser = new JSONParser();
-		
-		JSONObject responsejson = (JSONObject) parser.parse(responseparser
-				.responseToString(response));
+
+		JSONObject responsejson = (JSONObject) parser.parse(responseparser.responseToString(response));
 		JSONArray queriesArr = (JSONArray) responsejson.get("queries");
-		for(int i=0;i<queriesArr.size();i++) {
+		for (int i = 0; i < queriesArr.size(); i++) {
 			JSONObject queryObj = (JSONObject) queriesArr.get(i);
-			if(queryObj.get("language").toString().equalsIgnoreCase("sparql") && queryObj.get("query")!=null) {
+			if (queryObj.get("language").toString().equalsIgnoreCase("sparql") && queryObj.get("query") != null) {
 				sparqlStr = queryObj.get("query").toString();
 				break;
 			}
 		}
-		if(sparqlStr!=null) {
+		if (sparqlStr != null) {
 			HashSet<String> result = new HashSet<String>();
 			question.setSparqlQuery(sparqlStr);
-			//Fetch results using sparql
+			// Fetch results using sparql
 			Query query = QueryFactory.create(sparqlStr);
-	        // Remote execution.
-			QueryExecution qexec = QueryExecutionFactory.sparqlService(SPARQL_ENDPOINT, query) ;
-			  // Set the DBpedia specific timeout.
-	        ((QueryEngineHTTP)qexec).addParam("timeout", "10000") ;
-	        // Execute.
-	        ResultSet rs = qexec.execSelect();
-	        //Get the values and push them to the question
-	        while(rs.hasNext()) {
-	        	QuerySolution qs = rs.next();
-	        	Iterator<String> varIt = qs.varNames();
-	        	while(varIt.hasNext()) {
-	        		RDFNode node = qs.get(varIt.next());
-	        		result.add(node.asLiteral().getString());
-	        	}
-	        }
-	        question.setGoldenAnswers(result);
-	        //ResultSetFormatter.out(System.out, rs, query);
+			// Remote execution.
+			QueryExecution qexec = QueryExecutionFactory.sparqlService(SPARQL_ENDPOINT, query);
+			// Set the DBpedia specific timeout.
+			((QueryEngineHTTP) qexec).addParam("timeout", "10000");
+			// Execute.
+			ResultSet rs = qexec.execSelect();
+			// Get the values and push them to the question
+			while (rs.hasNext()) {
+				QuerySolution qs = rs.next();
+				Iterator<String> varIt = qs.varNames();
+				while (varIt.hasNext()) {
+					RDFNode node = qs.get(varIt.next());
+					result.add(node.asLiteral().getString());
+				}
+			}
+			question.setGoldenAnswers(result);
 		}
 	}
 }
