@@ -18,6 +18,9 @@ import org.aksw.qa.commons.load.json.EJQuestion;
 import org.aksw.qa.commons.load.json.EJQuestionEntry;
 import org.aksw.qa.commons.load.json.ExtendedJson;
 import org.aksw.qa.commons.load.json.ExtendedQALDJSONLoader;
+import org.aksw.qa.commons.load.json.QaldJson;
+import org.aksw.qa.commons.load.json.QaldQuery;
+import org.aksw.qa.commons.load.json.QaldQuestionEntry;
 import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -72,7 +75,7 @@ public class Gen_HTTP_QA_Sys extends ASystem{
 		this.isEQALD = isEQALD;
 	}
 	
-	private HttpResponse fetchPostResponse() throws ClientProtocolException, IOException {
+	protected HttpResponse fetchPostResponse() throws ClientProtocolException, IOException {
 		HttpResponse response = null;
 		
 		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
@@ -91,7 +94,7 @@ public class Gen_HTTP_QA_Sys extends ASystem{
 		return response;
 	}
 	
-	private HttpResponse fetchGetResponse() throws URISyntaxException, ClientProtocolException, IOException {
+	protected HttpResponse fetchGetResponse() throws URISyntaxException, ClientProtocolException, IOException {
 		HttpResponse response = null;
 		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).build();
 		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
@@ -119,16 +122,45 @@ public class Gen_HTTP_QA_Sys extends ASystem{
 			this.paramMap.put(lang_key, language);
 		}
 		HttpResponse response = isPostReq?fetchPostResponse():fetchGetResponse();
-
+		
+		
+		QaldJson qaldJson = (QaldJson) ExtendedQALDJSONLoader.readJson(response.getEntity().getContent(), QaldJson.class);
+		
+		
 		//Test if error occured
 		if (response.getStatusLine().getStatusCode() >= 400) {
 			throw new Exception("QANARY Server could not answer due to: " + response.getStatusLine());
 		}
-		//Check switch to decide QALD or EQALD
+		/*//Check switch to decide QALD or EQALD
 		if(isEQALD)
 			processEQALDResponse(response, question, language);
 		else
-			processQALDResponse(response, question, language);
+			processQALDResponse(response, question, language);*/
+		for (QaldQuestionEntry it : qaldJson.getQuestions()) {
+			QaldQuery qry = it.getQuery();
+			if(qry!=null) {
+				question.setSparqlQuery(qry.getSparql());
+				question.setPseudoSparqlQuery(qry.getPseudo());
+			}
+			if(it.getAnswers()!=null && it.getAnswers().size()>0) {
+				EJAnswers answers = it.getAnswers().get(0);
+	
+				if (answers == null) {
+					return;
+				}
+				if (answers.getBoolean() != null) {
+					question.getGoldenAnswers().add(answers.getBoolean().toString());
+				}
+				if (answers.getResults() != null) {
+					Vector<HashMap<String, EJBinding>> answerVector = answers.getResults().getBindings();
+					for (HashMap<String, EJBinding> answerMap : answerVector) {
+						for (EJBinding bind : answerMap.values()) {
+							question.getGoldenAnswers().add(bind.getValue());
+						}
+					}
+				}
+			}
+		}
 	}
 	/**
 	 * Method to process a QALD Based http response and set the details in 'IQuestion'
