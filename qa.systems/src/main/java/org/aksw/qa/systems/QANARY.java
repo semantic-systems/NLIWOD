@@ -29,16 +29,17 @@ public class QANARY extends ASystem {
 
 	Logger log = LoggerFactory.getLogger(QANARY.class);
 
-	private String qanaryUrl = "https://wdaqua-qanary.univ-st-etienne.fr/gerbil-execute/wdaqua-core1,%20QueryExecuter/";
-
+	private String qanaryUrl = "http://wdaqua-core1.univ-st-etienne.fr/gerbil";
+	private String kbName;
 	public QANARY() {
 		super();
 	}
 	
-	public QANARY(String url) {
+	public QANARY(String url, String kbName) {
 		super();
 		this.qanaryUrl=url;
-	}
+		this.kbName = kbName;
+		}
 	
 	@Override
 	public void search(final IQuestion question, final String language) throws Exception {
@@ -58,7 +59,9 @@ public class QANARY extends ASystem {
 		if (this.setLangPar) {
 			params.add(new BasicNameValuePair("lang", language));
 		}
-
+		//New parameter added as per GERBIL Issue 241
+		params.add(new BasicNameValuePair("kb", this.kbName));
+		
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, Consts.UTF_8);
 		httppost.setEntity(entity);
 
@@ -108,6 +111,14 @@ public class QANARY extends ASystem {
 
 	public void setQanaryUrl(final String qanaryUrl) {
 		this.qanaryUrl = qanaryUrl;
+	}
+
+	public String getKbName() {
+		return kbName;
+	}
+
+	public void setKbName(String kbName) {
+		this.kbName = kbName;
 	}
 
 }
