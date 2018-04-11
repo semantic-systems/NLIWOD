@@ -129,7 +129,7 @@ public class Gen_HTTP_QA_Sys extends ASystem {
 
 		// Test if error occured
 		if (response.getStatusLine().getStatusCode() >= 400) {
-			throw new Exception("QANARY Server could not answer due to: " + response.getStatusLine());
+			throw new Exception(this.name+" Server could not answer due to: " + response.getStatusLine());
 		}
 		//Checking if expected format is EQALD or QALD
 		if(this.isEQALD)
