@@ -83,7 +83,7 @@ public class DatasetGenerator {
 		// query tree factory
 		qtf = new QueryTreeFactoryBaseInv();
 		// filters
-		ArrayList<Filter<Statement>> treeFilters = Lists.newArrayList(
+		ArrayList<Predicate<Statement>> treeFilters = Lists.newArrayList(
 				new PredicateDropStatementFilter(StopURIsDBpedia.get()),
 				new ObjectDropStatementFilter(StopURIsDBpedia.get()),
 				new PredicateDropStatementFilter(Sets.union(StopURIsRDFS.get(), Sets.newHashSet(RDFS.seeAlso.getURI()))),
