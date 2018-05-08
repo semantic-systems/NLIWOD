@@ -80,6 +80,7 @@ out of scope (?) :
 *   [Yahoo! Answers Comprehensive Questions and Answers](http://webscope.sandbox.yahoo.com/catalog.php?datatype=l): Yahoo! Answers corpus as of 10/25/2007. Contains 4,483,032 questions and their answers. (3.6 GB)
 *   [Yahoo! Answers consisting of questions asked in French](http://webscope.sandbox.yahoo.com/catalog.php?datatype=l): Subset of the Yahoo! Answers corpus from 2006 to 2015 consisting of 1.7 million questions posed in French, and their corresponding answers. (3.8 GB)
 *   [Yahoo! Answers Manner Questions](http://webscope.sandbox.yahoo.com/catalog.php?datatype=l): subset of the Yahoo! Answers corpus from a 10/25/2007 dump, selected for their linguistic properties. Contains 142,627 questions and their answers. (104 MB)
+* https://sites.google.com/view/qanta/home
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
