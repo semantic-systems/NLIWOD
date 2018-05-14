@@ -68,6 +68,7 @@ out of scope (?) :
 * http://webscope.sandbox.yahoo.com/catalog.php?datatype=l
 * https://arxiv.org/abs/1710.06481
 * http://qangaroo.cs.ucl.ac.uk/
+* https://arxiv.org/abs/1805.03797
 * http://jmcauley.ucsd.edu/data/amazon/qa/
 * http://www.aclweb.org/aclwiki/index.php?title=Question_Answering_(State_of_the_art) 
 * https://stackoverflow.blog/2009/06/stack-overflow-creative-commons-data-dump/
