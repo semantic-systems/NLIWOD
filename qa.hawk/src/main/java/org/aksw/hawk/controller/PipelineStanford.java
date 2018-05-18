@@ -60,6 +60,8 @@ public class PipelineStanford extends AbstractPipeline {
 	@Override
 	public List<Answer> getAnswersToQuestion(final HAWKQuestion q) throws ExecutionException, RuntimeException, ParseException{
 		log.info("Question: " + q.getLanguageToQuestion().get("en"));
+		
+	    q.setTransformedQuestion(q.getLanguageToQuestion().get("en"));
 
 		log.info("Classify question type.");
 		q.setIsClassifiedAsASKQuery(queryTypeClassifier.isASKQuery(q.getLanguageToQuestion().get("en")));
