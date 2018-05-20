@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.aksw.jena_sparql_api.core.FluentQueryExecutionFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
@@ -96,7 +97,7 @@ public class StanfordRDFizer {
 		// query tree factory
 		QueryTreeFactory qtf = new QueryTreeFactoryBase();
 		// filters
-		ArrayList<Filter<Statement>> treeFilters = Lists.newArrayList(new PredicateDropStatementFilter(StopURIsDBpedia.get()), new ObjectDropStatementFilter(StopURIsDBpedia.get()),
+		ArrayList<Predicate<Statement>> treeFilters = Lists.newArrayList(new PredicateDropStatementFilter(StopURIsDBpedia.get()), new ObjectDropStatementFilter(StopURIsDBpedia.get()),
 		        new PredicateDropStatementFilter(Sets.union(StopURIsRDFS.get(), Sets.newHashSet(RDFS.seeAlso.getURI()))), new PredicateDropStatementFilter(StopURIsOWL.get()),
 		        new ObjectDropStatementFilter(StopURIsOWL.get()), new PredicateDropStatementFilter(StopURIsSKOS.get()), new ObjectDropStatementFilter(StopURIsSKOS.get()),
 		        new NamespaceDropStatementFilter(Sets.newHashSet("http://dbpedia.org/property/", "http://purl.org/dc/terms/", "http://dbpedia.org/class/yago/", FOAF.getURI())),
