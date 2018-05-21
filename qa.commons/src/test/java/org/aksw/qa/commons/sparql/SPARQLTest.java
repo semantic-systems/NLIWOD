@@ -3,7 +3,6 @@ package org.aksw.qa.commons.sparql;
 import java.util.concurrent.ExecutionException;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,7 @@ public class SPARQLTest {
 		}
 		Assert.assertTrue("Answersets differ", answer.equals(realAnswer));
 	}
-	@Ignore
+
 	@Test
 	public void wikidataTest() throws ExecutionException {
 		log.debug("Trying to query wikidata...(Timeout 5s)");
