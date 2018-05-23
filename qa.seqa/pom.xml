@@ -14,9 +14,12 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<systemProperties>
-						<JAVA_OPTS>-Xms415m -Xmx16G -XX:MaxPermSize=1G</JAVA_OPTS>
-					</systemProperties>
+					<jvmArguments>
+						<systemProperties>
+							<JAVA_OPTS>-Xms415m -Xmx16G -XX:MaxPermSize=1G</JAVA_OPTS>
+						</systemProperties>
+					</jvmArguments>
+
 					<mainClass>qa.seqa.controller.FrontController</mainClass>
 				</configuration>
 			</plugin>
