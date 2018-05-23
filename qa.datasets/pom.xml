@@ -5,7 +5,7 @@
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>datasets</artifactId>
 	<name>Question Answering (QA) datasets collection</name>
-	<version>0.5.10</version>
+	<version>0.5.11</version>
 	<!-- DISTRIBUTION MANAGEMENT -->
 	<distributionManagement>
 		<repository>
@@ -45,6 +45,9 @@
 						</fileset>
 						<fileset>
 							<directory>qa.datasets/src/main/resources/QALD-master</directory>
+						</fileset>
+						<fileset>
+							<directory>qa.datasets/src/main/resources/lcquad_qaldformat.json</directory>
 						</fileset>
 					</filesets>
 				</configuration>
@@ -94,6 +97,20 @@
 							<overwrite>false</overwrite>
 							<skipCache>false</skipCache>
 							<outputFileName>stanfordqa-train.json</outputFileName>
+							<outputDirectory>src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>resource-lcquad</id>
+						<phase>package</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://ndownloader.figshare.com/files/10505914</url>
+							<overwrite>false</overwrite>
+							<skipCache>false</skipCache>
+							<outputFileName>lcquad_qaldformat.json</outputFileName>
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>
 					</execution>

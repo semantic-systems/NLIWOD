@@ -2,7 +2,8 @@ package org.aksw.qa.commons.load.json;
 
 import java.util.Objects;
 import java.util.Vector;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class QaldQuestionEntry {
 
 	private String id;
