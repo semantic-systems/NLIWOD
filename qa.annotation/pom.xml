@@ -25,9 +25,12 @@
 				<configuration>
 				<!-- http://docs.spring.io/spring-boot/docs/current/reference/html/howto-build.html#howto-create-an-additional-executable-jar -->
 					<classifier>exec</classifier>
-					<systemProperties>
-						<JAVA_OPTS>-Xms415m -Xmx16G -XX:MaxPermSize=1G</JAVA_OPTS>
-					</systemProperties>
+					<jvmArguments>
+						<systemProperties>
+							<JAVA_OPTS>-Xms415m -Xmx16G -XX:MaxPermSize=1G</JAVA_OPTS>
+						</systemProperties>
+					</jvmArguments>
+
 					<mainClass>org.aksw.qa.annotation.webservice.FrontController</mainClass>
 				</configuration>
 			</plugin>
