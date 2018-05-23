@@ -1,6 +1,5 @@
-package org.aksw.autosparql.commons.qald;
+package org.aksw.hawk;
 
-import org.aksw.hawk.ServerChecks;
 import org.aksw.qa.commons.qald.EvaluationUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;

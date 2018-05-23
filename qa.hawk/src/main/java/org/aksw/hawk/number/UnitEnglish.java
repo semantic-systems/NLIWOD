@@ -365,7 +365,7 @@ public class UnitEnglish implements IUnitLanguage {
 		String q = "$80 thousand and three hundred four";
 		log.debug("Start conversion");
 		System.out.println(ue.convert(q));
-		/*-
+		
 		HashMap<String, String> sentenceToSentence = new HashMap<>();
 		sentenceToSentence.put("Which countries have more than ten volcanoes?", "Which countries have more than 10 volcanoes?");
 		sentenceToSentence.put("What are the five boroughs of New York?", "What are the 5 boroughs of New York?");
@@ -379,10 +379,10 @@ public class UnitEnglish implements IUnitLanguage {
 		       "Give me all films produced by Steven Spielberg with a budget of at least $ 80000000.");
 		sentenceToSentence.put("List the seven kings of Rome.", "List the 7 kings of Rome.");
 
-		for (String q : sentenceToSentence.keySet()) {
-		System.out.println(ue.convert(q));
+		for (String q1 : sentenceToSentence.keySet()) {
+		System.out.println(ue.convert(q1));
 		}
-		 */
+		 
 
 	}
 

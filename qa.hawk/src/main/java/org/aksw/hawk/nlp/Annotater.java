@@ -1,14 +1,14 @@
-package org.aksw.hawk.querybuilding;
+package org.aksw.hawk.nlp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
 import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.index.DBOIndex;
-import org.aksw.hawk.nlp.MutableTree;
-import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.util.JSONStatusBuilder;
 import org.aksw.qa.annotation.index.IndexDBO_classes;
 import org.aksw.qa.annotation.index.IndexDBO_properties;
@@ -30,6 +30,9 @@ public class Annotater {
 	// blacklisting is a bad solution but good for ambiguous nouns like "people"
 	Set<String> blacklist = Sets.newHashSet("people");
 	private SPARQL sparql;
+	public List<String> classesIn = new ArrayList<>();
+	public List<String> propertiesIn = new ArrayList<>();
+	public Map<String, String> annotationToWords = new HashMap<>();
 
 	public Annotater(final SPARQL sparql) {
 		this.sparql = sparql;
@@ -41,6 +44,7 @@ public class Annotater {
 		annotateVerbs(tree);
 		annotateNouns(tree);
 		q.setTree_final(JSONStatusBuilder.treeToJSON(q.getTree()));
+		log.info("annotationToWords" + annotationToWords);
 	}
 
 	/**
@@ -63,6 +67,7 @@ public class Annotater {
 			MutableTreeNode tmp = stack.pop();
 			String label = tmp.label;
 			String posTag = tmp.posTag;
+			
 			if (!blacklist.contains(label)) {
 
 				if (posTag.matches("NN(.)*") && tmp.getAnnotations().isEmpty()) {
@@ -70,16 +75,29 @@ public class Annotater {
 					if (!search.isEmpty()) {
 						for (String uri : search) {
 							tmp.addAnnotation(uri);
+							classesIn.add(uri);
+							annotationToWords.put(label, uri + "#class");
 						}
 					} else if (!propertiesIndex.search(label).isEmpty()) {
 						search = propertiesIndex.search(label);
 						for (String uri : search) {
 							tmp.addAnnotation(uri);
+							propertiesIn.add(uri);
+							annotationToWords.put(label, uri + "#property");
 						}
 					} else {
 						search = dboIndex.search(label);
 						for (String uri : search) {
 							tmp.addAnnotation(uri);
+							if (Character.isUpperCase(uri.codePointAt(28))){
+								classesIn.add(uri);
+								annotationToWords.put(label, uri + "#class");
+							}
+							else {
+								propertiesIn.add(uri);
+								annotationToWords.put(label, uri + "#property");
+							}
+
 						}
 					}
 					// use lemma to increase chances to find sth.
@@ -90,14 +108,26 @@ public class Annotater {
 						search = classesIndex.search(label);
 						for (String uri : search) {
 							tmp.addAnnotation(uri);
+							classesIn.add(uri);
+							annotationToWords.put(label, uri + "#class");
 						}
 						search = propertiesIndex.search(label);
 						for (String uri : search) {
 							tmp.addAnnotation(uri);
+							propertiesIn.add(uri);
+							annotationToWords.put(label, uri + "#property");
 						}
 						search = dboIndex.search(label);
 						for (String uri : search) {
 							tmp.addAnnotation(uri);
+							if (Character.isUpperCase(uri.codePointAt(28))){
+								classesIn.add(uri);
+								annotationToWords.put(label, uri + "#class");
+							}
+							else {
+								propertiesIn.add(uri);
+								annotationToWords.put(label, uri + "#property");
+							}
 						}
 					}
 				} else {
@@ -137,6 +167,8 @@ public class Annotater {
 				search = rank(search);
 				for (String uri : search) {
 					tmp.addAnnotation(uri);
+					propertiesIn.add(uri);
+					annotationToWords.put(label, uri + "#property");
 				}
 				log.debug(Joiner.on(", ").join(tmp.getAnnotations()));
 			}
@@ -146,7 +178,7 @@ public class Annotater {
 		}
 	}
 
-	private List<String> rank(final List<String> search) {
+	public List<String> rank(final List<String> search) {
 		// TODO christian: this ranking killed a certain predicate important for
 		// some
 		// queries form training but stabilized ranking :)
@@ -200,8 +232,12 @@ public class Annotater {
 							// variable
 							if (label.equals("Where")) {
 								tmp.addAnnotation("http://dbpedia.org/ontology/Place");
+								classesIn.add("http://dbpedia.org/ontology/Place");
+								annotationToWords.put(label, "http://dbpedia.org/ontology/Place" + "#class");
 							} else if (label.equals("Who")) {
 								tmp.addAnnotation("http://dbpedia.org/ontology/Agent");
+								classesIn.add("http://dbpedia.org/ontology/Agent");
+								annotationToWords.put(label, "http://dbpedia.org/ontology/Agent" + "#class");
 							}
 						} else if (posTag.matches("NN(.)*")) {
 							// DBO look up
@@ -217,6 +253,8 @@ public class Annotater {
 								List<String> uris = classesIndex.search(label);
 								for (String resourceURL : uris) {
 									tmp.addAnnotation(resourceURL);
+									classesIn.add(resourceURL);
+									annotationToWords.put(label, resourceURL + "#class");
 								}
 							} else {
 								log.error("Strange case that never should happen");
@@ -242,10 +280,14 @@ public class Annotater {
 								List<String> uris = classesIndex.search(label);
 								for (String resourceURL : uris) {
 									tmp.addAnnotation(resourceURL);
+									classesIn.add(resourceURL);
+									annotationToWords.put(label, resourceURL + "#class");
 								}
 								uris = propertiesIndex.search(label);
 								for (String resourceURL : uris) {
 									tmp.addAnnotation(resourceURL);
+									propertiesIn.add(resourceURL);
+									annotationToWords.put(label, resourceURL + "#property");
 								}
 
 							} else if (dboIndex.search(label).size() > 0) {
@@ -253,6 +295,14 @@ public class Annotater {
 								ArrayList<String> uris = dboIndex.search(label);
 								for (String resourceURL : uris) {
 									tmp.addAnnotation(resourceURL);
+									if (Character.isUpperCase(resourceURL.codePointAt(28))){
+										classesIn.add(resourceURL);
+										annotationToWords.put(label, resourceURL + "#class");
+									}
+									else {
+										propertiesIn.add(resourceURL);
+										annotationToWords.put(label, resourceURL + "#property");
+									}
 								}
 							} else {
 								// full text lookup
@@ -270,8 +320,12 @@ public class Annotater {
 							// variable
 							if (label.equals("Where")) {
 								tmp.addAnnotation("http://dbpedia.org/ontology/Place");
+								classesIn.add("http://dbpedia.org/ontology/Place");
+								annotationToWords.put(label, "http://dbpedia.org/ontology/Place" + "#class");
 							} else if (label.equals("Who")) {
 								tmp.addAnnotation("http://dbpedia.org/ontology/Agent");
+								classesIn.add("http://dbpedia.org/ontology/Agent");
+								annotationToWords.put(label, "http://dbpedia.org/ontology/Agent" + "#class");
 							}
 						} else {
 							log.error("Strange case that never should happen: " + posTag);

@@ -39,10 +39,10 @@ class StanfordCombinedNN extends ANounCombiner {
 		List<MutableTreeNode> removeMe = new ArrayList<>();
 
 		/**
-		 * Don´t combine if its a named entity.
+		 * Don´t combine if its a named entity or a property.
 		 */
 		for (MutableTreeNode child : children) {
-			if (child.label.toLowerCase().contains("http://dbpedia.org/resource/")) {
+			if (child.label.toLowerCase().contains("http://dbpedia.org/resource/") || child.label.toLowerCase().contains("http://dbpedia.org/ontology/")) {
 				removeMe.add(child);
 			}
 		}
@@ -80,7 +80,8 @@ class StanfordCombinedNN extends ANounCombiner {
 			 */
 			ArrayList<String> orderlyWords = new ArrayList<>();
 			for (MutableTreeNode compoundChild : children) {
-				orderlyWords.add(compoundChild.label);
+				if(!compoundChild.label.startsWith("http"))
+					orderlyWords.add(compoundChild.label);
 			}
 			setEntity(orderlyWords, q, children.get(0).getLabelPosition());
 			/**

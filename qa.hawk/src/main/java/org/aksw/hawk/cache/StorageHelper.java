@@ -61,8 +61,7 @@ public class StorageHelper {
 	}
 
 	/**
-	 * Serializes and stores the given object in the file with the given
-	 * filename.
+	 * Serializes and stores the given object in the file with the given filename.
 	 * 
 	 * @throws IOException
 	 *             if an IO error occurs
@@ -85,8 +84,7 @@ public class StorageHelper {
 	}
 
 	/**
-	 * Serializes and stores the given object in the file with the given
-	 * filename.
+	 * Serializes and stores the given object in the file with the given filename.
 	 * 
 	 * @return false if an error occurred, else true
 	 */

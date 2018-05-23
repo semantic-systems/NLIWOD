@@ -21,9 +21,9 @@ import org.slf4j.LoggerFactory;
 public class Spotlight extends ASpotter {
 	static Logger log = LoggerFactory.getLogger(Spotlight.class);
 
-	private String requestURL = "http://model.dbpedia-spotlight.org/en/";
-	private String confidence = "0.65";
-	private String support = "20";
+	private String requestURL = "http://model.dbpedia-spotlight.org/en/annotate";
+	private String confidence = "0.5";
+	private String support = "0";
 
 	public Spotlight() {
 	}
@@ -42,7 +42,7 @@ public class Spotlight extends ASpotter {
 		HashMap<String, List<Entity>> tmp = new HashMap<>();
 		try {
 			String foxJSONOutput = doTASK(question);
-
+			//System.out.println("f"+ foxJSONOutput);
 			JSONParser parser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) parser.parse(foxJSONOutput);
 
