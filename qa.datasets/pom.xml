@@ -18,6 +18,10 @@
 			<url>http://maven.aksw.org/archiva/repository/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
+	<properties>
+    		<maven.compiler.source>1.6</maven.compiler.source>
+  		<maven.compiler.target>1.6</maven.compiler.target>
+  	</properties>
 	<build>
 		<plugins>
 			<plugin>
