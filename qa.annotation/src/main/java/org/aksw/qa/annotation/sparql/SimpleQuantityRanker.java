@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.aksw.qa.commons.sparql.SPARQL;
-import org.apache.jena.ext.com.google.common.collect.Iterables;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.ext.com.google.common.collect.Iterables;
 
 public class SimpleQuantityRanker {
 	private SPARQL sparql = new SPARQL();

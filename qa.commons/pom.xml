@@ -14,16 +14,11 @@
 	<description>Question Answering (QA) common utilities to load and store QA datasets and calculate performance measures. 
 	It provides also basic data structures for building QA systems.</description>
 	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<!-- TODO put lucene to own subpackage -->
 		<lucene.version>4.6.0</lucene.version>
 	</properties>
-	<!--  <distributionManagement>
-    <repository>
-      <id>org.aksw.qa</id>
-      <name>commons</name>
-      <url>maven.aksw.org</url>
-    </repository>
-  </distributionManagement> -->
 	<dependencies>
 		<!-- QA datasets provided by github.com/aksw/qa-datasets -->
 		<dependency>
