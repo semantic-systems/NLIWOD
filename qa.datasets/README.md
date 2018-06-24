@@ -15,6 +15,7 @@ Overview articles:
 * https://github.com/karthikncode/nlp-datasets
 * http://www.cs.cmu.edu/~ark/QA-data/
 * http://searchivarius.org/dir/000/00I/000
+* https://github.com/sebastianruder/NLP-progress/blob/master/question_answering.md
 
 QA datasets to analyze: 
 * WebQuestions Semantic Parses Dataset https://www.microsoft.com/en-us/download/confirmation.aspx?id=52763
