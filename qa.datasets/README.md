@@ -87,6 +87,7 @@ out of scope (?) :
 * https://transacl.org/ojs/index.php/tacl/article/view/1325
 * https://msropendata.com/datasets/d8d67c14-9d3f-4aeb-8178-4b2f8fb46c55
 * https://msropendata.com/datasets/939b1042-6402-4697-9c15-7a28de7e1321
+* 758	PhotoshopQuiA: A Corpus of Non-Factoid Questions and Answers for Why-Question Answering / interesting for Wikihow-watodo
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
