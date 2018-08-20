@@ -4,7 +4,7 @@
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>datasets</artifactId>
 	<name>Question Answering (QA) datasets collection</name>
-	<version>0.5.13</version>
+	<version>0.5.14</version>
 	<!-- DISTRIBUTION MANAGEMENT -->
 	<distributionManagement>
 		<repository>

@@ -169,6 +169,8 @@ public class LoaderController {
 			return loadingAnchor.getResourceAsStream("/QALD-master/8/data/qald-8-test-multilingual.json");
 		case QALD8_Train_Multilingual:
 			return loadingAnchor.getResourceAsStream("/QALD-master/8/data/qald-8-train-multilingual.json");
+		case QALD9_Train_Multilingual:
+			return loadingAnchor.getResourceAsStream("/QALD-master/9/data/qald-9-train-multilingual.json");
 		case LCQUAD:
 			return loadingAnchor.getResourceAsStream("/lcquad_qaldformat.json");
 		// case qbench1:
@@ -279,6 +281,7 @@ public class LoaderController {
 				case QALD7_Test_Wikidata_en:
 				case QALD8_Test_Multilingual:
 				case QALD8_Train_Multilingual:
+				case QALD9_Train_Multilingual:
 				case LCQUAD :
 					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(getInputStream(data), QaldJson.class);
 					out = EJQuestionFactory.getQuestionsFromQaldJson(json);
