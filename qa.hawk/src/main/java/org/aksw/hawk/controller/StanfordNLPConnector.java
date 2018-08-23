@@ -12,6 +12,7 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.number.UnitController;
+import org.aksw.hawk.util.PropertiesLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,13 +51,10 @@ public class StanfordNLPConnector {
 	public static StringBuilder out = new StringBuilder();
 	private static Logger log = LoggerFactory.getLogger(StanfordNLPConnector.class);
 
-	@Value("${stanford.server.ip}")
+    private final Properties environment = PropertiesLoader.loadProperties();
+
 	private String STANFORD_IP;
-
-	@Value("${stanford.server.port}")
 	private int STANFORD_PORT;
-
-	@Value("${stanford.server.cores}")
 	private int USED_CORES;
 
 	/**
@@ -68,6 +66,10 @@ public class StanfordNLPConnector {
 	public StanfordNLPConnector(final String annotators) {
 		Properties props = new Properties();
 		props.setProperty("annotators", annotators);
+
+		STANFORD_IP = environment.getProperty("stanford.server.ip");
+		STANFORD_PORT = new Integer(environment.getProperty("stanford.server.port"));
+		USED_CORES = new Integer(environment.getProperty("stanford.server.cores"));
 		stanfordPipe = new StanfordCoreNLPClient(props, STANFORD_IP, STANFORD_PORT, USED_CORES);
 
 	}
@@ -81,6 +83,9 @@ public class StanfordNLPConnector {
 		Properties props = new Properties();
 		props.setProperty("annotators", "tokenize, ssplit, pos,lemma, ner,parse");
 
+        STANFORD_IP = environment.getProperty("stanford.server.ip");
+        STANFORD_PORT = new Integer(environment.getProperty("stanford.server.port"));
+        USED_CORES = new Integer(environment.getProperty("stanford.server.cores"));
 		stanfordPipe = new StanfordCoreNLPClient(props, STANFORD_IP, STANFORD_PORT, USED_CORES);
 	}
 

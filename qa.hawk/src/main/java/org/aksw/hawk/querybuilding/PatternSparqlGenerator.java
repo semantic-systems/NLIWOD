@@ -1,11 +1,12 @@
 package org.aksw.hawk.querybuilding;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
+
+import org.aksw.hawk.util.PropertiesLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.aksw.gerbil.transfer.nif.Document;
 import org.aksw.gerbil.transfer.nif.Marking;
@@ -54,11 +55,7 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 	private final static String PROJ = "?proj ";
 	private final static String PROJ2 = " ?proj2 ";
 
-	@Value("${fuseki.sparql.endpoint.url}")
-	private String fusekiSPARQLEndpointURL;
-
-	@Value("${fuseki.sparql.endpoint.port}")
-	private String fusekiSPARQLEndpointPort;
+	private final Properties environment = PropertiesLoader.loadProperties();
 
 	public PatternSparqlGenerator() {
 
@@ -454,7 +451,8 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 	@Override
 	public List<Answer> build(HAWKQuestion q) throws ExecutionException, RuntimeException, ParseException {
 		SPARQL sparql = new SPARQL(String.format("http://%s:%s/ds/sparql",
-				this.fusekiSPARQLEndpointURL, this.fusekiSPARQLEndpointPort));
+				environment.getProperty("fuseki.sparql.endpoint.url"),
+				environment.getProperty("fuseki.sparql.endpoint.port")));
 		Annotater annotator = new Annotater(sparql);
 		annotator.annotateTree(q);
 		

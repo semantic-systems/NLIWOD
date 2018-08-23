@@ -1,6 +1,7 @@
 package org.aksw.hawk.controller;
 
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 import org.aksw.hawk.datastructures.Answer;
@@ -12,6 +13,7 @@ import org.aksw.hawk.nouncombination.NounCombinationChain;
 import org.aksw.hawk.nouncombination.NounCombiners;
 import org.aksw.hawk.number.UnitController;
 import org.aksw.hawk.querybuilding.PatternSparqlGenerator;
+import org.aksw.hawk.util.PropertiesLoader;
 import org.aksw.qa.annotation.spotter.ASpotter;
 import org.aksw.qa.annotation.spotter.Fox;
 import org.aksw.qa.annotation.spotter.Spotlight;
@@ -19,7 +21,9 @@ import org.aksw.qa.commons.sparql.SPARQL;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 
 public class PipelineStanford extends AbstractPipeline {
 	static Logger log = LoggerFactory.getLogger(PipelineStanford.class);
@@ -34,13 +38,7 @@ public class PipelineStanford extends AbstractPipeline {
 	private UnitController numberToDigit;
 	private NounCombinationChain nounCombination;
 
-	@Value("${fuseki.sparql.endpoint.url}")
-	private String fusekiSPARQLEndpointURL;
-
-	@Value("${fuseki.sparql.endpoint.port}")
-	private String fusekiSPARQLEndpointPort;
-
-
+	private final Properties environment = PropertiesLoader.loadProperties();
 
 	public PipelineStanford() {
 		queryTypeClassifier = new QueryTypeClassifier();
@@ -61,7 +59,8 @@ public class PipelineStanford extends AbstractPipeline {
 		pruner = new MutableTreePruner();
 
 		SPARQL sparql = new SPARQL(String.format("http://%s:%s/ds/sparql",
-				this.fusekiSPARQLEndpointURL, this.fusekiSPARQLEndpointPort));
+				environment.getProperty("fuseki.sparql.endpoint.url"),
+				environment.getProperty("fuseki.sparql.endpoint.port")));
 		annotater = new Annotater(sparql);
 
 		patternsparqlgenerator = new PatternSparqlGenerator();
