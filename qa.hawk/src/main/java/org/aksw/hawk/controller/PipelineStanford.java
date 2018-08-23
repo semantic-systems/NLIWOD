@@ -19,6 +19,7 @@ import org.aksw.qa.commons.sparql.SPARQL;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 public class PipelineStanford extends AbstractPipeline {
 	static Logger log = LoggerFactory.getLogger(PipelineStanford.class);
@@ -32,6 +33,14 @@ public class PipelineStanford extends AbstractPipeline {
 
 	private UnitController numberToDigit;
 	private NounCombinationChain nounCombination;
+
+	@Value("${fuseki.sparql.endpoint.url}")
+	private String fusekiSPARQLEndpointURL;
+
+	@Value("${fuseki.sparql.endpoint.port}")
+	private String fusekiSPARQLEndpointPort;
+
+
 
 	public PipelineStanford() {
 		queryTypeClassifier = new QueryTypeClassifier();
@@ -51,7 +60,8 @@ public class PipelineStanford extends AbstractPipeline {
 
 		pruner = new MutableTreePruner();
 
-		SPARQL sparql = new SPARQL("http://131.234.28.52:3030/ds/sparql");
+		SPARQL sparql = new SPARQL(String.format("http://%s:%s/ds/sparql",
+				this.fusekiSPARQLEndpointURL, this.fusekiSPARQLEndpointPort));
 		annotater = new Annotater(sparql);
 
 		patternsparqlgenerator = new PatternSparqlGenerator();

@@ -31,6 +31,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.google.common.collect.Lists;
+import org.springframework.beans.factory.annotation.Value;
 
 public class PatternSparqlGenerator implements ISparqlBuilder {
 
@@ -52,6 +53,12 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 	private final static String URI_START_PREFIX = "http://dbpedia.org/";
 	private final static String PROJ = "?proj ";
 	private final static String PROJ2 = " ?proj2 ";
+
+	@Value("${fuseki.sparql.endpoint.url}")
+	private String fusekiSPARQLEndpointURL;
+
+	@Value("${fuseki.sparql.endpoint.port}")
+	private String fusekiSPARQLEndpointPort;
 
 	public PatternSparqlGenerator() {
 
@@ -446,7 +453,8 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 
 	@Override
 	public List<Answer> build(HAWKQuestion q) throws ExecutionException, RuntimeException, ParseException {
-		SPARQL sparql = new SPARQL("http://131.234.28.52:3030/ds/sparql");
+		SPARQL sparql = new SPARQL(String.format("http://%s:%s/ds/sparql",
+				this.fusekiSPARQLEndpointURL, this.fusekiSPARQLEndpointPort));
 		Annotater annotator = new Annotater(sparql);
 		annotator.annotateTree(q);
 		

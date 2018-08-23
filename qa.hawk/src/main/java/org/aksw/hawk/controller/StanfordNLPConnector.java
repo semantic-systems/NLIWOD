@@ -28,6 +28,7 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import edu.stanford.nlp.util.CoreMap;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * This class is a Connector between HAWK and StanfordNLP Usage: Either pass a
@@ -48,9 +49,15 @@ public class StanfordNLPConnector {
 	private Set<IndexedWord> visitedNodes;
 	public static StringBuilder out = new StringBuilder();
 	private static Logger log = LoggerFactory.getLogger(StanfordNLPConnector.class);
-	private static final String STANFORD_IP = "139.18.2.39";
-	private static final int STANFORD_PORT = 9000;
-	private static final int USED_CORES = 4;
+
+	@Value("${stanford.server.ip}")
+	private String STANFORD_IP;
+
+	@Value("${stanford.server.port}")
+	private int STANFORD_PORT;
+
+	@Value("${stanford.server.cores}")
+	private int USED_CORES;
 
 	/**
 	 * Initializes the StanfordNLP with given Annotators.Complete Annotator list
@@ -272,14 +279,6 @@ public class StanfordNLPConnector {
 			convertGraphStanford(childMutableNode, child, graph);
 		}
 
-	}
-
-	public static String getStanfordIp() {
-		return STANFORD_IP;
-	}
-
-	public static int getStanfordPort() {
-		return STANFORD_PORT;
 	}
 
 }
