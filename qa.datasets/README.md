@@ -91,6 +91,7 @@ out of scope (?) :
 * 758	PhotoshopQuiA: A Corpus of Non-Factoid Questions and Answers for Why-Question Answering / interesting for Wikihow-watodo
 * http://www.aclweb.org/anthology/W18-3204
 * https://mrqa2018.github.io/
+* https://arxiv.org/pdf/1808.07036.pdf
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
