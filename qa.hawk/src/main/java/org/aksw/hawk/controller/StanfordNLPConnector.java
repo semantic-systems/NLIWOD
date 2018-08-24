@@ -29,7 +29,6 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import edu.stanford.nlp.util.CoreMap;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * This class is a Connector between HAWK and StanfordNLP Usage: Either pass a

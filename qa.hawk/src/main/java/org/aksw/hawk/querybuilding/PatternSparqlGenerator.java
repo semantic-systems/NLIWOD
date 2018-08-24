@@ -5,8 +5,6 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 import org.aksw.hawk.util.PropertiesLoader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.aksw.gerbil.transfer.nif.Document;
 import org.aksw.gerbil.transfer.nif.Marking;
@@ -32,7 +30,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.google.common.collect.Lists;
-import org.springframework.beans.factory.annotation.Value;
 
 public class PatternSparqlGenerator implements ISparqlBuilder {
 
