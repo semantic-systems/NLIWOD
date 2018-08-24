@@ -26,13 +26,12 @@ curl -X POST -d "query=What is the capital o Germany?&lang=en" http://localhost:
 
 * Before running Hawk make sure there is a Fuseki SPARQL endpoint at `http://localhost:3030/ds/query` (**RECOMMENDED**). By default, Hawk points to SPARQL endpoint at `http://131.234.28.52:3030/ds/sparql`, but you can switch to your local instance in the [application.properties](src/main/resources/application.properties).
 
-* Make sure there is an available Stanford CoreNLP server at `http://localhost:9000` (**RECOMMENDED**). Default server is `http://akswnc9.informatik.uni-leipzig.de:9000`, but you can switch to your local instance in the [application.properties](src/main/resources/application.properties).
+* Make sure there is an available Stanford CoreNLP server at `http://localhost:9000` (**RECOMMENDED**). Default server is `http://139.18.2.39:9000`, but you can switch to your local instance in the [application.properties](src/main/resources/application.properties).
 
 ### Deploying HAWK via Docker
 
-Prior deploying a HAWK instance, it needs to connect with a SPARQL endpoint. There is also a public hawk-specific SPARQL endpoint at `http://131.234.28.52:3030`.
+Prior deploying a HAWK instance, it needs to connect to a SPARQL endpoint, and interact with a Stanford CoreNLP server.
 For deploying a *containerized* SPARQL endpoint locally look at [deploy-scripts/README.md](deploy-scripts/README.md).
-
 In case you also want to intall a local *containerized* instance of Stanford CoreNLP server, run the following commands:
 
 ```bash
