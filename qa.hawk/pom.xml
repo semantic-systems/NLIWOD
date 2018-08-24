@@ -25,9 +25,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<jvmArguments>
-						<systemProperties>
-							<JAVA_OPTS>-Xms415m -Xmx16G -XX:MaxPermSize=1G</JAVA_OPTS>
-						</systemProperties>
+						-Xms415m -Xmx16G -XX:MaxPermSize=1G
 					</jvmArguments>
 					<mainClass>org.aksw.hawk.webservice.WebApplication</mainClass>
 					<layout>JAR</layout>
