@@ -59,6 +59,8 @@ QA datasets to analyze:
 * https://machinelearningmastery.com/datasets-natural-language-processing/
 * https://arxiv.org/abs/1805.05942
 * http://www.aclweb.org/anthology/C18-1178
+* http://nlp.uned.es/clef-qa/repository/ave.php
+
 out of scope (?) :
 * http://alt.qcri.org/semeval2015/task3/ SemEval-2015 Task 3: Answer Selection in Community Question Answering 
 * http://alt.qcri.org/semeval2016/task3/ Semeval-2016 Task 3: Community Question Answering
