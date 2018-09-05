@@ -60,6 +60,7 @@ QA datasets to analyze:
 * https://arxiv.org/abs/1805.05942
 * http://www.aclweb.org/anthology/C18-1178
 * http://nlp.uned.es/clef-qa/repository/ave.php
+* https://hucvl.github.io/recipeqa/
 
 * Interesting study for Google's quality: https://www.emeraldinsight.com/doi/pdfplus/10.1108/LHT-10-2017-0218
 
