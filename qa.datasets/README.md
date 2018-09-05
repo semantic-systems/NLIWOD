@@ -61,6 +61,8 @@ QA datasets to analyze:
 * http://www.aclweb.org/anthology/C18-1178
 * http://nlp.uned.es/clef-qa/repository/ave.php
 
+* Interesting study for Google's quality: https://www.emeraldinsight.com/doi/pdfplus/10.1108/LHT-10-2017-0218
+
 out of scope (?) :
 * http://alt.qcri.org/semeval2015/task3/ SemEval-2015 Task 3: Answer Selection in Community Question Answering 
 * http://alt.qcri.org/semeval2016/task3/ Semeval-2016 Task 3: Community Question Answering
