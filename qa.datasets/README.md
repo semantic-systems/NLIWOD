@@ -65,6 +65,7 @@ QA datasets to analyze:
 * Interesting study for Google's quality: https://www.emeraldinsight.com/doi/pdfplus/10.1108/LHT-10-2017-0218
 
 out of scope (?) :
+* http://tvqa.cs.unc.edu/leaderboard.html
 * http://alt.qcri.org/semeval2015/task3/ SemEval-2015 Task 3: Answer Selection in Community Question Answering 
 * http://alt.qcri.org/semeval2016/task3/ Semeval-2016 Task 3: Community Question Answering
 * https://www.microsoft.com/en-us/download/details.aspx?id=52419 WikiQA (big!)
