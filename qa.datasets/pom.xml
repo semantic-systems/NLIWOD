@@ -4,7 +4,7 @@
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>datasets</artifactId>
 	<name>Question Answering (QA) datasets collection</name>
-	<version>0.5.14</version>
+	<version>0.5.15</version>
 	<!-- DISTRIBUTION MANAGEMENT -->
 	<distributionManagement>
 		<repository>
@@ -111,8 +111,8 @@
 						</goals>
 						<configuration>
 							<url>https://ndownloader.figshare.com/files/10505914</url>
-							<overwrite>false</overwrite>
-							<skipCache>false</skipCache>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
 							<outputFileName>lcquad_qaldformat.json</outputFileName>
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>
