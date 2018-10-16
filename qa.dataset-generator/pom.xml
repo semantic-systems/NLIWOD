@@ -26,7 +26,7 @@
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>datasets</artifactId>
-			<version>0.5.2</version>
+			<version>0.5.15</version>
 		</dependency>
 
 		<!-- DL-Learner used for LGG -->

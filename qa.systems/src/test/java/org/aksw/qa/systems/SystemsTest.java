@@ -31,6 +31,9 @@ public class SystemsTest {
             	log.debug(question.toString());
         	}catch(SocketTimeoutException e){
         	
+        	}catch(Exception e){
+        		System.out.println("System "+system.name()+" does not work");
+        		e.printStackTrace();
         	}
         }
     }
@@ -54,6 +57,9 @@ public class SystemsTest {
             	log.debug(question.toString());
         	}catch(SocketTimeoutException e){
         		
+        	}catch(Exception e){
+        		System.out.println("System "+system.name()+" does not work");
+        		e.printStackTrace();
         	}
         }
     }
