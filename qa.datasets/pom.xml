@@ -52,6 +52,12 @@
 						<fileset>
 							<directory>qa.datasets/src/main/resources/lcquad_qaldformat.json</directory>
 						</fileset>
+						<fileset>
+							<directory>qa.datasets/src/main/resources/webservice_25_06_2017.json</directory>
+						</fileset>
+						<fileset>
+							<directory>qa.datasets/src/main/resources/annotated_wd_data_valid_full.json</directory>
+						</fileset>
 					</filesets>
 				</configuration>
 			</plugin>
@@ -114,6 +120,35 @@
 							<overwrite>true</overwrite>
 							<skipCache>true</skipCache>
 							<outputFileName>lcquad_qaldformat.json</outputFileName>
+							<outputDirectory>src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
+					<!-- suganya -->
+					<execution>
+						<id>wdaqua-core0-logs</id>
+						<phase>package</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://github.com/WDAqua/WDAquaCore0Questions/blob/master/webservice_25_06_2017.json</url>
+							<overwrite>false</overwrite>
+							<skipCache>false</skipCache>
+							<outputFileName>webservice_25_06_2017.json</outputFileName>
+							<outputDirectory>src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>simple-question-wikidata-test</id>
+						<phase>package</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://github.com/askplatypus/wikidata-simplequestions/blob/master/qald-format/annotated_wd_data_valid_full.json</url>
+							<overwrite>false</overwrite>
+							<skipCache>false</skipCache>
+							<outputFileName>annotated_wd_data_valid_full.json</outputFileName>
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>
 					</execution>
