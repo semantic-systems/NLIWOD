@@ -117,8 +117,8 @@
 						</goals>
 						<configuration>
 							<url>https://ndownloader.figshare.com/files/10505914</url>
-							<overwrite>false</overwrite>
-							<skipCache>false</skipCache>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
 							<outputFileName>lcquad_qaldformat.json</outputFileName>
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>

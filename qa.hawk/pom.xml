@@ -25,11 +25,9 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<jvmArguments>
-						<systemProperties>
-							<JAVA_OPTS>-Xms415m -Xmx16G -XX:MaxPermSize=1G</JAVA_OPTS>
-						</systemProperties>
+						-Xms415m -Xmx16G -XX:MaxPermSize=1G
 					</jvmArguments>
-					<mainClass>org.aksw.hawk.webservice.WebController</mainClass>
+					<mainClass>org.aksw.hawk.webservice.WebApplication</mainClass>
 					<layout>JAR</layout>
 				</configuration>
 				<executions>
@@ -50,6 +48,20 @@
 			<groupId>org.aksw</groupId>
 			<artifactId>gerbil.nif.transfer</artifactId>
 			<version>1.2.2-jena3.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.jena</groupId>
+					<artifactId>jena-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.jena</groupId>
+					<artifactId>jena-arq</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.jena</groupId>
+					<artifactId>jena-iri</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Mutable Pair -->

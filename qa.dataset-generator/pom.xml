@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.aksw</groupId>
 		<artifactId>nliwod</artifactId>
-		<version>0.0.6</version>
+		<version>0.0.7</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<groupId>org.aksw.qa</groupId>
@@ -26,7 +26,7 @@
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>datasets</artifactId>
-			<version>0.5.2</version>
+			<version>0.5.15</version>
 		</dependency>
 
 		<!-- DL-Learner used for LGG -->

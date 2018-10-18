@@ -12,6 +12,7 @@ import org.aksw.hawk.datastructures.HAWKQuestion;
 import org.aksw.hawk.nlp.MutableTree;
 import org.aksw.hawk.nlp.MutableTreeNode;
 import org.aksw.hawk.number.UnitController;
+import org.aksw.hawk.util.PropertiesLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,9 +49,12 @@ public class StanfordNLPConnector {
 	private Set<IndexedWord> visitedNodes;
 	public static StringBuilder out = new StringBuilder();
 	private static Logger log = LoggerFactory.getLogger(StanfordNLPConnector.class);
-	private static final String STANFORD_IP = "139.18.2.39";
-	private static final int STANFORD_PORT = 9000;
-	private static final int USED_CORES = 4;
+
+    private final Properties environment = PropertiesLoader.loadProperties();
+
+	private String STANFORD_IP;
+	private int STANFORD_PORT;
+	private int USED_CORES;
 
 	/**
 	 * Initializes the StanfordNLP with given Annotators.Complete Annotator list
@@ -61,6 +65,10 @@ public class StanfordNLPConnector {
 	public StanfordNLPConnector(final String annotators) {
 		Properties props = new Properties();
 		props.setProperty("annotators", annotators);
+
+		STANFORD_IP = environment.getProperty("stanford.server.ip");
+		STANFORD_PORT = new Integer(environment.getProperty("stanford.server.port"));
+		USED_CORES = new Integer(environment.getProperty("stanford.server.cores"));
 		stanfordPipe = new StanfordCoreNLPClient(props, STANFORD_IP, STANFORD_PORT, USED_CORES);
 
 	}
@@ -74,6 +82,9 @@ public class StanfordNLPConnector {
 		Properties props = new Properties();
 		props.setProperty("annotators", "tokenize, ssplit, pos,lemma, ner,parse");
 
+        STANFORD_IP = environment.getProperty("stanford.server.ip");
+        STANFORD_PORT = new Integer(environment.getProperty("stanford.server.port"));
+        USED_CORES = new Integer(environment.getProperty("stanford.server.cores"));
 		stanfordPipe = new StanfordCoreNLPClient(props, STANFORD_IP, STANFORD_PORT, USED_CORES);
 	}
 
@@ -272,14 +283,6 @@ public class StanfordNLPConnector {
 			convertGraphStanford(childMutableNode, child, graph);
 		}
 
-	}
-
-	public static String getStanfordIp() {
-		return STANFORD_IP;
-	}
-
-	public static int getStanfordPort() {
-		return STANFORD_PORT;
 	}
 
 }

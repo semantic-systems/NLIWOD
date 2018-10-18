@@ -1,11 +1,10 @@
 package org.aksw.hawk.querybuilding;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
+
+import org.aksw.hawk.util.PropertiesLoader;
 
 import org.aksw.gerbil.transfer.nif.Document;
 import org.aksw.gerbil.transfer.nif.Marking;
@@ -52,6 +51,8 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 	private final static String URI_START_PREFIX = "http://dbpedia.org/";
 	private final static String PROJ = "?proj ";
 	private final static String PROJ2 = " ?proj2 ";
+
+	private final Properties environment = PropertiesLoader.loadProperties();
 
 	public PatternSparqlGenerator() {
 
@@ -446,7 +447,9 @@ public class PatternSparqlGenerator implements ISparqlBuilder {
 
 	@Override
 	public List<Answer> build(HAWKQuestion q) throws ExecutionException, RuntimeException, ParseException {
-		SPARQL sparql = new SPARQL("http://131.234.28.52:3030/ds/sparql");
+		SPARQL sparql = new SPARQL(String.format("http://%s:%s/ds/sparql",
+				environment.getProperty("fuseki.sparql.endpoint.url"),
+				environment.getProperty("fuseki.sparql.endpoint.port")));
 		Annotater annotator = new Annotater(sparql);
 		annotator.annotateTree(q);
 		

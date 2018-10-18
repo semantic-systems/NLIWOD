@@ -24,7 +24,7 @@ public class SystemsTest {
 		String question = "What is the capital of Germany?";
 		ArrayList<ASystem> systems = Lists.newArrayList(new HAWK(), new QAKIS(), new SINA(), new YODA());
 		for (ASystem system : systems) {
-			IQuestion answer = system.search(question);
+			IQuestion answer = system.search(question, "en");
 			log.debug("Answers: "+ answer.toString());
 			Assert.assertNotNull(answer);
 		}

@@ -58,7 +58,15 @@ QA datasets to analyze:
 * https://drive.google.com/file/d/0BwT5wj_P7BKXb2hfM3d2RHU1ckE/view
 * https://machinelearningmastery.com/datasets-natural-language-processing/
 * https://arxiv.org/abs/1805.05942
+* http://www.aclweb.org/anthology/C18-1178
+* http://nlp.uned.es/clef-qa/repository/ave.php
+* https://hucvl.github.io/recipeqa/
+* https://arxiv.org/pdf/1810.02802.pdf
+
+* Interesting study for Google's quality: https://www.emeraldinsight.com/doi/pdfplus/10.1108/LHT-10-2017-0218
+
 out of scope (?) :
+* http://tvqa.cs.unc.edu/leaderboard.html
 * http://alt.qcri.org/semeval2015/task3/ SemEval-2015 Task 3: Answer Selection in Community Question Answering 
 * http://alt.qcri.org/semeval2016/task3/ Semeval-2016 Task 3: Community Question Answering
 * https://www.microsoft.com/en-us/download/details.aspx?id=52419 WikiQA (big!)
@@ -90,6 +98,12 @@ out of scope (?) :
 * 758	PhotoshopQuiA: A Corpus of Non-Factoid Questions and Answers for Why-Question Answering / interesting for Wikihow-watodo
 * http://www.aclweb.org/anthology/W18-3204
 * https://mrqa2018.github.io/
+* https://arxiv.org/pdf/1808.07036.pdf
+* https://arxiv.org/pdf/1809.00732.pdf
+* http://qa.mpi-inf.mpg.de/comqa/
+* https://hotpotqa.github.io/
+* http://aclweb.org/anthology/S18-1009
+* temporal QA http://delivery.acm.org/10.1145/3200000/3191536/p1057-jia.pdf
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
