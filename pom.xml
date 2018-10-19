@@ -29,7 +29,6 @@
 		<qa-commons.version>0.4.20</qa-commons.version>
 		<qa-systems.version>0.0.5-SNAPSHOT</qa-systems.version>
 		<qa-ml.version>0.0.1-SNAPSHOT</qa-ml.version>
-		<qa-hawk.version>0.3.2</qa-hawk.version>
 		<qa-watodo.version>0.0.1-SNAPSHOT</qa-watodo.version>
 		<qa-dataset-generator.version>0.0.1-SNAPSHOT</qa-dataset-generator.version>
 	</properties>
@@ -97,7 +96,6 @@
 		<module>qa.commons</module>
 		<module>qa.ml</module>
 		<module>qa.annotation</module>
-		<module>qa.hawk</module>
 		<module>qa.seqa</module>		
 	</modules>
 	<!-- DISTRIBUTION MANAGEMENT -->
