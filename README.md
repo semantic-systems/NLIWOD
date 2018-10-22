@@ -1,4 +1,5 @@
 # NLIWOD - Natural Language Interfaces for the Web of Data
+[![Build Status](https://travis-ci.org/dice-group/NLIWOD.svg?branch=master)](https://travis-ci.org/dice-group/NLIWOD)
 [![Project Stats](https://www.openhub.net/p/NLIWOD/widgets/project_thin_badge.gif)](https://www.openhub.net/p/NLIWOD)
 [![BCH compliance](https://bettercodehub.com/edge/badge/AKSW/NLIWOD)](https://bettercodehub.com/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d20dadb8431c4b93befabff1c5858127)](https://www.codacy.com/app/lukasbluebaumb94/NLIWOD?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dice-group/NLIWOD&amp;utm_campaign=Badge_Grade)
