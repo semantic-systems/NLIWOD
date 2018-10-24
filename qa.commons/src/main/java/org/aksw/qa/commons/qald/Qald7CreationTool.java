@@ -205,10 +205,7 @@ public class Qald7CreationTool {
 	}
 
 	private boolean checkSparqlPresent(final IQuestion q) {
-		if (StringUtils.isEmpty(q.getSparqlQuery())) {
-			return false;
-		}
-		return true;
+		return !StringUtils.isEmpty(q.getSparqlQuery());
 	}
 
 	private boolean checkAnswertypeSet(final IQuestion q) {
@@ -225,10 +222,7 @@ public class Qald7CreationTool {
 	}
 
 	private boolean checkAtleastSixLanguages(final IQuestion q) {
-		if (q.getLanguageToQuestion().values().size() < 6) {
-			return false;
-		}
-		return true;
+		return !(q.getLanguageToQuestion().values().size() < 6);
 	}
 
 	/**

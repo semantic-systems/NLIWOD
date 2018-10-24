@@ -17,10 +17,6 @@ public class SparqlPatternRequest {
 
 	private PatternSparqlGenerator sparql = PatternSparqlGenerator.getInstance();
 
-	public SparqlPatternRequest() {
-
-	}
-
 	@RequestMapping(method = RequestMethod.GET)
 	public String getClass(@RequestParam(value = "q") final String q) {
 		logger.debug("Requesting Sparql Pattern VIA GET - forbidden");

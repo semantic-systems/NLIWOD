@@ -25,9 +25,6 @@ public class Spotlight extends ASpotter {
 	private String confidence = "0.5";
 	private String support = "0";
 
-	public Spotlight() {
-	}
-
 	private String doTASK(final String inputText) throws MalformedURLException, IOException, ProtocolException {
 
 		String urlParameters = "text=" + URLEncoder.encode(inputText, "UTF-8");

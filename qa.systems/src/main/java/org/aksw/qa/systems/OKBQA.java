@@ -81,17 +81,15 @@ public class OKBQA extends ASystem {
 		JSONArray logs = obj.getJSONArray("log");
 		for(int i=0; i<logs.length(); i++){
 			JSONObject log = logs.getJSONObject(i);
-			if(log.getString("1. module").equals("QGM")){
-				if(log.has("4. output")){
-					try{
-						JSONArray qout = log.getJSONArray("4. output");
-						if(qout.length()>0&& qout.getJSONObject(0).has("query")){
-							String queryString = qout.getJSONObject(0).getString("query");
-							question.setSparqlQuery(queryString);
-						}
-					}catch(JSONException e){
-						return;
+			if(log.getString("1. module").equals("QGM") && log.has("4. output")){
+				try{
+					JSONArray qout = log.getJSONArray("4. output");
+					if(qout.length()>0&& qout.getJSONObject(0).has("query")){
+						String queryString = qout.getJSONObject(0).getString("query");
+						question.setSparqlQuery(queryString);
 					}
+				}catch(JSONException e){
+						return;
 				}
 			}
 		}

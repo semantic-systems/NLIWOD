@@ -13,10 +13,7 @@ public class Results implements Iterator<List<String>> {
 
 	@Override
 	public boolean hasNext() {
-		if (row < table.size()) {
-			return true;
-		}
-		return false;
+		return row < table.size();
 	}
 
 	@Override

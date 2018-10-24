@@ -22,19 +22,17 @@ public abstract class ASpotter {
 	private static PersistentCache cache = new PersistentCache();
 
 	protected String requestPOST(String input, String requestURL) throws MalformedURLException, ProtocolException, IOException {
-			if (useCache) {
-				if (cache.containsKey(input)) {
-					return cache.get(input);
-				}
-			}
+		if (useCache && cache.containsKey(input)) {
+			return cache.get(input);
+		}
 
-			String output = POST(input, requestURL);
-			cache.put(input, output);
-			if (useCache) {
-				cache.writeCache();
-			}
+		String output = POST(input, requestURL);
+		cache.put(input, output);
+		if (useCache) {
+			cache.writeCache();
+		}
 
-			return output;
+		return output;
 	}
 
 	private String POST(String urlParameters, String requestURL) throws MalformedURLException, IOException, ProtocolException {

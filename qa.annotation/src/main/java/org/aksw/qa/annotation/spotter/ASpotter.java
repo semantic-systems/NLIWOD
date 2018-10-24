@@ -27,10 +27,8 @@ public abstract class ASpotter {
 
 	protected String requestPOST(final String input, final String requestURL) {
 
-		if (useCache) {
-			if (cache.containsKey(input)) {
-				return cache.get(input);
-			}
+		if (useCache && cache.containsKey(input)) {
+			return cache.get(input);
 		}
 		String output = "";
 		try {

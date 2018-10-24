@@ -25,9 +25,6 @@ public class Spotlight {
 	private String confidence = "0.65";
 	private String support = "20";
 
-	public Spotlight() {
-	}
-
 	protected String requestPOST(final String input, final String requestURL) {
 
 		String output = "";
