@@ -18,12 +18,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class ASpotter {
-
-	public abstract Map<String, List<Entity>> getEntities(String question);
-
-	static Logger log = LoggerFactory.getLogger(ASpotter.class);
+	
+	private static final Logger log = LoggerFactory.getLogger(ASpotter.class);
 	private boolean useCache = false;
 	private static PersistentCache cache = new PersistentCache();
+	
+	public abstract Map<String, List<Entity>> getEntities(String question);
 
 	protected String requestPOST(final String input, final String requestURL) {
 

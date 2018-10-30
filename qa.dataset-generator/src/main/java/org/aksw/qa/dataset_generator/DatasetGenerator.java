@@ -2,7 +2,6 @@ package org.aksw.qa.dataset_generator;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.aksw.jena_sparql_api.cache.core.QueryExecutionFactoryCacheEx;
 import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
 import org.aksw.jena_sparql_api.cache.h2.CacheUtilsH2;
 import org.aksw.jena_sparql_api.core.FluentQueryExecutionFactory;
@@ -52,7 +51,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -61,7 +59,6 @@ import java.util.stream.Collectors;
 public class DatasetGenerator {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DatasetGenerator.class);
-	private final QueryExecutionFactory qef;
 
 	private AGDISTIS disambiguator;
 	private Spotlight recognizer;
@@ -71,7 +68,6 @@ public class DatasetGenerator {
 	private LGGGenerator lggGen;
 
 	public DatasetGenerator(QueryExecutionFactory qef) {
-		this.qef = qef;
 
 		this.disambiguator = new AGDISTIS();
 		this.recognizer = new Spotlight();
@@ -201,7 +197,6 @@ public class DatasetGenerator {
 			LOGGER.info("|cbd(" + uri + ")|=" + cbd.size() + " triples");
 
 			Predicate<Statement> isRelevant = st -> {
-				Resource root = ResourceFactory.createResource(uri);
 //				return filterResources.contains(st.getSubject())|| filterResources.contains(st.getObject());
 
 				return filterEntities.isEmpty() || filterEntities.stream().anyMatch(e ->

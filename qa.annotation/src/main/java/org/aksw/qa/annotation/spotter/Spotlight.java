@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Spotlight extends ASpotter {
-	static Logger log = LoggerFactory.getLogger(Spotlight.class);
+	private static Logger log = LoggerFactory.getLogger(Spotlight.class);
 
 	private String requestURL = "http://model.dbpedia-spotlight.org/en/annotate";
 	private String confidence = "0.5";

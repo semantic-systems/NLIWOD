@@ -11,8 +11,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import junit.framework.Assert;
-
 public class AnswerBasedEvaluationTest {
 
 	Logger logger = LoggerFactory.getLogger(AnswerBasedEvaluationTest.class);
@@ -47,9 +45,9 @@ public class AnswerBasedEvaluationTest {
 
 		Set<String> systemAnswer = CollectionUtils.newHashSet();
 
-		double precision = AnswerBasedEvaluation.precision(systemAnswer, question);
-		double recall = AnswerBasedEvaluation.recall(systemAnswer, question);
-		double fMeasure = AnswerBasedEvaluation.fMeasure(systemAnswer, question);
+		AnswerBasedEvaluation.precision(systemAnswer, question);
+		AnswerBasedEvaluation.recall(systemAnswer, question);
+		AnswerBasedEvaluation.fMeasure(systemAnswer, question);
 
 		question = new Question();
 		question.setAggregation(null);
@@ -59,11 +57,11 @@ public class AnswerBasedEvaluationTest {
 
 		systemAnswer = CollectionUtils.newHashSet();
 
-		precision = AnswerBasedEvaluation.precision(systemAnswer, question);
-		recall = AnswerBasedEvaluation.recall(systemAnswer, question);
-		fMeasure = AnswerBasedEvaluation.fMeasure(systemAnswer, question);
+		AnswerBasedEvaluation.precision(systemAnswer, question);
+		AnswerBasedEvaluation.recall(systemAnswer, question);
+		AnswerBasedEvaluation.fMeasure(systemAnswer, question);
 
-		Assert.assertTrue(true);
+		assertEquals(true, true);
 	}
 
 	@Test

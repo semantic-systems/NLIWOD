@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Joiner;
 //TODO fix fox content type https://github.com/dice-group/FOX/blob/master/documentation/requests.md
 public class Fox extends ASpotter {
-	static Logger log = LoggerFactory.getLogger(Fox.class);
+	private static Logger log = LoggerFactory.getLogger(Fox.class);
 
 	private String requestURL = "http://fox.cs.uni-paderborn.de:4444/fox";
 	private String outputFormat = "N-Triples";

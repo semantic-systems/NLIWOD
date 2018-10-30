@@ -119,7 +119,6 @@ public class StanfordRDFizer {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(datasets.toString().toLowerCase() + ".tsv"));
 
 			// 2) run linking over all answers using AGDISTIS
-			int numberOfLinkableAnswers = 0;
 			int numberOfQuestions = 0;
 			for (IQuestion q : questions) {
 				String question = q.getLanguageToQuestion().get("en");
@@ -133,7 +132,6 @@ public class StanfordRDFizer {
 					numberOfQuestions++;
 					bw.write(question + "\t");
 					if (disambiguate != null) {
-						numberOfLinkableAnswers++;
 						System.out.println("\tDisambiguated Answer: " + answer + " -> " + disambiguate);
 						bw.write(answer + "\t");
 						bw.write(disambiguate + "\t");

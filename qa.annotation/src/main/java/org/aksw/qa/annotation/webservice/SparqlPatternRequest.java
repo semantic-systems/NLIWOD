@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/sparql")
 public class SparqlPatternRequest {
 
-	final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private PatternSparqlGenerator sparql = PatternSparqlGenerator.getInstance();
 

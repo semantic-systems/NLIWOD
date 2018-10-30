@@ -61,8 +61,6 @@ public class Qald7CreationTool {
 		sparql = new ThreadedSPARQL(timeout, sparqlEndpoint);
 	}
 
-	int badQuestionCounter = 0;
-
 	/**
 	 * Returns all Hybrid questions for Qald7 (Loads all previous qald hybrid questions and drops duplicates). <b> This will set "hybrid:true" in all questions!!!</b>
 	 *
@@ -161,7 +159,7 @@ public class Qald7CreationTool {
 					question.addFail(Fail.SPARQL_MISSING);
 				} else {
 					try {
-						if (!(checkIsOnlydbo(question.getSparqlQuery()) == question.getOnlydbo())) {
+						if (checkIsOnlydbo(question.getSparqlQuery()) != question.getOnlydbo()) {
 							if (autocorrectOnlyDBO) {
 								question.setOnlydbo(checkIsOnlydbo(question.getSparqlQuery()));
 							} else {
@@ -222,7 +220,7 @@ public class Qald7CreationTool {
 	}
 
 	private boolean checkAtleastSixLanguages(final IQuestion q) {
-		return !(q.getLanguageToQuestion().values().size() < 6);
+		return q.getLanguageToQuestion().values().size() >= 6;
 	}
 
 	/**

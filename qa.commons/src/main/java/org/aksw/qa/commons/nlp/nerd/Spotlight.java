@@ -19,7 +19,7 @@ import java.util.Map;
 // TODO refactor this and AGDISTIS to be in a submodule called qa.nerd,
 // submodule needs to be independent of other submodules, should have caching
 public class Spotlight {
-	static Logger log = LoggerFactory.getLogger(Spotlight.class);
+	private static final Logger log = LoggerFactory.getLogger(Spotlight.class);
 
 	private String requestURL = "http://spotlight.sztaki.hu:2222/rest/annotate";
 	private String confidence = "0.65";
