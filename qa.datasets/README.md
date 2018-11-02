@@ -105,6 +105,7 @@ out of scope (?) :
 * http://aclweb.org/anthology/S18-1009
 * temporal QA http://delivery.acm.org/10.1145/3200000/3191536/p1057-jia.pdf
 * hotel reviews http://www.europe.naverlabs.com/Blog/ReviewQA-A-novel-relational-aspect-based-opinion-dataset-for-machine-reading
+* ComQA https://arxiv.org/abs/1809.09528 http://qa.mpi-inf.mpg.de/comqa/
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
