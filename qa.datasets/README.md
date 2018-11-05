@@ -107,6 +107,7 @@ out of scope (?) :
 * hotel reviews http://www.europe.naverlabs.com/Blog/ReviewQA-A-novel-relational-aspect-based-opinion-dataset-for-machine-reading
 * ComQA https://arxiv.org/abs/1809.09528 http://qa.mpi-inf.mpg.de/comqa/
 * https://github.com/kayburns/tom-qa-dataset
+* https://arxiv.org/abs/1811.00937
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
