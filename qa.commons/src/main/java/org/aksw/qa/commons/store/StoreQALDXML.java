@@ -18,6 +18,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.jena.ext.com.google.common.base.Strings;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -164,7 +165,7 @@ public class StoreQALDXML {
 			question.appendChild(string);
 		}
 		for (String key : q.getLanguageToKeywords().keySet()) {
-			if (org.apache.commons.collections.CollectionUtils.isEmpty(q.getLanguageToKeywords().get(key))) {
+			if (CollectionUtils.isEmpty(q.getLanguageToKeywords().get(key))) {
 				continue;
 			}
 			Element keyword = doc.createElement("keywords");

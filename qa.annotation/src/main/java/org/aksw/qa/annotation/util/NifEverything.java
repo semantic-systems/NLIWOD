@@ -17,7 +17,7 @@ import org.aksw.gerbil.transfer.nif.data.TypedSpanImpl;
 import org.aksw.qa.annotation.index.IndexDBO;
 import org.aksw.qa.annotation.spotter.ASpotter;
 import org.aksw.qa.commons.datastructure.Entity;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.jena.rdf.model.Resource;
 import org.slf4j.Logger;

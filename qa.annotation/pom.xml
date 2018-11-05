@@ -26,9 +26,7 @@
 				<!-- http://docs.spring.io/spring-boot/docs/current/reference/html/howto-build.html#howto-create-an-additional-executable-jar -->
 					<classifier>exec</classifier>
 					<jvmArguments>
-						<systemProperties>
-							<JAVA_OPTS>-Xms415m -Xmx16G -XX:MaxPermSize=1G</JAVA_OPTS>
-						</systemProperties>
+							-Xms415m -Xmx16G -XX:MaxPermSize=1G
 					</jvmArguments>
 					<mainClass>org.aksw.qa.annotation.webservice.FrontController</mainClass>
 				</configuration>
@@ -47,6 +45,10 @@
 				<exclusion>
 					<groupId>ch.qos.logback</groupId>
 					<artifactId>logback-classic</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
