@@ -28,8 +28,12 @@ public class OKBQA extends ASystem {
 
 	private JSONObject conf;
 	
-	public OKBQA(){
-		createJSONConf();
+	public OKBQA() {
+		try {
+			createJSONConf();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private String execute(String jsonInput) throws Exception{
@@ -99,7 +103,7 @@ public class OKBQA extends ASystem {
 		return "okbqa";
 	}
 	
-	private String createInputJSON(String questionString, String language){
+	private String createInputJSON(String questionString, String language) throws JSONException{
 		JSONObject json = new JSONObject();
 		JSONObject input = new JSONObject();
 		
@@ -113,7 +117,7 @@ public class OKBQA extends ASystem {
 		return json.toString();
 	}
 	
-	private void createJSONConf(){
+	private void createJSONConf() throws JSONException{
 		conf = new JSONObject();
 		JSONArray sequence = new JSONArray();
 		sequence.put(0, "TGM");
