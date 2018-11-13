@@ -1,4 +1,4 @@
-package org.aksw.qa.commons.KnowledgeCard;
+package org.aksw.qa.commons.knowledgeCard;
 
 
 import java.io.IOException;
@@ -20,6 +20,8 @@ import org.springframework.core.io.ResourceLoader;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.github.jsonldjava.utils.JsonUtils;
 
+import org.aksw.qa.commons.knowledgeCard.Field;
+import org.aksw.qa.commons.knowledgeCard.KnowledgeCardCreator;
 import org.junit.Assert;
 
 

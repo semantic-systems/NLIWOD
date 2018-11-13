@@ -15,7 +15,7 @@ import weka.core.Attribute;
  *
  */
 public class NumberOfToken implements IAnalyzer {
-	Logger log = LoggerFactory.getLogger(NumberOfToken.class);
+	private Logger log = LoggerFactory.getLogger(NumberOfToken.class);
 	private Attribute attribute = null;
 
 	public NumberOfToken() {

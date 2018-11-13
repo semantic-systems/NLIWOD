@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Spotlight extends ASpotter {
-	static Logger log = LoggerFactory.getLogger(Spotlight.class);
+	private static Logger log = LoggerFactory.getLogger(Spotlight.class);
 
 	private String requestURL = "http://spotlight.sztaki.hu:2222/rest/annotate";
 	private String confidence = "0.2";

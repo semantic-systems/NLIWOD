@@ -15,11 +15,11 @@ import java.util.Map;
 import org.json.simple.parser.ParseException;
 
 public abstract class ASpotter {
-
-	public abstract Map<String, List<Entity>> getEntities(String question) throws MalformedURLException, ProtocolException, IOException, ParseException;
-
+	
 	private boolean useCache = true;
 	private static PersistentCache cache = new PersistentCache();
+
+	public abstract Map<String, List<Entity>> getEntities(String question) throws MalformedURLException, ProtocolException, IOException, ParseException;
 
 	protected String requestPOST(String input, String requestURL) throws MalformedURLException, ProtocolException, IOException {
 		if (useCache && cache.containsKey(input)) {

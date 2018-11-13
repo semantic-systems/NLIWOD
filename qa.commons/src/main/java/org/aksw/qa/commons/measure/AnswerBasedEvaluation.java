@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AnswerBasedEvaluation {
-	static Logger log = LoggerFactory.getLogger(AnswerBasedEvaluation.class);
+	private static Logger log = LoggerFactory.getLogger(AnswerBasedEvaluation.class);
 
 	public static double precision(Set<String> systemAnswer, IQuestion question) {
 		if (systemAnswer == null) {
@@ -109,13 +109,13 @@ public class AnswerBasedEvaluation {
 	}
 
 	public static boolean isAskType(String sparqlQuery) {
-		sparqlQuery = sparqlQuery.toUpperCase();
-		return sparqlQuery.contains("\nASK\n") || sparqlQuery.contains("ASK ");
+		String query = sparqlQuery.toUpperCase();
+		return query.contains("\nASK\n") || query.contains("ASK ");
 	}
 
 	public static boolean isSelectType(String sparqlQuery) {
-		sparqlQuery = sparqlQuery.toUpperCase();
-		return sparqlQuery.contains("\nSELECT\n") || sparqlQuery.contains("SELECT ");
+		String query = sparqlQuery.toUpperCase();
+		return query.contains("\nSELECT\n") || query.contains("SELECT ");
 	}
 
 	private static Set<String> answersToString(Set<String> answers) {

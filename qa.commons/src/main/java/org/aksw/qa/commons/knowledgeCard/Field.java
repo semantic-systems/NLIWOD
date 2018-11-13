@@ -1,17 +1,18 @@
-package org.aksw.qa.commons.KnowledgeCard;
+package org.aksw.qa.commons.knowledgeCard;
 
 import java.util.LinkedHashMap;
 
 public class Field {
-	@Override
-	public String toString() {
-		return "Field [name=" + name + ", value=" + value + ", values=" + values + "]";
-	}
-
+	
 	private String name;
 	private String value;
 	private LinkedHashMap<String, String> values = null;
 	private boolean isShort = true;
+	
+	@Override
+	public String toString() {
+		return "Field [name=" + name + ", value=" + value + ", values=" + values + "]";
+	}
 
 	public Field() {
 

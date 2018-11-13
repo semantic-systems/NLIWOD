@@ -15,10 +15,10 @@ import weka.core.FastVector;
  *
  */
 public class QuestionWord implements IAnalyzer {
-	Logger log = LoggerFactory.getLogger(QuestionWord.class);
+	private Logger log = LoggerFactory.getLogger(QuestionWord.class);
 	private Attribute attribute = null;
-	String AuxVerb = "Is||Are||Did";
-	String Commands = "Give||Show";
+	private String AuxVerb = "Is||Are||Did";
+	private String Commands = "Give||Show";
 
 	public QuestionWord() {
 		FastVector attributeValues = new FastVector();

@@ -1,4 +1,4 @@
-package org.aksw.qa.commons.KnowledgeCard;
+package org.aksw.qa.commons.knowledgeCard;
 
 import java.io.BufferedReader;
 import java.io.IOException;

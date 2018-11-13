@@ -1,4 +1,4 @@
-package org.aksw.qa.commons.KnowledgeCard;
+package org.aksw.qa.commons.knowledgeCard;
 
 public class ExplorerProperties {
 	private String className;

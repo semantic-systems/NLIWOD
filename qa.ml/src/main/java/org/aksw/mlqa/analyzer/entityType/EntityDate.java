@@ -45,7 +45,7 @@ public class EntityDate implements IAnalyzer {
 		for (CoreMap sentence : sentences)
 		for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
 	        String ne = token.get(NamedEntityTagAnnotation.class); 
-	        if(ne.equals("DATE"))
+	        if("DATE".equals(ne))
 	        	result = "Date";
 	       }
 		return result;

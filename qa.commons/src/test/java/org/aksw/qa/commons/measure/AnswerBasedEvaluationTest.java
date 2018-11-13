@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class AnswerBasedEvaluationTest {
 
-	Logger logger = LoggerFactory.getLogger(AnswerBasedEvaluationTest.class);
+	private Logger logger = LoggerFactory.getLogger(AnswerBasedEvaluationTest.class);
 
 	@Test
 	public void testTooGenericQuery() {

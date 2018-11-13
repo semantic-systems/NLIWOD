@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 // TODO rename class and packages
 public final class ExtendedQALDJSONLoader {
-	static Logger LOGGER = LoggerFactory.getLogger(ExtendedQALDJSONLoader.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(ExtendedQALDJSONLoader.class);
 
 	/**
 	 * Make this class non instatiable.

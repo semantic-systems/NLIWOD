@@ -76,14 +76,14 @@ public class Fox extends ASpotter {
       while (statementIter.hasNext()) {
         Statement statement = statementIter.next();
         String predicateURI = statement.getPredicate().getURI();
-        if (predicateURI.equals("http://www.w3.org/2000/10/annotation-ns#body")) {
+        if ("http://www.w3.org/2000/10/annotation-ns#body".equals(predicateURI)) {
           ent.label = statement.getObject().asLiteral().getString();
-        } else if (predicateURI.equals("http://ns.aksw.org/scms/means")) {
+        } else if ("http://ns.aksw.org/scms/means".equals(predicateURI)) {
           String uri = statement.getObject().asResource().getURI();
           String encode = uri.replaceAll(",", "%2C");
           ResourceImpl e = new ResourceImpl(encode);
           ent.uris.add(e);
-        } else if (predicateURI.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) {
+        } else if ("http://www.w3.org/1999/02/22-rdf-syntax-ns#type".equals(predicateURI)) {
           ent.posTypesAndCategories.add(statement.getObject().asResource());
         }
       }

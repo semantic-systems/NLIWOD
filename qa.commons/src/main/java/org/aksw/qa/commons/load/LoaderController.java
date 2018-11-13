@@ -53,7 +53,7 @@ import com.google.common.base.Strings;
 // TODO refactor that class to account for multiple dataset types. make qaldxml,
 // qaldjson independent of this class so it becomes easiert to load a new class
 public class LoaderController {
-	static Logger log = LoggerFactory.getLogger(LoaderController.class);
+	private static Logger log = LoggerFactory.getLogger(LoaderController.class);
 
 	private static InputStream getInputStream(final Dataset set) {
 		// Magical get the path from qa-datasets

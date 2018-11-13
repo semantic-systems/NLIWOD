@@ -62,9 +62,9 @@ public class NifEverything {
 	 */
 	private List<ImmutablePair<String, Integer>> extractSplitQuestion(String q) {
 		List<ImmutablePair<String, Integer>> ret = new ArrayList<>();
-		q = q.trim().replaceAll("(\\p{Punct})(\\s)*(\\z)", " $1");
+		String cleanedSentence = q.trim().replaceAll("(\\p{Punct})(\\s)*(\\z)", " $1");
 		int wordIndex = 0;
-		for (String s : q.split(" ")) {
+		for (String s : cleanedSentence.split(" ")) {
 			ret.add(new ImmutablePair<>(s, wordIndex));
 			wordIndex += s.length() + 1;
 		}

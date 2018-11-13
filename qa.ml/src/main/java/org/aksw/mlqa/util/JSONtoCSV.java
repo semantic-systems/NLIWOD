@@ -13,7 +13,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class JSONtoCSV {
-	static RunProducer runproducer = new RunProducer();
 	
 	public static void main (String[] args){
 		JSONArray rundata = RunProducer.loadRunData(Dataset.QALD6_Train_Multilingual);

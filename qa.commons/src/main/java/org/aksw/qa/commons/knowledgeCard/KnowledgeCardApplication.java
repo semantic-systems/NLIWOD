@@ -1,4 +1,4 @@
-package org.aksw.qa.commons.KnowledgeCard;
+package org.aksw.qa.commons.knowledgeCard;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

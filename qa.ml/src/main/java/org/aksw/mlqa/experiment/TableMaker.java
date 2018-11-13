@@ -9,8 +9,6 @@ import java.util.Arrays;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 
@@ -23,7 +21,7 @@ import weka.core.converters.ArffLoader.ArffReader;
  */
 
 public class TableMaker {
-	static Logger log = LoggerFactory.getLogger(TableMaker.class);
+	//static Logger log = LoggerFactory.getLogger(TableMaker.class);
 	
 	
 	public static void main(String[] args) throws Exception {				 

@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class QAKIS extends ASystem {
-	Logger log = LoggerFactory.getLogger(QAKIS.class);
+	private Logger log = LoggerFactory.getLogger(QAKIS.class);
 
 	public String name() {
 		return "qakis";

@@ -36,7 +36,7 @@
 					<jvmArguments>
 							-Xms415m -Xmx16G -XX:MaxPermSize=1G
 					</jvmArguments>
-					<mainClass>org.aksw.qa.commons.KnowledgeCard.KnowledgeCardApplication</mainClass>
+					<mainClass>org.aksw.qa.commons.knowledgeCard.KnowledgeCardApplication</mainClass>
 				</configuration>
 				<executions>
 					<execution>

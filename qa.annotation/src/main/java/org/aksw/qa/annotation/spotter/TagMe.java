@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TagMe extends ASpotter {
-	static Logger log = LoggerFactory.getLogger(TagMe.class);
+	private static Logger log = LoggerFactory.getLogger(TagMe.class);
 
 	private String requestURL = "https://tagme.d4science.org/tagme/tag";
 	private String key = "";

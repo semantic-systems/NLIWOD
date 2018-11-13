@@ -54,7 +54,7 @@ public class AGDISTIS {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	HashMap<String, String> runDisambiguation(String inputText) throws ParseException, IOException {
+	public HashMap<String, String> runDisambiguation(String inputText) throws ParseException, IOException {
 		String urlParameters = "text=" + URLEncoder.encode(inputText, "UTF-8");
 		urlParameters += "&type=agdistis";
 

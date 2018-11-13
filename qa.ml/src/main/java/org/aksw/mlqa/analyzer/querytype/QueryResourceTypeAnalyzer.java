@@ -21,7 +21,7 @@ import weka.core.FastVector;
  *
  */
 public class QueryResourceTypeAnalyzer implements IAnalyzer {
-	Logger log = LoggerFactory.getLogger(QueryResourceTypeAnalyzer.class);
+	private Logger log = LoggerFactory.getLogger(QueryResourceTypeAnalyzer.class);
 	private Attribute attribute = null;
 	private ASpotter spotter;
 

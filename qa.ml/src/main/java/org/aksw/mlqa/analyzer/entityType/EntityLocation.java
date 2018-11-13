@@ -4,11 +4,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.aksw.mlqa.analyzer.IAnalyzer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import weka.core.Attribute;
-import weka.core.FastVector;
 import edu.stanford.nlp.ling.CoreAnnotations.NamedEntityTagAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
@@ -16,9 +12,11 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
+import weka.core.Attribute;
+import weka.core.FastVector;
 
 public class EntityLocation implements IAnalyzer {
-	static Logger log = LoggerFactory.getLogger(EntityLocation.class);
+	//static Logger log = LoggerFactory.getLogger(EntityLocation.class);
 	private Attribute attribute = null;
 	private StanfordCoreNLP pipeline;
 	

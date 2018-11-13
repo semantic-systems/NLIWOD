@@ -17,7 +17,7 @@ import weka.core.Instance;
 import weka.core.Instances;
 
 public class ArrfFileFromQALDLogs {
-	static Logger log = LoggerFactory.getLogger(ArrfFileFromQALDLogs.class);
+	private static Logger log = LoggerFactory.getLogger(ArrfFileFromQALDLogs.class);
 
 	/*
 	 * Class to parse Results from QALD6 LogFiles 

@@ -43,7 +43,7 @@ public class EntityPerson implements IAnalyzer {
 		for (CoreMap sentence : sentences)
 		for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
 	        String ne = token.get(NamedEntityTagAnnotation.class); 
-	        if(ne.equals("PERSON"))
+	        if("PERSON".equals(ne))
 	        	result = "Person";
 	       }
 		return result;
