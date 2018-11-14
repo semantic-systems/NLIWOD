@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class Spotlight extends ASpotter {
 	private static Logger log = LoggerFactory.getLogger(Spotlight.class);
 
-	private String requestURL = "http://spotlight.sztaki.hu:2222/rest/annotate";
+	private String requestURL = "http://model.dbpedia-spotlight.org/en/annotate";
 	private String confidence = "0.2";
 	private String support = "20";
 
@@ -89,5 +89,5 @@ public class Spotlight extends ASpotter {
 	// }
 	// }
 	// }
-	// }
+	// }	
 }

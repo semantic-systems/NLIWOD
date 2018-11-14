@@ -1,5 +1,6 @@
 package org.aksw.mlqa.analyzer.entityType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -13,7 +14,6 @@ import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 import weka.core.Attribute;
-import weka.core.FastVector;
 
 
 public class EntityOrganization implements IAnalyzer {
@@ -26,9 +26,9 @@ public class EntityOrganization implements IAnalyzer {
 			props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner");
 			props.setProperty("ner.useSUTime", "false");
 			pipeline = new StanfordCoreNLP(props);
-			FastVector fvWekaOrganization = new FastVector(2);
-			fvWekaOrganization.addElement("Organization");
-			fvWekaOrganization.addElement("NoOrganization");
+			ArrayList<String> fvWekaOrganization = new ArrayList<String>();
+			fvWekaOrganization.add("Organization");
+			fvWekaOrganization.add("NoOrganization");
 			attribute = new Attribute("Organization", fvWekaOrganization);
 		}
 

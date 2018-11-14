@@ -1,5 +1,6 @@
 package org.aksw.mlqa.analyzer.entityType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -13,7 +14,6 @@ import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 import weka.core.Attribute;
-import weka.core.FastVector;
 
 public class EntityPercent implements IAnalyzer {
 		//static Logger log = LoggerFactory.getLogger(EntityPercent.class);
@@ -25,9 +25,9 @@ public class EntityPercent implements IAnalyzer {
 			props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner");
 			props.setProperty("ner.useSUTime", "false");
 			pipeline = new StanfordCoreNLP(props);
-			FastVector fvWekaPercent = new FastVector(2);
-			fvWekaPercent.addElement("Percent");
-			fvWekaPercent.addElement("NoPercent");
+			ArrayList<String> fvWekaPercent = new ArrayList<String>();
+			fvWekaPercent.add("Percent");
+			fvWekaPercent.add("NoPercent");
 			attribute = new Attribute("Percent", fvWekaPercent);
 		}
 

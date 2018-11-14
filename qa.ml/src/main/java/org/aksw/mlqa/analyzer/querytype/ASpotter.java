@@ -31,7 +31,6 @@ public abstract class ASpotter {
 		if (useCache) {
 			cache.writeCache();
 		}
-
 		return output;
 	}
 

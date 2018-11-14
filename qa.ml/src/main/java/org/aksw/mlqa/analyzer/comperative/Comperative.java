@@ -1,5 +1,6 @@
 package org.aksw.mlqa.analyzer.comperative;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -13,7 +14,6 @@ import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 import weka.core.Attribute;
-import weka.core.FastVector;
 
 public class Comperative implements IAnalyzer {
 	//static Logger log = LoggerFactory.getLogger(Comperative.class);
@@ -25,10 +25,9 @@ public class Comperative implements IAnalyzer {
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner");
 		props.setProperty("ner.useSUTime", "false");
 		pipeline = new StanfordCoreNLP(props);
-		
-		FastVector fvWekaComperative= new FastVector(2);
-		fvWekaComperative.addElement("Comperative");
-		fvWekaComperative.addElement("NoComperative");
+		ArrayList<String> fvWekaComperative = new ArrayList<String>();
+		fvWekaComperative.add("Comperative");
+		fvWekaComperative.add("NoComperative");
 		attribute = new Attribute("Comperative", fvWekaComperative);
 	}
 		

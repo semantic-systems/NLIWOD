@@ -1,5 +1,6 @@
 package org.aksw.mlqa.analyzer.entityType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -13,7 +14,6 @@ import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 import weka.core.Attribute;
-import weka.core.FastVector;
 
 public class EntityLocation implements IAnalyzer {
 	//static Logger log = LoggerFactory.getLogger(EntityLocation.class);
@@ -25,9 +25,9 @@ public class EntityLocation implements IAnalyzer {
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner");
 		props.setProperty("ner.useSUTime", "false");
 		pipeline = new StanfordCoreNLP(props);
-		FastVector fvWekaLocation = new FastVector(2);
-		fvWekaLocation.addElement("Location");
-		fvWekaLocation.addElement("NoLocation");
+		ArrayList<String> fvWekaLocation = new ArrayList<String>();
+		fvWekaLocation.add("Location");
+		fvWekaLocation.add("NoLocation");
 		attribute = new Attribute("Location", fvWekaLocation);
 	}
 
