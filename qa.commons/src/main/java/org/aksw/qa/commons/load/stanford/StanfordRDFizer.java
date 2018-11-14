@@ -19,6 +19,8 @@ import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
+import org.aksw.qa.commons.nlp.nerd.AGDISTIS;
+import org.aksw.qa.commons.nlp.nerd.Spotlight;
 import org.apache.jena.query.Query;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Statement;
