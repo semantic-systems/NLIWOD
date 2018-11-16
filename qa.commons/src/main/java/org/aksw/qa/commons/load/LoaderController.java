@@ -44,6 +44,10 @@ import org.xml.sax.SAXException;
 
 import com.google.common.base.Strings;
 
+import org.aksw.qa.commons.load.tsv.DbeQuestion;
+import org.aksw.qa.commons.load.tsv.LoadTsv;
+
+
 /**
  * Loads both QALD XML and JSON
  *
@@ -57,8 +61,11 @@ public class LoaderController {
 
 	private static InputStream getInputStream(final Dataset set) {
 		// Magical get the path from qa-datasets
+		log.info("inside getinputsream " + set.toString());
 
 		try {
+			log.info("inside getinputsream " + set.toString());
+
 			InputStream url = mapDatasetToPath(set);
 			return url;
 		} catch (NullPointerException e) {
@@ -80,6 +87,7 @@ public class LoaderController {
 
 	public static InputStream mapDatasetToPath(final Dataset set) {
 		Class<?> loadingAnchor = getLoadingAnchor();
+		log.info("inside map dataset to path");
 
 		switch (set) {
 		case nlq:
@@ -171,6 +179,12 @@ public class LoaderController {
 			return loadingAnchor.getResourceAsStream("/QALD-master/8/data/qald-8-train-multilingual.json");
 		case LCQUAD:
 			return loadingAnchor.getResourceAsStream("/lcquad_qaldformat.json");
+		//case DBpedia_Entity_v2:
+		//   return loadingAnchor.getResourceAsStream("/queries-v2.txt");
+			
+		case DBpedia_Entity_v2:
+			return loadingAnchor.getResourceAsStream("/qrels-v2.txt");
+
 		// case qbench1:
 		// return
 		// ClassLoader.getSystemClassLoader().getResourceAsStream("qbench/qbench1.xml");
@@ -303,6 +317,10 @@ public class LoaderController {
 				case nlq:
 					out = loadNLQ(is, deriveUri);
 					break;
+				case DBpedia_Entity_v2:
+					out = LoadTsv.readTSV(getInputStream(data));
+					break;
+
 
 				case Stanford_dev:
 				case Stanford_train:

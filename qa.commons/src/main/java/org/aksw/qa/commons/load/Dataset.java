@@ -45,5 +45,7 @@ public enum Dataset {
 						QALD8_Test_Multilingual,
 						Stanford_dev,
 						Stanford_train,
-						LCQUAD
+						LCQUAD,
+						DBpedia_Entity_v2
+
 }
