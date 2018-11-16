@@ -101,6 +101,7 @@ out of scope (?) :
 * https://arxiv.org/pdf/1808.07036.pdf
 * https://arxiv.org/pdf/1809.00732.pdf
 * http://qa.mpi-inf.mpg.de/comqa/
+* https://github.com/bdhingra/quasar
 * https://hotpotqa.github.io/
 * http://aclweb.org/anthology/S18-1009
 * temporal QA http://delivery.acm.org/10.1145/3200000/3191536/p1057-jia.pdf
