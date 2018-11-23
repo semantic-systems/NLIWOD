@@ -21,6 +21,7 @@ public class SystemsTest {
                 (ASystem) new SINA(),
                 (ASystem) new START(), 
                 (ASystem) new OKBQA(),
+                (ASystem) new AskNow(),
 //                (ASystem) new YODA(),
                 (ASystem) new QANARY()
                 );
@@ -47,6 +48,7 @@ public class SystemsTest {
                 (ASystem) new SINA(),
                 (ASystem) new START(), 
                 (ASystem) new OKBQA(),
+                (ASystem) new AskNow(),
 //                (ASystem) new YODA(),
                 (ASystem) new QANARY()
                 );
