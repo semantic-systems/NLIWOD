@@ -62,6 +62,11 @@ public class AskNow extends ASystem {
 		JSONObject answerjson =  (JSONObject) parser.parse(responseString);
 		answerjson = (JSONObject) answerjson.get("fullDetail");
 		
+		//if no answer just return
+		if(((JSONArray) answerjson.get("answers")).size() == 0) {
+			return;
+		}
+		
 		JSONArray answers =  (JSONArray) ((JSONArray) answerjson.get("answers")).get(0);
 		
 		for(int i = 0; i< answers.size(); i++) {
