@@ -2,6 +2,7 @@ package org.aksw.qa.commons.load;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.SequenceInputStream;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Vector;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -46,6 +48,8 @@ import com.google.common.base.Strings;
 
 import org.aksw.qa.commons.load.tsv.DbeQuestion;
 import org.aksw.qa.commons.load.tsv.LoadTsv;
+import org.aksw.qa.commons.load.tsv.Testing;
+import org.aksw.qa.commons.load.tsv.Testing1;
 
 
 /**
@@ -179,12 +183,17 @@ public class LoaderController {
 			return loadingAnchor.getResourceAsStream("/QALD-master/8/data/qald-8-train-multilingual.json");
 		case LCQUAD:
 			return loadingAnchor.getResourceAsStream("/lcquad_qaldformat.json");
-		//case DBpedia_Entity_v2:
-		//   return loadingAnchor.getResourceAsStream("/queries-v2.txt");
-			
 		case DBpedia_Entity_v2:
-			return loadingAnchor.getResourceAsStream("/qrels-v2.txt");
-
+		case SemSearch_ES:
+		case INEX_LD:
+		case QALD2:
+		case TREC_Entity:
+		   return loadingAnchor.getResourceAsStream("/queries-sample.txt");
+			
+		/*case DBpedia_Entity_v2:
+			return loadingAnchor.getResourceAsStream("/qrels-v21.txt");
+		
+*/
 		// case qbench1:
 		// return
 		// ClassLoader.getSystemClassLoader().getResourceAsStream("qbench/qbench1.xml");
@@ -222,6 +231,7 @@ public class LoaderController {
 				log.error("Couldn't load dataset " + data.name() + ". Returning null.");
 				return null;
 			}
+			
 			List<IQuestion> out = null;
 			if (is.available() > 0) // check if stream is not empty
 			{
@@ -318,7 +328,12 @@ public class LoaderController {
 					out = loadNLQ(is, deriveUri);
 					break;
 				case DBpedia_Entity_v2:
-					out = LoadTsv.readTSV(getInputStream(data));
+				case SemSearch_ES:
+				case INEX_LD:
+				case QALD2:
+				case TREC_Entity:
+					//out = LoadTsv.readTSV(is,data.name());
+					out=LoaderController.loadTSVLOAD(is,data.name());
 					break;
 
 
@@ -337,6 +352,16 @@ public class LoaderController {
 			log.info("Couldnt load dataset ", e);
 		}
 		return null;
+	}
+
+	private static Vector<InputStream> getSequenceInputStream(Dataset data) {
+		// TODO Auto-generated method stub
+		
+	    Vector<InputStream> inputStreams = new Vector<InputStream>();
+		inputStreams.add(getLoadingAnchor().getResourceAsStream("/qrels-v21.txt"));
+		inputStreams.add(getLoadingAnchor().getResourceAsStream("/queries-v2.txt"));
+	
+		return inputStreams;
 	}
 
 	/**
@@ -654,6 +679,16 @@ public class LoaderController {
 		for (String s : output2) {
 			System.out.println(s);
 		}
+	}
+
+	public static List<IQuestion> loadTSVLOAD(InputStream is, String name) throws IOException {
+		// TODO Auto-generated method stub
+		List<IQuestion> out = null;
+		System.out.println("inside tsv load");
+
+		//out = LoadTsv.readTSV(getSequenceInputStream(datasetId),datasetId.name());
+		out=Testing1.function(name);
+		return out;
 	}
 
 }

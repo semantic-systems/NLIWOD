@@ -46,6 +46,11 @@ public enum Dataset {
 						Stanford_dev,
 						Stanford_train,
 						LCQUAD,
-						DBpedia_Entity_v2
+						DBpedia_Entity_v2,
+						SemSearch_ES,
+						INEX_LD,
+						QALD2,
+						TREC_Entity, 
+						
 
 }
