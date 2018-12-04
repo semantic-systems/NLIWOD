@@ -67,12 +67,6 @@
 			<artifactId>datasets</artifactId>
 			<version>0.5.15</version>
 		</dependency>
-		<!-- Reading JSON files -->
-		<dependency>
-			<groupId>javax.json</groupId>
-			<artifactId>javax.json-api</artifactId>
-			<version>1.0</version>
-		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.json</artifactId>
@@ -94,21 +88,10 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.jamonapi/jamon -->
-		<dependency>
-			<groupId>com.jamonapi</groupId>
-			<artifactId>jamon</artifactId>
-			<version>2.81</version>
-		</dependency>
 		<!-- Lucene only until index moved to own subpackage -->
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
-			<version>${lucene.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-suggest</artifactId>
 			<version>${lucene.version}</version>
 		</dependency>
 		<dependency>
