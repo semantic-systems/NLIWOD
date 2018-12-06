@@ -1,24 +1,13 @@
 package org.aksw.qa.annotation.spotter;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.aksw.qa.commons.datastructure.Entity;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFReader;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.rdf.model.impl.ResourceImpl;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -26,114 +15,84 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
-//TODO fix fox content type https://github.com/dice-group/FOX/blob/master/documentation/requests.md
+
 public class Fox extends ASpotter {
 	private static Logger log = LoggerFactory.getLogger(Fox.class);
 
 	private String requestURL = "http://fox.cs.uni-paderborn.de:4444/fox";
-	private String outputFormat = "N-Triples";
+	private String outputFormat = "RDF/JSON";
 	private String taskType = "ner";
 	private String inputType = "text";
-
+	private String contentType = "application/json; charset=utf-8";
+	
+	@SuppressWarnings("unchecked")
 	private String doTask(final String inputText) {
+		JSONObject urlParameters = new JSONObject();
 
-		String urlParameters = "type=" + inputType;
-		urlParameters += "&task=" + taskType;
-		urlParameters += "&output=" + outputFormat;
-		try {
-			urlParameters += "&input=" + URLEncoder.encode(inputText, "UTF-8");
+		urlParameters.put("type", inputType);
+		urlParameters.put("task", taskType);
+		urlParameters.put("lang", "en");
 
-		} catch (UnsupportedEncodingException e) {
-			log.debug("", e);
-		}
-
-		return requestPOST(urlParameters, requestURL);
+		urlParameters.put("output", outputFormat);
+		urlParameters.put("input", inputText);
+		return requestPOST(urlParameters.toString(), requestURL, contentType);	
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * @see org.aksw.hawk.nlp.NERD_module#getEntities(java.lang.String)
 	 */
 	@Override
 	public Map<String, List<Entity>> getEntities(final String question) {
-		HashMap<String, List<Entity>> mappedEntitysReturn = new HashMap<>();
+		HashMap<String, List<Entity>> mappedEntitiesReturn = new HashMap<>();
 		String foxJSONOutput = null;
 
 		foxJSONOutput = doTask(question);
 		if (!foxJSONOutput.equals("") && (!(foxJSONOutput == null))) {
-
 			try {
-
 				JSONParser parser = new JSONParser();
 				JSONObject jsonArray = (JSONObject) parser.parse(foxJSONOutput);
-				String output = URLDecoder.decode((String) jsonArray.get("output"), "UTF-8");
-
-				String baseURI = "http://dbpedia.org";
-				Model model = ModelFactory.createDefaultModel();
-				RDFReader r = model.getReader("N3");
-				r.read(model, new StringReader(output), baseURI);
-
-				ResIterator iter = model.listSubjects();
+				
 				ArrayList<Entity> tmpList = new ArrayList<>();
-				while (iter.hasNext()) {
-					Resource next = iter.next();
-					StmtIterator statementIter = next.listProperties();
-					Entity ent = new Entity();
-					while (statementIter.hasNext()) {
-						Statement statement = statementIter.next();
-						String predicateURI = statement.getPredicate().getURI();
-						if ("http://www.w3.org/2000/10/annotation-ns#body".equals(predicateURI)) {
-							ent.setLabel(statement.getObject().asLiteral().getString());
-						} else if ("http://ns.aksw.org/scms/means".equals(predicateURI)) {
-							String uri = statement.getObject().asResource().getURI();
-							String encode = uri.replaceAll(",", "%2C");
-							ResourceImpl e = new ResourceImpl(encode);
-							ent.getUris().add(e);
-						} else if ("http://www.w3.org/1999/02/22-rdf-syntax-ns#type".equals(predicateURI)) {
-							ent.getPosTypesAndCategories().add(statement.getObject().asResource());
-						}
-					}
-					// FIXME handling when duplicates occur
-					/**
-					 * This will not work if there is the same named entity
-					 * twice. Checked other spotters, they do it similar
-					 * (Duplicate named entity results in one found"
-					 */
-					ent.setOffset(question.indexOf(ent.getLabel()));
-					tmpList.add(ent);
-				}
-				mappedEntitysReturn.put("en", tmpList);
+				for(Object key: jsonArray.keySet()) {
+					JSONObject json = (JSONObject) jsonArray.get(key);
+					if(json.keySet().contains("http://www.w3.org/2005/11/its/rdf#taIdentRef")) {
+						Entity ent = new Entity();
+						
+						JSONArray uriArray = (JSONArray) json.get("http://www.w3.org/2005/11/its/rdf#taIdentRef");
+						String uri = (String) ((JSONObject) uriArray.get(0)).get("value");
+						String encode = uri.replaceAll(",", "%2C");
+						ResourceImpl e = new ResourceImpl(encode);
+						ent.getUris().add(e);
 
-			} catch (IOException | ParseException e) {
+						JSONArray typeArray = (JSONArray) json.get("http://www.w3.org/2005/11/its/rdf#taClassRef");
+						for(int i = 0; i<typeArray.size(); i++) {
+							JSONObject types = (JSONObject) typeArray.get(i);
+							encode = ((String) types.get("value")).replaceAll(",", "%2C");
+							e = new ResourceImpl(encode);
+							ent.getPosTypesAndCategories().add(e);
+						}
+											
+						JSONArray labelArray = (JSONArray) json.get("http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#anchorOf");
+						String label = (String) ((JSONObject) labelArray.get(0)).get("value");
+						ent.setLabel(label);
+						
+						JSONArray offsetArray = (JSONArray) json.get("http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#beginIndex");
+						String offset = (String) ((JSONObject) offsetArray.get(0)).get("value");
+						ent.setOffset(Integer.parseInt(offset));
+							
+						tmpList.add(ent);
+					}
+				}
+				mappedEntitiesReturn.put("en", tmpList);
+			} catch (ParseException e) {
 				log.error("Could not parse Server rensponse", e);
 			}
-
 		}
 
-		if (!mappedEntitysReturn.isEmpty()) {
-			log.debug("\t" + Joiner.on("\n").join(mappedEntitysReturn.get("en")));
+		if (!mappedEntitiesReturn.isEmpty()) {
+			log.debug("\t" + Joiner.on("\n").join(mappedEntitiesReturn.get("en")));
 		}
-		return mappedEntitysReturn;
+		return mappedEntitiesReturn;
 	}
-
-	// // TODO CHristian: Transform to unit test
-	// public static void main(final String args[]) {
-	// HAWKQuestion q = new HAWKQuestion();
-	// q.getLanguageToQuestion().put("en", "Which buildings in art deco style
-	// did Shreve, Lamb and Harmon design?");
-	// ASpotter fox = new Fox();
-	// q.setLanguageToNamedEntites(fox.getEntities(q.getLanguageToQuestion().get("en")));
-	// for (String key : q.getLanguageToNamedEntites().keySet()) {
-	// System.out.println(key);
-	// for (Entity entity : q.getLanguageToNamedEntites().get(key)) {
-	// System.out.println("\t" + entity.getLabel() + " ->" + entity.getType());
-	// for (Resource r : entity.getPosTypesAndCategories()) {
-	// System.out.println("\t\tpos: " + r);
-	// }
-	// for (Resource r : entity.getUris()) {
-	// System.out.println("\t\turi: " + r);
-	// }
-	// }
-	// }
-	// }
 }

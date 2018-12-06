@@ -29,6 +29,7 @@ public class TagMe extends ASpotter {
 	private String lang = "en";
 	private String include_all_spots = "true";
 	private String include_categories = "true";
+	private String contentType = "application/x-www-form-urlencoded;charset=UTF-8";
 
 	public TagMe() {
 
@@ -49,7 +50,7 @@ public class TagMe extends ASpotter {
 		urlParameters += "&lang=" + lang;
 		urlParameters += "&include_all_spots=" + include_all_spots;
 		urlParameters += "&include_categories=" + include_categories;
-		return requestPOST(urlParameters, requestURL);
+		return requestPOST(urlParameters, requestURL, contentType);
 	}
 
 	@Override

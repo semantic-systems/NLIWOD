@@ -96,8 +96,6 @@ public class Spotlight {
 				for (Object res : resources.toArray()) {
 					JSONObject next = (JSONObject) res;
 					Entity ent = new Entity();
-					// FIXME implement offset also for other spotters, write a
-					// test that each spotter returns an offset
 					ent.setOffset(Integer.valueOf((String) next.get("@offset")));
 					ent.setLabel((String) next.get("@surfaceForm"));
 					String uri = ((String) next.get("@URI")).replaceAll(",", "%2C");

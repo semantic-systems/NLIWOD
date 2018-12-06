@@ -29,6 +29,7 @@ public class TagMe extends ASpotter {
 	private String lang = "en";
 	private String include_all_spots = "true";
 	private String include_categories = "true";
+	private String contentType = "application/x-www-form-urlencoded;charset=UTF-8";
 
 	public TagMe() {
 
@@ -49,7 +50,7 @@ public class TagMe extends ASpotter {
 		urlParameters += "&lang=" + lang;
 		urlParameters += "&include_all_spots=" + include_all_spots;
 		urlParameters += "&include_categories=" + include_categories;
-		return requestPOST(urlParameters, requestURL);
+		return requestPOST(urlParameters, requestURL, contentType);
 	}
 
 	@Override
@@ -94,25 +95,4 @@ public class TagMe extends ASpotter {
 		}
 		return tmp;
 	}
-
-	// public static void main(final String args[]) {
-	// HAWKQuestion q = new HAWKQuestion();
-	// // q.languageToQuestion.put("en", "Merkel met Obama?");
-	// q.getLanguageToQuestion().put("en", "Which buildings in art deco style
-	// did Shreve, Lamb and Harmon design?");
-	// ASpotter fox = new TagMe();
-	// q.setLanguageToNamedEntites(fox.getEntities(q.getLanguageToQuestion().get("en")));
-	// for (String key : q.getLanguageToNamedEntites().keySet()) {
-	// System.out.println(key);
-	// for (Entity entity : q.getLanguageToNamedEntites().get(key)) {
-	// System.out.println("\t" + entity.getLabel() + " ->" + entity.getType());
-	// for (Resource r : entity.getPosTypesAndCategories()) {
-	// System.out.println("\t\tpos: " + r);
-	// }
-	// for (Resource r : entity.getUris()) {
-	// System.out.println("\t\turi: " + r);
-	// }
-	// }
-	// }
-	// }
 }

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -136,20 +135,4 @@ public class IndexDBO_properties extends IndexDBO {
 		doc.add(new TextField(FIELD_NAME_OBJECT, next.asLiteral().getString(), Store.YES));
 		iwriter.addDocument(doc);
 	}
-
-	public static void main(final String[] args) {
-		IndexDBO_properties classes = new IndexDBO_properties();
-		Scanner sc = new Scanner(System.in);
-		do {
-			System.out.println("Search: ");
-			String in = sc.next();
-			List<String> out = classes.search(in);
-			for (String it : out) {
-				System.out.println("Result: " + it);
-			}
-
-		} while (true);
-
-	}
-
 }

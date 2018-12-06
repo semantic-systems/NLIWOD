@@ -1,99 +1,102 @@
 package org.aksw.mlqa.analyzer.querytype;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFReader;
-import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.rdf.model.impl.ResourceImpl;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Joiner;
+
 public class Fox extends ASpotter {
-  static Logger log = LoggerFactory.getLogger(Fox.class);
+	static Logger log = LoggerFactory.getLogger(Fox.class);
+  	
+	// private String requestURL = "http://139.18.2.164:4444/api";
+	private String requestURL = "http://fox.cs.uni-paderborn.de:4444/fox";
+	private String outputFormat = "RDF/JSON";
+	private String taskType = "ner";
+	private String inputType = "text";
+	private String lang = "en";
+	private String contentType = "application/json; charset=utf-8";
+  	
+	@SuppressWarnings("unchecked")
+	private String doTASK(String inputText) throws MalformedURLException, IOException, ProtocolException {
+		JSONObject urlParameters = new JSONObject();
+		
+		urlParameters.put("type", inputType);
+		urlParameters.put("task", taskType);
+		urlParameters.put("lang", lang);
 
-  // private String requestURL = "http://139.18.2.164:4444/api";
-  private String requestURL = "http://fox-demo.aksw.org/api";
-  private String outputFormat = "N-Triples";
-  private String taskType = "NER";
-  private String inputType = "text";
-  private String lang = "en";
+		urlParameters.put("output", outputFormat);
+		urlParameters.put("input", inputText);
+		return requestPOST(urlParameters.toString(), requestURL, contentType);
+	}
+  
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.aksw.hawk.nlp.NERD_module#getEntities(java.lang.String)
+	 */
+	@Override
+	public Map<String, List<Entity>> getEntities(String question) throws MalformedURLException, ProtocolException, IOException, ParseException {
+		HashMap<String, List<Entity>> mappedEntitiesReturn = new HashMap<>();
+		String foxJSONOutput = null;
+		
+		foxJSONOutput = doTASK(question);
+		if (!foxJSONOutput.equals("") && (!(foxJSONOutput == null))) {
+			try {
+				JSONParser parser = new JSONParser();
+				JSONObject jsonArray = (JSONObject) parser.parse(foxJSONOutput);
+				
+				ArrayList<Entity> tmpList = new ArrayList<>();
+				for(Object key: jsonArray.keySet()) {
+					JSONObject json = (JSONObject) jsonArray.get(key);
+					if(json.keySet().contains("http://www.w3.org/2005/11/its/rdf#taIdentRef")) {
+						Entity ent = new Entity();
+						
+						JSONArray uriArray = (JSONArray) json.get("http://www.w3.org/2005/11/its/rdf#taIdentRef");
+						String uri = (String) ((JSONObject) uriArray.get(0)).get("value");
+						String encode = uri.replaceAll(",", "%2C");
+						ResourceImpl e = new ResourceImpl(encode);
+						ent.uris.add(e);
 
-  private String doTASK(String inputText)
-      throws MalformedURLException, IOException, ProtocolException {
+						JSONArray typeArray = (JSONArray) json.get("http://www.w3.org/2005/11/its/rdf#taClassRef");
+						for(int i = 0; i<typeArray.size(); i++) {
+							JSONObject types = (JSONObject) typeArray.get(i);
+							encode = ((String) types.get("value")).replaceAll(",", "%2C");
+							e = new ResourceImpl(encode);
+							ent.posTypesAndCategories.add(e);
+						}
+											
+						JSONArray labelArray = (JSONArray) json.get("http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#anchorOf");
+						String label = (String) ((JSONObject) labelArray.get(0)).get("value");
+						ent.label = label;
+								
+						tmpList.add(ent);
+					}
+				}
+				mappedEntitiesReturn.put("en", tmpList);
+			} catch (ParseException e) {
+				log.error("Could not parse Server rensponse", e);
+			}
+		}
 
-    String urlParameters = "type=" + inputType;
-    urlParameters += "&task=" + taskType;
-    urlParameters += "&lang=" + lang;
-    urlParameters += "&output=" + outputFormat;
-    urlParameters += "&input=" + URLEncoder.encode(inputText, "UTF-8");
-
-    return requestPOST(urlParameters, requestURL);
+		if (!mappedEntitiesReturn.isEmpty()) {
+			log.debug("\t" + Joiner.on("\n").join(mappedEntitiesReturn.get("en")));
+		}
+		return mappedEntitiesReturn;  
   }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.aksw.hawk.nlp.NERD_module#getEntities(java.lang.String)
-   */
-  @Override
-  public Map<String, List<Entity>> getEntities(String question)
-      throws MalformedURLException, ProtocolException, IOException, ParseException {
-    HashMap<String, List<Entity>> tmp = new HashMap<String, List<Entity>>();
-    String foxJSONOutput = doTASK(question);
-    log.debug(foxJSONOutput);
-    JSONParser parser = new JSONParser();
-    JSONObject jsonArray = (JSONObject) parser.parse(foxJSONOutput);
-    String output = URLDecoder.decode((String) jsonArray.get("output"), "UTF-8");
-    log.debug(output);
-    String baseURI = "http://dbpedia.org";
-    Model model = ModelFactory.createDefaultModel();
-    RDFReader r = model.getReader("N3");
-    r.read(model, new StringReader(output), baseURI);
-
-    ResIterator iter = model.listSubjects();
-    ArrayList<Entity> tmpList = new ArrayList<>();
-    while (iter.hasNext()) {
-      Resource next = iter.next();
-      StmtIterator statementIter = next.listProperties();
-      Entity ent = new Entity();
-      while (statementIter.hasNext()) {
-        Statement statement = statementIter.next();
-        String predicateURI = statement.getPredicate().getURI();
-        if ("http://www.w3.org/2000/10/annotation-ns#body".equals(predicateURI)) {
-          ent.label = statement.getObject().asLiteral().getString();
-        } else if ("http://ns.aksw.org/scms/means".equals(predicateURI)) {
-          String uri = statement.getObject().asResource().getURI();
-          String encode = uri.replaceAll(",", "%2C");
-          ResourceImpl e = new ResourceImpl(encode);
-          ent.uris.add(e);
-        } else if ("http://www.w3.org/1999/02/22-rdf-syntax-ns#type".equals(predicateURI)) {
-          ent.posTypesAndCategories.add(statement.getObject().asResource());
-        }
-      }
-      tmpList.add(ent);
-    }
-    tmp.put("en", tmpList);
-
-    return tmp;
-  }
-
   // TODO transform to unit test
   public static void main(String args[])
       throws MalformedURLException, ProtocolException, IOException, ParseException {

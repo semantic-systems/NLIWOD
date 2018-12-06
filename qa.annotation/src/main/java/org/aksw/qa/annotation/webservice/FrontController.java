@@ -9,12 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //@EnableAutoConfiguration
 @SpringBootApplication
 public class FrontController {
-
 	// final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public static void main(final String[] args) {
 		SpringApplication.run(FrontController.class, args);
-
 	}
-
 }

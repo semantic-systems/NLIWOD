@@ -110,7 +110,6 @@ public class IndexDBO_classes extends IndexDBO {
 
 	private void index() {
 		try {
-
 			InputStream res = this.getClass().getResourceAsStream("/dbpedia_3Eng_class.ttl");
 			Model model = ModelFactory.createDefaultModel();
 			model.read(res, "http://dbpedia.org/", "TTL");
@@ -135,20 +134,4 @@ public class IndexDBO_classes extends IndexDBO {
 		doc.add(new TextField(FIELD_NAME_OBJECT, object, Store.YES));
 		iwriter.addDocument(doc);
 	}
-
-	// public static void main(final String[] args) {
-	// IndexDBO_classes classes = new IndexDBO_classes();
-	// Scanner sc = new Scanner(System.in);
-	// do {
-	// System.out.println("Search: ");
-	// String in = sc.next();
-	// List<String> out = classes.search(in);
-	// for (String it : out) {
-	// System.out.println("Result: " + it);
-	// }
-	//
-	// } while (true);
-	//
-	// }
-
 }

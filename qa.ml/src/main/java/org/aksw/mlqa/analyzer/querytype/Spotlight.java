@@ -24,6 +24,7 @@ public class Spotlight extends ASpotter {
 	private String requestURL = "http://model.dbpedia-spotlight.org/en/annotate";
 	private String confidence = "0.2";
 	private String support = "20";
+	private String contentType = "application/x-www-form-urlencoded;charset=UTF-8";
 
 	private String doTASK(String inputText) throws MalformedURLException, IOException, ProtocolException {
 
@@ -31,7 +32,7 @@ public class Spotlight extends ASpotter {
 		urlParameters += "&confidence=" + confidence;
 		urlParameters += "&support=" + support;
 
-		return requestPOST(urlParameters, requestURL);
+		return requestPOST(urlParameters, requestURL, contentType);
 	}
 
 	@Override
@@ -57,6 +58,7 @@ public class Spotlight extends ASpotter {
 							ent.posTypesAndCategories.add(new ResourceImpl(type));
 						}
 					}
+
 					tmpList.add(ent);
 				}
 				tmp.put("en", tmpList);
@@ -69,25 +71,4 @@ public class Spotlight extends ASpotter {
 		}
 		return tmp;
 	}
-
-	// public static void main(String args[]) {
-	// Question q = new Question();
-	// q.languageToQuestion.put("en",
-	// "Which buildings in art deco style did Shreve, Lamb and Harmon design?");
-	// ASpotter fox = new Spotlight();
-	// q.languageToNamedEntites =
-	// fox.getEntities(q.languageToQuestion.get("en"));
-	// for (String key : q.languageToNamedEntites.keySet()) {
-	// System.out.println(key);
-	// for (Entity entity : q.languageToNamedEntites.get(key)) {
-	// System.out.println("\t" + entity.label + " ->" + entity.type);
-	// for (Resource r : entity.posTypesAndCategories) {
-	// System.out.println("\t\tpos: " + r);
-	// }
-	// for (Resource r : entity.uris) {
-	// System.out.println("\t\turi: " + r);
-	// }
-	// }
-	// }
-	// }	
 }
