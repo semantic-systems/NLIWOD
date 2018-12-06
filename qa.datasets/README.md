@@ -110,6 +110,7 @@ out of scope (?) :
 * https://github.com/kayburns/tom-qa-dataset
 * https://arxiv.org/abs/1811.00937
 * https://pinafore.github.io/qanta-leaderboard/
+https://www.stateoftheart.ai/
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
