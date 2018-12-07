@@ -1,10 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>datasets</artifactId>
 	<name>Question Answering (QA) datasets collection</name>
-	<version>0.5.13</version>
+	<version>0.5.29-SNAPSHOT</version>
 	<!-- DISTRIBUTION MANAGEMENT -->
 	<distributionManagement>
 		<repository>
@@ -145,7 +146,7 @@
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>
 					</execution>
-				<execution>
+					<execution>
 						<id>Dbpedia-EntityV2</id>
 						<phase>package</phase>
 						<goals>
@@ -153,8 +154,8 @@
 						</goals>
 						<configuration>
 							<url>https://raw.githubusercontent.com/iai-group/DBpedia-Entity/master/collection/v2/queries-v2.txt</url>
-							<overwrite>false</overwrite>
-							<skipCache>false</skipCache>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
 							<outputFileName>queries-v2.txt</outputFileName>
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>
@@ -167,8 +168,8 @@
 						</goals>
 						<configuration>
 							<url>https://raw.githubusercontent.com/iai-group/DBpedia-Entity/master/collection/v2/qrels-v2.txt</url>
-							<overwrite>false</overwrite>
-							<skipCache>false</skipCache>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
 							<outputFileName>qrels-v2.txt</outputFileName>
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>

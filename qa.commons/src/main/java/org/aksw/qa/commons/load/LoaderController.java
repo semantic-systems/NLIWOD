@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Vector;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -46,16 +45,14 @@ import org.xml.sax.SAXException;
 
 import com.google.common.base.Strings;
 
-import org.aksw.qa.commons.load.tsv.DbeQuestion;
 import org.aksw.qa.commons.load.tsv.LoadTsv;
-import org.aksw.qa.commons.load.tsv.Testing;
-import org.aksw.qa.commons.load.tsv.Testing1;
+
 
 
 /**
  * Loads both QALD XML and JSON
  *
- * @author ricardousbeck tortugaattack jonathanhuthmann
+ * @author ricardousbeck tortugaattack jonathanhuthmann 
  */
 
 // TODO refactor that class to account for multiple dataset types. make qaldxml,
@@ -65,10 +62,8 @@ public class LoaderController {
 
 	private static InputStream getInputStream(final Dataset set) {
 		// Magical get the path from qa-datasets
-		log.info("inside getinputsream " + set.toString());
 
 		try {
-			log.info("inside getinputsream " + set.toString());
 
 			InputStream url = mapDatasetToPath(set);
 			return url;
@@ -91,7 +86,6 @@ public class LoaderController {
 
 	public static InputStream mapDatasetToPath(final Dataset set) {
 		Class<?> loadingAnchor = getLoadingAnchor();
-		log.info("inside map dataset to path");
 
 		switch (set) {
 		case nlq:
@@ -183,17 +177,14 @@ public class LoaderController {
 			return loadingAnchor.getResourceAsStream("/QALD-master/8/data/qald-8-train-multilingual.json");
 		case LCQUAD:
 			return loadingAnchor.getResourceAsStream("/lcquad_qaldformat.json");
-		case DBpedia_Entity_v2:
-		case SemSearch_ES:
-		case INEX_LD:
+			// The cases SemSearch, INEX, QALD2,TREC_Entity belong to DBpedia Entity V2
+		case SemSearch:
+		case INEX:
 		case QALD2:
 		case TREC_Entity:
-		   return loadingAnchor.getResourceAsStream("/queries-sample.txt");
+		   return loadingAnchor.getResourceAsStream("/queries-v22.txt");
 			
-		/*case DBpedia_Entity_v2:
-			return loadingAnchor.getResourceAsStream("/qrels-v21.txt");
 		
-*/
 		// case qbench1:
 		// return
 		// ClassLoader.getSystemClassLoader().getResourceAsStream("qbench/qbench1.xml");
@@ -327,13 +318,13 @@ public class LoaderController {
 				case nlq:
 					out = loadNLQ(is, deriveUri);
 					break;
-				case DBpedia_Entity_v2:
-				case SemSearch_ES:
-				case INEX_LD:
-				case QALD2:
+				
+				
 				case TREC_Entity:
-					//out = LoadTsv.readTSV(is,data.name());
-					out=LoaderController.loadTSVLOAD(is,data.name());
+				case INEX:
+				case SemSearch:
+				case QALD2:
+					out=LoaderController.loadTSV(is,data.name());
 					break;
 
 
@@ -354,15 +345,15 @@ public class LoaderController {
 		return null;
 	}
 
-	private static Vector<InputStream> getSequenceInputStream(Dataset data) {
+	/*private static List<InputStream> getSequenceInputStream(Dataset data) {
 		// TODO Auto-generated method stub
 		
-	    Vector<InputStream> inputStreams = new Vector<InputStream>();
+	    List<InputStream> inputStreams = new Vector<InputStream>();
 		inputStreams.add(getLoadingAnchor().getResourceAsStream("/qrels-v21.txt"));
 		inputStreams.add(getLoadingAnchor().getResourceAsStream("/queries-v2.txt"));
 	
 		return inputStreams;
-	}
+	}*/
 
 	/**
 	 * Use this to load answers from server:{@link AnswerSyncer}
@@ -680,14 +671,13 @@ public class LoaderController {
 			System.out.println(s);
 		}
 	}
-
-	public static List<IQuestion> loadTSVLOAD(InputStream is, String name) throws IOException {
-		// TODO Auto-generated method stub
-		List<IQuestion> out = null;
-		System.out.println("inside tsv load");
-
-		//out = LoadTsv.readTSV(getSequenceInputStream(datasetId),datasetId.name());
-		out=Testing1.function(name);
+	/**
+	 * Use this to load tsv files 
+	 */
+	
+	public static List<IQuestion> loadTSV(InputStream queries, String name) throws IOException {
+		List<IQuestion> out = new ArrayList<>();
+		out = LoadTsv.readTSV(queries,getLoadingAnchor().getResourceAsStream("/qrels-v21.txt"),name);
 		return out;
 	}
 
