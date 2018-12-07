@@ -69,7 +69,6 @@ public class LoadTsv {
 			question.setLanguageToQuestion(langToQuestion);
 
 			DbeQuestions.add(question);
-			System.out.println(DbeQuestions.size());
 
 		}
 		return DbeQuestions;

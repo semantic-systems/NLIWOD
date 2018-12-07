@@ -45,6 +45,8 @@ public enum Dataset {
 						QALD8_Test_Multilingual,
 						Stanford_dev,
 						Stanford_train,
+						Simple_Question_Wikidata,
+						Wdaqua_Core0_Logs,
 						LCQUAD,
 						SemSearch,
 						INEX,
