@@ -9,9 +9,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 
 public class ResponseToStringParser {
-	public void main (String[] args){
-		
-	}
 	
     public String responseToString(HttpResponse response) throws IllegalStateException, IOException {
         HttpEntity entity = null;

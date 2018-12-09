@@ -10,9 +10,6 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,8 +28,12 @@ public class OKBQA extends ASystem {
 
 	private JSONObject conf;
 	
-	public OKBQA(){
-		createJSONConf();
+	public OKBQA() {
+		try {
+			createJSONConf();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private String execute(String jsonInput) throws Exception{
@@ -81,17 +82,15 @@ public class OKBQA extends ASystem {
 		JSONArray logs = obj.getJSONArray("log");
 		for(int i=0; i<logs.length(); i++){
 			JSONObject log = logs.getJSONObject(i);
-			if(log.getString("1. module").equals("QGM")){
-				if(log.has("4. output")){
-					try{
-						JSONArray qout = log.getJSONArray("4. output");
-						if(qout.length()>0&& qout.getJSONObject(0).has("query")){
-							String queryString = qout.getJSONObject(0).getString("query");
-							question.setSparqlQuery(queryString);
-						}
-					}catch(JSONException e){
-						return;
+			if(log.getString("1. module").equals("QGM") && log.has("4. output")){
+				try{
+					JSONArray qout = log.getJSONArray("4. output");
+					if(qout.length()>0&& qout.getJSONObject(0).has("query")){
+						String queryString = qout.getJSONObject(0).getString("query");
+						question.setSparqlQuery(queryString);
 					}
+				}catch(JSONException e){
+						return;
 				}
 			}
 		}
@@ -104,7 +103,7 @@ public class OKBQA extends ASystem {
 		return "okbqa";
 	}
 	
-	private String createInputJSON(String questionString, String language){
+	private String createInputJSON(String questionString, String language) throws JSONException{
 		JSONObject json = new JSONObject();
 		JSONObject input = new JSONObject();
 		
@@ -118,7 +117,7 @@ public class OKBQA extends ASystem {
 		return json.toString();
 	}
 	
-	private void createJSONConf(){
+	private void createJSONConf() throws JSONException{
 		conf = new JSONObject();
 		JSONArray sequence = new JSONArray();
 		sequence.put(0, "TGM");

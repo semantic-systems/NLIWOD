@@ -16,7 +16,7 @@ public class Spotter_FoxRequest {
 	/**
 	 *
 	 */
-	final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private Fox fox;
 	private NifEverything nif = NifEverything.getInstance();

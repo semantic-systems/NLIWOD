@@ -1,10 +1,9 @@
 package org.aksw.qa.commons.load.stanford;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Properties;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -28,15 +27,12 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
-import org.apache.lucene.util.Version;
-import org.junit.Assert;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 
 public class DBpediaIndex {
 
-	private static final Version LUCENE_VERSION = Version.LUCENE_46;
 	private org.slf4j.Logger log = LoggerFactory.getLogger(DBpediaIndex.class);
 	public String FIELD_NAME_SUBJECT = "subject";
 	public String FIELD_NAME_PREDICATE = "predicate";
@@ -51,12 +47,12 @@ public class DBpediaIndex {
 
 	public DBpediaIndex() {
 		try {
-			File index = new File("resources/indexOntology");
-			analyzer = new SimpleAnalyzer(LUCENE_VERSION);
+			Path index = Paths.get("resources/indexOntology"); 
+			analyzer = new SimpleAnalyzer();
 			//TODO wenn beim ersten erstellen ein fehler auftritt erstellt er zwar den ordner legt aber nur eine write.lock datei hinein, sollte nur die datei vorhanden sein, lösche den ordner und baue index neu  
-			if (!index.exists()) {
-				index.mkdir();
-				IndexWriterConfig config = new IndexWriterConfig(LUCENE_VERSION, analyzer);
+			if (!index.toFile().exists()) {
+				index.toFile().mkdir();
+				IndexWriterConfig config = new IndexWriterConfig(analyzer);
 				directory = new MMapDirectory(index);
 				iwriter = new IndexWriter(directory, config);
 				index();
@@ -81,8 +77,8 @@ public class DBpediaIndex {
 			// }
 			// FuzzyQuery q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT,
 			// object), 0);
-			QueryParser qp = new QueryParser(LUCENE_VERSION, FIELD_NAME_OBJECT, analyzer);
-			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
+			QueryParser qp = new QueryParser(FIELD_NAME_OBJECT, analyzer);
+			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex);
 			isearcher.search(qp.createPhraseQuery(FIELD_NAME_OBJECT, object), collector);
 			// isearcher.search(q, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
@@ -140,13 +136,4 @@ public class DBpediaIndex {
 		doc.add(new TextField(FIELD_NAME_OBJECT, object, Store.YES));
 		iwriter.addDocument(doc);
 	}
-//TODO transform to unit test
-	public static void main(String[] args) {
-		DBpediaIndex dboindex = new DBpediaIndex();
-		Assert.assertFalse(dboindex.search("currencies").contains("http://dbpedia.org/ontology/currency"));
-		Assert.assertTrue(dboindex.search("vice-president").contains("http://dbpedia.org/ontology/vicePresident"));
-		Assert.assertTrue(dboindex.search("currency").contains("http://dbpedia.org/ontology/currency"));
-		System.out.println(dboindex.search("currency"));
-	}
-
 }

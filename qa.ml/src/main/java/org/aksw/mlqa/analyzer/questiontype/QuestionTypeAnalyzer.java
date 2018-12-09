@@ -1,11 +1,11 @@
 package org.aksw.mlqa.analyzer.questiontype;
 
+import java.util.ArrayList;
+
 import org.aksw.mlqa.analyzer.IAnalyzer;
 
 import weka.core.Attribute;
-import weka.core.FastVector;
 
-//TODO write unit test for this analyzer
 public class QuestionTypeAnalyzer implements IAnalyzer {
 
 	@Override
@@ -29,9 +29,9 @@ public class QuestionTypeAnalyzer implements IAnalyzer {
 		LIST, NUMBER, BOOLEAN, RESOURCE;
 		private static Attribute attribute = null;
 		static {
-			FastVector attributeValues = new FastVector(QuestionTypeFeature.values().length);
+			ArrayList<String> attributeValues = new ArrayList<String>();
 			for (QuestionTypeFeature qtf : QuestionTypeFeature.values()) {
-				attributeValues.addElement(qtf.name());
+				attributeValues.add(qtf.name());				
 			}
 			attribute = new Attribute("QuestionTypeFeature", attributeValues);
 		};

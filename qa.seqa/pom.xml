@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.aksw</groupId>
 		<artifactId>nliwod</artifactId>
-		<version>0.0.6</version>
+		<version>0.0.7</version>
 	</parent>
 	<artifactId>qa.seqa</artifactId>
 	<version>0.0.3</version>
@@ -15,11 +15,8 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<jvmArguments>
-						<systemProperties>
-							<JAVA_OPTS>-Xms415m -Xmx16G -XX:MaxPermSize=1G</JAVA_OPTS>
-						</systemProperties>
+							-Xms415m -Xmx16G -XX:MaxPermSize=1G
 					</jvmArguments>
-
 					<mainClass>qa.seqa.controller.FrontController</mainClass>
 				</configuration>
 			</plugin>

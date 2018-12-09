@@ -121,7 +121,7 @@ public class LoadTest {
 			Assert.assertFalse(q.getLanguageToQuestion().values().isEmpty());
 			Assert.assertNotNull(q.getLanguageToKeywords());
 			// skipping Answer on known incompletes:
-			if (!foundIncompletes.contains(new Integer(q.getId()))) {
+			if (!foundIncompletes.contains(Integer.valueOf(q.getId()))) {
 				Assert.assertTrue((q.getPseudoSparqlQuery() != null) || (q.getSparqlQuery() != null));
 				// log.debug(q.getLanguageToQuestion().get("en") + "\t" +
 				// "Answer:" + "\t" + q.getSparqlQuery());

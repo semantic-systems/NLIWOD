@@ -1,0 +1,11 @@
+language: java
+sudo: false
+
+jdk:  
+  - oraclejdk8
+  
+script: 
+  - mvn -U test -B 
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

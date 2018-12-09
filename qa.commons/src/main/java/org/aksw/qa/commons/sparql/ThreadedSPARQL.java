@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 public class ThreadedSPARQL extends SPARQL {
 	private int timeoutInSeconds = 10;
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-	ExecutorService executor = Executors.newFixedThreadPool(1);
+	private ExecutorService executor = Executors.newFixedThreadPool(1);
 
 	/**
 	 * {@link #ENDPOINT_DBPEDIA_ORG} as endpoint used.

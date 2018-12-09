@@ -1,5 +1,6 @@
 package org.aksw.mlqa.analyzer.superlative;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -7,8 +8,6 @@ import org.aksw.mlqa.analyzer.IAnalyzer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import weka.core.Attribute;
-import weka.core.FastVector;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
@@ -16,6 +15,7 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
+import weka.core.Attribute;
 
 public class Superlative implements IAnalyzer {
 	static Logger log = LoggerFactory.getLogger(Superlative.class);
@@ -28,9 +28,9 @@ public class Superlative implements IAnalyzer {
 		props.setProperty("ner.useSUTime", "false");
 		pipeline = new StanfordCoreNLP(props);
 		
-		FastVector fvWekaSuperlative= new FastVector(2);
-		fvWekaSuperlative.addElement("Superlative");
-		fvWekaSuperlative.addElement("NoSuperlative");
+		ArrayList<String> fvWekaSuperlative = new ArrayList<String>();
+		fvWekaSuperlative.add("Superlative");
+		fvWekaSuperlative.add("NoSuperlative");
 		attribute = new Attribute("Superlative", fvWekaSuperlative);
 	}
 	

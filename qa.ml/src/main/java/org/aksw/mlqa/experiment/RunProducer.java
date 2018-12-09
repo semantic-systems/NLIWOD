@@ -93,7 +93,7 @@ public class RunProducer {
 			for(ASystem system: systems){
 				Set<String> foundAnswers = null;
 				try{
-					foundAnswers = system.search(question.getLanguageToQuestion().get("en")).getGoldenAnswers();
+					foundAnswers = system.search(question.getLanguageToQuestion().get("en"), "en").getGoldenAnswers();
 				}catch(Exception e){
 					continue;
 				}

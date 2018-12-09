@@ -2,18 +2,8 @@ package org.aksw.mlqa.analyzer;
 
 import java.util.ArrayList;
 
-import org.aksw.mlqa.analyzer.comperative.Comperative;
-import org.aksw.mlqa.analyzer.entityType.EntityDate;
-import org.aksw.mlqa.analyzer.entityType.EntityLocation;
-import org.aksw.mlqa.analyzer.entityType.EntityMoney;
-import org.aksw.mlqa.analyzer.entityType.EntityOrganization;
-import org.aksw.mlqa.analyzer.entityType.EntityPercent;
-import org.aksw.mlqa.analyzer.entityType.EntityPerson;
-import org.aksw.mlqa.analyzer.numberOfToken.NumberOfToken;
 import org.aksw.mlqa.analyzer.querytype.QueryResourceTypeAnalyzer;
-import org.aksw.mlqa.analyzer.questiontype.QuestionTypeAnalyzer;
 import org.aksw.mlqa.analyzer.questionword.QuestionWord;
-import org.aksw.mlqa.analyzer.superlative.Superlative;
 
 import weka.core.Attribute;
 import weka.core.DenseInstance;

@@ -17,7 +17,6 @@ public class PersistentCache {
 	public String charset = "UTF-8";
 	public static String cacheLocation;
 	public HashMap<String, String> cache;
-	int i = 0;
 
 	// TODO delete that class when the spotters are moved
 	public PersistentCache() {

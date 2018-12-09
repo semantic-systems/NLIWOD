@@ -332,7 +332,7 @@ public class PatternSparqlGenerator {
 	}
 
 	class Querypart {
-		String part;
+		private String part;
 
 		public Querypart(final String part) {
 			this.part = part;

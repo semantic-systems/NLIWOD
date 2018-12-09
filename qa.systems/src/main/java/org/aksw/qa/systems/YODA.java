@@ -105,7 +105,7 @@ public class YODA extends ASystem {
 				}
 			} else
 				EntityUtils.consume(questionresponse.getEntity());
-		} while (finished.equals("false"));
+		} while ("false".equals(finished));
 		question.setGoldenAnswers(result);
 	}
 

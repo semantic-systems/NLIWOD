@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>commons</artifactId>
-	<version>0.4.18</version>
+	<version>0.4.20</version>
 	<name>Question Answering (QA) common utilities</name>
 	<description>Question Answering (QA) common utilities to load and store QA datasets and calculate performance measures. 
 	It provides also basic data structures for building QA systems.</description>
@@ -17,20 +17,55 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<!-- TODO put lucene to own subpackage -->
-		<lucene.version>4.6.0</lucene.version>
+		<lucene.version>7.5.0</lucene.version>
 	</properties>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</pluginRepository>
+	</pluginRepositories>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<jvmArguments>
+							-Xms415m -Xmx16G -XX:MaxPermSize=1G
+					</jvmArguments>
+					<mainClass>org.aksw.qa.commons.knowledgeCard.KnowledgeCardApplication</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<classifier>bootable-with-spring</classifier>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
 	<dependencies>
+		<dependency>
+	    	<groupId>org.springframework.boot</groupId>
+	    	<artifactId>spring-boot-starter-web</artifactId>
+	    </dependency> 
+	    <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
 		<!-- QA datasets provided by github.com/aksw/qa-datasets -->
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>datasets</artifactId>
-			<version>0.5.13</version>
-		</dependency>
-		<!-- Reading JSON files -->
-		<dependency>
-			<groupId>javax.json</groupId>
-			<artifactId>javax.json-api</artifactId>
-			<version>1.0</version>
+			<version>0.5.15</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>
@@ -53,21 +88,10 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.jamonapi/jamon -->
-		<dependency>
-			<groupId>com.jamonapi</groupId>
-			<artifactId>jamon</artifactId>
-			<version>2.81</version>
-		</dependency>
 		<!-- Lucene only until index moved to own subpackage -->
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
-			<version>${lucene.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-suggest</artifactId>
 			<version>${lucene.version}</version>
 		</dependency>
 		<dependency>

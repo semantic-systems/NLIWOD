@@ -16,17 +16,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO refactor this and AGDISTIS to be in a submodule called qa.nerd,
 // submodule needs to be independent of other submodules, should have caching
 public class Spotlight {
-	static Logger log = LoggerFactory.getLogger(Spotlight.class);
+	private static final Logger log = LoggerFactory.getLogger(Spotlight.class);
 
-	private String requestURL = "http://spotlight.sztaki.hu:2222/rest/annotate";
+	private String requestURL = "http://model.dbpedia-spotlight.org/en/annotate";
 	private String confidence = "0.65";
 	private String support = "20";
-
-	public Spotlight() {
-	}
 
 	protected String requestPOST(final String input, final String requestURL) {
 
@@ -100,8 +96,6 @@ public class Spotlight {
 				for (Object res : resources.toArray()) {
 					JSONObject next = (JSONObject) res;
 					Entity ent = new Entity();
-					// FIXME implement offset also for other spotters, write a
-					// test that each spotter returns an offset
 					ent.setOffset(Integer.valueOf((String) next.get("@offset")));
 					ent.setLabel((String) next.get("@surfaceForm"));
 					String uri = ((String) next.get("@URI")).replaceAll(",", "%2C");
@@ -117,19 +111,6 @@ public class Spotlight {
 			log.error("Could not call Spotlight for NER/NED", e);
 		}
 		return tmp;
-	}
-
-	// TODO Christian: Unit Test, logging einbauen
-	public static void main(final String args[]) {
-		String input = "Who was vice president under the president who approved the use of atomic weapons against Japan during World War II?";
-		Spotlight spotter = new Spotlight();
-
-		for (double i = 0; i <= 1.0; i += 0.05) {
-			spotter.setConfidence(i);
-			System.out.println("Confidence: " + spotter.getConfidence());
-			Map<String, List<Entity>> entities = spotter.getEntities(input);
-			entities.forEach((x, y) -> System.out.println(x + " -> " + y));
-		}
 	}
 
 	public String getConfidence() {

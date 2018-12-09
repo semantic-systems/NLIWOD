@@ -19,14 +19,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Spotlight extends ASpotter {
-	static Logger log = LoggerFactory.getLogger(Spotlight.class);
+	private static Logger log = LoggerFactory.getLogger(Spotlight.class);
 
 	private String requestURL = "http://model.dbpedia-spotlight.org/en/annotate";
 	private String confidence = "0.5";
 	private String support = "0";
-
-	public Spotlight() {
-	}
+	private String contentType = "application/x-www-form-urlencoded;charset=UTF-8";
 
 	private String doTASK(final String inputText) throws MalformedURLException, IOException, ProtocolException {
 
@@ -34,7 +32,7 @@ public class Spotlight extends ASpotter {
 		urlParameters += "&confidence=" + confidence;
 		urlParameters += "&support=" + support;
 
-		return requestPOST(urlParameters, requestURL);
+		return requestPOST(urlParameters, requestURL, contentType);
 	}
 
 	@Override
@@ -42,7 +40,7 @@ public class Spotlight extends ASpotter {
 		HashMap<String, List<Entity>> tmp = new HashMap<>();
 		try {
 			String foxJSONOutput = doTASK(question);
-			//System.out.println("f"+ foxJSONOutput);
+
 			JSONParser parser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) parser.parse(foxJSONOutput);
 
@@ -52,11 +50,6 @@ public class Spotlight extends ASpotter {
 				for (Object res : resources.toArray()) {
 					JSONObject next = (JSONObject) res;
 					Entity ent = new Entity();
-					// FIXME implement offset also for other spotters, write a
-					// test that each spotter returns an offset
-					/**
-					 * Offset doesnt work for duplicate named entities
-					 */
 					ent.setOffset(Integer.valueOf((String) next.get("@offset")));
 					ent.setLabel((String) next.get("@surfaceForm"));
 					String uri = ((String) next.get("@URI")).replaceAll(",", "%2C");
@@ -64,6 +57,7 @@ public class Spotlight extends ASpotter {
 					for (String type : ((String) next.get("@types")).split(",")) {
 						ent.getPosTypesAndCategories().add(new ResourceImpl(type));
 					}
+
 					tmpList.add(ent);
 				}
 				tmp.put("en", tmpList);
@@ -73,39 +67,6 @@ public class Spotlight extends ASpotter {
 		}
 		return tmp;
 	}
-
-	// TODO Christian: Unit Test
-	// public static void main(final String args[]) {
-	// HAWKQuestion q = new HAWKQuestion();
-	// // q.getLanguageToQuestion().put("en",
-	// // "Which buildings in art deco style did Shreve, Lamb and Harmon
-	// // design?");
-	// // q.getLanguageToQuestion().put("en",
-	// // "Which anti-apartheid activist was born in Mvezo?");
-	// q.getLanguageToQuestion().put("en", " Who was vice president under the
-	// president who approved the use of atomic weapons against Japan during
-	// World War II?");
-	// ASpotter spotter = new Spotlight();
-	//
-	// for (double i = 0; i <= 1.0; i += 0.05) {
-	// ((Spotlight) spotter).setConfidence(i);
-	// System.out.println("Confidence: " + ((Spotlight)
-	// spotter).getConfidence());
-	// q.setLanguageToNamedEntites(spotter.getEntities(q.getLanguageToQuestion().get("en")));
-	// for (String key : q.getLanguageToNamedEntites().keySet()) {
-	// System.out.println(key);
-	// for (Entity entity : q.getLanguageToNamedEntites().get(key)) {
-	// System.out.println("\t" + entity.getLabel() + " ->" + entity.getType());
-	// for (Resource r : entity.getPosTypesAndCategories()) {
-	// System.out.println("\t\tpos: " + r);
-	// }
-	// for (Resource r : entity.getUris()) {
-	// System.out.println("\t\turi: " + r);
-	// }
-	// }
-	// }
-	// }
-	// }
 
 	public String getConfidence() {
 		return confidence;

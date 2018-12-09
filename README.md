@@ -1,6 +1,10 @@
 # NLIWOD - Natural Language Interfaces for the Web of Data
+[![Build Status](https://travis-ci.org/dice-group/NLIWOD.svg?branch=master)](https://travis-ci.org/dice-group/NLIWOD)
 [![Project Stats](https://www.openhub.net/p/NLIWOD/widgets/project_thin_badge.gif)](https://www.openhub.net/p/NLIWOD)
-[![BCH compliance](https://bettercodehub.com/edge/badge/AKSW/NLIWOD)](https://bettercodehub.com/)
+[![BCH compliance](https://bettercodehub.com/edge/badge/dice-group/NLIWOD)](https://bettercodehub.com/results/dice-group/NLIWOD)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d20dadb8431c4b93befabff1c5858127)](https://www.codacy.com/app/lukasbluebaumb94/NLIWOD?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dice-group/NLIWOD&amp;utm_campaign=Badge_Grade)
+[![codecov](https://codecov.io/gh/dice-group/NLIWOD/branch/master/graph/badge.svg)](https://codecov.io/gh/dice-group/NLIWOD)
+
 
 Collection of tools, utilities, datasets and approaches towards realizing natural language interfaces for the Web of Data. Currently, we are focusing on Question Answering (QA) utilities.
 
@@ -31,18 +35,3 @@ Add the following repository to your project:
 Artifacts are described in the sub-modules.
 
 Look for more interesting libraries here: http://maven.aksw.org/archiva/#browse/org.aksw.qa 
-
-## Docker
-> work in progress
-### hawk
-    docker build -t hawk -f Dockerfile-hawk .
-    docker run -t hawk
-
-### hawk-fuseki
-run `cd qa.hawk/deploy-scripts && ./index_fuseki.sh` to create index
-
-    docker build -t hawk-fuseki -f Dockerfile-fuseki .
-    docker run --name hawk-fuseki -v /path/to/deploy-scripts/:/staging hawk-fuseki
-
-
-

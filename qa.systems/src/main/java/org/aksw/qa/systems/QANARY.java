@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 public class QANARY extends ASystem {
 
-	Logger log = LoggerFactory.getLogger(QANARY.class);
+	private Logger log = LoggerFactory.getLogger(QANARY.class);
 
 	private String qanaryUrl = "http://wdaqua-core1.univ-st-etienne.fr/gerbil";
 	private String kbName;

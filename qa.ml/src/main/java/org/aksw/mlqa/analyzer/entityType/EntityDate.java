@@ -1,5 +1,6 @@
 package org.aksw.mlqa.analyzer.entityType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -7,8 +8,6 @@ import org.aksw.mlqa.analyzer.IAnalyzer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import weka.core.Attribute;
-import weka.core.FastVector;
 import edu.stanford.nlp.ling.CoreAnnotations.NamedEntityTagAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
@@ -16,6 +15,7 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
+import weka.core.Attribute;
 
 public class EntityDate implements IAnalyzer {
 	static Logger log = LoggerFactory.getLogger(EntityDate.class);
@@ -28,9 +28,9 @@ public class EntityDate implements IAnalyzer {
 		props.setProperty("ner.useSUTime", "false");
 		pipeline = new StanfordCoreNLP(props);
 		
-		FastVector fvWekaDate= new FastVector(2);
-		fvWekaDate.addElement("Date");
-		fvWekaDate.addElement("NoDate");
+		ArrayList<String> fvWekaDate = new ArrayList<String>();
+		fvWekaDate.add("Date");
+		fvWekaDate.add("NoDate");
 		attribute = new Attribute("Date", fvWekaDate);
 	}
 	
@@ -45,7 +45,7 @@ public class EntityDate implements IAnalyzer {
 		for (CoreMap sentence : sentences)
 		for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
 	        String ne = token.get(NamedEntityTagAnnotation.class); 
-	        if(ne.equals("DATE"))
+	        if("DATE".equals(ne))
 	        	result = "Date";
 	       }
 		return result;

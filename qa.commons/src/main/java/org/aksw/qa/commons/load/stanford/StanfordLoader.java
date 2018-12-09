@@ -16,6 +16,7 @@ import javax.json.JsonString;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.datastructure.Question;
+import org.aksw.qa.commons.nlp.nerd.Spotlight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
