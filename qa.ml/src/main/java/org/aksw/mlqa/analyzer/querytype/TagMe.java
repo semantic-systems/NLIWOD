@@ -22,13 +22,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TagMe extends ASpotter {
-	static Logger log = LoggerFactory.getLogger(TagMe.class);
+	private static Logger log = LoggerFactory.getLogger(TagMe.class);
 
 	private String requestURL = "http://tagme.di.unipi.it/tag";
 	private String key = "";
 	private String lang = "en";
 	private String include_all_spots = "true";
 	private String include_categories = "true";
+	private String contentType = "application/x-www-form-urlencoded;charset=UTF-8";
 
 	public TagMe() {
 
@@ -49,7 +50,7 @@ public class TagMe extends ASpotter {
 		urlParameters += "&lang=" + lang;
 		urlParameters += "&include_all_spots=" + include_all_spots;
 		urlParameters += "&include_categories=" + include_categories;
-		return requestPOST(urlParameters, requestURL);
+		return requestPOST(urlParameters, requestURL, contentType);
 	}
 
 	@Override

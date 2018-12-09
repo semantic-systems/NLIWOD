@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class NtripleUtil {
 
-	static Logger log = LoggerFactory.getLogger(NtripleUtil.class);
+	private static Logger log = LoggerFactory.getLogger(NtripleUtil.class);
 
 	public static List<String[]> getSubjectAndObjectsFromNTriple(String filename, String replacePrefix) {
 
@@ -31,9 +31,9 @@ public class NtripleUtil {
 		while (iter.hasNext()) {
 			Triple statement = iter.next();
 			results.add(new String[] {
-					replacePrefix == null || replacePrefix.equals("") ? statement.getSubject().getURI()
+					replacePrefix == null || "".equals(replacePrefix) ? statement.getSubject().getURI()
 							: statement.getSubject().getURI().replace(replacePrefix, ""),
-					replacePrefix == null || replacePrefix.equals("") ? statement.getObject().getURI()
+					replacePrefix == null || "".equals(replacePrefix) ? statement.getObject().getURI()
 							: statement.getObject().getURI().replace(replacePrefix, ""), });
 
 		}

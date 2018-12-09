@@ -59,8 +59,8 @@ public class Question implements IQuestion {
 	 */
 	@Override
 	public void setValue(String valDescriptor, final String val) {
-		valDescriptor = valDescriptor.toLowerCase();
-		switch (valDescriptor) {
+		String valDescriptorLowerCase = valDescriptor.toLowerCase();
+		switch (valDescriptorLowerCase) {
 		case "id":
 			this.id = val;
 			break;

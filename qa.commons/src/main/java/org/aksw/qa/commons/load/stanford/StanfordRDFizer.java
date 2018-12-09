@@ -19,6 +19,8 @@ import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
+import org.aksw.qa.commons.nlp.nerd.AGDISTIS;
+import org.aksw.qa.commons.nlp.nerd.Spotlight;
 import org.apache.jena.query.Query;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Statement;
@@ -119,7 +121,6 @@ public class StanfordRDFizer {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(datasets.toString().toLowerCase() + ".tsv"));
 
 			// 2) run linking over all answers using AGDISTIS
-			int numberOfLinkableAnswers = 0;
 			int numberOfQuestions = 0;
 			for (IQuestion q : questions) {
 				String question = q.getLanguageToQuestion().get("en");
@@ -133,7 +134,6 @@ public class StanfordRDFizer {
 					numberOfQuestions++;
 					bw.write(question + "\t");
 					if (disambiguate != null) {
-						numberOfLinkableAnswers++;
 						System.out.println("\tDisambiguated Answer: " + answer + " -> " + disambiguate);
 						bw.write(answer + "\t");
 						bw.write(disambiguate + "\t");

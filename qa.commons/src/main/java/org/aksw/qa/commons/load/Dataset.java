@@ -43,6 +43,7 @@ public enum Dataset {
 						QALD7_Test_Wikidata_en,
 						QALD8_Train_Multilingual,
 						QALD8_Test_Multilingual,
+						QALD9_Train_Multilingual,
 						Stanford_dev,
 						Stanford_train,
 						Simple_Question_Wikidata,
@@ -52,6 +53,7 @@ public enum Dataset {
 						INEX,
 						QALD2,
 						TREC_Entity, 
+			 		    Simple_Question_Wikidata,
+						Wdaqua_Core0_Logs
 						
-
 }

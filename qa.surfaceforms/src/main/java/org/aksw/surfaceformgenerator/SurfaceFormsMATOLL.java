@@ -25,7 +25,7 @@ public class SurfaceFormsMATOLL {
 			String wordtype = split[2];
 			String propertyURI = split[4];
 			String namespace = "http://dbpedia.org/ontology/";
-			if (wordtype.equals("verb") && propertyURI.startsWith(namespace)) {
+			if ("verb".equals(wordtype) && propertyURI.startsWith(namespace)) {
 				String ar = "<" + propertyURI + "> <http://www.w3.org/2000/01/rdf-schema#label> \"" + label + " " + prep + "\" .";
 				System.out.println(ar);
 				bw.write(ar);

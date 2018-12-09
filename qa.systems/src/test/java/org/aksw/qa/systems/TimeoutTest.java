@@ -6,7 +6,6 @@ import java.net.SocketTimeoutException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.aksw.qa.commons.datastructure.IQuestion;
 import org.junit.Test;
 
 public class TimeoutTest {
@@ -27,7 +26,7 @@ public class TimeoutTest {
         	system.setSocketTimeOutMs(10);
         	long a = System.currentTimeMillis();
         	try{
-        		IQuestion question = system.search(questionString, "de", true);
+        		system.search(questionString, "de", true);
             	assertTrue(false);
         	}catch(SocketTimeoutException e){
         		long b = System.currentTimeMillis();

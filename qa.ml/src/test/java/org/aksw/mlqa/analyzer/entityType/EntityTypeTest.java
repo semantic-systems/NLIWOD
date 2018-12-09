@@ -2,10 +2,12 @@ package org.aksw.mlqa.analyzer.entityType;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
+import weka.core.Attribute;
 import weka.core.DenseInstance;
-import weka.core.FastVector;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -14,8 +16,8 @@ public class EntityTypeTest {
 	@Test
 	public void PersonTest1() {
 		EntityPerson personana = new EntityPerson();
-		FastVector fvWekaAttributes = new FastVector();
-		fvWekaAttributes.addElement(personana.getAttribute());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(personana.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1);
 		Instance testinstance = new DenseInstance(fvWekaAttributes.size());
 		testinstance.setValue(personana.getAttribute(), (String) personana.analyze("Bart is a person."));
@@ -25,8 +27,8 @@ public class EntityTypeTest {
 	@Test
 	public void PersonTest2() {
 		EntityPerson personana = new EntityPerson();
-		FastVector fvWekaAttributes = new FastVector();
-		fvWekaAttributes.addElement(personana.getAttribute());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(personana.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1);
 		Instance testinstance = new DenseInstance(fvWekaAttributes.size());
 		testinstance.setValue(personana.getAttribute(), (String) personana.analyze("Berlin is a city."));
@@ -36,8 +38,8 @@ public class EntityTypeTest {
 	@Test
 	public void LocationTest1() {
 		EntityLocation locationana = new EntityLocation();
-		FastVector fvWekaAttributes = new FastVector();
-		fvWekaAttributes.addElement(locationana.getAttribute());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(locationana.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1);
 		Instance testinstance = new DenseInstance(fvWekaAttributes.size());
 		testinstance.setValue(locationana.getAttribute(), (String) locationana.analyze("Berlin is a city."));
@@ -47,8 +49,8 @@ public class EntityTypeTest {
 	@Test
 	public void LocationTest2() {
 		EntityLocation locationana = new EntityLocation();
-		FastVector fvWekaAttributes = new FastVector();
-		fvWekaAttributes.addElement(locationana.getAttribute());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(locationana.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1);
 		Instance testinstance = new DenseInstance(fvWekaAttributes.size());
 		testinstance.setValue(locationana.getAttribute(), (String) locationana.analyze("Bart is a person."));
@@ -58,8 +60,8 @@ public class EntityTypeTest {
 	@Test
 	public void OrganizationTest1() {
 		EntityOrganization organa = new EntityOrganization();
-		FastVector fvWekaAttributes = new FastVector();
-		fvWekaAttributes.addElement(organa.getAttribute());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(organa.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1);
 		Instance testinstance = new DenseInstance(fvWekaAttributes.size());
 		testinstance.setValue(organa.getAttribute(), (String) organa.analyze("The United Nations are an organization."));
@@ -69,8 +71,8 @@ public class EntityTypeTest {
 	@Test
 	public void OrganizationTest2() {
 		EntityOrganization organa = new EntityOrganization();
-		FastVector fvWekaAttributes = new FastVector();
-		fvWekaAttributes.addElement(organa.getAttribute());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(organa.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1);
 		Instance testinstance = new DenseInstance(fvWekaAttributes.size());
 		testinstance.setValue(organa.getAttribute(), (String) organa.analyze("Bart is a person."));
@@ -80,8 +82,8 @@ public class EntityTypeTest {
 	@Test
 	public void MoneyTest1() {
 		EntityMoney monana = new EntityMoney();
-		FastVector fvWekaAttributes = new FastVector();
-		fvWekaAttributes.addElement(monana.getAttribute());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(monana.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1);
 		Instance testinstance = new DenseInstance(fvWekaAttributes.size());
 		testinstance.setValue(monana.getAttribute(), (String) monana.analyze("One Dollar is worth more than one Yen."));
@@ -91,8 +93,8 @@ public class EntityTypeTest {
 	@Test
 	public void MoneyTest2() {
 		EntityMoney monana = new EntityMoney();
-		FastVector fvWekaAttributes = new FastVector();
-		fvWekaAttributes.addElement(monana.getAttribute());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(monana.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1);
 		Instance testinstance = new DenseInstance(fvWekaAttributes.size());
 		testinstance.setValue(monana.getAttribute(), (String) monana.analyze("Bart lives in Berlin."));
@@ -102,8 +104,8 @@ public class EntityTypeTest {
 	@Test
 	public void PercentTest1() {
 		EntityPercent percana = new EntityPercent();
-		FastVector fvWekaAttributes = new FastVector();
-		fvWekaAttributes.addElement(percana.getAttribute());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(percana.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1);
 		Instance testinstance = new DenseInstance(fvWekaAttributes.size());
 		testinstance.setValue(percana.getAttribute(), (String) percana.analyze("5% of 100 equal 5."));
@@ -113,8 +115,8 @@ public class EntityTypeTest {
 	@Test
 	public void PercentTest2() {
 		EntityPercent percana = new EntityPercent();
-		FastVector fvWekaAttributes = new FastVector();
-		fvWekaAttributes.addElement(percana.getAttribute());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(percana.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1);
 		Instance testinstance = new DenseInstance(fvWekaAttributes.size());
 		testinstance.setValue(percana.getAttribute(), (String) percana.analyze("Bart lives in Berlin."));
@@ -124,8 +126,8 @@ public class EntityTypeTest {
 	@Test
 	public void DateTest1() {
 		EntityDate dateana = new EntityDate();
-		FastVector fvWekaAttributes = new FastVector();
-		fvWekaAttributes.addElement(dateana.getAttribute());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(dateana.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1);
 		Instance testinstance = new DenseInstance(fvWekaAttributes.size());
 		testinstance.setValue(dateana.getAttribute(), (String) dateana.analyze("The olympic games in 1992 were the best."));
@@ -135,8 +137,8 @@ public class EntityTypeTest {
 	@Test
 	public void DateTest2() {
 		EntityDate dateana = new EntityDate();
-		FastVector fvWekaAttributes = new FastVector();
-		fvWekaAttributes.addElement(dateana.getAttribute());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(dateana.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1);
 		Instance testinstance = new DenseInstance(fvWekaAttributes.size());
 		testinstance.setValue(dateana.getAttribute(), (String) dateana.analyze("Who fucked up?"));

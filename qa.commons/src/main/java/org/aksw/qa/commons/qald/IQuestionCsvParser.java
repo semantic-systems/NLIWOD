@@ -284,8 +284,8 @@ public class IQuestionCsvParser {
 	 * @see IQuestionCsvParser#csvToQuestionList(CSVReader, Column...)
 	 */
 	static class Column {
-		ColEnum en;
-		String state;
+		private ColEnum en;
+		private String state;
 
 		private Column(final ColEnum en, final String state) {
 			this.en = en;

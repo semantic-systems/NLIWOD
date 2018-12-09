@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class START extends ASystem {
-	Logger log = LoggerFactory.getLogger(START.class);
+	private Logger log = LoggerFactory.getLogger(START.class);
 
 	public String name() {
 		return "start";

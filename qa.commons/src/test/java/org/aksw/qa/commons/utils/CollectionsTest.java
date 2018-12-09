@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CollectionsTest {
-	Logger log = LoggerFactory.getLogger(CollectionsTest.class);
+	private Logger log = LoggerFactory.getLogger(CollectionsTest.class);
 
 	@Test
 	public void testIntersect() {

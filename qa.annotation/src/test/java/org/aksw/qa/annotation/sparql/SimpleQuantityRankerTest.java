@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class SimpleQuantityRankerTest {
-	SimpleQuantityRanker ranker = new SimpleQuantityRanker();
+	private SimpleQuantityRanker ranker = new SimpleQuantityRanker();
 
 	@Test
 	public void test() {

@@ -15,29 +15,26 @@ import java.util.Map;
 import org.json.simple.parser.ParseException;
 
 public abstract class ASpotter {
-
-	public abstract Map<String, List<Entity>> getEntities(String question) throws MalformedURLException, ProtocolException, IOException, ParseException;
-
+	
 	private boolean useCache = true;
 	private static PersistentCache cache = new PersistentCache();
 
-	protected String requestPOST(String input, String requestURL) throws MalformedURLException, ProtocolException, IOException {
-			if (useCache) {
-				if (cache.containsKey(input)) {
-					return cache.get(input);
-				}
-			}
+	public abstract Map<String, List<Entity>> getEntities(String question) throws MalformedURLException, ProtocolException, IOException, ParseException;
 
-			String output = POST(input, requestURL);
-			cache.put(input, output);
-			if (useCache) {
-				cache.writeCache();
-			}
+	protected String requestPOST(String input, String requestURL, String contentType) throws MalformedURLException, ProtocolException, IOException {
+		if (useCache && cache.containsKey(input)) {
+			return cache.get(input);
+		}
 
-			return output;
+		String output = POST(input, requestURL, contentType);
+		cache.put(input, output);
+		if (useCache) {
+			cache.writeCache();
+		}
+		return output;
 	}
 
-	private String POST(String urlParameters, String requestURL) throws MalformedURLException, IOException, ProtocolException {
+	private String POST(String urlParameters, String requestURL, String contentType) throws MalformedURLException, IOException, ProtocolException {
 		URL url = new URL(requestURL);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("POST");
@@ -45,7 +42,7 @@ public abstract class ASpotter {
 		connection.setDoInput(true);
 		connection.setUseCaches(false);
 		connection.setRequestProperty("Accept", "application/json");
-		connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+		connection.setRequestProperty("Content-Type", contentType);
 		connection.setRequestProperty("Content-Length", String.valueOf(urlParameters.length()));
 
 		DataOutputStream wr = new DataOutputStream(connection.getOutputStream());

@@ -1,13 +1,13 @@
 package org.aksw.mlqa.analyzer.questionword;
 
+import java.util.ArrayList;
+
 import org.aksw.mlqa.analyzer.IAnalyzer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import weka.core.Attribute;
-import weka.core.FastVector;
 
-//TODO write unit test for this analyzer
 /**
  * Analyzes what type of question word is it, like Who Where What Give Me
  * 
@@ -15,22 +15,23 @@ import weka.core.FastVector;
  *
  */
 public class QuestionWord implements IAnalyzer {
-	Logger log = LoggerFactory.getLogger(QuestionWord.class);
+	private Logger log = LoggerFactory.getLogger(QuestionWord.class);
 	private Attribute attribute = null;
-	String AuxVerb = "Is||Are||Did";
-	String Commands = "Give||Show";
+	private String AuxVerb = "Is||Are||Did";
+	private String Commands = "Give||Show||List";
 
 	public QuestionWord() {
-		FastVector attributeValues = new FastVector();
-		attributeValues.addElement("Who");
-		attributeValues.addElement("What");
-		attributeValues.addElement("When");
-		attributeValues.addElement("Where");
-		attributeValues.addElement("Which");
-		attributeValues.addElement(Commands);
-		attributeValues.addElement(AuxVerb);
-		attributeValues.addElement("How");
-		attributeValues.addElement("Misc");
+		
+		ArrayList<String> attributeValues = new ArrayList<String>();
+		attributeValues.add("Who");
+		attributeValues.add("What");
+		attributeValues.add("When");
+		attributeValues.add("Where");
+		attributeValues.add("Which");
+		attributeValues.add(Commands);
+		attributeValues.add(AuxVerb);
+		attributeValues.add("How");
+		attributeValues.add("Misc");
 
 		attribute = new Attribute("QuestionWord", attributeValues);
 	}

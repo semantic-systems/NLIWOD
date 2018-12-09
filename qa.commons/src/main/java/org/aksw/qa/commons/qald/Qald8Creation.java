@@ -68,7 +68,6 @@ public class Qald8Creation {
 		 * Add missing sparql prefixes
 		 */
 		for (IQuestion it : questions) {
-			String oldQuery = it.getSparqlQuery();
 			String newSparql = SPARQLPrefixResolver.addMissingPrefixes(it.getSparqlQuery());
 			it.setSparqlQuery(newSparql);
 		}

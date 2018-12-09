@@ -58,7 +58,7 @@ import org.aksw.qa.commons.load.tsv.LoadTsv;
 // TODO refactor that class to account for multiple dataset types. make qaldxml,
 // qaldjson independent of this class so it becomes easiert to load a new class
 public class LoaderController {
-	static Logger log = LoggerFactory.getLogger(LoaderController.class);
+	private static Logger log = LoggerFactory.getLogger(LoaderController.class);
 
 	private static InputStream getInputStream(final Dataset set) {
 		// Magical get the path from qa-datasets
@@ -175,6 +175,8 @@ public class LoaderController {
 			return loadingAnchor.getResourceAsStream("/QALD-master/8/data/qald-8-test-multilingual.json");
 		case QALD8_Train_Multilingual:
 			return loadingAnchor.getResourceAsStream("/QALD-master/8/data/qald-8-train-multilingual.json");
+		case QALD9_Train_Multilingual:
+			return loadingAnchor.getResourceAsStream("/QALD-master/9/data/qald-9-train-multilingual.json");
 		case LCQUAD:
 			return loadingAnchor.getResourceAsStream("/lcquad_qaldformat.json");
 			// The cases SemSearch, INEX, QALD2,TREC_Entity belong to DBpedia Entity V2
@@ -183,8 +185,10 @@ public class LoaderController {
 		case QALD2:
 		case TREC_Entity:
 		   return loadingAnchor.getResourceAsStream("/queries-v22.txt");
-			
-		
+		case Simple_Question_Wikidata:
+			return loadingAnchor.getResourceAsStream("/annotated_wd_data_valid_full.json");
+		case Wdaqua_Core0_Logs:
+			return loadingAnchor.getResourceAsStream("/webservice_25_06_2017.json");
 		// case qbench1:
 		// return
 		// ClassLoader.getSystemClassLoader().getResourceAsStream("qbench/qbench1.xml");
@@ -294,6 +298,9 @@ public class LoaderController {
 				case QALD7_Test_Wikidata_en:
 				case QALD8_Test_Multilingual:
 				case QALD8_Train_Multilingual:
+				case Simple_Question_Wikidata:
+				case Wdaqua_Core0_Logs:
+				case QALD9_Train_Multilingual:
 				case LCQUAD :
 					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(getInputStream(data), QaldJson.class);
 					out = EJQuestionFactory.getQuestionsFromQaldJson(json);

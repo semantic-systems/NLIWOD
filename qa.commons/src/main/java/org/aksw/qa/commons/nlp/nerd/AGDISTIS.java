@@ -11,8 +11,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
-//TODO refactor to standalone submodule nerd
-
 /**
  * URI Disambiguation using AGDISTIS https://github.com/AKSW/AGDISTIS
  * 

@@ -28,7 +28,7 @@ import weka.core.Instance;
 import weka.core.Instances;
 
 public class SimpleClassification {
-	static Logger log = LoggerFactory.getLogger(SimpleClassification.class);
+	private static Logger log = LoggerFactory.getLogger(SimpleClassification.class);
 
 	public static void main(String[] args) throws Exception {
 		HAWK hawk = new HAWK();

@@ -25,7 +25,7 @@ import weka.core.Instance;
 import weka.core.Instances;
 
 public class ArffFileFromRun {
-	static Logger log = LoggerFactory.getLogger(ArffFileFromRun.class);
+	private static Logger log = LoggerFactory.getLogger(ArffFileFromRun.class);
 
 	public static void main(String[] args) throws Exception {
 		HAWK hawk = new HAWK();

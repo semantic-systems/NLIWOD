@@ -37,10 +37,6 @@ public class AgdistisWrapper {
 	private final static String AGDISTIS_URL = "http://139.18.2.164:8080/AGDISTIS";
 	final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public AgdistisWrapper() {
-
-	}
-
 	@RequestMapping(method = RequestMethod.GET)
 	public String getAgdistis() {
 		logger.debug("Requesting AGDISTIS VIA GET - forbidden");

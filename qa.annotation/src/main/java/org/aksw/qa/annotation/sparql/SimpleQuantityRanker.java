@@ -72,12 +72,7 @@ public class SimpleQuantityRanker {
 	 */
 	public boolean disambiguateOntologyIsProperty(final String uri) {
 		Character character = uri.charAt(DBPEDIA_ONTO_URI.length());
-
-		if (uri.startsWith(DBPEDIA_ONTO_URI) && Character.isLowerCase(character)) {
-			// lowercase start so property in dbpedia
-			return true;
-		}
-		return false;
+		return uri.startsWith(DBPEDIA_ONTO_URI) && Character.isLowerCase(character);
 	}
 
 	/**
@@ -90,12 +85,7 @@ public class SimpleQuantityRanker {
 	 */
 	public boolean disambiguateOntologyIsClass(final String uri) {
 		Character character = uri.charAt(DBPEDIA_ONTO_URI.length());
-
-		if (uri.startsWith(DBPEDIA_ONTO_URI) && Character.isUpperCase(character)) {
-			// uppercase so class in dbpedia
-			return true;
-		}
-		return false;
+		return uri.startsWith(DBPEDIA_ONTO_URI) && Character.isUpperCase(character);
 	}
 
 }

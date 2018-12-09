@@ -93,10 +93,7 @@ public class SPARQLBasedEvaluation {
 	}
 
 	private static boolean hasAggregations(String query) {
-		if (query.toLowerCase().contains("count") || query.toLowerCase().contains("sum")) {
-			return true;
-		}
-		return false;
+		return query.toLowerCase().contains("count") || query.toLowerCase().contains("sum");
 	}
 
 }

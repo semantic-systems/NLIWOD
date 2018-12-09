@@ -25,21 +25,6 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 
-import meka.classifiers.multilabel.BRq;
-import meka.classifiers.multilabel.CC;
-import meka.classifiers.multilabel.CDN;
-import meka.classifiers.multilabel.CDT;
-import meka.classifiers.multilabel.CT;
-import meka.classifiers.multilabel.FW;
-import meka.classifiers.multilabel.HASEL;
-import meka.classifiers.multilabel.LC;
-import meka.classifiers.multilabel.MCC;
-import meka.classifiers.multilabel.PCC;
-import meka.classifiers.multilabel.PMCC;
-import meka.classifiers.multilabel.PS;
-import meka.classifiers.multilabel.PSt;
-import meka.classifiers.multilabel.RAkEL;
-import meka.classifiers.multilabel.RAkELd;
 import meka.classifiers.multilabel.RT;
 import weka.core.Instance;
 import weka.core.Instances;

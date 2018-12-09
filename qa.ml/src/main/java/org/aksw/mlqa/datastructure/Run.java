@@ -4,6 +4,11 @@ import java.util.Map;
 
 public class Run {
 
+	private String name;
+	private String submission;
+	private Object fmeasure;
+	private Map<String,Double> map;
+	
 	public String getName() {
 		return name;
 	}
@@ -27,11 +32,6 @@ public class Run {
 	public void setFmeasure(Object fmeasure) {
 		this.fmeasure = fmeasure;
 	}
-
-	private String name;
-	private String submission;
-	private Object fmeasure;
-	private Map<String,Double> map;
 
 	public Run(String name) {
 		this.name = name;

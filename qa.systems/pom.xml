@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>org.aksw.qa</groupId>
 			<artifactId>commons</artifactId>
-			<version>0.4.13</version>
+			<version>0.4.20</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>slf4j-log4j12</artifactId>
@@ -48,11 +48,6 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
 			<version>${logback.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.aksw.qa</groupId>
-			<artifactId>datasets</artifactId>
-			<version>0.5.5</version>
 		</dependency>
 	</dependencies>
 </project>

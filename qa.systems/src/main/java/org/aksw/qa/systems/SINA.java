@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SINA extends ASystem {
-	Logger log = LoggerFactory.getLogger(SINA.class);
+	private Logger log = LoggerFactory.getLogger(SINA.class);
 
 	public String name() {
 		return "sina";

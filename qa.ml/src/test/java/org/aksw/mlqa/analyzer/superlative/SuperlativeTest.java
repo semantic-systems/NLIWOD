@@ -2,10 +2,12 @@ package org.aksw.mlqa.analyzer.superlative;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
+import weka.core.Attribute;
 import weka.core.DenseInstance;
-import weka.core.FastVector;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -14,8 +16,8 @@ public class SuperlativeTest {
 	@Test
 	public void ThisContainsSuperlative() {
 		Superlative superlative = new Superlative();
-		FastVector fvWekaAttributes = new FastVector();
-		fvWekaAttributes.addElement(superlative.getAttribute());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(superlative.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1 );
 		Instance test = new DenseInstance(fvWekaAttributes.size());
 		test.setValue(superlative.getAttribute(), (String) superlative.analyze("This is the best test class!"));		
@@ -25,8 +27,8 @@ public class SuperlativeTest {
 	@Test
 	public void ThisContainsNoSuperlative() {
 		Superlative superlative = new Superlative();
-		FastVector fvWekaAttributes = new FastVector();
-		fvWekaAttributes.addElement(superlative.getAttribute());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(superlative.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1 );
 		Instance test = new DenseInstance(fvWekaAttributes.size());
 		test.setValue(superlative.getAttribute(), (String) superlative.analyze("This sentence contains no superlative!"));		

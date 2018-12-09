@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class HAWK extends ASystem {
-	Logger log = LoggerFactory.getLogger(HAWK.class);
+	private Logger log = LoggerFactory.getLogger(HAWK.class);
 
 	private Decoder based64Decoder = Base64.getDecoder();
 

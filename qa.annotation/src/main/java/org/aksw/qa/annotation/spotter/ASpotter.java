@@ -18,23 +18,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class ASpotter {
-
-	public abstract Map<String, List<Entity>> getEntities(String question);
-
-	static Logger log = LoggerFactory.getLogger(ASpotter.class);
+	
+	private static final Logger log = LoggerFactory.getLogger(ASpotter.class);
 	private boolean useCache = false;
 	private static PersistentCache cache = new PersistentCache();
+	
+	public abstract Map<String, List<Entity>> getEntities(String question);
 
-	protected String requestPOST(final String input, final String requestURL) {
+	protected String requestPOST(final String input, final String requestURL, final String contentType) {
 
-		if (useCache) {
-			if (cache.containsKey(input)) {
-				return cache.get(input);
-			}
+		if (useCache && cache.containsKey(input)) {
+			return cache.get(input);
 		}
 		String output = "";
 		try {
-			output = post(input, requestURL);
+			output = post(input, requestURL, contentType);
 			cache.put(input, output);
 			if (useCache) {
 				cache.writeCache();
@@ -50,7 +48,7 @@ public abstract class ASpotter {
 		return output;
 	}
 
-	private String post(final String urlParameters, final String requestURL) throws MalformedURLException, IOException, ProtocolException {
+	private String post(final String urlParameters, final String requestURL, final String contentType) throws MalformedURLException, IOException, ProtocolException {
 		URL url = new URL(requestURL);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("POST");
@@ -58,7 +56,7 @@ public abstract class ASpotter {
 		connection.setDoInput(true);
 		connection.setUseCaches(false);
 		connection.setRequestProperty("Accept", "application/json");
-		connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+		connection.setRequestProperty("Content-Type", contentType);
 		connection.setRequestProperty("Content-Length", String.valueOf(urlParameters.length()));
 
 		DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
@@ -68,7 +66,6 @@ public abstract class ASpotter {
 		InputStream inputStream = connection.getInputStream();
 		InputStreamReader in = new InputStreamReader(inputStream);
 		BufferedReader reader = new BufferedReader(in);
-
 		StringBuilder sb = new StringBuilder();
 		while (reader.ready()) {
 			sb.append(reader.readLine());

@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 
 import weka.core.Attribute;
 
-//TODO write unit test for this analyzer
 /**
  * Analyses the number of token in input question. TODO: Extract noun phrases
  * and count as one, e.g., "Where was ---Prince Charles--- born?"  4
@@ -15,7 +14,7 @@ import weka.core.Attribute;
  *
  */
 public class NumberOfToken implements IAnalyzer {
-	Logger log = LoggerFactory.getLogger(NumberOfToken.class);
+	private Logger log = LoggerFactory.getLogger(NumberOfToken.class);
 	private Attribute attribute = null;
 
 	public NumberOfToken() {

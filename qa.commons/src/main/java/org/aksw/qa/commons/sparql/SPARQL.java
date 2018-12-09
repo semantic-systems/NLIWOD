@@ -23,7 +23,7 @@ import com.google.common.collect.Sets;
  * Executes sparql queries.
  */
 public class SPARQL {
-	Logger log = LoggerFactory.getLogger(SPARQL.class);
+	private Logger log = LoggerFactory.getLogger(SPARQL.class);
 	public QueryExecutionFactory qef;
 
 	private long timeToLive = 360l * 24l * 60l * 60l * 1000l;
