@@ -1,13 +1,14 @@
 package org.aksw.mlqa.analyzer.querytype;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.aksw.mlqa.analyzer.IAnalyzer;
+import org.aksw.qa.annotation.spotter.ASpotter;
+import org.aksw.qa.annotation.spotter.Spotlight;
+import org.aksw.qa.commons.datastructure.Entity;
 import org.apache.jena.rdf.model.Resource;
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -154,17 +155,13 @@ public class QueryResourceTypeAnalyzer implements IAnalyzer {
 	public Object analyze(String q) {
 		log.debug("String question: " + q);
 		Map<String, List<Entity>> entities = null;
-		try {
-			entities = spotter.getEntities(q);
-			if (!entities.isEmpty()) {
-				for (Entity tmpEntity : entities.get("en")) {
-					for (Resource type : tmpEntity.posTypesAndCategories) {
-						return type.getURI();
-					}
+		entities = spotter.getEntities(q);
+		if (!entities.isEmpty()) {
+			for (Entity tmpEntity : entities.get("en")) {
+				for (Resource type : tmpEntity.getPosTypesAndCategories()) {
+					return type.getURI();
 				}
 			}
-		} catch (IOException | ParseException e) {
-			log.error("Annotator error");
 		}
 		return "Misc";
 
@@ -174,5 +171,4 @@ public class QueryResourceTypeAnalyzer implements IAnalyzer {
 	public Attribute getAttribute() {
 		return attribute;
 	}
-
 }
