@@ -29,7 +29,7 @@ public class StanfordLoader {
 	 *         strings
 	 *
 	 */
-	static Logger log = LoggerFactory.getLogger(Spotlight.class);
+	private static Logger log = LoggerFactory.getLogger(Spotlight.class);
 
 	public static List<IQuestion> load(final InputStream is) {
 		List<IQuestion> output = new ArrayList<>();

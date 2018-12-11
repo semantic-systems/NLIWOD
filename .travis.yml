@@ -5,7 +5,7 @@ jdk:
   - oraclejdk8
   
 script: 
-  - mvn -U test -B 
+  - mvn test -B 
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

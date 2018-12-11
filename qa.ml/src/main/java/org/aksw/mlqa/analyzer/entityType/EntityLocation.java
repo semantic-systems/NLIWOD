@@ -40,7 +40,7 @@ public class EntityLocation implements IAnalyzer {
 		for (CoreMap sentence : sentences)
 		for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
 	        String ne = token.get(NamedEntityTagAnnotation.class); 
-	        if(ne.equals("LOCATION"))
+	        if("LOCATION".equals(ne))
 	        	result = "Location";
 	       }
 		return result;
