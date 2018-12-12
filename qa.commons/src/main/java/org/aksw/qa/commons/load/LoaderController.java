@@ -2,7 +2,6 @@ package org.aksw.qa.commons.load;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.SequenceInputStream;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.ParseException;
