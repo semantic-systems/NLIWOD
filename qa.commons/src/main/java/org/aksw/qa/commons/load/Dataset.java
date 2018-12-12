@@ -52,8 +52,6 @@ public enum Dataset {
 						SemSearch,
 						INEX,
 						QALD2,
-						TREC_Entity, 
-			 		    Simple_Question_Wikidata,
-						Wdaqua_Core0_Logs
+						TREC_Entity
 						
 }
