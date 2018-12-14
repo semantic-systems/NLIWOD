@@ -29,7 +29,6 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.MMapDirectory;
-import org.apache.lucene.util.Version;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.ImmutableList;
@@ -37,7 +36,6 @@ import com.google.common.collect.Lists;
 
 public class IndexDBO_properties extends IndexDBO {
 
-	private static final Version LUCENE_VERSION = Version.LUCENE_46;
 	private org.slf4j.Logger log = LoggerFactory.getLogger(IndexDBO_properties.class);
 	public String FIELD_NAME_SUBJECT = "subject";
 	public String FIELD_NAME_PREDICATE = "predicate";
@@ -53,15 +51,15 @@ public class IndexDBO_properties extends IndexDBO {
 	public IndexDBO_properties() {
 		try {
 			File index = new File("resources/ontologyProperties");
-			analyzer = new SimpleAnalyzer(LUCENE_VERSION);
+			analyzer = new SimpleAnalyzer();
 			if (!index.exists()) {
 				index.mkdir();
-				IndexWriterConfig config = new IndexWriterConfig(LUCENE_VERSION, analyzer);
-				directory = new MMapDirectory(index);
+				IndexWriterConfig config = new IndexWriterConfig(analyzer);
+				directory = new MMapDirectory(index.toPath());
 				iwriter = new IndexWriter(directory, config);
 				index();
 			} else {
-				directory = new MMapDirectory(index);
+				directory = new MMapDirectory(index.toPath());
 			}
 			ireader = DirectoryReader.open(directory);
 			isearcher = new IndexSearcher(ireader);
@@ -82,7 +80,7 @@ public class IndexDBO_properties extends IndexDBO {
 			log.debug("\t start asking index for |" + object + "|");
 
 			Query q = new FuzzyQuery(new Term(FIELD_NAME_OBJECT, object), 0);
-			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
+			TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex);
 
 			isearcher.search(q, collector);
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
