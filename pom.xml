@@ -29,7 +29,6 @@
 		<qa-commons.version>0.4.20</qa-commons.version>
 		<qa-systems.version>0.0.5-SNAPSHOT</qa-systems.version>
 		<qa-ml.version>0.0.1-SNAPSHOT</qa-ml.version>
-		<qa-watodo.version>0.0.1-SNAPSHOT</qa-watodo.version>
 		<qa-dataset-generator.version>0.0.1-SNAPSHOT</qa-dataset-generator.version>
 	</properties>
 

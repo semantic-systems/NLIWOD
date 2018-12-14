@@ -5,7 +5,7 @@
 	<groupId>org.aksw.qa</groupId>
 	<artifactId>datasets</artifactId>
 	<name>Question Answering (QA) datasets collection</name>
-	<version>0.5.15</version>
+	<version>0.5.16</version>
 	<!-- DISTRIBUTION MANAGEMENT -->
 	<distributionManagement>
 		<repository>
@@ -150,48 +150,6 @@
 							<overwrite>false</overwrite>
 							<skipCache>false</skipCache>
 							<outputFileName>annotated_wd_data_valid_full.json</outputFileName>
-							<outputDirectory>src/main/resources/</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>wdaqua-core0-logs</id>
-						<phase>package</phase>
-						<goals>
-							<goal>wget</goal>
-						</goals>
-						<configuration>
-							<url>https://github.com/WDAqua/WDAquaCore0Questions/blob/master/webservice_25_06_2017.json</url>
-							<overwrite>false</overwrite>
-							<skipCache>false</skipCache>
-							<outputFileName>webservice_25_06_2017.json</outputFileName>
-							<outputDirectory>src/main/resources/</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>simple-question-wikidata-test</id>
-						<phase>package</phase>
-						<goals>
-							<goal>wget</goal>
-						</goals>
-						<configuration>
-							<url>https://github.com/askplatypus/wikidata-simplequestions/blob/master/qald-format/annotated_wd_data_valid_full.json</url>
-							<overwrite>false</overwrite>
-							<skipCache>false</skipCache>
-							<outputFileName>annotated_wd_data_valid_full.json</outputFileName>
-							<outputDirectory>src/main/resources/</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>Dbpedia-EntityV2</id>
-						<phase>package</phase>
-						<goals>
-							<goal>wget</goal>
-						</goals>
-						<configuration>
-							<url>https://raw.githubusercontent.com/iai-group/DBpedia-Entity/master/collection/v2/queries-v2.txt</url>
-							<overwrite>true</overwrite>
-							<skipCache>true</skipCache>
-							<outputFileName>queries-v2.txt</outputFileName>
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>
 					</execution>
