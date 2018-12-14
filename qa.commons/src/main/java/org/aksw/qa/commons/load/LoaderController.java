@@ -44,10 +44,14 @@ import org.xml.sax.SAXException;
 
 import com.google.common.base.Strings;
 
+import org.aksw.qa.commons.load.tsv.LoadTsv;
+
+
+
 /**
  * Loads both QALD XML and JSON
  *
- * @author ricardousbeck tortugaattack jonathanhuthmann
+ * @author ricardousbeck tortugaattack jonathanhuthmann 
  */
 
 // TODO refactor that class to account for multiple dataset types. make qaldxml,
@@ -59,6 +63,7 @@ public class LoaderController {
 		// Magical get the path from qa-datasets
 
 		try {
+
 			InputStream url = mapDatasetToPath(set);
 			return url;
 		} catch (NullPointerException e) {
@@ -173,6 +178,12 @@ public class LoaderController {
 			return loadingAnchor.getResourceAsStream("/QALD-master/9/data/qald-9-train-multilingual.json");
 		case LCQUAD:
 			return loadingAnchor.getResourceAsStream("/lcquad_qaldformat.json");
+			// The cases SemSearch, INEX, QALD2,TREC_Entity belong to DBpedia Entity V2
+		case SemSearch:
+		case INEX:
+		case QALD2:
+		case TREC_Entity:
+		   return loadingAnchor.getResourceAsStream("/queries-v22.txt");
 		case Simple_Question_Wikidata:
 			return loadingAnchor.getResourceAsStream("/annotated_wd_data_valid_full.json");
 		case Wdaqua_Core0_Logs:
@@ -214,6 +225,7 @@ public class LoaderController {
 				log.error("Couldn't load dataset " + data.name() + ". Returning null.");
 				return null;
 			}
+			
 			List<IQuestion> out = null;
 			if (is.available() > 0) // check if stream is not empty
 			{
@@ -312,6 +324,15 @@ public class LoaderController {
 				case nlq:
 					out = loadNLQ(is, deriveUri);
 					break;
+				
+				
+				case TREC_Entity:
+				case INEX:
+				case SemSearch:
+				case QALD2:
+					out=LoaderController.loadTSV(is,data.name());
+					break;
+
 
 				case Stanford_dev:
 				case Stanford_train:
@@ -329,6 +350,16 @@ public class LoaderController {
 		}
 		return null;
 	}
+
+	/*private static List<InputStream> getSequenceInputStream(Dataset data) {
+		// TODO Auto-generated method stub
+		
+	    List<InputStream> inputStreams = new Vector<InputStream>();
+		inputStreams.add(getLoadingAnchor().getResourceAsStream("/qrels-v21.txt"));
+		inputStreams.add(getLoadingAnchor().getResourceAsStream("/queries-v2.txt"));
+	
+		return inputStreams;
+	}*/
 
 	/**
 	 * Use this to load answers from server:{@link AnswerSyncer}
@@ -645,6 +676,15 @@ public class LoaderController {
 		for (String s : output2) {
 			System.out.println(s);
 		}
+	}
+	/**
+	 * Use this to load tsv files 
+	 */
+	
+	public static List<IQuestion> loadTSV(InputStream queries, String name) throws IOException {
+		List<IQuestion> out = new ArrayList<>();
+		out = LoadTsv.readTSV(queries,getLoadingAnchor().getResourceAsStream("/qrels-v21.txt"),name);
+		return out;
 	}
 
 }

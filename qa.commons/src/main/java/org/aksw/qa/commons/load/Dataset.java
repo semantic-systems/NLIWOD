@@ -46,8 +46,12 @@ public enum Dataset {
 						QALD9_Train_Multilingual,
 						Stanford_dev,
 						Stanford_train,
-						LCQUAD,
 						Simple_Question_Wikidata,
-						Wdaqua_Core0_Logs
+						Wdaqua_Core0_Logs,
+						LCQUAD,
+						SemSearch,
+						INEX,
+						QALD2,
+						TREC_Entity
 						
 }
