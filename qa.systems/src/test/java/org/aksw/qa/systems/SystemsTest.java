@@ -22,6 +22,7 @@ public class SystemsTest {
                 (ASystem) new START(), 
                 (ASystem) new OKBQA(),
                 (ASystem) new AskNow(),
+                (ASystem) new KBQA(),
 //                (ASystem) new YODA(),
                 (ASystem) new QANARY()
                 );
@@ -31,9 +32,9 @@ public class SystemsTest {
         		IQuestion question = system.search(questionString, "en", true);
             	log.debug(question.toString());
         	}catch(SocketTimeoutException e){
-        	
+        		log.debug("Timeout in " + system.name());
         	}catch(Exception e){
-        		System.out.println("System "+system.name()+" does not work");
+        		log.debug("System "+system.name()+" does not work");
         		e.printStackTrace();
         	}
         }
@@ -58,7 +59,7 @@ public class SystemsTest {
         		IQuestion question = system.search(questionString, "de", true);
             	log.debug(question.toString());
         	}catch(SocketTimeoutException e){
-        		
+        		log.debug("Timeout in " + system.name());
         	}catch(Exception e){
         		System.out.println("System "+system.name()+" does not work");
         		e.printStackTrace();

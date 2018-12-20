@@ -20,7 +20,9 @@ public class TimeoutTest {
                 (ASystem) new SINA(),
                 (ASystem) new START(), 
                 (ASystem) new YODA(),
-                (ASystem) new QANARY()
+                (ASystem) new QANARY(),
+                (ASystem) new AskNow(),
+                (ASystem) new KBQA()
                 );
         for (ASystem system : systems) {
         	system.setSocketTimeOutMs(10);
