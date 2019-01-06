@@ -176,6 +176,8 @@ public class LoaderController {
 			return loadingAnchor.getResourceAsStream("/QALD-master/8/data/qald-8-train-multilingual.json");
 		case QALD9_Train_Multilingual:
 			return loadingAnchor.getResourceAsStream("/QALD-master/9/data/qald-9-train-multilingual.json");
+		case QALD9_Test_Multilingual:
+			return loadingAnchor.getResourceAsStream("/QALD-master/9/data/qald-9-test-multilingual.json");
 		case LCQUAD:
 			return loadingAnchor.getResourceAsStream("/lcquad_qaldformat.json");
 			// The cases SemSearch, INEX, QALD2,TREC_Entity belong to DBpedia Entity V2
@@ -300,6 +302,7 @@ public class LoaderController {
 				case Simple_Question_Wikidata:
 				case Wdaqua_Core0_Logs:
 				case QALD9_Train_Multilingual:
+				case QALD9_Test_Multilingual:
 				case LCQUAD :
 					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(getInputStream(data), QaldJson.class);
 					out = EJQuestionFactory.getQuestionsFromQaldJson(json);

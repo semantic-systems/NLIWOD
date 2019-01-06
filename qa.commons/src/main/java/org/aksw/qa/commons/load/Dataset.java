@@ -44,6 +44,7 @@ public enum Dataset {
 						QALD8_Train_Multilingual,
 						QALD8_Test_Multilingual,
 						QALD9_Train_Multilingual,
+						QALD9_Test_Multilingual,
 						Stanford_dev,
 						Stanford_train,
 						Simple_Question_Wikidata,
