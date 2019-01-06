@@ -125,7 +125,6 @@ public class PatternSparqlGenerator {
 					// return "SELECT * WHERE { dbr:" + named(0) + " ?proj dbr:"
 					// + named(1) + " . }";
 					return construct(Querytype.SELECT, named(0), var(PROJ), named(1));
-
 				default:
 					return NOT_DEFINED;
 				}
@@ -176,7 +175,6 @@ public class PatternSparqlGenerator {
 				default:
 					return NOT_DEFINED;
 				}
-
 			case 1:
 				switch (namedEntities.size()) {
 				case 0:

@@ -22,7 +22,13 @@ public class TimeoutTest {
                 (ASystem) new YODA(),
                 (ASystem) new QANARY(),
                 (ASystem) new AskNow(),
-                (ASystem) new KBQA()
+                (ASystem) new SorokinQA(),
+                (ASystem) new OKBQA(),
+                (ASystem) new GANSWER2(),
+                (ASystem) new PLATYPUS(),
+                (ASystem) new QASystem(),
+                (ASystem) new QUEPY(),
+                (ASystem) new TeBaQA()
                 );
         for (ASystem system : systems) {
         	system.setSocketTimeOutMs(10);

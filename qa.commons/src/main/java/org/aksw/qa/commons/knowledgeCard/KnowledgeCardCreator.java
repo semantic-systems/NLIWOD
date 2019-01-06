@@ -81,13 +81,11 @@ public class KnowledgeCardCreator {
 			List<ExplorerProperties> explorerProperties = readCSVWithExplorerProperties(properties);
 
 			for (ExplorerProperties property : explorerProperties) {
-				// Check if the property matches one of the list of classes(types) found for the
-				// entity
+				// Check if the property matches one of the list of classes(types) found for the entity
 				if (Answer.contains(property.getClassName())) {
 					propertyMap.put(Float.parseFloat(property.getScore()), property.getProperty());
 				}
 			}
-
 			if (propertyMap.size() > 0) {
 				int count = 0;
 				Iterator<Float> iterator = propertyMap.descendingKeySet().iterator(); // Sorts descending order

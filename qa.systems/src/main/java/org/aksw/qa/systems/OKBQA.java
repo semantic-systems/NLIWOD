@@ -19,9 +19,10 @@ import org.slf4j.LoggerFactory;
 public class OKBQA extends ASystem {
 	Logger log = LoggerFactory.getLogger(OKBQA.class);
 	
-	private static final String CONTROLLER_URI = "http://ws.okbqa.org:7042/cm";
+	private static final String CONTROLLER_URI = "http://ws.okbqa.org:7047/cm";
 	private static final String TGM_URI = "http://ws.okbqa.org:1515/templategeneration/rocknrole";
-	private static final String KB_URI2 = "http://dbpedia.org/sparql";
+	private static final String KB_URI1 = "http://kbox.kaist.ac.kr:5889/sparql";
+	private static final String KB_URI2 = "http://en.dbpedia2014.kaist.ac.kr";
 	private static final String QGM_URI = "http://ws.okbqa.org:38401/queries";
 	private static final String AGM_URI = "http://ws.okbqa.org:7745/agm";
 	private static final String DM_URI = "http://ws.okbqa.org:2357/agdistis/run";
@@ -67,6 +68,8 @@ public class OKBQA extends ASystem {
 		
 		//Execute TGM to AGM. 
 		String responseString = execute(createInputJSON(questionString, language));
+		
+		if(responseString == null || responseString.length() == 0) return;
 		JSONObject obj = new JSONObject(responseString);
 		JSONArray results = obj.getJSONArray("result");
 		//Iterate over answers and add them to the final answerSet
@@ -129,8 +132,8 @@ public class OKBQA extends ASystem {
 		JSONObject address = new JSONObject();
 		JSONArray kbAddress = new JSONArray();
 		JSONArray kbAddressURIs = new JSONArray();
-		kbAddressURIs.put(0, KB_URI2);
-		kbAddressURIs.put(1, "");
+		kbAddressURIs.put(0, KB_URI1);
+		kbAddressURIs.put(1, KB_URI2);
 		kbAddress.put(kbAddressURIs);
 		JSONArray tgmAddress = new JSONArray();
 		tgmAddress.put(TGM_URI);
@@ -147,7 +150,6 @@ public class OKBQA extends ASystem {
 		address.put("QGM", qgmAddress);
 		address.put("AGM", agmAddress);
 		conf.put("address", address);
+		conf.put("sync", "on");
 	}
-
-
 }

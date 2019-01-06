@@ -14,19 +14,24 @@ import org.json.simple.parser.ParseException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-public class AskNow extends Gen_HTTP_QA_Sys{
+public class AskNow extends Gen_HTTP_QA_Sys {
 	
-	private static String url = "https://asknowdemo.sda.tech/_getJSON";
+	private static final String URL = "https://asknowdemo.sda.tech/_getJSON";
 	
 	public AskNow() {
+		super(URL, "asknow", true, false);
+		this.setQuery_key("question");
+	}
+	
+	public AskNow(String url) {
 		super(url, "asknow", true, false);
 		this.setQuery_key("question");
 	}
 	
+	
 	@Override
-	public void processQALDResp(HttpResponse response, IQuestion question, String language) throws JsonParseException, JsonMappingException, UnsupportedOperationException, IOException {
-		HashSet<String> resultSet = new HashSet<String>();
-		
+	public void processQALDResp(HttpResponse response, IQuestion question) throws JsonParseException, JsonMappingException, UnsupportedOperationException, IOException {
+		HashSet<String> resultSet = new HashSet<String>();	
 		ResponseToStringParser responseparser = new ResponseToStringParser();
 		JSONParser parser = new JSONParser();
 		String responseString = responseparser.responseToString(response);
@@ -40,10 +45,7 @@ public class AskNow extends Gen_HTTP_QA_Sys{
 		answerjson = (JSONObject) answerjson.get("fullDetail");
 		
 		//if no answer just return
-		if(((JSONArray) answerjson.get("answers")).size() == 0) {
-			return;
-		}
-		
+		if(((JSONArray) answerjson.get("answers")).size() == 0) return;	
 		JSONArray answers =  (JSONArray) ((JSONArray) answerjson.get("answers")).get(0);
 		for(int i = 0; i< answers.size(); i++) {
 			JSONObject answer = (JSONObject) answers.get(i);
@@ -51,8 +53,7 @@ public class AskNow extends Gen_HTTP_QA_Sys{
 			answer = (JSONObject) answer.get(key);
 			resultSet.add((String) answer.get("value"));
 		}
-		question.setGoldenAnswers(resultSet);
-		
+		question.setGoldenAnswers(resultSet);		
 		JSONArray queries =  (JSONArray) ((JSONObject) answerjson.get("sparql")).get("queries");	
 		String query = (String) queries.get(0);
 		question.setSparqlQuery(query.trim());

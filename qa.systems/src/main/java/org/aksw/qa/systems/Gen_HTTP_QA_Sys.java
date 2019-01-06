@@ -63,43 +63,26 @@ public class Gen_HTTP_QA_Sys extends ASystem {
 		this.isPostReq = isPostReq;
 		this.isEQALD = isEQALD;
 	}
-
-	public Gen_HTTP_QA_Sys(String url, String name, Boolean isPostReq, Boolean isEQALD, Map<String, String> paramMap) {
-		super();
-		if (paramMap == null) {
-			paramMap = new HashMap<>();
-		}
-		this.name = name;
-		this.url = url;
-		this.isPostReq = isPostReq;
-		this.paramMap = paramMap;
-		this.isEQALD = isEQALD;
-	}
-
-	public static HttpResponse fetchPostResponse(String url, int timeout, Map<String, String> paramMap)
-			throws ClientProtocolException, IOException {
+	
+	public HttpResponse fetchPostResponse(String url, Map<String, String> paramMap) throws ClientProtocolException, IOException {
 		HttpResponse response = null;
-
-		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).build();
+		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
 		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 		HttpPost httppost = new HttpPost(url);
 
 		List<NameValuePair> params = new ArrayList<>();
-
 		for (String key : paramMap.keySet()) {
 			params.add(new BasicNameValuePair(key, paramMap.get(key)));
 		}
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, Consts.UTF_8);
 		httppost.setEntity(entity);
-
 		response = client.execute(httppost);
 		return response;
 	}
 
-	public static HttpResponse fetchGetResponse(String url, int timeout, Map<String, String> paramMap)
-			throws URISyntaxException, ClientProtocolException, IOException {
+	public HttpResponse fetchGetResponse(String url, Map<String, String> paramMap) throws URISyntaxException, ClientProtocolException, IOException {
 		HttpResponse response = null;
-		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).build();
+		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
 		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 
 		URIBuilder builder = new URIBuilder();
@@ -121,11 +104,12 @@ public class Gen_HTTP_QA_Sys extends ASystem {
 		questionString = question.getLanguageToQuestion().get(language);
 		log.debug(this.getClass().getSimpleName() + ": " + questionString);
 		this.paramMap.put(query_key, questionString);
+
 		if (this.setLangPar) {
 			this.paramMap.put(lang_key, language);
 		}
-		HttpResponse response = isPostReq ? fetchPostResponse(this.url, this.timeout, this.paramMap)
-				: fetchGetResponse(this.url, this.timeout, this.paramMap);
+		HttpResponse response = isPostReq ? fetchPostResponse(this.url, this.paramMap)
+				: fetchGetResponse(this.url, this.paramMap);
 
 		// Test if error occured
 		if (response.getStatusLine().getStatusCode() >= 400) {
@@ -133,9 +117,9 @@ public class Gen_HTTP_QA_Sys extends ASystem {
 		}
 		//Checking if expected format is EQALD or QALD
 		if(this.isEQALD)
-			processEQALDResponse(response, question, language);
+			processEQALDResponse(response, question);
 		else
-			processQALDResp(response, question, language);		
+			processQALDResp(response, question);		
 	}
 
 	/**
@@ -147,14 +131,12 @@ public class Gen_HTTP_QA_Sys extends ASystem {
 	 *            - response to be processed
 	 * @param question
 	 *            - IQuestion instance to be set
-	 * @param language
-	 *            - language of the question
 	 * @throws IOException
 	 * @throws ParseException
 	 * @throws IllegalStateException
 	 */
 	@Deprecated
-	public void processQALDResponse(HttpResponse response, IQuestion question, String language)
+	public void processQALDResponse(HttpResponse response, IQuestion question)
 			throws IllegalStateException, ParseException, IOException {
 		JSONParser parser = new JSONParser();
 
@@ -205,15 +187,12 @@ public class Gen_HTTP_QA_Sys extends ASystem {
 	 *            - response to be processed
 	 * @param question
 	 *            - IQuestion instance to be set
-	 * @param language
-	 *            - language of the question
 	 * @throws IOException
 	 * @throws ParseException
 	 * @throws IllegalStateException
 	 */
-	public void processQALDResp(HttpResponse response, IQuestion question, String language) throws JsonParseException, JsonMappingException, UnsupportedOperationException, IOException {
-		QaldJson qaldJson = (QaldJson) ExtendedQALDJSONLoader.readJson(response.getEntity().getContent(),
-				QaldJson.class);
+	public void processQALDResp(HttpResponse response, IQuestion question) throws JsonParseException, JsonMappingException, UnsupportedOperationException, IOException {
+		QaldJson qaldJson = (QaldJson) ExtendedQALDJSONLoader.readJson(response.getEntity().getContent(),QaldJson.class);
 		//Fetch all answers
 		for (QaldQuestionEntry it : qaldJson.getQuestions()) {
 			QaldQuery qry = it.getQuery();
@@ -223,10 +202,7 @@ public class Gen_HTTP_QA_Sys extends ASystem {
 			}
 			if (it.getAnswers() != null && it.getAnswers().size() > 0) {
 				EJAnswers answers = it.getAnswers().get(0);
-
-				if (answers == null) {
-					return;
-				}
+				if (answers == null) return;
 				if (answers.getBoolean() != null) {
 					question.getGoldenAnswers().add(answers.getBoolean().toString());
 				}
@@ -248,17 +224,13 @@ public class Gen_HTTP_QA_Sys extends ASystem {
 	 * 
 	 * @param response
 	 * @param question
-	 * @param language
 	 * @throws JsonParseException
 	 * @throws JsonMappingException
 	 * @throws UnsupportedOperationException
 	 * @throws IOException
 	 */
-	public void processEQALDResponse(HttpResponse response, IQuestion question, String language)
-			throws JsonParseException, JsonMappingException, UnsupportedOperationException, IOException {
-		ExtendedJson json = (ExtendedJson) ExtendedQALDJSONLoader.readJson(response.getEntity().getContent(),
-				ExtendedJson.class);
-
+	public void processEQALDResponse(HttpResponse response, IQuestion question) throws JsonParseException, JsonMappingException, UnsupportedOperationException, IOException {
+		ExtendedJson json = (ExtendedJson) ExtendedQALDJSONLoader.readJson(response.getEntity().getContent(),ExtendedJson.class);
 		for (EJQuestionEntry it : json.getQuestions()) {
 			EJQuestion q = it.getQuestion();
 			for (EJLanguage lang : q.getLanguage()) {
@@ -266,10 +238,7 @@ public class Gen_HTTP_QA_Sys extends ASystem {
 				question.setPseudoSparqlQuery(lang.getPseudo());
 			}
 			EJAnswers answers = q.getAnswers();
-
-			if (answers == null) {
-				return;
-			}
+			if (answers == null) return;
 			if (answers.getBoolean() != null) {
 				question.getGoldenAnswers().add(answers.getBoolean().toString());
 			}

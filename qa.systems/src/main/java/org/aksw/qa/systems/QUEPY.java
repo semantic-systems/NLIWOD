@@ -20,6 +20,13 @@ import org.json.simple.parser.JSONParser;
 public class QUEPY extends Gen_HTTP_QA_Sys {
 	private static final String SPARQL_ENDPOINT = "http://dbpedia.org/sparql";
 
+	private static final String URL = "http://quepy.machinalis.com/engine/get_query";
+	
+	public QUEPY() {
+		super(URL, "quepy", false, false);
+		this.setQuery_key("question");
+	}
+	
 	public QUEPY(String url) {
 		super(url, "quepy", false, false);
 		this.setQuery_key("question");
@@ -41,8 +48,8 @@ public class QUEPY extends Gen_HTTP_QA_Sys {
 		if (this.setLangPar) {
 			this.getParamMap().put(this.getLang_key(), language);
 		}
-		HttpResponse response = this.getIsPostReq() ? fetchPostResponse(getUrl(), this.timeout, getParamMap())
-				: fetchGetResponse(getUrl(), this.timeout, getParamMap());
+		HttpResponse response = this.getIsPostReq() ? fetchPostResponse(getUrl(), getParamMap())
+				: fetchGetResponse(getUrl(), getParamMap());
 		// Test if error occured
 		if (response.getStatusLine().getStatusCode() >= 400) {
 			throw new Exception("QUEPY Server could not answer due to: " + response.getStatusLine());
