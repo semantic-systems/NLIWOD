@@ -2,39 +2,21 @@ package org.aksw.qa.commons.knowledgeCard;
 
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.github.jsonldjava.utils.JsonUtils;
 
-import org.aksw.qa.commons.knowledgeCard.Field;
-import org.aksw.qa.commons.knowledgeCard.KnowledgeCardCreator;
-import org.junit.Assert;
-
-
-@RunWith(MockitoJUnitRunner.class)
 public class KnowledgeCardCreatorTest {	
 	
 	 private String realCard;
 	
-	 @InjectMocks
 	 private KnowledgeCardCreator knowledgeCardCreator = new KnowledgeCardCreator();
-	 
-	 @Mock
-	 private ResourceLoader resourceLoader;
 	
 	 @Before 
 	 public void createCard() throws JsonGenerationException, IOException {
@@ -74,13 +56,7 @@ public class KnowledgeCardCreatorTest {
 	 @Test
 	 public void knowledgeCardTest() throws JsonGenerationException, IOException {
 		 String uri = "http://dbpedia.org/resource/Albert_Einstein";
-		 DefaultResourceLoader loader = new DefaultResourceLoader();
-		 Resource resource = loader.getResource("classpath:db.csv");
-		 Mockito.when(resourceLoader.getResource("classpath:db.csv")).thenReturn(resource);
-
-		 HashSet<Field> answer = knowledgeCardCreator.process(uri);
-		 String answerCard = JsonUtils.toPrettyString(answer);
-
+		 String answerCard = knowledgeCardCreator.process(uri);
 		 Assert.assertTrue(answerCard.equals(realCard));
 	 }
 }

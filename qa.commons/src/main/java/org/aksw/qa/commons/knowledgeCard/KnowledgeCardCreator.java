@@ -20,18 +20,15 @@ import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.stereotype.Service;
-@Service
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.github.jsonldjava.utils.JsonUtils;
+
 public class KnowledgeCardCreator {
 
 	private static final int MAX_FIELD_SIZE = 5; // Top N Properties that you want
 	private static final int API_TIMEOUT = 5000;
 	private static final String ENDPOINT = "http://dbpedia.org/sparql";
-	@Autowired
-	private ResourceLoader resourceLoader;
 	
 	private static final String PREFIXES = new String("PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n"
 			+ "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
@@ -47,7 +44,7 @@ public class KnowledgeCardCreator {
 		return queryEngine;
 	}
 
-	public HashSet<Field> process(String uri) {
+	public String process(String uri) throws JsonGenerationException, IOException {
 		String query = PREFIXES
 				+ "SELECT (GROUP_CONCAT(distinct ?type;separator=' ') as ?types) (GROUP_CONCAT(distinct ?property;separator=' ') as ?properties) WHERE {\n"
 				+ "<" + uri + "> rdf:type ?type . FILTER(STRSTARTS(STR(?type), 'http://dbpedia.org/ontology')) . \n"
@@ -72,7 +69,9 @@ public class KnowledgeCardCreator {
 		}
 
 		queryExecution.close();
-		return fields;
+		
+		
+		return JsonUtils.toPrettyString(fields);
 	}
 
 	public List<Field> getRelevantProperties(String uri, List<String> Answer, HashSet<String> properties) {
@@ -141,8 +140,7 @@ public class KnowledgeCardCreator {
 	}
 
 	private List<ExplorerProperties> readCSVWithExplorerProperties(HashSet<String> properties) throws IOException {
-		Resource resource = resourceLoader.getResource("classpath:db.csv");
-		InputStream openResource = resource.getInputStream();
+	    InputStream openResource = this.getClass().getClassLoader().getResourceAsStream("db.csv");
 		InputStreamReader in = new InputStreamReader(openResource);
 		BufferedReader br = new BufferedReader(in);
 		List<ExplorerProperties> tmp = new ArrayList<ExplorerProperties>();
