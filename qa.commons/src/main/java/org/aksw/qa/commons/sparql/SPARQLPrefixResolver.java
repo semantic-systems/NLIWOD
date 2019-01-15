@@ -268,11 +268,4 @@ public class SPARQLPrefixResolver {
 			return "LocalMapping: " + super.getLocalPrefixMapping().toString();
 		}
 	}
-
-	public static void main(final String[] args) throws Exception {
-
-		String prefixQuery = "SELECT DISTINCT ?uri WHERE { ?uri a dbo:Musical . ?uri dbo:musicBy <http://dbpedia.org/resource/Category:Critically_endangered_animals> .}";
-
-		System.out.println(SPARQLPrefixResolver.addMissingPrefixes(prefixQuery));
-	}
 }

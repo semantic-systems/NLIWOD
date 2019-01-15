@@ -53,12 +53,12 @@ public class PLATYPUS extends Gen_HTTP_QA_Sys{
 			setQuery((JSONObject) answers.get(0), question);
 			for(int i = 0; i<answers.size(); i++) {
 				JSONObject answer = (JSONObject) answers.get(i);
-				setResult((JSONObject) answer.get("result"), question, resultSet);
+				setResult((JSONObject) answer.get("result"), resultSet);
 			}
 		} else {			
 			JSONObject answer = (JSONObject) answerjson.get("member"); 		
 			setQuery(answer, question);
-			setResult((JSONObject) answer.get("result"), question, resultSet);
+			setResult((JSONObject) answer.get("result"), resultSet);
 		}
 		question.setGoldenAnswers(resultSet);
 	}
@@ -72,7 +72,7 @@ public class PLATYPUS extends Gen_HTTP_QA_Sys{
 		}
 	}
 	
-	private void setResult(JSONObject result, IQuestion question, HashSet<String> resultSet) {
+	private void setResult(JSONObject result, HashSet<String> resultSet) {
 		String id = (String) result.get("@id");
 		if(id == null) {
 			id = (String) result.get("name");

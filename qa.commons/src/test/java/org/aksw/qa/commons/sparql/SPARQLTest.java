@@ -20,12 +20,12 @@ public class SPARQLTest {
 		try {
 			realAnswer = new ThreadedSPARQL(5, SPARQLEndpoints.DBPEDIA_ORG).sparql(query).toString();
 		} catch (ExecutionException e) {
-
 			e.printStackTrace();
 			Assert.fail();
 		}
 		Assert.assertTrue("Answersets differ", answer.equals(realAnswer));
 	}
+	
 	@Ignore
 	@Test
 	public void wikidataTest() throws ExecutionException {

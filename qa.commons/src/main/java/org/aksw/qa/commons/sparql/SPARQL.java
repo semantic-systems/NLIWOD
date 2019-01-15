@@ -152,34 +152,4 @@ public class SPARQL {
 		}
 		return true;
 	}
-
-	// TODO Christian: transform to unit test
-	public static void main(final String args[]) throws Exception {
-		SPARQL sqb = new SPARQL();
-		// TODO @ricardo from jonathan please take a moment to look at this:
-
-		// TODO In order of generateQueries() to work
-		// you need to set something to
-		// SparqlQuery.textMapFromVariableToCombinedNNExactMatchToken
-		// or to SparqlQuery.textMapFromVariableToSingleFuzzyToken, which are
-		// public Maps
-		// But for a query with a few basic constraints you wouldnt set
-		// something there?! So, only by setting Constraints, generateQueries
-		// will always be empty
-		SPARQLQuery query = new SPARQLQuery();
-		query.addConstraint("?proj a <http://dbpedia.org/ontology/Person>.");
-		// query.addConstraint("?proj ?p ?const.");
-		// query.addFilter("proj",
-		// Lists.newArrayList("http://dbpedia.org/resource/Pope_John_Paul_I",
-		// "http://dbpedia.org/resource/Pope_John_Paul_II"));
-		// query.addFilter("const",
-		// Lists.newArrayList("http://dbpedia.org/resource/Canale_d'Agordo"));
-
-		for (String q : query.generateQueries()) {
-			Set<RDFNode> set = sqb.sparql(q);
-			for (RDFNode item : set) {
-				System.out.println(item);
-			}
-		}
-	}
 }

@@ -138,19 +138,23 @@ public class SPARQLQuery implements Cloneable, Serializable {
 		if (!textMapFromVariableToCombinedNNExactMatchToken.isEmpty()) {
 			String exactQuery = generateQueryStringWithExactMatch();
 			set.add(exactQuery);
+		}	
+		if(!constraintTriples.isEmpty() && textMapFromVariableToCombinedNNExactMatchToken.isEmpty() && textMapFromVariableToSingleFuzzyToken.isEmpty()) {
+			String constraintQuery = generateQueryOnlyConstrains();
+			set.add(constraintQuery);
 		}
 
 		return set;
 	}
+	
+	private String generateQueryOnlyConstrains() {
+		StringBuilder sb = setBeginOfQuery();
+		return addConstraintsAndFilter(sb);
+	}
 
 	private String generateQueryStringWithExactMatch() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("PREFIX text:<http://jena.apache.org/text#> \n");
-		if (isASKQuery) {
-			sb.append("ASK {\n ");
-		} else {
-			sb.append("SELECT DISTINCT ?proj WHERE {\n ");
-		}
+		StringBuilder sb = setBeginOfQuery();
+		
 		for (String variable : textMapFromVariableToCombinedNNExactMatchToken.keySet()) {
 			// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
 			// anti-apartheid activist').
@@ -172,27 +176,12 @@ public class SPARQLQuery implements Cloneable, Serializable {
 				sb.append("' " + 1000 + "). \n");
 			}
 		}
-		for (String constraint : constraintTriples) {
-			sb.append(constraint + " \n");
-		}
-		for (String filterString : filter) {
-			sb.append("FILTER (" + filterString + ").\n ");
-		}
-		sb.append("}\n");
-		if (!isASKQuery) {
-			sb.append("LIMIT " + limit);
-		}
-		return sb.toString();
+		return addConstraintsAndFilter(sb);
 	}
 
 	private String generateQueryStringWithFuzzy() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("PREFIX text:<http://jena.apache.org/text#> \n");
-		if (isASKQuery) {
-			sb.append("ASK {\n ");
-		} else {
-			sb.append("SELECT DISTINCT ?proj WHERE {\n ");
-		}
+		StringBuilder sb = setBeginOfQuery();
+
 		for (String variable : textMapFromVariableToSingleFuzzyToken.keySet()) {
 			// ?s text:query (<http://dbpedia.org/ontology/abstract> 'Mandela
 			// anti-apartheid activist').
@@ -220,6 +209,22 @@ public class SPARQLQuery implements Cloneable, Serializable {
 				sb.append("' " + 1000 + "). \n");
 			}
 		}
+		return addConstraintsAndFilter(sb);
+	}
+
+	
+	private StringBuilder setBeginOfQuery() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("PREFIX text:<http://jena.apache.org/text#> \n");
+		if (isASKQuery) {
+			sb.append("ASK {\n");
+		} else {
+			sb.append("SELECT DISTINCT ?proj WHERE {\n");
+		}
+		return sb;
+	}
+	
+	private String addConstraintsAndFilter(StringBuilder sb) {
 		for (String constraint : constraintTriples) {
 			sb.append(constraint + " \n");
 		}
@@ -232,7 +237,7 @@ public class SPARQLQuery implements Cloneable, Serializable {
 		}
 		return sb.toString();
 	}
-
+	
 	// taken from
 	// http://stackoverflow.com/questions/237159/whats-the-best-way-to-check-to-see-if-a-string-represents-an-integer-in-java
 	private boolean isInteger(final String str) {
