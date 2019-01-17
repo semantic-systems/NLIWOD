@@ -27,8 +27,8 @@
 | APEQ          |                                                   |                           |         |
 | QAnswer       |                                                   |                           |         |
 | SemGraphQA    |                                                   |                           |         |
-| YodaQA        | http://live.ailao.eu/                             |                           |     X   |
-| HAWK          | http://hawk.aksw.org/                             |                           |     X   |
+| YodaQA        | http://live.ailao.eu/                             | webservice not working    |     X   |
+| HAWK          | http://hawk.aksw.org/                             | webservice not working    |     X   |
 | **-QALD 6** |
 | CANaLI        |                                                   |                           |         |
 | PersionQA     |                                                   |                           |         |
@@ -36,15 +36,24 @@
 | KGWAnswer     |                                                   |                           |         |
 | NbFramework   |                                                   |                           |         |
 | UIQA          |                                                   |                           |         |
+| **-QALD 9** |
+| WDAqua-core1  | http://qanswer-frontend.univ-st-etienne.fr/       |                           |     X   |
+| gAnswer       | http://ganswer.gstore-pku.com/                    |                           |     X   |
+| TeBaQA        | http://139.18.2.39:8187/                          |                           |     X   |
+| QASystem      | http://qald-beta.cs.upb.de:80/gerbil              |                           |     X   |
 | **-Miscelleanous** |
 | NLSearch      | https://wikidata.metaphacts.com/resource/NLSearch |                           |         |
-| OKBQA         | http://ws.okbqa.org/~testuser02/                  |                           |         |
+| OKBQA         | http://ws.okbqa.org/wui-2016/                     |                           |     X   |
 | DEANNA        |                                                   |                           |         |
 | questIO       |                                                   |                           |         |
-| SINA          | http://sina.aksw.org/                             | very slow                 |     X   |
+| SINA          | http://sina.aksw.org/                             | webservice not reachable  |     X   |
 | Start         | http://start.csail.mit.edu/index.php              | non-uniform answer format |     X   |
 | TBSL          | http://linkedspending.aksw.org/tbsl/              | unstable                  |         |
 | LODQA         | http://lodqa.org/                                 | only searches for datasets|         |
+| AskNow        | https://asknowdemo.sda.tech/                      |                           |     X   |
+| Platypus      | https://projetpp.github.io/demo.html              |                           |     X   |
+| Quepy         | http://quepy.machinalis.com/                      | non-uniform answer format |     X   |
+| SorokinQA         | http://semanticparsing.ukp.informatik.tu-darmstadt.de:5000/question-answering/static/index.html  | very slow                 |     X   |
 
 For more systems see page 7 of http://www.semantic-web-journal.net/system/files/swj1205.pdf
 
