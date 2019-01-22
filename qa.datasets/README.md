@@ -63,7 +63,7 @@ QA datasets to analyze:
 * https://hucvl.github.io/recipeqa/
 * https://arxiv.org/pdf/1810.02802.pdf
 * https://gluebenchmark.com/
-
+* https://github.com/conversationai/wikidetox/tree/master/wikiconv
 * Interesting study for Google's quality: https://www.emeraldinsight.com/doi/pdfplus/10.1108/LHT-10-2017-0218
 
 out of scope (?) :
