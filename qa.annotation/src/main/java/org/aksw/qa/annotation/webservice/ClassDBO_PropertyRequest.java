@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/property")
 public class ClassDBO_PropertyRequest {
 
-	final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private IndexDBO_properties properties;
 	private NifEverything nif = NifEverything.getInstance();

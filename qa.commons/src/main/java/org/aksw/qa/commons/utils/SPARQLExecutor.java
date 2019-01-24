@@ -144,7 +144,7 @@ public class SPARQLExecutor {
 		Set<RDFNode> set = Sets.newHashSet();
 
 		QueryExecution qe = QueryExecutionFactory.sparqlService(service, query);
-		if ((qe != null) && (query.toString() != null)) {
+		if ((qe != null) && (query != null)) {
 			if (QALD4_EvaluationUtils.isAskType(query)) {
 				set.add(new ResourceImpl(String.valueOf(qe.execAsk())));
 			} else {

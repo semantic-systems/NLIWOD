@@ -6,9 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.common.collect.Lists;
 
 import meka.classifiers.multilabel.RT;
@@ -22,7 +19,7 @@ import weka.core.converters.ArffLoader.ArffReader;
  */
 
 public class CrossValidationExperiments {
-	static Logger log = LoggerFactory.getLogger(CrossValidationExperiments.class);
+	// private static Logger log = LoggerFactory.getLogger(CrossValidationExperiments.class);
 	
 	
 	public static void main(String[] args) throws Exception {		

@@ -31,7 +31,7 @@ import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
 
 public class LeaveOneOutCV {
-static Logger log = LoggerFactory.getLogger(CDTClassifierMultilable.class);
+	private static Logger log = LoggerFactory.getLogger(CDTClassifierMultilable.class);
 	
 	
 	public static void main(String[] args) throws Exception {		

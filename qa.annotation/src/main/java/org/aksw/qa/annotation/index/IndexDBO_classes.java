@@ -47,12 +47,11 @@ public class IndexDBO_classes extends IndexDBO {
 	private IndexSearcher isearcher;
 	private DirectoryReader ireader;
 	private IndexWriter iwriter;
-	private SimpleAnalyzer analyzer;
 
 	public IndexDBO_classes() {
 		try {
 			File index = new File("resources/ontologyClasses");
-			analyzer = new SimpleAnalyzer();
+			SimpleAnalyzer analyzer = new SimpleAnalyzer();
 			if (!index.exists() || (index.list().length < 2)) {
 				index.mkdir();
 				IndexWriterConfig config = new IndexWriterConfig(analyzer);

@@ -22,6 +22,7 @@ public class GreedyPipelineCreatorService implements PipelineCreatorService {
 	public List<Pipeline> createAllPossiblePipelines() {
 		// get list of all available modules from registry
 		logger.info("Get all modules from registry");
+		@SuppressWarnings("unused")
 		List<Module> modules = moduleDAO.getModules();
 
 		

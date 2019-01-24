@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class NifEverything {
-	final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	/**
 	 * Make this Singleton
 	 */
@@ -107,11 +107,9 @@ public class NifEverything {
 			logger.debug("Given input results in empty document list - check input");
 			return INPUT_NOT_PARSABLE;
 		}
-
 		for (Document doc : docs) {
 			addAllMarkingsToDoc(doc, stringToMarkingsIndexDBO(doc.getText(), indexDBO, nif));
 		}
-
 		return writeNIF(docs);
 	}
 

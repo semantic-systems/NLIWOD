@@ -24,7 +24,7 @@ import com.google.common.collect.Lists;
 
 public class Utils {
 	
-	static Logger log = LoggerFactory.getLogger(Utils.class);
+	private static Logger log = LoggerFactory.getLogger(Utils.class);
 
 	public static ArrayList<String> loadSystemP(String system){
 

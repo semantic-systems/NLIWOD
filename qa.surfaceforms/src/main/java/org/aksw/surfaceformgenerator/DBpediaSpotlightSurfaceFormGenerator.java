@@ -172,10 +172,8 @@ public class DBpediaSpotlightSurfaceFormGenerator {
 			String tempSubject = subject.substring(subject.lastIndexOf("/") + 1);
 			String tempObject = object.substring(object.lastIndexOf("/") + 1);
 
-			if (!tempSubject.equals(tempObject)) {
-				if (conceptUris.contains(subject) && !subject.contains("%")) {
+			if (!tempSubject.equals(tempObject) && (conceptUris.contains(subject) && !subject.contains("%"))) {
 					addSurfaceFormAnchor(surfaceForms, subject, object);
-				}
 			}
 		}
 

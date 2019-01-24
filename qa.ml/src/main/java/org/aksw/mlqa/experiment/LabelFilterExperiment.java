@@ -11,9 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.common.collect.Lists;
 
 import meka.classifiers.multilabel.PSt;
@@ -28,7 +25,7 @@ import weka.filters.unsupervised.attribute.Remove;
  */
 
 public class LabelFilterExperiment {
-	static Logger log = LoggerFactory.getLogger(LabelFilterExperiment.class);
+	// private static Logger log = LoggerFactory.getLogger(LabelFilterExperiment.class);
 	
 	
 	public static void main(String[] args) throws Exception {

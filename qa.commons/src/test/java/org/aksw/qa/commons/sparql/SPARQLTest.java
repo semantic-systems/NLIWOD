@@ -3,7 +3,6 @@ package org.aksw.qa.commons.sparql;
 import java.util.concurrent.ExecutionException;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,20 +25,14 @@ public class SPARQLTest {
 		Assert.assertTrue("Answersets differ", answer.equals(realAnswer));
 	}
 	
-	@Ignore
 	@Test
 	public void wikidataTest() throws ExecutionException {
 		log.debug("Trying to query wikidata...(Timeout 5s)");
 		String query = "SELECT DISTINCT ?company WHERE {?company 		 <http://www.wikidata.org/prop/direct/P452> 		 <http://www.wikidata.org/entity/Q581105> ; 		 <http://www.wikidata.org/prop/direct/P740> 		 <http://www.wikidata.org/entity/Q956> . }";
-		// String query = "SELECT (COUNT(DISTINCT ?uri) as ?count) WHERE {
-		// <http://www.wikidata.org/entity/Q83233>
-		// <http://www.wikidata.org/prop/direct/P40>/<http://www.wikidata.org/prop/direct/P40>
-		// ?uri }";
-		String answer = "[http://www.wikidata.org/entity/Q14799, http://www.wikidata.org/entity/Q1636958]";
+		String answer = "[http://www.wikidata.org/entity/Q1636958]";
 		String realAnswer = "";
 		realAnswer = new SPARQL(SPARQLEndpoints.WIKIDATA_ORG).sparql(query).toString();
 		Assert.assertTrue("Answersets differ", answer.equals(realAnswer));
-
 	}
 
 }

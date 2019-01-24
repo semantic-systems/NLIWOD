@@ -73,7 +73,7 @@ public class SPARQL {
 		Set<RDFNode> set = Sets.newHashSet();
 
 		QueryExecution qe = qef.createQueryExecution(query);
-		if ((qe != null) && (query.toString() != null)) {
+		if ((qe != null) && (query != null)) {
 			if (QALD4_EvaluationUtils.isAskType(query)) {
 				set.add(new ResourceImpl(String.valueOf(qe.execAsk())));
 			} else {

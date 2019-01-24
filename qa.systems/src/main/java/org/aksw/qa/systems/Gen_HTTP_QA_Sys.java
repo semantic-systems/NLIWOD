@@ -44,7 +44,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class Gen_HTTP_QA_Sys extends ASystem {
-	Logger log = LoggerFactory.getLogger(Gen_HTTP_QA_Sys.class);
+	private Logger log = LoggerFactory.getLogger(Gen_HTTP_QA_Sys.class);
 	// String constants
 	private String query_key = "query";
 	private String lang_key = "lang";

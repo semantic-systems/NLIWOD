@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,34 +139,6 @@ public final class ExtendedQALDJSONLoader {
 	}
 
 	public static Object readJson(final File f, final Class<?> type) throws JsonParseException, JsonMappingException, FileNotFoundException, IOException {
-		return readJson(new FileInputStream(f), type);
-	}
-
-	// TODO transform to unit test
-	public static void main(final String[] args) throws Exception {
-		HashMap<String, EJBinding> hash = new HashMap<>();
-		hash.put("myVar", new EJBinding().setType("myType").setValue("myValue"));
-
-		ExtendedJson ej = new ExtendedJson();
-		EJQuestionEntry entry = new EJQuestionEntry();
-		EJAnswers answers = new EJAnswers();
-		entry.getQuestion().addAnsweritemtype("answeritemtype").setId(5 + "").setAnswertype("someAnswertype").setConfidence("very confident").setAnswers(answers);
-		answers.setHead(new EJHead());
-		answers.getHead().getVars().add("myVariable");
-		answers.getHead().getLink().add("http://myli.n" + "k");
-		EJResults results = new EJResults();
-		results.getBindings().add((hash));
-		answers.setResults(results);
-		answers.setConfidence("so confident, very satisfied, such unafraid").setBoolean(true);
-		EJDataset dataset = new EJDataset();
-		dataset.setId("5").setMetadata("MetadataString");
-		ej.setDataset(dataset);
-
-		ej.addQuestions(entry);
-       
-		ExtendedQALDJSONLoader.writeJson(ej, new File("ExtendedJson2.json"), true);
-		System.out.println(ExtendedQALDJSONLoader.readJson(new File("ExtendedJson2.json"), ExtendedJson.class).toString());
-		System.out.println("done");
-
+		return  readJson(new FileInputStream(f), type);
 	}
 }

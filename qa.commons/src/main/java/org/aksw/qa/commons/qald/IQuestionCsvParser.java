@@ -292,63 +292,63 @@ public class IQuestionCsvParser {
 			this.state = state;
 		}
 
-		public ColEnum getEnum() {
+		protected ColEnum getEnum() {
 			return en;
 		}
 
-		public String getState() {
+		protected String getState() {
 			return state;
 		}
 
-		private Column(final ColEnum en) {
+		protected Column(final ColEnum en) {
 			this(en, null);
 		}
 
-		static Column ignore() {
+		protected static Column ignore() {
 			return new Column(ColEnum.__IGNORE);
 		}
 
-		static Column ID() {
+		protected static Column ID() {
 			return new Column(ColEnum.ID);
 		}
 
-		static Column aggregationFlag() {
+		protected static Column aggregationFlag() {
 			return new Column(ColEnum.AGGREGATION_FLAG);
 		}
 
-		static Column onlyDboFlag() {
+		protected static Column onlyDboFlag() {
 			return new Column(ColEnum.ONLYDBO_FLAG);
 		}
 
-		static Column outOfScopeFlag() {
+		protected static Column outOfScopeFlag() {
 			return new Column(ColEnum.OUT_OF_SCOPE_FLAG);
 		}
 
-		static Column hybridFlag() {
+		protected static Column hybridFlag() {
 			return new Column(ColEnum.HYBRID_FLAG);
 		}
 
-		static Column sparqlQuery() {
+		protected static Column sparqlQuery() {
 			return new Column(ColEnum.SPARQL_QUERY);
 		}
 
-		static Column pseudoSparqlQuery() {
+		protected static Column pseudoSparqlQuery() {
 			return new Column(ColEnum.PSEUDO_SPARQL_QUERY);
 		}
 
-		static Column answerType() {
+		protected static Column answerType() {
 			return new Column(ColEnum.ANSWER_TYPE);
 		}
 
-		static Column goldenAnswers() {
+		protected static Column goldenAnswers() {
 			return new Column(ColEnum.GOLDEN_ANSWERS);
 		}
 
-		static Column question(final String lang) {
+		protected static Column question(final String lang) {
 			return new Column(ColEnum.QUESTION, lang);
 		}
 
-		static Column keywords(final String lang) {
+		protected static Column keywords(final String lang) {
 			return new Column(ColEnum.KEYWORDS, lang);
 		}
 
@@ -383,8 +383,4 @@ public class IQuestionCsvParser {
 	public static CSVReader readerForGoogleDocsCsvExports(final Reader reader, final int skipLines) {
 		return new CSVReader(reader, ',', '"', skipLines);
 	}
-
-	public static void main(final String[] args) throws Exception {
-	}
-
 }

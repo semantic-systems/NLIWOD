@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import javax.json.Json;
 import javax.json.JsonArray;
-import javax.json.JsonNumber;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonString;
@@ -56,7 +55,6 @@ public class StanfordLoader {
 					JsonArray answers = ((JsonObject) x).getJsonArray("answers");
 					HashSet<String> goldenAnswers = new HashSet<>();
 					answers.forEach(y -> {
-						JsonNumber answerStart = ((JsonObject) y).getJsonNumber("answer_start");
 						JsonString text = ((JsonObject) y).getJsonString("text");
 						if (text == null) {
 							log.info("id: " + id.getString() + " has answertext : NULL");

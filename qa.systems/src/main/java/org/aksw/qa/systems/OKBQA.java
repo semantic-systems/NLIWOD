@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class OKBQA extends ASystem {
-	Logger log = LoggerFactory.getLogger(OKBQA.class);
+	private Logger log = LoggerFactory.getLogger(OKBQA.class);
 	
 	private static final String CONTROLLER_URI = "http://ws.okbqa.org:7047/cm";
 	private static final String TGM_URI = "http://ws.okbqa.org:1515/templategeneration/rocknrole";

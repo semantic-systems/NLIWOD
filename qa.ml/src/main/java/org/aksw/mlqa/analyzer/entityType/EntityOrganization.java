@@ -42,7 +42,7 @@ public class EntityOrganization implements IAnalyzer {
 			for (CoreMap sentence : sentences)
 			for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
 		        String ne = token.get(NamedEntityTagAnnotation.class); 
-		        if(ne.equals("ORGANIZATION"))
+		        if("ORGANIZATION".equals(ne))
 		        	result = "Organization";
 		       }
 			return result;

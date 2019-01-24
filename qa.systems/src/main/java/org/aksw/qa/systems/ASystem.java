@@ -21,16 +21,17 @@ public abstract class ASystem {
     	return search(question, language, false);
     }
 
-	public IQuestion search(String question, String language, boolean setLangPar) throws Exception{
-        if(language == null){
-        	language="en";
+	public IQuestion search(String question, String language, boolean setLangPar) throws Exception {
+		String lang = language;
+        if(lang == null){
+        	lang = "en";
         }
         this.setLangPar=setLangPar;
     	IQuestion iQuestion = new Question();
         Map<String, String> langToQuestion = new HashMap<String, String>();
-        langToQuestion.put(language, question);
+        langToQuestion.put(lang, question);
         iQuestion.setLanguageToQuestion(langToQuestion);
-        search(iQuestion, language);
+        search(iQuestion, lang);
         return iQuestion;
     }
 

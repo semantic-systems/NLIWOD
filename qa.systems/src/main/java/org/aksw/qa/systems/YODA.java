@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class YODA extends ASystem {
-	Logger log = LoggerFactory.getLogger(YODA.class);
+	private Logger log = LoggerFactory.getLogger(YODA.class);
 
 	/**
 	 * Time to wait between calls.
@@ -94,7 +94,7 @@ public class YODA extends ASystem {
 			JSONObject responsejson = (JSONObject) parser.parse(responseparser
 					.responseToString(questionresponse));
 			finished = responsejson.get("finished").toString();
-			if (finished.equals("true")) {
+			if ("true".equals(finished)) {
 				JSONArray answer = (JSONArray) responsejson.get("answers");
 				for (int j = 0; j < answer.size(); j++) {
 					JSONObject answerj = (JSONObject) answer.get(j);

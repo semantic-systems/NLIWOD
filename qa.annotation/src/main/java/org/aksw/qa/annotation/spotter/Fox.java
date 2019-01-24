@@ -48,7 +48,7 @@ public class Fox extends ASpotter {
 		String foxJSONOutput = null;
 
 		foxJSONOutput = doTask(question);
-		if (!foxJSONOutput.equals("") && (!(foxJSONOutput == null))) {
+		if (!"".equals(foxJSONOutput) && (foxJSONOutput != null)) {
 			try {
 				JSONParser parser = new JSONParser();
 				JSONObject jsonArray = (JSONObject) parser.parse(foxJSONOutput);

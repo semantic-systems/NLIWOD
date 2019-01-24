@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Properties;
 
 import org.aksw.mlqa.analyzer.IAnalyzer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
@@ -18,7 +16,7 @@ import edu.stanford.nlp.util.CoreMap;
 import weka.core.Attribute;
 
 public class Superlative implements IAnalyzer {
-	static Logger log = LoggerFactory.getLogger(Superlative.class);
+	// private static Logger log = LoggerFactory.getLogger(Superlative.class);
 	private Attribute attribute = null;
 	private StanfordCoreNLP pipeline;
 	
@@ -45,7 +43,7 @@ public class Superlative implements IAnalyzer {
 		for (CoreMap sentence : sentences)
 		for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
 	        String pos = token.get(CoreAnnotations.PartOfSpeechAnnotation.class); 
-	        if(pos.equals("RBS")||pos.equals("JJS"))
+	        if("RBS".equals(pos)||"JJS".equals(pos))
 	        	result = "Superlative";
 	       }
 		return result;

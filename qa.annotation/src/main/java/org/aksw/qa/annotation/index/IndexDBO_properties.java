@@ -46,12 +46,11 @@ public class IndexDBO_properties extends IndexDBO {
 	private IndexSearcher isearcher;
 	private DirectoryReader ireader;
 	private IndexWriter iwriter;
-	private SimpleAnalyzer analyzer;
 
 	public IndexDBO_properties() {
 		try {
 			File index = new File("resources/ontologyProperties");
-			analyzer = new SimpleAnalyzer();
+			SimpleAnalyzer analyzer = new SimpleAnalyzer();
 			if (!index.exists()) {
 				index.mkdir();
 				IndexWriterConfig config = new IndexWriterConfig(analyzer);

@@ -9,7 +9,7 @@ import java.io.IOException;
  */
 public class SurfaceFormGenerator {
 
-	private static Boolean FILTER_SURFACE_FORMS = true;
+//	private static Boolean FILTER_SURFACE_FORMS = true;
 	public static String DIRECTORY = "data/2016-10/en/";
 	public static String LANGUAGE = "en";
 //downloaded files

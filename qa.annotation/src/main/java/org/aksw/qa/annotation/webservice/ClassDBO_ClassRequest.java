@@ -17,7 +17,7 @@ class ClassDBO_ClassRequest {
 	/**
 	 *
 	 */
-	final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private IndexDBO_classes classes;
 	private NifEverything nif = NifEverything.getInstance();

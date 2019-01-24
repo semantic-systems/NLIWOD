@@ -25,7 +25,7 @@ import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
 
 public class CDTClassifierEvaluation {
-	static Logger log = LoggerFactory.getLogger(CDTClassifierEvaluation.class);
+	private static Logger log = LoggerFactory.getLogger(CDTClassifierEvaluation.class);
 	
 	
 	public static void main(String[] args) throws Exception {		

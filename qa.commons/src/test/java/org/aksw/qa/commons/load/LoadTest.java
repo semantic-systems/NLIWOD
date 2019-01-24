@@ -17,14 +17,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LoadTest {
-	Logger log = LoggerFactory.getLogger(LoadTest.class);
+	private Logger log = LoggerFactory.getLogger(LoadTest.class);
 
 	@Test
 	/**
 	 * Testing all datasets for loadability and validity of SPARQL-queries
 	 */
-	// FIXME do not ignore that but also
-	// @Ignore
 	public void testAllDatasetsTowardsLoadibility() {
 		Boolean queriesValid = true;
 		for (Dataset d : Dataset.values()) {
@@ -133,7 +131,7 @@ public class LoadTest {
 
 	}
 
-	boolean execQuery(final IQuestion q, final boolean hurry) {
+	private boolean execQuery(final IQuestion q, final boolean hurry) {
 
 		Query query = new Query();
 
@@ -191,16 +189,18 @@ public class LoadTest {
 					queryValid = false;
 				}
 
-			}
+			} 
+		} finally {
+			qef.close();
 		}
 		return queryValid;
 	}
 
-	boolean execQuery(final IQuestion q) {
-		return execQuery(q, false);
-	}
+//	private boolean execQuery(final IQuestion q) {
+//		return execQuery(q, false);
+//	}
 
-	boolean execQueryWithoutResults(final IQuestion q) {
+	private boolean execQueryWithoutResults(final IQuestion q) {
 		return execQuery(q, true);
 	}
 }

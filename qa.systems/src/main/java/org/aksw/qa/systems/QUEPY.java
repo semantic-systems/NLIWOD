@@ -16,8 +16,12 @@ import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class QUEPY extends Gen_HTTP_QA_Sys {
+	private Logger log = LoggerFactory.getLogger(QUEPY.class);
+	
 	private static final String SPARQL_ENDPOINT = "http://dbpedia.org/sparql";
 
 	private static final String URL = "http://quepy.machinalis.com/engine/get_query";

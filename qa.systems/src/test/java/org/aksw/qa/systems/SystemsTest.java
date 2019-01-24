@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SystemsTest {
-    Logger log = LoggerFactory.getLogger(SystemsTest.class);
+    private Logger log = LoggerFactory.getLogger(SystemsTest.class);
 
     @Test
     public void testAllSystemsEN() throws Exception {

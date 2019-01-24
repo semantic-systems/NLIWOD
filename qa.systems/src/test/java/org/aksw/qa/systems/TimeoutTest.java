@@ -10,7 +10,6 @@ import org.junit.Test;
 
 public class TimeoutTest {
 
-	
     @Test
     public void testAllSystems() throws Exception {
         String questionString = "Was ist die Hauptstadt von Deutschland?";

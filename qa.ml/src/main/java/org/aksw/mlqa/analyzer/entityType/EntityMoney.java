@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Properties;
 
 import org.aksw.mlqa.analyzer.IAnalyzer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import edu.stanford.nlp.ling.CoreAnnotations.NamedEntityTagAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
@@ -18,7 +16,7 @@ import edu.stanford.nlp.util.CoreMap;
 import weka.core.Attribute;
 
 public class EntityMoney implements IAnalyzer {
-		static Logger log = LoggerFactory.getLogger(EntityMoney.class);
+		// private static Logger log = LoggerFactory.getLogger(EntityMoney.class);
 		private Attribute attribute = null;
 		private StanfordCoreNLP pipeline;
 		
@@ -42,7 +40,7 @@ public class EntityMoney implements IAnalyzer {
 			for (CoreMap sentence : sentences)
 			for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
 		        String ne = token.get(NamedEntityTagAnnotation.class); 
-		        if(ne.equals("MONEY"))
+		        if("MONEY".equals(ne))
 		        	result = "Money";
 		       }
 			return result;

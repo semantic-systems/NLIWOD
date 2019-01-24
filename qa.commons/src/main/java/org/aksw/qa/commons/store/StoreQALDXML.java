@@ -68,10 +68,6 @@ public class StoreQALDXML {
 	// qw.close();
 	// }
 
-	public static void main(final String[] args) {
-
-	}
-
 	public void close() throws IOException, TransformerFactoryConfigurationError, TransformerException {
 		Element root = doc.createElement("dataset");
 		root.setAttribute("id", dataset);

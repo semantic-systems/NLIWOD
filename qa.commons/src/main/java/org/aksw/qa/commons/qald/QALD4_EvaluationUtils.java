@@ -13,7 +13,7 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.Sets.SetView;
 
 public class QALD4_EvaluationUtils {
-	static Logger log = LoggerFactory.getLogger(QALD4_EvaluationUtils.class);
+	private static Logger log = LoggerFactory.getLogger(QALD4_EvaluationUtils.class);
 
 	public static double precision(final Set<RDFNode> systemAnswer, final IQuestion question) {
 		if (systemAnswer == null) {

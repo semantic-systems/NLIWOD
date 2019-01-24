@@ -56,7 +56,7 @@ public class NtripleUtil {
 			if (i % 10000 == 0) {
 				log.debug("still reading " + filename);
 			}
-			results.add(replacePrefix == null || replacePrefix.equals("") ? statement.getSubject().getURI()
+			results.add(replacePrefix == null || "".equals(replacePrefix) ? statement.getSubject().getURI()
 					: statement.getSubject().getURI().replace(replacePrefix, ""));
 
 			

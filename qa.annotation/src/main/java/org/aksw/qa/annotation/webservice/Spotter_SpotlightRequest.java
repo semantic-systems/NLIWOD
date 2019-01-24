@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/spotlight")
 public class Spotter_SpotlightRequest {
 
-	final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private NifEverything nif = NifEverything.getInstance();
 	private Spotlight spotlight;

@@ -20,27 +20,6 @@ import java.util.HashMap;
 
 public class AGDISTIS {
 	/**
-	 * testing main
-	 * 
-	 * @param args
-	 * @throws ParseException
-	 * @throws IOException
-	 */
-	public static void main(String[] args) throws ParseException, IOException {
-		AGDISTIS post = new AGDISTIS();
-		String subjectString = "Tom Cruise";
-		String objectString = "Katie Holmes";
-
-		String preAnnotatedText = "<entity>" + subjectString + "</entity><entity>" + objectString + "</entity>";
-
-		HashMap<String, String> results = post.runDisambiguation(preAnnotatedText);
-		for (String namedEntity : results.keySet()) {
-			System.out.println("named entity: " + namedEntity + " -> " + results.get(namedEntity));
-		}
-
-	}
-
-	/**
 	 * 
 	 * @param inputText
 	 *            with encoded entities,e.g.,
