@@ -39,7 +39,7 @@ public class HAWK extends ASystem {
 		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
 		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 		URIBuilder builder = new URIBuilder().setScheme("http")
-				.setHost("139.18.2.164:8181").setPath("/search")
+				.setHost("hawk.aksw.org:8181").setPath("/search")
 				.setParameter("q", questionString);
 		if(this.setLangPar){
 			builder = builder.setParameter("lang", language);
@@ -55,9 +55,12 @@ public class HAWK extends ASystem {
 		
 		String id = responseparser.responseToString(idresponse);
 		JSONParser parser = new JSONParser();
-
+//http://hawk.aksw.org:8181/
+		//URI quri = new URIBuilder().setScheme("http")
+		//		.setHost("139.18.2.164:8181").setPath("/status")
+		//		.setParameter("UUID", id.substring(1, id.length() - 2)).build();
 		URI quri = new URIBuilder().setScheme("http")
-				.setHost("139.18.2.164:8181").setPath("/status")
+				.setHost("hawk.aksw.org:8181").setPath("/status")
 				.setParameter("UUID", id.substring(1, id.length() - 2)).build();
 
 		int j = 0;

@@ -8,12 +8,12 @@ public class QANARY extends Gen_HTTP_QA_Sys {
 	private static final String KB = "dbpedia";
 	
 	public QANARY() {
-		super(URL, "qanary", true, true);
+		super(URL, "qanary", false, true);
 		this.getParamMap().put("kb", KB);
 	}
 	
 	public QANARY(String url, String kb) {
-		super(url, "qanary", true, true);
+		super(url, "qanary", false, true);
 		this.getParamMap().put("kb", kb);
 	}
 }

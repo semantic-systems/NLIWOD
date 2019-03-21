@@ -75,7 +75,7 @@ public class PLATYPUS extends Gen_HTTP_QA_Sys{
 	private void setResult(JSONObject result, HashSet<String> resultSet) {
 		String id = (String) result.get("@id");
 		if(id == null) {
-			id = (String) result.get("name");
+			id = result.get("name").toString();
 		}
 		id = id.replaceAll("wd:", "http://www.wikidata.org/entity/");
 		resultSet.add(id);

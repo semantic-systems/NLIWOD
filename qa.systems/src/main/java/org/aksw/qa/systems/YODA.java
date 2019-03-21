@@ -35,7 +35,7 @@ public class YODA extends ASystem {
 	 */
 	private long lastCall = 0;
 
-	private String url = "http://yodaqa.felk.cvut.cz:4567/q";
+	private String url = "http://yodaqa.felk.cvut.cz:4568/q";
 
 	@Override
 	public String name() {
