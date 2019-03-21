@@ -78,6 +78,7 @@ out of scope (?) :
 * http://www.cs.cmu.edu/~ark/QA-data/ 
 * http://webscope.sandbox.yahoo.com/catalog.php?datatype=l
 * https://arxiv.org/abs/1710.06481
+* https://t.co/CXQ9BfVOyU
 * http://qangaroo.cs.ucl.ac.uk/
 * https://arxiv.org/abs/1805.03797
 * http://jmcauley.ucsd.edu/data/amazon/qa/
