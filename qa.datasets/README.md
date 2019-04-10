@@ -116,6 +116,7 @@ out of scope (?) :
 * https://www.stateoftheart.ai/
 * https://www.aaai.org/Papers/AAAI/2019/AAAI-TafjordO.6869.pdf
 * https://github.com/NLP-BigDataLab/QAnalysis-project
+* https://www.semanticscholar.org/paper/DROP%3A-A-Reading-Comprehension-Benchmark-Requiring-Dua-Wang/9498f5b9ff0052c22e41979df49bc8efca0a9d17
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
