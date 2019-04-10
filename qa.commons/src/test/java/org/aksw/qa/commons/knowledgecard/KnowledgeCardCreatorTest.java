@@ -1,10 +1,12 @@
-package org.aksw.qa.commons.knowledgeCard;
+package org.aksw.qa.commons.knowledgecard;
 
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 
+import org.aksw.qa.commons.knowledgecard.Field;
+import org.aksw.qa.commons.knowledgecard.KnowledgeCardCreator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

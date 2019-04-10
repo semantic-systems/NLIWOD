@@ -14,7 +14,7 @@ import weka.core.Instances;
 public class ComperativeTest {
 
 	@Test
-	public void ThisContainsComperative() {
+	public void thisContainsComperative() {
 		Comperative superlative = new Comperative();
 		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		fvWekaAttributes.add(superlative.getAttribute());
@@ -25,7 +25,7 @@ public class ComperativeTest {
 	}
 
 	@Test
-	public void ThisContainsNoComperative(){
+	public void thisContainsNoComperative(){
 		Comperative superlative = new Comperative();
 		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		fvWekaAttributes.add(superlative.getAttribute());

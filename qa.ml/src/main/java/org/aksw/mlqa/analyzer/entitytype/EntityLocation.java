@@ -1,4 +1,4 @@
-package org.aksw.mlqa.analyzer.entityType;
+package org.aksw.mlqa.analyzer.entitytype;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,39 +15,37 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 import weka.core.Attribute;
 
-public class EntityDate implements IAnalyzer {
-	// private static Logger log = LoggerFactory.getLogger(EntityDate.class);
+public class EntityLocation implements IAnalyzer {
+	//static Logger log = LoggerFactory.getLogger(EntityLocation.class);
 	private Attribute attribute = null;
 	private StanfordCoreNLP pipeline;
 	
-	public EntityDate() {
+	public EntityLocation() {
 		Properties props = new Properties();
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner");
 		props.setProperty("ner.useSUTime", "false");
 		pipeline = new StanfordCoreNLP(props);
-		
-		ArrayList<String> fvWekaDate = new ArrayList<String>();
-		fvWekaDate.add("Date");
-		fvWekaDate.add("NoDate");
-		attribute = new Attribute("Date", fvWekaDate);
+		ArrayList<String> fvWekaLocation = new ArrayList<String>();
+		fvWekaLocation.add("Location");
+		fvWekaLocation.add("NoLocation");
+		attribute = new Attribute("Location", fvWekaLocation);
 	}
-	
-//FIXME: Time funktioniert mit Stanford NLP nicht einwandfrei.
-	
+
 	@Override
 	public Object analyze(String q) {
-		String result = "NoDate";
+		String result = "NoLocation";
 		Annotation annotation = new Annotation(q);
 		pipeline.annotate(annotation);
 		List<CoreMap> sentences = annotation.get(SentencesAnnotation.class);
 		for (CoreMap sentence : sentences)
 		for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
 	        String ne = token.get(NamedEntityTagAnnotation.class); 
-	        if("DATE".equals(ne))
-	        	result = "Date";
+	        if("LOCATION".equals(ne))
+	        	result = "Location";
 	       }
 		return result;
 	}
+
 	@Override
 	public Attribute getAttribute() {
 		return attribute;

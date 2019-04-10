@@ -1,9 +1,15 @@
-package org.aksw.mlqa.analyzer.entityType;
+package org.aksw.mlqa.analyzer.entitytype;
 
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import org.aksw.mlqa.analyzer.entitytype.EntityDate;
+import org.aksw.mlqa.analyzer.entitytype.EntityLocation;
+import org.aksw.mlqa.analyzer.entitytype.EntityMoney;
+import org.aksw.mlqa.analyzer.entitytype.EntityOrganization;
+import org.aksw.mlqa.analyzer.entitytype.EntityPercent;
+import org.aksw.mlqa.analyzer.entitytype.EntityPerson;
 import org.junit.Test;
 
 import weka.core.Attribute;
@@ -14,7 +20,7 @@ import weka.core.Instances;
 public class EntityTypeTest {
 
 	@Test
-	public void PersonTest1() {
+	public void personTest1() {
 		EntityPerson personana = new EntityPerson();
 		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		fvWekaAttributes.add(personana.getAttribute());
@@ -25,7 +31,7 @@ public class EntityTypeTest {
 	}
 
 	@Test
-	public void PersonTest2() {
+	public void personTest2() {
 		EntityPerson personana = new EntityPerson();
 		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		fvWekaAttributes.add(personana.getAttribute());
@@ -36,7 +42,7 @@ public class EntityTypeTest {
 	}
 
 	@Test
-	public void LocationTest1() {
+	public void locationTest1() {
 		EntityLocation locationana = new EntityLocation();
 		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		fvWekaAttributes.add(locationana.getAttribute());
@@ -47,7 +53,7 @@ public class EntityTypeTest {
 	}
 
 	@Test
-	public void LocationTest2() {
+	public void locationTest2() {
 		EntityLocation locationana = new EntityLocation();
 		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		fvWekaAttributes.add(locationana.getAttribute());
@@ -58,7 +64,7 @@ public class EntityTypeTest {
 	}
 
 	@Test
-	public void OrganizationTest1() {
+	public void organizationTest1() {
 		EntityOrganization organa = new EntityOrganization();
 		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		fvWekaAttributes.add(organa.getAttribute());
@@ -69,7 +75,7 @@ public class EntityTypeTest {
 	}
 
 	@Test
-	public void OrganizationTest2() {
+	public void organizationTest2() {
 		EntityOrganization organa = new EntityOrganization();
 		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		fvWekaAttributes.add(organa.getAttribute());
@@ -80,7 +86,7 @@ public class EntityTypeTest {
 	}
 
 	@Test
-	public void MoneyTest1() {
+	public void moneyTest1() {
 		EntityMoney monana = new EntityMoney();
 		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		fvWekaAttributes.add(monana.getAttribute());
@@ -91,7 +97,7 @@ public class EntityTypeTest {
 	}
 
 	@Test
-	public void MoneyTest2() {
+	public void moneyTest2() {
 		EntityMoney monana = new EntityMoney();
 		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		fvWekaAttributes.add(monana.getAttribute());
@@ -102,7 +108,7 @@ public class EntityTypeTest {
 	}
 
 	@Test
-	public void PercentTest1() {
+	public void percentTest1() {
 		EntityPercent percana = new EntityPercent();
 		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		fvWekaAttributes.add(percana.getAttribute());
@@ -113,7 +119,7 @@ public class EntityTypeTest {
 	}
 
 	@Test
-	public void PercentTest2() {
+	public void percentTest2() {
 		EntityPercent percana = new EntityPercent();
 		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		fvWekaAttributes.add(percana.getAttribute());
@@ -124,7 +130,7 @@ public class EntityTypeTest {
 	}
 
 	@Test
-	public void DateTest1() {
+	public void dateTest1() {
 		EntityDate dateana = new EntityDate();
 		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		fvWekaAttributes.add(dateana.getAttribute());
@@ -135,7 +141,7 @@ public class EntityTypeTest {
 	}
 
 	@Test
-	public void DateTest2() {
+	public void dateTest2() {
 		EntityDate dateana = new EntityDate();
 		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		fvWekaAttributes.add(dateana.getAttribute());

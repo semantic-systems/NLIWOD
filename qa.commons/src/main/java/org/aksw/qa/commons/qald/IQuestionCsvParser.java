@@ -308,7 +308,7 @@ public class IQuestionCsvParser {
 			return new Column(ColEnum.__IGNORE);
 		}
 
-		protected static Column ID() {
+		protected static Column iD() {
 			return new Column(ColEnum.ID);
 		}
 

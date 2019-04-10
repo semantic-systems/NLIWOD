@@ -19,12 +19,12 @@ public class SorokinQA extends Gen_HTTP_QA_Sys{
 	
 	public SorokinQA() {
 		super(URL, "sorokinqa", true, false);
-		this.setQuery_key("question");
+		this.setQueryKey("question");
 	}
 	
 	public SorokinQA(String url) {
 		super(url, "sorokinqa", true, false);
-		this.setQuery_key("question");
+		this.setQueryKey("question");
 	}
 	
 	@Override
@@ -44,7 +44,7 @@ public class SorokinQA extends Gen_HTTP_QA_Sys{
 		for(int i = 0; i<answerjson.size(); i++) {
 			resultSet.add("https://www.wikidata.org/wiki/" + (String) answerjson.get(i));
 		}
-		//ony returns wikidata ids, nothing else
+		//only returns wikidata ids, nothing else
 		question.setGoldenAnswers(resultSet);
 	}
 }

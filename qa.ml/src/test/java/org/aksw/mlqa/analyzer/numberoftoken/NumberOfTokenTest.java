@@ -1,9 +1,10 @@
-package org.aksw.mlqa.analyzer.numberOfToken;
+package org.aksw.mlqa.analyzer.numberoftoken;
 
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import org.aksw.mlqa.analyzer.numberoftoken.NumberOfToken;
 import org.junit.Test;
 
 import weka.core.Attribute;

@@ -101,10 +101,10 @@ public class ArffFileFromRun {
 				JSONObject systemdata = (JSONObject) allsystemsdata.get(system.name());
 				if(new Double(systemdata.get("fmeasure").toString()) > 0)
 					switch (system.name()){
-					case "hawk": tmp.setValue(hawkatt, 1); 
-					case "yoda": tmp.setValue(yodaatt, 1);
-					case "sina": tmp.setValue(sinaatt, 1);
-					case "qakis": tmp.setValue(qakisatt, 1);
+					case "hawk": tmp.setValue(hawkatt, 1); break;
+					case "yoda": tmp.setValue(yodaatt, 1); break;
+					case "sina": tmp.setValue(sinaatt, 1); break;
+					case "qakis": tmp.setValue(qakisatt, 1); break;
 					}
 				}
 

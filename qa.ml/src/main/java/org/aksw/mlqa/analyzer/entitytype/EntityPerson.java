@@ -1,4 +1,4 @@
-package org.aksw.mlqa.analyzer.entityType;
+package org.aksw.mlqa.analyzer.entitytype;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,33 +15,34 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 import weka.core.Attribute;
 
-public class EntityLocation implements IAnalyzer {
-	//static Logger log = LoggerFactory.getLogger(EntityLocation.class);
+public class EntityPerson implements IAnalyzer {
+	// private static Logger log = LoggerFactory.getLogger(EntityPerson.class);
 	private Attribute attribute = null;
 	private StanfordCoreNLP pipeline;
 	
-	public EntityLocation() {
+	public EntityPerson() {
 		Properties props = new Properties();
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner");
 		props.setProperty("ner.useSUTime", "false");
 		pipeline = new StanfordCoreNLP(props);
-		ArrayList<String> fvWekaLocation = new ArrayList<String>();
-		fvWekaLocation.add("Location");
-		fvWekaLocation.add("NoLocation");
-		attribute = new Attribute("Location", fvWekaLocation);
+		
+		ArrayList<String> fvWekaPerson = new ArrayList<String>();
+		fvWekaPerson.add("Person");
+		fvWekaPerson.add("NoPerson");
+		attribute = new Attribute("Person", fvWekaPerson);
 	}
 
 	@Override
 	public Object analyze(String q) {
-		String result = "NoLocation";
+		String result = "NoPerson";
 		Annotation annotation = new Annotation(q);
 		pipeline.annotate(annotation);
 		List<CoreMap> sentences = annotation.get(SentencesAnnotation.class);
 		for (CoreMap sentence : sentences)
 		for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
 	        String ne = token.get(NamedEntityTagAnnotation.class); 
-	        if("LOCATION".equals(ne))
-	        	result = "Location";
+	        if("PERSON".equals(ne))
+	        	result = "Person";
 	       }
 		return result;
 	}
@@ -50,4 +51,5 @@ public class EntityLocation implements IAnalyzer {
 	public Attribute getAttribute() {
 		return attribute;
 	}
+
 }

@@ -1,4 +1,4 @@
-package org.aksw.mlqa.analyzer.numberOfToken;
+package org.aksw.mlqa.analyzer.numberoftoken;
 
 import org.aksw.mlqa.analyzer.IAnalyzer;
 import org.slf4j.Logger;

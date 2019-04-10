@@ -21,6 +21,7 @@ log.out.*
 qa.datasets/src/main/resources/annotated_wd_data_valid_full.json
 qa.datasets/src/main/resources/lcquad_qaldformat.json
 qa.datasets/src/main/resources/qrels-v2.txt
+qa.datasets/src/main/resources/queries-v2.txt
 qa.datasets/src/main/resources/webservice_25_06_2017.json
 qa.datasets/src/main/resources/QALD
 qa.datasets/src/main/resources/QALD-master

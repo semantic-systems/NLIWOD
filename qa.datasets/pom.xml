@@ -167,6 +167,20 @@
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>
 					</execution>
+					<execution>
+						<id>Dbpedia-Entity-V2-Queries</id>
+						<phase>package</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://raw.githubusercontent.com/iai-group/DBpedia-Entity/master/collection/v2/queries-v2.txt</url>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+							<outputFileName>queries-v2.txt</outputFileName>
+							<outputDirectory>src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 		</plugins>

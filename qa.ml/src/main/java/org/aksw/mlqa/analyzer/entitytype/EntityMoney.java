@@ -1,4 +1,4 @@
-package org.aksw.mlqa.analyzer.entityType;
+package org.aksw.mlqa.analyzer.entitytype;
 
 import java.util.ArrayList;
 import java.util.List;

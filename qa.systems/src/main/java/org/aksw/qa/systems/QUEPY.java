@@ -28,12 +28,12 @@ public class QUEPY extends Gen_HTTP_QA_Sys {
 	
 	public QUEPY() {
 		super(URL, "quepy", false, false);
-		this.setQuery_key("question");
+		this.setQueryKey("question");
 	}
 	
 	public QUEPY(String url) {
 		super(url, "quepy", false, false);
-		this.setQuery_key("question");
+		this.setQueryKey("question");
 	}
 
 	/**
@@ -48,9 +48,9 @@ public class QUEPY extends Gen_HTTP_QA_Sys {
 		}
 		questionString = question.getLanguageToQuestion().get(language);
 		log.debug(this.getClass().getSimpleName() + ": " + questionString);
-		this.getParamMap().put(this.getQuery_key(), questionString);
+		this.getParamMap().put(this.getQueryKey(), questionString);
 		if (this.setLangPar) {
-			this.getParamMap().put(this.getLang_key(), language);
+			this.getParamMap().put(this.getLangKey(), language);
 		}
 		HttpResponse response = this.getIsPostReq() ? fetchPostResponse(getUrl(), getParamMap())
 				: fetchGetResponse(getUrl(), getParamMap());

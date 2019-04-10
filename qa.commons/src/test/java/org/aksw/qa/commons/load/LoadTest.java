@@ -95,7 +95,7 @@ public class LoadTest {
 	}
 
 	@Test
-	public void loadQALD6Train_Multilingual() throws IOException {
+	public void loadQALD6TrainMultilingual() throws IOException {
 		List<IQuestion> load = LoaderController.load(Dataset.QALD6_Train_Multilingual);
 		List<Integer> expectedIncompletes = Arrays.asList(100, 118, 136, 137, 147, 152, 94, 95, 96, 97, 98, 99, 249, 250, 312, 342);
 		log.debug("Number of Loaded Questions:" + load.size());
@@ -123,10 +123,10 @@ public class LoadTest {
 				Assert.assertTrue((q.getPseudoSparqlQuery() != null) || (q.getSparqlQuery() != null));
 				// log.debug(q.getLanguageToQuestion().get("en") + "\t" +
 				// "Answer:" + "\t" + q.getSparqlQuery());
-			} else {
+			}  // else {
 				// log.debug(q.getLanguageToQuestion().get("en") + "\t" +
 				// "No Answer, known incomplete question.");
-			}
+			// }
 		}
 
 	}

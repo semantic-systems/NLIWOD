@@ -185,7 +185,7 @@ public class LoaderController {
 		case INEX:
 		case QALD2:
 		case TREC_Entity:
-		   return loadingAnchor.getResourceAsStream("/queries-v22.txt");
+		   return loadingAnchor.getResourceAsStream("/queries-v2.txt");
 		case Simple_Question_Wikidata:
 			return loadingAnchor.getResourceAsStream("/annotated_wd_data_valid_full.json");
 		case Wdaqua_Core0_Logs:
@@ -262,7 +262,7 @@ public class LoaderController {
 				// two files.
 				case QALD3_Test_esdbpedia:
 					is.close();
-					out = qald3_test_esdbpedia_loader(deriveUri, questionLang);
+					out = qald3TestEsdbpediaLoader(deriveUri, questionLang);
 					break;
 
 				case QALD5_Test_Hybrid:
@@ -368,7 +368,7 @@ public class LoaderController {
 	 * Use this to load answers from server:{@link AnswerSyncer}
 	 */
 	@Deprecated //TODO refactor this so that answersyncing is no longer in this class
-	private static List<IQuestion> qald3_test_esdbpedia_loader(final String deriveUri, final String questionLang) {
+	private static List<IQuestion> qald3TestEsdbpediaLoader(final String deriveUri, final String questionLang) {
 		List<IQuestion> answerList = null;
 		try {
 			InputStream sparqlIs = null;
@@ -686,7 +686,7 @@ public class LoaderController {
 	
 	public static List<IQuestion> loadTSV(InputStream queries, String name) throws IOException {
 		List<IQuestion> out = new ArrayList<>();
-		out = LoadTsv.readTSV(queries,getLoadingAnchor().getResourceAsStream("/qrels-v21.txt"),name);
+		out = LoadTsv.readTSV(queries,getLoadingAnchor().getResourceAsStream("/qrels-v2.txt"),name);
 		return out;
 	}
 

@@ -3,6 +3,7 @@ package org.aksw.qa.systems;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,6 +22,7 @@ import org.aksw.qa.commons.load.json.ExtendedQALDJSONLoader;
 import org.aksw.qa.commons.load.json.QaldJson;
 import org.aksw.qa.commons.load.json.QaldQuery;
 import org.aksw.qa.commons.load.json.QaldQuestionEntry;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -230,6 +232,7 @@ public class Gen_HTTP_QA_Sys extends ASystem {
 	 * @throws IOException
 	 */
 	public void processEQALDResponse(HttpResponse response, IQuestion question) throws JsonParseException, JsonMappingException, UnsupportedOperationException, IOException {
+		//System.out.println(IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8));
 		ExtendedJson json = (ExtendedJson) ExtendedQALDJSONLoader.readJson(response.getEntity().getContent(),ExtendedJson.class);
 		for (EJQuestionEntry it : json.getQuestions()) {
 			EJQuestion q = it.getQuestion();
@@ -291,19 +294,19 @@ public class Gen_HTTP_QA_Sys extends ASystem {
 		this.name = name;
 	}
 
-	public String getQuery_key() {
+	public String getQueryKey() {
 		return query_key;
 	}
 
-	public void setQuery_key(String query_key) {
+	public void setQueryKey(String query_key) {
 		this.query_key = query_key;
 	}
 
-	public String getLang_key() {
+	public String getLangKey() {
 		return lang_key;
 	}
 
-	public void setLang_key(String lang_key) {
+	public void setLangKey(String lang_key) {
 		this.lang_key = lang_key;
 	}
 

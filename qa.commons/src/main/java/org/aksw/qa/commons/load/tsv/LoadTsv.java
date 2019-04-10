@@ -37,7 +37,8 @@ public class LoadTsv {
 			String[] lineparts;
 			if (line.startsWith(data)) {
 				lineparts = line.split("\t");
-				String result = lineparts[2].replaceAll("<dbpedia:", "<http://dbpedia.org/resource/");
+				String result = lineparts[2].replaceAll("<dbpedia:", "http://dbpedia.org/resource/");
+				result = result.substring(0, result.length()-1);
 				results.computeIfAbsent(lineparts[0], k -> new HashSet<>()).add(result);
 			}
 

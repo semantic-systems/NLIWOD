@@ -20,12 +20,12 @@ public class AskNow extends Gen_HTTP_QA_Sys {
 	
 	public AskNow() {
 		super(URL, "asknow", true, false);
-		this.setQuery_key("question");
+		this.setQueryKey("question");
 	}
 	
 	public AskNow(String url) {
 		super(url, "asknow", true, false);
-		this.setQuery_key("question");
+		this.setQueryKey("question");
 	}
 	
 	

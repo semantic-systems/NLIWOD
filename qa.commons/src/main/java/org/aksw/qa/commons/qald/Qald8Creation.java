@@ -148,7 +148,7 @@ public class Qald8Creation {
 
 		CSVWriter wr = new CSVWriter(fw, ';', '"');
 
-		IQuestionCsvParser.questionListToCsv(wr, true, questions, Column.ID(), Column.question("en"), Column.sparqlQuery(), Column.goldenAnswers());
+		IQuestionCsvParser.questionListToCsv(wr, true, questions, Column.iD(), Column.question("en"), Column.sparqlQuery(), Column.goldenAnswers());
 		wr.flush();
 		fw.close();
 
@@ -161,7 +161,7 @@ public class Qald8Creation {
 
 		CSVWriter wr2 = new CSVWriter(fw2, ';', '"');
 
-		IQuestionCsvParser.questionListToCsv(wr2, true, failQuestions, Column.ID(), Column.question("en"), Column.sparqlQuery(), Column.goldenAnswers());
+		IQuestionCsvParser.questionListToCsv(wr2, true, failQuestions, Column.iD(), Column.question("en"), Column.sparqlQuery(), Column.goldenAnswers());
 		wr2.flush();
 		fw2.close();
 		System.out.println("done qald8train");
@@ -239,7 +239,7 @@ public class Qald8Creation {
 
 		CSVWriter wr2 = new CSVWriter(fw2, ';', '"');
 
-		IQuestionCsvParser.questionListToCsv(wr2, true, que, Column.ID(), Column.question("en"), Column.sparqlQuery(), Column.goldenAnswers());
+		IQuestionCsvParser.questionListToCsv(wr2, true, que, Column.iD(), Column.question("en"), Column.sparqlQuery(), Column.goldenAnswers());
 
 		wr2.close();
 		fw2.close();

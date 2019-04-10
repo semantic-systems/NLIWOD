@@ -26,7 +26,7 @@ public class AnswerBasedEvaluation {
 				if (systemAnswer.size() == 1) {
 					String ans = systemAnswer.iterator().next();
 					String goldstandardAns = goldenStrings.iterator().next();
-					if (ans.toString().equals(goldstandardAns.toString())) {
+					if (ans.equals(goldstandardAns.toString())) {
 						precision = 1;
 					}
 				}
@@ -43,7 +43,7 @@ public class AnswerBasedEvaluation {
 				if (systemAnswer.size() == 1) {
 					String ans = systemAnswer.iterator().next();
 					String goldstandardAns = goldenStrings.iterator().next();
-					if (ans.toString().equals(goldstandardAns)) {
+					if (ans.equals(goldstandardAns)) {
 						precision = 1;
 					}
 				}

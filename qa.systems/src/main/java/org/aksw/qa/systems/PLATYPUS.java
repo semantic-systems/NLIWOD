@@ -20,12 +20,12 @@ public class PLATYPUS extends Gen_HTTP_QA_Sys{
 	
 	public PLATYPUS() {
 		super(URL, "platypus", false, false);
-		this.setQuery_key("q");
+		this.setQueryKey("q");
 	}
 	
 	public PLATYPUS(String url) {
 		super(url, "platypus", false, false);
-		this.setQuery_key("q");
+		this.setQueryKey("q");
 	}
 	
 	@Override
