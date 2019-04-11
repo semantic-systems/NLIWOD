@@ -627,67 +627,13 @@ public class LoaderController {
 		return output;
 	}
 
-	// // TODO transform to unit test
-	public static void main(final String[] args) throws ParseException {
-		ArrayList<String> output = new ArrayList<>();
-		ArrayList<String> output2 = new ArrayList<>();
-		for (Dataset data : Dataset.values()) {
-			// if (!data.equals(Dataset.QALD6_Train_Multilingual)) {
-			// continue;
-			// }
 
-			List<IQuestion> questions = load(data);
-			if (questions == null) {
-				System.out.println("Dataset null" + data.toString());
-			} else if (questions.size() == 0) {
-				System.out.println("Dataset empty" + data.toString());
-			} else {
-				Set<IQuestion> noanswers = new HashSet<>();
-				Set<IQuestion> nosparql = new HashSet<>();
-				for (IQuestion q : questions) {
-
-					if (((q.getSparqlQuery() == null) || (q.getSparqlQuery().isEmpty())) && ((q.getPseudoSparqlQuery() == null) || q.getPseudoSparqlQuery().isEmpty())) {
-						nosparql.add(q);
-					}
-					if (((q.getGoldenAnswers() == null) || q.getGoldenAnswers().isEmpty())) {
-						noanswers.add(q);
-					}
-
-				}
-				DecimalFormat df = new DecimalFormat("###.##");
-				df.setRoundingMode(RoundingMode.CEILING);
-				if (!noanswers.isEmpty()) {
-					output.add(((df.format(((double) noanswers.size() / questions.size()) * 100)) + "%") + " Missing answers on : " + data.toString() + ", " + noanswers.size() + " Question(s).");
-				}
-
-				if (!nosparql.isEmpty()) {
-					output2.add(
-					        (df.format((((double) nosparql.size() / questions.size()) * 100)) + "%") + " Neither Sparql nor Pseudo : " + data.toString() + ", " + nosparql.size() + " Question(s).");
-				}
-
-				System.out.println("Loaded successfully: " + data.toString());
-			}
-		}
-		/*
-		 * QUALD2__test_dbpedia has no answers in File (only sparql) QUALD2_test_musicbrainz has no answers in File (only sparql)
-		 */
-		System.out.println("\n\n");
-		for (String s : output) {
-			System.out.println(s);
-		}
-		System.out.println("\n\n");
-		for (String s : output2) {
-			System.out.println(s);
-		}
-	}
 	/**
 	 * Use this to load tsv files 
 	 */
-	
 	public static List<IQuestion> loadTSV(InputStream queries, String name) throws IOException {
 		List<IQuestion> out = new ArrayList<>();
 		out = LoadTsv.readTSV(queries,getLoadingAnchor().getResourceAsStream("/qrels-v2.txt"),name);
 		return out;
 	}
-
 }

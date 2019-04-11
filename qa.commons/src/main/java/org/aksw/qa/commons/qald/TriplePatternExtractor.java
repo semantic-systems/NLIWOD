@@ -11,7 +11,6 @@ import org.apache.commons.collections15.ListUtils;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.Query;
-import org.apache.jena.query.QueryFactory;
 import org.apache.jena.sparql.core.TriplePath;
 import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.syntax.Element;
@@ -54,24 +53,6 @@ public class TriplePatternExtractor extends ElementVisitorBase {
 		return triplePatterns;
 	}
 
-	/**
-	 * Returns all triple patterns in given SPARQL query that have the given
-	 * node in object position, i.e. the incoming triple patterns.
-	 * 
-	 * @param query The SPARQL query.
-	 */
-	public Set<Triple> extractIncomingTriplePatterns(final Query query, final Node node) {
-		Set<Triple> triplePatterns = extractTriplePattern(query, false);
-		// remove triple patterns not containing triple patterns with given node
-		// in subject position
-		for (Iterator<Triple> iterator = triplePatterns.iterator(); iterator.hasNext();) {
-			Triple triple = iterator.next();
-			if (!triple.objectMatches(node)) {
-				iterator.remove();
-			}
-		}
-		return triplePatterns;
-	}
 
 	/**
 	 * Returns all triple patterns in given SPARQL query that have the given
@@ -159,22 +140,6 @@ public class TriplePatternExtractor extends ElementVisitorBase {
 	 */
 	public Set<Triple> getOptionalTriplePatterns() {
 		return optionalTriplePattern;
-	}
-
-	/**
-	 * Returns triple patterns for each projection variable v such that v is in
-	 * subject position.
-	 * 
-	 * @param query The SPARQL query.
-	 */
-	public Map<Var, Set<Triple>> extractIncomingTriplePatternsForProjectionVars(final Query query) {
-		Map<Var, Set<Triple>> var2TriplePatterns = new HashMap<>();
-		for (Var var : query.getProjectVars()) {
-			Set<Triple> triplePatterns = new HashSet<>();
-			triplePatterns.addAll(extractIncomingTriplePatterns(query, var));
-			var2TriplePatterns.put(var, triplePatterns);
-		}
-		return var2TriplePatterns;
 	}
 
 	/**
@@ -303,12 +268,5 @@ public class TriplePatternExtractor extends ElementVisitorBase {
 
 	public int getFilterCount() {
 		return filterCount;
-	}
-//TODO christian unittest
-	public static void main(final String[] args) throws Exception {
-		Query q = QueryFactory
-		        .create("prefix  dbp:  <http://dbpedia.org/resource/> " + "prefix  dbp2: <http://dbpedia.org/ontology/> " + "select  ?thumbnail where  { dbp:total !dbp2:thumbnail ?thumbnail }");
-		TriplePatternExtractor triplePatternExtractor = new TriplePatternExtractor();
-		triplePatternExtractor.extractIngoingTriplePatterns(q, q.getProjectVars().get(0));
 	}
 }

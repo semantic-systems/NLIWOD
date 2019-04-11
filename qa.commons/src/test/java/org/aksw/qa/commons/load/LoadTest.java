@@ -1,9 +1,13 @@
 package org.aksw.qa.commons.load;
 
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.aksw.qa.commons.datastructure.IQuestion;
@@ -91,6 +95,43 @@ public class LoadTest {
 			Assert.assertFalse(q.getLanguageToQuestion().values().isEmpty());
 			Assert.assertNotNull(q.getLanguageToKeywords());
 			Assert.assertTrue((q.getGoldenAnswers() != null) && q.getAnswerType().matches("resource||boolean||number||date||string"));
+		}
+	}
+	
+	@Test
+	public void missingAnswerQueryTest() {
+		Dataset data = Dataset.QALD6_Test_Multilingual;
+		int missingAnswers = 5;
+		int missingQueries = 4;
+		
+		List<IQuestion> questions = LoaderController.load(data);
+		if (questions == null) {
+			log.debug("Dataset null" + data.toString());
+		} else if (questions.size() == 0) {
+			log.debug("Dataset empty" + data.toString());
+		} else {
+			Set<IQuestion> noanswers = new HashSet<>();
+			Set<IQuestion> nosparql = new HashSet<>();
+			for (IQuestion q : questions) {
+				if (((q.getSparqlQuery() == null) || (q.getSparqlQuery().isEmpty())) && ((q.getPseudoSparqlQuery() == null) || q.getPseudoSparqlQuery().isEmpty())) {
+					nosparql.add(q);
+				}
+				if (((q.getGoldenAnswers() == null) || q.getGoldenAnswers().isEmpty())) {
+					noanswers.add(q);
+				}
+			}
+			DecimalFormat df = new DecimalFormat("###.##");
+			df.setRoundingMode(RoundingMode.CEILING);
+			if (!noanswers.isEmpty()) {
+				log.debug(((df.format(((double) noanswers.size() / questions.size()) * 100)) + "%") + " Missing answers on : " + data.toString() + ", " + noanswers.size() + " Question(s).");
+				Assert.assertTrue(noanswers.size() == missingAnswers);
+			}
+			
+			if (!nosparql.isEmpty()) {
+				log.debug((df.format((((double) nosparql.size() / questions.size()) * 100)) + "%") + " Neither Sparql nor Pseudo : " + data.toString() + ", " + nosparql.size() + " Question(s).");
+				Assert.assertTrue(nosparql.size() == missingQueries);
+			}
+			log.debug("Loaded successfully: " + data.toString());
 		}
 	}
 
@@ -203,4 +244,5 @@ public class LoadTest {
 	private boolean execQueryWithoutResults(final IQuestion q) {
 		return execQuery(q, true);
 	}
+	
 }

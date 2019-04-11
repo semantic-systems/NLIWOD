@@ -14,11 +14,11 @@ public class TimeoutTest {
     public void testAllSystems() throws Exception {
         String questionString = "Was ist die Hauptstadt von Deutschland?";
         List<ASystem> systems = Arrays.asList(
-                (ASystem) new HAWK(), 
+//                (ASystem) new HAWK(), 
                 (ASystem) new QAKIS(),
                 (ASystem) new SINA(),
                 (ASystem) new START(), 
-                (ASystem) new YODA(),
+//                (ASystem) new YODA(),
                 (ASystem) new QANARY(),
                 (ASystem) new AskNow(),
                 (ASystem) new SorokinQA(),

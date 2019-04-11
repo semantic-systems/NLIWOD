@@ -39,4 +39,21 @@ public class SPARQLQueryTest {
 		Assert.assertTrue("Answer 2 differs.", realAnswer2.equals(answers.get(1)));
 		log.debug("Second answer: \n" + answers.get(1));
 	}
+	
+	@Test
+	public void cloneTest() throws CloneNotSupportedException {
+		SPARQLQuery query = new SPARQLQuery();
+		query.addConstraint("?proj a <http://dbpedia.org/ontology/Person>.");
+		query.addFilterOverAbstractsContraint("?prof", "Mandela anti-apartheid activist");
+		
+		String realAnswer = "PREFIX text:<http://jena.apache.org/text#> \n" + 
+				"SELECT DISTINCT ?proj WHERE {\n" + 
+				"?prof text:query (<http://dbpedia.org/ontology/abstract> '\"Mandela anti-apartheid activist\"' 1000). \n" + 
+				"?proj a <http://dbpedia.org/ontology/Person>. \n" + 
+				"}\n" + 
+				"LIMIT 1";
+		
+		SPARQLQuery answer = (SPARQLQuery) query.clone();
+		Assert.assertTrue("Clone differs from real answer.", realAnswer.equals(answer.toString()));
+	}
 }

@@ -22,6 +22,7 @@ public abstract class ASpotter {
 	private static final Logger log = LoggerFactory.getLogger(ASpotter.class);
 	private boolean useCache = false;
 	private static PersistentCache cache = new PersistentCache();
+	private int timeout = 60000;
 	
 	public abstract Map<String, List<Entity>> getEntities(String question);
 
@@ -58,6 +59,8 @@ public abstract class ASpotter {
 		connection.setRequestProperty("Accept", "application/json");
 		connection.setRequestProperty("Content-Type", contentType);
 		connection.setRequestProperty("Content-Length", String.valueOf(urlParameters.length()));
+		connection.setConnectTimeout(timeout);
+		connection.setReadTimeout(timeout);
 
 		DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
 		wr.writeBytes(urlParameters);
