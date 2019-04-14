@@ -117,6 +117,7 @@ out of scope (?) :
 * https://www.aaai.org/Papers/AAAI/2019/AAAI-TafjordO.6869.pdf
 * https://github.com/NLP-BigDataLab/QAnalysis-project
 * https://www.semanticscholar.org/paper/DROP%3A-A-Reading-Comprehension-Benchmark-Requiring-Dua-Wang/9498f5b9ff0052c22e41979df49bc8efca0a9d17
+* https://arxiv.org/pdf/1904.04365.pdf commonsense qa
 * https://www.tau-nlp.org/commonsenseqa
 
 ## Focus
