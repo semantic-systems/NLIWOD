@@ -119,6 +119,7 @@ out of scope (?) :
 * https://www.semanticscholar.org/paper/DROP%3A-A-Reading-Comprehension-Benchmark-Requiring-Dua-Wang/9498f5b9ff0052c22e41979df49bc8efca0a9d17
 * https://arxiv.org/pdf/1904.04365.pdf commonsense qa
 * https://www.tau-nlp.org/commonsenseqa
+* https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Question_Answering_data
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
