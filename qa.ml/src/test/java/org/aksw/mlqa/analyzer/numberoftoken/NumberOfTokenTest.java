@@ -21,7 +21,21 @@ public class NumberOfTokenTest {
 		fvWekaAttributes.add(numberOfToken.getAttribute());
 		new Instances("Test", fvWekaAttributes, 1 );
 		Instance test = new DenseInstance(fvWekaAttributes.size());
-		test.setValue(numberOfToken.getAttribute(), (double) numberOfToken.analyze("This test class is worse than the other!"));
-		assertTrue(test.value(numberOfToken.getAttribute()) == 8.0);
+		test.setValue(numberOfToken.getAttribute(), (double) numberOfToken.analyze("This test is worse than the other!"));
+		assertTrue(test.value(numberOfToken.getAttribute()) == 7.0);
+	}
+	
+	@Test
+	public void nounPhraseTest() {
+		NumberOfToken numberOfToken = new NumberOfToken();
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(numberOfToken.getAttribute());
+		new Instances("Test", fvWekaAttributes, 1 );
+		Instance test = new DenseInstance(fvWekaAttributes.size());
+		test.setValue(numberOfToken.getAttribute(), (double) numberOfToken.analyze("Where was Prince Charles born?"));
+		assertTrue(test.value(numberOfToken.getAttribute()) == 4.0);
+
+		test.setValue(numberOfToken.getAttribute(), (double) numberOfToken.analyze("The Delta Airlines flight to New York is ready to board."));
+		assertTrue(test.value(numberOfToken.getAttribute()) == 8.0);		
 	}
 }

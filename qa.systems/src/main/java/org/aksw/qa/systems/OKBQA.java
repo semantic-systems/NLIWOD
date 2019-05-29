@@ -48,7 +48,7 @@ public class OKBQA extends ASystem {
 		HttpResponse response = client.execute(httppost);
 		
 		if(response.getStatusLine().getStatusCode()>=400){
-			throw new Exception("OKBQA Server could not answer due to: "+response.getStatusLine());
+			throw new Exception("OKBQA Server could not answer due to: " + response.getStatusLine());
 		}
 		return responseparser.responseToString(response);
 	}

@@ -54,6 +54,8 @@
 | Platypus      | https://projetpp.github.io/demo.html              |                           |     X   |
 | Quepy         | http://quepy.machinalis.com/                      | non-uniform answer format |     X   |
 | SorokinQA         | http://semanticparsing.ukp.informatik.tu-darmstadt.de:5000/question-answering/static/index.html  | very slow                 |     X   |
+| FRANKENSTEIN         | http://frankenstein.qanary-qa.com/                     |  |     X   |
+| QUINT         | https://gate.d5.mpi-inf.mpg.de/quint/quint                      |  |     X   |
 
 For more systems see page 7 of http://www.semantic-web-journal.net/system/files/swj1205.pdf
 

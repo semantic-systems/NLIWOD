@@ -53,7 +53,9 @@ public class AskNow extends Gen_HTTP_QA_Sys {
 			answer = (JSONObject) answer.get(key);
 			resultSet.add((String) answer.get("value"));
 		}
-		question.setGoldenAnswers(resultSet);		
+		question.setGoldenAnswers(resultSet);	
+		if(!(answerjson.get("sparql") instanceof JSONObject)) return;
+		
 		JSONArray queries =  (JSONArray) ((JSONObject) answerjson.get("sparql")).get("queries");	
 		String query = (String) queries.get(0);
 		question.setSparqlQuery(query.trim());

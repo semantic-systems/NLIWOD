@@ -10,12 +10,14 @@ public class QuestionTypeAnalyzer implements IAnalyzer {
 	
 	@Override
 	public Object analyze(String q) {
-		if (isASKQuery(q)) {
+		if (isNumberQuery(q)) {
+			return QuestionTypeFeature.NUMBER.name();
+		} else if(isListQuery(q)) {
+			return QuestionTypeFeature.LIST.name();
+		} else if(isASKQuery(q)) {
 			return QuestionTypeFeature.BOOLEAN.name();
 		} else {
-			// FIXME write analysis steps for other types
 			return QuestionTypeFeature.RESOURCE.name();
-
 		}
 	}
 
@@ -37,7 +39,6 @@ public class QuestionTypeAnalyzer implements IAnalyzer {
 		};
 	}
 
-	// TODO stolen from hawk, please put into qa-commons
 	public Boolean isASKQuery(String question) {
 		// Compare to source from:
 		// src/main/java/org/aksw/hawk/controller/Cardinality.java
@@ -56,5 +57,13 @@ public class QuestionTypeAnalyzer implements IAnalyzer {
 
 		// regex: ^(Are|D(id|o(es)?)|Is|Was)( .*)$
 		return question.startsWith("Are ") || question.startsWith("Did ") || question.startsWith("Do ") || question.startsWith("Does ") || question.startsWith("Is ") || question.startsWith("Was ");
+	}
+	
+	public Boolean isListQuery(String question) {
+		return question.startsWith("List ") || question.startsWith("Give ") || question.startsWith("Show ");
+	}
+	
+	public Boolean isNumberQuery(String question) {
+		return question.startsWith("How many")  || question.startsWith("How much");
 	}
 }

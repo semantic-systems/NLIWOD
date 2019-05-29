@@ -1,20 +1,28 @@
 package org.aksw.mlqa.analyzer.querytype;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.aksw.mlqa.analyzer.IAnalyzer;
-import org.aksw.qa.annotation.spotter.ASpotter;
-import org.aksw.qa.annotation.spotter.Spotlight;
-import org.aksw.qa.commons.datastructure.Entity;
-import org.apache.jena.rdf.model.Resource;
+import org.aksw.qa.annotation.index.IndexDBO_properties;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.RDFNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.stanford.nlp.ling.CoreAnnotations;
+import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.pipeline.Annotation;
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.util.CoreMap;
 import weka.core.Attribute;
 
-//TODO write unit test for this analyzer
 /**
  * Analyzes what type for the result is expected
  * 
@@ -22,16 +30,22 @@ import weka.core.Attribute;
  *
  */
 public class QueryResourceTypeAnalyzer implements IAnalyzer {
+	private static final  StanfordCoreNLP PIPELINE;
+		
+	private static final String SERVICE = "http://dbpedia.org/sparql";
+	
 	private Logger log = LoggerFactory.getLogger(QueryResourceTypeAnalyzer.class);
 	private Attribute attribute = null;
-	private ASpotter spotter;
-
+	private IndexDBO_properties index;
+	
+	static {
+		Properties props = new Properties();
+	    props.setProperty("annotators","tokenize, ssplit, pos");
+	    PIPELINE = new StanfordCoreNLP(props);
+	}
+	
 	public QueryResourceTypeAnalyzer() {
 		ArrayList<String> attributeValues = new ArrayList<String>();
-		// attributeValues.add("Place");
-		// attributeValues.add("Person");
-		// attributeValues.add("Organization");
-		// attributeValues.add("Misc");
 
 		attributeValues.add("DBpedia:Activity");
 		attributeValues.add("DBpedia:Actor");
@@ -90,9 +104,7 @@ public class QueryResourceTypeAnalyzer implements IAnalyzer {
 		attributeValues.add("DBpedia:NaturalPlace");
 		attributeValues.add("DBpedia:OfficeHolder");
 		attributeValues.add("DBpedia:Organisation");
-		attributeValues.add("DBpedia:Person");
 		attributeValues.add("DBpedia:Philosopher");
-		attributeValues.add("DBpedia:Place");
 		attributeValues.add("DBpedia:Planet");
 		attributeValues.add("DBpedia:Plant");
 		attributeValues.add("DBpedia:PlayboyPlaymate");
@@ -145,30 +157,89 @@ public class QueryResourceTypeAnalyzer implements IAnalyzer {
 		attributeValues.add("Schema:RiverBodyOfWater");
 		attributeValues.add("Schema:TelevisionStation");
 		attributeValues.add("Schema:WebPage");
+		
+		attributeValues.add("Schema:Date");
+		attributeValues.add("DBpedia:Place");
+		attributeValues.add("DBpedia:Person");
+		attributeValues.add("Number");
 		attributeValues.add("Misc");
 
 		attribute = new Attribute("QueryResourceType", attributeValues);
-		this.spotter = new Spotlight();
+		index = new IndexDBO_properties();
 	}
-
+	
 	@Override
 	public Object analyze(String q) {
 		log.debug("String question: " + q);
-		Map<String, List<Entity>> entities = null;
-		entities = spotter.getEntities(q);
-		if (!entities.isEmpty()) {
-			for (Entity tmpEntity : entities.get("en")) {
-				for (Resource type : tmpEntity.getPosTypesAndCategories()) {
-					return type.getURI();
-				}
-			}
-		}
-		return "Misc";
-
+		
+		if(q.startsWith("Where ")) return "DBpedia:Place";
+		if(q.startsWith("How many") || q.startsWith("How much")) return "Number";
+		if(q.startsWith("When ")) return "Schema:Date";
+		if(q.startsWith("Who ")) return "DBpedia:Person";
+		
+		Annotation annotation = new Annotation(q);
+	    PIPELINE.annotate(annotation);
+	      
+	    List<CoreMap> question = annotation.get(CoreAnnotations.SentencesAnnotation.class);
+	    
+	    List<String> verbs = getWords(question, "V");
+	    List<String> nouns = getWords(question, "N");
+	    List<String> adjectives = getWords(question, "JJ");
+	    
+	    Map<String, List<String>> properties = new LinkedHashMap<>();
+	    getProperties(properties, verbs);
+	    getProperties(properties, nouns);
+	    getProperties(properties, adjectives);
+ 		
+ 		//TODO: use the most common range of all properties
+ 		for(String key: properties.keySet()) {
+ 			String answer = queryRange(properties.get(key).get(0));
+ 			return answer.replace("http://dbpedia.org/ontology/", "DBpedia:");
+ 		}
+ 		return "Misc";
 	}
+	
+	private void getProperties(Map<String, List<String>> properties,  List<String> words) {
+		for(String word: words) {
+			List<String> props = index.search(word);
+			if(props.size() > 0) properties.put(word, props);
+ 		}
+	}
+	
+	private ArrayList<String> getWords(List<CoreMap> question, String tag) {
+ 		ArrayList<String> words = new ArrayList<String>();
+ 		
+ 		for (CoreMap sentence : question) {
+            List<CoreLabel> tokens = sentence.get(CoreAnnotations.TokensAnnotation.class);
+            for(CoreLabel token: tokens) {
+               	if(token.tag().startsWith(tag)){
+            		String word = token.toString();
+            		words.add(word.substring(0, word.lastIndexOf("-")));
+            	}
+            }
+        }       	
+ 		return words;
+ 	}
+	
+	private String queryRange(String property) {	
+		String q = "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#> SELECT ?x {<" + property + "> rdfs:range ?x.  }";	
+		QueryExecution qe = QueryExecutionFactory.sparqlService(SERVICE, q);
+		ResultSet rs = qe.execSelect();	
+		if(rs.hasNext()) {
+			QuerySolution solution = rs.nextSolution();			
+			RDFNode node = solution.get("?x");	
+			return node.toString();
+		}	
+		return "Misc";
+	}	
 
 	@Override
 	public Attribute getAttribute() {
 		return attribute;
+	}
+	
+	public static void main(String[] args) {
+		QueryResourceTypeAnalyzer a= new QueryResourceTypeAnalyzer();
+		System.out.println(a.analyze("What is the highest mountain in Germany?"));
 	}
 }
