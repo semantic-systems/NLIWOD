@@ -129,6 +129,8 @@ generating characteristic-rich question sets for QA evaluation. In Proceedings
 of the 2016 Conference on Empirical Methods in Natural Language Processing,
 EMNLP 2016, Austin, Texas, USA, November 1-4, 2016, pages 562–572.
 
+DROP: A Reading Comprehension Benchmark Requiring Discrete Reasoning Over Paragraphs
+
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
 
