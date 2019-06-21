@@ -17,7 +17,7 @@ import weka.core.Attribute;
 public class QuestionWord implements IAnalyzer {
 	private Logger log = LoggerFactory.getLogger(QuestionWord.class);
 	private Attribute attribute = null;
-	private String AuxVerb = "Is||Are||Did";
+	private String AuxVerb = "Is||Are||Did||Does||Was||Do";
 	private String Commands = "Give||Show||List";
 
 	public QuestionWord() {

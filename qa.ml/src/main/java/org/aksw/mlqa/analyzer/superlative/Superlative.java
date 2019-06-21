@@ -21,7 +21,7 @@ public class Superlative implements IAnalyzer {
 	@Override
 	public Object analyze(String q) {
 		ComparisonUtils comp = new ComparisonUtils();
-		if(comp.getSuperlatives(q).size() > 0) {
+		if(comp.getSuperlatives(q).size() > 0 || q.contains(" most ") || q.contains(" least ")) {
 			return "Superlative";
 		} else {
 			return "NoSuperlative";

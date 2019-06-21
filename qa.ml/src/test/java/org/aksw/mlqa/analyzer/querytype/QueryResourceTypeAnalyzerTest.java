@@ -45,4 +45,26 @@ public class QueryResourceTypeAnalyzerTest {
 		testinstance.setValue(answerType.getAttribute(), (String) answerType.analyze("What is the highest mountain in Germany?"));
 		assertTrue(testinstance.stringValue(answerType.getAttribute()).equals("DBpedia:Mountain"));
 	}
+	
+	@Test
+	public void numberTest() {
+		QueryResourceTypeAnalyzer answerType = new QueryResourceTypeAnalyzer();
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(answerType.getAttribute());
+		new Instances("Test", fvWekaAttributes, 1);
+		Instance testinstance = new DenseInstance(fvWekaAttributes.size());
+		testinstance.setValue(answerType.getAttribute(), (String) answerType.analyze("What is the revenue of IBM?"));
+		assertTrue(testinstance.stringValue(answerType.getAttribute()).equals("Schema:Number"));
+	}
+	
+	@Test
+	public void stringTest() {
+		QueryResourceTypeAnalyzer answerType = new QueryResourceTypeAnalyzer();
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
+		fvWekaAttributes.add(answerType.getAttribute());
+		new Instances("Test", fvWekaAttributes, 1);
+		Instance testinstance = new DenseInstance(fvWekaAttributes.size());
+		testinstance.setValue(answerType.getAttribute(), (String) answerType.analyze("What is the birth name of Adele?"));
+		assertTrue(testinstance.stringValue(answerType.getAttribute()).equals("Schema:String"));
+	}
 }

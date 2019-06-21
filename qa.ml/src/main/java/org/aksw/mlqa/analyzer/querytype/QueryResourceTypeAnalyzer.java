@@ -1,12 +1,14 @@
 package org.aksw.mlqa.analyzer.querytype;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import org.aksw.mlqa.analyzer.IAnalyzer;
+import org.aksw.mlqa.analyzer.questiontype.QuestionTypeAnalyzer;
 import org.aksw.qa.annotation.index.IndexDBO_properties;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -31,7 +33,7 @@ import weka.core.Attribute;
  */
 public class QueryResourceTypeAnalyzer implements IAnalyzer {
 	private static final  StanfordCoreNLP PIPELINE;
-		
+	
 	private static final String SERVICE = "http://dbpedia.org/sparql";
 	
 	private Logger log = LoggerFactory.getLogger(QueryResourceTypeAnalyzer.class);
@@ -43,7 +45,7 @@ public class QueryResourceTypeAnalyzer implements IAnalyzer {
 	    props.setProperty("annotators","tokenize, ssplit, pos");
 	    PIPELINE = new StanfordCoreNLP(props);
 	}
-	
+
 	public QueryResourceTypeAnalyzer() {
 		ArrayList<String> attributeValues = new ArrayList<String>();
 
@@ -54,6 +56,7 @@ public class QueryResourceTypeAnalyzer implements IAnalyzer {
 		attributeValues.add("DBpedia:Airline");
 		attributeValues.add("DBpedia:Album");
 		attributeValues.add("DBpedia:Animal");
+		attributeValues.add("DBpedia:Arena");
 		attributeValues.add("DBpedia:ArchitecturalStructure");
 		attributeValues.add("DBpedia:Artist");
 		attributeValues.add("DBpedia:Artwork");
@@ -104,6 +107,7 @@ public class QueryResourceTypeAnalyzer implements IAnalyzer {
 		attributeValues.add("DBpedia:NaturalPlace");
 		attributeValues.add("DBpedia:OfficeHolder");
 		attributeValues.add("DBpedia:Organisation");
+		attributeValues.add("DBpedia:PersonFunction");
 		attributeValues.add("DBpedia:Philosopher");
 		attributeValues.add("DBpedia:Planet");
 		attributeValues.add("DBpedia:Plant");
@@ -114,6 +118,7 @@ public class QueryResourceTypeAnalyzer implements IAnalyzer {
 		attributeValues.add("DBpedia:RecordLabel");
 		attributeValues.add("DBpedia:Region");
 		attributeValues.add("DBpedia:River");
+		attributeValues.add("DBpedia:Rocket");
 		attributeValues.add("DBpedia:RouteOfTransportation");
 		attributeValues.add("DBpedia:Royalty");
 		attributeValues.add("DBpedia:Saint");
@@ -158,10 +163,14 @@ public class QueryResourceTypeAnalyzer implements IAnalyzer {
 		attributeValues.add("Schema:TelevisionStation");
 		attributeValues.add("Schema:WebPage");
 		
-		attributeValues.add("Schema:Date");
+
 		attributeValues.add("DBpedia:Place");
 		attributeValues.add("DBpedia:Person");
-		attributeValues.add("Number");
+		attributeValues.add("Schema:Date");
+		attributeValues.add("Schema:GYear");
+		attributeValues.add("Schema:String");
+		attributeValues.add("Schema:Number");
+		attributeValues.add("Boolean");
 		attributeValues.add("Misc");
 
 		attribute = new Attribute("QueryResourceType", attributeValues);
@@ -172,10 +181,11 @@ public class QueryResourceTypeAnalyzer implements IAnalyzer {
 	public Object analyze(String q) {
 		log.debug("String question: " + q);
 		
-		if(q.startsWith("Where ")) return "DBpedia:Place";
-		if(q.startsWith("How many") || q.startsWith("How much")) return "Number";
+		if(q.startsWith("Where ") || q.startsWith("In ")) return "DBpedia:Place";
+		if(q.startsWith("How ")) return "Schema:Number";
 		if(q.startsWith("When ")) return "Schema:Date";
 		if(q.startsWith("Who ")) return "DBpedia:Person";
+		if(QuestionTypeAnalyzer.isASKQuery(q)) return "Boolean";
 		
 		Annotation annotation = new Annotation(q);
 	    PIPELINE.annotate(annotation);
@@ -191,10 +201,28 @@ public class QueryResourceTypeAnalyzer implements IAnalyzer {
 	    getProperties(properties, nouns);
 	    getProperties(properties, adjectives);
  		
- 		//TODO: use the most common range of all properties
+
+	    ArrayList<String> ranges = new ArrayList<String>();
  		for(String key: properties.keySet()) {
- 			String answer = queryRange(properties.get(key).get(0));
- 			return answer.replace("http://dbpedia.org/ontology/", "DBpedia:");
+ 			for(String r: properties.get(key)) {
+ 				String answer = queryRange(r);
+ 				ranges.add(answer);
+ 			}
+ 		}
+
+ 		String range = mostCommon(ranges);
+
+ 		if(range.contains("http://dbpedia.org/ontology/")) {
+ 			return range.replace("http://dbpedia.org/ontology/", "DBpedia:");
+ 		}  else if(range.contains("http://www.w3.org/2001/XMLSchema#")) {
+ 			if(range.toLowerCase().contains("double") || range.toLowerCase().contains("integer")) {
+ 				return "Schema:Number";
+ 			}
+ 			range = range.replace("http://www.w3.org/2001/XMLSchema#", "");
+ 			range = range.substring(0,1).toUpperCase() + range.substring(1);
+ 			return "Schema:" + range;
+ 		} else if(range.contains("http://www.w3.org/1999/02/22-rdf-syntax-ns#langString")) {
+ 			return "Schema:String";
  		}
  		return "Misc";
 	}
@@ -232,14 +260,32 @@ public class QueryResourceTypeAnalyzer implements IAnalyzer {
 		}	
 		return "Misc";
 	}	
+	
+	private String mostCommon(ArrayList<String> ranges) {
+		HashMap<String, Integer> mCommon = new HashMap<String,Integer>();
+		
+		for(String range: ranges) {
+			if(range.equals("Misc")) continue;
+			if(mCommon.containsKey(range)) {
+				mCommon.put(range, mCommon.get(range) + 1);
+			} else {
+				mCommon.put(range, 1);
+			}
+		}
+		
+		String maxRange = "";
+		int currentMax = 0;
+		for(String range: mCommon.keySet()) {
+			if(mCommon.get(range) > currentMax) {
+				maxRange = range;
+				currentMax = mCommon.get(range);
+			}
+		}
+		return maxRange;
+	}
 
 	@Override
 	public Attribute getAttribute() {
 		return attribute;
-	}
-	
-	public static void main(String[] args) {
-		QueryResourceTypeAnalyzer a= new QueryResourceTypeAnalyzer();
-		System.out.println(a.analyze("What is the highest mountain in Germany?"));
 	}
 }

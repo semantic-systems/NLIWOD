@@ -2,9 +2,6 @@ package org.aksw.qa.commons.load;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,6 +24,7 @@ import org.aksw.qa.commons.load.json.EJQuestionFactory;
 import org.aksw.qa.commons.load.json.ExtendedQALDJSONLoader;
 import org.aksw.qa.commons.load.json.QaldJson;
 import org.aksw.qa.commons.load.stanford.StanfordLoader;
+import org.aksw.qa.commons.load.tsv.LoadTsv;
 import org.aksw.qa.commons.sparql.AnswerSyncer;
 import org.aksw.qa.commons.utils.DateFormatter;
 import org.aksw.qa.commons.utils.SPARQLExecutor;
@@ -43,8 +41,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Strings;
-
-import org.aksw.qa.commons.load.tsv.LoadTsv;
 
 
 

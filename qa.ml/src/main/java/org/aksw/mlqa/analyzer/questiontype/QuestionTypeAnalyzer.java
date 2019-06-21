@@ -39,7 +39,7 @@ public class QuestionTypeAnalyzer implements IAnalyzer {
 		};
 	}
 
-	public Boolean isASKQuery(String question) {
+	public static Boolean isASKQuery(String question) {
 		// Compare to source from:
 		// src/main/java/org/aksw/hawk/controller/Cardinality.java
 
@@ -64,6 +64,6 @@ public class QuestionTypeAnalyzer implements IAnalyzer {
 	}
 	
 	public Boolean isNumberQuery(String question) {
-		return question.startsWith("How many")  || question.startsWith("How much");
+		return question.startsWith("How ");
 	}
 }
