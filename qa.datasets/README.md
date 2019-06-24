@@ -107,6 +107,7 @@ out of scope (?) :
 * http://qa.mpi-inf.mpg.de/comqa/
 * https://github.com/bdhingra/quasar
 * https://hotpotqa.github.io/
+* http://openaccess.thecvf.com/content_CVPR_2019/papers/Zadeh_Social-IQ_A_Question_Answering_Benchmark_for_Artificial_Social_Intelligence_CVPR_2019_paper.pdf
 * http://aclweb.org/anthology/S18-1009
 * temporal QA http://delivery.acm.org/10.1145/3200000/3191536/p1057-jia.pdf
 * hotel reviews http://www.europe.naverlabs.com/Blog/ReviewQA-A-novel-relational-aspect-based-opinion-dataset-for-machine-reading
