@@ -20,8 +20,7 @@ import edu.stanford.nlp.util.CoreMap;
 import weka.core.Attribute;
 
 /**
- * Analyses the number of token in input question.
- * 
+ * Analyses the number of token in the input question. Counts noun phrases as one token.
  * @author ricardousbeck
  *
  */
@@ -49,8 +48,13 @@ public class NumberOfToken implements IAnalyzer {
 		return (double) (split.length - nounPhrases.size());
 	}
 	
+	/***
+	 * Returns a list of all noun phrases of the question q.
+	 * @param q  a question
+	 * @return list of noun phrases
+	 */
 	private ArrayList<String> getNounPhrases(String q) {
- 		ArrayList<String> compoundWords = new ArrayList<String>();
+ 		ArrayList<String> nounP = new ArrayList<String>();
      
  		Annotation annotation = new Annotation(q);
         PIPELINE.annotate(annotation);
@@ -68,11 +72,11 @@ public class NumberOfToken implements IAnalyzer {
             	if(depString.equals("compound") || depString.equals("amod")) {
             		String dep = dependency.dep().toString();
             		String gov = dependency.gov().toString();
-            		compoundWords.add(dep.substring(0, dep.lastIndexOf("/")) + " " + gov.substring(0, gov.lastIndexOf("/")));
+            		nounP.add(dep.substring(0, dep.lastIndexOf("/")) + " " + gov.substring(0, gov.lastIndexOf("/")));
             	}
             }
         }    
-        return compoundWords;
+        return nounP;
  	}
 	
 	@Override

@@ -6,8 +6,12 @@ import org.aksw.mlqa.analyzer.IAnalyzer;
 
 import weka.core.Attribute;
 
+/***
+ * Analyzes if there is an entity of type Percent in the question.
+ * @author Lukas
+ *
+ */
 public class EntityPercent extends Entity implements IAnalyzer {
-	//static Logger log = LoggerFactory.getLogger(EntityPercent.class);
 	private Attribute attribute = null;
 		
 	public EntityPercent() {
@@ -27,4 +31,5 @@ public class EntityPercent extends Entity implements IAnalyzer {
 		return attribute;
 	}
 }
+
 

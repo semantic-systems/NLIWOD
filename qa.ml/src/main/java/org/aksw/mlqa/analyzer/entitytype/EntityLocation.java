@@ -6,15 +6,19 @@ import org.aksw.mlqa.analyzer.IAnalyzer;
 
 import weka.core.Attribute;
 
+/***
+ * Analyzes if there is an entity of type Location in the question.
+ * @author Lukas
+ *
+ */
 public class EntityLocation extends Entity implements IAnalyzer {
-	//static Logger log = LoggerFactory.getLogger(EntityLocation.class);
 	private Attribute attribute = null;
 	
 	public EntityLocation() {
-		ArrayList<String> fvWekaPercent = new ArrayList<String>();
-		fvWekaPercent.add("Location");
-		fvWekaPercent.add("NoLocation");
-		attribute = new Attribute("Location", fvWekaPercent);
+		ArrayList<String> fvWekaLocation = new ArrayList<String>();
+		fvWekaLocation.add("Location");
+		fvWekaLocation.add("NoLocation");
+		attribute = new Attribute("Location", fvWekaLocation);
 	}
 
 	@Override

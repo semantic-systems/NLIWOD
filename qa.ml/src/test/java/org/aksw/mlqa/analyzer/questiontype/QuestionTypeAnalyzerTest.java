@@ -32,17 +32,6 @@ public class QuestionTypeAnalyzerTest {
 	}
 	
 	@Test
-	public void resultTypeList() {
-		QuestionTypeAnalyzer typeAnalyzer = new QuestionTypeAnalyzer();
-		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
-		fvWekaAttributes.add(typeAnalyzer.getAttribute());
-		new Instances("Test", fvWekaAttributes, 1 );
-		Instance test = new DenseInstance(fvWekaAttributes.size());
-		test.setValue(typeAnalyzer.getAttribute(), (String) typeAnalyzer.analyze("Give me all B-sides of the Ramones."));	
-		assertTrue(test.stringValue(typeAnalyzer.getAttribute()).equals("LIST"));
-	}
-	
-	@Test
 	public void resultTypeBoolean() {
 		log.info("Test QuestionType classification ...");
 		log.debug("Initialize components ...");
@@ -58,7 +47,7 @@ public class QuestionTypeAnalyzerTest {
 		
 		for (IQuestion q : questions) {			
 			// Classify query type
-			boolean classification = questionTypeAnalyzer.isASKQuery(q.getLanguageToQuestion().get("en"));
+			boolean classification = questionTypeAnalyzer.isASKQuestion(q.getLanguageToQuestion().get("en"));
 			
 			counter++;
 			if (classification) {
@@ -70,37 +59,6 @@ public class QuestionTypeAnalyzerTest {
 		}
 			
 		log.info("Classified " + counterClassifiedWrong + " wrong from " + counter + " queries. (" + counterASK + " are ASK)"); 
-		assertTrue(counterClassifiedWrong <= 0);
-	}
-	
-	@Test
-	public void resultTypeNumber() {
-		log.info("Test QuestionType classification ...");
-		log.debug("Initialize components ...");
-		
-		QuestionTypeAnalyzer questionTypeAnalyzer = new QuestionTypeAnalyzer();		
-		log.info("Run queries through components ...");	
-		log.debug("Load data file: " + Dataset.QALD9_Test_Multilingual.name());
-		List<IQuestion> questions = LoaderController.load(Dataset.QALD9_Test_Multilingual);
-		
-		int counter = 0;
-		int counterASK = 0;
-		int counterClassifiedWrong = 0;
-		
-		for (IQuestion q : questions) {			
-			// Classify query type
-			boolean classification = questionTypeAnalyzer.isNumberQuery(q.getLanguageToQuestion().get("en"));
-			
-			counter++;
-			if (classification) {
-				counterASK++;
-			}
-			if ( (classification && !"number".equals(q.getAnswerType())) || (!classification && "number".equals(q.getAnswerType())) ) {
-				counterClassifiedWrong++;
-			}
-		}
-			
-		log.info("Classified " + counterClassifiedWrong + " wrong from " + counter + " queries. (" + counterASK + " are Number)"); 
-		assertTrue(counterClassifiedWrong <= 5);
+		assertTrue(counterClassifiedWrong == 0);
 	}
 }

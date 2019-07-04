@@ -6,15 +6,19 @@ import org.aksw.mlqa.analyzer.IAnalyzer;
 
 import weka.core.Attribute;
 
+/***
+ * Analyzes if there is an entity of type Date in the question.
+ * @author Lukas
+ *
+ */
 public class EntityDate extends Entity implements IAnalyzer {
-	// private static Logger log = LoggerFactory.getLogger(EntityDate.class);
 	private Attribute attribute = null;
 	
 	public EntityDate() {
-		ArrayList<String> fvWekaPercent = new ArrayList<String>();
-		fvWekaPercent.add("Date");
-		fvWekaPercent.add("NoDate");
-		attribute = new Attribute("Date", fvWekaPercent);
+		ArrayList<String> fvWekaDate = new ArrayList<String>();
+		fvWekaDate.add("Date");
+		fvWekaDate.add("NoDate");
+		attribute = new Attribute("Date", fvWekaDate);
 	}
 
 	@Override
@@ -27,3 +31,4 @@ public class EntityDate extends Entity implements IAnalyzer {
 		return attribute;
 	}
 }
+

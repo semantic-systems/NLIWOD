@@ -6,15 +6,19 @@ import org.aksw.mlqa.analyzer.IAnalyzer;
 
 import weka.core.Attribute;
 
+/***
+ * Analyzes if there is an entity of type Money in the question.
+ * @author Lukas
+ *
+ */
 public class EntityMoney extends Entity implements IAnalyzer {
-	// private static Logger log = LoggerFactory.getLogger(EntityMoney.class);
 	private Attribute attribute = null;
 	
 	public EntityMoney() {
-		ArrayList<String> fvWekaPercent = new ArrayList<String>();
-		fvWekaPercent.add("Money");
-		fvWekaPercent.add("NoMoney");
-		attribute = new Attribute("Money", fvWekaPercent);
+		ArrayList<String> fvWekaMoney = new ArrayList<String>();
+		fvWekaMoney.add("Money");
+		fvWekaMoney.add("NoMoney");
+		attribute = new Attribute("Money", fvWekaMoney);
 	}
 
 	@Override

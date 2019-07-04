@@ -6,16 +6,19 @@ import org.aksw.mlqa.analyzer.IAnalyzer;
 
 import weka.core.Attribute;
 
-
+/***
+ * Analyzes if there is an entity of type Organization in the question.
+ * @author Lukas
+ *
+ */
 public class EntityOrganization extends Entity implements IAnalyzer {
-	//static Logger log = LoggerFactory.getLogger(EntityOrganization.class);
 	private Attribute attribute = null;
 	
 	public EntityOrganization() {
-		ArrayList<String> fvWekaPercent = new ArrayList<String>();
-		fvWekaPercent.add("Organization");
-		fvWekaPercent.add("NoOrganization");
-		attribute = new Attribute("Organization", fvWekaPercent);
+		ArrayList<String> fvWekaOrganization = new ArrayList<String>();
+		fvWekaOrganization.add("Organization");
+		fvWekaOrganization.add("NoOrganization");
+		attribute = new Attribute("Organization", fvWekaOrganization);
 	}
 
 	@Override
@@ -28,4 +31,5 @@ public class EntityOrganization extends Entity implements IAnalyzer {
 		return attribute;
 	}
 }
+
 

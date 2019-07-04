@@ -6,15 +6,19 @@ import org.aksw.mlqa.analyzer.IAnalyzer;
 
 import weka.core.Attribute;
 
+/***
+ * Analyzes if there is an entity of type Person in the question.
+ * @author Lukas
+ *
+ */
 public class EntityPerson extends Entity implements IAnalyzer {
-	// private static Logger log = LoggerFactory.getLogger(EntityPerson.class);
 	private Attribute attribute = null;
 	
 	public EntityPerson() {
-		ArrayList<String> fvWekaPercent = new ArrayList<String>();
-		fvWekaPercent.add("Person");
-		fvWekaPercent.add("NoPerson");
-		attribute = new Attribute("Person", fvWekaPercent);
+		ArrayList<String> fvWekaPerson = new ArrayList<String>();
+		fvWekaPerson.add("Person");
+		fvWekaPerson.add("NoPerson");
+		attribute = new Attribute("Person", fvWekaPerson);
 	}
 
 	@Override
@@ -27,3 +31,4 @@ public class EntityPerson extends Entity implements IAnalyzer {
 		return attribute;
 	}
 }
+

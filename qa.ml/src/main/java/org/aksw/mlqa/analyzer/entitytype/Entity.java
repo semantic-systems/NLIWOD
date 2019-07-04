@@ -12,6 +12,7 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 
 public class Entity {
+	
 	private static StanfordCoreNLP pipeline;
 
 	static {
@@ -21,6 +22,12 @@ public class Entity {
 		pipeline = new StanfordCoreNLP(props);
 	}
 	
+	/***
+	 * Checks if there is an entity of the specified type in the question.
+	 * @param entityType an entity type: Date, Location, Organization, Person, Percent, or Money
+	 * @param question
+	 * @return if a entity of that type is present returns the name of the type otherwise "No" + the name of the type 
+	 */
 	protected String recognizeEntity(String entityType, String question){
 		String result = "No" + entityType;
 		Annotation annotation = new Annotation(question);
