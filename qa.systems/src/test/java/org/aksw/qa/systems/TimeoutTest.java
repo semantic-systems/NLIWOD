@@ -17,7 +17,7 @@ public class TimeoutTest {
 //                (ASystem) new HAWK(), 
                 (ASystem) new QAKIS(),
 //                (ASystem) new SINA(),
-                (ASystem) new START(), 
+//                (ASystem) new START(), 
 //                (ASystem) new YODA(),
                 (ASystem) new QANARY(),
                 (ASystem) new AskNow(),
