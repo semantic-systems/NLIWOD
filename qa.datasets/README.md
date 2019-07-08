@@ -67,6 +67,7 @@ QA datasets to analyze:
 * https://amritasaha1812.github.io/CSQA/_pages/example.html
 * https://github.com/conversationai/wikidetox/tree/master/wikiconv
 * Interesting study for Google's quality: https://www.emeraldinsight.com/doi/pdfplus/10.1108/LHT-10-2017-0218
+* https://github.com/aliannejadi/qulac
 
 out of scope (?) :
 * http://tvqa.cs.unc.edu/leaderboard.html
