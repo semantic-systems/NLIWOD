@@ -100,7 +100,7 @@ public class DatasetGenerator {
 		                // "http://dbpedia.org/property/",
 		                "http://purl.org/dc/terms/", "http://dbpedia.org/class/yago/", FOAF.getURI())),
 		        new PredicateDropStatementFilter(Sets.newHashSet("http://www.w3.org/2002/07/owl#equivalentClass", "http://www.w3.org/2002/07/owl#disjointWith")));
-		qtf.addDropFilters((Filter<Statement>[]) treeFilters.toArray(new Filter[treeFilters.size()]));
+		qtf.addDropFilters((Predicate<Statement>[]) treeFilters.toArray(new Predicate[treeFilters.size()]));
 
 		// LGG generator
 		lggGen = new LGGGeneratorSimple();
