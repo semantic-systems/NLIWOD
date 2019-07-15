@@ -1,0 +1,5520 @@
+{
+  "dataset" : {
+    "id" : "test"
+  },
+  "questions" : [ {
+    "id" : "1",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "List all the musicals with music by Elton John."
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/property/music> <http://dbpedia.org/resource/Elton_John> ; <http://dbpedia.org/property/music> <http://dbpedia.org/resource/Elton_John> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/A_Change_of_Seasons"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Grammy_Nominees"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Day_Job_(Suburban_Legends_album)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Versão_Acústica_4"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "2",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How high is the lighthouse in Colombo?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "3",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who was the wife of U.S. president Lincoln?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/spouse> <http://dbpedia.org/resource/Wife> ; <http://dbpedia.org/ontology/spouse> <http://dbpedia.org/resource/Wife> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Jack_Deth"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "4",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the host of the BBC Wildlife Specials?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "5",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How much did Pulp Fiction cost?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT (COUNT(DISTINCT *) as ?c) WHERE { ?class_0 ?property_0 ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "0"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "6",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In what city is the Heineken brewery?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/National_University_of_Distance_Education> <http://dbpedia.org/ontology/city> <http://dbpedia.org/resource/City> . <http://dbpedia.org/resource/National_University_of_Distance_Education> <http://dbpedia.org/ontology/city> ?uri . ?uri a <http://dbpedia.org/ontology/City> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Madrid"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "7",
+    "answertype" : "date",
+    "question" : [ {
+      "language" : "en",
+      "string" : "When did Operation Overlord commence?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "date" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "8",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which city does the Chile Route 68 end?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Temuco_Maquehue_Airport> <http://dbpedia.org/ontology/city> <http://dbpedia.org/resource/Chile> . <http://dbpedia.org/resource/Temuco_Maquehue_Airport> <http://dbpedia.org/ontology/city> ?uri . ?uri a <http://dbpedia.org/ontology/City> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Temuco"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "9",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who developed Slack?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "10",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who was married to president Chirac?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Jacques_Chirac> <http://dbpedia.org/ontology/president> <http://dbpedia.org/resource/Georges_Pompidou> . <http://dbpedia.org/resource/Georges_Pompidou> <http://dbpedia.org/ontology/president> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Charles_de_Gaulle"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "11",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What did Bruce Carver die from?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "12",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which cities does the Weser flow through?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Weser> <http://dbpedia.org/ontology/city> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Fulda_(river)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Kassel"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Hamelin"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Minden"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Bremen"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Bremerhaven"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Hann._Münden"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "13",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which books by Kerouac were published by Viking Press?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "14",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How tall is Amazon Eve?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "15",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which museum exhibits The Scream by Munch?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/The_Scream> <http://dbpedia.org/ontology/museum> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/National_Gallery_(Norway)"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "16",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who wrote the book Les Piliers de la terre?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "17",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Is James Bond married?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "18",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who discovered Ceres?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "19",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which river does the Brooklyn Bridge cross?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "20",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the largest country in the world?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Country> ; <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Country> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Simpson_College"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "21",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the mayor of Paris?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Paris> <http://dbpedia.org/ontology/mayor> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Anne_Hidalgo"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "22",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the coach of Ankara's ice hockey team?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "23",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the mayor of the capital of French Polynesia?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/French_Polynesia> <http://dbpedia.org/ontology/capital> <http://dbpedia.org/resource/Papeete> . <http://dbpedia.org/resource/Papeete> <http://dbpedia.org/ontology/mayor> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Michel_Buillard"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "24",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which awards did Douglas Hofstadter win?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Douglas_Hofstadter> <http://dbpedia.org/ontology/award> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/American_Academy_of_Arts_and_Sciences"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/National_Book_Award"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Pulitzer_Prize"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "25",
+    "answertype" : "string",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How much did the Lego Movie cost?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT (COUNT(DISTINCT *) as ?c) WHERE { ?class_0 ?property_0 ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "string" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "string" : {
+            "type" : "literal",
+            "value" : "0"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "26",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Do Prince Harry and Prince William have the same parents?"
+    } ],
+    "query" : {
+      "sparql" : "ASK WHERE { <http://dbpedia.org/resource/Prince_William,_Duke_of_Cambridge> <http://dbpedia.org/ontology/parent> ?uri . <http://dbpedia.org/resource/Prince_Harry> <http://dbpedia.org/ontology/parent> ?uri FILTER ( concat(<http://dbpedia.org/resource/Prince_William,_Duke_of_Cambridge>, <http://dbpedia.org/ontology/parent>, ?uri) != concat(<http://dbpedia.org/resource/Prince_Harry>, <http://dbpedia.org/ontology/parent>, ?uri) ) FILTER ( concat(<http://dbpedia.org/resource/Prince_Harry>, <http://dbpedia.org/ontology/parent>, ?uri) != concat(<http://dbpedia.org/resource/Prince_William,_Duke_of_Cambridge>, <http://dbpedia.org/ontology/parent>, ?uri) ) }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : true
+    } ]
+  }, {
+    "id" : "27",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How many languages are spoken in Turkmenistan?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT (COUNT(DISTINCT *) as ?c) WHERE { <http://dbpedia.org/resource/Turkmenistan> <http://dbpedia.org/ontology/language> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "2"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "28",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which films did Julia Roberts as well as Richard Gere play?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "29",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which country does the Ganges start?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Country> ; <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Country> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Simpson_College"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "30",
+    "answertype" : "date",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which year was Rachel Stevens born?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "date" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "31",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Is Barack Obama a democrat?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "32",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Where was Bach born?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "33",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How often did Jane Fonda marry?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "34",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who was the first to climb Mount Everest?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "35",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How many people live in Poland?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT (COUNT(DISTINCT *) as ?c) WHERE { ?class_0 ?property_0 ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "0"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "36",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the location of the Houses of Parliament?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/property/location> <http://dbpedia.org/resource/Palace_of_Westminster> ; <http://dbpedia.org/property/location> <http://dbpedia.org/resource/Palace_of_Westminster> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Judicial_functions_of_the_House_of_Lords"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "37",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which country is the Limerick Lake?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Limerick_Lake> <http://dbpedia.org/ontology/country> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Canada"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "38",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What was the last movie with Alec Guinness?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "39",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the highest mountain in Australia?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "40",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Is Frank Herbert still alive?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "41",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who created Family Guy?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "42",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the official language of Suriname?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Suriname> <http://dbpedia.org/ontology/officialLanguage> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Dutch_language"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "43",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who wrote the song Hotel California?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/California> <http://dbpedia.org/property/song> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "\\\"I Love You, California\\\""
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "44",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me all actors starring in movies directed by William Shatner."
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/starring> <http://dbpedia.org/resource/William_Shatner> ; <http://dbpedia.org/ontology/starring> <http://dbpedia.org/resource/William_Shatner> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Over_the_Hedge_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Quantum_Quest:_A_Cassini_Space_Odyssey"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Secrets_of_a_Married_Man"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Star_Trek_IV:_The_Voyage_Home"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Airplane_II:_The_Sequel"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Star_Trek:_The_Motion_Picture"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Intruder_(1962_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Loaded_Weapon_1"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Miss_Congeniality_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Explosive_Generation"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/American_Psycho_2"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Big_Bad_Mama"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Star_Trek_VI:_The_Undiscovered_Country"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Malevolent_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Star_Trek:_The_Original_Series"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Invasion_Iowa"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/T._J._Hooker"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Wild"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Star_Trek:_Planet_of_the_Titans"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Mind_Meld"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_People_(1972_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/A_Christmas_Horror_Story"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Star_Trek_III:_The_Search_for_Spock"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/William_Shatner's_Gonzo_Ballet"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Creators:_The_Past"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Kelly_Clarkson's_Cautionary_Christmas_Music_Tale"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Star_Trek:_The_God_Thing"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Blood_Sport_(TV_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Kingdom_of_the_Spiders"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/A_Carol_Christmas"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Canadian_Conspiracy"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Star_Trek_Generations"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Groom_Lake_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Prisoner_of_Zenda,_Inc."
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/White_Comanche"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Disaster_on_the_Coastliner"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Pray_for_the_Wildcats"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Free_Enterprise_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Star_Trek_II:_The_Wrath_of_Khan"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Showtime_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/TekWar_(TV_series)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Incubus_(1966_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Aftermath_with_William_Shatner"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Babysitter_(1980_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Devil's_Rain"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Everest_'82"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Visiting_Hours"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Shoot_or_Be_Shot"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Horror_at_37,000_Feet"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Outrage"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "45",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is in a chocolate chip cookie?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "46",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which ingredients do I need for carrot cake?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Carrot_cake> <http://dbpedia.org/ontology/ingredient> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Almond"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Carrot"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Flour"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Egg_as_food"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Baking_powder"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Sugar"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "47",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Does Neymar play for Real Madrid?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "48",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which UK city are the headquarters of the MI6?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/University_of_Kent> <http://dbpedia.org/ontology/city> <http://dbpedia.org/resource/United_Kingdom> . <http://dbpedia.org/resource/University_of_Kent> <http://dbpedia.org/ontology/city> ?uri . ?uri a <http://dbpedia.org/ontology/City> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Canterbury"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "49",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Was the Cuban Missile Crisis earlier than the Bay of Pigs Invasion?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "50",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What does IYCM stand for?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "51",
+    "answertype" : "date",
+    "question" : [ {
+      "language" : "en",
+      "string" : "When did the Ming dynasty dissolve?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "date" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "52",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the total population of Melbourne, Florida?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Melbourne,_Florida> <http://dbpedia.org/ontology/populationTotal> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "76068"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "53",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Did Arnold Schwarzenegger attend a university?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/property/institution> <http://dbpedia.org/resource/University> ; <http://dbpedia.org/property/institution> <http://dbpedia.org/resource/University> . }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : false
+    } ]
+  }, {
+    "id" : "54",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What country is Mount Everest in?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Country> ; <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Country> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Simpson_College"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "55",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the largest city in Australia?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri a <http://dbpedia.org/ontology/City> . <http://dbpedia.org/resource/Australia> <http://dbpedia.org/ontology/largestCity> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Sydney"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "56",
+    "answertype" : "list",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me all launch pads operated by NASA."
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "list" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "57",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the mayor of Tel Aviv?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/mayor> <http://dbpedia.org/resource/Mayor> ; <http://dbpedia.org/ontology/mayor> <http://dbpedia.org/resource/Mayor> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Kraainem"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "58",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "List all episodes of the first season of the HBO television series The Sopranos."
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/series> <http://dbpedia.org/resource/The_Sopranos> ; <http://dbpedia.org/ontology/series> <http://dbpedia.org/resource/The_Sopranos> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Army_of_One_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/D-Girl_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Remember_When_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Legend_of_Tennessee_Moltisanti"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Live_Free_or_Die_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Proshai,_Livushka"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Chasing_It"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Join_the_Club"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Calling_All_Cars_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Watching_Too_Much_Television"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Kennedy_and_Heidi"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Whoever_Did_This"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Second_Opinion_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Long_Term_Parking"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Guy_Walks_into_a_Psychiatrist's_Office..."
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/All_Due_Respect_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/All_Happy_Families..."
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Pine_Barrens_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Members_Only_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Cold_Stones"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Bust_Out"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Full_Leather_Jacket"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/I_Dream_of_Jeannie_Cusamano"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Second_Coming_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Pax_Soprana"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Fortunate_Son_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Moe_n'_Joe"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Toodle-Fucking-Oo"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Christopher_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Big_Girls_Don't_Cry_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Irregular_Around_the_Margins"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Mayham"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Fleshy_Part_of_the_Thigh"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Funhouse_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Blue_Comet"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/He_Is_Risen_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Boca_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/For_All_Debts_Public_and_Private"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Ride_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Do_Not_Resuscitate_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Two_Tonys"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Amour_Fou_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/No_Show"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Eloise_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/A_Hit_Is_a_Hit"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Strong,_Silent_Type"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/...To_Save_Us_All_from_Satan's_Power"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/College_(The_Sopranos)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Luxury_Lounge"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Weight_(The_Sopranos)"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "59",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who created Batman?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "60",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who played Gus Fring in Breaking Bad?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "61",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which programming language is GIMP written?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Go_(programming_language)> <http://dbpedia.org/property/programmingLanguage> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "Go, assembly language, previously C ; C++"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "62",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which ancient empire could you pay with cocoa beans?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "63",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the editor of Forbes?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Forbes> <http://dbpedia.org/property/editor> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "Randall Lane"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "64",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How many people live in the capital of Australia?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT (COUNT(DISTINCT *) as ?c) WHERE { ?uri ?property_0 ?class_0 . ?uri ?property_1 ?year . ?class_1 ?property_2 ?year . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "0"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "65",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which electronics companies were founded in Beijing?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "66",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me all video games published by Mean Hamster Software."
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "67",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How many Aldi stores are there?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT (COUNT(DISTINCT *) as ?c) WHERE { ?class_0 ?property_0 ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "0"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "68",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the capital of Cameroon?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Cameroon> <http://dbpedia.org/ontology/capital> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Yaoundé"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "69",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Is there a video game called Battle Chess?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "70",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Was the wife of president Lincoln called Mary?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/spouse> <http://dbpedia.org/resource/Wife> ; <http://dbpedia.org/ontology/spouse> <http://dbpedia.org/resource/Wife> . }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : false
+    } ]
+  }, {
+    "id" : "71",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me all movies directed by Francis Ford Coppola."
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "72",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which of Tim Burton's films had the highest budget?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "73",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Does Breaking Bad have more episodes than Game of Thrones?"
+    } ],
+    "query" : {
+      "sparql" : "ASK WHERE { <http://dbpedia.org/resource/Game_of_Thrones> <http://dbpedia.org/ontology/numberOfEpisodes> ?uri }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : true
+    } ]
+  }, {
+    "id" : "74",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Was Natalie Portman born in the United States?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/property/states> <http://dbpedia.org/resource/United_States> ; <http://dbpedia.org/property/states> <http://dbpedia.org/resource/United_States> . }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : false
+    } ]
+  }, {
+    "id" : "75",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me the grandchildren of Elvis Presley."
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "76",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which movies starring Mickey Rourke were directed by Guy Ritchie?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/starring> <http://dbpedia.org/resource/Mickey_Rourke> ; <http://dbpedia.org/ontology/starring> <http://dbpedia.org/resource/Mickey_Rourke> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/War_Pigs_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Desperate_Hours"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Bullet_(1996_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Stormbreaker_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Informers_(2008_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Picture_Claire"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Homeboy_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Animal_Factory"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Dark_Side_of_Fame_with_Piers_Morgan"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Double_Team_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Shades_(1999_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Rape_and_Marriage:_The_Rideout_Case"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/They_Crawl"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Buffalo_'66"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Blunt_Force_Trauma_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Java_Heat"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Last_Outlaw_(1993_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Thursday_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Rumble_Fish"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Thicker_Than_Blood_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Expendables_(2010_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/City_in_Fear"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Harley_Davidson_and_the_Marlboro_Man"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Ashby_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Love_in_Paris"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Diner_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Get_Carter_(2000_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Wild_Orchid_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Act_of_Love_(1980_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Black_November"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Rainmaker_(1997_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/A_Prayer_for_the_Dying"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Point_Blank_(1998_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Francesco_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Wrestler_(2008_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Eureka_(1983_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Domino_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Out_in_Fifty"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Sin_City_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Fade_to_Black_(1980_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Johnny_Handsome"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Immortals_(2011_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Angel_Heart"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Year_of_the_Dragon_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Once_Upon_a_Time_in_Mexico"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/F.T.W._(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Barfly_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Killshot_(film)"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "77",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which country does the creator of Miffy come from?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/The_Creator> <http://dbpedia.org/property/country> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "."
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "78",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What form of government does Russia have?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "79",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me all Canadian Grunge record labels."
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Canadians> <http://dbpedia.org/property/label> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Irreligion_in_Canada"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "Other Christian"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "Other religions"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Buddhism_in_Canada"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Hinduism_in_Canada"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Catholicism_in_Canada"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Sikhism_in_Canada"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/History_of_the_Jews_in_Canada"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Islam_in_Canada"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "80",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How many children did Benjamin Franklin have?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT (COUNT(DISTINCT *) as ?c) WHERE { <http://dbpedia.org/resource/Benjamin_Franklin> <http://dbpedia.org/ontology/child> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "3"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "81",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "List the children of Margaret Thatcher."
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Margaret_Thatcher> <http://dbpedia.org/ontology/child> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Carol_Thatcher"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Mark_Thatcher"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "82",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "From which region is the Melon de Bourgogne?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/region> <http://dbpedia.org/resource/Burgundy> ; <http://dbpedia.org/ontology/region> <http://dbpedia.org/resource/Burgundy> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Aubigny-lès-Sombernon"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Gevrey-Chambertin"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Allerey"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Montchanin"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Aubaine,_Côte-d'Or"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Ameugny"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Autricourt"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Ahuy"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Couchey"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Asnières-en-Montagne"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Antheuil"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Marsannay-la-Côte"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Antigny-la-Ville"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Agey"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Arcenant"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Aloxe-Corton"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Cluny"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Avosnes"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Avelanges"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Bard-lès-Époisses"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Aignay-le-Duc"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Arconcey"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Artaix"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Ampilly-le-Sec"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Pommard"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Arcey,_Côte-d'Or"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Alise-Sainte-Reine"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Aisey-sur-Seine"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Asnières-lès-Dijon"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Athée,_Côte-d'Or"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Arnay-le-Duc"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Gaston_Gérard_Chicken"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Argilly"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Barjon"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Barbirey-sur-Ouche"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "83",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the oldest child of Meryl Streep?"
+    } ],
+    "query" : {
+      "sparql" : "ASK WHERE { <http://dbpedia.org/resource/Meryl_Streep> <http://dbpedia.org/ontology/child> ?uri }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "true"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "84",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Are tree frogs a type of amphibian?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "85",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Is Christian Bale starring in Velvet Goldmine?"
+    } ],
+    "query" : {
+      "sparql" : "ASK WHERE { <http://dbpedia.org/resource/Velvet_Goldmine> <http://dbpedia.org/ontology/starring> ?uri }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : true
+    } ]
+  }, {
+    "id" : "86",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "List all games by GMT."
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/timeZone> <http://dbpedia.org/resource/Greenwich_Mean_Time> ; <http://dbpedia.org/ontology/timeZone> <http://dbpedia.org/resource/Greenwich_Mean_Time> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Fodoa"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Tristan_da_Cunha"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Bakel_Department"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/West_Lindsey"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Ndioum_Arrondissement"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/East_Akim_Municipal_District"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Oboo,_Ghana"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Sulima_Chiefdom"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Konindou"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Borough_of_Guildford"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Kouriah"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/East_Cambridgeshire"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Kaalan,_Guinea"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Kenema_District"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Bozrah"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Stratford-on-Avon_District"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Kankama"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Sidéradougou"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Tanéné,_Boké"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Adabraka"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Elmadağ,_Şişli"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Dagana_Department,_Senegal"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Al-Qurnah"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Mlomp"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Abeïbara_Cercle"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Saint_Saviour,_Jersey"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Mjóifjörður"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Mbaké"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Diara-Guerela"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Onwe"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Grand_Duchy_of_Flandrensis"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Mambia"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Missamana"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Aveyime-Battor"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Diang_Chiefdom"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Hvalvík"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Purbeck_District"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Merinaghen"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Bouzourou"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Atibie,_Ghana"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Butre,_Ghana"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Wadi_Musa"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Ajumako/Enyan/Essiam_District"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Romtanghin"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/South_Bucks"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Kangaba_Cercle"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Ansongo_Cercle"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Diatiféré"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Dakar_Region"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Dialakoro,_Kankan"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "87",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Does the Isar flow into a lake?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "88",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which airports does Yeti Airlines serve?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "89",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which Indian company has the most employees?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "90",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which city has the most inhabitants?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/city> <http://dbpedia.org/resource/City> ; <http://dbpedia.org/ontology/city> <http://dbpedia.org/resource/City> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/National_University_of_Distance_Education"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "91",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who created Wikipedia?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "92",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Is Rita Wilson the wife of Tom Hanks?"
+    } ],
+    "query" : {
+      "sparql" : "ASK WHERE { <http://dbpedia.org/resource/Tom_Hanks> <http://dbpedia.org/ontology/spouse> ?uri }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : true
+    } ]
+  }, {
+    "id" : "93",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Is the wife of president Obama called Michelle?"
+    } ],
+    "query" : {
+      "sparql" : "ASK WHERE { <http://dbpedia.org/resource/Barack_Obama> <http://dbpedia.org/ontology/spouse> ?uri }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : true
+    } ]
+  }, {
+    "id" : "94",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How many ethnic groups live in Slovenia?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Slovenia> <http://dbpedia.org/ontology/ethnicGroupsInYear> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "2002"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "95",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the president of Eritrea?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/president> <http://dbpedia.org/resource/President> ; <http://dbpedia.org/ontology/president> <http://dbpedia.org/resource/President> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Rend_Lake_College"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/John_Wood_Community_College"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "96",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which films did Stanley Kubrick direct?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "97",
+    "answertype" : "date",
+    "question" : [ {
+      "language" : "en",
+      "string" : "When was the Titanic completed?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "date" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "98",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How many pages does War and Peace have?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT (COUNT(DISTINCT *) as ?c) WHERE { ?class_0 ?property_0 ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "0"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "99",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the highest mountain in Italy?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "100",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How tall is Claudia Schiffer?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "101",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who was John F. Kennedy's vice president?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/president> <http://dbpedia.org/resource/President> ; <http://dbpedia.org/ontology/president> <http://dbpedia.org/resource/President> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Rend_Lake_College"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/John_Wood_Community_College"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "102",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which subsidiary of Lufthansa serves both Dortmund and Berlin Tegel?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Lufthansa> <http://dbpedia.org/ontology/subsidiary> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/LSG_Sky_Chefs"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Edelweiss_Air"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Germanwings"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Air_Dolomiti"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Lufthansa_Technik"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Swiss_Global_Air_Lines"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Lufthansa_Regional"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Global_Load_Control"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Lufthansa_Systems"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Swiss_International_Air_Lines"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Lufthansa_Consulting"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Lufthansa_Cargo"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Lufthansa_CityLine"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Eurowings"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Lufthansa_Flight_Training"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Austrian_Airlines"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "103",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who was the successor of John F. Kennedy?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/John_F._Kennedy> <http://dbpedia.org/ontology/successor> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Benjamin_A._Smith_II"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Lyndon_B._Johnson"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Tip_O'Neill"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "104",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who composed the soundtrack for Cameron's Titanic?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "105",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which movies did Kurosawa direct?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "106",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which time zone is Rome?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Rome> <http://dbpedia.org/ontology/timeZone> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Central_European_Time"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "107",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me the currency of China."
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/China> <http://dbpedia.org/ontology/currency> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Renminbi"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "108",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who are the developers of DBpedia?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/DBpedia> <http://dbpedia.org/ontology/developer> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/University_of_Mannheim"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Leipzig_University"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/OpenLink_Software"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "109",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Does Abraham Lincoln's death place have a website?"
+    } ],
+    "query" : {
+      "sparql" : "ASK WHERE { <http://dbpedia.org/resource/Abraham> <http://dbpedia.org/ontology/deathPlace> ?uri }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : true
+    } ]
+  }, {
+    "id" : "110",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the king of the Netherlands?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "111",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which city did Nikos Kazantzakis die?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/National_University_of_Distance_Education> <http://dbpedia.org/ontology/city> <http://dbpedia.org/resource/City> . <http://dbpedia.org/resource/National_University_of_Distance_Education> <http://dbpedia.org/ontology/city> ?uri . ?uri a <http://dbpedia.org/ontology/City> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Madrid"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "112",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me a list of all critically endangered birds."
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "113",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How many inhabitants does the largest city in Canada have?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri a <http://dbpedia.org/ontology/City> . <http://dbpedia.org/resource/Canada> <http://dbpedia.org/ontology/largestCity> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "http://dbpedia.org/resource/Toronto"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "114",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which military conflicts did Lawrence of Arabia participate?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "115",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which book has the most pages?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "116",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which country does the Nile start?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Country> ; <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Country> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Simpson_College"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "117",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the Formula 1 race driver with the most races?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "118",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which companies produce hovercrafts?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Publix> <http://dbpedia.org/ontology/product> <http://dbpedia.org/resource/Produce> . <http://dbpedia.org/resource/Publix> <http://dbpedia.org/ontology/product> ?uri . ?uri a <http://dbpedia.org/ontology/Company> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Dairy"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Western_Union"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Delicatessen"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "119",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Did Elvis Presley have children?"
+    } ],
+    "query" : {
+      "sparql" : "ASK WHERE { <http://dbpedia.org/resource/Elvis_Presley> <http://dbpedia.org/ontology/child> ?uri }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : true
+    } ]
+  }, {
+    "id" : "120",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which countries do people speak Japanese?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "121",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Show me the book that Muhammad Ali wrote."
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "122",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Is Michelle Obama the wife of Barack Obama?"
+    } ],
+    "query" : {
+      "sparql" : "ASK WHERE { <http://dbpedia.org/resource/Barack_Obama> <http://dbpedia.org/ontology/spouse> ?uri }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : true
+    } ]
+  }, {
+    "id" : "123",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the area code of Berlin?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Berlin> <http://dbpedia.org/ontology/areaCode> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "030"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "124",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me all actors starring in Last Action Hero."
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Last_Action_Hero> <http://dbpedia.org/ontology/starring> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Tom_Noonan"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/F._Murray_Abraham"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Arnold_Schwarzenegger"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Mercedes_Ruehl"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Charles_Dance"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Art_Carney"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Frank_McRae"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Austin_O'Brien"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Robert_Prosky"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Anthony_Quinn"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "125",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What was the first Queen album?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/album> <http://dbpedia.org/resource/(_)_(album)> ; <http://dbpedia.org/ontology/album> <http://dbpedia.org/resource/(_)_(album)> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Vaka_(song)"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "126",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which television shows were created by Walt Disney?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "127",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the bridge with the longest span?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "128",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What country is Sitecore from?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Country> ; <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Country> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Simpson_College"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "129",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the capital of Canada?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Canada> <http://dbpedia.org/ontology/capital> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Ottawa"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "130",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who was Vincent van Gogh inspired by?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "131",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which city did John F. Kennedy die?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/National_University_of_Distance_Education> <http://dbpedia.org/ontology/city> <http://dbpedia.org/resource/City> . <http://dbpedia.org/resource/National_University_of_Distance_Education> <http://dbpedia.org/ontology/city> ?uri . ?uri a <http://dbpedia.org/ontology/City> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Madrid"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "132",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Was U.S. president Jackson involved in a war?"
+    } ],
+    "query" : {
+      "sparql" : "ASK WHERE { <http://dbpedia.org/resource/War> <http://dbpedia.org/property/s> ?uri }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : true
+    } ]
+  }, {
+    "id" : "133",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who wrote the Game of Thrones theme?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "134",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who designed the Brooklyn Bridge?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "135",
+    "answertype" : "date",
+    "question" : [ {
+      "language" : "en",
+      "string" : "When did Boris Becker end his active career?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "date" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "136",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which types of grapes grow in Oregon?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "137",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How tall is Michael Jordan?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "138",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "To which party does the mayor of Paris belong?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Paris> <http://dbpedia.org/ontology/mayor> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Anne_Hidalgo"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "139",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who wrote the book The Pillars of the Earth?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Cult_of_Skaro> <http://dbpedia.org/property/planet> <http://dbpedia.org/resource/Earth> . <http://dbpedia.org/resource/Cult_of_Skaro> <http://dbpedia.org/property/planet> ?uri . ?uri a <http://dbpedia.org/ontology/Planet> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Skaro"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "140",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who was the doctoral supervisor of Albert Einstein?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/doctoralStudent> <http://dbpedia.org/resource/Albert_Einstein> ; <http://dbpedia.org/ontology/doctoralStudent> <http://dbpedia.org/resource/Albert_Einstein> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Alfred_Kleiner"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "141",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which city does Sylvester Stallone live?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/National_University_of_Distance_Education> <http://dbpedia.org/ontology/city> <http://dbpedia.org/resource/City> . <http://dbpedia.org/resource/National_University_of_Distance_Education> <http://dbpedia.org/ontology/city> ?uri . ?uri a <http://dbpedia.org/ontology/City> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Madrid"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "142",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the currency of the Czech Republic?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Czech_Republic> <http://dbpedia.org/ontology/currency> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Czech_koruna"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "143",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Did Socrates influence Aristotle?"
+    } ],
+    "query" : {
+      "sparql" : "ASK WHERE { <http://dbpedia.org/resource/Socrates> <http://dbpedia.org/ontology/influenced> ?uri }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : true
+    } ]
+  }, {
+    "id" : "144",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the son of Sonny and Cher?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/child> <http://dbpedia.org/resource/Cher> ; <http://dbpedia.org/ontology/child> <http://dbpedia.org/resource/Cher> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Georgia_Holt"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "145",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which city are the headquarters of the United Nations?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/National_University_of_Distance_Education> <http://dbpedia.org/ontology/city> <http://dbpedia.org/resource/City> . <http://dbpedia.org/resource/National_University_of_Distance_Education> <http://dbpedia.org/ontology/city> ?uri . ?uri a <http://dbpedia.org/ontology/City> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Madrid"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "146",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the founder of Penguin Books?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Penguin_Books> <http://dbpedia.org/ontology/founder> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Allen_Lane"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "147",
+    "answertype" : "date",
+    "question" : [ {
+      "language" : "en",
+      "string" : "When was Jack Wolfskin founded?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "date" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "148",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the mayor of Rotterdam?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/mayor> <http://dbpedia.org/resource/Mayor> ; <http://dbpedia.org/ontology/mayor> <http://dbpedia.org/resource/Mayor> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Kraainem"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "149",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me all Swedish oceanographers."
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "150",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Show me Hemingway's autobiography."
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "151",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who are the parents of the wife of Juan Carlos I?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Juan_Carlos_I_of_Spain> <http://dbpedia.org/ontology/parent> <http://dbpedia.org/resource/Infante_Juan,_Count_of_Barcelona> . <http://dbpedia.org/resource/Infante_Juan,_Count_of_Barcelona> <http://dbpedia.org/ontology/parent> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Alfonso_XIII_of_Spain"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Victoria_Eugenie_of_Battenberg"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "152",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Did Tesla win a nobel prize in physics?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "153",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the tallest basketball player?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "154",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which city has the least inhabitants?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/city> <http://dbpedia.org/resource/City> ; <http://dbpedia.org/ontology/city> <http://dbpedia.org/resource/City> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/National_University_of_Distance_Education"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "155",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Is proinsulin a protein?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "156",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who were the parents of Queen Victoria?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Queen_Victoria> <http://dbpedia.org/ontology/parent> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Princess_Victoria_of_Saxe-Coburg-Saalfeld"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Prince_Edward,_Duke_of_Kent_and_Strathearn"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "157",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Did Che Guevara have children?"
+    } ],
+    "query" : {
+      "sparql" : "ASK WHERE { <http://dbpedia.org/resource/Che_Guevara> <http://dbpedia.org/ontology/child> ?uri }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : true
+    } ]
+  }, {
+    "id" : "158",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Is Lake Baikal bigger than the Great Bear Lake?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "159",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Did Kaurismäki ever win the Grand Prix at Cannes?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "160",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me all books by William Goldman with more than 300 pages."
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "161",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Where is Syngman Rhee buried?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "162",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the timezone in San Pedro de Atacama?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/San_Pedro_de_Atacama> <http://dbpedia.org/ontology/timeZone> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Time_in_Chile"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "163",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "To which artistic movement did the painter of The Three Dancers belong?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "164",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which scientist is known for the Manhattan Project and the Nobel Peace Prize?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "165",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Show me all books in Asimov's Foundation series."
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Foundation_series> <http://dbpedia.org/property/books> <http://dbpedia.org/resource/Second_Foundation> . <http://dbpedia.org/resource/Second_Foundation> <http://dbpedia.org/ontology/series> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Foundation_series"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "166",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which museum in New York has the most visitors?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/museum> <http://dbpedia.org/resource/New_York> ; <http://dbpedia.org/ontology/museum> <http://dbpedia.org/resource/New_York> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Le_Bateau"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "167",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How high is the Yokohama Marine Tower?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "168",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is the youngest Darts player?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "169",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who developed the video game World of Warcraft?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "170",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who was the pope that founded the Vatican Television?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "171",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who composed the music for Harold and Maude?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "172",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me all members of Prodigy."
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "173",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who is starring in Spanish movies produced by Benicio del Toro?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/starring> <http://dbpedia.org/resource/Benicio_del_Toro> ; <http://dbpedia.org/ontology/starring> <http://dbpedia.org/resource/Benicio_del_Toro> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Fan_(1996_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Excess_Baggage_(1997_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Traffic_(2000_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/A_Perfect_Day_(2015_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Star_Wars:_Episode_VIII"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Little_Prince_(2015_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Way_of_the_Gun"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Hunted_(2003_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Basquiat_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/21_Grams"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Swimming_with_Sharks"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Snatch_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/China_Moon"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Fear_and_Loathing_in_Las_Vegas_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Things_We_Lost_in_the_Fire_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Savages_(2012_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Weightless_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Funeral_(1996_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Usual_Suspects"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/The_Wolfman_(2010_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Christopher_Columbus:_The_Discovery"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Che_(2008_film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Buy_the_Ticket,_Take_the_Ride:_Hunter_S._Thompson_on_Film"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Inherent_Vice_(film)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Drug_Wars:_The_Camarena_Story"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Jimmy_P:_Psychotherapy_of_a_Plains_Indian"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "174",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "In which country is Mecca located?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Mecca> <http://dbpedia.org/ontology/country> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Saudi_Arabia"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "175",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How many languages are spoken in Colombia?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT (COUNT(DISTINCT *) as ?c) WHERE { <http://dbpedia.org/resource/Colombia> <http://dbpedia.org/ontology/language> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "3"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "176",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the biggest stadium in Spain?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Netherlands_women's_national_rugby_union_team> <http://dbpedia.org/property/stadium> <http://dbpedia.org/resource/Spain> . <http://dbpedia.org/resource/Netherlands_women's_national_rugby_union_team> <http://dbpedia.org/property/stadium> ?uri . ?uri a <http://dbpedia.org/ontology/Stadium> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Estadio_Nacional_Complutense"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "177",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What are the five boroughs of New York?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "178",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Is Cola a beverage?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "179",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Where in France is sparkling wine produced?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/wineProduced> <http://dbpedia.org/resource/Sparkling_wine> ; <http://dbpedia.org/ontology/wineProduced> <http://dbpedia.org/resource/Sparkling_wine> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Tasmanian_wine"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Loire_Valley_(wine)"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Horse_Heaven_Hills_AVA"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Wahluke_Slope_AVA"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Walla_Walla_Valley_AVA"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Puget_Sound_AVA"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Columbia_Valley_AVA"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Yakima_Valley_AVA"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "180",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Are there any castles in the United States?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/property/states> <http://dbpedia.org/resource/United_States> ; <http://dbpedia.org/property/states> <http://dbpedia.org/resource/United_States> . }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : false
+    } ]
+  }, {
+    "id" : "181",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Can you find frescoes in Crete?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "182",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Do Urdu and Persian have a common root?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "183",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Does the Ford Motor Company have a manufacturing plant in Malaysia?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/company> <http://dbpedia.org/resource/Ford_Motor_Company> ; <http://dbpedia.org/ontology/company> <http://dbpedia.org/resource/Ford_Motor_Company> . }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : false
+    } ]
+  }, {
+    "id" : "184",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How many years was the Ford Model T manufactured?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT (COUNT(DISTINCT *) as ?c) WHERE { ?uri ?property_0 ?class_0 . ?uri ?property_1 ?year . ?class_1 ?property_2 ?year . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "0"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "185",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me all gangsters from the prohibition era."
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "186",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me all Seven Wonders of the Ancient World."
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "187",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me all chemical elements."
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "188",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How many rivers and lakes are in South Carolina?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT (COUNT(DISTINCT *) as ?c) WHERE { ?uri ?property_0 ?class_0 . ?uri ?property_1 ?year . ?class_1 ?property_2 ?year . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "0"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "189",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How many states are in Mexico?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT (COUNT(DISTINCT *) as ?c) WHERE { ?class_0 ?property_0 ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "0"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "190",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How many theories did Albert Einstein come up with?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT (COUNT(DISTINCT *) as ?c) WHERE { ?class_0 ?property_0 ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "0"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "191",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Is horse racing a sport?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/property/sport> <http://dbpedia.org/resource/Racing> ; <http://dbpedia.org/property/sport> <http://dbpedia.org/resource/Racing> . }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : false
+    } ]
+  }, {
+    "id" : "192",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Is Pluto really a planet?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/property/planet> <http://dbpedia.org/resource/Pluto> ; <http://dbpedia.org/property/planet> <http://dbpedia.org/resource/Pluto> . }"
+    },
+    "answers" : [ {
+      "head" : { },
+      "results" : { },
+      "boolean" : false
+    } ]
+  }, {
+    "id" : "193",
+    "answertype" : "boolean",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Was Sigmund Freud married?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : { },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "194",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What form of government is found in South Africa?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "195",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the largest state in the United States?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/property/states> <http://dbpedia.org/resource/United_States> ; <http://dbpedia.org/property/states> <http://dbpedia.org/resource/United_States> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Robert_Anthony_Buell"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Wayne_Nance"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "196",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the longest river in the world?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "197",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which building after the Burj Khalifa has the most floors?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "198",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What is the wavelength of indigo?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Indigo> <http://dbpedia.org/ontology/wavelength> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "4.5e-07"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "199",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What was the name of the famous battle in 1836 in San Antonio?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "200",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What were the names of the three ships used by Columbus?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "201",
+    "answertype" : "date",
+    "question" : [ {
+      "language" : "en",
+      "string" : "When did Muhammad die?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "date" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "202",
+    "answertype" : "date",
+    "question" : [ {
+      "language" : "en",
+      "string" : "When was the De Beers company founded?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "date" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "203",
+    "answertype" : "date",
+    "question" : [ {
+      "language" : "en",
+      "string" : "When was John Adams born?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "date" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "204",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which American presidents were in office during the Vietnam War?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/property/war> <http://dbpedia.org/resource/Vietnam_War> ; <http://dbpedia.org/property/war> <http://dbpedia.org/resource/Vietnam_War> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Lane_Carson"
+          }
+        }, {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/United_Front_for_the_Liberation_of_Oppressed_Races"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "205",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which city has the oldest running metro?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/ontology/city> <http://dbpedia.org/resource/City> ; <http://dbpedia.org/ontology/city> <http://dbpedia.org/resource/City> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/National_University_of_Distance_Education"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "206",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which holidays are celebrated around the world?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "207",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who assassinated President McKinley?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/William_McKinley> <http://dbpedia.org/property/president> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "William McKinley"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "208",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who discovered Pluto?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/property/planet> <http://dbpedia.org/resource/Pluto> ; <http://dbpedia.org/property/planet> <http://dbpedia.org/resource/Pluto> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Yama_(Hinduism)"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "209",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who killed Caesar?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "210",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who was buried in the Great Pyramid of Giza?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "211",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who was the first King of England?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "212",
+    "answertype" : "string",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What was the final result of the War of the Roses?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "string" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "213",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Who writes the Farmers' Almanac?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "214",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How big is the earth's diameter?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "215",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "How many people live in Eurasia?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT (COUNT(DISTINCT *) as ?c) WHERE { ?class_0 ?property_0 ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "0"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "216",
+    "answertype" : "number",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me the runtime of Toy Story."
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Toy_Story_3> <http://dbpedia.org/ontology/writer> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "c" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "c" : {
+            "type" : "literal",
+            "value" : "http://dbpedia.org/resource/Michael_Arndt"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "217",
+    "answertype" : "string",
+    "question" : [ {
+      "language" : "en",
+      "string" : "What was the first name of the band Queens of the Stone Age?"
+    } ],
+    "query" : { },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "string" ]
+      },
+      "results" : { }
+    } ]
+  }, {
+    "id" : "218",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Give me the birth place of Frank Sinatra."
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { <http://dbpedia.org/resource/Frank_Sinatra> <http://dbpedia.org/ontology/birthPlace> ?uri . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Hoboken,_New_Jersey"
+          }
+        } ]
+      }
+    } ]
+  }, {
+    "id" : "219",
+    "answertype" : "resource",
+    "question" : [ {
+      "language" : "en",
+      "string" : "Which university did Angela Merkel attend?"
+    } ],
+    "query" : {
+      "sparql" : "SELECT DISTINCT * WHERE { ?uri <http://dbpedia.org/property/institution> <http://dbpedia.org/resource/University> ; <http://dbpedia.org/property/institution> <http://dbpedia.org/resource/University> . }"
+    },
+    "answers" : [ {
+      "head" : {
+        "vars" : [ "uri" ]
+      },
+      "results" : {
+        "bindings" : [ {
+          "uri" : {
+            "type" : "uri",
+            "value" : "http://dbpedia.org/resource/Union_nouvelle_et_indépendante-syndicat_universitaire"
+          }
+        } ]
+      }
+    } ]
+  } ]
+}

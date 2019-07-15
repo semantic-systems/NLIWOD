@@ -1,23 +1,13 @@
 package org.aksw.qa.systems;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class OKBQA extends ASystem {
-	private Logger log = LoggerFactory.getLogger(OKBQA.class);
+public class OKBQA extends Gen_HTTP_QA_Sys_JSON {
 	
 	private static final String CONTROLLER_URI = "http://ws.okbqa.org:7047/cm";
 	private static final String TGM_URI = "http://ws.okbqa.org:1515/templategeneration/rocknrole";
@@ -30,54 +20,41 @@ public class OKBQA extends ASystem {
 	private JSONObject conf;
 	
 	public OKBQA() {
+		super(CONTROLLER_URI, "okbqa");
 		try {
 			createJSONConf();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
+			
+	@Override
+	public String createInputJSON(String question) {
+		JSONObject json = new JSONObject();
+		JSONObject input = new JSONObject();
+		
+		input.put("language", "en");
+		input.put("string", question);
 	
-	private String execute(String jsonInput) throws Exception{
-		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
-		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
-		HttpPost httppost = new HttpPost(CONTROLLER_URI);
-		StringEntity entity = new StringEntity(jsonInput);
+		json.put("input", input);
+		json.put("conf", conf);
+		json.put("timelimit", "10000");
 		
-		httppost.setEntity(entity);
-		
-		HttpResponse response = client.execute(httppost);
-		
-		if(response.getStatusLine().getStatusCode()>=400){
-			throw new Exception("OKBQA Server could not answer due to: "+response.getStatusLine());
-		}
-		return responseparser.responseToString(response);
+		return json.toString();
 	}
 	
 	@Override
-	public void search(IQuestion question, String language) throws Exception {
-		String questionString;
-		if (!question.getLanguageToQuestion().containsKey(language)) {
-			return;
-		}
-		questionString = question.getLanguageToQuestion().get(language);
-		log.debug(this.getClass().getSimpleName() + ": " + questionString);
-		
-		
-		Set<String> answerSet = new HashSet<String>();
-		question.setGoldenAnswers(answerSet);
-		
-		//Execute TGM to AGM. 
-		String responseString = execute(createInputJSON(questionString, language));
-		
-		if(responseString == null || responseString.length() == 0) return;
-		JSONObject obj = new JSONObject(responseString);
+	public void processResponse(String response, IQuestion question) {
+		HashSet<String> resultSet = new HashSet<String>();
+		if(response == null || response.length() == 0) return;
+		JSONObject obj = new JSONObject(response);
 		JSONArray results = obj.getJSONArray("result");
 		//Iterate over answers and add them to the final answerSet
 		for(int i=0; i<results.length(); i++){
 			JSONObject result = results.getJSONObject(i);
 
 			String answerString = result.getString("answer");
-			answerSet.add(answerString);
+			resultSet.add(answerString);
 			
 		}
 		
@@ -97,27 +74,7 @@ public class OKBQA extends ASystem {
 				}
 			}
 		}
-
-		question.setGoldenAnswers(answerSet);
-	}
-	
-	@Override
-	public String name() {
-		return "okbqa";
-	}
-	
-	private String createInputJSON(String questionString, String language) throws JSONException{
-		JSONObject json = new JSONObject();
-		JSONObject input = new JSONObject();
-		
-		input.put("language", language);
-		input.put("string", questionString);
-	
-		json.put("input", input);
-		json.put("conf", conf);
-		json.put("timelimit", "10000");
-		
-		return json.toString();
+		question.setGoldenAnswers(resultSet);	
 	}
 	
 	private void createJSONConf() throws JSONException{

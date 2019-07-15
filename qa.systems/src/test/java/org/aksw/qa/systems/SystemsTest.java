@@ -18,8 +18,8 @@ public class SystemsTest {
         List<ASystem> systems = Arrays.asList(
 //                (ASystem) new HAWK(), 
                 (ASystem) new QAKIS(),
-                (ASystem) new SINA(),
-                (ASystem) new START(), 
+//                (ASystem) new SINA(),
+//                (ASystem) new START(), 
                 (ASystem) new OKBQA(),
                 (ASystem) new AskNow(),
                 (ASystem) new SorokinQA(),
@@ -29,7 +29,8 @@ public class SystemsTest {
                 (ASystem) new PLATYPUS(),
                 (ASystem) new QASystem(),
                 (ASystem) new QUEPY(),
-                (ASystem) new TeBaQA()
+                (ASystem) new TeBaQA(),
+                (ASystem) new FRANKENSTEIN()
                 );
         for (ASystem system : systems) {
         	system.setSocketTimeOutMs(30000);
@@ -51,8 +52,8 @@ public class SystemsTest {
         List<ASystem> systems = Arrays.asList(
 //                (ASystem) new HAWK(), 
                 (ASystem) new QAKIS(),
-                (ASystem) new SINA(),
-                (ASystem) new START(), 
+//                (ASystem) new SINA(),
+//                (ASystem) new START(), 
                 (ASystem) new OKBQA(),
                 (ASystem) new AskNow(),
 //                (ASystem) new YODA(),

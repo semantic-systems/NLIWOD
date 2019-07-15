@@ -4,15 +4,18 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.aksw.mlqa.experimentold.RunProducer;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class RunProducerTest {
 
+	@Ignore
 	@Test
 	public void test() {
 		JSONArray arr = RunProducer.loadRunData(Dataset.QALD6_Train_Multilingual);

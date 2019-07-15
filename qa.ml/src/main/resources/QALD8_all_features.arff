@@ -1,0 +1,295 @@
+@relation 'training_classifier: -C 6'
+
+@attribute GANSWER2 {0,1}
+@attribute QANSWER {0,1}
+@attribute QASystem {0,1}
+@attribute TeBaQA {0,1}
+@attribute QAKIS {0,1}
+@attribute AskNow {0,1}
+@attribute CC numeric
+@attribute CD numeric
+@attribute DT numeric
+@attribute EX numeric
+@attribute FW numeric
+@attribute IN numeric
+@attribute JJ numeric
+@attribute JJR numeric
+@attribute JJS numeric
+@attribute LS numeric
+@attribute MD numeric
+@attribute NN numeric
+@attribute NNS numeric
+@attribute NNP numeric
+@attribute NNPS numeric
+@attribute PDT numeric
+@attribute POS numeric
+@attribute PRP numeric
+@attribute PRP$ numeric
+@attribute RB numeric
+@attribute RBR numeric
+@attribute RBS numeric
+@attribute RP numeric
+@attribute SYM numeric
+@attribute TO numeric
+@attribute UH numeric
+@attribute VB numeric
+@attribute VBD numeric
+@attribute VBG numeric
+@attribute VBN numeric
+@attribute VBP numeric
+@attribute VBZ numeric
+@attribute WDT numeric
+@attribute WP numeric
+@attribute WP$ numeric
+@attribute WRB numeric
+@attribute nsubj numeric
+@attribute iobj numeric
+@attribute dobj numeric
+@attribute csubj numeric
+@attribute xcomp numeric
+@attribute advcl numeric
+@attribute nmod numeric
+@attribute nummod numeric
+@attribute appos numeric
+@attribute acl numeric
+@attribute amod numeric
+@attribute det numeric
+@attribute neg numeric
+@attribute compound numeric
+@attribute case numeric
+@attribute advmod numeric
+@attribute root numeric
+@attribute punct numeric
+@attribute QuestionType {LIST,NUMBER,BOOLEAN,RESOURCE}
+@attribute QueryAnswerType {DBpedia:Activity,DBpedia:Actor,DBpedia:AdministrativeRegion,DBpedia:Agent,DBpedia:Airline,DBpedia:Album,DBpedia:Animal,DBpedia:Arena,DBpedia:ArchitecturalStructure,DBpedia:Artist,DBpedia:Artwork,DBpedia:Athlete,DBpedia:Award,DBpedia:Band,DBpedia:BasketballPlayer,DBpedia:Beverage,DBpedia:BodyOfWater,DBpedia:Book,DBpedia:Bridge,DBpedia:BritishRoyalty,DBpedia:Broadcaster,DBpedia:CelestialBody,DBpedia:ChristianBishop,DBpedia:City,DBpedia:Cleric,DBpedia:Comedian,DBpedia:Company,DBpedia:Continent,DBpedia:Country,DBpedia:Currency,DBpedia:Device,DBpedia:Disease,DBpedia:EducationalInstitution,DBpedia:Eukaryote,DBpedia:Event,DBpedia:FictionalCharacter,DBpedia:Film,DBpedia:FloweringPlant,DBpedia:Food,DBpedia:Game,DBpedia:GovernmentAgency,DBpedia:Governor,DBpedia:Grape,DBpedia:Holiday,DBpedia:Infrastructure,DBpedia:Island,DBpedia:Language,DBpedia:Mammal,DBpedia:MilitaryPerson,DBpedia:MilitaryUnit,DBpedia:Model,DBpedia:Monarch,DBpedia:Mountain,DBpedia:MusicalArtist,DBpedia:MusicalWork,DBpedia:NaturalPlace,DBpedia:OfficeHolder,DBpedia:Organisation,DBpedia:PersonFunction,DBpedia:Philosopher,DBpedia:Planet,DBpedia:Plant,DBpedia:PlayboyPlaymate,DBpedia:Politician,DBpedia:PopulatedPlace,DBpedia:ProgrammingLanguage,DBpedia:RecordLabel,DBpedia:Region,DBpedia:River,DBpedia:Rocket,DBpedia:RouteOfTransportation,DBpedia:Royalty,DBpedia:Saint,DBpedia:Scientist,DBpedia:Settlement,DBpedia:Single,DBpedia:Software,DBpedia:SpaceMission,DBpedia:Species,DBpedia:Sport,DBpedia:Stream,DBpedia:Swimmer,DBpedia:TelevisionShow,DBpedia:TelevisionStation,DBpedia:University,DBpedia:Weapon,DBpedia:Website,DBpedia:Work,DBpedia:Writer,DBpedia:WrittenWork,Schema:AdministrativeArea,Schema:BodyOfWater,Schema:Book,Schema:City,Schema:CollegeOrUniversity,Schema:Continent,Schema:Country,Schema:CreativeWork,Schema:EducationalOrganization,Schema:Event,Schema:GovernmentOrganization,Schema:Language,Schema:Mountain,Schema:Movie,Schema:MusicAlbum,Schema:MusicGroup,Schema:Organization,Schema:Person,Schema:Place,Schema:Product,Schema:RiverBodyOfWater,Schema:TelevisionStation,Schema:WebPage,DBpedia:Place,DBpedia:Person,Schema:Date,Schema:GYear,Schema:String,Number,Boolean,Misc}
+@attribute QuestionWord {Who,What,When,Where,Which,Give||Show||List,Is||Are||Did||Does||Was||Do,How,Misc}
+@attribute NumberOfToken numeric
+@attribute Superlative {Superlative,NoSuperlative}
+@attribute Comparative {Comparative,NoComparative}
+@attribute Person {Person,NoPerson}
+@attribute Money {Money,NoMoney}
+@attribute Location {Location,NoLocation}
+@attribute Percent {Percent,NoPercent}
+@attribute Organization {Organization,NoOrganization}
+@attribute Date {Date,NoDate}
+
+@data
+0,1,0,0,1,0,0,0,1,0,0,2,0,0,0,0,0,1,1,2,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2,0,0,0,0,2,0,1,2,0,1,1,LIST,Misc,Give||Show||List,8,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,1,1,1,NUMBER,Number,How,7,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,2,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,Person,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,0,0,1,0,0,0,2,0,0,1,0,0,0,0,0,1,0,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,2,0,2,1,0,1,1,RESOURCE,DBpedia:Person,Who,7,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,Organization,NoDate
+0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,2,1,1,NUMBER,Number,How,5,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,2,0,1,1,0,1,1,RESOURCE,DBpedia:Place,Misc,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,RESOURCE,Schema:Date,When,4,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,1,0,0,0,0,1,1,0,0,1,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,1,1,0,0,0,2,0,0,1,0,1,1,RESOURCE,DBpedia:Place,Misc,9,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,RESOURCE,DBpedia:Person,Who,3,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,1,1,RESOURCE,DBpedia:Person,Who,5,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,0,0,0,0,0,0,1,0,0,1,1,RESOURCE,Schema:Date,What,5,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,1,1,1,1,0,0,1,0,0,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,2,0,1,0,1,1,1,RESOURCE,DBpedia:PopulatedPlace,Which,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,0,1,0,0,0,0,0,0,2,1,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,0,0,2,0,0,0,1,1,0,0,2,0,1,1,RESOURCE,Misc,Which,8,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,Organization,NoDate
+1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,NUMBER,Number,How,4,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,Organization,NoDate
+1,0,1,1,0,0,0,0,1,0,0,1,0,0,0,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,2,0,0,1,0,1,1,RESOURCE,Misc,Which,7,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,2,0,0,1,0,0,0,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,0,0,0,0,2,0,2,1,0,1,1,RESOURCE,DBpedia:Person,Who,7,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,3,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,RESOURCE,DBpedia:Person,Who,3,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,2,0,1,0,0,1,1,RESOURCE,DBpedia:RouteOfTransportation,Which,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,1,0,0,0,0,0,2,0,0,1,0,0,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1,2,0,0,1,0,1,1,RESOURCE,Misc,What,7,Superlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,1,0,1,0,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,4,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,2,0,0,0,0,1,0,2,2,0,1,1,RESOURCE,DBpedia:Person,Who,7,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,0,1,0,0,0,0,2,0,0,2,1,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,2,0,0,0,1,2,0,0,2,0,1,1,RESOURCE,DBpedia:Person,Who,9,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,RESOURCE,DBpedia:Award,Which,5,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,2,1,1,NUMBER,Number,How,6,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,1,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,4,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,1,0,2,0,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,7,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,1,1,1,NUMBER,Number,How,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,1,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,1,4,0,0,0,0,0,2,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,0,2,1,0,1,1,RESOURCE,DBpedia:Place,Misc,10,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,DBpedia:Place,Misc,7,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,0,0,2,0,0,0,0,0,0,1,1,0,1,1,RESOURCE,DBpedia:Place,Misc,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,4,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,RESOURCE,DBpedia:Place,Where,4,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,2,1,1,NUMBER,Number,How,5,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,1,0,1,0,1,0,0,1,1,RESOURCE,DBpedia:Person,Who,7,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,1,1,1,NUMBER,Number,How,5,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,1,0,0,0,0,0,2,0,0,2,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,2,0,0,0,0,2,0,0,2,0,1,1,RESOURCE,Schema:String,What,9,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,1,1,0,0,0,1,0,0,1,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,RESOURCE,DBpedia:Place,Misc,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,1,1,0,1,1,RESOURCE,Misc,What,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,0,1,0,0,0,1,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,0,1,0,1,1,RESOURCE,DBpedia:Mountain,What,6,Superlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,1,1,0,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,4,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,RESOURCE,DBpedia:Person,Who,3,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,1,1,1,0,0,1,0,0,1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,0,1,0,1,1,RESOURCE,Schema:String,What,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,2,0,0,1,1,RESOURCE,DBpedia:Person,Who,4,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,1,0,0,2,0,0,0,0,0,0,2,2,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,2,0,0,2,0,1,0,1,2,0,1,1,LIST,Misc,Give||Show||List,10,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,2,1,0,1,1,RESOURCE,Misc,What,5,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,2,1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,RESOURCE,Misc,Which,7,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,5,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,Organization,NoDate
+0,0,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,3,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,2,0,0,0,0,2,0,1,2,0,1,1,RESOURCE,DBpedia:Place,Misc,9,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,1,0,1,0,0,0,2,0,0,2,1,1,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,0,0,0,2,2,0,2,2,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,8,NoSuperlative,Comparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,RESOURCE,Schema:String,What,5,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,Organization,NoDate
+0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1,1,RESOURCE,Schema:Date,When,5,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,1,0,1,1,0,0,1,0,1,2,RESOURCE,Number,What,7,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,5,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,RESOURCE,Misc,What,5,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,1,1,1,1,0,0,1,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,0,1,0,1,1,RESOURCE,Misc,What,6,Superlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,1,0,1,0,1,1,0,1,1,LIST,DBpedia:Rocket,Give||Show||List,7,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,Organization,NoDate
+1,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,1,0,0,0,0,4,0,0,2,1,0,0,0,0,3,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,2,0,0,0,1,4,0,2,2,0,1,1,LIST,Misc,Give||Show||List,11,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,Organization,NoDate
+0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,RESOURCE,DBpedia:Person,Who,3,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,1,0,2,0,0,1,0,0,0,0,0,0,0,1,0,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,1,1,RESOURCE,DBpedia:Place,Misc,6,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,1,2,1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,2,0,0,0,0,0,2,0,0,0,1,0,0,1,2,0,1,1,RESOURCE,DBpedia:Place,Misc,8,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,0,1,1,0,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,0,0,0,1,0,0,2,1,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,2,0,0,0,1,1,0,0,2,1,1,1,NUMBER,Number,How,8,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,RESOURCE,Schema:Date,Which,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,2,1,2,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,1,0,1,0,3,1,0,1,1,LIST,Misc,Give||Show||List,7,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,1,1,NUMBER,Number,How,4,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,1,0,1,0,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,Misc,What,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,2,0,1,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,6,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,7,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,3,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,1,0,1,0,2,1,0,1,1,LIST,Misc,Give||Show||List,7,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,0,0,0,0,0,1,0,0,1,0,0,1,0,0,1,1,2,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,0,0,0,2,0,0,0,1,1,0,1,2,0,1,1,RESOURCE,DBpedia:Mountain,Which,7,Superlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,0,1,0,0,0,0,0,0,2,1,1,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,1,0,1,0,2,0,0,0,1,0,0,0,2,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,9,NoSuperlative,Comparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,2,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,6,NoSuperlative,NoComparative,Person,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,2,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,LIST,Misc,Give||Show||List,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,1,0,1,0,2,1,0,1,1,RESOURCE,Misc,Which,8,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,1,0,0,2,0,0,0,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,2,0,0,0,0,2,0,0,1,0,1,1,RESOURCE,DBpedia:Agent,Which,9,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,Misc,What,7,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,2,1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,2,0,0,1,1,LIST,Schema:Date,Give||Show||List,4,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,1,0,0,1,0,1,1,1,NUMBER,Number,How,5,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,1,1,0,0,0,1,0,0,1,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,LIST,Misc,Give||Show||List,5,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,1,0,0,0,0,0,1,0,0,2,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,1,1,0,1,1,RESOURCE,DBpedia:PopulatedPlace,Misc,6,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,1,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,Superlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,6,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,2,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,5,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,LIST,Misc,Give||Show||List,5,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,0,0,0,0,0,2,0,0,1,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,2,0,1,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,RESOURCE,DBpedia:MilitaryUnit,Which,5,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,Organization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,0,0,0,0,2,2,0,0,0,0,1,1,RESOURCE,DBpedia:Company,Which,5,Superlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,0,0,0,0,1,2,0,0,0,0,1,1,RESOURCE,Misc,Which,5,Superlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,RESOURCE,DBpedia:Person,Who,3,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,Organization,NoDate
+1,0,1,1,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,2,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,1,1,0,0,0,0,1,0,0,1,0,0,0,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,2,0,1,0,0,0,1,0,0,1,0,1,0,0,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,8,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,2,0,0,0,1,1,1,1,NUMBER,Number,How,5,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,RESOURCE,Misc,Which,5,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,RESOURCE,Schema:Date,When,5,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,1,1,NUMBER,Number,How,7,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,1,0,0,0,1,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,0,1,0,1,1,RESOURCE,DBpedia:Mountain,What,6,Superlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,NUMBER,Number,How,4,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,2,0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,3,1,0,1,1,RESOURCE,DBpedia:Person,Who,4,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,1,0,0,1,0,1,0,0,1,0,0,0,0,0,2,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,DBpedia:Company,Which,10,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,Organization,NoDate
+1,0,1,1,1,1,0,0,1,0,0,1,0,0,0,0,0,1,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,2,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,2,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,1,0,0,0,2,0,0,0,0,1,0,0,2,0,1,1,RESOURCE,DBpedia:Person,Who,7,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,RESOURCE,Misc,Which,5,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,RESOURCE,DBpedia:Place,Misc,5,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,1,1,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,LIST,Misc,Give||Show||List,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,0,1,0,1,0,0,1,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,3,0,2,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,2,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,1,0,0,2,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,2,0,0,1,0,1,1,RESOURCE,DBpedia:Person,Who,7,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,RESOURCE,DBpedia:Place,Misc,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,2,0,0,1,0,0,0,0,0,1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,1,2,0,0,1,1,1,1,LIST,Misc,Give||Show||List,8,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,1,1,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,0,1,0,0,0,1,0,0,0,2,1,0,0,1,1,1,1,NUMBER,Number,How,8,Superlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,1,0,0,0,0,0,0,2,1,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,2,0,0,0,0,0,2,0,0,0,1,0,0,0,2,0,1,1,RESOURCE,DBpedia:Place,Misc,8,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,0,0,0,0,1,2,0,0,0,0,1,1,RESOURCE,Misc,Which,5,Superlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,DBpedia:Place,Misc,7,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,1,2,0,0,1,0,0,0,0,0,3,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,1,0,0,1,2,0,2,1,0,1,1,RESOURCE,DBpedia:Person,Who,8,Superlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,RESOURCE,DBpedia:Organisation,Which,4,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,4,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,2,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,DBpedia:Place,Misc,7,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,2,0,2,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,2,0,0,0,0,0,0,1,0,1,0,1,0,0,1,1,LIST,Misc,Give||Show||List,7,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,1,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,2,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,1,1,1,0,0,1,0,0,1,0,0,0,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,RESOURCE,Number,What,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,1,1,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,2,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,1,1,1,0,1,1,0,1,1,LIST,Misc,Give||Show||List,7,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,1,1,RESOURCE,Misc,What,4,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,2,1,0,1,1,RESOURCE,Misc,Which,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,2,0,0,1,0,0,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1,2,0,0,1,0,1,1,RESOURCE,DBpedia:River,What,7,Superlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,RESOURCE,Misc,What,5,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,1,1,1,0,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,Misc,What,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,2,0,0,1,1,RESOURCE,DBpedia:Person,Who,5,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,3,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,2,1,0,1,1,RESOURCE,DBpedia:Place,Misc,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,2,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,6,NoSuperlative,NoComparative,Person,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,2,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,RESOURCE,DBpedia:Person,Who,4,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,2,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,1,0,0,0,1,0,0,0,1,0,0,1,0,1,1,1,RESOURCE,Schema:Date,When,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,1,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,2,0,0,0,0,1,0,0,2,0,1,1,RESOURCE,Misc,Which,7,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,NUMBER,Number,How,4,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,2,0,0,0,0,2,0,0,2,0,1,1,RESOURCE,DBpedia:Species,Misc,9,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,0,0,1,0,0,0,3,0,0,1,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,0,0,0,0,3,0,0,1,0,1,1,RESOURCE,DBpedia:Person,Who,9,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,1,1,1,1,0,0,1,0,0,1,1,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,1,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,RESOURCE,DBpedia:Place,Misc,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,1,1,1,0,0,2,0,0,1,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,2,0,1,1,0,1,1,RESOURCE,Misc,What,7,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,4,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,1,1,1,0,1,0,0,1,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,DBpedia:Person,Who,8,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,2,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,2,0,0,0,0,3,0,1,2,0,1,1,RESOURCE,DBpedia:Place,Misc,9,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,Organization,NoDate
+1,0,1,1,0,1,0,0,1,0,0,1,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,RESOURCE,Schema:Date,When,4,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,LIST,Misc,Give||Show||List,4,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1,1,0,1,1,LIST,Misc,Give||Show||List,3,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,1,1,2,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,2,0,0,0,0,2,0,2,2,0,1,1,RESOURCE,DBpedia:Person,Who,9,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,0,1,0,0,0,1,0,0,1,1,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,1,1,0,0,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,7,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,1,1,RESOURCE,DBpedia:Person,Who,4,Superlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,0,0,0,0,1,2,0,0,0,0,1,1,RESOURCE,Misc,Which,5,Superlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,3,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,1,1,1,0,0,1,0,0,1,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,4,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,3,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,5,NoSuperlative,Comparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,0,4,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,1,1,1,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,8,NoSuperlative,NoComparative,Person,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,1,0,0,0,0,0,1,1,0,0,3,0,1,0,0,0,0,2,2,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,2,1,0,0,0,1,0,1,2,1,1,1,LIST,Misc,Give||Show||List,11,NoSuperlative,Comparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,RESOURCE,DBpedia:Place,Where,4,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,0,1,1,0,0,0,1,0,0,2,0,0,0,0,0,1,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,2,1,0,1,1,RESOURCE,Misc,What,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,1,2,0,0,1,1,0,0,0,0,2,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,2,1,0,0,1,3,0,0,2,0,1,1,RESOURCE,DBpedia:Species,Misc,11,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,0,0,0,1,0,2,0,0,1,0,0,0,0,0,1,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,3,0,3,1,0,1,1,RESOURCE,Schema:String,Which,10,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,Organization,NoDate
+1,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,2,1,2,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,1,0,3,2,0,1,1,LIST,Misc,Give||Show||List,5,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,1,2,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,2,0,1,1,0,1,1,RESOURCE,Misc,Which,7,Superlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,2,0,1,1,1,NUMBER,Number,How,5,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,1,1,RESOURCE,DBpedia:Person,Who,4,Superlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,3,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,2,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,1,1,0,0,2,0,1,0,0,0,0,0,0,1,0,2,0,1,0,0,1,1,RESOURCE,DBpedia:Person,Who,8,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,Organization,NoDate
+0,1,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,DBpedia:Person,Who,8,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,LIST,Misc,Give||Show||List,6,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,0,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,0,1,0,0,0,0,0,2,0,0,1,1,0,0,2,2,0,1,1,RESOURCE,DBpedia:Person,Who,8,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,1,RESOURCE,DBpedia:Place,Misc,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,1,1,1,NUMBER,Number,How,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,0,1,0,1,1,RESOURCE,DBpedia:Arena,What,6,Superlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,1,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,1,1,0,0,0,1,0,1,1,0,1,1,RESOURCE,Misc,What,7,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,3,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,1,1,1,RESOURCE,DBpedia:Place,Where,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,2,1,0,1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,2,0,1,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,7,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,1,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,1,1,RESOURCE,Misc,Misc,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,7,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,2,0,0,1,0,0,0,0,0,2,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,2,0,3,1,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,8,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,Organization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,1,1,0,2,0,1,1,1,NUMBER,Number,How,6,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,2,0,0,1,0,0,0,0,0,2,1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,2,0,1,1,0,1,1,LIST,Misc,Give||Show||List,7,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,0,0,1,2,0,0,1,0,0,0,0,0,0,1,2,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,0,0,1,2,0,0,1,0,1,1,LIST,Misc,Give||Show||List,8,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,LIST,Misc,Give||Show||List,4,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,1,1,1,1,NUMBER,Number,How,7,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,1,1,1,NUMBER,Number,How,5,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,1,0,0,0,1,0,0,0,1,0,0,2,0,1,1,1,NUMBER,Number,How,7,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,4,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,4,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,BOOLEAN,Boolean,Is||Are||Did||Does||Was||Do,3,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,0,0,0,0,0,0,0,0,2,0,0,0,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,1,0,0,0,0,0,2,0,0,0,0,1,0,1,2,0,1,1,RESOURCE,DBpedia:Agent,What,8,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,2,0,0,1,0,0,1,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1,2,0,1,1,0,1,1,RESOURCE,Misc,What,7,Superlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,1,0,0,0,0,0,2,0,0,1,0,0,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1,2,0,0,1,0,1,1,RESOURCE,Misc,What,7,Superlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,2,0,0,1,0,0,0,0,0,1,1,2,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,0,0,0,0,1,3,0,1,0,0,1,1,RESOURCE,Misc,Which,8,Superlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,Misc,What,6,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,1,2,0,0,3,1,0,0,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,3,0,0,0,1,2,0,1,3,0,1,1,RESOURCE,Schema:String,What,11,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,Date
+0,0,0,0,0,0,0,1,2,0,0,2,0,0,0,0,0,0,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0,0,2,1,0,1,0,2,0,0,2,0,1,1,RESOURCE,Misc,What,11,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,RESOURCE,Schema:Date,When,4,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,2,0,1,1,1,RESOURCE,Schema:Date,When,5,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,Organization,NoDate
+1,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,RESOURCE,Schema:Date,When,4,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,1,0,0,0,1,0,0,2,1,0,0,0,0,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,1,2,0,1,2,0,1,1,RESOURCE,Misc,Which,8,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,1,0,1,0,0,0,0,0,0,0,2,2,0,0,0,0,1,1,RESOURCE,DBpedia:Person,Which,5,Superlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,2,0,0,1,0,1,1,RESOURCE,Misc,Which,7,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,RESOURCE,DBpedia:Person,Who,3,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,RESOURCE,DBpedia:Person,Who,3,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,RESOURCE,DBpedia:Person,Who,3,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,0,0,0,0,0,1,0,0,2,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0,0,2,0,0,0,1,1,0,0,2,0,1,1,RESOURCE,DBpedia:Person,Who,8,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,1,1,0,0,1,0,1,1,RESOURCE,DBpedia:Person,Who,6,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,3,0,0,2,1,0,0,0,0,2,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,2,0,0,0,1,3,0,0,2,0,1,1,RESOURCE,Schema:String,What,10,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,2,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,0,1,0,1,1,RESOURCE,DBpedia:Person,Who,5,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,Organization,NoDate
+0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,1,1,1,NUMBER,Number,How,6,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,1,1,1,NUMBER,Number,How,5,NoSuperlative,NoComparative,NoPerson,NoMoney,Location,NoPercent,NoOrganization,NoDate
+1,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,2,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,1,0,1,1,0,1,1,LIST,Number,Give||Show||List,6,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+0,0,0,0,0,0,0,0,3,0,0,2,1,0,0,0,0,2,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,2,0,0,0,1,3,0,2,2,0,1,1,RESOURCE,Schema:String,What,10,NoSuperlative,NoComparative,NoPerson,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,1,0,0,0,0,1,0,0,1,0,0,0,0,0,2,0,2,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,1,0,2,1,0,1,1,LIST,DBpedia:Place,Give||Show||List,6,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate
+1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,RESOURCE,DBpedia:EducationalInstitution,Which,5,NoSuperlative,NoComparative,Person,NoMoney,NoLocation,NoPercent,NoOrganization,NoDate

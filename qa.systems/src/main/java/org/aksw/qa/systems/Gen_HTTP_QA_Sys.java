@@ -5,7 +5,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -33,9 +32,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -122,63 +118,6 @@ public class Gen_HTTP_QA_Sys extends ASystem {
 			processQALDResp(response, question);		
 	}
 
-	/**
-	 * Method to process a QALD Based http response and set the details in
-	 * 'IQuestion' Formatting based on QALD as mentioned :
-	 * https://github.com/dice-group/gerbil/wiki/Question-Answering
-	 * 
-	 * @param response
-	 *            - response to be processed
-	 * @param question
-	 *            - IQuestion instance to be set
-	 * @throws IOException
-	 * @throws ParseException
-	 * @throws IllegalStateException
-	 */
-	@Deprecated
-	public void processQALDResponse(HttpResponse response, IQuestion question)
-			throws IllegalStateException, ParseException, IOException {
-		JSONParser parser = new JSONParser();
-
-		JSONObject responsejson = (JSONObject) parser.parse(responseparser.responseToString(response));
-		JSONArray questionsArr = (JSONArray) responsejson.get("questions");
-		if (questionsArr != null && questionsArr.size() > 0) {
-			JSONObject questionsObj = (JSONObject) questionsArr.get(0);
-			if (questionsObj != null && questionsObj.containsKey("query")) {
-				JSONObject queryJson = (JSONObject) questionsObj.get("query");
-				String sparqlQuery = queryJson.get("sparql").toString();
-				sparqlQuery = new String(sparqlQuery);
-				question.setSparqlQuery(sparqlQuery);
-			}
-			if (questionsObj.containsKey("answers")) {
-				JSONArray answerlist = (JSONArray) questionsObj.get("answers");
-				JSONObject answersJson = (JSONObject) answerlist.get(0);
-
-				HashSet<String> vars = new HashSet<String>();
-				JSONObject headJson = (JSONObject) answersJson.get("head");
-				if (headJson != null && headJson.containsKey("vars")) {
-					JSONArray varsArr = (JSONArray) headJson.get("vars");
-					for (int i = 0; i < varsArr.size(); i++) {
-						vars.add(varsArr.get(i).toString());
-					}
-
-					JSONObject resultsJson = (JSONObject) answersJson.get("results");
-					JSONArray bindingsArr = (JSONArray) resultsJson.get("bindings");
-					HashSet<String> result = new HashSet<String>();
-					for (int i = 0; i < bindingsArr.size(); i++) {
-						JSONObject answer = (JSONObject) bindingsArr.get(i);
-						for (String varLabel : vars) {
-							JSONObject uriJson = (JSONObject) answer.get(varLabel);
-							if (uriJson.containsKey("value"))
-								result.add(uriJson.get("value").toString());
-						}
-					}
-					question.setGoldenAnswers(result);
-				}
-			}
-		}
-
-	}
 	/**
 	 * Method to process a QALD Based http response and set the details in
 	 * 'IQuestion'.

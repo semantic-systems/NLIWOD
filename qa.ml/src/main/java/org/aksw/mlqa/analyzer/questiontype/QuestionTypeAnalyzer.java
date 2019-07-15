@@ -6,16 +6,23 @@ import org.aksw.mlqa.analyzer.IAnalyzer;
 
 import weka.core.Attribute;
 
+/**
+ * Analyzes what answerset type is expected. RESOURCE, BOOLEAN, LIST or NUMBER.
+ * @author Lukas
+ *
+ */
 public class QuestionTypeAnalyzer implements IAnalyzer {
 	
 	@Override
 	public Object analyze(String q) {
-		if (isASKQuery(q)) {
+		if (isNumberQuestion(q)) {
+			return QuestionTypeFeature.NUMBER.name();
+		} else if(isListQuestion(q)) {
+			return QuestionTypeFeature.LIST.name();
+		} else if(isASKQuestion(q)) {
 			return QuestionTypeFeature.BOOLEAN.name();
 		} else {
-			// FIXME write analysis steps for other types
 			return QuestionTypeFeature.RESOURCE.name();
-
 		}
 	}
 
@@ -33,28 +40,34 @@ public class QuestionTypeAnalyzer implements IAnalyzer {
 			for (QuestionTypeFeature qtf : QuestionTypeFeature.values()) {
 				attributeValues.add(qtf.name());				
 			}
-			attribute = new Attribute("QuestionTypeFeature", attributeValues);
+			attribute = new Attribute("QuestionType", attributeValues);
 		};
 	}
-
-	// TODO stolen from hawk, please put into qa-commons
-	public Boolean isASKQuery(String question) {
-		// Compare to source from:
-		// src/main/java/org/aksw/hawk/controller/Cardinality.java
-
-		// From train query set: (better to use keyword list!)
-		// (Root [-> first child])
-		// VBG -> VBZ (Does)
-		// VBZ (Is)
-		// ADD -> VB (Do)
-		// VBP (Are)
-		// VBD (Was)
-		// VB -> VBD (Did)
-		// VBN -> VBD (Was)
-		// VB -> VBZ (Does)
-		// VBN -> VBZ (Is)
-
-		// regex: ^(Are|D(id|o(es)?)|Is|Was)( .*)$
+	
+	/***
+	 * Returns true if the given question is a ask question.
+	 * @param question
+	 * @return true if ask query false otherwise
+	 */
+	public static Boolean isASKQuestion(String question) {
 		return question.startsWith("Are ") || question.startsWith("Did ") || question.startsWith("Do ") || question.startsWith("Does ") || question.startsWith("Is ") || question.startsWith("Was ");
+	}
+	
+	/**
+	 * Returns true if it is a list question.
+	 * @param question
+	 * @return true if list question false otherwise
+	 */
+	public Boolean isListQuestion(String question) {
+		return question.startsWith("List ") || question.startsWith("Give ") || question.startsWith("Show ");
+	}
+	
+	/**
+	 * Returns true if it is a number question. 
+	 * @param question
+	 * @return true if number question false otherwise
+	 */
+	public Boolean isNumberQuestion(String question) {
+		return question.startsWith("How ");
 	}
 }

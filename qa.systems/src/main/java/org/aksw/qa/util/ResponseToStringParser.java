@@ -3,6 +3,7 @@ package org.aksw.qa.util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -16,13 +17,7 @@ public class ResponseToStringParser {
         try {
             entity = response.getEntity();
             br = new BufferedReader(new InputStreamReader(entity.getContent()));
-            // TODO use java 8 file IO API
-            StringBuffer htmlResponse = new StringBuffer();
-            String line = "";
-            while ((line = br.readLine()) != null) {
-                htmlResponse.append(line).append("\n");
-            }
-            return htmlResponse.toString();
+            return br.lines().collect(Collectors.joining());
         } finally {
             if (br != null) {
                 try {

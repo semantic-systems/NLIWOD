@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 import weka.core.Attribute;
 
 /**
- * Analyzes what type of question word is it, like Who Where What Give Me
+ * Analyzes what type of question word it is, like Who, Where, and What. Groups List, Give, Show as Commands and
+ * Is, Are, Did, Does, Was, Do as AuxVerb.
  * 
  * @author ricardousbeck
  *
@@ -17,7 +18,7 @@ import weka.core.Attribute;
 public class QuestionWord implements IAnalyzer {
 	private Logger log = LoggerFactory.getLogger(QuestionWord.class);
 	private Attribute attribute = null;
-	private String AuxVerb = "Is||Are||Did";
+	private String AuxVerb = "Is||Are||Did||Does||Was||Do";
 	private String Commands = "Give||Show||List";
 
 	public QuestionWord() {
@@ -34,6 +35,7 @@ public class QuestionWord implements IAnalyzer {
 		attributeValues.add("Misc");
 
 		attribute = new Attribute("QuestionWord", attributeValues);
+		
 	}
 
 	@Override

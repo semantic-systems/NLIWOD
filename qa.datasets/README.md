@@ -24,6 +24,7 @@ QA datasets to analyze:
 * www.msmarco.org
 * https://github.com/ysu1989/GraphQuestions/tree/master/freebase13
 * http://dl.acm.org/citation.cfm?id=2878551
+* https://sharc-data.github.io/
 * TriviaQA for 95k reading comprehension questions http://nlp.cs.washington.edu/triviaqa/ 
 * convai.io 
 * https://github.com/deepmind/aqua Algebraic QA
@@ -66,6 +67,7 @@ QA datasets to analyze:
 * https://amritasaha1812.github.io/CSQA/_pages/example.html
 * https://github.com/conversationai/wikidetox/tree/master/wikiconv
 * Interesting study for Google's quality: https://www.emeraldinsight.com/doi/pdfplus/10.1108/LHT-10-2017-0218
+* https://github.com/aliannejadi/qulac
 
 out of scope (?) :
 * http://tvqa.cs.unc.edu/leaderboard.html
@@ -106,6 +108,7 @@ out of scope (?) :
 * http://qa.mpi-inf.mpg.de/comqa/
 * https://github.com/bdhingra/quasar
 * https://hotpotqa.github.io/
+* http://openaccess.thecvf.com/content_CVPR_2019/papers/Zadeh_Social-IQ_A_Question_Answering_Benchmark_for_Artificial_Social_Intelligence_CVPR_2019_paper.pdf
 * http://aclweb.org/anthology/S18-1009
 * temporal QA http://delivery.acm.org/10.1145/3200000/3191536/p1057-jia.pdf
 * hotel reviews http://www.europe.naverlabs.com/Blog/ReviewQA-A-novel-relational-aspect-based-opinion-dataset-for-machine-reading
@@ -119,6 +122,18 @@ out of scope (?) :
 * https://www.semanticscholar.org/paper/DROP%3A-A-Reading-Comprehension-Benchmark-Requiring-Dua-Wang/9498f5b9ff0052c22e41979df49bc8efca0a9d17
 * https://arxiv.org/pdf/1904.04365.pdf commonsense qa
 * https://www.tau-nlp.org/commonsenseqa
+* https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Question_Answering_data
+Bao, J., Duan, N., Yan, Z., Zhou, M., and Zhao, T. (2016). Constraint-based
+question answering with knowledge graph. In COLING 2016, 26th International Conference on Computational Linguistics, Proceedings of the Conference: Technical Papers, December 11-16, 2016, Osaka, Japan, pages 2503–
+2514.
+
+Su, Y., Sun, H., Sadler, B., Srivatsa, M., Gur, I., Yan, Z., and Yan, X. (2016). On
+generating characteristic-rich question sets for QA evaluation. In Proceedings
+of the 2016 Conference on Empirical Methods in Natural Language Processing,
+EMNLP 2016, Austin, Texas, USA, November 1-4, 2016, pages 562–572.
+
+DROP: A Reading Comprehension Benchmark Requiring Discrete Reasoning Over Paragraphs
+* https://arxiv.org/abs/1905.08957
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.

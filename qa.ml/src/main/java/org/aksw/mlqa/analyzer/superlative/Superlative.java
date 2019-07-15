@@ -7,8 +7,12 @@ import org.aksw.qa.annotation.comparison.ComparisonUtils;
 
 import weka.core.Attribute;
 
+/**
+ * Analyzes if there is a superlative in the input question.
+ * @author Lukas
+ *
+ */
 public class Superlative implements IAnalyzer {
-	// private static Logger log = LoggerFactory.getLogger(Superlative.class);
 	private Attribute attribute = null;
 	
 	public Superlative() {	
@@ -21,7 +25,7 @@ public class Superlative implements IAnalyzer {
 	@Override
 	public Object analyze(String q) {
 		ComparisonUtils comp = new ComparisonUtils();
-		if(comp.getSuperlatives(q).size() > 0) {
+		if(comp.getSuperlatives(q).size() > 0 || q.contains(" most ") || q.contains(" least ")) {
 			return "Superlative";
 		} else {
 			return "NoSuperlative";
@@ -30,5 +34,4 @@ public class Superlative implements IAnalyzer {
 	public Attribute getAttribute() {
 		return attribute;
 	}
-
 }

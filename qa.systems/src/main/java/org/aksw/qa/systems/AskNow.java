@@ -28,7 +28,6 @@ public class AskNow extends Gen_HTTP_QA_Sys {
 		this.setQueryKey("question");
 	}
 	
-	
 	@Override
 	public void processQALDResp(HttpResponse response, IQuestion question) throws JsonParseException, JsonMappingException, UnsupportedOperationException, IOException {
 		HashSet<String> resultSet = new HashSet<String>();	
@@ -42,20 +41,17 @@ public class AskNow extends Gen_HTTP_QA_Sys {
 			e.printStackTrace();
 			return;
 		}
-		answerjson = (JSONObject) answerjson.get("fullDetail");
+
+		if(answerjson.get("fullDetail") == null || answerjson.get("fullDetail") instanceof JSONArray) return;
 		
-		//if no answer just return
-		if(((JSONArray) answerjson.get("answers")).size() == 0) return;	
-		JSONArray answers =  (JSONArray) ((JSONArray) answerjson.get("answers")).get(0);
+		answerjson = (JSONObject) answerjson.get("fullDetail");
+		JSONArray answers =  (JSONArray) answerjson.get("answers");
 		for(int i = 0; i< answers.size(); i++) {
-			JSONObject answer = (JSONObject) answers.get(i);
-			String key = (String) answer.keySet().toArray()[0];
-			answer = (JSONObject) answer.get(key);
-			resultSet.add((String) answer.get("value"));
+			resultSet.add((String) answers.get(i));
 		}
-		question.setGoldenAnswers(resultSet);		
-		JSONArray queries =  (JSONArray) ((JSONObject) answerjson.get("sparql")).get("queries");	
-		String query = (String) queries.get(0);
-		question.setSparqlQuery(query.trim());
+		question.setGoldenAnswers(resultSet);
+		
+		String sparql =  (String) answerjson.get("sparql");
+		question.setSparqlQuery(sparql.trim());
 	}
 }

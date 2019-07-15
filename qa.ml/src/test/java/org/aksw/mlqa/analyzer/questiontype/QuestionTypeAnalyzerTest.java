@@ -47,7 +47,7 @@ public class QuestionTypeAnalyzerTest {
 		
 		for (IQuestion q : questions) {			
 			// Classify query type
-			boolean classification = questionTypeAnalyzer.isASKQuery(q.getLanguageToQuestion().get("en"));
+			boolean classification = questionTypeAnalyzer.isASKQuestion(q.getLanguageToQuestion().get("en"));
 			
 			counter++;
 			if (classification) {

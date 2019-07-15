@@ -22,6 +22,6 @@ public class NumberOfTokenTest {
 		new Instances("Test", fvWekaAttributes, 1 );
 		Instance test = new DenseInstance(fvWekaAttributes.size());
 		test.setValue(numberOfToken.getAttribute(), (double) numberOfToken.analyze("This test class is worse than the other!"));
-		assertTrue(test.value(numberOfToken.getAttribute()) == 8.0);
+		assertTrue(test.value(numberOfToken.getAttribute()) == 7.0);
 	}
 }
