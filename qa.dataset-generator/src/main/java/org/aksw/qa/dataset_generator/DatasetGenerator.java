@@ -246,7 +246,7 @@ public class DatasetGenerator {
 		long timeToLive = TimeUnit.DAYS.toMillis(30);
 		CacheFrontend cacheFrontend = CacheUtilsH2.createCacheFrontend("/tmp/qald/sparql", true, timeToLive);
 		  final QueryExecutionFactory qef  = FluentQueryExecutionFactory
-				                                 .http("http://kddste.sda.tech/dbpedia201604", Lists.newArrayList("http://dbpedia.org"))
+				                                 .http("http://dbpedia.org/sparql", Lists.newArrayList("http://dbpedia.org"))
 				                                 .config().withPostProcessor(qe -> ((QueryEngineHTTP) ((QueryExecutionHttpWrapper) qe).getDecoratee())
 				                                                 .setModelContentType(WebContent.contentTypeRDFXML))
 				                                 .withCache(cacheFrontend)
