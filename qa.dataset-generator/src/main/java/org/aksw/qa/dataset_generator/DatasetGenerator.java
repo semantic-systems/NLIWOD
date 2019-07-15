@@ -1,11 +1,22 @@
 package org.aksw.qa.dataset_generator;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
 import org.aksw.jena_sparql_api.cache.h2.CacheUtilsH2;
 import org.aksw.jena_sparql_api.core.FluentQueryExecutionFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.core.SparqlServiceReference;
 import org.aksw.jena_sparql_api.http.QueryExecutionHttpWrapper;
 import org.aksw.qa.commons.datastructure.Entity;
 import org.aksw.qa.commons.datastructure.IQuestion;
@@ -13,13 +24,19 @@ import org.aksw.qa.commons.load.Dataset;
 import org.aksw.qa.commons.load.LoaderController;
 import org.aksw.qa.commons.nlp.nerd.AGDISTIS;
 import org.aksw.qa.commons.nlp.nerd.Spotlight;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.HttpClient;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.apache.jena.riot.WebContent;
+import org.apache.jena.sparql.core.DatasetDescription;
 import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.util.iterator.Filter;
@@ -47,11 +64,8 @@ import org.semanticweb.owlapi.util.SimpleIRIShortFormProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 /**
  * @author Lorenz Buehmann
@@ -79,27 +93,13 @@ public class DatasetGenerator {
 		// query tree factory
 		qtf = new QueryTreeFactoryBaseInv();
 		// filters
-		ArrayList<Predicate<Statement>> treeFilters = Lists.newArrayList(
-				new PredicateDropStatementFilter(StopURIsDBpedia.get()),
-				new ObjectDropStatementFilter(StopURIsDBpedia.get()),
-				new PredicateDropStatementFilter(Sets.union(StopURIsRDFS.get(), Sets.newHashSet(RDFS.seeAlso.getURI()))),
-				new PredicateDropStatementFilter(StopURIsOWL.get()),
-				new ObjectDropStatementFilter(StopURIsOWL.get()),
-				new PredicateDropStatementFilter(StopURIsSKOS.get()),
-				new ObjectDropStatementFilter(StopURIsSKOS.get()),
-				new NamespaceDropStatementFilter(
-						Sets.newHashSet(
-//								"http://dbpedia.org/property/",
-								"http://purl.org/dc/terms/",
-								"http://dbpedia.org/class/yago/"
-								, FOAF.getURI()
-						)
-				),
-				new PredicateDropStatementFilter(
-						Sets.newHashSet(
-								"http://www.w3.org/2002/07/owl#equivalentClass",
-								"http://www.w3.org/2002/07/owl#disjointWith"))
-		);
+		ArrayList<Predicate<Statement>> treeFilters = Lists.newArrayList(new PredicateDropStatementFilter(StopURIsDBpedia.get()), new ObjectDropStatementFilter(StopURIsDBpedia.get()),
+		        new PredicateDropStatementFilter(Sets.union(StopURIsRDFS.get(), Sets.newHashSet(RDFS.seeAlso.getURI()))), new PredicateDropStatementFilter(StopURIsOWL.get()),
+		        new ObjectDropStatementFilter(StopURIsOWL.get()), new PredicateDropStatementFilter(StopURIsSKOS.get()), new ObjectDropStatementFilter(StopURIsSKOS.get()),
+		        new NamespaceDropStatementFilter(Sets.newHashSet(
+		                // "http://dbpedia.org/property/",
+		                "http://purl.org/dc/terms/", "http://dbpedia.org/class/yago/", FOAF.getURI())),
+		        new PredicateDropStatementFilter(Sets.newHashSet("http://www.w3.org/2002/07/owl#equivalentClass", "http://www.w3.org/2002/07/owl#disjointWith")));
 		qtf.addDropFilters((Filter<Statement>[]) treeFilters.toArray(new Filter[treeFilters.size()]));
 
 		// LGG generator
@@ -109,7 +109,8 @@ public class DatasetGenerator {
 	public void generate(Map<String, Set<String>> question2Answers) {
 
 		question2Answers.forEach((question, answers) -> {
-			if(!question.contains("writer")) return;
+			if (!question.contains("writer"))
+				return;
 			LOGGER.info("###################################################################################");
 			LOGGER.info("processing \"{}\" ...", question);
 
@@ -120,7 +121,7 @@ public class DatasetGenerator {
 			Map<String, Optional<String>> answerEntities = disambiguateAnswers(answers);
 
 			// we stop if we could not find entities
-			if(answerEntities.isEmpty()) {
+			if (answerEntities.isEmpty()) {
 				LOGGER.warn("Could not find the answer entities for");
 				return;
 			}
@@ -132,19 +133,13 @@ public class DatasetGenerator {
 	}
 
 	public void generate(List<IQuestion> questions) {
-		generate(questions.stream().collect(
-				Collectors.toMap(
-						q -> q.getLanguageToQuestion().get("en"),
-						q -> q.getGoldenAnswers(),
-						(q1, q2) -> q1)
-				)
-		);
+		generate(questions.stream().collect(Collectors.toMap(q -> q.getLanguageToQuestion().get("en"), q -> q.getGoldenAnswers(), (q1, q2) -> q1)));
 	}
 
 	private Map<String, List<Entity>> recognize(String question) {
 		LOGGER.info("entity detection in question...");
 		Map<String, List<Entity>> entities = recognizer.getEntities(question);
-		if(question.contains("Super Bowl 50")) {
+		if (question.contains("Super Bowl 50")) {
 			Entity e = new Entity();
 			e.setLabel("Super Bowl 50");
 			e.getUris().add(new ResourceImpl("http://dbpedia.org/resource/Super_Bowl_50"));
@@ -155,8 +150,7 @@ public class DatasetGenerator {
 	}
 
 	private Map<String, Optional<String>> disambiguateAnswers(Set<String> answers) {
-		return answers.stream()
-				.collect(Collectors.toMap(a -> a, a -> disambiguate(a)));
+		return answers.stream().collect(Collectors.toMap(a -> a, a -> disambiguate(a)));
 	}
 
 	private Optional<String> disambiguate(String label) {
@@ -166,7 +160,7 @@ public class DatasetGenerator {
 		try {
 			HashMap<String, String> results = disambiguator.runDisambiguation(preAnnotatedText);
 			String namedEntity = results.get(label);
-			if(namedEntity == null) {
+			if (namedEntity == null) {
 				LOGGER.warn("no entity found for {}", label);
 			} else {
 				LOGGER.info("{} -> {}", label, namedEntity);
@@ -179,9 +173,7 @@ public class DatasetGenerator {
 	}
 
 	private void generateSPARQLQuery(Map<String, Optional<String>> entities, Map<String, List<Entity>> questionEntities) {
-		Set<Resource> filterResources = questionEntities.values().stream().flatMap(l -> l.stream()).map(
-				e -> e.getUris()).flatMap(u -> u.stream()).collect(
-				Collectors.toSet());
+		Set<Resource> filterResources = questionEntities.values().stream().flatMap(l -> l.stream()).map(e -> e.getUris()).flatMap(u -> u.stream()).collect(Collectors.toSet());
 		System.out.println(filterResources);
 
 		Set<Entity> filterEntities = questionEntities.values().stream().flatMap(l -> l.stream()).collect(Collectors.toSet());
@@ -197,11 +189,11 @@ public class DatasetGenerator {
 			LOGGER.info("|cbd(" + uri + ")|=" + cbd.size() + " triples");
 
 			Predicate<Statement> isRelevant = st -> {
-//				return filterResources.contains(st.getSubject())|| filterResources.contains(st.getObject());
+				// return filterResources.contains(st.getSubject())||
+				// filterResources.contains(st.getObject());
 
-				return filterEntities.isEmpty() || filterEntities.stream().anyMatch(e ->
-																(st.getSubject().toString().toLowerCase().contains(e.getLabel().toLowerCase())) ||
-																		st.getObject().toString().toLowerCase().contains(e.getLabel().toLowerCase()));
+				return filterEntities.isEmpty() || filterEntities.stream()
+				        .anyMatch(e -> (st.getSubject().toString().toLowerCase().contains(e.getLabel().toLowerCase())) || st.getObject().toString().toLowerCase().contains(e.getLabel().toLowerCase()));
 			};
 
 			// filter CBD
@@ -225,56 +217,56 @@ public class DatasetGenerator {
 		System.out.println(query);
 	}
 
-	// used to get up-to-date answers for a SPARQL query instead of the hard-code and probably out-dated list
+	// used to get up-to-date answers for a SPARQL query instead of the
+	// hard-code and probably out-dated list
 	// of resources in the benchmark data
 	private static void updateGoldenAnswers(QueryExecutionFactory qef, IQuestion q) {
 		Set<String> uris = new HashSet<>();
-		try(QueryExecution qe = qef.createQueryExecution(q.getSparqlQuery())) {
-			ResultSet rs = qe.execSelect();
-			while(rs.hasNext()) {
-				QuerySolution qs = rs.next();
+		if (null != q && null != q.getSparqlQuery() && !q.getSparqlQuery().contains("ASK")) {
+			try (QueryExecution qe = qef.createQueryExecution(q.getSparqlQuery())) {
+				ResultSet rs = qe.execSelect();
+				while (rs.hasNext()) {
+					QuerySolution qs = rs.next();
 
-				RDFNode node = qs.get("uri");
+					RDFNode node = qs.get("uri");
 
-				if(node != null && node.isResource()) {
-					uris.add(node.asResource().getURI());
+					if (node != null && node.isResource()) {
+						uris.add(node.asResource().getURI());
+					}
 				}
 			}
+			q.setGoldenAnswers(uris);
+		} else {// TODO what happens if q is null?
 		}
-		q.setGoldenAnswers(uris);
+
 	}
 
 	public static void main(String[] args) throws IOException {
 		// DBpedia as SPARQL endpoint
 		long timeToLive = TimeUnit.DAYS.toMillis(30);
 		CacheFrontend cacheFrontend = CacheUtilsH2.createCacheFrontend("/tmp/qald/sparql", true, timeToLive);
-		final QueryExecutionFactory qef  = FluentQueryExecutionFactory
-				.http("http://dbpedia.org/sparql", Lists.newArrayList("http://dbpedia.org"))
-				.config().withPostProcessor(qe -> ((QueryEngineHTTP) ((QueryExecutionHttpWrapper) qe).getDecoratee())
-						.setModelContentType(WebContent.contentTypeRDFXML))
-				.withCache(cacheFrontend)
-				.end()
-				.create();
-
-//		List<IQuestion> questions = LoaderController.load(Dataset.Stanford_dev);
+		  final QueryExecutionFactory qef  = FluentQueryExecutionFactory
+				                                 .http("http://kddste.sda.tech/dbpedia201604", Lists.newArrayList("http://dbpedia.org"))
+				                                 .config().withPostProcessor(qe -> ((QueryEngineHTTP) ((QueryExecutionHttpWrapper) qe).getDecoratee())
+				                                                 .setModelContentType(WebContent.contentTypeRDFXML))
+				                                 .withCache(cacheFrontend)
+				                                 .end()
+				                                 .create();
 		List<IQuestion> questions = LoaderController.load(Dataset.QALD6_Train_Multilingual);
-		questions.stream()
-				.filter(q -> q.getAnswerType().equals("resource"))
-				.collect(Collectors.toList());
+		// List<IQuestion> questions =
+		// LoaderController.load(Dataset.QALD6_Train_Multilingual);
+		questions.stream().filter(q -> q.getAnswerType().equals("resource")).collect(Collectors.toList());
 		questions.forEach(q -> updateGoldenAnswers(qef, q));
 
 		IRIShortFormProvider sfp = new SimpleIRIShortFormProvider();
-		questions.forEach(q -> q.setGoldenAnswers(q.getGoldenAnswers().stream()
-														  .map(a -> sfp.getShortForm(IRI.create(a)))
-														  .collect(Collectors.toSet())));
-//		questions = questions.stream()
-//				.filter(q -> q.getLanguageToQuestion().get("en").equals("Where did Super Bowl 50 take place?"))
-//				.collect(Collectors.toList());
+		questions.forEach(q -> q.setGoldenAnswers(q.getGoldenAnswers().stream().map(a -> sfp.getShortForm(IRI.create(a))).collect(Collectors.toSet())));
+		// questions = questions.stream()
+		// .filter(q -> q.getLanguageToQuestion().get("en").equals("Where did
+		// Super Bowl 50 take place?"))
+		// .collect(Collectors.toList());
 
 		DatasetGenerator stan = new DatasetGenerator(qef);
 		stan.generate(questions);
 
-
 	}
 }
-
