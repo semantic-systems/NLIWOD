@@ -1,6 +1,8 @@
 package org.aksw.qa.dataset_generator;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
 import org.aksw.jena_sparql_api.cache.h2.CacheUtilsH2;
@@ -74,6 +77,9 @@ public class DatasetGenerator {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DatasetGenerator.class);
 
+	private static final String NAMESPACE ="http://dbpedia.org/resource/";
+	private static final String CSV_FILE_NAME="evaluation_datasetevaluator.csv";
+
 	private AGDISTIS disambiguator;
 	private Spotlight recognizer;
 
@@ -81,15 +87,20 @@ public class DatasetGenerator {
 	private QueryTreeFactory qtf;
 	private LGGGenerator lggGen;
 
+	private QueryExecutionFactory qef;
+
+	List<String[]>evaluation;
 	public DatasetGenerator(QueryExecutionFactory qef) {
 
 		this.disambiguator = new AGDISTIS();
 		this.recognizer = new Spotlight();
 
+		this.qef=qef;
 		// CBD generator
 		cbdGen = new ConciseBoundedDescriptionGeneratorImpl(qef);
 		cbdGen = new SymmetricConciseBoundedDescriptionGeneratorImpl(qef);
 
+		evaluation=new ArrayList<>();
 		// query tree factory
 		qtf = new QueryTreeFactoryBaseInv();
 		// filters
@@ -127,7 +138,8 @@ public class DatasetGenerator {
 			}
 
 			// 3. generate SPARQL query
-			generateSPARQLQuery(answerEntities, questionEntities);
+
+			generateSPARQLQuery(answerEntities, questionEntities,question);
 		});
 
 	}
@@ -172,7 +184,7 @@ public class DatasetGenerator {
 		return null;
 	}
 
-	private void generateSPARQLQuery(Map<String, Optional<String>> entities, Map<String, List<Entity>> questionEntities) {
+	private void generateSPARQLQuery(Map<String, Optional<String>> entities, Map<String, List<Entity>> questionEntities,String question) {
 		Set<Resource> filterResources = questionEntities.values().stream().flatMap(l -> l.stream()).map(e -> e.getUris()).flatMap(u -> u.stream()).collect(Collectors.toSet());
 		System.out.println(filterResources);
 
@@ -215,8 +227,46 @@ public class DatasetGenerator {
 		// 5) run best QTL against DBpedia and measure
 		// f-measure/accuracy to answer
 		System.out.println(query);
+		evaluate(entities.keySet(),query,question);
 	}
+	private void evaluate(Set<String>answers,Query query,String question){
+		QueryExecution qe = qef.createQueryExecution(query);
+		LOGGER.debug("Question:"+ question);
+		ResultSet rs=qe.execSelect();
+		double truepositive=0;
+		double falsepositive=0;
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
 
+			RDFNode node = qs.get("s");
+
+			if (node != null && node.isResource()) {
+				String resourceString=(node.asResource().toString().replace(NAMESPACE,""));
+				if(answers.contains(resourceString)) {
+					truepositive++;
+					LOGGER.debug("truepositive: "+resourceString);
+				}
+				else {
+					falsepositive++;
+					LOGGER.debug("falsepositive: "+resourceString);
+				}
+			}
+		}
+		if(truepositive>0||falsepositive>0) {
+			double falsenegative = answers.size() - truepositive;
+			double recall = truepositive / (truepositive + falsepositive);
+			double precision = truepositive / (truepositive + falsenegative);
+			double accuracy = truepositive / (truepositive + falsenegative + falsepositive);
+			double f1 = 2 * (precision * recall) / (precision + recall);
+			LOGGER.debug("Evaluation: tp:" + truepositive + " fp:" + falsepositive + " fn:" + falsenegative + " recall:" + recall + " precision:" + precision + " f1:" + f1 + " accuracy:" + accuracy);
+			evaluation.add(new String[]{question, truepositive + "", falsepositive + ""
+					, falsenegative + "", recall + "", precision + "", f1 + "", accuracy + ""});
+		}
+		else{
+			LOGGER.debug("No results for question: "+question);
+			evaluation.add(new String[]{question,"0.0","0.0","0.0","0.0","0.0","0.0","0.0"});
+		}
+	}
 	// used to get up-to-date answers for a SPARQL query instead of the
 	// hard-code and probably out-dated list
 	// of resources in the benchmark data
@@ -240,7 +290,19 @@ public class DatasetGenerator {
 		}
 
 	}
-
+	private String convertToCSV(String[] data) {
+		return Stream.of(data)
+				.collect(Collectors.joining(","));
+	}
+	private void writeCSVEvaluation() throws IOException {
+		File csvOutputFile = new File(CSV_FILE_NAME);
+		try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+			pw.println("Question,truepositive,falsepositive,falsenegative,recall,precision,f1,accuracy");
+			evaluation.stream()
+					.map(this::convertToCSV)
+					.forEach(pw::println);
+		}
+	}
 	public static void main(String[] args) throws IOException {
 		// DBpedia as SPARQL endpoint
 		long timeToLive = TimeUnit.DAYS.toMillis(30);
@@ -267,6 +329,6 @@ public class DatasetGenerator {
 
 		DatasetGenerator stan = new DatasetGenerator(qef);
 		stan.generate(questions);
-
+		stan.writeCSVEvaluation();
 	}
 }
