@@ -78,8 +78,8 @@ public class DatasetGenerator {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DatasetGenerator.class);
 
 	private static final String NAMESPACE ="http://dbpedia.org/resource/";
+	private static final String NAMESPACE2 ="http://dbpedia.org/property/";
 	private static final String CSV_FILE_NAME="evaluation_datasetevaluator.csv";
-
 	private AGDISTIS disambiguator;
 	private Spotlight recognizer;
 
@@ -120,8 +120,10 @@ public class DatasetGenerator {
 	public void generate(Map<String, Set<String>> question2Answers) {
 
 		question2Answers.forEach((question, answers) -> {
-			if (!question.contains("writer"))
-				return;
+			/*if (!question.contains("writer"))
+				return;*/
+			LOGGER.info("Question:"+question);
+			LOGGER.info("Answers:"+answers);
 			LOGGER.info("###################################################################################");
 			LOGGER.info("processing \"{}\" ...", question);
 
@@ -219,38 +221,53 @@ public class DatasetGenerator {
 		});
 
 		// compute LGG
-		RDFResourceTree lgg = lggGen.getLGG(trees);
+		if(trees.size()>0) {
+			RDFResourceTree lgg = lggGen.getLGG(trees);
 
-		// SPARQL query
-		Query query = QueryTreeUtils.toSPARQLQuery(lgg);
+			// SPARQL query
+			Query query = QueryTreeUtils.toSPARQLQuery(lgg);
 
-		// 5) run best QTL against DBpedia and measure
-		// f-measure/accuracy to answer
-		System.out.println(query);
-		evaluate(entities.keySet(),query,question);
+			// 5) run best QTL against DBpedia and measure
+			// f-measure/accuracy to answer
+			System.out.println(query);
+			evaluate(entities.keySet(), query, question);
+		}
+
+		else{
+			LOGGER.debug("No tree found for question: "+question);
+			evaluation.add(new String[]{question,"0.0","0.0","0.0","0.0","0.0","0.0","0.0"});
+		}
 	}
 	private void evaluate(Set<String>answers,Query query,String question){
+
 		QueryExecution qe = qef.createQueryExecution(query);
+
+		LOGGER.debug(query.toString());
 		LOGGER.debug("Question:"+ question);
-		ResultSet rs=qe.execSelect();
+
 		double truepositive=0;
 		double falsepositive=0;
-		while (rs.hasNext()) {
-			QuerySolution qs = rs.next();
+		try {
+			ResultSet rs = qe.execSelect();
+			while (rs.hasNext()) {
+				QuerySolution qs = rs.next();
 
-			RDFNode node = qs.get("s");
+				RDFNode node = qs.get("s");
 
-			if (node != null && node.isResource()) {
-				String resourceString=(node.asResource().toString().replace(NAMESPACE,""));
-				if(answers.contains(resourceString)) {
-					truepositive++;
-					LOGGER.debug("truepositive: "+resourceString);
-				}
-				else {
-					falsepositive++;
-					LOGGER.debug("falsepositive: "+resourceString);
+				if (node != null && node.isResource()) {
+					String resourceString = (node.asResource().toString().replace(NAMESPACE, ""));
+					resourceString = resourceString.replace(NAMESPACE2, "");
+					if (answers.contains(resourceString)) {
+						truepositive++;
+						//LOGGER.debug("truepositive: " + resourceString);
+					} else {
+						falsepositive++;
+						//LOGGER.debug("falsepositive: " + resourceString);
+					}
 				}
 			}
+		}catch(Exception e){
+			LOGGER.error("Executing SPARQL Query"+query.toString()+"failed");
 		}
 		if(truepositive>0||falsepositive>0) {
 			double falsenegative = answers.size() - truepositive;
@@ -314,7 +331,7 @@ public class DatasetGenerator {
 				                                 .withCache(cacheFrontend)
 				                                 .end()
 				                                 .create();
-		List<IQuestion> questions = LoaderController.load(Dataset.QALD6_Train_Multilingual);
+		List<IQuestion> questions = LoaderController.load(Dataset.QALD9_Train_Multilingual);
 		// List<IQuestion> questions =
 		// LoaderController.load(Dataset.QALD6_Train_Multilingual);
 		questions.stream().filter(q -> q.getAnswerType().equals("resource")).collect(Collectors.toList());
