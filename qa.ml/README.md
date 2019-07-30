@@ -8,5 +8,6 @@ Currently, we work on log files provided from the QALD-6 challenge. In the futur
 
 ## Publications
 
-Upcoming
+Usbeck, Ricardo, et al. "Using Multi-Label Classification for Improved Question Answering." arXiv preprint arXiv:1710.08634 (2017). 
+Paper link: https://arxiv.org/pdf/1710.08634
 
