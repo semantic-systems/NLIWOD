@@ -3,13 +3,7 @@ package org.aksw.qa.dataset_generator;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -33,16 +27,12 @@ import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.rdf.model.impl.ResourceImpl;
 import org.apache.jena.riot.WebContent;
-import org.apache.jena.sparql.core.DatasetDescription;
 import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
 import org.apache.jena.sparql.vocabulary.FOAF;
-import org.apache.jena.util.iterator.Filter;
+
 import org.apache.jena.vocabulary.RDFS;
 import org.dllearner.algorithms.qtl.QueryTreeUtils;
 import org.dllearner.algorithms.qtl.datastructures.impl.RDFResourceTree;
@@ -61,6 +51,7 @@ import org.dllearner.kb.sparql.ConciseBoundedDescriptionGenerator;
 import org.dllearner.kb.sparql.ConciseBoundedDescriptionGeneratorImpl;
 import org.dllearner.kb.sparql.SymmetricConciseBoundedDescriptionGeneratorImpl;
 import org.json.simple.parser.ParseException;
+
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.util.IRIShortFormProvider;
 import org.semanticweb.owlapi.util.SimpleIRIShortFormProvider;
@@ -192,7 +183,9 @@ public class DatasetGenerator {
 
 		Set<Entity> filterEntities = questionEntities.values().stream().flatMap(l -> l.stream()).collect(Collectors.toSet());
 		System.out.println(filterEntities);
-
+		List<Set<String>> knownProperties=new ArrayList<>();
+		Set<String> commonProperties=new HashSet<>();
+		List<Object[]>scippedCBDs=new ArrayList<>();
 		// generate query trees
 		List<RDFResourceTree> trees = new ArrayList<>(entities.size());
 
@@ -201,6 +194,15 @@ public class DatasetGenerator {
 			// generate CBD
 			Model cbd = cbdGen.getConciseBoundedDescription(uri);
 			LOGGER.info("|cbd(" + uri + ")|=" + cbd.size() + " triples");
+			//First 100 cbd statements should be enough to represent one single entity
+			if(entities.size()==1&&cbd.size()>100){
+				StmtIterator it = cbd.listStatements();
+				Statement[] statements=new Statement[100];
+				for(int i=0;i<100;i++)
+					statements[i]=it.nextStatement();
+				cbd.removeAll();
+				cbd.add(statements);
+			}
 
 			Predicate<Statement> isRelevant = st -> {
 				// return filterResources.contains(st.getSubject())||
@@ -209,15 +211,78 @@ public class DatasetGenerator {
 				return filterEntities.isEmpty() || filterEntities.stream()
 				        .anyMatch(e -> (st.getSubject().toString().toLowerCase().contains(e.getLabel().toLowerCase())) || st.getObject().toString().toLowerCase().contains(e.getLabel().toLowerCase()));
 			};
+			Predicate<Statement> isDBO = st -> {
+				// return filterResources.contains(st.getSubject())||
+				// filterResources.contains(st.getObject());
+				//http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+				//http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+
+
+				return !"http://www.w3.org/1999/02/22-rdf-syntax-ns#type".equals(st.getPredicate().toString()) || st.getObject().toString().startsWith("http://dbpedia.org/ontology/");
+			};
 
 			// filter CBD
+			LOGGER.info("|cbd_filtered(" + uri + ")|=" + cbd.size() + " triples");
 			cbd.remove(cbd.listStatements().filterDrop(isRelevant).toList());
+			LOGGER.info("|cbd_filtered(" + uri + ")|=" + cbd.size() + " triples");
+			cbd.remove(cbd.listStatements().filterDrop(isDBO).toList());
 			LOGGER.info("|cbd_filtered(" + uri + ")|=" + cbd.size() + " triples");
 
 			// generate query tree
-			RDFResourceTree tree = qtf.getQueryTree(uri, cbd);
-			trees.add(tree);
-			LOGGER.info(tree.getStringRepresentation(true));
+
+			boolean contains=false;
+			NsIterator it=cbd.listNameSpaces();
+			while(it.hasNext()&&!contains) {
+				String namespace=it.nextNs();
+				contains = "http://dbpedia.org/property/".equals(namespace) || "http://dbpedia.org/ontology/".equals(namespace);
+			}
+
+
+			if(contains) {
+				Set<String>properties=new HashSet<>();
+				cbd.listStatements().forEachRemaining(s -> properties.add(s.getPredicate().toString()));
+				knownProperties.add(properties);
+				if(cbd.size()>1000){
+					scippedCBDs.add(new Object[]{uri,cbd});
+				}else {
+					RDFResourceTree tree = qtf.getQueryTree(uri, cbd);
+					trees.add(tree);
+					LOGGER.info(tree.getStringRepresentation(true));
+				}
+			}
+		});
+
+		if(knownProperties.size()>0) {
+			commonProperties.addAll(knownProperties.get(0));
+			knownProperties.remove(0);
+
+			for (Set properties : knownProperties) {
+				commonProperties=(Sets.intersection(commonProperties, properties));
+			}
+		}
+		Set p=new HashSet<>();
+		p.addAll(commonProperties);
+		scippedCBDs.forEach(skipped->{
+			Predicate<Statement> isknownProperty = st -> {
+				// return filterResources.contains(st.getSubject())||
+				// filterResources.contains(st.getObject());
+				//http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+				//http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+
+				return p.contains(st.getPredicate().toString());
+			};
+			String uri=(String)skipped[0];
+			Model cbd= (Model) skipped[1];
+			LOGGER.info("|cbd_filtered|=" + cbd.size() + " triples");
+			cbd.remove(cbd.listStatements().filterDrop(isknownProperty).toList());
+			LOGGER.info("|cbd_filtered|=" + cbd.size() + " triples");
+			if(cbd.size()<1000) {
+				RDFResourceTree tree = qtf.getQueryTree(uri, cbd);
+				trees.add(tree);
+				LOGGER.info(tree.getStringRepresentation(true));
+			}else{
+				LOGGER.error("CBD for "+uri+" to large the Tree g eneration was skipped");
+			}
 		});
 
 		// compute LGG
