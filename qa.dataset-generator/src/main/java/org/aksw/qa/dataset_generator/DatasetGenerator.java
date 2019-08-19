@@ -70,7 +70,7 @@ public class DatasetGenerator {
 
 	private static final String NAMESPACE ="http://dbpedia.org/resource/";
 	private static final String NAMESPACE2 ="http://dbpedia.org/property/";
-	private static final String CSV_FILE_NAME="evaluation_datasetevaluator.csv";
+	private static final String CSV_FILE_NAME="evaluation_datasetevaluator_avg.csv";
 	private AGDISTIS disambiguator;
 	private Spotlight recognizer;
 
@@ -80,7 +80,11 @@ public class DatasetGenerator {
 
 	private QueryExecutionFactory qef;
 
+
 	List<String[]>evaluation;
+	double correct;
+	double f1sum;
+	double accsum;
 	public DatasetGenerator(QueryExecutionFactory qef) {
 
 		this.disambiguator = new AGDISTIS();
@@ -92,6 +96,9 @@ public class DatasetGenerator {
 		cbdGen = new SymmetricConciseBoundedDescriptionGeneratorImpl(qef);
 
 		evaluation=new ArrayList<>();
+		correct=0;
+		f1sum=0;
+		accsum=0;
 		// query tree factory
 		qtf = new QueryTreeFactoryBaseInv();
 		// filters
@@ -134,6 +141,9 @@ public class DatasetGenerator {
 
 			generateSPARQLQuery(answerEntities, questionEntities,question);
 		});
+
+		evaluation.add(new String[]{"average ","0.0","0.0","0.0","0.0","0.0",(f1sum/question2Answers.size())+"",(accsum/question2Answers.size())+""});
+		evaluation.add(new String[]{"overall ","-","-","-","-","-","-",(correct/question2Answers.size())+""});
 
 	}
 
@@ -300,6 +310,8 @@ public class DatasetGenerator {
 
 		else{
 			LOGGER.debug("No tree found for question: "+question);
+			f1sum+=0.0;
+			accsum+=0.0;
 			evaluation.add(new String[]{question,"0.0","0.0","0.0","0.0","0.0","0.0","0.0"});
 		}
 	}
@@ -340,12 +352,24 @@ public class DatasetGenerator {
 			double precision = truepositive / (truepositive + falsenegative);
 			double accuracy = truepositive / (truepositive + falsenegative + falsepositive);
 			double f1 = 2 * (precision * recall) / (precision + recall);
+			if(f1==1.0)
+				correct++;
+			if(Double.isNaN(f1))
+				f1=0.0;
+			f1sum+=f1;
+
+			if(Double.isNaN(accuracy))
+				accuracy=0.0;
+			accsum+=accuracy;
 			LOGGER.debug("Evaluation: tp:" + truepositive + " fp:" + falsepositive + " fn:" + falsenegative + " recall:" + recall + " precision:" + precision + " f1:" + f1 + " accuracy:" + accuracy);
+
 			evaluation.add(new String[]{question, truepositive + "", falsepositive + ""
 					, falsenegative + "", recall + "", precision + "", f1 + "", accuracy + ""});
 		}
 		else{
 			LOGGER.debug("No results for question: "+question);
+			f1sum+=0.0;
+			accsum+=0.0;
 			evaluation.add(new String[]{question,"0.0","0.0","0.0","0.0","0.0","0.0","0.0"});
 		}
 	}
@@ -411,6 +435,7 @@ public class DatasetGenerator {
 
 		DatasetGenerator stan = new DatasetGenerator(qef);
 		stan.generate(questions);
+
 		stan.writeCSVEvaluation();
 	}
 }

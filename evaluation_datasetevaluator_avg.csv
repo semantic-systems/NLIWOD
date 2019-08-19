@@ -1,0 +1,316 @@
+Question,truepositive,falsepositive,falsenegative,recall,precision,f1,accuracy
+List all the musicals with music by Elton John.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all writers that won the Nobel Prize in literature.,6.0,9994.0,15.0,6.0E-4,0.2857142857142857,0.0011974852809100887,5.99101347978033E-4
+Which caves have more than 3 entrances?,0.0,10000.0,48.0,0.0,0.0,0.0,0.0
+Who is the host of the BBC Wildlife Specials?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Who wrote The Hunger Games?,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+In which city does the Chile Route 68 end?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+What is the highest mountain?,1.0,1946.0,0.0,5.136106831022085E-4,1.0,0.001026694045174538,5.136106831022085E-4
+Who was married to president Chirac?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+What did Bruce Carver die from?,0.0,1.0,1.0,0.0,0.0,0.0,0.0
+Which countries have places with more than two caves?,0.0,10000.0,26.0,0.0,0.0,0.0,0.0
+Which books by Kerouac were published by Viking Press?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all people that were born in Vienna and died in Berlin.,0.0,10000.0,43.0,0.0,0.0,0.0,0.0
+Which television shows were created by John Cleese?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Is James Bond married?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who discovered Ceres?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which river does the Brooklyn Bridge cross?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What is the largest country in the world?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who is the mayor of Paris?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Who is the coach of Ankara's ice hockey team?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who is the mayor of the capital of French Polynesia?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which organizations were founded in 1930?,1.0,9999.0,377.0,1.0E-4,0.0026455026455026454,1.9271535941414532E-4,9.636696540425942E-5
+Give me a list of all bandleaders that play trumpet.,44.0,409.0,2.0,0.09713024282560706,0.9565217391304348,0.17635270541082163,0.0967032967032967
+Who are the four youngest MVP basketball players?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Do Prince Harry and Prince William have the same parents?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who played Agent Smith in Matrix?,0.0,10000.0,2.0,0.0,0.0,0.0,0.0
+In which films did Julia Roberts as well as Richard Gere play?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+In which country does the Ganges start?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all actors who were born in Berlin.,2.0,3656.0,0.0,5.467468562055768E-4,1.0,0.001092896174863388,5.467468562055768E-4
+Give me all islands that belong to Japan.,0.0,10000.0,88.0,0.0,0.0,0.0,0.0
+Where was Bach born?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+In which U.S. state is Mount McKinley located?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who was the first to climb Mount Everest?,0.0,10000.0,4.0,0.0,0.0,0.0,0.0
+Where did Abraham Lincoln die?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What was the last movie with Alec Guinness?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What is the highest mountain in Australia?,1.0,45.0,0.0,0.021739130434782608,1.0,0.042553191489361694,0.021739130434782608
+What form of government is found in South Africa?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who created Family Guy?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which instruments does Cat Stevens play?,0.0,10000.0,10.0,0.0,0.0,0.0,0.0
+Which state of the United States of America has the highest density?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who wrote the song Hotel California?,0.0,10000.0,3.0,0.0,0.0,0.0,0.0
+Which software has been developed by organizations founded in California?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Does Neymar play for Real Madrid?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What are the official languages of the Philippines?,2.0,0.0,0.0,1.0,1.0,1.0,1.0
+Who created the comic Captain America?,0.0,10000.0,2.0,0.0,0.0,0.0,0.0
+Is Darth Vader Luke’s father?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+In which UK city are the headquarters of the MI6?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What does IYCM stand for?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+List all episodes of the first season of the HBO television series The Sopranos!,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Show me all English Gothic buildings in Kent.,0.0,10000.0,18.0,0.0,0.0,0.0,0.0
+Give me all actors called Baldwin.,1.0,9999.0,4.0,1.0E-4,0.2,1.999000499750125E-4,9.996001599360256E-5
+Which movies starring Brad Pitt were directed by Guy Ritchie?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What country is Mount Everest in?,0.0,10000.0,2.0,0.0,0.0,0.0,0.0
+What is the largest city in Australia?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Who is the mayor of Tel Aviv?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+List all episodes of the first season of the HBO television series The Sopranos.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which spaceflights were launched from Baikonur?,0.0,10000.0,13.0,0.0,0.0,0.0,0.0
+Which U.S. states are in the same timezone as Utah?,0.0,10000.0,45.0,0.0,0.0,0.0,0.0
+Which weapons did Heckler & Koch develop?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which mountains are higher than the Nanga Parbat?,0.0,10000.0,11.0,0.0,0.0,0.0,0.0
+Who developed Skype?,2.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which countries have more than two official languages?,31.0,312.0,0.0,0.09037900874635568,1.0,0.1657754010695187,0.09037900874635568
+Where is the residence of the prime minister of Spain?,0.0,1.0,1.0,0.0,0.0,0.0,0.0
+What is the capital of Cameroon?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which musician wrote the most books?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Is there a video game called Battle Chess?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all Danish films.,0.0,10000.0,120.0,0.0,0.0,0.0,0.0
+Which of Tim Burton's films had the highest budget?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which Chess players died in the same place they were born in?,2.0,9998.0,99.0,2.0E-4,0.019801980198019802,3.96000396000396E-4,1.9803940984255866E-4
+Does Breaking Bad have more episodes than Game of Thrones?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Was Natalie Portman born in the United States?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which writers studied in Istanbul?,0.0,10000.0,12.0,0.0,0.0,0.0,0.0
+Does the Ford Motor Company have a manufacturing plant in Malaysia?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which films starring Clint Eastwood did he direct himself?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which organizations were founded in 1950?,0.0,10000.0,571.0,0.0,0.0,0.0,0.0
+Which movies starring Mickey Rourke were directed by Guy Ritchie?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me the grandchildren of Elvis Presley.,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+Which programming languages influenced Javascript?,0.0,10000.0,9.0,0.0,0.0,0.0,0.0
+What form of government does Russia have?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which poet wrote the most books?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Who is the owner of Facebook?,5.0,0.0,0.0,1.0,1.0,1.0,1.0
+Give me all Canadian Grunge record labels.,1.0,988.0,0.0,0.0010111223458038423,1.0,0.00202020202020202,0.0010111223458038423
+Show me all songs from Bruce Springsteen released between 1980 and 1990.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Where do the Red Sox play?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Show me all museums in London.,0.0,10000.0,78.0,0.0,0.0,0.0,0.0
+Give me all soccer clubs in Spain.,0.0,10000.0,715.0,0.0,0.0,0.0,0.0
+Who is the oldest child of Meryl Streep?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which countries have more than ten caves?,0.0,10000.0,16.0,0.0,0.0,0.0,0.0
+Is Christian Bale starring in Velvet Goldmine?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What movies does Jesse Eisenberg play in?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Is Rita Wilson the wife of Tom Hanks?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who is the president of Eritrea?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Show me all basketball players that are higher than 2 meters.,0.0,10000.0,4267.0,0.0,0.0,0.0,0.0
+Which holidays are celebrated around the world? test2,0.0,10000.0,2061.0,0.0,0.0,0.0,0.0
+Which subsidiary of Lufthansa serves both Dortmund and Berlin Tegel?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+What does ICRO stand for?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+For which label did Elvis record his first album?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Give me the currency of China.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Does Abraham Lincoln's death place have a website?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which soccer players were born on Malta?,6.0,9994.0,109.0,6.0E-4,0.05217391304347826,0.0011863568956994562,5.935305173607676E-4
+In which military conflicts did Lawrence of Arabia participate?,1.0,0.0,5.0,1.0,0.16666666666666666,0.2857142857142857,0.16666666666666666
+Which ships were called after Benjamin Franklin?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who is the Formula 1 race driver with the most races?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Did Elvis Presley have children?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me a list of all lakes in Denmark.,4.0,1811.0,1.0,0.0022038567493112946,0.8,0.004395604395604395,0.0022026431718061676
+List the seven kings of Rome.,7.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which U.S. states possess gold minerals?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Is Michelle Obama the wife of Barack Obama?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who is the heaviest player of the Chicago Bulls?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all actors starring in Last Action Hero.,0.0,10000.0,10.0,0.0,0.0,0.0,0.0
+Who is the manager of Real Madrid?,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+What is the second highest mountain on Earth?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+In which city did John F. Kennedy die?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Was U.S. president Jackson involved in a war?,0.0,129.0,1.0,0.0,0.0,0.0,0.0
+Who wrote the Game of Thrones theme?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which types of grapes grow in Oregon?,82.0,0.0,0.0,1.0,1.0,1.0,1.0
+To which party does the mayor of Paris belong?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+In which countries can you pay using the West African CFA franc?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What is the currency of the Czech Republic?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+In which city does Sylvester Stallone live?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+In which city are the headquarters of the United Nations?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who is the founder of Penguin Books?,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+Give me all films produced by Steven Spielberg with a budget of at least $80 million.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which rockets were launched from Baikonur?,1.0,0.0,37.0,1.0,0.02631578947368421,0.05128205128205127,0.02631578947368421
+Is Egypts largest city also its capital?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Did Tesla win a nobel prize in physics?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What are the specialities of the UNC Health Care?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all Methodist politicians.,0.0,10000.0,86.0,0.0,0.0,0.0,0.0
+Show me all the breweries in Australia.,0.0,10000.0,3.0,0.0,0.0,0.0,0.0
+Did Che Guevara have children?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which languages are spoken in Estonia?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Did Kaurismäki ever win the Grand Prix at Cannes?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who produced films starring Natalie Portman?,0.0,10000.0,36.0,0.0,0.0,0.0,0.0
+Where is Syngman Rhee buried?,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+In which U.S. state is Fort Knox located?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all movies with Tom Cruise.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all breeds of the German Shepherd dog.,0.0,10000.0,8.0,0.0,0.0,0.0,0.0
+Who has Tom Cruise been married to?,0.0,10000.0,3.0,0.0,0.0,0.0,0.0
+Give me all films produced by Hal Roach.,0.0,10000.0,514.0,0.0,0.0,0.0,0.0
+Which museum in New York has the most visitors?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Does the new Battlestar Galactica series have more episodes than the old one?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which actor was casted in the most movies?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+What is the ruling party in Lisbon?,1.0,95.0,0.0,0.010416666666666666,1.0,0.020618556701030924,0.010416666666666666
+What is the longest river?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who developed the video game World of Warcraft?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who is the youngest Darts player?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which Greek parties are pro-European?,0.0,10000.0,8.0,0.0,0.0,0.0,0.0
+Who was the pope that founded the Vatican Television?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Was Sigmund Freud married?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all members of Prodigy.,2.0,0.0,1.0,1.0,0.6666666666666666,0.8,0.6666666666666666
+In which country is Mecca located?,1.0,2.0,0.0,0.3333333333333333,1.0,0.5,0.3333333333333333
+What is the biggest stadium in Spain?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Is Cola a beverage?,0.0,129.0,1.0,0.0,0.0,0.0,0.0
+In which U.S. state is Area 51 located?,0.0,10000.0,2.0,0.0,0.0,0.0,0.0
+Show a list of soccer clubs that play in the Bundesliga.,16.0,2.0,2.0,0.8888888888888888,0.8888888888888888,0.8888888888888888,0.8
+Who was the wife of U.S. president Lincoln?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+In what city is the Heineken brewery?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which companies have more than 1 million employees?,0.0,10000.0,683.0,0.0,0.0,0.0,0.0
+What is the largest metropolitan area in Washington state?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who developed Slack?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which cities does the Weser flow through?,7.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which volcanos in Japan erupted since 2000?,7.0,381.0,0.0,0.01804123711340206,1.0,0.035443037974683546,0.01804123711340206
+Who was the first King of England?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+What are the top-10 action role-playing video games according to IGN?,0.0,1.0,10.0,0.0,0.0,0.0,0.0
+Which countries adopted the Euro?,0.0,10000.0,45.0,0.0,0.0,0.0,0.0
+Who wrote the book Les Piliers de la terre?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who is the tallest player of the Atlanta Falcons?,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+Who wrote the book The pillars of the Earth?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which awards did Douglas Hofstadter win?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Is Barack Obama a democrat?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What is the highest place of the Urals?,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+Give me all books written by Danielle Steel.,0.0,10000.0,47.0,0.0,0.0,0.0,0.0
+What is the location of the Houses of Parliament?,0.0,10000.0,2.0,0.0,0.0,0.0,0.0
+Is Christian Bale starring in Batman Begins?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+In which country is the Limerick Lake?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all cosmonauts.,0.0,10000.0,118.0,0.0,0.0,0.0,0.0
+Which holidays are celebrated around the world?,0.0,10000.0,2061.0,0.0,0.0,0.0,0.0
+Which rivers flow into a German lake?,37.0,1491.0,0.0,0.024214659685863876,1.0,0.047284345047923323,0.024214659685863876
+Was Marc Chagall a jew?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Is Frank Herbert still alive?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What is the official language of Suriname?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all actors starring in movies directed by William Shatner.,0.0,10000.0,18.0,0.0,0.0,0.0,0.0
+What is in a chocolate chip cookie?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which ingredients do I need for carrot cake?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all ESA astronauts.,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+Was the Cuban Missile Crisis earlier than the Bay of Pigs Invasion?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all companies in Munich.,0.0,10000.0,139.0,0.0,0.0,0.0,0.0
+List all the musicals with music by Leonard Bernstein.,0.0,10000.0,8.0,0.0,0.0,0.0,0.0
+Did Arnold Schwarzenegger attend a university?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What is the longest river in the world?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all launch pads operated by NASA.,7.0,2.0,0.0,0.7777777777777778,1.0,0.8750000000000001,0.7777777777777778
+Who created Batman?,2.0,0.0,0.0,1.0,1.0,1.0,1.0
+Give me all libraries established earlier than 1400.,12.0,712.0,0.0,0.016574585635359115,1.0,0.03260869565217391,0.016574585635359115
+Who played Gus Fring in Breaking Bad?,1.0,10.0,0.0,0.09090909090909091,1.0,0.16666666666666669,0.09090909090909091
+In which programming language is GIMP written?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+In which ancient empire could you pay with cocoa beans?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who is the editor of Forbes?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which electronics companies were founded in Beijing?,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+Who is the owner of Universal Studios?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all video games published by Mean Hamster Software.,0.0,10000.0,2.0,0.0,0.0,0.0,0.0
+List all boardgames by GMT.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Was Margaret Thatcher a chemist?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Where did Hillel Slovak die?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all world heritage sites designated within the past two years.,29.0,1276.0,4.0,0.022222222222222223,0.8787878787878788,0.043348281016442454,0.02215431627196333
+Was the wife of president Lincoln called Mary?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all movies directed by Francis Ford Coppola.,0.0,10000.0,29.0,0.0,0.0,0.0,0.0
+Give me all Swiss non-profit organizations.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What airlines are part of the SkyTeam alliance?,54.0,0.0,0.0,1.0,1.0,1.0,1.0
+Give me all types of eating disorders.,0.0,10000.0,63.0,0.0,0.0,0.0,0.0
+Give me all Apollo 14 astronauts.,0.0,10000.0,3.0,0.0,0.0,0.0,0.0
+Which country does the creator of Miffy come from?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which U.S. states are in the same time zone as Utah?,0.0,10000.0,45.0,0.0,0.0,0.0,0.0
+Give me all Danish movies.,0.0,10000.0,120.0,0.0,0.0,0.0,0.0
+From which region is the Melon de Bourgogne?,0.0,10000.0,4.0,0.0,0.0,0.0,0.0
+List the children of Margaret Thatcher.,0.0,10000.0,2.0,0.0,0.0,0.0,0.0
+Are tree frogs a type of amphibian?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+List all games by GMT.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Does the Isar flow into a lake?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which airports does Yeti Airlines serve?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all actors starring in movies directed by and starring William Shatner.,1.0,0.0,11.0,1.0,0.08333333333333333,0.15384615384615385,0.08333333333333333
+Which city has the most inhabitants?,0.0,1.0,1.0,0.0,0.0,0.0,0.0
+Which Indian company has the most employees?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Who created Wikipedia?,2.0,0.0,0.0,1.0,1.0,1.0,1.0
+Where is the origin of Carolina reaper?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Is the wife of president Obama called Michelle?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+In which films directed by Garry Marshall was Julia Roberts starring?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give all swimmers that were born in Moscow.,65.0,4247.0,0.0,0.015074211502782932,1.0,0.029700708247658216,0.015074211502782932
+How many museums does Paris have?,0.0,10000.0,21.0,0.0,0.0,0.0,0.0
+Which films did Stanley Kubrick direct?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What is the highest mountain in Italy?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Who was John F. Kennedy's vice president?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me the capitals of all countries that the Himalayas run through.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who was the successor of John F. Kennedy?,2.0,6654.0,1.0,3.0048076923076925E-4,0.6666666666666666,6.006907944135757E-4,3.004356316659156E-4
+Who composed the soundtrack for Cameron's Titanic?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which actors were born in Germany?,0.0,10000.0,36.0,0.0,0.0,0.0,0.0
+In which time zone is Rome?,1.0,1.0,0.0,0.5,1.0,0.6666666666666666,0.5
+Give me a list of all trumpet players that were bandleaders.,44.0,409.0,2.0,0.09713024282560706,0.9565217391304348,0.17635270541082163,0.0967032967032967
+Give me all actors who were born in Paris after 1950.,177.0,8021.0,0.0,0.021590631861429618,1.0,0.04226865671641791,0.021590631861429618
+Who are the developers of DBpedia?,3.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which state of the USA has the highest population density?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who is the king of the Netherlands?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Where did the architect of the Eiffel Tower study?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all soccer clubs in the Premier League.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which monarchs were married to a German?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which music albums contain the song Last Christmas?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+In which city did Nikos Kazantzakis die?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which presidents were born in 1945?,26.0,1945.0,0.0,0.013191273465246067,1.0,0.026039058587881823,0.013191273465246067
+Give me all Australian nonprofit organizations.,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Is horse racing a sport?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+In which country does the Nile start?,2.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which companies produce hovercrafts?,3.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which pope succeeded John Paul II?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+To which countries does the Himalayan mountain system extend?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What kind of music did Lou Reed play?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+In which countries do people speak Japanese?,3.0,0.0,0.0,1.0,1.0,1.0,1.0
+Show me the book that Muhammad Ali wrote.,0.0,10000.0,2.0,0.0,0.0,0.0,0.0
+Give me the Apollo 14 astronauts.,0.0,10000.0,3.0,0.0,0.0,0.0,0.0
+What was the first Queen album?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which states border Illinois?,5.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which television shows were created by Walt Disney?,0.0,10000.0,5.0,0.0,0.0,0.0,0.0
+What is the bridge with the longest span?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+What country is Sitecore from?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who was buried in the Great Pyramid of Giza?,2.0,0.0,0.0,1.0,1.0,1.0,1.0
+What is the capital of Canada?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Who was Vincent van Gogh inspired by?,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+Who was president of Pakistan in 1978?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Who designed the Brooklyn Bridge?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who is the owner of Rolls-Royce?,2.0,0.0,0.0,1.0,1.0,1.0,1.0
+Who created Goofy?,3.0,0.0,0.0,1.0,1.0,1.0,1.0
+Who wrote the book The Pillars of the Earth?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who was the doctoral supervisor of Albert Einstein?,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+Did Socrates influence Aristotle?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who is the mayor of New York City?,1.0,1.0,0.0,0.5,1.0,0.6666666666666666,0.5
+Who is the son of Sonny and Cher?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Give me all federal chancellors of Germany.,12.0,1.0,1.0,0.9230769230769231,0.9230769230769231,0.9230769230769231,0.8571428571428571
+Who developed Minecraft?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which building after the Burj Khalifa has the most floors?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which airports does Air China serve?,0.0,10000.0,9.0,0.0,0.0,0.0,0.0
+Who is the mayor of Rotterdam?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Give me all Swedish oceanographers.,1.0,24.0,0.0,0.04,1.0,0.07692307692307693,0.04
+Show me Hemingway's autobiography.,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Where was JFK assassinated?,0.0,10000.0,2.0,0.0,0.0,0.0,0.0
+Give me all Australian metalcore bands.,20.0,2117.0,1.0,0.009358914365933552,0.9523809523809523,0.018535681186283598,0.009354536950420954
+Who is the tallest basketball player?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Who produced the most films?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which city has the least inhabitants?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which movies star both Liz Taylor and Richard Burton?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Is proinsulin a protein?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Is Lake Baikal bigger than the Great Bear Lake?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all books by William Goldman with more than 300 pages.,0.0,10000.0,10.0,0.0,0.0,0.0,0.0
+Do Urdu and Persian have a common root?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all Swedish holidays.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+What is the timezone in San Pedro de Atacama?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+To which artistic movement did the painter of The Three Dancers belong?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which country has the most official languages?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Show me everyone who was born on Halloween.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which scientist is known for the Manhattan Project and the Nobel Peace Prize?,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+Show me all books in Asimov's Foundation series.,0.0,10000.0,3.0,0.0,0.0,0.0,0.0
+Who killed John Lennon?,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+Which people were born in Heraklion?,97.0,0.0,0.0,1.0,1.0,1.0,1.0
+Give me all cities in New Jersey with more than 100000 inhabitants.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which programming languages were influenced by Perl?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+In which city was the former Dutch queen Juliana buried?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which other weapons did the designer of the Uzi develop?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Which bridges cross the Seine?,0.0,10000.0,32.0,0.0,0.0,0.0,0.0
+Which actor played Chewbacca?,1.0,0.0,1.0,1.0,0.5,0.6666666666666666,0.5
+Who composed the music for Harold and Maude?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Who is starring in Spanish movies produced by Benicio del Toro?,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+Who discovered Pluto?,1.0,1.0,0.0,0.5,1.0,0.6666666666666666,0.5
+Who is the governor of Wyoming?,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+Which beer originated in Ireland?,0.0,10000.0,1.0,0.0,0.0,0.0,0.0
+What are the five boroughs of New York?,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Give me all the TV shows with Neil Patrick Harris.,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Where in France is sparkling wine produced?,1.0,1844.0,0.0,5.420054200542005E-4,1.0,0.0010834236186348862,5.420054200542005E-4
+average ,0.0,0.0,0.0,0.0,0.0,0.15994690614364368,0.15515927923874875
+overall ,-,-,-,-,-,-,0.13970588235294118
