@@ -7,8 +7,12 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class Gen_HTTP_QA_Sys_JSON extends ASystem {
+	private Logger log = LoggerFactory.getLogger(Gen_HTTP_QA_Sys_JSON.class);
+	
 	// String constants
 	private String url;
 	private String name;
@@ -22,7 +26,7 @@ public abstract class Gen_HTTP_QA_Sys_JSON extends ASystem {
 	public String fetchPostResponse(String url, String json) throws Exception {
 		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(this.timeout).build();
 		HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
-		HttpPost httppost = new HttpPost(this.url);
+		HttpPost httppost = new HttpPost(url);
 		StringEntity entity = new StringEntity(json);
 		httppost.addHeader("Content-Type", "application/json; charset=UTF-8");
 		httppost.setEntity(entity);
@@ -42,6 +46,7 @@ public abstract class Gen_HTTP_QA_Sys_JSON extends ASystem {
 			return;
 		}
 		questionString = question.getLanguageToQuestion().get(language);
+		log.debug(this.getClass().getSimpleName() + ": " + questionString);
 		
 		String responseString = fetchPostResponse(this.url, createInputJSON(questionString));
 			

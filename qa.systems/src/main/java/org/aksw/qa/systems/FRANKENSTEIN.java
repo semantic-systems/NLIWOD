@@ -39,6 +39,7 @@ public class FRANKENSTEIN extends Gen_HTTP_QA_Sys_JSON {
 	public void processResponse(String response, IQuestion question) {
 		JSONParser parser = new JSONParser();
 		JSONObject answerjson = null;
+
 		try {
 			answerjson = (JSONObject) parser.parse(response);
 		} catch (ParseException e) {

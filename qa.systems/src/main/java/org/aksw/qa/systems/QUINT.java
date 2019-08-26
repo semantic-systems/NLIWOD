@@ -1,10 +1,19 @@
 package org.aksw.qa.systems;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Map;
 
+import org.aksw.qa.commons.datastructure.IQuestion;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 
 // not complete yet, since the website is not working correctly at the moment
@@ -24,10 +33,12 @@ public class QUINT extends Gen_HTTP_QA_Sys {
 	
 	public QUINT() {
 		super(URL, "quint", true, false);
+		this.setQueryKey("question");
 	}
 	
 	public QUINT(String url) {
 		super(url, "quint", true, false);
+		this.setQueryKey("question");
 	}
 
 	@Override
@@ -37,5 +48,25 @@ public class QUINT extends Gen_HTTP_QA_Sys {
 		paramMap.put("queriesNumber", QUERIES_NUMBER);
 		paramMap.put("numberDecisionTrees", NUMBER_DECISION_TREES);
 		return super.fetchPostResponse(url, paramMap);	
+	}
+	
+	@Override
+	public void processQALDResp(HttpResponse response, IQuestion question) throws JsonParseException, JsonMappingException, UnsupportedOperationException, IOException {
+		HashSet<String> resultSet = new HashSet<String>();	
+		Document doc = Jsoup.parse(responseparser.responseToString(response));
+		Element container = doc.getElementById("result-container");
+		
+		if(container == null) return;
+		Elements results = container.select("a");		
+		for(Element result: results) {
+			//only returns wikipedia links
+			resultSet.add(result.attr("href"));
+		}
+		question.setGoldenAnswers(resultSet);		
+	}
+
+	public static void main(String[] args) throws Exception {
+		ASystem a = new SorokinQA();
+		System.out.println(a.search("How many children did Benjamin Franklin have?", "en"));
 	}
 }
