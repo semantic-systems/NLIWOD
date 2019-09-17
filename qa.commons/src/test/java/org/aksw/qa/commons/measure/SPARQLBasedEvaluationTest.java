@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.aksw.qa.commons.utils.SPARQLExecutor;
+import org.aksw.qa.commons.sparql.SPARQL;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +15,8 @@ public class SPARQLBasedEvaluationTest {
 
 	@Test
 	public void testEndpointAvailibility() {
-		assertTrue(SPARQLExecutor.isEndpointAlive("http://dbpedia.org/sparql"));
-		assertFalse(SPARQLExecutor.isEndpointAlive("http://dbpedia2.org/sparql"));
+		assertTrue(SPARQL.isEndpointAlive("http://dbpedia.org/sparql"));
+		assertFalse(SPARQL.isEndpointAlive("http://dbpedia2.org/sparql"));
 	}
 
 	@Test
@@ -43,9 +43,9 @@ public class SPARQLBasedEvaluationTest {
 	public void testTooSpecificQuery() {
 		// SELECT COUNT(?x)...
 		String sparqlQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> " + "PREFIX res: <http://dbpedia.org/resource/> " + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
-		        + "SELECT COUNT(DISTINCT ?uri) WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts .}";
+		        + "SELECT (COUNT(DISTINCT ?uri) as ?u) WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts .}";
 		String targetSPARQLQuery = "PREFIX dbo: <http://dbpedia.org/ontology/> " + "PREFIX res: <http://dbpedia.org/resource/> " + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
-		        + "SELECT COUNT(DISTINCT ?uri) WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts ." + "?uri dbo:director res:Garry_Marshall .}";
+		        + "SELECT (COUNT(DISTINCT ?uri) as ?u) WHERE {	" + "?uri rdf:type dbo:Film ." + "?uri dbo:starring res:Julia_Roberts ." + "?uri dbo:director res:Garry_Marshall .}";
 		double precision = SPARQLBasedEvaluation.precision(sparqlQuery, targetSPARQLQuery, endpoint);
 		double recall = SPARQLBasedEvaluation.recall(sparqlQuery, targetSPARQLQuery, endpoint);
 		double fMeasure = SPARQLBasedEvaluation.fMeasure(sparqlQuery, targetSPARQLQuery, endpoint);

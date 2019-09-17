@@ -1,11 +1,12 @@
 language: java
 sudo: false
+dist: trusty
 
-jdk:  
+jdk:
   - oraclejdk8
-  
-script: 
-  - mvn test -B 
+
+script:
+  - mvn test -B
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

@@ -1,135 +1,91 @@
 package org.aksw.qa.commons.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.aksw.qa.commons.qald.QALD4_EvaluationUtils;
 import org.aksw.qa.commons.sparql.SPARQL;
 import org.aksw.qa.commons.sparql.ThreadedSPARQL;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.impl.ResourceImpl;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import com.google.common.collect.Sets;
 
-//@Deprecated
 /**
- * In qa.commons, there are 2 differnet ways to fire queries to an endpoint, {@link SPARQL} and this class. This becomes tedious to keep clean, especially when both share the same (hardcopied) code.
- * Please consider merging the functionality in favor of {@link SPARQL} or {@link ThreadedSPARQL}
- *
- * @param service
- * @param query
- * @return
+ * Please consider using {@link SPARQL} or {@link ThreadedSPARQL}
  */
+@Deprecated
 public class SPARQLExecutor {
-
-	public static boolean isEndpointAlive(final String endpoint) {
+	
+	/**
+	 * An exact copy of this code is {@link SPARQL#isEndpointAlive(String)}.
+	 * @param endpoint
+	 * @return
+	 */
+	@Deprecated
+	public static boolean isEndpointAlive(final String endpoint) {		
 		try {
-			BufferedReader reader = getReader(endpoint);
-			reader.close();
+			QueryExecution qeExe = QueryExecutionFactory.sparqlService(endpoint, "PREFIX foaf:    <http://xmlns.com/foaf/0.1/> ASK  { ?x foaf:name  \"Alice\" }");
+			qeExe.execAsk();	
 			return true;
-		} catch (IOException e) {
+		} catch (Exception e) {
+
 		}
 		return false;
-
 	}
-
-	//TODO change that to use proper JENA library
+	
+	/**
+	 * An exact copy of this code is {@link SPARQL#executeSelect(String)}.
+	 * @param query
+	 * @param endpoint
+	 * @return
+	 */
+	@Deprecated
 	public static Results executeSelect(final String query, final String endpoint) {
-		BufferedReader reader;
-		try {
-			reader = getReader(endpoint + "?query=" + URLEncoder.encode(query, "UTF-8"));
-			String results = readAll(reader);
-			reader.close();
-			Results ret = processSelectResults(results);
-			return ret;
-		} catch (IOException | ParserConfigurationException | SAXException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public static Boolean executeAsk(final String query, final String endpoint) {
-		BufferedReader reader;
-		try {
-			reader = getReader(endpoint + "?query=" + URLEncoder.encode(query, "UTF-8"));
-			String results = readAll(reader);
-			reader.close();
-			return Boolean.valueOf(results);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	private static Results processSelectResults(final String results) throws ParserConfigurationException, SAXException, IOException {
-		// Set<String> ret = CollectionUtils.newHashSet();
-		InputSource is = new InputSource(new StringReader(results));
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		Document doc = builder.parse(is);
-		NodeList nodes = doc.getFirstChild().getChildNodes();
+		QueryExecution qeExe = QueryExecutionFactory.sparqlService(endpoint, query);
+		ResultSet rs = qeExe.execSelect();	
+		
 		Results res = new Results();
-		for (int i = 0; i < nodes.getLength(); i++) {
-			NodeList childs = nodes.item(i).getChildNodes();
+		res.header.addAll(rs.getResultVars());
 
-			List<String> row = new LinkedList<>();
-			for (int j = 0; j < childs.getLength(); j++) {
-				if (childs.item(j).getNodeName().equals("th")) {
-					res.header.add(childs.item(j).getTextContent());
-					continue;
-				}
-
-				String add = "";
-				if (childs.item(j).hasChildNodes()) {
-					add = childs.item(j).getFirstChild().getTextContent().trim();
+		while(rs.hasNext()) {
+			QuerySolution sol = rs.nextSolution();
+			res.table.add(new ArrayList<String>());
+			for(String head: res.header) {
+				String answer = "";
+				
+				if(sol.get(head).isResource()) {
+					answer = sol.getResource(head).toString();
 				} else {
-					add = childs.item(j).getTextContent().trim();
+					String temp = sol.get(head).toString();
+					if(temp.contains("@")) {
+						answer = "\"" + temp.substring(0, temp.indexOf("@")) + "\"" + temp.substring(temp.indexOf("@"));
+					} else if (temp.contains("^^")){
+						answer = "\"" + temp.substring(0, temp.indexOf("^")) + "\"^^<" + temp.substring(temp.indexOf("^")+2) + ">";
+					} else {
+						answer = temp;
+					}
 				}
-				if (!add.isEmpty()) {
-					row.add(add);
-				}
-			}
-			if (!row.isEmpty()) {
-				res.table.add(row);
+				res.table.get(res.table.size()-1).add(answer);
 			}
 		}
-
 		return res;
 	}
 
-	private static String readAll(final BufferedReader reader) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		int cp;
-		while ((cp = reader.read()) != -1) {
-			sb.append((char) cp);
-		}
-		return sb.toString();
-	}
-
-	private static BufferedReader getReader(final String endpoint) throws IOException {
-		URL url = new URL(endpoint);
-		InputStream stream = url.openStream();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream, Charset.forName("UTF-8")));
-		return reader;
+	/**
+	 * An exact copy of this code is {@link SPARQL#executeAsk(String)}.
+	 * @param query
+	 * @param endpoint
+	 * @return
+	 */
+	@Deprecated
+	public static Boolean executeAsk(final String query, final String endpoint) {
+		QueryExecution qeExe = QueryExecutionFactory.sparqlService(endpoint, query);
+		return qeExe.execAsk();
 	}
 
 	/**
@@ -165,5 +121,4 @@ public class SPARQLExecutor {
 		}
 		return set;
 	}
-
 }

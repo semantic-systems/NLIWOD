@@ -36,7 +36,6 @@ public class QuestionTypeAnalyzerTest {
 		log.info("Test QuestionType classification ...");
 		log.debug("Initialize components ...");
 		
-		QuestionTypeAnalyzer questionTypeAnalyzer = new QuestionTypeAnalyzer();		
 		log.info("Run queries through components ...");	
 		log.debug("Load data file: " + Dataset.QALD9_Test_Multilingual.name());
 		List<IQuestion> questions = LoaderController.load(Dataset.QALD9_Test_Multilingual);
@@ -47,7 +46,7 @@ public class QuestionTypeAnalyzerTest {
 		
 		for (IQuestion q : questions) {			
 			// Classify query type
-			boolean classification = questionTypeAnalyzer.isASKQuestion(q.getLanguageToQuestion().get("en"));
+			boolean classification = QuestionTypeAnalyzer.isASKQuestion(q.getLanguageToQuestion().get("en"));
 			
 			counter++;
 			if (classification) {

@@ -55,7 +55,6 @@ public class OKBQA extends Gen_HTTP_QA_Sys_JSON {
 
 			String answerString = result.getString("answer");
 			resultSet.add(answerString);
-			
 		}
 		
 		//Get Query from log

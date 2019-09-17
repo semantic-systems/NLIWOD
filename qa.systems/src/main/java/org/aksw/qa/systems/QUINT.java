@@ -64,9 +64,4 @@ public class QUINT extends Gen_HTTP_QA_Sys {
 		}
 		question.setGoldenAnswers(resultSet);		
 	}
-
-	public static void main(String[] args) throws Exception {
-		ASystem a = new SorokinQA();
-		System.out.println(a.search("How many children did Benjamin Franklin have?", "en"));
-	}
 }

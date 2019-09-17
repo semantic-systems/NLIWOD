@@ -10,7 +10,6 @@ import org.json.simple.parser.ParseException;
 
 public class SorokinQA extends Gen_HTTP_QA_Sys_JSON {
 
-	//private static final String URL = "http://semanticparsing.ukp.informatik.tu-darmstadt.de:5000/question-answering/answerforqald/";
 	private static final String URL_UG = "http://semanticparsing.ukp.informatik.tu-darmstadt.de:5000/question-answering/ungroundedgraph/";
 	private static final String URL_GG = "http://semanticparsing.ukp.informatik.tu-darmstadt.de:5000/question-answering/groundedgraphs/";
 	private static final String URL_EG = "http://semanticparsing.ukp.informatik.tu-darmstadt.de:5000/question-answering/evaluategraphs/";
@@ -20,8 +19,7 @@ public class SorokinQA extends Gen_HTTP_QA_Sys_JSON {
 	}
 	
 	/**
-	 * Overriding original search method to implement SorokinQA's three step requests for
-	 * QA
+	 * Overriding original search method to implement SorokinQA's three step requests for QA
 	 */
 	@SuppressWarnings("unchecked")
 	@Override

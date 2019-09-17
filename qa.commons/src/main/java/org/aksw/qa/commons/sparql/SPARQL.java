@@ -1,5 +1,6 @@
 package org.aksw.qa.commons.sparql;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
@@ -7,9 +8,12 @@ import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
 import org.aksw.jena_sparql_api.cache.h2.CacheUtilsH2;
 import org.aksw.jena_sparql_api.core.FluentQueryExecutionFactory;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
+import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
 import org.aksw.qa.commons.qald.QALD4_EvaluationUtils;
+import org.aksw.qa.commons.utils.Results;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.RDFNode;
@@ -97,7 +101,7 @@ public class SPARQL {
 	}
 
 	/**
-	 * For use with {@link #sparql(String)} Extracts answer strings. Can be directly set as golden answers in IQuesion.
+	 * For use with {@link #sparql(String)} Extracts answer strings. Can be directly set as golden answers in an IQuestion.
 	 *
 	 * @param answers
 	 * @return
@@ -122,7 +126,60 @@ public class SPARQL {
 		}
 		return set;
 	}
+	
+	/**
+	 * Executes a select query for the given endpoint and query. Returns the answer as an {@link Results} object.
+	 * @param query
+	 * @param endpoint
+	 * @return
+	 */
+	public static Results executeSelect(final String query, final String endpoint) {
+		QueryExecutionFactory qef = new QueryExecutionFactoryHttp(endpoint);
+		QueryExecution qe = qef.createQueryExecution(query);
 
+		ResultSet rs = qe.execSelect();	
+		
+		Results res = new Results();
+		res.header.addAll(rs.getResultVars());
+
+		while(rs.hasNext()) {
+			QuerySolution sol = rs.nextSolution();
+			res.table.add(new ArrayList<String>());
+			for(String head: res.header) {
+				String answer = "";
+				
+				if(sol.get(head).isResource()) {
+					answer = sol.getResource(head).toString();
+				} else {
+					String temp = sol.get(head).toString();
+					if(temp.contains("@")) {
+						answer = "\"" + temp.substring(0, temp.indexOf("@")) + "\"" + temp.substring(temp.indexOf("@"));
+					} else if (temp.contains("^^")){
+						answer = "\"" + temp.substring(0, temp.indexOf("^")) + "\"^^<" + temp.substring(temp.indexOf("^")+2) + ">";
+					} else {
+						answer = temp;
+					}
+				}
+				res.table.get(res.table.size()-1).add(answer);
+			}
+		}		
+		closeExecFactory(qef);
+		return res;
+	}
+
+	/**
+	 * Executes an ask query for the given endpoint and query.
+	 * @param query
+	 * @param endpoint
+	 * @return
+	 */
+	public static Boolean executeAsk(final String query, final String endpoint) {
+		QueryExecutionFactory qef = new QueryExecutionFactoryHttp(endpoint);
+		QueryExecution qe = qef.createQueryExecution(query);		
+		closeExecFactory(qef);
+		return qe.execAsk();
+	}
+	
 	/**
 	 * @return - The time to live of frontendCache
 	 */
@@ -151,5 +208,34 @@ public class SPARQL {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * Checks if the given endpoint is alive. If fails, returns false.
+	 * @param endpoint
+	 * @return
+	 */
+	public static boolean isEndpointAlive(final String endpoint) {		
+		QueryExecutionFactory qef = new QueryExecutionFactoryHttp(endpoint);
+		try {
+			QueryExecution qe = qef.createQueryExecution("PREFIX foaf:    <http://xmlns.com/foaf/0.1/> ASK  { ?x foaf:name  \"Alice\" }");
+			qe.execAsk();
+			return true;
+		} catch (Exception e) {
+	
+		} finally {
+			closeExecFactory(qef);
+		}
+		return false;
+	}
+	
+	private static void closeExecFactory(QueryExecutionFactory qef) {
+		if(qef != null) {
+			try {
+				qef.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
 	}
 }

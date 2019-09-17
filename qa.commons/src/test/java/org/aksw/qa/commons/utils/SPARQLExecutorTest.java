@@ -58,7 +58,6 @@ public class SPARQLExecutorTest {
 		assertTrue(res.header.contains("s"));
 		assertTrue(res.header.contains("o"));
 		List<String> row = res.table.get(0);
-
 		assertTrue(row.get(res.header.indexOf("o")).equals("http://www.w3.org/2002/07/owl#FunctionalProperty"));
 		assertTrue(row.get(res.header.indexOf("s")).equals("http://dbpedia.org/ontology/deathDate"));
 		row = res.table.get(1);
@@ -78,7 +77,7 @@ public class SPARQLExecutorTest {
 	private Object[] getGoldenArray2() {
 		String[] ret = new String[3];
 		ret[0] = "\"1785-3-7\"^^<http://www.w3.org/2001/XMLSchema#date>";
-		ret[1] = "1785-03-07";
+		ret[1] = "\"1785-03-07\"^^<http://www.w3.org/2001/XMLSchema#date>";
 		ret[2] = "\"1950-1-9\"^^<http://www.w3.org/2001/XMLSchema#date>";
 		Arrays.sort(ret);
 		return ret;
