@@ -127,7 +127,7 @@ out of scope (?) :
 Bao, J., Duan, N., Yan, Z., Zhou, M., and Zhao, T. (2016). Constraint-based
 question answering with knowledge graph. In COLING 2016, 26th International Conference on Computational Linguistics, Proceedings of the Conference: Technical Papers, December 11-16, 2016, Osaka, Japan, pages 2503–
 2514.
-
+* chatbot https://developer.amazon.com/de/blogs/alexa/post/885ec615-314f-425f-a396-5bcffd33dd76/amazon-releases-data-set-of-annotated-conversations-to-aid-development-of-socialbots
 Su, Y., Sun, H., Sadler, B., Srivatsa, M., Gur, I., Yan, Z., and Yan, X. (2016). On
 generating characteristic-rich question sets for QA evaluation. In Proceedings
 of the 2016 Conference on Empirical Methods in Natural Language Processing,
