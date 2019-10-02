@@ -26,8 +26,8 @@ import org.aksw.qa.commons.load.json.QaldJson;
 import org.aksw.qa.commons.load.stanford.StanfordLoader;
 import org.aksw.qa.commons.load.tsv.LoadTsv;
 import org.aksw.qa.commons.sparql.AnswerSyncer;
+import org.aksw.qa.commons.sparql.SPARQL;
 import org.aksw.qa.commons.utils.DateFormatter;
-import org.aksw.qa.commons.utils.SPARQLExecutor;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.RDFNode;
@@ -301,12 +301,14 @@ public class LoaderController {
 				case QALD9_Test_Multilingual:
 				case LCQUAD :
 					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(getInputStream(data), QaldJson.class);
-					out = EJQuestionFactory.getQuestionsFromQaldJson(json);
+					out = EJQuestionFactory.getQuestionsFromQaldJson(json);				
+					SPARQL sparqlService = null;
+					if(deriveUri != null) sparqlService = new SPARQL(deriveUri);
+					
 					for (IQuestion q : out) {
 						HashSet<String> set = new HashSet<>();
-						if ((deriveUri != null) && (q.getSparqlQuery() != null)) {
-
-							Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, q.getSparqlQuery());
+						if ((sparqlService != null) && (q.getSparqlQuery() != null)) {
+							Set<RDFNode> answers = sparqlService.sparql(q.getSparqlQuery());
 							for (RDFNode answ : answers) {
 								if (answ.isResource()) {
 									set.add(answ.asResource().getURI());
@@ -419,6 +421,9 @@ public class LoaderController {
 
 			NodeList questionNodes = doc.getElementsByTagName("question");
 
+			SPARQL sparqlService = null;
+			if(deriveUri != null) sparqlService = new SPARQL(deriveUri);
+			
 			for (int i = 0; i < questionNodes.getLength(); i++) {
 
 				IQuestion question = new Question();
@@ -486,9 +491,9 @@ public class LoaderController {
 				}
 				// Read answers
 				HashSet<String> set = new HashSet<>();
-				if ((deriveUri != null) && (question.getSparqlQuery() != null)) {
+				if ((sparqlService != null) && (question.getSparqlQuery() != null)) {
 
-					Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, question.getSparqlQuery());
+					Set<RDFNode> answers = sparqlService.sparql(question.getSparqlQuery());
 					for (RDFNode answ : answers) {
 						if (answ.isResource()) {
 							set.add(answ.asResource().getURI());
@@ -578,6 +583,9 @@ public class LoaderController {
 			log.error("Could not load Dataset", e);
 		}
 
+		SPARQL sparqlService = null;
+		if(deriveUri != null) sparqlService = new SPARQL(deriveUri);
+		
 		for (Integer i : idToQuestion.keySet()) {
 			Question q = new Question();
 			for (JsonObject currentJsonObject : idToQuestion.get(i)) {
@@ -594,8 +602,8 @@ public class LoaderController {
 				q.setSparqlQuery(lang, sparql);
 
 				Set<String> answ = new HashSet<>();
-				if ((deriveUri != null) && (q.getSparqlQuery() != null)) {
-					Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, q.getSparqlQuery());
+				if ((sparqlService != null) && (q.getSparqlQuery() != null)) {
+					Set<RDFNode> answers = sparqlService.sparql(q.getSparqlQuery());
 
 					for (RDFNode a : answers) {
 						if (a.isResource()) {

@@ -2,8 +2,8 @@ package org.aksw.qa.commons.measure;
 
 import java.util.Set;
 
+import org.aksw.qa.commons.sparql.SPARQL;
 import org.aksw.qa.commons.utils.CollectionUtils;
-import org.aksw.qa.commons.utils.SPARQLExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,15 +28,15 @@ public class SPARQLBasedEvaluation {
 
 		double precision = 0;
 		if (isSelectType(sparqlQueryString) && isSelectType(targetSPARQLQueryString)) {
-			Set<String> nodes = SPARQLExecutor.executeSelect(sparqlQueryString, endpoint).getStringSet();
-			Set<String> targetNodes = SPARQLExecutor.executeSelect(targetSPARQLQueryString, endpoint).getStringSet();
+			Set<String> nodes = SPARQL.executeSelect(sparqlQueryString, endpoint).getStringSet();
+			Set<String> targetNodes = SPARQL.executeSelect(targetSPARQLQueryString, endpoint).getStringSet();
 			Set<String> intersection = CollectionUtils.intersection(nodes, targetNodes);
 			if (nodes.size() != 0) {
 				precision = (double) intersection.size() / (double) nodes.size();
 			}
 		} else if (isAskType(sparqlQueryString) && isAskType(targetSPARQLQueryString)) {
-			boolean answer = SPARQLExecutor.executeAsk(sparqlQueryString, endpoint);
-			boolean targetAnswer = SPARQLExecutor.executeAsk(targetSPARQLQueryString, endpoint);
+			boolean answer = SPARQL.executeAsk(sparqlQueryString, endpoint);
+			boolean targetAnswer = SPARQL.executeAsk(targetSPARQLQueryString, endpoint);
 			if (answer == targetAnswer) {
 				precision = 1;
 			}
@@ -59,8 +59,8 @@ public class SPARQLBasedEvaluation {
 			if (hasAggregations(sparqlQueryString) && hasAggregations(targetSPARQLQueryString)) {
 				return 1;
 			}
-			Set<String> nodes = SPARQLExecutor.executeSelect(sparqlQueryString, endpoint).getStringSet();
-			Set<String> targetNodes = SPARQLExecutor.executeSelect(targetSPARQLQueryString, endpoint).getStringSet();
+			Set<String> nodes = SPARQL.executeSelect(sparqlQueryString, endpoint).getStringSet();
+			Set<String> targetNodes = SPARQL.executeSelect(targetSPARQLQueryString, endpoint).getStringSet();
 			Set<String> intersection = CollectionUtils.intersection(nodes, targetNodes);
 			if (nodes.size() != 0) {
 				recall = (double) intersection.size() / (double) targetNodes.size();

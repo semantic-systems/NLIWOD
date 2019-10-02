@@ -12,7 +12,7 @@ import java.util.Vector;
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.datastructure.Question;
 import org.aksw.qa.commons.sparql.AnswerSyncer;
-import org.aksw.qa.commons.utils.SPARQLExecutor;
+import org.aksw.qa.commons.sparql.SPARQL;
 import org.apache.jena.ext.com.google.common.base.Joiner;
 import org.apache.jena.rdf.model.RDFNode;
 
@@ -35,7 +35,10 @@ public final class EJQuestionFactory {
 	 */
 	@Deprecated //TODO refactor this so that answersyncing is no longer in this class
 	public static List<IQuestion> getQuestionsFromExtendedJson(final ExtendedJson json, final String deriveUri) {
-		List<IQuestion> out = new ArrayList<>();
+		List<IQuestion> out = new ArrayList<>();		
+		SPARQL sparqlService = null;
+		if(deriveUri != null) sparqlService = new SPARQL(deriveUri);
+		
 		for (EJQuestionEntry it : json.getQuestions()) {
 			IQuestion question = new Question();
 			out.add(question);
@@ -64,7 +67,7 @@ public final class EJQuestionFactory {
 			}
 			if ((deriveUri != null) && (question.getSparqlQuery() != null)) {
 				HashSet<String> set = new HashSet<>();
-				Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, question.getSparqlQuery());
+				Set<RDFNode> answers = sparqlService.sparql(question.getSparqlQuery());
 
 				for (RDFNode answ : answers) {
 					set.add(answ.toString());
@@ -205,6 +208,9 @@ public final class EJQuestionFactory {
 	public static List<IQuestion> getQuestionsFromQaldJson(final QaldJson json, final String deriveUri) {
 		List<IQuestion> questions = new ArrayList<>();
 
+		SPARQL sparqlService = null;
+		if(deriveUri != null) sparqlService = new SPARQL(deriveUri);
+		
 		for (QaldQuestionEntry it : json.getQuestions()) {
 			Question question = new Question();
 			question.setId(it.getId());
@@ -226,9 +232,9 @@ public final class EJQuestionFactory {
 
 			}
 
-			if ((deriveUri != null) && (question.getSparqlQuery() != null)) {
+			if ((sparqlService != null) && (question.getSparqlQuery() != null)) {
 				HashSet<String> set = new HashSet<>();
-				Set<RDFNode> answers = SPARQLExecutor.sparql(deriveUri, question.getSparqlQuery());
+				Set<RDFNode> answers = sparqlService.sparql(question.getSparqlQuery());
 
 				for (RDFNode answ : answers) {
 					set.add(answ.toString());

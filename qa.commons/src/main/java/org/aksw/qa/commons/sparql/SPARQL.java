@@ -2,7 +2,6 @@ package org.aksw.qa.commons.sparql;
 
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 import org.aksw.jena_sparql_api.cache.extra.CacheFrontend;
 import org.aksw.jena_sparql_api.cache.h2.CacheUtilsH2;
@@ -71,9 +70,8 @@ public class SPARQL {
 	 * @param query
 	 *            - a sparql query
 	 * @return
-	 * @throws ExecutionException
 	 */
-	public Set<RDFNode> sparql(final String query) throws ExecutionException {
+	public Set<RDFNode> sparql(final String query) {
 		Set<RDFNode> set = Sets.newHashSet();
 
 		QueryExecution qe = qef.createQueryExecution(query);

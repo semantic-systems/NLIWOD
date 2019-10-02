@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.aksw.gerbil.io.nif.NIFParser;
 import org.aksw.gerbil.io.nif.NIFWriter;
@@ -14,6 +15,7 @@ import org.aksw.gerbil.transfer.nif.Marking;
 import org.aksw.gerbil.transfer.nif.data.DocumentImpl;
 import org.aksw.gerbil.transfer.nif.data.NamedEntity;
 import org.aksw.gerbil.transfer.nif.data.TypedSpanImpl;
+import org.aksw.qa.annotation.comparison.ComparisonUtils;
 import org.aksw.qa.annotation.index.IndexDBO;
 import org.aksw.qa.annotation.spotter.ASpotter;
 import org.aksw.qa.commons.datastructure.Entity;
@@ -79,7 +81,7 @@ public class NifEverything {
 	 * @param q The sentence to run IdexDBO on
 	 * @param indexDBO Choose implementation of @link {@link IndexDBO} to find
 	 *            properties(classes) to store in nif
-	 * @param nif The kind of Annotation how found properties(classes) sould be
+	 * @param nif The kind of Annotation how found properties(classes) should be
 	 *            represented in NIF (e.g. taIdentRef,taClassRef)
 	 * @return Created NIF
 	 */
@@ -88,16 +90,16 @@ public class NifEverything {
 		addAllMarkingsToDoc(doc, stringToMarkingsIndexDBO(q, indexDBO, nif));
 		return writeNIF(doc);
 	}
-
+	
 	/**
-	 * Appends found properties(classes) annoatation to given NIF.
+	 * Appends found properties(classes) annotations to given NIF.
 	 *
 	 * @param documentsString The NIF as String
 	 * @param indexDBO Choose implementation of {@link IndexDBO} to find
 	 *            properties(classes) to store in nif.
-	 * @param nif The kind of Annotation how found properties(classes) sould be
+	 * @param nif The kind of Annotation how found properties(classes) should be
 	 *            represented in NIF (e.g. taIdentRef,taClassRef)
-	 * @return The given NIF, with added annoataions.
+	 * @return The given NIF, with added annotations.
 	 */
 	public String appendNIFResultFromIndexDBO(final String documentsString, final IndexDBO indexDBO, final NifProperty nif) {
 		List<Document> docs = null;
@@ -109,6 +111,47 @@ public class NifEverything {
 		}
 		for (Document doc : docs) {
 			addAllMarkingsToDoc(doc, stringToMarkingsIndexDBO(doc.getText(), indexDBO, nif));
+		}
+		return writeNIF(docs);
+	}
+	
+	/**
+	 * Creates a NIF with annotations respective to given {@link NifProperty}
+	 * respective to given {@link ComparisonUtils}
+	 *
+	 * @param q The sentence to run ComparisonUtils on
+	 * @param indexDBO Choose implementation of @link {@link ComparisonUtils} to find
+	 *            properties(classes) to store in nif
+	 * @param nif The kind of Annotation how found properties(classes) should be
+	 *            represented in NIF (e.g. taIdentRef,taClassRef)
+	 * @return Created NIF
+	 */
+	public String createNIFResultFromComparisonUtils(final String q, final ComparisonUtils comparison, final NifProperty nif) {
+		Document doc = new DocumentImpl(q);
+		addAllMarkingsToDoc(doc, stringToMarkingsComparison(q, comparison, nif));
+		return writeNIF(doc);
+	}
+	
+	/**
+	 * Appends found properties(classes) annotations to given NIF.
+	 *
+	 * @param documentsString The NIF as String
+	 * @param comparison Choose implementation of {@link ComparisonUtils} to find
+	 *            properties(classes) to store in nif.
+	 * @param nif The kind of Annotation how found properties(classes) should be
+	 *            represented in NIF (e.g. taIdentRef,taClassRef)
+	 * @return The given NIF, with added annotations.
+	 */
+	public String appendNIFResultFromComparisonUtils(final String documentsString, final ComparisonUtils comparison, final NifProperty nif) {
+		List<Document> docs = null;
+		try {
+			docs = parseNIF(documentsString);
+		} catch (IllegalArgumentException e) {
+			logger.debug("Given input results in empty document list - check input");
+			return INPUT_NOT_PARSABLE;
+		}
+		for (Document doc : docs) {
+			addAllMarkingsToDoc(doc, stringToMarkingsComparison(doc.getText(), comparison, nif));
 		}
 		return writeNIF(docs);
 	}
@@ -128,11 +171,11 @@ public class NifEverything {
 	}
 
 	/**
-	 * Here the actual annoataion takes place. Takes some String, annotates it,
+	 * Here the actual annotation takes place. Takes some String, annotates it,
 	 * and returns a List of {@link Marking}s you can add to a {@link Document}
 	 *
 	 * @param q String to annotate
-	 * @param indexDBO Sone Annotator
+	 * @param indexDBO Some Annotator
 	 * @param nif Specify here which Style the Annotation should have:
 	 *            {@link NifProperty}
 	 * @return All found Annotations, ready to be added to a NIF
@@ -149,6 +192,34 @@ public class NifEverything {
 		}
 		return markings;
 	}
+	
+	/**
+	 * Here the actual annotation takes place. Takes some String, annotates it,
+	 * and returns a List of {@link Marking}s you can add to a {@link Document}
+	 *
+	 * @param q String to annotate
+	 * @param comparison Some Annotator
+	 * @param nif Specify here which Style the Annotation should have:
+	 *            {@link NifProperty}
+	 * @return All found Annotations, ready to be added to a NIF
+	 *         {@link Document}
+	 */
+	private List<Marking> stringToMarkingsComparison(final String q, final ComparisonUtils comparison, final NifProperty nif) {
+		List<Marking> markings = new ArrayList<>();
+		for (ImmutablePair<String, Integer> it : extractSplitQuestion(q)) {
+			List<String> foundComparisons = new ArrayList<>();
+			List<String> foundURIs = new ArrayList<>();
+			Stream.of(comparison.getSuperlatives(it.getLeft()), comparison.getComparatives(it.getLeft())).forEach(foundComparisons::addAll);
+			foundComparisons.stream().map(x -> comparison.getProperties(x)).forEach(foundURIs::addAll);
+			if (CollectionUtils.isEmpty(foundURIs)) {
+				continue;
+			}
+			markings.add(nif.getInstanceWith(it.getRight(), it.getLeft().length(), foundURIs));
+		}
+		return markings;
+	}
+	
+	
 
 	/**
 	 * Appends found NEs as annotation to given NIF. Annotation will have the

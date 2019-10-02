@@ -70,10 +70,9 @@ public class ThreadedSPARQL extends SPARQL {
 	 * @param query
 	 *            - a sparql query
 	 * @return
-	 * @throws ExecutionException
 	 */
 	@Override
-	public synchronized Set<RDFNode> sparql(final String query) throws ExecutionException {
+	public synchronized Set<RDFNode> sparql(final String query)  {
 		Callable<Set<RDFNode>> task = () -> {
 			Date dateStart = new Date();
 			Set<RDFNode> result = super.sparql(query);
@@ -90,10 +89,11 @@ public class ThreadedSPARQL extends SPARQL {
 		try {
 			result = future.get(this.timeoutInSeconds, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
-			throw new ExecutionException("Sparql thread interrupted, returned null. Query: \n" + query, e);
-
+			e.printStackTrace();
 		} catch (TimeoutException e) {
-			throw new ExecutionException("Query timed out after " + this.timeoutInSeconds + " s \n" + query, e);
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
 		}
 		future.cancel(true);
 		return result;
