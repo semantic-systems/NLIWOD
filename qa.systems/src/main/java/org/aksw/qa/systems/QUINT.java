@@ -16,7 +16,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 
-// not complete yet, since the website is not working correctly at the moment
 public class QUINT extends Gen_HTTP_QA_Sys {
 
 	private static final String URL = "https://gate.d5.mpi-inf.mpg.de/quint/quint";
