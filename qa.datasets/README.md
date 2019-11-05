@@ -124,6 +124,7 @@ out of scope (?) :
 * https://arxiv.org/pdf/1904.04365.pdf commonsense qa
 * https://www.tau-nlp.org/commonsenseqa
 * https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Question_Answering_data
+* https://towardsdatascience.com/question-answering-for-enterprise-use-cases-70ed39b74296
 Bao, J., Duan, N., Yan, Z., Zhou, M., and Zhao, T. (2016). Constraint-based
 question answering with knowledge graph. In COLING 2016, 26th International Conference on Computational Linguistics, Proceedings of the Conference: Technical Papers, December 11-16, 2016, Osaka, Japan, pages 2503–
 2514.
