@@ -1,20 +1,17 @@
 package org.aksw.qa.systems;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.HashSet;
-import java.util.Map;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 
 public class TEQUILA extends Gen_HTTP_QA_Sys {
@@ -35,21 +32,21 @@ public class TEQUILA extends Gen_HTTP_QA_Sys {
 	public TEQUILA() {
 		super(URL, "tequila", false, false);
 		this.setQueryKey("question");
+		initParamMap();
 	}
 	
 	public TEQUILA(String url) {
 		super(url, "tequila", false, false);
 		this.setQueryKey("question");
+		initParamMap();
 	}
-	
-	@Override
-	public HttpResponse fetchGetResponse(String url, Map<String, String> paramMap) throws URISyntaxException, ClientProtocolException, IOException {
-		paramMap.put("removeDateMode", REMOVE_DATE_NODE);
-		paramMap.put("addNoDateAnswersMode", ADD_NO_DATE_MODE);
-		paramMap.put("onlyLatestOneMode", ONLY_LATEST_ONE);
-		paramMap.put("rankMode", RANK_MODE);
-		paramMap.put("qaMode", QA_MODE);
-		return super.fetchGetResponse(url, paramMap);
+
+	private void initParamMap() {
+		this.getParamMap().put("removeDateMode", REMOVE_DATE_NODE);
+		this.getParamMap().put("addNoDateAnswersMode", ADD_NO_DATE_MODE);
+		this.getParamMap().put("onlyLatestOneMode", ONLY_LATEST_ONE);
+		this.getParamMap().put("rankMode", RANK_MODE);
+		this.getParamMap().put("qaMode", QA_MODE);
 	}
 	
 	@Override
@@ -76,10 +73,5 @@ public class TEQUILA extends Gen_HTTP_QA_Sys {
 		}
 		question.setGoldenAnswers(resultSet);	
 		question.setSparqlQuery((String) answerjson.get("subquestion_1_updated_sparql"));
-	}
-	
-	public static void main(String[] args) throws Exception {
-		ASystem a = new TEQUILA();
-		System.out.println(a.search("x", "en"));
 	}
 }

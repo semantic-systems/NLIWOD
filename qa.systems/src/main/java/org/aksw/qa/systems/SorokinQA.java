@@ -85,10 +85,8 @@ public class SorokinQA extends Gen_HTTP_QA_Sys_JSON {
 
 		HashSet<String> resultSet = new HashSet<String>();
 		answerjson = (JSONArray) answerjson.get(0);
-		if(answerjson.size() == 0) {
-			System.out.println("eee");
-			return;
-		}
+		if(answerjson.size() == 0) return;
+		
 		for(int i = 0; i<answerjson.size(); i++) {
 			resultSet.add("https://www.wikidata.org/wiki/" + (String) answerjson.get(i));
 		}

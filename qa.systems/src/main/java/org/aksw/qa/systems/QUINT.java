@@ -2,18 +2,16 @@ package org.aksw.qa.systems;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 
 public class QUINT extends Gen_HTTP_QA_Sys {
@@ -33,20 +31,20 @@ public class QUINT extends Gen_HTTP_QA_Sys {
 	public QUINT() {
 		super(URL, "quint", true, false);
 		this.setQueryKey("question");
+		initParamMap();
 	}
 	
 	public QUINT(String url) {
 		super(url, "quint", true, false);
 		this.setQueryKey("question");
+		initParamMap();
 	}
-
-	@Override
-	public HttpResponse fetchPostResponse(String url, Map<String, String> paramMap) throws ClientProtocolException, IOException {
-		paramMap.put("dataResource", DATA_RESOURCE);
-		paramMap.put("quintVariant", QUINT_VARIANT);
-		paramMap.put("queriesNumber", QUERIES_NUMBER);
-		paramMap.put("numberDecisionTrees", NUMBER_DECISION_TREES);
-		return super.fetchPostResponse(url, paramMap);	
+	
+	private void initParamMap() {
+		this.getParamMap().put("dataResource", DATA_RESOURCE);
+		this.getParamMap().put("quintVariant", QUINT_VARIANT);
+		this.getParamMap().put("queriesNumber", QUERIES_NUMBER);
+		this.getParamMap().put("numberDecisionTrees", NUMBER_DECISION_TREES);
 	}
 	
 	@Override

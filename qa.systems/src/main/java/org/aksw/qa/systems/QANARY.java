@@ -19,7 +19,7 @@ public class QANARY extends Gen_HTTP_QA_Sys {
 	private static final String URL = "http://qanswer-core1.univ-st-etienne.fr/api/gerbil";
 	
 	//possible values: dbpedia, wikidata, dblp, freebase
-	private static final String KB = "dbpedia";
+	private static final String KB = "wikidata";
 	
 	public QANARY() {
 		super(URL, "qanary", true, false);
