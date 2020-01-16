@@ -1,5 +1,27 @@
 # Question answering datasets
 
+## Datasets included in NLIWOD
+
+| Dataset                  |                   Paper                          | 
+|--------------------------|:------------------------------------------------:|
+|DBpedia-Entity v2 INEX       |[Link](https://www.researchgate.net/publication/318131631_DBpedia-Entity_v2_A_Test_Collection_for_Entity_Search/link/59dc7f73458515e9ab4c669d/download)|
+|DBpedia-Entity v2 QALD2      |[Link](https://www.researchgate.net/publication/318131631_DBpedia-Entity_v2_A_Test_Collection_for_Entity_Search/link/59dc7f73458515e9ab4c669d/download)|
+|DBpedia-Entity v2 SemSearch  |[Link](https://www.researchgate.net/publication/318131631_DBpedia-Entity_v2_A_Test_Collection_for_Entity_Search/link/59dc7f73458515e9ab4c669d/download)|
+|DBpedia-Entity v2 TREC Entity|[Link](https://www.researchgate.net/publication/318131631_DBpedia-Entity_v2_A_Test_Collection_for_Entity_Search/link/59dc7f73458515e9ab4c669d/download)|
+|LCQUAD                    |[Link](http://jens-lehmann.org/files/2017/iswc_lcquad.pdf)|
+|NLQ          	           |[Link](http://2015.okbqa.org/nlq)|
+|QALD-1                    |[Link](http://qald.aksw.org/1/documents/qald-1-challenge.pdf)|
+|QALD-2                    |[Link](http://qald.aksw.org/2/documents/qald-2-challenge.pdf)|
+|QALD-3                    |[Link](https://www.researchgate.net/publication/278716415_Multilingual_Question_Answering_over_Linked_Data_QALD-3_Lab_Overview)|
+|QALD-4                    |[Link](https://www.researchgate.net/publication/278798193_Question_answering_over_linked_data_QALD-4)|
+|QALD-5                    |[Link](https://www.researchgate.net/publication/282124138_Question_Answering_over_Linked_Data_QALD-5)|
+|QALD-6                    |[Link](https://link.springer.com/chapter/10.1007/978-3-319-46565-4_13)|
+|QALD-7                    |[Link](https://svn.aksw.org/papers/2017/ESWC_2017_QALD/public.pdf)|
+|QALD-8                    |[Link](https://www.semanticscholar.org/paper/8th-Challenge-on-Question-Answering-over-Linked-Usbeck-Ngomo/44ddbf4032e70c4aabfa6799df5ee2b5ce51a468)|
+|QALD-9                    |[Link](https://www.semanticscholar.org/paper/9th-Challenge-on-Question-Answering-over-Linked-Usbeck-Gusmita/4f83e1b64f57ae0d546076279426e85c0e60298b)|
+|SimpleQuestionsWikidata   |[Link](https://www.researchgate.net/publication/319482301_Question_Answering_Benchmarks_for_Wikidata)|
+|WDAquaCore0Wikidata       |[Link](https://github.com/WDAqua/WDAquaCore0Questions)|
+
 NOTE: PARL.AI does a tremendous job in including different tasks. Thus it would make sense to analyze their state before starting to include more tasks http://www.parl.ai/static/docs/tasks.html# 
 
 This collection includes the following datasets or respectivly looks at the following datasets to be included:
