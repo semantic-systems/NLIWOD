@@ -92,6 +92,7 @@ QA datasets to analyze:
 * https://github.com/aliannejadi/qulac
 * https://link.springer.com/chapter/10.1007/978-3-030-41505-1_21
 * https://convex.mpi-inf.mpg.de/ !!!
+* https://arxiv.org/abs/2004.10645 very complex QA with a lot of ambiguities
 
 out of scope (?) :
 * http://tvqa.cs.unc.edu/leaderboard.html
