@@ -161,7 +161,7 @@ EMNLP 2016, Austin, Texas, USA, November 1-4, 2016, pages 562–572.
 
 DROP: A Reading Comprehension Benchmark Requiring Discrete Reasoning Over Paragraphs
 * https://arxiv.org/abs/1905.08957
-
+* https://arxiv.org/pdf/2004.11861.pdf Event QA
 * https://github.com/wenhuchen/HybridQA
 
 ## Focus
