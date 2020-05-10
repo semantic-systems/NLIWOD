@@ -164,7 +164,7 @@ DROP: A Reading Comprehension Benchmark Requiring Discrete Reasoning Over Paragr
 * https://arxiv.org/pdf/2004.11861.pdf Event QA
 * https://github.com/wenhuchen/HybridQA
 * https://scai.info/2020/
-
+* blog posts von Mikhail Galkin 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
 
