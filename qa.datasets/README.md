@@ -169,6 +169,7 @@ DROP: A Reading Comprehension Benchmark Requiring Discrete Reasoning Over Paragr
 * https://foodkg.github.io/kbqa.html
 * https://colab.research.google.com/github/huggingface/nlp/blob/master/notebooks/Overview.ipynb#scrollTo=d3RJisGLvSUp source of many datasets and libraries, maybe one could extend this base version in a fork in particular geared towards QA over KGs
 * https://arxiv.org/abs/2005.10659
+* well as muti-hop complex questions, including WebQuestionSP (WQSP), ComplexWebQuestion-1.1 (CWQ), and PathQuestion-Large (PQL),
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
