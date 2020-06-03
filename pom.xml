@@ -133,7 +133,7 @@
 		<repository>
 			<id>Apache Repo Central</id>
 			<name>Apache Repository</name>
-			<url>http://repo.maven.apache.org/maven2</url>
+			<url>https://repo.maven.apache.org/maven2</url>
 		</repository>
 		<repository>
 			<id>maven.aksw.internal</id>

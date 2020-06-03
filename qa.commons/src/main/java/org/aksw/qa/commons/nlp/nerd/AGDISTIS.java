@@ -32,9 +32,9 @@ public class AGDISTIS {
 		String urlParameters = "text=" + URLEncoder.encode(inputText, "UTF-8");
 		urlParameters += "&type=agdistis";
 
-		// change this URL to http://139.18.2.164:8080/AGDISTIS_ZH to use
+		// change this URL to https://agdistis.demos.dice-research.org/api/zh_cn/ to use
 		// chinese endpoint
-		URL url = new URL("http://139.18.2.164:8080/AGDISTIS");
+		URL url = new URL("https://agdistis.demos.dice-research.org/api/en/");
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("GET");
 		connection.setDoOutput(true);

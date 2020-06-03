@@ -34,7 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/agdistis")
 public class AgdistisWrapper {
 	private NifEverything nif = NifEverything.getInstance();
-	private final static String AGDISTIS_URL = "http://139.18.2.164:8080/AGDISTIS";
+	private final static String AGDISTIS_URL = "https://agdistis.demos.dice-research.org/api/en/";
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping(method = RequestMethod.GET)

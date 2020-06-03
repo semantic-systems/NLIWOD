@@ -17,21 +17,22 @@ public class SystemsTest {
         String questionString = "What is the capital of Germany?";
         List<ASystem> systems = Arrays.asList(
 //                (ASystem) new HAWK(), 
-                (ASystem) new QAKIS(),
+//                (ASystem) new QAKIS(),
 //                (ASystem) new SINA(),
 //                (ASystem) new START(), 
-                (ASystem) new OKBQA(),
-//                (ASystem) new AskNow(),
-                (ASystem) new SorokinQA(),
+//                (ASystem) new OKBQA(),
+                (ASystem) new AskNow(),
+//                (ASystem) new SorokinQA(),
 //                (ASystem) new YODA(),
                 (ASystem) new QANARY(),
-                (ASystem) new GANSWER2(),
+//                (ASystem) new GANSWER2(),
                 (ASystem) new PLATYPUS(),
-                (ASystem) new QASystem(),
-                (ASystem) new QUEPY(),
+//               (ASystem) new QASystem(),
+//                (ASystem) new QUEPY(),
                 (ASystem) new TeBaQA(),
-                (ASystem) new FRANKENSTEIN(),
-                (ASystem) new TEQUILA()
+//                (ASystem) new FRANKENSTEIN(),
+                (ASystem) new TEQUILA(),
+                (ASystem) new KGQA()
                 );
         for (ASystem system : systems) {
         	system.setSocketTimeOutMs(30000);
@@ -52,10 +53,10 @@ public class SystemsTest {
         String questionString = "Was ist die Hauptstadt von Deutschland?";
         List<ASystem> systems = Arrays.asList(
 //                (ASystem) new HAWK(), 
-                (ASystem) new QAKIS(),
+//                (ASystem) new QAKIS(),
 //                (ASystem) new SINA(),
 //                (ASystem) new START(), 
-                (ASystem) new OKBQA(),
+//                (ASystem) new OKBQA(),
 //                (ASystem) new AskNow(),
 //                (ASystem) new YODA(),
                 (ASystem) new QANARY()
