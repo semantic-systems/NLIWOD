@@ -14,17 +14,17 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class KGQA extends Gen_HTTP_QA_Sys {
+public class QAmp extends Gen_HTTP_QA_Sys {
 
     private static final String URL = "https://kbqa-api.ai.wu.ac.at/ask";
 
-    public KGQA() {
-        super(URL, "kgqa", false, false);
+    public QAmp() {
+        super(URL, "qamp", false, false);
         this.setQueryKey("question");
     }
 
-    public KGQA(String url) {
-        super(url, "kgqa", false, false);
+    public QAmp(String url) {
+        super(url, "qamp", false, false);
         this.setQueryKey("question");
     }
 

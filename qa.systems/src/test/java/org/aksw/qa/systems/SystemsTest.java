@@ -32,7 +32,7 @@ public class SystemsTest {
                 (ASystem) new TeBaQA(),
 //                (ASystem) new FRANKENSTEIN(),
                 (ASystem) new TEQUILA(),
-                (ASystem) new KGQA()
+                (ASystem) new QAmp()
                 );
         for (ASystem system : systems) {
         	system.setSocketTimeOutMs(30000);
