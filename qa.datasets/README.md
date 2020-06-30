@@ -168,7 +168,7 @@ DROP: A Reading Comprehension Benchmark Requiring Discrete Reasoning Over Paragr
 * https://www.tau-nlp.org/compwebq
 * https://foodkg.github.io/kbqa.html
 * https://colab.research.google.com/github/huggingface/nlp/blob/master/notebooks/Overview.ipynb#scrollTo=d3RJisGLvSUp source of many datasets and libraries, maybe one could extend this base version in a fork in particular geared towards QA over KGs
-* https://arxiv.org/abs/2005.10659
+* https://arxiv.org/abs/2005.10659 RUBQ contains already a nice overview
 * well as muti-hop complex questions, including WebQuestionSP (WQSP), ComplexWebQuestion-1.1 (CWQ), and PathQuestion-Large (PQL),
 * https://datasets.quantumstat.com/
 * https://github.com/google-research/google-research/tree/master/cfq
