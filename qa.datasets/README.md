@@ -93,8 +93,7 @@ QA datasets to analyze:
 * https://link.springer.com/chapter/10.1007/978-3-030-41505-1_21
 * https://convex.mpi-inf.mpg.de/ !!!
 * https://arxiv.org/abs/2004.10645 very complex QA with a lot of ambiguities
-
-out of scope (?) :
+* https://sites.google.com/view/quira/imdb 
 * http://tvqa.cs.unc.edu/leaderboard.html
 * http://alt.qcri.org/semeval2015/task3/ SemEval-2015 Task 3: Answer Selection in Community Question Answering 
 * http://alt.qcri.org/semeval2016/task3/ Semeval-2016 Task 3: Community Question Answering
