@@ -179,6 +179,7 @@ DROP: A Reading Comprehension Benchmark Requiring Discrete Reasoning Over Paragr
 * https://arxiv.org/pdf/1907.09361.pdf -> compare dataset list
 * https://arxiv.org/abs/2007.03875 KQA Pro large scale wikidata
 * https://twitter.com/ShayneRedford/status/1289250148497776640?s=09 multilingual open domain dataset for reference
+* https://medium.com/semantic-tech-hotspot/acl-2020-overview-and-new-benchmarks-81b7fb0e609e
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
