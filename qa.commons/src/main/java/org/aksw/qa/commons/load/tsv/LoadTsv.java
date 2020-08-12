@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.collect.Sets;
+
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.datastructure.Question;
 import org.aksw.qa.commons.load.json.EJLanguage;
@@ -75,4 +77,22 @@ public class LoadTsv {
 		return DbeQuestions;
 	}
 
+	public static List<IQuestion> readSimpleQuestionsTsv(InputStream in) throws IOException {
+		List<IQuestion> questions = new ArrayList<IQuestion>();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+		String line;
+		int id = 1;
+		while ((line = reader.readLine()) != null) {
+			String[] cols = line.split("\t");
+			IQuestion question = new Question();
+			question.setId(String.valueOf(id++));
+			question.setGoldenAnswers(Sets.newHashSet("http://www.wikidata.org/entity/" + cols[2]));
+
+			HashMap<String, String> langToQuestion = new HashMap<>();
+			langToQuestion.put("en", cols[3]);
+			question.setLanguageToQuestion(langToQuestion);
+			questions.add(question);
+		}
+		return questions;
+	}
 }

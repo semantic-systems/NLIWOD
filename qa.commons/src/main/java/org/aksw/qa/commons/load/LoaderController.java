@@ -182,10 +182,16 @@ public class LoaderController {
 		case QALD2:
 		case TREC_Entity:
 		   return loadingAnchor.getResourceAsStream("/queries-v2.txt");
-		case Simple_Question_Wikidata:
-			return loadingAnchor.getResourceAsStream("/annotated_wd_data_valid_full.json");
+		case Simple_Question_Wikidata_Train:
+			return loadingAnchor.getResourceAsStream("/annotated_wd_data_train_answerable.txt");
+		case Simple_Question_Wikidata_Test:
+			return loadingAnchor.getResourceAsStream("/annotated_wd_data_test_answerable.txt");
+		case Simple_Question_Wikidata_Valid:
+			return loadingAnchor.getResourceAsStream("/annotated_wd_data_valid_answerable.txt");
 		case Wdaqua_Core0_Logs:
 			return loadingAnchor.getResourceAsStream("/webservice_25_06_2017.json");
+		case EventQA_DBpedia:
+			return loadingAnchor.getResourceAsStream("/eventqa-train-multilingual-dbpedia.json.txt");
 		// case qbench1:
 		// return
 		// ClassLoader.getSystemClassLoader().getResourceAsStream("qbench/qbench1.xml");
@@ -295,10 +301,10 @@ public class LoaderController {
 				case QALD7_Test_Wikidata_en:
 				case QALD8_Test_Multilingual:
 				case QALD8_Train_Multilingual:
-				case Simple_Question_Wikidata:
 				case Wdaqua_Core0_Logs:
 				case QALD9_Train_Multilingual:
 				case QALD9_Test_Multilingual:
+				case EventQA_DBpedia:
 				case LCQUAD :
 					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(getInputStream(data), QaldJson.class);
 					out = EJQuestionFactory.getQuestionsFromQaldJson(json);				
@@ -338,6 +344,11 @@ public class LoaderController {
 				case Stanford_dev:
 				case Stanford_train:
 					out = StanfordLoader.load(is);
+					break;
+				case Simple_Question_Wikidata_Train:
+				case Simple_Question_Wikidata_Test:
+				case Simple_Question_Wikidata_Valid:
+					out = LoadTsv.readSimpleQuestionsTsv(is);
 					break;
 				}
 				is.close();

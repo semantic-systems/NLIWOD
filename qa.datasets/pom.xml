@@ -123,7 +123,7 @@
 							<outputFileName>lcquad_qaldformat.json</outputFileName>
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>
-					</execution>
+					</execution> 
 					<!-- suganya -->
 					<execution>
 						<id>wdaqua-core0-logs</id>
@@ -136,20 +136,6 @@
 							<overwrite>false</overwrite>
 							<skipCache>false</skipCache>
 							<outputFileName>webservice_25_06_2017.json</outputFileName>
-							<outputDirectory>src/main/resources/</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>simple-question-wikidata-test</id>
-						<phase>package</phase>
-						<goals>
-							<goal>wget</goal>
-						</goals>
-						<configuration>
-							<url>https://github.com/askplatypus/wikidata-simplequestions/blob/master/qald-format/annotated_wd_data_valid_full.json</url>
-							<overwrite>false</overwrite>
-							<skipCache>false</skipCache>
-							<outputFileName>annotated_wd_data_valid_full.json</outputFileName>
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>
 					</execution>
@@ -178,6 +164,62 @@
 							<overwrite>true</overwrite>
 							<skipCache>true</skipCache>
 							<outputFileName>queries-v2.txt</outputFileName>
+							<outputDirectory>src/main/resources/</outputDirectory>
+						</configuration>
+					</execution> 
+					<execution>
+						<id>eventqa-dbpedia</id>
+						<phase>package</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://github.com/dice-group/gerbil/files/3036169/eventqa-train-multilingual-dbpedia.json.txt</url>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+							<outputFileName>eventqa-train-multilingual-dbpedia.json.txt</outputFileName>
+							<outputDirectory>src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>simplequestions-wikidata-train</id>
+						<phase>package</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://raw.githubusercontent.com/askplatypus/wikidata-simplequestions/master/annotated_wd_data_train_answerable.txt</url>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+							<outputFileName>annotated_wd_data_train_answerable.txt</outputFileName>
+							<outputDirectory>src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>simplequestions-wikidata-test</id>
+						<phase>package</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://raw.githubusercontent.com/askplatypus/wikidata-simplequestions/master/annotated_wd_data_test_answerable.txt</url>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+							<outputFileName>annotated_wd_data_test_answerable.txt</outputFileName>
+							<outputDirectory>src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>simplequestions-wikidata-valid</id>
+						<phase>package</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://raw.githubusercontent.com/askplatypus/wikidata-simplequestions/master/annotated_wd_data_valid_answerable.txt</url>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+							<outputFileName>annotated_wd_data_valid_answerable.txt</outputFileName>
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>
 					</execution>
