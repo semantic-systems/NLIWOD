@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -17,6 +18,8 @@ import javax.json.JsonValue;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+import com.google.common.base.Strings;
 
 import org.aksw.qa.commons.datastructure.IQuestion;
 import org.aksw.qa.commons.datastructure.Question;
@@ -39,8 +42,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import com.google.common.base.Strings;
 
 
 
@@ -176,6 +177,10 @@ public class LoaderController {
 			return loadingAnchor.getResourceAsStream("/QALD-master/9/data/qald-9-test-multilingual.json");
 		case LCQUAD:
 			return loadingAnchor.getResourceAsStream("/lcquad_qaldformat.json");
+		case LCQUAD2_Train:
+			return loadingAnchor.getResourceAsStream("/lcquad2_train.json");
+		case LCQUAD2_Test:
+			return loadingAnchor.getResourceAsStream("/lcquad2_test.json");
 			// The cases SemSearch, INEX, QALD2,TREC_Entity belong to DBpedia Entity V2
 		case SemSearch:
 		case INEX:
@@ -327,6 +332,10 @@ public class LoaderController {
 							q.setGoldenAnswers(set);
 						}
 					}
+					break;
+				case LCQUAD2_Train:
+				case LCQUAD2_Test:
+					out = loadLCQUAD2(is);
 					break;
 				case nlq:
 					out = loadNLQ(is, deriveUri);
@@ -642,6 +651,28 @@ public class LoaderController {
 		return output;
 	}
 
+	public static List<IQuestion> loadLCQUAD2(InputStream is) {
+		JsonReader jsonReader = Json.createReader(is);
+		JsonArray dataset = jsonReader.readArray();
+		List<IQuestion> out = new ArrayList<>();
+		for(JsonValue currentValue: dataset) {
+			JsonObject question = (JsonObject) currentValue;
+			IQuestion q = new Question();
+			q.setId(String.valueOf(question.getInt("uid")));
+			q.setSparqlQuery(question.getString("sparql_wikidata"));
+			q.setGoldenAnswers(question.getJsonArray("answer").stream().map(ans -> ans.toString()).collect(Collectors.toSet()));
+
+			HashMap<String, String> langToQuestion = new HashMap<>();
+			if (!question.isNull("question")) {
+				langToQuestion.put("en", question.getString("question"));
+			} else {
+				langToQuestion.put("en", question.getString("NNQT_question"));
+			}
+			q.setLanguageToQuestion(langToQuestion);
+			out.add(q);
+		}
+		return out;
+	}
 
 	/**
 	 * Use this to load tsv files 

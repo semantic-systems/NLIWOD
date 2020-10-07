@@ -49,6 +49,8 @@ public enum Dataset {
 						Stanford_train,
 						Wdaqua_Core0_Logs,
 						LCQUAD,
+						LCQUAD2_Train,
+						LCQUAD2_Test,
 						SemSearch,
 						INEX,
 						QALD2,
