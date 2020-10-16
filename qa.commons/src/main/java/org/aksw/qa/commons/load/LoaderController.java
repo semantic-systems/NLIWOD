@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -178,9 +177,9 @@ public class LoaderController {
 		case LCQUAD:
 			return loadingAnchor.getResourceAsStream("/lcquad_qaldformat.json");
 		case LCQUAD2_Train:
-			return loadingAnchor.getResourceAsStream("/lcquad2_train.json");
+			return loadingAnchor.getResourceAsStream("/lcquad2_train_qald.json");
 		case LCQUAD2_Test:
-			return loadingAnchor.getResourceAsStream("/lcquad2_test.json");
+			return loadingAnchor.getResourceAsStream("/lcquad2_test_qald.json");
 			// The cases SemSearch, INEX, QALD2,TREC_Entity belong to DBpedia Entity V2
 		case SemSearch:
 		case INEX:
@@ -311,6 +310,8 @@ public class LoaderController {
 				case QALD9_Test_Multilingual:
 				case EventQA_DBpedia:
 				case LCQUAD :
+				case LCQUAD2_Train:
+				case LCQUAD2_Test:
 					QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(getInputStream(data), QaldJson.class);
 					out = EJQuestionFactory.getQuestionsFromQaldJson(json);				
 					SPARQL sparqlService = null;
@@ -332,10 +333,6 @@ public class LoaderController {
 							q.setGoldenAnswers(set);
 						}
 					}
-					break;
-				case LCQUAD2_Train:
-				case LCQUAD2_Test:
-					out = loadLCQUAD2(is);
 					break;
 				case nlq:
 					out = loadNLQ(is, deriveUri);
@@ -649,29 +646,6 @@ public class LoaderController {
 		}
 
 		return output;
-	}
-
-	public static List<IQuestion> loadLCQUAD2(InputStream is) {
-		JsonReader jsonReader = Json.createReader(is);
-		JsonArray dataset = jsonReader.readArray();
-		List<IQuestion> out = new ArrayList<>();
-		for(JsonValue currentValue: dataset) {
-			JsonObject question = (JsonObject) currentValue;
-			IQuestion q = new Question();
-			q.setId(String.valueOf(question.getInt("uid")));
-			q.setSparqlQuery(question.getString("sparql_wikidata"));
-			q.setGoldenAnswers(question.getJsonArray("answer").stream().map(ans -> ans.toString()).collect(Collectors.toSet()));
-
-			HashMap<String, String> langToQuestion = new HashMap<>();
-			if (!question.isNull("question")) {
-				langToQuestion.put("en", question.getString("question"));
-			} else {
-				langToQuestion.put("en", question.getString("NNQT_question"));
-			}
-			q.setLanguageToQuestion(langToQuestion);
-			out.add(q);
-		}
-		return out;
 	}
 
 	/**

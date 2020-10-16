@@ -223,6 +223,34 @@
 							<outputDirectory>src/main/resources/</outputDirectory>
 						</configuration>
 					</execution>
+					<execution>
+						<id>lcquad2_train</id>
+						<phase>package</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://hobbitdata.informatik.uni-leipzig.de/lcquad2_qald/lcquad2_train_qald.json</url>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+							<outputFileName>lcquad2_train_qald.json</outputFileName>
+							<outputDirectory>src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>lcquad2_test</id>
+						<phase>package</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://hobbitdata.informatik.uni-leipzig.de/lcquad2_qald/lcquad2_test_qald.json</url>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+							<outputFileName>lcquad2_test_qald.json</outputFileName>
+							<outputDirectory>src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 		</plugins>

@@ -63,6 +63,7 @@ public class LoadTsv {
 			HashMap<String, String> langToQuestion = new HashMap<>();
 			HashMap<String, List<String>> langToKeywords = new HashMap<>();
 			question.setId(entry.getKey());
+			question.setAnswerType("resource");
 			question.setGoldenAnswers(results.get(entry.getKey()));
 			EJLanguage lang = new EJLanguage();
 			question.setId(entry.getKey());
@@ -86,6 +87,7 @@ public class LoadTsv {
 			String[] cols = line.split("\t");
 			IQuestion question = new Question();
 			question.setId(String.valueOf(id++));
+			question.setAnswerType("resource");
 			question.setGoldenAnswers(Sets.newHashSet("http://www.wikidata.org/entity/" + cols[2]));
 
 			HashMap<String, String> langToQuestion = new HashMap<>();
