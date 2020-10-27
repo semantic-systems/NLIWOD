@@ -1,7 +1,10 @@
 package org.aksw.qa.commons.load;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -33,6 +36,9 @@ import org.aksw.qa.commons.utils.DateFormatter;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.RDFNode;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMException;
@@ -196,6 +202,8 @@ public class LoaderController {
 			return loadingAnchor.getResourceAsStream("/webservice_25_06_2017.json");
 		case EventQA_DBpedia:
 			return loadingAnchor.getResourceAsStream("/eventqa-train-multilingual-dbpedia.json.txt");
+		case EventQA_EventKG:
+			return loadingAnchor.getResourceAsStream("/eventqa-train-multilingual-eventkg.json.txt");
 		// case qbench1:
 		// return
 		// ClassLoader.getSystemClassLoader().getResourceAsStream("qbench/qbench1.xml");
@@ -355,6 +363,9 @@ public class LoaderController {
 				case Simple_Question_Wikidata_Test:
 				case Simple_Question_Wikidata_Valid:
 					out = LoadTsv.readSimpleQuestionsTsv(is);
+					break;
+				case EventQA_EventKG:
+					out = loadEventQA(is);
 					break;
 				}
 				is.close();
@@ -654,6 +665,24 @@ public class LoaderController {
 	public static List<IQuestion> loadTSV(InputStream queries, String name) throws IOException {
 		List<IQuestion> out = new ArrayList<>();
 		out = LoadTsv.readTSV(queries,getLoadingAnchor().getResourceAsStream("/qrels-v2.txt"),name);
+		return out;
+	}
+
+	public static List<IQuestion> loadEventQA(InputStream in) throws UnsupportedEncodingException, IOException {
+		JSONParser jsonParser = new JSONParser(); 
+		JSONObject jsonObject = null;
+		try {
+			jsonObject = (JSONObject) jsonParser.parse(new InputStreamReader(in, "UTF-8"));
+		} catch (ParseException e) {
+			log.info("Couldnt load dataset ", e);
+			return null;
+		}
+		String prefix = (String) ((JSONObject) jsonObject.get("dataset")).get("prefix");
+		((JSONObject) jsonObject.get("dataset")).remove("prefix");
+		InputStream updatedStream = new ByteArrayInputStream(jsonObject.toJSONString().getBytes());
+		QaldJson json = (QaldJson) ExtendedQALDJSONLoader.readJson(updatedStream, QaldJson.class);
+		List<IQuestion> out = EJQuestionFactory.getQuestionsFromQaldJson(json);
+		out.stream().forEach(q -> q.setSparqlQuery(prefix + " " + q.getSparqlQuery()));
 		return out;
 	}
 }

@@ -182,6 +182,20 @@
 						</configuration>
 					</execution>
 					<execution>
+						<id>eventqa-eventkg</id>
+						<phase>package</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>https://github.com/dice-group/gerbil/files/3038913/eventqa-train-multilingual-eventkg.json.txt</url>
+							<overwrite>true</overwrite>
+							<skipCache>true</skipCache>
+							<outputFileName>eventqa-train-multilingual-eventkg.json.txt</outputFileName>
+							<outputDirectory>src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
 						<id>simplequestions-wikidata-train</id>
 						<phase>package</phase>
 						<goals>

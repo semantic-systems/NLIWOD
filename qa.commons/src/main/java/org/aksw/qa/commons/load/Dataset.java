@@ -56,6 +56,7 @@ public enum Dataset {
 						QALD2,
 						TREC_Entity,
 						EventQA_DBpedia,
+						EventQA_EventKG,
 						Simple_Question_Wikidata_Train,
 						Simple_Question_Wikidata_Test,
 						Simple_Question_Wikidata_Valid

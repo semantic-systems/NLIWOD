@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class Spotlight extends ASpotter {
 	private static Logger log = LoggerFactory.getLogger(Spotlight.class);
 
-	private String requestURL = "http://model.dbpedia-spotlight.org/en/annotate";
+	private String requestURL = "https://api.dbpedia-spotlight.org/en/annotate";
 	private String confidence = "0.5";
 	private String support = "0";
 	private String contentType = "application/x-www-form-urlencoded;charset=UTF-8";

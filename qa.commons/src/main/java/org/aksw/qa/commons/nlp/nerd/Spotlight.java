@@ -20,7 +20,7 @@ import java.util.Map;
 public class Spotlight {
 	private static final Logger log = LoggerFactory.getLogger(Spotlight.class);
 
-	private String requestURL = "http://model.dbpedia-spotlight.org/en/annotate";
+	private String requestURL = "https://api.dbpedia-spotlight.org/en/annotate";
 	private String confidence = "0.65";
 	private String support = "20";
 
