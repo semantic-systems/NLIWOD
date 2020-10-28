@@ -45,6 +45,9 @@ public class TeBaQA extends Gen_HTTP_QA_Sys {
 			resultSet.add((String) answers.get(i));
 		}
 		question.setGoldenAnswers(resultSet);
-		question.setSparqlQuery((String) answerjson.get("sparql"));
+		String query = (String) answerjson.get("sparql");
+		if (query != null && !query.isEmpty()) {
+			question.setSparqlQuery(query);
+		}
 	}
 }
