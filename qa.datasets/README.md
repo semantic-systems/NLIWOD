@@ -3,7 +3,7 @@
 ## Datasets included in NLIWOD
 
 | Dataset                  |                   Paper                          |              Download Link                       |           Notes         |
-|--------------------------|:------------------------------------------------:|:------------------------------------------------:|:-----------------------:|    
+|--------------------------|:------------------------------------------------:|:------------------------------------------------:|-------------------------|    
 |DBpedia-Entity v2 INEX       |[Link](https://www.researchgate.net/publication/318131631_DBpedia-Entity_v2_A_Test_Collection_for_Entity_Search/link/59dc7f73458515e9ab4c669d/download)| [Link](https://github.com/iai-group/DBpedia-Entity/tree/master/collection/v2)||
 |DBpedia-Entity v2 QALD2      |[Link](https://www.researchgate.net/publication/318131631_DBpedia-Entity_v2_A_Test_Collection_for_Entity_Search/link/59dc7f73458515e9ab4c669d/download)|[Link](https://github.com/iai-group/DBpedia-Entity/tree/master/collection/v2) ||
 |DBpedia-Entity v2 SemSearch  |[Link](https://www.researchgate.net/publication/318131631_DBpedia-Entity_v2_A_Test_Collection_for_Entity_Search/link/59dc7f73458515e9ab4c669d/download)|[Link](https://github.com/iai-group/DBpedia-Entity/tree/master/collection/v2) ||
