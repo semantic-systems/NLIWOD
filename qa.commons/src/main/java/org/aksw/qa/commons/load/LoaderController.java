@@ -199,7 +199,7 @@ public class LoaderController {
 		case Simple_Question_Wikidata_Valid:
 			return loadingAnchor.getResourceAsStream("/annotated_wd_data_valid_answerable.txt");
 		case Wdaqua_Core0_Logs:
-			return loadingAnchor.getResourceAsStream("/webservice_25_06_2017.json");
+			return loadingAnchor.getResourceAsStream("/wdaqua-core0-logs_qald.json");
 		case EventQA_DBpedia:
 			return loadingAnchor.getResourceAsStream("/eventqa-train-multilingual-dbpedia.json.txt");
 		case EventQA_EventKG:

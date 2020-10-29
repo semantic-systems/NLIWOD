@@ -126,20 +126,6 @@
 					</execution> 
 					<!-- suganya -->
 					<execution>
-						<id>wdaqua-core0-logs</id>
-						<phase>package</phase>
-						<goals>
-							<goal>wget</goal>
-						</goals>
-						<configuration>
-							<url>https://github.com/WDAqua/WDAquaCore0Questions/blob/master/webservice_25_06_2017.json</url>
-							<overwrite>false</overwrite>
-							<skipCache>false</skipCache>
-							<outputFileName>webservice_25_06_2017.json</outputFileName>
-							<outputDirectory>src/main/resources/</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
 						<id>Dbpedia-Entity-V2</id>
 						<phase>package</phase>
 						<goals>
