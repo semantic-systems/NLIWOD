@@ -186,6 +186,7 @@ DROP: A Reading Comprehension Benchmark Requiring Discrete Reasoning Over Paragr
 * https://aaai.org/ojs/index.php/AAAI/article/view/4991
 * https://arxiv.org/pdf/1607.06275.pdf
 * https://t.co/xMUeh2lNHT?amp=1
+* https://arxiv.org/abs/2011.01060
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
