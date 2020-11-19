@@ -10,7 +10,7 @@
 | Alexandria    | [Webservice](http://alexandria.neofonie.de/)  [Paper](http://ceur-ws.org/Vol-913/06_ILD2012.pdf)  |                           |         |
 | SemSeK        | [Paper](https://link.springer.com/chapter/10.1007/978-3-642-35173-0_26#enumeration)   |                           |         |
 | MHE           |                                                   |                           |         |
-| QAKIS         | [Webservice](http://qakis.org/qakis2/) [Paper](https://www.researchgate.net/publication/282066121_QAKiS_an_Open_Domain_QA_System_based_on_Relational_Patterns)  |      |    X    |
+| QAKIS         | [Webservice](http://qakis.org/qakis2/) [Paper](https://www.researchgate.net/publication/282066121_QAKiS_an_Open_Domain_QA_System_based_on_Relational_Patterns)  |   webservice not working   |    X    |
 | **-QALD 3**   |
 | squal2sparql  | [Paper](https://www.researchgate.net/publication/278815711_squall2sparql_a_Translator_from_Controlled_English_to_Full_SPARQL_11)  |                           |         |
 | CASIA         | [Paper](https://www.semanticscholar.org/paper/CASIA%40QALD-3%3A-A-Question-Answering-System-over-Data-He-Liu/3490d0610484b676b0270a3136e3ca819ea22d79)  |    |         |
@@ -37,27 +37,28 @@
 | NbFramework   |                                                   |                           |         |
 | UIQA          |                                                   |                           |         |
 | **-QALD 9**   |
-| WDAqua-core1  | [Webservice](http://qanswer-frontend.univ-st-etienne.fr/)  [Paper](https://www.researchgate.net/publication/323772290_WDAqua-core1_A_Question_Answering_service_for_RDF_Knowledge_Bases) | |X |
+| QAnswer  | [Webservice](http://qanswer-frontend.univ-st-etienne.fr/)  [Paper](https://www.researchgate.net/publication/323772290_WDAqua-core1_A_Question_Answering_service_for_RDF_Knowledge_Bases) | |X |
 | gAnswer       | [Webservice](http://ganswer.gstore-pku.com/)  [Paper](https://www.researchgate.net/publication/320635589_Answering_Natural_Language_Questions_by_Subgraph_Matching_over_Knowledge_Graphs) | |X|
 | TeBaQA        | [Webservice](http://139.18.2.39:8187/)  [Paper](https://github.com/dice-group/TeBaQA)                        |                           |     X   |
-| QASystem      | [Webservice](http://qald-beta.cs.upb.de:80/gerbil)  [Paper](https://github.com/LukasBluebaum/QALD-Mini-Project)         |                           |     X   |
+| QASystem      | [Webservice](http://qald-beta.cs.upb.de:80/gerbil)  [Paper](https://github.com/LukasBluebaum/QALD-Mini-Project)         |   webservice not working                        |     X   |
 | **-Miscelleanous** |
 | NLSearch      | [Webservice](https://wikidata.metaphacts.com/resource/NLSearch) |                           |         |
-| OKBQA         | [Webservice](http://ws.okbqa.org/wui-2016/)  [Paper](http://doc.okbqa.org/overview/v1/)                   |                           |     X   |
+| OKBQA         | [Webservice](http://ws.okbqa.org/wui-2016/)  [Paper](http://doc.okbqa.org/overview/v1/)                   | very slow                          |     X   |
 | DEANNA        | [Paper](https://www.researchgate.net/publication/267557990_Natural_Language_Questions_for_the_Web_of_Data)    |                           |         |
 | questIO       |                                                   |                           |         |
 | SINA          | [Webservice](http://sina.aksw.org/)  [Paper](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.685.5024&rep=rep1&type=pdf)   | webservice not reachable  |     X   |
 | Start         | [Webservice](http://start.csail.mit.edu/index.php)  [Paper](https://groups.csail.mit.edu/infolab/publications/Katz-RIAO97.pdf)            | non-uniform answer format |     X   |
 | TBSL          | [Webservice](http://linkedspending.aksw.org/tbsl/) [Paper](https://www.researchgate.net/publication/254008885_Template-based_question_answering_over_RDF_data)   | unstable        |         |
 | LODQA         | [Webservice](http://lodqa.org/)                                | only searches for datasets|         |
-| AskNow        | [Webservice](https://asknowdemo.sda.tech/)  [Paper](http://jens-lehmann.org/files/2016/eswc_asknow.pdf)                   |                           |     X   |
+| AskNow        | [Webservice](https://asknowdemo.sda.tech/)  [Paper](http://jens-lehmann.org/files/2016/eswc_asknow.pdf)                   | webservice not working                         |     X   |
 | Platypus      | [Webservice](https://projetpp.github.io/demo.html)             |                           |     X   |
-| Quepy         | [Webservice](http://quepy.machinalis.com/)  [Paper](https://github.com/narphorium/quepy)                   | non-uniform answer format |     X   |
-| SorokinQA     | [Webservice](http://semanticparsing.ukp.informatik.tu-darmstadt.de:5000/question-answering/static/index.html)  | very slow                 |     X   |
-| FRANKENSTEIN  | [Webservice](http://frankenstein.qanary-qa.com/)  [Paper](https://dl.acm.org/citation.cfm?id=3186023)                   |  |     X   |
-| QUINT         | [Webservice](https://gate.d5.mpi-inf.mpg.de/quint/quint)   [Paper](https://www.aclweb.org/anthology/D17-2011/)                   |  |     X   |
-| TEQUILA       | [Webservice](https://gate.d5.mpi-inf.mpg.de/tequila/)    [Paper](https://arxiv.org/abs/1908.03650)                 |  |     X   |
-| QUEST         | [Webservice](https://quest-sys.mpi-inf.mpg.de/)     [Paper](https://arxiv.org/abs/1908.00469)               |  |     X   |
+| Quepy         | [Webservice](http://quepy.machinalis.com/)  [Paper](https://github.com/narphorium/quepy)                   | webservice not working |     X   |
+| SorokinQA     | [Webservice](http://semanticparsing.ukp.informatik.tu-darmstadt.de:5000/question-answering/static/index.html)  | webservice not working                 |     X   |
+| FRANKENSTEIN  | [Webservice](http://frankenstein.qanary-qa.com/)  [Paper](https://dl.acm.org/citation.cfm?id=3186023)                   | webservice not working |     X   |
+| QUINT         | [Webservice](https://gate.d5.mpi-inf.mpg.de/quint/quint)   [Paper](https://www.aclweb.org/anthology/D17-2011/)                   |  webservice not working |     X   |
+| TEQUILA       | [Webservice](https://gate.d5.mpi-inf.mpg.de/tequila/)    [Paper](https://arxiv.org/abs/1908.03650)                 | webservice not working |     X   |
+| QUEST         | [Webservice](https://quest-sys.mpi-inf.mpg.de/)     [Paper](https://arxiv.org/abs/1908.00469)               | webservice not working |     X   |
+| QAmp         | [Webservice](https://kbqa-api.ai.wu.ac.at/ask?question=)     [Paper](https://arxiv.org/abs/1908.06917)               |  |     X   |
 
 For more systems see page 7 of http://www.semantic-web-journal.net/system/files/swj1205.pdf
 
@@ -69,7 +70,7 @@ This library is available as snapshot here: http://maven.aksw.org/archiva/#artif
 <dependency>
   <groupId>org.aksw</groupId>
   <artifactId>qa.systems</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.7-SNAPSHOT</version>
 </dependency>
 ```
 Add the following repository:
