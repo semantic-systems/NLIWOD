@@ -190,7 +190,8 @@ DROP: A Reading Comprehension Benchmark Requiring Discrete Reasoning Over Paragr
 * https://allenai.org/data/break
 * https://github.com/UKPLab/coling2018-graph-neural-networks-question-answering/
 * https://github.com/castorini/SimpleDBpediaQA
-
+* https://www.aclweb.org/anthology/2021.eacl-main.300.pdf
+*
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
 
