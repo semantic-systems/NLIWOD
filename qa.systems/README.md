@@ -59,6 +59,7 @@
 | TEQUILA       | [Webservice](https://gate.d5.mpi-inf.mpg.de/tequila/)    [Paper](https://arxiv.org/abs/1908.03650)                 | webservice not working |     X   |
 | QUEST         | [Webservice](https://quest-sys.mpi-inf.mpg.de/)     [Paper](https://arxiv.org/abs/1908.00469)               | webservice not working |     X   |
 | QAmp         | [Webservice](https://kbqa-api.ai.wu.ac.at/ask?question=)     [Paper](https://arxiv.org/abs/1908.06917)               |  |     X   |
+| QASparql (to be analysed | https://github.com/Sylvia-Liang/QAsparql|
 
 For more systems see page 7 of http://www.semantic-web-journal.net/system/files/swj1205.pdf
 
