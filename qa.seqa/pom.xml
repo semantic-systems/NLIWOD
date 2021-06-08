@@ -4,10 +4,10 @@
 	<parent>
 		<groupId>org.aksw</groupId>
 		<artifactId>nliwod</artifactId>
-		<version>0.0.7</version>
+		<version>0.0.8</version>
 	</parent>
 	<artifactId>qa.seqa</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4</version>
 	<build>
 		<plugins>
 			<plugin>
