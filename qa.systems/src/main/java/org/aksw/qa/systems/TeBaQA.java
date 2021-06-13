@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class TeBaQA extends Gen_HTTP_QA_Sys {
 	
-	private static final String URL = "http://139.18.2.39:8187/qa-simple";
+	private static final String URL = "https://tebaqa.demos.dice-research.org/qa-simple";
 			
 	public TeBaQA() {
 		super(URL, "tebaqa", true, false);
