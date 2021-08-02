@@ -194,6 +194,9 @@ DROP: A Reading Comprehension Benchmark Requiring Discrete Reasoning Over Paragr
 * https://openreview.net/pdf?id=P5UQFFoQ4PJ
 * https://arxiv.org/pdf/2107.02865.pdf -> wikidataqa
 * http://www.semantic-web-journal.net/content/question-answering-deep-neural-networks-semi-structured-heterogeneous-genealogical-knowledge digital humanities
+* https://aclanthology.org/2021.acl-long.357.pdf temporal qa
+* https://aclanthology.org/2021.starsem-1.10.pdf
+
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
 
