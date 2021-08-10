@@ -197,6 +197,7 @@ DROP: A Reading Comprehension Benchmark Requiring Discrete Reasoning Over Paragr
 * https://aclanthology.org/2021.acl-long.357.pdf temporal qa 
 * https://aclanthology.org/2021.starsem-1.10.pdf
 * https://github.com/apoorvumang/CronKGQA temporal QA
+* https://arxiv.org/abs/2108.03509 Wikidata QA
 
 ## Focus
 This collection aims at becoming a central focus point of question answering research. Using deeper analysis (sentiment, clustering, topic) of a questions will help to understand arising difficulties within QA systems. Moreover, this collection will help also semantic search, e.g. keyword search, phrase search, in later stages.
