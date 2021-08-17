@@ -21,8 +21,11 @@
 |QALD-8                    |[Link](https://www.semanticscholar.org/paper/8th-Challenge-on-Question-Answering-over-Linked-Usbeck-Ngomo/44ddbf4032e70c4aabfa6799df5ee2b5ce51a468)| [Link](https://github.com/ag-sc/QALD/tree/master/8/data)||
 |QALD-9                    |[Link](https://www.semanticscholar.org/paper/9th-Challenge-on-Question-Answering-over-Linked-Usbeck-Gusmita/4f83e1b64f57ae0d546076279426e85c0e60298b)| [Link](https://github.com/ag-sc/QALD/tree/master/9/data) ||
 |SimpleQuestionsWikidata   |[Link](https://www.researchgate.net/publication/319482301_Question_Answering_Benchmarks_for_Wikidata)| [Link](https://github.com/askplatypus/wikidata-simplequestions)||
+|SimpleQuestionsDBpedia   |[Link](https://aclanthology.org/C18-1178)| [Link](https://github.com/castorini/SimpleDBpediaQA)||
 |WDAquaCore0Logs       |-| Original: [Link](https://github.com/WDAqua/WDAquaCore0Questions)  <br> Including Answers (QALD): [Link](https://github.com/dice-group/NLIWOD/blob/master/qa.datasets/src/main/resources/wdaqua-core0-logs_qald.json)| The repository contains two files, one with the dataset, the other one with raw questions without answers. Thus, we include only the former and add answers by querying the KB in Oct. 2020.|
 |EventQA       |[Link](https://arxiv.org/abs/2004.11861)| [Link](https://github.com/dice-group/gerbil/issues/314)||
+|RuBQ 1.0 |[Link](https://link.springer.com/chapter/10.1007/978-3-030-62466-8_7)| [Link](https://github.com/vladislavneon/RuBQ/tree/master/RuBQ_1.0)||
+|RuBQ 2.0 |[Link](https://link.springer.com/chapter/10.1007/978-3-030-77385-4_32)| [Link](https://github.com/vladislavneon/RuBQ/tree/master/RuBQ_2.0)||
 
 NOTE: PARL.AI does a tremendous job in including different tasks. Thus it would make sense to analyze their state before starting to include more tasks http://www.parl.ai/static/docs/tasks.html# 
 
