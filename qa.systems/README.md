@@ -61,6 +61,8 @@
 | QAmp         | [Webservice](https://kbqa-api.ai.wu.ac.at/ask?question=)     [Paper](https://arxiv.org/abs/1908.06917)               |  |     X   |
 | QASparql (to be analysed | https://github.com/Sylvia-Liang/QAsparql|
 |QUEGG https://scdemo.techfak.uni-bielefeld.de/quegg/|
+| DeepPavlov KBQA | [Webservice](https://webengineering.ins.hs-anhalt.de:41021/docs#/DeepPavlov/get_answer_deeppavlov_answer_get) [Paper](https://aclanthology.org/P18-4021.pdf) | | |
+| RuBQ Baseline | [Webservice](https://webengineering.ins.hs-anhalt.de:41021/docs#/RuBQ/get_answer_rubq_answer_get) [Paper](https://link.springer.com/chapter/10.1007/978-3-030-62466-8_7) | Only Russian language. Not stable | |
 
 For more systems see page 7 of http://www.semantic-web-journal.net/system/files/swj1205.pdf
 
