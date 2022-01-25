@@ -1,0 +1,41 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  NLIWOD - Natural Language Interfaces for the Web of
+  Data library
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Ricardo
+    family-names: Usbeck
+    email: ricardo.usbeck@uni-hamburg.de
+    affiliation: Universität Hamburg
+    orcid: 'https://orcid.org/0000-0002-0191-7211'
+  - given-names: Lukas
+    family-names: Blübaum
+  - given-names: Rricha
+    family-names: Jalota
+    orcid: 'https://orcid.org/0000-0003-1517-6394'
+  - given-names: Lixi
+    orcid: 'https://orcid.org/0000-0002-8803-6758'
+  - given-names: Jonathan
+    family-names: Huthmann
+  - given-names: Christian
+    family-names: Demmler
+  - given-names: Michael
+    family-names: Röder
+    email: michael.roeder@upb.de
+    affiliation: Universität Paderborn
+  - given-names: Lorenz
+    family-names: Bühmann
+    email: buemann@infai.org
+    affiliation: InfAI e.V.
+  - given-names: Nikit
+    family-names: Srivastava
+    affiliation: Universität Paderborn
+  - given-names: Erik
+    family-names: Körner
